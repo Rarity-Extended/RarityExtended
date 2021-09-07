@@ -1,0 +1,45 @@
+{
+  "name": "ape_tax",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run open-browser && next dev",
+    "open-browser": "open http://localhost:3000",
+    "build": "next build",
+    "analyze": "ANALYZE=true next build",
+    "start": "next start",
+    "export": "next export",
+    "lint": "eslint . --ext .js",
+    "lintfix": "eslint . --ext .js --fix"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.4.0",
+    "@tailwindcss/forms": "^0.3.3",
+    "@tailwindcss/typography": "^0.4.1",
+    "@walletconnect/qrcode-modal": "^1.6.2",
+    "@web3-react-fork/core": "^2.0.5",
+    "@web3-react-fork/injected-connector": "^2.0.5",
+    "@web3-react-fork/network-connector": "^2.0.5",
+    "@web3-react-fork/types": "^2.0.5",
+    "@web3-react-fork/walletconnect-connector": "^2.0.5",
+    "autoprefixer": "^10.3.2",
+    "axios": "^0.21.1",
+    "dayjs": "^1.10.6",
+    "dotenv-webpack": "^7.0.3",
+    "ethcall": "4.0.0",
+    "ethers": "^5.4.5",
+    "next": "11.1.0",
+    "next-seo": "^4.26.0",
+    "postcss": "^8.3.6",
+    "react": "17.0.2",
+    "react-dom": "^17.0.2",
+    "swr": "^0.5.6",
+    "tailwindcss": "^2.2.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-next": "^11.1.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0"
+  }
+}
