@@ -9,164 +9,19 @@
 import	React							from	'react';
 import	Head							from	'next/head';
 import	{DefaultSeo}					from	'next-seo';
-import	useSWR, {useSWRConfig} 			from	'swr';
 import	{Web3ReactProvider}				from	'@web3-react-fork/core';
 import	{ethers}						from	'ethers';
-import	{Provider, Contract}			from	'ethcall';
 import	useWeb3, {Web3ContextApp}		from	'contexts/useWeb3';
+import	useRarity, {RarityContextApp}	from 'contexts/useRarity';
 import	Navbar							from	'components/Navbar';
-import	RARITY_ABI						from	'utils/rarity.abi';
-import	RARITY_ATTR_ABI					from	'utils/rarityAttr.abi';
-import	RARITY_GOLD_ABI					from	'utils/rarityGold.abi';
 
 import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
 
-const chunk = (arr, size) => arr.reduce((acc, e, i) => (i % size ? acc[acc.length - 1].push(e) : acc.push([e]), acc), []);
-const fetcher = (...args) => fetch(...args).then(res => res.json());
-async function newEthCallProvider(provider) {
-	const	ethcallProvider = new Provider();
-	await ethcallProvider.init(provider);
-	return ethcallProvider;
-}
-
 function	AppWrapper(props) {
 	const	{Component, pageProps, router} = props;
-	const	{mutate} = useSWRConfig();
-	const	{active, address, switchChain, getProvider, chainID, provider} = useWeb3();
-	const	[rNonce, set_rNonce] = React.useState(0);
-	const	[rarities, set_rarities] = React.useState({});
-	const	getRaritiesRequestURI = `https://api.ftmscan.com/api?module=account&action=tokennfttx&contractaddress=${process.env.RARITY_ADDR}&address=${address}&apikey=${process.env.FMT_KEY}`;
-	const	{data} = useSWR(active && address ? getRaritiesRequestURI : null, fetcher, {revalidateOnMount: true, revalidateOnReconnect: true, refreshInterval: 30000, shouldRetryOnError: true, dedupingInterval: 1000, focusThrottleInterval: 5000});
-
-	React.useEffect(() => {
-		set_rarities({});
-		set_rNonce(n => n + 1);
-	}, [active, address, chainID]);
-
-	function		prepareAdventurer(tokenID) {
-		const	rarity = new Contract(process.env.RARITY_ADDR, RARITY_ABI);
-		const	rarityAttr = new Contract(process.env.RARITY_ATTR_ADDR, RARITY_ATTR_ABI);
-		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI);
-		return [
-			rarity.ownerOf(tokenID),
-			rarity.summoner(tokenID),
-			rarityAttr.character_created(tokenID),
-			rarityAttr.ability_scores(tokenID),
-			rarityGold.balanceOf(tokenID),
-			// rarityGold.claimable(tokenID),
-		];
-	}
-	function		prepareAdventurerExtra(tokenID) {
-		const	rarityGold = new ethers.Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI, provider);
-		return [
-			rarityGold.claimable(tokenID)
-		];
-	}
-	async function	fetchAdventurer(calls) {
-		if (Number(chainID) === 1337) {
-			const	ethcallProvider = await newEthCallProvider(new ethers.providers.JsonRpcProvider('http://localhost:8545'));
-			ethcallProvider.multicallAddress = '0xc04d660976c923ddba750341fe5923e47900cf24';
-			const	callResult = await ethcallProvider.all(calls);
-			return (callResult);
-		} else {
-			const	ethcallProvider = await newEthCallProvider(provider);
-			const	callResult = await ethcallProvider.all(calls);
-			return (callResult);
-		}
-	}
-	async function	fetchAdventurerExtra(calls) {
-		const	results = await Promise.all(calls.map(p => p.catch()));
-		return	results.map(result => (result instanceof Error) ? undefined : result);
-	}
-
-	async function	fetchRarities(elements) {
-		const	preparedCalls = [];
-		const	preparedExtraCalls = [];
-		const	tokensIDs = [];
-		elements?.forEach((token) => {
-			preparedCalls.push(...prepareAdventurer(token.tokenID));
-			preparedExtraCalls.push(...prepareAdventurerExtra(token.tokenID));
-			tokensIDs.push(token.tokenID);
-		});
-
-		// preparedCalls.push(...prepareAdventurer(29010)); tokensIDs.push(29010);
-
-		const	callResults = await fetchAdventurer(preparedCalls);
-		const	chunkedCallResult = chunk(callResults, 5);
-		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
-		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
-
-		tokensIDs.forEach((tokenID, i) => {
-			const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold] = chunkedCallResult[i];
-			const	[claimableGold] = chunkedExtraCallResult[i];
-
-			set_rarities((prev) => ({...prev, [tokenID]: {
-				tokenID: tokenID,
-				owner: owner,
-				xp: ethers.utils.formatEther(adventurer['_xp']),
-				class: Number(adventurer['_class']),
-				level: Number(adventurer['_level']),
-				log: Number(adventurer['_log']),
-				gold: {
-					balance: ethers.utils.formatEther(balanceOfGold),
-					claimable: claimableGold ? ethers.utils.formatEther(claimableGold) : '0'
-				},
-				attributes: {
-					isInit: initialAttributes,
-					remainingPoints: initialAttributes ? -1 : 32,
-					strength: initialAttributes ? abilityScores['strength'] : 8,
-					dexterity: initialAttributes ? abilityScores['dexterity'] : 8,
-					constitution: initialAttributes ? abilityScores['constitution'] : 8,
-					intelligence: initialAttributes ? abilityScores['intelligence'] : 8,
-					wisdom: initialAttributes ? abilityScores['wisdom'] : 8,
-					charisma: initialAttributes ? abilityScores['charisma'] : 8,
-				}
-			}}));
-			set_rNonce(prev => prev + 1);
-		});
-	}
-
-	React.useEffect(() => {
-		if (data?.result) {
-			fetchRarities(data?.result);
-		}
-	}, [data]);
-
-	async function	updateRarity(tokenID) {
-		const	callResults = await fetchAdventurer(prepareAdventurer(tokenID));
-		const	chunkedCallResult = chunk(callResults, 6);
-		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, claimableGold] = chunkedCallResult[0];
-
-		set_rarities((prev) => ({...prev, [tokenID]: {
-			tokenID: tokenID,
-			owner: owner,
-			xp: ethers.utils.formatEther(adventurer['_xp']),
-			class: Number(adventurer['_class']),
-			level: Number(adventurer['_level']),
-			log: Number(adventurer['_log']),
-			gold: {
-				balance: ethers.utils.formatEther(balanceOfGold),
-				claimable: ethers.utils.formatEther(claimableGold)
-			},
-			attributes: {
-				isInit: initialAttributes,
-				remainingPoints: initialAttributes ? -1 : 32,
-				strength: initialAttributes ? abilityScores['strength'] : 8,
-				dexterity: initialAttributes ? abilityScores['dexterity'] : 8,
-				constitution: initialAttributes ? abilityScores['constitution'] : 8,
-				intelligence: initialAttributes ? abilityScores['intelligence'] : 8,
-				wisdom: initialAttributes ? abilityScores['wisdom'] : 8,
-				charisma: initialAttributes ? abilityScores['charisma'] : 8,
-			}
-		}}));
-		set_rNonce(prev => prev + 1);
-	}
-
-	async function	fetchRarity() {
-		const {result} = await mutate(getRaritiesRequestURI);
-		await fetchRarities(result);
-	}
+	const	{rarities, updateRarity, fetchRarity, rNonce} = useRarity();
+	const	{switchChain, chainID} = useWeb3();
 
 	React.useEffect(() => {
 		if (Number(chainID) > 0 && (Number(chainID) !== 250 || Number(chainID) !== 1337)) {
@@ -265,11 +120,13 @@ function	MyApp(props) {
 	return (
 		<Web3ReactProvider getLibrary={getLibrary}>
 			<Web3ContextApp>
-				<AppWrapper
-					Component={Component}
-					pageProps={pageProps}
-					element={props.element}
-					router={props.router} />
+				<RarityContextApp>
+					<AppWrapper
+						Component={Component}
+						pageProps={pageProps}
+						element={props.element}
+						router={props.router} />
+				</RarityContextApp>
 			</Web3ContextApp>
 		</Web3ReactProvider>
 	);
