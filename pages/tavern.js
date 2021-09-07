@@ -144,7 +144,7 @@ function	Index({fetchRarity, router}) {
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Paladin']} />
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Ranger']} />
 					</div>
-					<div className={'flex flex-col md:flex-row w-full justify-center spamb-2 md:ce-x-6'}>
+					<div className={'flex flex-col md:flex-row w-full justify-center mb-2 md:mb-0 md:space-x-6'}>
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Rogue']} />
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Sorcerer']} />
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Wizard']} />
