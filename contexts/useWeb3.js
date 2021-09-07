@@ -74,6 +74,27 @@ export const Web3ContextApp = ({children}) => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [account, chainId, connector, library, onDesactivate, onUpdate]);
 
+	function	switchChain() {
+		if (Number(chainID) === 250) {
+			return;
+		}
+		if (!provider || !active) {
+			console.error('Not initialized');
+			return;
+		}
+		provider.send('wallet_addEthereumChain', [{
+			'chainId': '0xFA',
+			'blockExplorerUrls': ['https://ftmscan.com'],
+			'chainName': 'Fantom Opera',
+			'rpcUrls': ['https://rpc.ftm.tools'],
+			'nativeCurrency': {
+				'name': 'Fantom',
+				'symbol': 'FTM',
+				'decimals': 18
+			}
+		}, address]).catch((error) => console.error(error));
+	}
+
 
 	/**************************************************************************
 	**	connect
@@ -94,9 +115,9 @@ export const Web3ContextApp = ({children}) => {
 				deactivate();
 			}
 			const	injected = new InjectedConnector({
-				supportedChainIds: [250, 1337]
+				// supportedChainIds: [250, 1337]
 			});
-			activate(injected, undefined, true);
+			activate(injected, undefined, false);
 			set_lastWallet(walletType.METAMASK);
 		} else if (_providerType === walletType.WALLET_CONNECT) {
 			if (active) {
@@ -147,9 +168,9 @@ export const Web3ContextApp = ({children}) => {
 				onDesactivate,
 				walletType,
 				chainID,
-				active,
+				active: active && (Number(chainID) === 250 || Number(chainID) === 1337),
 				initialized,
-
+				switchChain,
 				provider,
 				getProvider,
 				currentRPCProvider: provider

@@ -72,6 +72,10 @@
 	font-size: 6px;
 	line-height: 12px;
 }
+.text-xss {
+	font-size: 8px;
+	line-height: 12px;
+}
 .text-ybase {
 	font-family: Roboto;
 	font-size: 14px;

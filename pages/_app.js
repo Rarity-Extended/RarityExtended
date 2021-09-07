@@ -4,6 +4,7 @@
 **	@Date:					Tuesday August 31st 2021
 **	@Filename:				_app.js
 ******************************************************************************/
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import	React							from	'react';
 import	Head							from	'next/head';
@@ -33,11 +34,16 @@ const	WEBSITE_URI = process.env.WEBSITE_URI;
 function	AppWrapper(props) {
 	const	{Component, pageProps, router} = props;
 	const	{mutate} = useSWRConfig();
-	const	{active, address, getProvider} = useWeb3();
+	const	{active, address, switchChain, getProvider, chainID} = useWeb3();
 	const	[rNonce, set_rNonce] = React.useState(0);
 	const	[rarities, set_rarities] = React.useState({});
 	const	getRaritiesRequestURI = `https://api.ftmscan.com/api?module=account&action=tokennfttx&contractaddress=${RARITY_ADDR}&address=${address}&apikey=${FMT_KEY}`;
 	const	{data} = useSWR(active && address ? getRaritiesRequestURI : null, fetcher, {revalidateOnMount: true, revalidateOnReconnect: true, refreshInterval: 30000, shouldRetryOnError: true, dedupingInterval: 1000, focusThrottleInterval: 5000});
+
+	React.useEffect(() => {
+		set_rarities({});
+		set_rNonce(n => n + 1);
+	}, [active, address, chainID]);
 
 	function		prepareAdventurer(tokenID) {
 		const	rarity = new Contract(RARITY_ADDR, ABI);
@@ -111,7 +117,12 @@ function	AppWrapper(props) {
 		const {result} = await mutate(getRaritiesRequestURI);
 		await fetchRarities(result);
 	}
-	fetchRarity;
+
+	React.useEffect(() => {
+		if (Number(chainID) > 0 && (Number(chainID) !== 250 || Number(chainID) !== 1337)) {
+			switchChain();
+		}
+	}, [chainID]);
 
 	return (
 		<>
@@ -159,7 +170,12 @@ function	AppWrapper(props) {
 				}} />
 			<main id={'app'} className={'p-4 relative'} style={{minHeight: '100vh'}}>
 				<Navbar router={router} />
-				<div className={'mb-16'}>
+				<div className={'mb-16 relative'}>
+					{chainID >= 0 && chainID !== 250 ? (
+						<div aria-label={'switchchain'} className={'flex w-full font-title text-lg text-center justify-center'}>
+							{'PLEASE SWITCH TO FANTOM NETWORK'}
+						</div>
+					) : null}
 					<Component
 						key={router.route}
 						element={props.element}
