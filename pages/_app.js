@@ -109,6 +109,14 @@ function	AppWrapper(props) {
 			class: Number(chunkedCallResult[0][1]['_class']),
 			level: Number(chunkedCallResult[0][1]['_level']),
 			log: Number(chunkedCallResult[0][1]['_log']),
+			attributes: {
+				strength: 8,
+				dexterity: 8,
+				constitution: 8,
+				intelligence: 8,
+				wisdom: 8,
+				charisma: 8,
+			}
 		}}));
 		set_rNonce(prev => prev + 1);
 	}
