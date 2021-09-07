@@ -1,7 +1,7 @@
 /******************************************************************************
-**	@Author:				The Ape Community
-**	@Twitter:				@ape_tax
-**	@Date:					Wednesday August 11th 2021
+**	@Author:				Rarity Extended
+**	@Twitter:				@MajorTom_eth
+**	@Date:					Sunday September 5th 2021
 **	@Filename:				useWeb3.js
 ******************************************************************************/
 

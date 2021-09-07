@@ -1,7 +1,7 @@
 /******************************************************************************
-**	@Author:				The Ape Community
-**	@Twitter:				@ape_tax
-**	@Date:					Saturday June 5th 2021
+**	@Author:				Rarity Extended
+**	@Twitter:				@MajorTom_eth
+**	@Date:					Tuesday August 31st 2021
 **	@Filename:				useLocalStorage.js
 ******************************************************************************/
 

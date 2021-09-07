@@ -1,8 +1,8 @@
 /******************************************************************************
-**	@Author:				The Ape Community
-**	@Twitter:				@ape_tax
-**	@Date:					Wednesday August 11th 2021
-**	@Filename:				index.js
+**	@Author:				Rarity Extended
+**	@Twitter:				@MajorTom_eth
+**	@Date:					Tuesday September 7th 2021
+**	@Filename:				tavern.js
 ******************************************************************************/
 
 import	React, {useState}			from	'react';
