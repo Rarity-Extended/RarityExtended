@@ -33,7 +33,7 @@ async function newEthCallProvider(provider) {
 function	AppWrapper(props) {
 	const	{Component, pageProps, router} = props;
 	const	{mutate} = useSWRConfig();
-	const	{active, address, switchChain, getProvider, chainID} = useWeb3();
+	const	{active, address, switchChain, getProvider, chainID, provider} = useWeb3();
 	const	[rNonce, set_rNonce] = React.useState(0);
 	const	[rarities, set_rarities] = React.useState({});
 	const	getRaritiesRequestURI = `https://api.ftmscan.com/api?module=account&action=tokennfttx&contractaddress=${process.env.RARITY_ADDR}&address=${address}&apikey=${process.env.FMT_KEY}`;
@@ -54,7 +54,13 @@ function	AppWrapper(props) {
 			rarityAttr.character_created(tokenID),
 			rarityAttr.ability_scores(tokenID),
 			rarityGold.balanceOf(tokenID),
-			rarityGold.claimable(tokenID),
+			// rarityGold.claimable(tokenID),
+		];
+	}
+	function		prepareAdventurerExtra(tokenID) {
+		const	rarityGold = new ethers.Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI, provider);
+		return [
+			rarityGold.claimable(tokenID)
 		];
 	}
 	async function	fetchAdventurer(calls) {
@@ -64,26 +70,36 @@ function	AppWrapper(props) {
 			const	callResult = await ethcallProvider.all(calls);
 			return (callResult);
 		} else {
-			const	ethcallProvider = await newEthCallProvider(getProvider());
+			const	ethcallProvider = await newEthCallProvider(provider);
 			const	callResult = await ethcallProvider.all(calls);
 			return (callResult);
 		}
 	}
+	async function	fetchAdventurerExtra(calls) {
+		const	results = await Promise.all(calls.map(p => p.catch()));
+		return	results.map(result => (result instanceof Error) ? undefined : result);
+	}
 
 	async function	fetchRarities(elements) {
 		const	preparedCalls = [];
+		const	preparedExtraCalls = [];
 		const	tokensIDs = [];
 		elements?.forEach((token) => {
 			preparedCalls.push(...prepareAdventurer(token.tokenID));
+			preparedExtraCalls.push(...prepareAdventurerExtra(token.tokenID));
 			tokensIDs.push(token.tokenID);
 		});
 
 		// preparedCalls.push(...prepareAdventurer(29010)); tokensIDs.push(29010);
 
 		const	callResults = await fetchAdventurer(preparedCalls);
-		const	chunkedCallResult = chunk(callResults, 6);
+		const	chunkedCallResult = chunk(callResults, 5);
+		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
+		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
+
 		tokensIDs.forEach((tokenID, i) => {
-			const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, claimableGold] = chunkedCallResult[i];
+			const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold] = chunkedCallResult[i];
+			const	[claimableGold] = chunkedExtraCallResult[i];
 
 			set_rarities((prev) => ({...prev, [tokenID]: {
 				tokenID: tokenID,
@@ -94,7 +110,7 @@ function	AppWrapper(props) {
 				log: Number(adventurer['_log']),
 				gold: {
 					balance: ethers.utils.formatEther(balanceOfGold),
-					claimable: ethers.utils.formatEther(claimableGold)
+					claimable: claimableGold ? ethers.utils.formatEther(claimableGold) : '0'
 				},
 				attributes: {
 					isInit: initialAttributes,
