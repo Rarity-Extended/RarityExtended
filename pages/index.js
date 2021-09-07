@@ -46,7 +46,7 @@ const	classMappingImg = [
 
 const		RARITY_ADDR = '0xce761D788DF608BD21bdd59d6f4B54b2e27F25Bb';
 const		RARITY_ATTR_ADDR = '0xB5F5AF1087A8DA62A23b08C00C6ec9af21F397a1';
-function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute}) {
+function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute, toUpdate}) {
 	function pointCost(val) {
 		if (val <= 14) {
 			return val - 8;
@@ -75,7 +75,7 @@ function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute}) 
 				<div className={'font-title uppercase flex flex-row items-center justify-end'}>
 					<div 
 						onClick={() => {
-							if (isInit || updateAttribute[name] === value)
+							if (isInit || updateAttribute[name] === value || !toUpdate)
 								return;
 							const	previousRemainingPoints = getPreviousRemainingPoints();
 							if (updateAttribute.remainingPoints !== updateAttribute.maxPoints) {
@@ -86,13 +86,13 @@ function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute}) 
 								}));
 							}
 						}}
-						className={`text-sm w-4 text-left ${isInit || updateAttribute[name] === value ? 'opacity-0' : 'cursor-pointer'}`}>
+						className={`text-sm w-4 text-left ${isInit || updateAttribute[name] === value || !toUpdate ? 'opacity-0' : 'cursor-pointer'}`}>
 						{'-'}
 					</div>
 					<div className={'w-9 text-center'}>{updateAttribute[name]}</div>
 					<div 
 						onClick={() => {
-							if (isInit)
+							if (isInit || !toUpdate)
 								return;
 							const	nextRemainingPoints = getNextRemainingPoints();
 							if (getNextRemainingPoints() >= 0) {
@@ -103,7 +103,7 @@ function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute}) 
 								}));
 							}
 						}}
-						className={`text-sm w-4 text-right ${isInit || getNextRemainingPoints() < 0 ? 'opacity-0' : 'cursor-pointer'}`}>
+						className={`text-sm w-4 text-right ${isInit || getNextRemainingPoints() < 0 || !toUpdate ? 'opacity-0' : 'cursor-pointer'}`}>
 						{'+'}
 					</div>
 				</div>
@@ -166,36 +166,42 @@ function	Attributes({rarity, updateRarity, provider}) {
 				value={rarity.attributes.strength}
 				updateAttribute={updateAttribute}
 				set_updateAttribute={set_updateAttribute}
+				toUpdate={updateAttribute.remainingPoints >= 0}
 				name={'strength'} />
 			<Attribute
 				isInit={rarity?.attributes?.isInit}
 				value={rarity.attributes.dexterity}
 				updateAttribute={updateAttribute}
 				set_updateAttribute={set_updateAttribute}
+				toUpdate={updateAttribute.remainingPoints >= 0}
 				name={'dexterity'} />
 			<Attribute
 				isInit={rarity?.attributes?.isInit}
 				value={rarity.attributes.constitution}
 				updateAttribute={updateAttribute}
 				set_updateAttribute={set_updateAttribute}
+				toUpdate={updateAttribute.remainingPoints >= 0}
 				name={'constitution'} />
 			<Attribute
 				isInit={rarity?.attributes?.isInit}
 				value={rarity.attributes.intelligence}
 				updateAttribute={updateAttribute}
 				set_updateAttribute={set_updateAttribute}
+				toUpdate={updateAttribute.remainingPoints >= 0}
 				name={'intelligence'} />
 			<Attribute
 				isInit={rarity?.attributes?.isInit}
 				value={rarity.attributes.wisdom}
 				updateAttribute={updateAttribute}
 				set_updateAttribute={set_updateAttribute}
+				toUpdate={updateAttribute.remainingPoints >= 0}
 				name={'wisdom'} />
 			<Attribute
 				isInit={rarity?.attributes?.isInit}
 				value={rarity.attributes.charisma}
 				updateAttribute={updateAttribute}
 				set_updateAttribute={set_updateAttribute}
+				toUpdate={updateAttribute.remainingPoints >= 0}
 				name={'charisma'} />
 		</div>
 	);
