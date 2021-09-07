@@ -17,6 +17,7 @@ import	useWeb3, {Web3ContextApp}		from	'contexts/useWeb3';
 import	Navbar							from	'components/Navbar';
 import	RARITY_ABI						from	'utils/rarity.abi';
 import	RARITY_ATTR_ABI					from	'utils/rarityAttr.abi';
+import	RARITY_GOLD_ABI					from	'utils/rarityGold.abi';
 
 import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
@@ -28,10 +29,6 @@ async function newEthCallProvider(provider) {
 	await ethcallProvider.init(provider);
 	return ethcallProvider;
 }
-const	RARITY_ADDR = '0xce761D788DF608BD21bdd59d6f4B54b2e27F25Bb';
-const	RARITY_ATTR_ADDR = '0xb5f5af1087a8da62a23b08c00c6ec9af21f397a1';
-const	FMT_KEY = process.env.FMT_KEY;
-const	WEBSITE_URI = process.env.WEBSITE_URI;
 
 function	AppWrapper(props) {
 	const	{Component, pageProps, router} = props;
@@ -39,7 +36,7 @@ function	AppWrapper(props) {
 	const	{active, address, switchChain, getProvider, chainID} = useWeb3();
 	const	[rNonce, set_rNonce] = React.useState(0);
 	const	[rarities, set_rarities] = React.useState({});
-	const	getRaritiesRequestURI = `https://api.ftmscan.com/api?module=account&action=tokennfttx&contractaddress=${RARITY_ADDR}&address=${address}&apikey=${FMT_KEY}`;
+	const	getRaritiesRequestURI = `https://api.ftmscan.com/api?module=account&action=tokennfttx&contractaddress=${process.env.RARITY_ADDR}&address=${address}&apikey=${process.env.FMT_KEY}`;
 	const	{data} = useSWR(active && address ? getRaritiesRequestURI : null, fetcher, {revalidateOnMount: true, revalidateOnReconnect: true, refreshInterval: 30000, shouldRetryOnError: true, dedupingInterval: 1000, focusThrottleInterval: 5000});
 
 	React.useEffect(() => {
@@ -48,13 +45,16 @@ function	AppWrapper(props) {
 	}, [active, address, chainID]);
 
 	function		prepareAdventurer(tokenID) {
-		const	rarity = new Contract(RARITY_ADDR, RARITY_ABI);
-		const	rarityAttr = new Contract(RARITY_ATTR_ADDR, RARITY_ATTR_ABI);
+		const	rarity = new Contract(process.env.RARITY_ADDR, RARITY_ABI);
+		const	rarityAttr = new Contract(process.env.RARITY_ATTR_ADDR, RARITY_ATTR_ABI);
+		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI);
 		return [
 			rarity.ownerOf(tokenID),
 			rarity.summoner(tokenID),
 			rarityAttr.character_created(tokenID),
 			rarityAttr.ability_scores(tokenID),
+			rarityGold.balanceOf(tokenID),
+			rarityGold.claimable(tokenID),
 		];
 	}
 	async function	fetchAdventurer(calls) {
@@ -78,10 +78,12 @@ function	AppWrapper(props) {
 			tokensIDs.push(token.tokenID);
 		});
 
+		// preparedCalls.push(...prepareAdventurer(29010)); tokensIDs.push(29010);
+
 		const	callResults = await fetchAdventurer(preparedCalls);
-		const	chunkedCallResult = chunk(callResults, 4);
+		const	chunkedCallResult = chunk(callResults, 6);
 		tokensIDs.forEach((tokenID, i) => {
-			const	[owner, adventurer, initialAttributes, abilityScores] = chunkedCallResult[i];
+			const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, claimableGold] = chunkedCallResult[i];
 
 			set_rarities((prev) => ({...prev, [tokenID]: {
 				tokenID: tokenID,
@@ -90,6 +92,10 @@ function	AppWrapper(props) {
 				class: Number(adventurer['_class']),
 				level: Number(adventurer['_level']),
 				log: Number(adventurer['_log']),
+				gold: {
+					balance: ethers.utils.formatEther(balanceOfGold),
+					claimable: ethers.utils.formatEther(claimableGold)
+				},
 				attributes: {
 					isInit: initialAttributes,
 					remainingPoints: initialAttributes ? -1 : 32,
@@ -113,8 +119,8 @@ function	AppWrapper(props) {
 
 	async function	updateRarity(tokenID) {
 		const	callResults = await fetchAdventurer(prepareAdventurer(tokenID));
-		const	chunkedCallResult = chunk(callResults, 2);
-		const	[owner, adventurer, initialAttributes, abilityScores] = chunkedCallResult[0];
+		const	chunkedCallResult = chunk(callResults, 6);
+		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, claimableGold] = chunkedCallResult[0];
 
 		set_rarities((prev) => ({...prev, [tokenID]: {
 			tokenID: tokenID,
@@ -123,6 +129,10 @@ function	AppWrapper(props) {
 			class: Number(adventurer['_class']),
 			level: Number(adventurer['_level']),
 			log: Number(adventurer['_log']),
+			gold: {
+				balance: ethers.utils.formatEther(balanceOfGold),
+				claimable: ethers.utils.formatEther(claimableGold)
+			},
 			attributes: {
 				isInit: initialAttributes,
 				remainingPoints: initialAttributes ? -1 : 32,
@@ -174,13 +184,13 @@ function	AppWrapper(props) {
 				openGraph={{
 					type: 'website',
 					locale: 'en_US',
-					url: WEBSITE_URI,
+					url: process.env.WEBSITE_URI,
 					site_name: 'Rarity Extended',
 					title: 'Rarity Extended',
 					description: 'Write your next adventure with your brave adventurers',
 					images: [
 						{
-							url: `${WEBSITE_URI}og.png`,
+							url: `${process.env.WEBSITE_URI}og.png`,
 							width: 1200,
 							height: 675,
 							alt: 'Rarity',

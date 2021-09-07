@@ -13,7 +13,10 @@ module.exports = ({
 	],
 	env: {
 		FMT_KEY: process.env.FMT_KEY,
-		WEBSITE_URI: process.env.WEBSITE_URI || 'https://adventure.major.tax/'
+		WEBSITE_URI: process.env.WEBSITE_URI || 'https://adventure.major.tax/',
+		RARITY_ADDR: '0xce761D788DF608BD21bdd59d6f4B54b2e27F25Bb',
+		RARITY_ATTR_ADDR: '0xb5f5af1087a8da62a23b08c00c6ec9af21f397a1',
+		RARITY_GOLD_ADDR: '0x2069B76Afe6b734Fb65D1d099E7ec64ee9CC76B2'
 	},
 	optimization: {
 		minimize: true,

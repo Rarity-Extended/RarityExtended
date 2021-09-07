@@ -44,8 +44,6 @@ const	classMappingImg = [
 	'/wizard.png',
 ];
 
-const		RARITY_ADDR = '0xce761D788DF608BD21bdd59d6f4B54b2e27F25Bb';
-const		RARITY_ATTR_ADDR = '0xB5F5AF1087A8DA62A23b08C00C6ec9af21F397a1';
 function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute, toUpdate}) {
 	function pointCost(val) {
 		if (val <= 14) {
@@ -111,7 +109,6 @@ function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute, t
 		</div>
 	);
 }
-
 function	Attributes({rarity, updateRarity, provider}) {
 	const	[updateAttribute, set_updateAttribute] = useState({
 		strength: rarity?.attributes?.strength,
@@ -128,7 +125,7 @@ function	Attributes({rarity, updateRarity, provider}) {
 		if (updateAttribute.remainingPoints === 0) {
 			setAttributes({
 				provider,
-				contractAddress: RARITY_ATTR_ADDR,
+				contractAddress: process.env.RARITY_ATTR_ADDR,
 				_summoner: rarity.tokenID,
 				_str: updateAttribute.strength,
 				_dex: updateAttribute.dexterity,
@@ -236,7 +233,7 @@ function	Aventurers({rarity, provider, updateRarity}) {
 														onClick={async () => {
 															goAdventure({
 																provider,
-																contractAddress: RARITY_ADDR,
+																contractAddress: process.env.RARITY_ADDR,
 																tokenID: rarity.tokenID,
 															}, ({error, data}) => {
 																if (error) {
@@ -279,6 +276,12 @@ function	Aventurers({rarity, provider, updateRarity}) {
 						<div className={'font-title text-gray-800 text-sm w-32'}>{'LEVEL: '}</div>
 						<div className={'w-full'}>
 							<p className={'font-title'}>{rarity.level}</p>
+						</div>
+					</div>
+					<div className={'flex flex-row items-center w-full py-2'}>
+						<div className={'font-title text-gray-800 text-sm w-32'}>{'GOLD: '}</div>
+						<div className={'w-full'}>
+							<p className={'font-title'}>{`${rarity.gold.balance} Gold`}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
