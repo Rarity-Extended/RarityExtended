@@ -15,7 +15,8 @@ import	{ethers}						from	'ethers';
 import	{Provider, Contract}			from	'ethcall';
 import	useWeb3, {Web3ContextApp}		from	'contexts/useWeb3';
 import	Navbar							from	'components/Navbar';
-import	ABI								from	'utils/rarity.abi';
+import	RARITY_ABI						from	'utils/rarity.abi';
+import	RARITY_ATTR_ABI					from	'utils/rarityAttr.abi';
 
 import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
@@ -28,6 +29,7 @@ async function newEthCallProvider(provider) {
 	return ethcallProvider;
 }
 const	RARITY_ADDR = '0xce761D788DF608BD21bdd59d6f4B54b2e27F25Bb';
+const	RARITY_ATTR_ADDR = '0xb5f5af1087a8da62a23b08c00c6ec9af21f397a1';
 const	FMT_KEY = process.env.FMT_KEY;
 const	WEBSITE_URI = process.env.WEBSITE_URI;
 
@@ -46,18 +48,26 @@ function	AppWrapper(props) {
 	}, [active, address, chainID]);
 
 	function		prepareAdventurer(tokenID) {
-		const	rarity = new Contract(RARITY_ADDR, ABI);
+		const	rarity = new Contract(RARITY_ADDR, RARITY_ABI);
+		const	rarityAttr = new Contract(RARITY_ATTR_ADDR, RARITY_ATTR_ABI);
 		return [
 			rarity.ownerOf(tokenID),
 			rarity.summoner(tokenID),
+			rarityAttr.character_created(tokenID),
+			rarityAttr.ability_scores(tokenID),
 		];
 	}
 	async function	fetchAdventurer(calls) {
-		const	ethcallProvider = await newEthCallProvider(getProvider());
-		// const	ethcallProvider = await newEthCallProvider(new ethers.providers.JsonRpcProvider('http://localhost:8545'));
-		// ethcallProvider.multicallAddress = '0xc04d660976c923ddba750341fe5923e47900cf24';
-		const	callResult = await ethcallProvider.all(calls);
-		return (callResult);
+		if (Number(chainID) === 1337) {
+			const	ethcallProvider = await newEthCallProvider(new ethers.providers.JsonRpcProvider('http://localhost:8545'));
+			ethcallProvider.multicallAddress = '0xc04d660976c923ddba750341fe5923e47900cf24';
+			const	callResult = await ethcallProvider.all(calls);
+			return (callResult);
+		} else {
+			const	ethcallProvider = await newEthCallProvider(getProvider());
+			const	callResult = await ethcallProvider.all(calls);
+			return (callResult);
+		}
 	}
 
 	async function	fetchRarities(elements) {
@@ -69,22 +79,26 @@ function	AppWrapper(props) {
 		});
 
 		const	callResults = await fetchAdventurer(preparedCalls);
-		const	chunkedCallResult = chunk(callResults, 2);
+		const	chunkedCallResult = chunk(callResults, 4);
 		tokensIDs.forEach((tokenID, i) => {
+			const	[owner, adventurer, initialAttributes, abilityScores] = chunkedCallResult[i];
+
 			set_rarities((prev) => ({...prev, [tokenID]: {
 				tokenID: tokenID,
-				owner: chunkedCallResult[i][0],
-				xp: ethers.utils.formatEther(chunkedCallResult[i][1]['_xp']),
-				class: Number(chunkedCallResult[i][1]['_class']),
-				level: Number(chunkedCallResult[i][1]['_level']),
-				log: Number(chunkedCallResult[i][1]['_log']),
+				owner: owner,
+				xp: ethers.utils.formatEther(adventurer['_xp']),
+				class: Number(adventurer['_class']),
+				level: Number(adventurer['_level']),
+				log: Number(adventurer['_log']),
 				attributes: {
-					strength: 8,
-					dexterity: 8,
-					constitution: 8,
-					intelligence: 8,
-					wisdom: 8,
-					charisma: 8,
+					isInit: initialAttributes,
+					remainingPoints: initialAttributes ? -1 : 32,
+					strength: initialAttributes ? abilityScores['strength'] : 8,
+					dexterity: initialAttributes ? abilityScores['dexterity'] : 8,
+					constitution: initialAttributes ? abilityScores['constitution'] : 8,
+					intelligence: initialAttributes ? abilityScores['intelligence'] : 8,
+					wisdom: initialAttributes ? abilityScores['wisdom'] : 8,
+					charisma: initialAttributes ? abilityScores['charisma'] : 8,
 				}
 			}}));
 			set_rNonce(prev => prev + 1);
@@ -98,24 +112,26 @@ function	AppWrapper(props) {
 	}, [data]);
 
 	async function	updateRarity(tokenID) {
-		console.log(tokenID);
 		const	callResults = await fetchAdventurer(prepareAdventurer(tokenID));
 		const	chunkedCallResult = chunk(callResults, 2);
-		console.log(chunkedCallResult);
+		const	[owner, adventurer, initialAttributes, abilityScores] = chunkedCallResult[0];
+
 		set_rarities((prev) => ({...prev, [tokenID]: {
 			tokenID: tokenID,
-			owner: chunkedCallResult[0][0],
-			xp: ethers.utils.formatEther(chunkedCallResult[0][1]['_xp']),
-			class: Number(chunkedCallResult[0][1]['_class']),
-			level: Number(chunkedCallResult[0][1]['_level']),
-			log: Number(chunkedCallResult[0][1]['_log']),
+			owner: owner,
+			xp: ethers.utils.formatEther(adventurer['_xp']),
+			class: Number(adventurer['_class']),
+			level: Number(adventurer['_level']),
+			log: Number(adventurer['_log']),
 			attributes: {
-				strength: 8,
-				dexterity: 8,
-				constitution: 8,
-				intelligence: 8,
-				wisdom: 8,
-				charisma: 8,
+				isInit: initialAttributes,
+				remainingPoints: initialAttributes ? -1 : 32,
+				strength: initialAttributes ? abilityScores['strength'] : 8,
+				dexterity: initialAttributes ? abilityScores['dexterity'] : 8,
+				constitution: initialAttributes ? abilityScores['constitution'] : 8,
+				intelligence: initialAttributes ? abilityScores['intelligence'] : 8,
+				wisdom: initialAttributes ? abilityScores['wisdom'] : 8,
+				charisma: initialAttributes ? abilityScores['charisma'] : 8,
 			}
 		}}));
 		set_rNonce(prev => prev + 1);
@@ -179,7 +195,7 @@ function	AppWrapper(props) {
 			<main id={'app'} className={'p-4 relative'} style={{minHeight: '100vh'}}>
 				<Navbar router={router} />
 				<div className={'mb-16 relative'}>
-					{chainID >= 0 && chainID !== 250 ? (
+					{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
 						<div aria-label={'switchchain'} className={'flex w-full font-title text-lg text-center justify-center'}>
 							{'PLEASE SWITCH TO FANTOM NETWORK'}
 						</div>
