@@ -41,29 +41,33 @@ function	Navbar({router}) {
 				onClick={() => {deactivate(); onDesactivate();}}
 				suppressHydrationWarning
 				className={'inline-flex px-3 py-2 items-center leading-4 text-xs cursor-pointer whitespace-nowrap font-semibold font-title hover:underline'}>
-				<span className={'flex'}>{`${address.slice(0, 4)}...${address.slice(-4)}`}</span>
+				<span className={'flex md:hidden'}>{`${address.slice(0, 4)}}`}</span>
+				<span className={'hidden md:flex'}>{`${address.slice(0, 4)}...${address.slice(-4)}`}</span>
 			</p>
 		);
 	}
 	return (
-		<nav className={'w-full flex flex-row justify-start h-20 border-b-4 border-black mb-20'}>
+		<nav className={'w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black mb-20 pb-4'}>
 			<div className={'items-center justify-start flex flex-row w-full font-title text-lg uppercase'}>
 				{'Rarity Extended'}
+				<div className={'items-center justify-end flex-row flex md:hidden'}>
+					{renderWalletButton()}
+				</div>
 			</div>
-			<div className={'items-center justify-end flex flex-row w-full'}>
+			<div className={'items-center justify-center md:justify-end flex flex-row w-full mt-3 md:mt-0 -ml-6 md:ml-0'}>
 				<div className={'items-center justify-end flex-row flex mr-6'}>
 					<label>
 						<input type={'radio'} className={'nes-radio'} name={'tab'} checked={router.pathname === '/'} readOnly onClick={() => router.push('/')}/>
-						<span className={'font-title text-sm uppercase'}>{'Adventurers'}</span>
+						<span className={'font-title text-xs md:text-sm uppercase'}>{'Adventurers'}</span>
 					</label>
 				</div>
 				<div className={'items-center justify-end flex-row flex mr-6'}>
 					<label>
 						<input type={'radio'} className={'nes-radio'} name={'tab'} checked={router.pathname === '/tavern'} readOnly onClick={() => router.push('/tavern')}/>
-						<span className={'font-title text-sm uppercase'}>{'Tavern'}</span>
+						<span className={'font-title text-xs md:text-sm uppercase'}>{'Tavern'}</span>
 					</label>
 				</div>
-				<div className={'items-center justify-end flex-row flex border-black border-l-4 pl-6 ml-6'}>
+				<div className={'items-center justify-end flex-row border-black border-l-4 pl-6 ml-6 hidden md:flex'}>
 					{renderWalletButton()}
 				</div>
 			</div>

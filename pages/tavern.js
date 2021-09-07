@@ -73,7 +73,7 @@ function	Class({provider, rarityClass, fetchRarity, router}) {
 	const	[isLoading, set_isLoading] = useState(false);
 	return (
 		<div
-			className={'w-60 border-black border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-100 transition-colors cursor-pointer relative'}
+			className={'w-full md:w-60 border-black border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}
 			onClick={() => {
 				if (isLoading) {
 					return;
@@ -132,19 +132,19 @@ function	Index({fetchRarity, router}) {
 				</div>
 
 				<div className={`flex flex-row w-full flex-wrap items-center justify-center ${option !== 0 ? 'opacity-0 h-0': ''}`}>
-					<div className={'flex flex-row w-full justify-between mb-8'}>
+					<div className={'flex flex-col md:flex-row w-full justify-center md:justify-between mb-2 md:mb-8'}>
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Barbarian']} />
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Bard']} />
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Cleric']} />
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Druid']} />
 					</div>
-					<div className={'flex flex-row w-full justify-between mb-8'}>
+					<div className={'flex flex-col md:flex-row w-full justify-center md:justify-between mb-2 md:mb-8'}>
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Fighter']} />
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Monk']} />
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Paladin']} />
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Ranger']} />
 					</div>
-					<div className={'flex flex-row w-full justify-center space-x-6'}>
+					<div className={'flex flex-col md:flex-row w-full justify-center spamb-2 md:ce-x-6'}>
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Rogue']} />
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Sorcerer']} />
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Wizard']} />

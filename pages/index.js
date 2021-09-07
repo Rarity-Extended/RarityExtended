@@ -98,8 +98,8 @@ function	Aventurers({rarity, provider, updateRarity}) {
 					</div>
 				</div>
 			</div>
-			<div className={'flex flex-row w-full space-x-2'}>
-				<div className={'nes-container with-title w-2/3'}>
+			<div className={'flex flex-col md:flex-row w-full space-x-0 md:space-x-2'}>
+				<div className={'nes-container with-title w-full md:w-2/3'}>
 					<p className={'font-title title uppercase mb-1'}>{rarity.tokenID}</p>
 					<div className={'flex flex-row items-center w-full py-2'}>
 						<div className={'font-title text-gray-800 text-sm w-32'}>{'ID: '}</div>
@@ -129,7 +129,7 @@ function	Aventurers({rarity, provider, updateRarity}) {
 						</div>
 					</div>
 				</div>
-				<div className={'nes-container with-title w-1/3'}>
+				<div className={'nes-container with-title w-full md:w-1/3 -mt-1 md:mt-0'}>
 					<p className={'font-title title uppercase mb-1'}>{'Attributes'}</p>
 					<div className={'flex flex-row items-center w-full py-2'}>
 						<div className={'font-title text-gray-800 text-sm uppercase'}>{'strength: '}</div>
