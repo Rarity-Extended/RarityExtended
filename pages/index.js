@@ -281,7 +281,7 @@ function	Aventurers({rarity, provider, updateRarity}) {
 					<div className={'flex flex-row items-center w-full py-2'}>
 						<div className={'font-title text-gray-800 text-sm w-32'}>{'GOLD: '}</div>
 						<div className={'w-full'}>
-							<p className={'inline font-title uppercase'}>{`${rarity.gold.balance}`}</p>
+							<p className={'inline font-title uppercase'}>{`${Number(rarity?.gold?.balance || 0) === 0 ? '0' : rarity.gold.balance}`}</p>
 							&nbsp;
 							<p className={'inline font-title text-xss'}>{`(${Number(rarity?.gold?.claimable || 0).toFixed(0)} claimable)`}</p>
 						</div>
