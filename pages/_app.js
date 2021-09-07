@@ -216,6 +216,10 @@ function	AppWrapper(props) {
 							{'Rarity Manifested'}
 						</a>
 						{' - '}
+						<a href={'https://github.com/TBouder/RarityExtended'} target={'_blank'} rel={'noreferrer'} className={'hover:underline'}>
+							{'Source code'}
+						</a>
+						{' - '}
 						<a href={'https://andrecronje.medium.com/loot-rarity-d341faa4485c'} target={'_blank'} rel={'noreferrer'} className={'hover:underline'}>
 							{'Loot & Rarity'}
 						</a>
