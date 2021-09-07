@@ -1,14 +1,14 @@
 /******************************************************************************
-**	@Author:				The Ape Community
-**	@Twitter:				@ape_tax
-**	@Date:					Wednesday August 11th 2021
+**	@Author:				Rarity Extended
+**	@Twitter:				@MajorTom_eth
+**	@Date:					Tuesday August 31st 2021
 **	@Filename:				_app.js
 ******************************************************************************/
 
 import	React							from	'react';
 import	Head							from	'next/head';
 import	{DefaultSeo}					from	'next-seo';
-import	useSWR							from	'swr';
+import	useSWR, {useSWRConfig} 			from	'swr';
 import	{Web3ReactProvider}				from	'@web3-react-fork/core';
 import	{ethers}						from	'ethers';
 import	{Provider, Contract}			from	'ethcall';
@@ -32,10 +32,12 @@ const	WEBSITE_URI = process.env.WEBSITE_URI;
 
 function	AppWrapper(props) {
 	const	{Component, pageProps, router} = props;
+	const	{mutate} = useSWRConfig();
 	const	{active, address, getProvider} = useWeb3();
 	const	[rNonce, set_rNonce] = React.useState(0);
 	const	[rarities, set_rarities] = React.useState({});
-	const	{data} = useSWR(active && address ? `https://api.ftmscan.com/api?module=account&action=tokennfttx&contractaddress=${RARITY_ADDR}&address=${address}&apikey=${FMT_KEY}` : null, fetcher, {revalidateOnMount: true, revalidateOnReconnect: true, refreshInterval: 30000, shouldRetryOnError: true, dedupingInterval: 1000, focusThrottleInterval: 5000});
+	const	getRaritiesRequestURI = `https://api.ftmscan.com/api?module=account&action=tokennfttx&contractaddress=${RARITY_ADDR}&address=${address}&apikey=${FMT_KEY}`;
+	const	{data} = useSWR(active && address ? getRaritiesRequestURI : null, fetcher, {revalidateOnMount: true, revalidateOnReconnect: true, refreshInterval: 30000, shouldRetryOnError: true, dedupingInterval: 1000, focusThrottleInterval: 5000});
 
 	function		prepareAdventurer(tokenID) {
 		const	rarity = new Contract(RARITY_ADDR, ABI);
@@ -52,39 +54,40 @@ function	AppWrapper(props) {
 		return (callResult);
 	}
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	React.useEffect(async () => {
-		if (data?.result) {
-			const	preparedCalls = [];
-			const	tokensIDs = [];
-			data?.result?.forEach((token) => {
-				preparedCalls.push(...prepareAdventurer(token.tokenID));
-				tokensIDs.push(token.tokenID);
-			});
-			// preparedCalls.push(...prepareAdventurer(441099)); tokensIDs.push(441099);
-			// preparedCalls.push(...prepareAdventurer(441009)); tokensIDs.push(441009);
+	async function	fetchRarities(elements) {
+		const	preparedCalls = [];
+		const	tokensIDs = [];
+		elements?.forEach((token) => {
+			preparedCalls.push(...prepareAdventurer(token.tokenID));
+			tokensIDs.push(token.tokenID);
+		});
 
-			const	callResults = await fetchAdventurer(preparedCalls);
-			const	chunkedCallResult = chunk(callResults, 2);
-			tokensIDs.forEach((tokenID, i) => {
-				set_rarities((prev) => ({...prev, [tokenID]: {
-					tokenID: tokenID,
-					owner: chunkedCallResult[i][0],
-					xp: ethers.utils.formatEther(chunkedCallResult[i][1]['_xp']),
-					class: Number(chunkedCallResult[i][1]['_class']),
-					level: Number(chunkedCallResult[i][1]['_level']),
-					log: Number(chunkedCallResult[i][1]['_log']),
-					attributes: {
-						strength: 8,
-						dexterity: 8,
-						constitution: 8,
-						intelligence: 8,
-						wisdom: 8,
-						charisma: 8,
-					}
-				}}));
-				set_rNonce(prev => prev + 1);
-			});
+		const	callResults = await fetchAdventurer(preparedCalls);
+		const	chunkedCallResult = chunk(callResults, 2);
+		tokensIDs.forEach((tokenID, i) => {
+			set_rarities((prev) => ({...prev, [tokenID]: {
+				tokenID: tokenID,
+				owner: chunkedCallResult[i][0],
+				xp: ethers.utils.formatEther(chunkedCallResult[i][1]['_xp']),
+				class: Number(chunkedCallResult[i][1]['_class']),
+				level: Number(chunkedCallResult[i][1]['_level']),
+				log: Number(chunkedCallResult[i][1]['_log']),
+				attributes: {
+					strength: 8,
+					dexterity: 8,
+					constitution: 8,
+					intelligence: 8,
+					wisdom: 8,
+					charisma: 8,
+				}
+			}}));
+			set_rNonce(prev => prev + 1);
+		});
+	}
+
+	React.useEffect(() => {
+		if (data?.result) {
+			fetchRarities(data?.result);
 		}
 	}, [data]);
 
@@ -103,6 +106,12 @@ function	AppWrapper(props) {
 		}}));
 		set_rNonce(prev => prev + 1);
 	}
+
+	async function	fetchRarity() {
+		const {result} = await mutate(getRaritiesRequestURI);
+		await fetchRarities(result);
+	}
+	fetchRarity;
 
 	return (
 		<>
@@ -150,13 +159,14 @@ function	AppWrapper(props) {
 				}} />
 			<main id={'app'} className={'p-4 relative'} style={{minHeight: '100vh'}}>
 				<Navbar router={router} />
-				<div className={'mb-8'}>
+				<div className={'mb-16'}>
 					<Component
 						key={router.route}
 						element={props.element}
 						router={props.router}
 						rarities={rarities}
 						updateRarity={updateRarity}
+						fetchRarity={fetchRarity}
 						rNonce={rNonce}
 						{...pageProps} />
 				</div>

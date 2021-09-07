@@ -53,13 +53,13 @@ function	Navbar({router}) {
 			<div className={'items-center justify-end flex flex-row w-full'}>
 				<div className={'items-center justify-end flex-row flex mr-6'}>
 					<label>
-						<input type={'radio'} className={'nes-radio'} name={'tab'} checked={router.pathname === '/'} onClick={() => router.push('/')}/>
+						<input type={'radio'} className={'nes-radio'} name={'tab'} checked={router.pathname === '/'} readOnly onClick={() => router.push('/')}/>
 						<span className={'font-title text-sm uppercase'}>{'Adventurers'}</span>
 					</label>
 				</div>
 				<div className={'items-center justify-end flex-row flex mr-6'}>
 					<label>
-						<input type={'radio'} className={'nes-radio'} name={'tab'} checked={router.pathname === '/tavern'} onClick={() => router.push('/tavern')}/>
+						<input type={'radio'} className={'nes-radio'} name={'tab'} checked={router.pathname === '/tavern'} readOnly onClick={() => router.push('/tavern')}/>
 						<span className={'font-title text-sm uppercase'}>{'Tavern'}</span>
 					</label>
 				</div>

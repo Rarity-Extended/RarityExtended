@@ -31,13 +31,13 @@ const	classMapping = [
 
 const	classMappingImg = [
 	'',
-	'/fighter.png',
+	'/barbarian.png',
 	'/bard.png',
 	'/cleric.png',
 	'/druid.png',
 	'/fighter.png',
-	'/unset.png',
-	'/fighter.png',
+	'/monk.png',
+	'/paladin.png',
 	'/ranger.png',
 	'/rogue.png',
 	'/sorcerer.png',
