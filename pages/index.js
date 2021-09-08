@@ -9,7 +9,7 @@ import	React, {useState}				from	'react';
 import	Image							from	'next/image';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
-import	{goAdventure, setAttributes}	from	'utils/actions';
+import	{goAdventure, levelUp, setAttributes}	from	'utils/actions';
 import	useWeb3							from	'contexts/useWeb3';
 
 dayjs.extend(relativeTime);
@@ -68,9 +68,9 @@ function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute, t
 
 	return (
 		<div className={'flex flex-row items-center w-full py-2'}>
-			<div className={'font-title text-gray-800 text-sm uppercase'}>{`${name}: `}</div>
+			<div className={'text-gray-800 text-sm'}>{`${name}: `}</div>
 			<div className={'w-full text-right'}>
-				<div className={'font-title uppercase flex flex-row items-center justify-end'}>
+				<div className={'flex flex-row items-center justify-end'}>
 					<div 
 						onClick={() => {
 							if (isInit || updateAttribute[name] === value || !toUpdate)
@@ -148,9 +148,9 @@ function	Attributes({rarity, updateRarity, provider}) {
 
 	return (
 		<div className={'nes-container with-title w-full md:w-1/3 -mt-1 md:mt-0'}>
-			<div className={'title mb-1 font-title uppercase'}>{'Attributes'}</div>
+			<div className={'title mb-1'}>{'Attributes'}</div>
 			{updateAttribute.remainingPoints >= 0 ? (
-				<p onClick={buyPoints} className={`font-title uppercase text-xss border-t-2 border-b-2 border-black py-1 my-2 ${updateAttribute.remainingPoints === 0 ? 'animate-pulse text-center cursor-pointer hover:bg-black hover:animate-none hover:text-white' : ''}`}>
+				<p onClick={buyPoints} className={` text-xss border-t-2 border-b-2 border-black py-1 my-2 ${updateAttribute.remainingPoints === 0 ? 'animate-pulse text-center cursor-pointer hover:bg-black hover:animate-none hover:text-white' : ''}`}>
 					{updateAttribute.remainingPoints === 0 ?
 						'▶ Save you stats ! ◀'
 						:
@@ -203,7 +203,6 @@ function	Attributes({rarity, updateRarity, provider}) {
 		</div>
 	);
 }
-
 function	Aventurers({rarity, provider, updateRarity, chainTime}) {
 	return (
 		<div className={'w-full'}>
@@ -218,7 +217,7 @@ function	Aventurers({rarity, provider, updateRarity, chainTime}) {
 					</div>
 					<div>
 						<section className={'message -left -mt-16 md:mt-0'}>
-							<div className={'nes-balloon from-left font-title text-xs md:text-base'}>
+							<div className={'nes-balloon from-left text-xs md:text-base'}>
 								{
 									dayjs(new Date(rarity.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000))) ?
 										<p>{`Next adventure ready ${dayjs(new Date(rarity.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}</p> :
@@ -241,7 +240,6 @@ function	Aventurers({rarity, provider, updateRarity, chainTime}) {
 																}
 																updateRarity(data);
 															});
-
 														}} />
 													<span>{'Yes'}</span>
 												</label>
@@ -259,38 +257,56 @@ function	Aventurers({rarity, provider, updateRarity, chainTime}) {
 			</div>
 			<div className={'flex flex-col md:flex-row w-full space-x-0 md:space-x-2'}>
 				<div className={'nes-container with-title w-full md:w-2/3'}>
-					<p className={'font-title title uppercase mb-1'}>{rarity.tokenID}</p>
+					<p className={'title mb-1'}>{rarity.tokenID}</p>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'font-title text-gray-800 text-sm w-32'}>{'ID: '}</div>
+						<div className={'text-gray-800 text-sm w-32'}>{'ID:'}</div>
 						<div className={'w-full'}>
-							<p className={'font-title uppercase'}>{rarity.tokenID}</p>
+							<p>{rarity.tokenID}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'font-title text-gray-800 text-sm w-32'}>{'CLASS: '}</div>
+						<div className={'text-gray-800 text-sm w-32'}>{'CLASS:'}</div>
 						<div className={'w-full'}>
-							<p className={'font-title uppercase'}>{classMapping[rarity.class]}</p>
+							<p>{classMapping[rarity.class]}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'font-title text-gray-800 text-sm w-32'}>{'LEVEL: '}</div>
+						<div className={'text-gray-800 text-sm w-32'}>{'LEVEL:'}</div>
 						<div className={'w-full'}>
-							<p className={'font-title'}>{rarity.level}</p>
+							<p>{rarity.level}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'font-title text-gray-800 text-sm w-32'}>{'GOLD: '}</div>
+						<div className={'text-gray-800 text-sm w-32'}>{'GOLD:'}</div>
 						<div className={'w-full'}>
-							<p className={'inline font-title uppercase'}>{`${Number(rarity?.gold?.balance || 0) === 0 ? '0' : rarity.gold.balance}`}</p>
+							<p className={'inline'}>{`${Number(rarity?.gold?.balance || 0) === 0 ? '0' : rarity.gold.balance}`}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'font-title text-gray-800 text-sm w-32'}>{'XP: '}</div>
+						<div className={'text-gray-800 text-sm w-32'}>{'XP:'}</div>
 						<div className={'w-full'}>
-							<progress
-								className={'nes-progress is-primary w-full'}
-								value={rarity.xp}
-								max={rarity.level * 1000} />
+							<div
+								onClick={() => {
+									if (rarity.xp >= (rarity.level * 1000)) {
+										levelUp({
+											provider,
+											contractAddress: process.env.RARITY_ADDR,
+											tokenID: rarity.tokenID,
+										}, ({error, data}) => {
+											if (error) {
+												return console.error(error);
+											}
+											updateRarity(data);
+										});
+									}
+								}}
+								className={`nes-progress w-full relative ${rarity.xp >= (rarity.level * 1000) ? 'cursor-pointer' : ''}`}>
+								<progress
+									className={`progressbar ${rarity.xp >= (rarity.level * 1000) ? 'is-warning animate-pulse' : 'is-primary'} w-full absolute inset-0`}
+									value={rarity.xp}
+									max={rarity.level * 1000} />
+								<p className={`text-sm absolute inset-0 w-full text-center ${rarity.xp >= (rarity.level * 1000) ? '' : 'hidden'}`}>{'LEVEL-UP!'}</p>
+							</div>
 						</div>
 					</div>
 				</div>
