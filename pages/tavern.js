@@ -120,30 +120,40 @@ function	Class({provider, rarityClass, fetchRarity, router}) {
 
 function	Index({fetchRarity, router}) {
 	const	{provider} = useWeb3();
-	const	[option, set_option] = useState(-1);
+	const	[option, set_option] = useState(0);
 
 	return (
 		<section className={'mt-12'}>
-
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<h1 className={'text-lg  justify-center mb-4'}>{'Hello traveler! Welcome the Facu\'s Tavern.'}</h1>
-				<p className={'text-base'}>{'What do you want to do ?'}</p>
-				<div className={'nes-container mt-6   text-sm space-y-8 mb-8'}>
-					<div>
-						<label>
-							<input type={'radio'} className={'nes-radio'} name={'what-to-do'} readOnly onClick={() => set_option(0)} checked={option === 0} />
-							<span>{'Recruit a new adventurer'}</span>
-						</label>
+				<div className={'flex flex-row items-center'}>
+					<div className={'w-60 mr-16'}>
+						<Image
+							src={'/avatar/banker.png'}
+							loading={'eager'}
+							quality={100}
+							width={240}
+							height={240} />
 					</div>
-					<div>
-						<label>
-							<input type={'radio'} className={'nes-radio'} name={'what-to-do'} readOnly onClick={() => set_option(1)} checked={option === 1}/>
-							<span>{'Nothing'}</span>
-						</label>
+					<h1 className={'text-lg whitespace-pre-line justify-center mb-4'}>{'Hello traveler! Welcome to Facu\'s Tavern.\nWhat do you want to do ?'}</h1>
+				</div>
+				<div>
+					<div className={'nes-container mt-6 text-sm space-y-8 mb-8'}>
+						<div>
+							<label>
+								<input type={'radio'} className={'nes-radio'} name={'what-to-do'} readOnly onClick={() => set_option(1)} checked={option === 1} />
+								<span>{'Recruit a new adventurer'}</span>
+							</label>
+						</div>
+						<div>
+							<label>
+								<input type={'radio'} className={'nes-radio'} name={'what-to-do'} readOnly onClick={() => set_option(-1)} checked={option === -1}/>
+								<span>{'Nothing'}</span>
+							</label>
+						</div>
 					</div>
 				</div>
 
-				<div className={`flex flex-row w-full flex-wrap items-center justify-center ${option !== 0 ? 'opacity-0 h-0': ''}`}>
+				<div className={`flex flex-row w-full flex-wrap items-center justify-center ${option !== 1 ? 'opacity-0 h-0': ''}`}>
 					<div className={'flex flex-col md:flex-row w-full justify-center md:justify-between mb-2 md:mb-8'}>
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Barbarian']} />
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Bard']} />
@@ -163,7 +173,6 @@ function	Index({fetchRarity, router}) {
 					</div>
 				</div>
 			</div>
-
 
 		</section>
 	);
