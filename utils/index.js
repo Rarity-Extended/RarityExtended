@@ -45,3 +45,7 @@ export function	formatAmount(amount, decimals = 2) {
 export function	formatValue(value, decimals = 2) {
 	return (new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: decimals}).format(value));
 }
+
+export const chunk = (arr, size) => arr.reduce((acc, e, i) => (i % size ? acc[acc.length - 1].push(e) : acc.push([e]), acc), []);
+
+export const fetcher = (...args) => fetch(...args).then(res => res.json());

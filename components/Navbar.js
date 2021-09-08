@@ -41,14 +41,14 @@ function	Navbar({router}) {
 				onClick={() => {deactivate(); onDesactivate();}}
 				suppressHydrationWarning
 				className={'inline-flex px-3 py-2 items-center leading-4 text-xs cursor-pointer whitespace-nowrap font-semibold font-title hover:underline'}>
-				<span className={'flex md:hidden'}>{`${address.slice(0, 4)}}`}</span>
+				<span className={'flex md:hidden'}>{`${address.slice(0, 4)}`}</span>
 				<span className={'hidden md:flex'}>{`${address.slice(0, 4)}...${address.slice(-4)}`}</span>
 			</p>
 		);
 	}
 	return (
 		<nav className={'w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black mb-20 pb-4'}>
-			<div className={'items-center justify-start flex flex-row w-full font-title text-lg uppercase'}>
+			<div className={'items-center justify-start flex flex-row whitespace-normal md:whitespace-nowrap font-title text-lg uppercase'}>
 				{'Rarity Extended'}
 				<div className={'items-center justify-end flex-row flex md:hidden'}>
 					{renderWalletButton()}

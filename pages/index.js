@@ -44,8 +44,6 @@ const	classMappingImg = [
 	'/wizard.png',
 ];
 
-const		RARITY_ADDR = '0xce761D788DF608BD21bdd59d6f4B54b2e27F25Bb';
-const		RARITY_ATTR_ADDR = '0xB5F5AF1087A8DA62A23b08C00C6ec9af21F397a1';
 function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute, toUpdate}) {
 	function pointCost(val) {
 		if (val <= 14) {
@@ -111,7 +109,6 @@ function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute, t
 		</div>
 	);
 }
-
 function	Attributes({rarity, updateRarity, provider}) {
 	const	[updateAttribute, set_updateAttribute] = useState({
 		strength: rarity?.attributes?.strength,
@@ -128,7 +125,7 @@ function	Attributes({rarity, updateRarity, provider}) {
 		if (updateAttribute.remainingPoints === 0) {
 			setAttributes({
 				provider,
-				contractAddress: RARITY_ATTR_ADDR,
+				contractAddress: process.env.RARITY_ATTR_ADDR,
 				_summoner: rarity.tokenID,
 				_str: updateAttribute.strength,
 				_dex: updateAttribute.dexterity,
@@ -207,7 +204,7 @@ function	Attributes({rarity, updateRarity, provider}) {
 	);
 }
 
-function	Aventurers({rarity, provider, updateRarity}) {
+function	Aventurers({rarity, provider, updateRarity, chainTime}) {
 	return (
 		<div className={'w-full'}>
 			<div className={'flex flex-row w-full mb-6'}>
@@ -223,8 +220,8 @@ function	Aventurers({rarity, provider, updateRarity}) {
 						<section className={'message -left -mt-16 md:mt-0'}>
 							<div className={'nes-balloon from-left font-title text-xs md:text-base'}>
 								{
-									dayjs(new Date(rarity.log * 1000)).isAfter(dayjs()) ?
-										<p>{`Next adventure ready ${dayjs(new Date(rarity.log * 1000)).from(dayjs())}`}</p> :
+									dayjs(new Date(rarity.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000))) ?
+										<p>{`Next adventure ready ${dayjs(new Date(rarity.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}</p> :
 										<div>
 											{'Would you like to go in an adventure ?'}
 											<div className={'mt-6'}>
@@ -236,7 +233,7 @@ function	Aventurers({rarity, provider, updateRarity}) {
 														onClick={async () => {
 															goAdventure({
 																provider,
-																contractAddress: RARITY_ADDR,
+																contractAddress: process.env.RARITY_ADDR,
 																tokenID: rarity.tokenID,
 															}, ({error, data}) => {
 																if (error) {
@@ -282,6 +279,12 @@ function	Aventurers({rarity, provider, updateRarity}) {
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
+						<div className={'font-title text-gray-800 text-sm w-32'}>{'GOLD: '}</div>
+						<div className={'w-full'}>
+							<p className={'inline font-title uppercase'}>{`${Number(rarity?.gold?.balance || 0) === 0 ? '0' : rarity.gold.balance}`}</p>
+						</div>
+					</div>
+					<div className={'flex flex-row items-center w-full py-2'}>
 						<div className={'font-title text-gray-800 text-sm w-32'}>{'XP: '}</div>
 						<div className={'w-full'}>
 							<progress
@@ -298,14 +301,19 @@ function	Aventurers({rarity, provider, updateRarity}) {
 }
 
 function	Index({rarities = [], updateRarity}) {
-	const	{provider} = useWeb3();
+	const	{provider, chainTime} = useWeb3();
 
 	return (
 		<section className={'mt-12'}>
 			<div className={'flex flex-col space-y-32 max-w-screen-lg w-full mx-auto'}>
 				{
 					Object.values(rarities)?.map((rarity) => (
-						<Aventurers rarity={rarity} key={rarity.tokenID} provider={provider} updateRarity={updateRarity} />
+						<Aventurers
+							key={rarity.tokenID}
+							rarity={rarity}
+							provider={provider}
+							updateRarity={updateRarity}
+							chainTime={chainTime} />
 					))
 				}
 			</div>
