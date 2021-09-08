@@ -109,8 +109,8 @@ function	Class({provider, rarityClass, fetchRarity, router}) {
 				quality={100}
 				width={240}
 				height={240} />
-			<p className={'text-sm  justify-center group-hover:underline'}>{rarityClass.name}</p>
-			<p className={'text-xss  justify-center text-center mt-1'}>{rarityClass.description}</p>
+			<p className={'text-base md:text-sm justify-center group-hover:underline'}>{rarityClass.name}</p>
+			<p className={'text-xs md:text-xss justify-center text-center mt-1'}>{rarityClass.description}</p>
 			{isLoading ? <div className={'absolute inset-0 backdrop-blur-3xl bg-white bg-opacity-40 cursor-not-allowed'}>
 				<div className={'loader'} />
 			</div> : null}
@@ -123,10 +123,10 @@ function	Index({fetchRarity, router}) {
 	const	[option, set_option] = useState(0);
 
 	return (
-		<section className={'mt-12'}>
+		<section className={'mt-0 md:mt-12'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<div className={'flex flex-row items-center'}>
-					<div className={'w-60 mr-16'}>
+				<div className={'flex flex-col md:flex-row items-center md:items-center'}>
+					<div className={'w-auto md:w-60 mr-0 md:mr-16'}>
 						<Image
 							src={'/avatar/banker.png'}
 							loading={'eager'}
@@ -134,14 +134,17 @@ function	Index({fetchRarity, router}) {
 							width={240}
 							height={240} />
 					</div>
-					<h1 className={'text-lg whitespace-pre-line justify-center mb-4'}>{'Hello traveler! Welcome to Facu\'s Tavern.\nWhat do you want to do ?'}</h1>
+					<h1 className={'text-sm md:text-lg whitespace-pre-line justify-center mb-4'}>{'Hello traveler! Welcome to Facu\'s Tavern.\nWhat do you want to do ?'}</h1>
 				</div>
 				<div>
 					<div className={'nes-container mt-6 text-sm space-y-8 mb-8'}>
 						<div>
 							<label>
 								<input type={'radio'} className={'nes-radio'} name={'what-to-do'} readOnly onClick={() => set_option(1)} checked={option === 1} />
-								<span>{'Recruit a new adventurer'}</span>
+								<span className={'text-sm'}>
+									<span className={'text-xs hidden md:inline'}>{'Recruit a new adventurer'}</span>
+									<span className={'text-xs inline md:hidden'}>{'Recruit an adventurer'}</span>
+								</span>
 							</label>
 						</div>
 						<div>
@@ -153,7 +156,7 @@ function	Index({fetchRarity, router}) {
 					</div>
 				</div>
 
-				<div className={`flex flex-row w-full flex-wrap items-center justify-center ${option !== 1 ? 'opacity-0 h-0': ''}`}>
+				<div className={`flex flex-row w-full flex-wrap items-center justify-center ${option !== 1 ? 'opacity-0 h-0 max-h-0 overflow-hidden': ''}`}>
 					<div className={'flex flex-col md:flex-row w-full justify-center md:justify-between mb-2 md:mb-8'}>
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Barbarian']} />
 						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Bard']} />

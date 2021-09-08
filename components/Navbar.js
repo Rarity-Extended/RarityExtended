@@ -57,17 +57,23 @@ function	Navbar({router}) {
 					{renderWalletButton()}
 				</div>
 			</div>
-			<div className={'items-center justify-center md:justify-end flex flex-row w-full mt-3 md:mt-0 -ml-6 md:ml-0'}>
+			<div className={'items-center justify-start md:justify-end flex flex-row w-full mt-3 md:mt-0'}>
 				<div className={'items-center justify-end flex-row flex mr-6'}>
 					<label>
 						<input type={'radio'} className={'nes-radio'} name={'tab'} checked={router.pathname === '/'} readOnly onClick={() => router.push('/')}/>
-						<span className={'text-xs md:text-sm'}>{'Adventurers'}</span>
+						<span className={'text-sm'}>
+							<span className={'text-xs hidden md:inline'}>{'Adventurers'}</span>
+							<span className={'text-xs inline md:hidden'}>{'Adv'}</span>
+						</span>
 					</label>
 				</div>
 				<div className={'items-center justify-end flex-row flex mr-6'}>
 					<label>
 						<input type={'radio'} className={'nes-radio'} name={'tab'} checked={router.pathname === '/tavern'} readOnly onClick={() => router.push('/tavern')}/>
-						<span className={'text-xs md:text-sm'}>{'Tavern'}</span>
+						<span className={'text-sm'}>
+							<span className={'text-xs hidden md:inline'}>{'Tavern'}</span>
+							<span className={'text-xs inline md:hidden'}>{'Tavern'}</span>
+						</span>
 					</label>
 				</div>
 				<div className={'items-center justify-end flex-row border-black border-l-4 pl-6 ml-6 hidden md:flex'}>
