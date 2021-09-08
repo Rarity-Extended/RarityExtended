@@ -12,7 +12,7 @@ import	{ethers}												from	'ethers';
 import	{Provider, Contract}									from	'ethcall';
 import	useSWR, {useSWRConfig} 									from	'swr';
 
-import	{chunk, fetcher}										from	'utils';
+import	{chunk, fetcher, toAddress}										from	'utils';
 import	RARITY_ABI												from	'utils/rarity.abi';
 import	RARITY_ATTR_ABI											from	'utils/rarityAttr.abi';
 import	RARITY_GOLD_ABI											from	'utils/rarityGold.abi';
@@ -27,7 +27,13 @@ async function newEthCallProvider(provider) {
 
 export const RarityContextApp = ({children}) => {
 	const	{active, address, chainID, provider} = useWeb3();
-	const	getRaritiesRequestURI = `https://api.ftmscan.com/api?module=account&action=tokennfttx&contractaddress=${process.env.RARITY_ADDR}&address=${address}&apikey=${process.env.FMT_KEY}`;
+	const	getRaritiesRequestURI = `
+		https://api.ftmscan.com/api
+		?module=account
+		&action=tokennfttx
+		&contractaddress=${process.env.RARITY_ADDR}
+		&address=${address}
+		&apikey=${process.env.FMT_KEY}`;
 
 	const	{mutate} = useSWRConfig();
 	const	{data} = useSWR(active && address ? getRaritiesRequestURI : null, fetcher);
@@ -102,6 +108,9 @@ export const RarityContextApp = ({children}) => {
 		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold] = multicallResult;
 		const	[claimableGold] = callResult;
 
+		if (toAddress(owner) !== toAddress(address)) {
+			return;
+		}
 		set_rarities((prev) => ({...prev, [tokenID]: {
 			tokenID: tokenID,
 			owner: owner,
@@ -140,7 +149,7 @@ export const RarityContextApp = ({children}) => {
 			tokensIDs.push(token.tokenID);
 		});
 
-		// preparedCalls.push(...prepareAdventurer(29010)); tokensIDs.push(29010);
+		// preparedCalls.push(...prepareAdventurer(29010)); preparedExtraCalls.push(...prepareAdventurerExtra(29010)); tokensIDs.push(29010);
 
 		const	callResults = await fetchAdventurer(preparedCalls);
 		const	chunkedCallResult = chunk(callResults, 5);
