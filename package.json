@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.1",
+    "@tailwindcss/aspect-ratio": "^0.2.1",
     "@tailwindcss/forms": "^0.3.3",
     "@tailwindcss/typography": "^0.4.1",
     "@walletconnect/qrcode-modal": "^1.6.5",
