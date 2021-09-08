@@ -302,132 +302,111 @@
 	}
   }
   
-  .nes-progress::-webkit-progress-bar {
+	.progressbar::-webkit-progress-bar,
+	.nes-progress::-webkit-progress-bar {
 	background-color: #fff;
   }
   
-  .nes-progress::-webkit-progress-value {
+	.progressbar::-webkit-progress-value,
+	.nes-progress::-webkit-progress-value {
 	background-color: #212529;
   }
   
-  .nes-progress::-moz-progress-bar {
+	.progressbar::-moz-progress-bar,
+	.nes-progress::-moz-progress-bar {
 	background-color: #212529;
   }
   
-  .nes-progress::-ms-fill {
+	.progressbar::-ms-fill,
+	.nes-progress::-ms-fill {
 	background-color: #212529;
 	border: none;
   }
-  
-  .nes-progress.is-rounded {
-	border-image-slice: 3;
-	border-image-width: 3;
-	border-image-repeat: stretch;
-	border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="8" height="8" xmlns="http://www.w3.org/2000/svg"><path d="M3 1 h1 v1 h-1 z M4 1 h1 v1 h-1 z M2 2 h1 v1 h-1 z M5 2 h1 v1 h-1 z M1 3 h1 v1 h-1 z M6 3 h1 v1 h-1 z M1 4 h1 v1 h-1 z M6 4 h1 v1 h-1 z M2 5 h1 v1 h-1 z M5 5 h1 v1 h-1 z M3 6 h1 v1 h-1 z M4 6 h1 v1 h-1 z" fill="rgb(33,37,41)" /></svg>');
-	border-image-outset: 2;
-  }
-  
-  @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
-	.nes-progress.is-rounded {
-	  border-image-repeat: space;
-	}
-  }
-  
-  @supports (-moz-appearance: meterbar) {
-	.nes-progress.is-rounded {
-	  border-image-repeat: stretch;
-	}
-  }
-  
-  .nes-progress.is-primary::-webkit-progress-bar {
+   
+	.progressbar.is-primary::-webkit-progress-bar,
+	.nes-progress.is-primary::-webkit-progress-bar {
 	background-color: #fff;
   }
   
-  .nes-progress.is-primary::-webkit-progress-value {
+	.progressbar.is-primary::-webkit-progress-value,
+	.nes-progress.is-primary::-webkit-progress-value {
 	background-color: #209cee;
   }
   
-  .nes-progress.is-primary::-moz-progress-bar {
+	.progressbar.is-primary::-moz-progress-bar,
+	.nes-progress.is-primary::-moz-progress-bar {
 	background-color: #209cee;
   }
   
-  .nes-progress.is-primary::-ms-fill {
+	.progressbar.is-primary::-ms-fill,
+	.nes-progress.is-primary::-ms-fill {
 	background-color: #209cee;
 	border: none;
   }
   
-  .nes-progress.is-success::-webkit-progress-bar {
+	.progressbar.is-success::-webkit-progress-bar,
+	.nes-progress.is-success::-webkit-progress-bar {
 	background-color: #fff;
   }
   
-  .nes-progress.is-success::-webkit-progress-value {
+	.progressbar.is-success::-webkit-progress-value,
+	.nes-progress.is-success::-webkit-progress-value {
 	background-color: #92cc41;
   }
   
-  .nes-progress.is-success::-moz-progress-bar {
+	.progressbar.is-success::-moz-progress-bar,
+	.nes-progress.is-success::-moz-progress-bar {
 	background-color: #92cc41;
   }
   
-  .nes-progress.is-success::-ms-fill {
+	.progressbar.is-success::-ms-fill,
+	.nes-progress.is-success::-ms-fill {
 	background-color: #92cc41;
 	border: none;
   }
   
-  .nes-progress.is-warning::-webkit-progress-bar {
+	.progressbar.is-warning::-webkit-progress-bar,
+	.nes-progress.is-warning::-webkit-progress-bar {
 	background-color: #fff;
   }
   
-  .nes-progress.is-warning::-webkit-progress-value {
+	.progressbar.is-warning::-webkit-progress-value,
+	.nes-progress.is-warning::-webkit-progress-value {
 	background-color: #f7d51d;
   }
   
-  .nes-progress.is-warning::-moz-progress-bar {
+	.progressbar.is-warning::-moz-progress-bar,
+	.nes-progress.is-warning::-moz-progress-bar {
 	background-color: #f7d51d;
   }
   
-  .nes-progress.is-warning::-ms-fill {
+	.progressbar.is-warning::-ms-fill,
+	.nes-progress.is-warning::-ms-fill {
 	background-color: #f7d51d;
 	border: none;
   }
   
-  .nes-progress.is-error::-webkit-progress-bar {
+	.progressbar.is-error::-webkit-progress-bar,
+	.nes-progress.is-error::-webkit-progress-bar {
 	background-color: #fff;
   }
   
-  .nes-progress.is-error::-webkit-progress-value {
+	.progressbar.is-error::-webkit-progress-value,
+	.nes-progress.is-error::-webkit-progress-value {
 	background-color: #e76e55;
   }
   
-  .nes-progress.is-error::-moz-progress-bar {
+	.progressbar.is-error::-moz-progress-bar,
+	.nes-progress.is-error::-moz-progress-bar {
 	background-color: #e76e55;
   }
   
-  .nes-progress.is-error::-ms-fill {
+	.progressbar.is-error::-ms-fill,
+	.nes-progress.is-error::-ms-fill {
 	background-color: #e76e55;
 	border: none;
   }
   
-  .nes-progress.is-pattern::-webkit-progress-value {
-	background-color: #212529;
-	background-image: linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff), linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
-	background-position: 0 0, 10px 10px;
-	background-size: 20px 20px;
-  }
-  
-  .nes-progress.is-pattern::-moz-progress-bar {
-	background-color: #212529;
-	background-image: -moz-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff), -moz-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
-	background-position: 0 0, 10px 10px;
-	background-size: 20px 20px;
-  }
-  
-  .nes-progress.is-pattern::-ms-fill {
-	background-color: #212529;
-	background-image: linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff), linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
-	background-position: 0 0, 10px 10px;
-	background-size: 20px 20px;
-	border: none;
-  }
 
  .nes-btn {
 	border-image-slice: 2;

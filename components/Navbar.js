@@ -30,7 +30,7 @@ function	Navbar({router}) {
 			return (
 				<button
 					onClick={() => set_modalLoginOpen(true)}
-					className={'inline-flex px-3 py-2 items-center leading-4 text-xs cursor-pointer whitespace-nowrap font-semibold font-title uppercase'}>
+					className={'inline-flex px-3 py-2 items-center leading-4 text-xs cursor-pointer whitespace-nowrap font-semibold '}>
 					<span className={'hidden md:flex'}>{'Connect wallet'}</span>
 					<span className={'flex md:hidden'}>{'Connect'}</span>
 				</button>
@@ -40,7 +40,7 @@ function	Navbar({router}) {
 			<p
 				onClick={() => {deactivate(); onDesactivate();}}
 				suppressHydrationWarning
-				className={'inline-flex px-3 py-2 items-center leading-4 text-xs cursor-pointer whitespace-nowrap font-semibold font-title hover:underline'}>
+				className={'inline-flex px-3 py-2 items-center leading-4 text-xs cursor-pointer whitespace-nowrap font-semibold  hover:underline'}>
 				<span className={'flex md:hidden'}>{`${address.slice(0, 4)}`}</span>
 				<span className={'hidden md:flex'}>{`${address.slice(0, 4)}...${address.slice(-4)}`}</span>
 			</p>
@@ -48,7 +48,7 @@ function	Navbar({router}) {
 	}
 	return (
 		<nav className={'w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black mb-20 pb-4'}>
-			<div className={'items-center justify-start flex flex-row whitespace-normal md:whitespace-nowrap font-title text-lg uppercase'}>
+			<div className={'items-center justify-start flex flex-row whitespace-normal md:whitespace-nowrap  text-lg'}>
 				{'Rarity Extended'}
 				<div className={'items-center justify-end flex-row flex md:hidden'}>
 					{renderWalletButton()}
@@ -58,13 +58,13 @@ function	Navbar({router}) {
 				<div className={'items-center justify-end flex-row flex mr-6'}>
 					<label>
 						<input type={'radio'} className={'nes-radio'} name={'tab'} checked={router.pathname === '/'} readOnly onClick={() => router.push('/')}/>
-						<span className={'font-title text-xs md:text-sm uppercase'}>{'Adventurers'}</span>
+						<span className={'text-xs md:text-sm'}>{'Adventurers'}</span>
 					</label>
 				</div>
 				<div className={'items-center justify-end flex-row flex mr-6'}>
 					<label>
 						<input type={'radio'} className={'nes-radio'} name={'tab'} checked={router.pathname === '/tavern'} readOnly onClick={() => router.push('/tavern')}/>
-						<span className={'font-title text-xs md:text-sm uppercase'}>{'Tavern'}</span>
+						<span className={'text-xs md:text-sm'}>{'Tavern'}</span>
 					</label>
 				</div>
 				<div className={'items-center justify-end flex-row border-black border-l-4 pl-6 ml-6 hidden md:flex'}>

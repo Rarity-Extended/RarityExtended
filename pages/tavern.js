@@ -109,8 +109,8 @@ function	Class({provider, rarityClass, fetchRarity, router}) {
 				quality={100}
 				width={240}
 				height={240} />
-			<p className={'font-title text-sm uppercase justify-center group-hover:underline'}>{rarityClass.name}</p>
-			<p className={'font-title text-xss uppercase justify-center text-center mt-1'}>{rarityClass.description}</p>
+			<p className={'text-sm  justify-center group-hover:underline'}>{rarityClass.name}</p>
+			<p className={'text-xss  justify-center text-center mt-1'}>{rarityClass.description}</p>
 			{isLoading ? <div className={'absolute inset-0 backdrop-blur-3xl bg-white bg-opacity-40 cursor-not-allowed'}>
 				<div className={'loader'} />
 			</div> : null}
@@ -126,9 +126,9 @@ function	Index({fetchRarity, router}) {
 		<section className={'mt-12'}>
 
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<h1 className={'font-title text-lg uppercase justify-center mb-4'}>{'Hello traveler! Welcome the Facu\'s Tavern.'}</h1>
-				<p className={'font-title text-base uppercase'}>{'What do you want to do ?'}</p>
-				<div className={'nes-container mt-6 font-title uppercase text-sm space-y-8 mb-8'}>
+				<h1 className={'text-lg  justify-center mb-4'}>{'Hello traveler! Welcome the Facu\'s Tavern.'}</h1>
+				<p className={'text-base'}>{'What do you want to do ?'}</p>
+				<div className={'nes-container mt-6   text-sm space-y-8 mb-8'}>
 					<div>
 						<label>
 							<input type={'radio'} className={'nes-radio'} name={'what-to-do'} readOnly onClick={() => set_option(0)} checked={option === 0} />
