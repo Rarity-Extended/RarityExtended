@@ -7,13 +7,13 @@ assignees: TBouder
 
 ---
 
-# What happened 🆘
+### What happened 🆘
 **A clear and concise description of what the bug is.**
 
-# To Reproduce 🔂
+### To Reproduce 🔂
 Steps to reproduce the behavior:
 
-# More 🔎
+### More 🔎
 - Browser : 
 - FTM Provider : 
 - Adventurer ID :

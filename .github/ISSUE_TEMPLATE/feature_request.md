@@ -7,11 +7,15 @@ assignees: fameal
 
 ---
 
-# What problem will this solve ? ✅
+### What problem will this solve ? ✅
 **A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]**
 
-# What is your solution 🔧
+<br />  
+
+### What is your solution 🔧
 **A clear and concise description of what you want to happen.**
 
-# Additional context 📝
+<br />  
+
+### Additional context 📝
 **Add any other context or screenshots about the feature request here.**
