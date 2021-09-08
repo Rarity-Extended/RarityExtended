@@ -296,7 +296,7 @@ function	Aventurers({rarity, provider, updateRarity, chainTime}) {
 					<div className={'w-64'}>
 						<Image
 							src={classMappingImg[rarity.class]}
-							loader={'eager'}
+							loading={'eager'}
 							quality={100}
 							width={256}
 							height={256} />

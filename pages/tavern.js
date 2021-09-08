@@ -129,7 +129,7 @@ function	Index({fetchRarity, router}) {
 					<div className={'w-60 mr-16'}>
 						<Image
 							src={'/avatar/banker.png'}
-							loader={'eager'}
+							loading={'eager'}
 							quality={100}
 							width={240}
 							height={240} />
