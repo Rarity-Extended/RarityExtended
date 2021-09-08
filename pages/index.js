@@ -9,7 +9,7 @@ import	React, {useState}				from	'react';
 import	Image							from	'next/image';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
-import	{goAdventure, levelUp, setAttributes}	from	'utils/actions';
+import	{goAdventure, levelUp, setAttributes, claimGold}	from	'utils/actions';
 import	useWeb3							from	'contexts/useWeb3';
 
 dayjs.extend(relativeTime);
@@ -43,6 +43,91 @@ const	classMappingImg = [
 	'/sorcerer.png',
 	'/wizard.png',
 ];
+
+function	DailyBalloon({rarity, chainTime, provider, updateRarity}) {
+	const	[ask, set_ask] = useState(0);
+	const	canAdventure = !dayjs(new Date(rarity.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
+	const	canGold = Number(rarity?.gold?.claimable || 0) > 0;
+
+	if (ask <= 0 && canAdventure) {
+		return (
+			<div className={'nes-balloon relative from-left text-xs md:text-base'}>
+				<div className={'mb-2'}>
+					{'Would you like to go in an adventure ?'}
+					<div className={'mt-6'}>
+						<label>
+							<input
+								type={'radio'}
+								className={'nes-radio'}
+								name={`${rarity.tokenID}_adventure`}
+								defaultChecked
+								onClick={() => {
+									goAdventure({
+										provider,
+										contractAddress: process.env.RARITY_ADDR,
+										tokenID: rarity.tokenID,
+									}, ({error, data}) => {
+										if (error) {
+											return console.error(error);
+										}
+										updateRarity(data);
+									});
+								}} />
+							<span>{'Yes'}</span>
+						</label>
+						<label className={'ml-6'}>
+							<input type={'radio'} className={'nes-radio'} name={`${rarity.tokenID}_adventure`} onClick={() => canGold ? set_ask(1) : null}/>
+							<span>{'no'}</span>
+						</label>
+					</div>
+				</div>
+				{canGold ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(1)}>
+					{'▸'}
+				</div> : null}
+			</div>
+		);
+	}
+	if (ask <= 1 && canGold) {
+		return (
+			<div className={'nes-balloon relative from-left text-xs md:text-base '}>
+				<div className={'mb-2'}>
+					{`Would you like to claim your ${Number(rarity?.gold?.claimable)} golds ?`}
+					<div className={'mt-6'}>
+						<label>
+							<input
+								type={'radio'}
+								className={'nes-radio'}
+								name={`${rarity.tokenID}_gold`}
+								checked
+								onClick={async () => {
+									claimGold({
+										provider,
+										contractAddress: process.env.RARITY_GOLD_ADDR,
+										tokenID: rarity.tokenID,
+									}, ({error, data}) => {
+										if (error) {
+											return console.error(error);
+										}
+										updateRarity(data);
+									});
+								}} />
+							<span>{'Claim'}</span>
+						</label>
+					</div>
+				</div>
+				{canAdventure ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(0)}>
+					{'◂'}
+				</div> : null}
+			</div>
+		);
+	}
+
+	return (
+		<div className={'nes-balloon relative from-left text-xs md:text-base'}>
+			<p>{`Next adventure ready ${dayjs(new Date(rarity.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}</p>
+		</div>
+	);
+}
 
 function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute, toUpdate}) {
 	function pointCost(val) {
@@ -211,46 +296,18 @@ function	Aventurers({rarity, provider, updateRarity, chainTime}) {
 					<div className={'w-64'}>
 						<Image
 							src={classMappingImg[rarity.class]}
+							loader={'eager'}
 							quality={100}
 							width={256}
 							height={256} />
 					</div>
 					<div>
 						<section className={'message -left -mt-16 md:mt-0'}>
-							<div className={'nes-balloon from-left text-xs md:text-base'}>
-								{
-									dayjs(new Date(rarity.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000))) ?
-										<p>{`Next adventure ready ${dayjs(new Date(rarity.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}</p> :
-										<div>
-											{'Would you like to go in an adventure ?'}
-											<div className={'mt-6'}>
-												<label>
-													<input
-														type={'radio'}
-														className={'nes-radio'}
-														name={'adventure'}
-														onClick={async () => {
-															goAdventure({
-																provider,
-																contractAddress: process.env.RARITY_ADDR,
-																tokenID: rarity.tokenID,
-															}, ({error, data}) => {
-																if (error) {
-																	return console.error(error);
-																}
-																updateRarity(data);
-															});
-														}} />
-													<span>{'Yes'}</span>
-												</label>
-												<label>
-													<input type={'radio'} className={'nes-radio ml-6'} name={'adventure'} />
-													<span>{'No'}</span>
-												</label>
-											</div>
-										</div>
-								}
-							</div>
+							<DailyBalloon
+								rarity={rarity}
+								chainTime={chainTime}
+								updateRarity={updateRarity}
+								provider={provider} />
 						</section>
 					</div>
 				</div>

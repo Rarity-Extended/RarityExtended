@@ -48,7 +48,7 @@ export const RarityContextApp = ({children}) => {
 	**	Reset the rarities when the chain changes, when the address changes or
 	**	when the web3 become inactive.
 	**************************************************************************/
-	React.useEffect(() => {
+	useEffect(() => {
 		set_rarities({});
 		set_rNonce(n => n + 1);
 	}, [active, address, chainID]);
@@ -89,9 +89,8 @@ export const RarityContextApp = ({children}) => {
 	**	because of the msg.sender limitation
 	**************************************************************************/
 	function		prepareAdventurerExtra(tokenID) {
-		const	rarityGold = new ethers.Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI, provider);
+		const	rarityGold = new ethers.Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI, provider).connect(provider.getSigner());
 		return [
-			// provider.getBlock(),
 			rarityGold.claimable(tokenID)
 		];
 	}
@@ -99,7 +98,7 @@ export const RarityContextApp = ({children}) => {
 	**	Fetch the data from the prepared extra call
 	**************************************************************************/
 	async function	fetchAdventurerExtra(calls) {
-		const	results = await Promise.all(calls.map(p => p.catch()));
+		const	results = await Promise.all(calls.map(p => p.catch(() => ethers.BigNumber.from(0))));
 		return	results.map(result => (result instanceof Error) ? undefined : result);
 	}
 
@@ -108,7 +107,7 @@ export const RarityContextApp = ({children}) => {
 	**************************************************************************/
 	function	setRarity(tokenID, multicallResult, callResult) {
 		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold] = multicallResult;
-		// const	[claimableGold] = callResult;
+		const	[claimableGold] = callResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
 			return;
@@ -122,7 +121,7 @@ export const RarityContextApp = ({children}) => {
 			log: Number(adventurer['_log']),
 			gold: {
 				balance: ethers.utils.formatEther(balanceOfGold),
-				// claimable: claimableGold ? ethers.utils.formatEther(claimableGold) : '0'
+				claimable: claimableGold ? ethers.utils.formatEther(claimableGold) : '0'
 			},
 			attributes: {
 				isInit: initialAttributes,
@@ -143,11 +142,11 @@ export const RarityContextApp = ({children}) => {
 	**************************************************************************/
 	async function	updateRarities(elements) {
 		const	preparedCalls = [];
-		// const	preparedExtraCalls = [];
+		const	preparedExtraCalls = [];
 		const	tokensIDs = [];
 		elements?.forEach((token) => {
 			preparedCalls.push(...prepareAdventurer(token.tokenID));
-			// preparedExtraCalls.push(...prepareAdventurerExtra(token.tokenID));
+			preparedExtraCalls.push(...prepareAdventurerExtra(token.tokenID));
 			tokensIDs.push(token.tokenID);
 		});
 
@@ -155,11 +154,10 @@ export const RarityContextApp = ({children}) => {
 
 		const	callResults = await fetchAdventurer(preparedCalls);
 		const	chunkedCallResult = chunk(callResults, 5);
-		// const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
-		// const	chunkedExtraCallResult = chunk(extraCallResults, 1);
+		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
+		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		tokensIDs.forEach((tokenID, i) => {
-			setRarity(tokenID, chunkedCallResult[i]);
-			// setRarity(tokenID, chunkedCallResult[i], chunkedExtraCallResult[i]);
+			setRarity(tokenID, chunkedCallResult[i], chunkedExtraCallResult[i]);
 		});
 	}
 
@@ -190,7 +188,6 @@ export const RarityContextApp = ({children}) => {
 			updateRarities(data?.result);
 		}
 	}, [data, provider]);
-
 
 	return (
 		<RarityContext.Provider
