@@ -24,7 +24,7 @@ function	AppWrapper(props) {
 	const	{switchChain, chainID} = useWeb3();
 
 	React.useEffect(() => {
-		if (Number(chainID) > 0 && (Number(chainID) !== 250 || Number(chainID) !== 1337)) {
+		if (Number(chainID) > 0 && (Number(chainID) !== 250 && Number(chainID) !== 1337)) {
 			switchChain();
 		}
 	}, [chainID]);
