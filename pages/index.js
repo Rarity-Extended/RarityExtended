@@ -68,7 +68,7 @@ function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute, t
 
 	return (
 		<div className={'flex flex-row items-center w-full py-2'}>
-			<div className={'text-gray-800 text-sm'}>{`${name}: `}</div>
+			<div className={'text-gray-800 text-xs md:text-sm'}>{`${name}: `}</div>
 			<div className={'w-full text-right'}>
 				<div className={'flex flex-row items-center justify-end'}>
 					<div 
@@ -259,27 +259,27 @@ function	Aventurers({rarity, provider, updateRarity, chainTime}) {
 				<div className={'nes-container with-title w-full md:w-2/3'}>
 					<p className={'title mb-1'}>{rarity.tokenID}</p>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'text-gray-800 text-sm w-32'}>{'ID:'}</div>
-						<div className={'w-full'}>
+						<div className={'text-gray-800 text-xs md:text-sm w-32'}>{'ID:'}</div>
+						<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 							<p>{rarity.tokenID}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'text-gray-800 text-sm w-32'}>{'CLASS:'}</div>
-						<div className={'w-full'}>
+						<div className={'text-gray-800 text-xs md:text-sm w-32'}>{'CLASS:'}</div>
+						<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 							<p>{classMapping[rarity.class]}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'text-gray-800 text-sm w-32'}>{'LEVEL:'}</div>
-						<div className={'w-full'}>
+						<div className={'text-gray-800 text-xs md:text-sm w-32'}>{'LEVEL:'}</div>
+						<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 							<p>{rarity.level}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'text-gray-800 text-sm w-32'}>{'GOLD:'}</div>
-						<div className={'w-full'}>
-							<p className={'inline'}>{`${Number(rarity?.gold?.balance || 0) === 0 ? '0' : rarity.gold.balance}`}</p>
+						<div className={'text-gray-800 text-xs md:text-sm w-32'}>{'GOLD:'}</div>
+						<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
+							<p>{`${Number(rarity?.gold?.balance || 0) === 0 ? '0' : rarity.gold.balance}`}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
@@ -320,7 +320,7 @@ function	Index({rarities = [], updateRarity}) {
 	const	{provider, chainTime} = useWeb3();
 
 	return (
-		<section className={'mt-12'}>
+		<section className={'mt-24 md:mt-12'}>
 			<div className={'flex flex-col space-y-32 max-w-screen-lg w-full mx-auto'}>
 				{
 					Object.values(rarities)?.map((rarity) => (

@@ -155,11 +155,10 @@ export const RarityContextApp = ({children}) => {
 
 		const	callResults = await fetchAdventurer(preparedCalls);
 		const	chunkedCallResult = chunk(callResults, 5);
-		// const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
-		// const	chunkedExtraCallResult = chunk(extraCallResults, 1);
-		tokensIDs.forEach((tokenID, i) => {
-			setRarity(tokenID, chunkedCallResult[i]);
-			// setRarity(tokenID, chunkedCallResult[i], chunkedExtraCallResult[i]);
+		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
+		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
+		tokensIDs?.forEach((tokenID, i) => {
+			setRarity(tokenID, chunkedCallResult[i], chunkedExtraCallResult[i]);
 		});
 	}
 

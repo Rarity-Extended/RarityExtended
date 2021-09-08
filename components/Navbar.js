@@ -47,9 +47,12 @@ function	Navbar({router}) {
 		);
 	}
 	return (
-		<nav className={'w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black mb-20 pb-4'}>
-			<div className={'items-center justify-start flex flex-row whitespace-normal md:whitespace-nowrap  text-lg'}>
-				{'Rarity Extended'}
+		<nav className={'w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black mb-4 md:mb-20 pb-4'}>
+			<div className={'items-center justify-start flex flex-row whitespace-normal md:whitespace-nowrap text-lg'}>
+				<div className={'w-full'}>
+					<p className={'block md:hidden'}>{'RE'}</p>
+					<p className={'hidden md:block'}>{'Rarity Extended'}</p>
+				</div>
 				<div className={'items-center justify-end flex-row flex md:hidden'}>
 					{renderWalletButton()}
 				</div>
