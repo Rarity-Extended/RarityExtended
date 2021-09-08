@@ -156,7 +156,7 @@ export const RarityContextApp = ({children}) => {
 		const	chunkedCallResult = chunk(callResults, 5);
 		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
-		tokensIDs.forEach((tokenID, i) => {
+		tokensIDs?.forEach((tokenID, i) => {
 			setRarity(tokenID, chunkedCallResult[i], chunkedExtraCallResult[i]);
 		});
 	}
@@ -185,6 +185,9 @@ export const RarityContextApp = ({children}) => {
 	**************************************************************************/
 	useEffect(() => {
 		if (data?.result && provider) {
+			if (data?.status === 0) {
+				return setTimeout(() => fetchRarity(), 100);
+			}
 			updateRarities(data?.result);
 		}
 	}, [data, provider]);
