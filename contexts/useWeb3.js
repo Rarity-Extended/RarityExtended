@@ -14,6 +14,10 @@ import	{ConnectorEvent}														from	'@web3-react-fork/types';
 import	{WalletConnectConnector}												from	'@web3-react-fork/walletconnect-connector';
 import	useLocalStorage															from	'hook/useLocalStorage';
 import	{toAddress}																from	'utils';
+import	useSWR				 													from	'swr';
+
+let fakeFetcherNonce = 0;
+const fakeFetcher = () => fakeFetcherNonce++;
 
 const walletType = {NONE: -1, METAMASK: 0, WALLET_CONNECT: 1};
 const Web3Context = createContext();
@@ -30,7 +34,9 @@ export const Web3ContextApp = ({children}) => {
 	const	[chainID, set_chainID] = useLocalStorage('chainID', -1);
 	const	[lastWallet, set_lastWallet] = useLocalStorage('lastWallet', walletType.NONE);
 	const	[, set_nonce] = useState(0);
+	const	[chainTime, set_chainTime] = useState(new Date());
 	const	{activate, active, library, connector, account, chainId, deactivate} = web3;
+	const	{data: chainTimeNonce} = useSWR('chainTime', fakeFetcher, {refreshInterval: 10 * 1000});
 
 	const onUpdate = useCallback(async (update) => {
 		if (update.provider) {
@@ -67,6 +73,7 @@ export const Web3ContextApp = ({children}) => {
 		set_provider(library);
 		set_address(toAddress(account));
 		library.getNetwork().then(e => set_chainID(e.chainId));
+		library.getNetwork().then(e => set_chainTime(e.timestamp));
 
 		connector
 			.on(ConnectorEvent.Update, onUpdate)
@@ -94,7 +101,6 @@ export const Web3ContextApp = ({children}) => {
 			}
 		}, address]).catch((error) => console.error(error));
 	}
-
 
 	/**************************************************************************
 	**	connect
@@ -159,6 +165,11 @@ export const Web3ContextApp = ({children}) => {
 		setTimeout(() => set_initialized(true), 1500);
 	}, []);
 
+	useEffect(() => {
+		if (provider)
+			provider.getBlock().then(e => set_chainTime(e.timestamp));
+	}, [chainTimeNonce, provider]);
+
 	return (
 		<Web3Context.Provider
 			value={{
@@ -171,6 +182,7 @@ export const Web3ContextApp = ({children}) => {
 				active: active && (Number(chainID) === 250 || Number(chainID) === 1337),
 				initialized,
 				switchChain,
+				chainTime,
 				provider,
 				getProvider,
 				currentRPCProvider: provider

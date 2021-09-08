@@ -204,7 +204,7 @@ function	Attributes({rarity, updateRarity, provider}) {
 	);
 }
 
-function	Aventurers({rarity, provider, updateRarity}) {
+function	Aventurers({rarity, provider, updateRarity, chainTime}) {
 	return (
 		<div className={'w-full'}>
 			<div className={'flex flex-row w-full mb-6'}>
@@ -220,8 +220,8 @@ function	Aventurers({rarity, provider, updateRarity}) {
 						<section className={'message -left -mt-16 md:mt-0'}>
 							<div className={'nes-balloon from-left font-title text-xs md:text-base'}>
 								{
-									dayjs(new Date(rarity.log * 1000)).isAfter(dayjs()) ?
-										<p>{`Next adventure ready ${dayjs(new Date(rarity.log * 1000)).from(dayjs())}`}</p> :
+									dayjs(new Date(rarity.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000))) ?
+										<p>{`Next adventure ready ${dayjs(new Date(rarity.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}</p> :
 										<div>
 											{'Would you like to go in an adventure ?'}
 											<div className={'mt-6'}>
@@ -301,14 +301,19 @@ function	Aventurers({rarity, provider, updateRarity}) {
 }
 
 function	Index({rarities = [], updateRarity}) {
-	const	{provider} = useWeb3();
+	const	{provider, chainTime} = useWeb3();
 
 	return (
 		<section className={'mt-12'}>
 			<div className={'flex flex-col space-y-32 max-w-screen-lg w-full mx-auto'}>
 				{
 					Object.values(rarities)?.map((rarity) => (
-						<Aventurers rarity={rarity} key={rarity.tokenID} provider={provider} updateRarity={updateRarity} />
+						<Aventurers
+							key={rarity.tokenID}
+							rarity={rarity}
+							provider={provider}
+							updateRarity={updateRarity}
+							chainTime={chainTime} />
 					))
 				}
 			</div>

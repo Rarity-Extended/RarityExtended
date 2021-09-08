@@ -91,6 +91,7 @@ export const RarityContextApp = ({children}) => {
 	function		prepareAdventurerExtra(tokenID) {
 		const	rarityGold = new ethers.Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI, provider);
 		return [
+			// provider.getBlock(),
 			rarityGold.claimable(tokenID)
 		];
 	}
