@@ -185,6 +185,9 @@ export const RarityContextApp = ({children}) => {
 	**************************************************************************/
 	useEffect(() => {
 		if (data?.result && provider) {
+			if (data?.status === 0) {
+				return setTimeout(() => fetchRarity(), 100);
+			}
 			updateRarities(data?.result);
 		}
 	}, [data, provider]);
