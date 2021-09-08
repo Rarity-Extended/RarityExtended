@@ -9,6 +9,7 @@ import	React, {useState}			from	'react';
 import	Image						from	'next/image';
 import	{recruitAdventurer}			from	'utils/actions';
 import	useWeb3						from	'contexts/useWeb3';
+import	Typer						from	'components/Typer';
 
 const	classes = {
 	'Barbarian': {
@@ -126,8 +127,10 @@ function	Index({fetchRarity, router}) {
 		<section className={'mt-12'}>
 
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<h1 className={'font-title text-lg uppercase justify-center mb-4'}>{'Hello traveler! Welcome the Facu\'s Tavern.'}</h1>
-				<p className={'font-title text-base uppercase'}>{'What do you want to do ?'}</p>
+				<h1 className={'font-title text-lg uppercase justify-center mb-4 whitespace-pre-line'}>
+					<Typer>{'Hello traveler! Welcome to Facu\'s Tavern!\nWhat do you want to do ?'}</Typer>
+				</h1>
+				{/* <p className={'font-title text-base uppercase'}>{'What do you want to do ?'}</p> */}
 				<div className={'nes-container mt-6 font-title uppercase text-sm space-y-8 mb-8'}>
 					<div>
 						<label>
