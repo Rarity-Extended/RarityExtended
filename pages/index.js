@@ -111,7 +111,7 @@ function	DailyBalloon({rarity, chainTime, provider, router, updateRarity}) {
 						</label>
 					</div>
 				</div>
-				{canAdventure || canDungeonTheCellar ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(0)}>
+				{canAdventure ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(0)}>
 					{'◂'}
 				</div> : null}
 				{canGold ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(1)}>
