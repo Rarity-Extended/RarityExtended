@@ -49,23 +49,23 @@ module.exports = {
 				'3xl': '2rem',
 				'7xl': '5rem',
 				'sm': '0.8rem',
-			}
-		},
-		animation: {
-			'bounce-r': 'bounce-r 1s infinite'
-		},
-		keyframes: {
-			'bounce-r': {
-				'0%,to': {
-					transform: 'translateX(-25%)',
-					'animation-timing-function': 'cubic-bezier(.8,0,1,1)'
-				},
-				'50%': {
-					transform: 'none',
-					'animation-timing-function': 'cubic-bezier(0,0,.2,1)'
+			},
+			animation: {
+				'bounce-r': 'bounce-r 1s infinite'
+			},
+			keyframes: {
+				'bounce-r': {
+					'0%,to': {
+						transform: 'translateX(-25%)',
+						'animation-timing-function': 'cubic-bezier(.8,0,1,1)'
+					},
+					'50%': {
+						transform: 'none',
+						'animation-timing-function': 'cubic-bezier(0,0,.2,1)'
+					}
 				}
 			}
-		}
+		},
 	},
 	variants: {
 		extend: {

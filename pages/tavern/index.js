@@ -10,6 +10,20 @@ import	Image						from	'next/image';
 import	{recruitAdventurer}			from	'utils/actions';
 import	useWeb3						from	'contexts/useWeb3';
 
+const	classNameMapping = [
+	'',
+	'Barbarian',
+	'Bard',
+	'Cleric',
+	'Druid',
+	'Fighter',
+	'Monk',
+	'Paladin',
+	'Ranger',
+	'Rogue',
+	'Sorcerer',
+	'Wizard',
+];
 const	classes = {
 	'Barbarian': {
 		name: 'Barbarian',
@@ -118,7 +132,65 @@ function	Class({provider, rarityClass, fetchRarity, router}) {
 	);
 }
 
-function	Index({fetchRarity, router}) {
+function	RecruitTab({option, router, provider, fetchRarity}) {
+	return (
+		<div className={`flex flex-row w-full flex-wrap items-center justify-center ${option !== 1 ? 'opacity-0 h-0 pointer-events-none': ''}`}>
+			<div className={'flex flex-col md:flex-row w-full justify-center md:justify-between mb-2 md:mb-8'}>
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Barbarian']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Bard']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Cleric']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Druid']} />
+			</div>
+			<div className={'flex flex-col md:flex-row w-full justify-center md:justify-between mb-2 md:mb-8'}>
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Fighter']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Monk']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Paladin']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Ranger']} />
+			</div>
+			<div className={'flex flex-col md:flex-row w-full justify-center mb-2 md:mb-0 md:space-x-6'}>
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Rogue']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Sorcerer']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Wizard']} />
+			</div>
+		</div>
+	);
+}
+
+function	DungeonTab({option, rarities}) {
+	return (
+		<div className={`flex flex-col w-full ${option !== 2 ? 'opacity-0 h-0 pointer-events-none': ''}`}>
+			<div className={'pb-10'}>
+				<i className={'text-sm'}>
+					{'Facu, the Tavern’s owner, has heard some scurrying about down in his cellar. He went down to check it and found swarms of hungry rats. In his earlier days, Facu the Committer would have squashed those pests, but these days he’s weak and frail. Do you want to help him out? Anything you find you get to keep.'}
+				</i>
+			</div>
+			<div className={'pb-2'}>
+				<p>{'Those rats be hungry. Those rats be many. Best if ye Constitution be plenty'}</p>
+			</div>
+			<div>
+				<div className={'nes-container mt-0 text-sm space-y-8 mb-8'}>
+					{Object.values(rarities)?.map((rarity, index) => (
+						<div key={rarity.tokenID}>
+							<label>
+								<input type={'radio'} className={'nes-radio'} name={'adventurerforthecellar'} readOnly defaultChecked={index === 0} />
+								<span>{`Send ${rarity.tokenID}, your ${classNameMapping[rarity.class]} level ${rarity.level} ?`}</span>
+							</label>
+						</div>
+					))}
+				</div>
+			</div>
+			<div>
+				<Image
+					src={'/dungeons/rat.gif'}
+					quality={100}
+					width={240}
+					height={141} />
+			</div>
+		</div>
+	);
+}
+
+function	Index({rarities, fetchRarity, router}) {
 	const	{provider} = useWeb3();
 	const	[option, set_option] = useState(0);
 
@@ -146,32 +218,20 @@ function	Index({fetchRarity, router}) {
 						</div>
 						<div>
 							<label>
+								<input type={'radio'} className={'nes-radio'} name={'what-to-do'} readOnly onClick={() => router.push('/tavern/the-cellar')} />
+								<span>{'About the rat ...'}</span>
+							</label>
+						</div>
+						<div>
+							<label>
 								<input type={'radio'} className={'nes-radio'} name={'what-to-do'} readOnly onClick={() => set_option(-1)} checked={option === -1}/>
 								<span>{'Nothing'}</span>
 							</label>
 						</div>
 					</div>
 				</div>
-
-				<div className={`flex flex-row w-full flex-wrap items-center justify-center ${option !== 1 ? 'opacity-0 h-0': ''}`}>
-					<div className={'flex flex-col md:flex-row w-full justify-center md:justify-between mb-2 md:mb-8'}>
-						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Barbarian']} />
-						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Bard']} />
-						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Cleric']} />
-						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Druid']} />
-					</div>
-					<div className={'flex flex-col md:flex-row w-full justify-center md:justify-between mb-2 md:mb-8'}>
-						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Fighter']} />
-						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Monk']} />
-						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Paladin']} />
-						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Ranger']} />
-					</div>
-					<div className={'flex flex-col md:flex-row w-full justify-center mb-2 md:mb-0 md:space-x-6'}>
-						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Rogue']} />
-						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Sorcerer']} />
-						<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Wizard']} />
-					</div>
-				</div>
+				<RecruitTab option={option} router={router} provider={provider} fetchRarity={fetchRarity} />
+				<DungeonTab option={option} router={router} rarities={rarities} />
 			</div>
 
 		</section>

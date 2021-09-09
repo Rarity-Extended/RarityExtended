@@ -76,6 +76,10 @@
 	font-size: 8px;
 	line-height: 12px;
 }
+.text-sx {
+	font-size: 10px;
+	line-height: 12px;
+}
 .text-ybase {
 	font-family: Roboto;
 	font-size: 14px;
@@ -351,24 +355,27 @@
   
 	.progressbar.is-success::-webkit-progress-value,
 	.nes-progress.is-success::-webkit-progress-value {
-	background-color: #92cc41;
-  }
+		background-color: #92cc41;
+		transition : width 0.350s ease;
+	}
   
 	.progressbar.is-success::-moz-progress-bar,
 	.nes-progress.is-success::-moz-progress-bar {
-	background-color: #92cc41;
-  }
+		background-color: #92cc41;
+		transition : width 0.350s ease;
+	}
   
 	.progressbar.is-success::-ms-fill,
 	.nes-progress.is-success::-ms-fill {
-	background-color: #92cc41;
-	border: none;
-  }
+		background-color: #92cc41;
+		border: none;
+		transition : width 0.350s ease;
+	}
   
 	.progressbar.is-warning::-webkit-progress-bar,
 	.nes-progress.is-warning::-webkit-progress-bar {
-	background-color: #fff;
-  }
+		background-color: #fff;
+}
   
 	.progressbar.is-warning::-webkit-progress-value,
 	.nes-progress.is-warning::-webkit-progress-value {
@@ -393,19 +400,22 @@
   
 	.progressbar.is-error::-webkit-progress-value,
 	.nes-progress.is-error::-webkit-progress-value {
-	background-color: #e76e55;
-  }
+		transition : width 0.350s ease;
+		background-color: #e76e55;
+	}
   
 	.progressbar.is-error::-moz-progress-bar,
 	.nes-progress.is-error::-moz-progress-bar {
-	background-color: #e76e55;
-  }
+		transition : width 0.350s ease;
+		background-color: #e76e55;
+	}
   
 	.progressbar.is-error::-ms-fill,
 	.nes-progress.is-error::-ms-fill {
-	background-color: #e76e55;
-	border: none;
-  }
+		transition : width 0.350s ease;
+		background-color: #e76e55;
+		border: none;
+	}
   
  .nes-balloon {
 	border-image-slice: 3;

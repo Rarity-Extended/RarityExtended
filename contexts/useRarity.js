@@ -17,6 +17,7 @@ import	{chunk, fetcher, toAddress}										from	'utils';
 import	RARITY_ABI												from	'utils/rarity.abi';
 import	RARITY_ATTR_ABI											from	'utils/rarityAttr.abi';
 import	RARITY_GOLD_ABI											from	'utils/rarityGold.abi';
+import	THE_CELLAR_ABI											from	'utils/dungeonTheCellar.abi';
 
 const	RarityContext = createContext();
 
@@ -60,12 +61,16 @@ export const RarityContextApp = ({children}) => {
 		const	rarity = new Contract(process.env.RARITY_ADDR, RARITY_ABI);
 		const	rarityAttr = new Contract(process.env.RARITY_ATTR_ADDR, RARITY_ATTR_ABI);
 		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI);
+		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, THE_CELLAR_ABI);
+
 		return [
 			rarity.ownerOf(tokenID),
 			rarity.summoner(tokenID),
 			rarityAttr.character_created(tokenID),
 			rarityAttr.ability_scores(tokenID),
 			rarityGold.balanceOf(tokenID),
+			rarityDungeonCellar.balanceOf(tokenID),
+			rarityDungeonCellar.adventurers_log(tokenID),
 		];
 	}
 	/**************************************************************************
@@ -106,7 +111,7 @@ export const RarityContextApp = ({children}) => {
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
 	function	setRarity(tokenID, multicallResult, callResult) {
-		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold] = multicallResult;
+		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, balanceOfCellar, cellarLog] = multicallResult;
 		const	[claimableGold] = callResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
@@ -132,6 +137,12 @@ export const RarityContextApp = ({children}) => {
 				intelligence: initialAttributes ? abilityScores['intelligence'] : 8,
 				wisdom: initialAttributes ? abilityScores['wisdom'] : 8,
 				charisma: initialAttributes ? abilityScores['charisma'] : 8,
+			},
+			dungeons: {
+				cellar: {
+					lootBalance: balanceOfCellar,
+					nextAvailability: Number(cellarLog),
+				}
 			}
 		}}));
 		set_rNonce(prev => prev + 1);
@@ -150,10 +161,10 @@ export const RarityContextApp = ({children}) => {
 			tokensIDs.push(token.tokenID);
 		});
 
-		// preparedCalls.push(...prepareAdventurer(29010)); preparedExtraCalls.push(...prepareAdventurerExtra(29010)); tokensIDs.push(29010);
+		// preparedCalls.push(...prepareAdventurer(258181)); preparedExtraCalls.push(...prepareAdventurerExtra(258181)); tokensIDs.push(258181);
 
 		const	callResults = await fetchAdventurer(preparedCalls);
-		const	chunkedCallResult = chunk(callResults, 5);
+		const	chunkedCallResult = chunk(callResults, 7);
 		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		tokensIDs?.forEach((tokenID, i) => {
@@ -166,7 +177,7 @@ export const RarityContextApp = ({children}) => {
 	**************************************************************************/
 	async function	updateRarity(tokenID) {
 		const	callResults = await fetchAdventurer(prepareAdventurer(tokenID));
-		const	chunkedCallResult = chunk(callResults, 5);
+		const	chunkedCallResult = chunk(callResults, 7);
 		const	extraCallResults = await fetchAdventurerExtra(prepareAdventurerExtra(tokenID));
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		setRarity(tokenID, chunkedCallResult[0], chunkedExtraCallResult[0]);

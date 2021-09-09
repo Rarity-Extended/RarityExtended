@@ -181,3 +181,8 @@ export async function	claimGold({provider, contractAddress, tokenID}, callback) 
 		callback({error, data: undefined});
 	}
 }
+
+
+export async function	lootDungeonTheCellar({provider, contractAddress, tokenID}, callback) {
+	goAdventure({provider, contractAddress, tokenID}, callback);
+}
