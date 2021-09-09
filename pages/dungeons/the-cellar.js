@@ -11,6 +11,7 @@ import	Link									from	'next/link';
 import	useDungeon, {DungeonContextApp}			from	'contexts/useDungeonsTheCellar';
 import	useWeb3									from	'contexts/useWeb3';
 import	{lootDungeonTheCellar}					from	'utils/actions';
+import	DialogBox								from	'components/DialogBox';
 
 const	classMappingBackImg = [
 	'',
@@ -31,59 +32,44 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function	FightMenu({step, stepAuto, set_option, option, router}) {
+function	DialogChoices({router, step, stepAuto, ratEscaped, adventurerWon, expectedLoot, loot}) {
+	if (ratEscaped) {
+		return (
+			<DialogBox
+				options={[
+					{label: 'THE BIG UGLY RAT HAS ESCAPED', onClick: () => router.push('/tavern?tab=the-cellar')},
+				]} />
+		);
+	}
+	if (adventurerWon) {
+		if (expectedLoot === 0) {
+			return (
+				<DialogBox
+					options={[
+						{label: 'YOU HAVE DEFEATED THE RAT ! UNFORTUNATELY, THERE IS NOTHING TO RECOVER', onClick: () => router.push('/tavern?tab=the-cellar')},
+					]} />
+			);
+		}
+		return (
+			<DialogBox
+				options={[
+					{label: `YOU HAVE DEFEATED THE RAT ! YOU CAN LOOT ${expectedLoot} SKIN${expectedLoot > 0 ? 's' : ''}`, onClick: loot},
+				]} />
+		);
+	}
 	return (
-		<>
-			<div>
-				<label>
-					<input type={'radio'} className={'nes-radio'} name={'what-to-do'} readOnly onClick={() => step()} checked={option === 0} />
-					<span>{'Fight'}</span>
-				</label>
-			</div>
-			<div>
-				<label>
-					<input type={'radio'} className={'nes-radio'} name={'what-to-do'} readOnly onClick={() => stepAuto()} checked={option === 1} />
-					<span>{'FIGHT (auto)'}</span>
-				</label>
-			</div>
-			<div>
-				<label>
-					<input type={'radio'} className={'nes-radio'} name={'what-to-do'} readOnly onClick={() => {set_option(2), router.push('/tavern/the-cellar');}} checked={option === 2} />
-					<span>{'Escape'}</span>
-				</label>
-			</div>
-		</>
+		<DialogBox
+			options={[
+				{label: 'FIGHT', onClick: step},
+				{label: 'FIGHT (AUTO)', onClick: stepAuto},
+				{label: 'ESCAPE', onClick: () => router.push('/tavern?tab=the-cellar')},
+			]} />
 	);
 }
 
-function	LootMenu({loot, expectedLoot}) {
-	return (
-		<>
-			<div>
-				<label>
-					<input type={'radio'} className={'nes-radio'} name={'what-to-do-loot'} readOnly onClick={() => loot()} checked />
-					<span className={'animate-pulse hover:animate-none'}>{`Loot the Big Ugly Rat for ${expectedLoot} rat skin${expectedLoot > 0 ? 's' : ''}`}</span>
-				</label>
-			</div>
-		</>
-	);
-}
-
-function	EscapeMenu({router}) {
-	return (
-		<>
-			<div>
-				<label>
-					<input type={'radio'} className={'nes-radio'} name={'what-to-do-escape'} readOnly onClick={() => router.push('/tavern/the-cellar')} checked />
-					<span className={'animate-pulse hover:animate-none'}>{'The Big Ugly Rat has escaped'}</span>
-				</label>
-			</div>
-		</>
-	);
-}
 
 function	Index({dungeon, adventurer, router}) {
-	const	STEP_LIMIT = 3;
+	const	STEP_LIMIT = 10;
 	const	{provider} = useWeb3();
 	const	[fightStep, set_fightStep] = useState(0);
 	const	[option, set_option] = useState(0);
@@ -111,7 +97,7 @@ function	Index({dungeon, adventurer, router}) {
 				return true;
 			}
 			set_logs(l => [...l, `Your adventurer attacks the Big Ugly Rat and deals ${dungeon.adventurerDamage} dmg.`]);
-			await sleep(150);
+			await sleep(0);
 			if (dungeon.adventurerArmor < dungeon.dungeonToHit) {
 				set_adventurerHealth(h => h -= dungeon.dungeonDamage);
 				_adventurerHealth -= dungeon.dungeonDamage;
@@ -121,7 +107,7 @@ function	Index({dungeon, adventurer, router}) {
 				}
 			}
 			set_logs(l => [...l, `The Big Ugly Rat attacks your adventurer and deals ${dungeon.dungeonDamage} dmg.`]);
-			await sleep(150);
+			await sleep(0);
 		}
 		set_logs(l => [...l, 'The big ugly rat escaped']);
 		set_ratEscaped(true);
@@ -165,8 +151,8 @@ function	Index({dungeon, adventurer, router}) {
 			<div className={`absolute bg-black inset-0 z-10 -top-24 -left-4 -right-4 flex flex-col items-center min-h-screen transition-opacity duration-1000 ${adventurerHealth <= 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
 				<p className={'text-2xl text-white pt-64 max-w-screen-sm text-center'}>{'you passed out'}</p>
 				<p className={'text-base text-white pt-8 max-w-screen-sm text-center'}>{'After some time, the rat returns to his hole and Facu the tavernkeeper, worried, finds you lying on the floor'}</p>
-				<Link href={'/'}>
-					<div className={'text-base text-white mt-16 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 border-white hover:bg-white hover:text-black transition-colors cursor-pointer hover:animate-none'}>
+				<Link href={'/tavern?tab=the-cellar'}>
+					<div className={'text-base text-white mt-16 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 border-white hover:bg-white hover:text-black transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
 						{'Rest weak adventurer, Rest...'}
 					</div>
 				</Link>
@@ -217,34 +203,26 @@ function	Index({dungeon, adventurer, router}) {
 				</div>
 			</div>
 			<div className={'max-w-screen-md w-full mx-auto'}>
-				<div className={'nes-container mt-6 text-sm space-y-8 mb-8'}>
-					{!adventurerWon && !ratEscaped ?
-						<FightMenu
-							step={step}
-							stepAuto={stepAuto}
-							set_option={set_option}
-							option={option}
-							router={router} />
-						:
-						ratEscaped ?
-							<EscapeMenu router={router} />
-							:
-							<LootMenu
-								loot={() => {
-									lootDungeonTheCellar({
-										provider,
-										contractAddress: process.env.DUNGEON_THE_CELLAR_ADDR,
-										tokenID: dungeon.tokenID,
-									}, ({error}) => {
-										if (error) {
-											return console.error(error);
-										}
-										router.push('/');
-									});
-								}}
-								expectedLoot={dungeon.scout} />
-					}
-				</div>
+				<DialogChoices
+					router={router}
+					step={step}
+					stepAuto={stepAuto}
+					ratEscaped={ratEscaped}
+					adventurerWon={adventurerWon}
+					expectedLoot={dungeon.scout}
+					loot={() => {
+						lootDungeonTheCellar({
+							provider,
+							contractAddress: process.env.DUNGEON_THE_CELLAR_ADDR,
+							tokenID: dungeon.tokenID,
+						}, ({error}) => {
+							if (error) {
+								return console.error(error);
+							}
+							router.push('/');
+						});
+					}}
+				/>
 			</div>
 			<div className={'max-w-screen-md w-full mx-auto'}>
 				<div className={'space-y-4 text-center'}>
