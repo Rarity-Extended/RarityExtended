@@ -5,17 +5,17 @@
 **	@Filename:				Navbar.js
 ******************************************************************************/
 
-import	React, {useState}		from	'react';
-import	Link					from	'next/link';
-import	useWeb3					from	'contexts/useWeb3';
-import	ModalLogin				from	'components/ModalLogin';
+import	React, {useState, useEffect}	from	'react';
+import	Link							from	'next/link';
+import	useWeb3							from	'contexts/useWeb3';
+import	ModalLogin						from	'components/ModalLogin';
 
 function	Navbar({router}) {
 	const	{active, address, deactivate, onDesactivate} = useWeb3();
 	const	[initialPopup, set_initialPopup] = useState(false);
 	const	[modalLoginOpen, set_modalLoginOpen] = useState(false);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (initialPopup)
 			return;
 
