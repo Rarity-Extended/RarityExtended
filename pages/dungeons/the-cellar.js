@@ -69,7 +69,21 @@ function	LootMenu({loot, expectedLoot}) {
 	);
 }
 
+function	EscapeMenu({router}) {
+	return (
+		<>
+			<div>
+				<label>
+					<input type={'radio'} className={'nes-radio'} name={'what-to-do-escape'} readOnly onClick={() => router.push('/tavern/the-cellar')} checked />
+					<span className={'animate-pulse hover:animate-none'}>{'The Big Ugly Rat has escaped'}</span>
+				</label>
+			</div>
+		</>
+	);
+}
+
 function	Index({dungeon, adventurer, router}) {
+	const	STEP_LIMIT = 3;
 	const	{provider} = useWeb3();
 	const	[fightStep, set_fightStep] = useState(0);
 	const	[option, set_option] = useState(0);
@@ -88,7 +102,7 @@ function	Index({dungeon, adventurer, router}) {
 		set_option(1);
 		let	_adventurerHealth = adventurerHealth;
 		let	_dungeonHealth = dungeonHealth;
-		for (let index = 10; index >= fightStep; index--) {
+		for (let index = STEP_LIMIT; index >= fightStep; index--) {
 			set_dungeonHealth(h => h -= dungeon.adventurerDamage);
 			_dungeonHealth -= dungeon.adventurerDamage;
 			if (_dungeonHealth <= 0) {
@@ -119,7 +133,7 @@ function	Index({dungeon, adventurer, router}) {
 		set_option(0);
 		let	_adventurerHealth = adventurerHealth;
 		let	_dungeonHealth = dungeonHealth;
-		if (fightStep === 10) {
+		if (fightStep === STEP_LIMIT) {
 			set_logs(l => [...l, 'The big ugly rat escaped']);
 			set_ratEscaped(true);
 			return;
@@ -204,7 +218,7 @@ function	Index({dungeon, adventurer, router}) {
 			</div>
 			<div className={'max-w-screen-md w-full mx-auto'}>
 				<div className={'nes-container mt-6 text-sm space-y-8 mb-8'}>
-					{!adventurerWon ?
+					{!adventurerWon && !ratEscaped ?
 						<FightMenu
 							step={step}
 							stepAuto={stepAuto}
@@ -212,20 +226,23 @@ function	Index({dungeon, adventurer, router}) {
 							option={option}
 							router={router} />
 						:
-						<LootMenu
-							loot={() => {
-								lootDungeonTheCellar({
-									provider,
-									contractAddress: process.env.DUNGEON_THE_CELLAR_ADDR,
-									tokenID: dungeon.tokenID,
-								}, ({error}) => {
-									if (error) {
-										return console.error(error);
-									}
-									router.push('/');
-								});
-							}}
-							expectedLoot={dungeon.scout} />
+						ratEscaped ?
+							<EscapeMenu router={router} />
+							:
+							<LootMenu
+								loot={() => {
+									lootDungeonTheCellar({
+										provider,
+										contractAddress: process.env.DUNGEON_THE_CELLAR_ADDR,
+										tokenID: dungeon.tokenID,
+									}, ({error}) => {
+										if (error) {
+											return console.error(error);
+										}
+										router.push('/');
+									});
+								}}
+								expectedLoot={dungeon.scout} />
 					}
 				</div>
 			</div>
