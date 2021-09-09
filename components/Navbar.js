@@ -6,6 +6,7 @@
 ******************************************************************************/
 
 import	React, {useState}		from	'react';
+import	Link					from	'next/link';
 import	useWeb3					from	'contexts/useWeb3';
 import	ModalLogin				from	'components/ModalLogin';
 
@@ -48,8 +49,10 @@ function	Navbar({router}) {
 	}
 	return (
 		<nav className={'w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black mb-20 pb-4'}>
-			<div className={'items-center justify-start flex flex-row whitespace-normal md:whitespace-nowrap  text-lg'}>
-				{'Rarity Extended'}
+			<div className={'items-center justify-start flex flex-row whitespace-normal md:whitespace-nowrap text-lg'}>
+				<Link href={'/'}>
+					{'Rarity Extended'}
+				</Link>
 				<div className={'items-center justify-end flex-row flex md:hidden'}>
 					{renderWalletButton()}
 				</div>

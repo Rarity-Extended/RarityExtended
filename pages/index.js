@@ -44,9 +44,10 @@ const	classMappingImg = [
 	'/wizard.png',
 ];
 
-function	DailyBalloon({rarity, chainTime, provider, updateRarity}) {
+function	DailyBalloon({rarity, chainTime, provider, router, updateRarity}) {
 	const	[ask, set_ask] = useState(0);
 	const	canAdventure = !dayjs(new Date(rarity.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
+	const	canDungeonTheCellar = !dayjs(new Date(rarity?.dungeons?.cellar?.nextAvailability * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
 	const	canGold = Number(rarity?.gold?.claimable || 0) > 0;
 
 	if (ask <= 0 && canAdventure) {
@@ -81,13 +82,45 @@ function	DailyBalloon({rarity, chainTime, provider, updateRarity}) {
 						</label>
 					</div>
 				</div>
+				{canDungeonTheCellar || canGold ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(1)}>
+					{'▸'}
+				</div> : null}
+			</div>
+		);
+	}
+	if (ask <= 1 && canDungeonTheCellar) {
+		return (
+			<div className={'nes-balloon relative from-left text-xs md:text-base'}>
+				<div className={'mb-2'}>
+					{'Would you like to hunt the Big Ugly Rat in the Cellar ?'}
+					<div className={'mt-6'}>
+						<label>
+							<input
+								type={'radio'}
+								className={'nes-radio'}
+								name={`${rarity.tokenID}_adventure`}
+								defaultChecked
+								onClick={() => {
+									router.push(`/dungeons/the-cellar?adventurer=${rarity.tokenID}`);
+								}} />
+							<span>{'Yes'}</span>
+						</label>
+						<label className={'ml-6'}>
+							<input type={'radio'} className={'nes-radio'} name={`${rarity.tokenID}_adventure`} onClick={() => canGold ? set_ask(1) : null}/>
+							<span>{'no'}</span>
+						</label>
+					</div>
+				</div>
+				{canAdventure || canDungeonTheCellar ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(0)}>
+					{'◂'}
+				</div> : null}
 				{canGold ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(1)}>
 					{'▸'}
 				</div> : null}
 			</div>
 		);
 	}
-	if (ask <= 1 && canGold) {
+	if (ask <= 2 && canGold) {
 		return (
 			<div className={'nes-balloon relative from-left text-xs md:text-base '}>
 				<div className={'mb-2'}>
@@ -115,7 +148,7 @@ function	DailyBalloon({rarity, chainTime, provider, updateRarity}) {
 						</label>
 					</div>
 				</div>
-				{canAdventure ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(0)}>
+				{canAdventure || canDungeonTheCellar ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(0)}>
 					{'◂'}
 				</div> : null}
 			</div>
@@ -288,12 +321,12 @@ function	Attributes({rarity, updateRarity, provider}) {
 		</div>
 	);
 }
-function	Aventurers({rarity, provider, updateRarity, chainTime}) {
+function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 	return (
 		<div className={'w-full'}>
 			<div className={'flex flex-row w-full mb-6'}>
 				<div className={'w-full flex justify-start flex-row'}>
-					<div className={'w-64'}>
+					<div className={'w-64'} style={{minWidth: 256}}>
 						<Image
 							src={classMappingImg[rarity.class]}
 							loading={'eager'}
@@ -307,7 +340,8 @@ function	Aventurers({rarity, provider, updateRarity, chainTime}) {
 								rarity={rarity}
 								chainTime={chainTime}
 								updateRarity={updateRarity}
-								provider={provider} />
+								provider={provider}
+								router={router} />
 						</section>
 					</div>
 				</div>
@@ -379,7 +413,7 @@ function	Aventurers({rarity, provider, updateRarity, chainTime}) {
 	);
 }
 
-function	Index({rarities = [], updateRarity}) {
+function	Index({rarities = [], updateRarity, router}) {
 	const	{provider, chainTime} = useWeb3();
 
 	return (
@@ -392,7 +426,8 @@ function	Index({rarities = [], updateRarity}) {
 							rarity={rarity}
 							provider={provider}
 							updateRarity={updateRarity}
-							chainTime={chainTime} />
+							chainTime={chainTime}
+							router={router} />
 					))
 				}
 			</div>
