@@ -188,7 +188,7 @@ function	DungeonTab({shouldDisplay, rarities, router}) {
 	return (
 		<div className={'flex flex-col w-full'}>
 			<div className={'pb-10'}>
-				<i className={'text-xs'}>
+				<i className={'text-xs text-black text-opacity-60'}>
 					{'Facu, the Tavern’s owner, has heard some scurrying about down in his cellar. He went down to check it and found swarms of hungry rats. In his earlier days, Facu the Committer would have squashed those pests, but these days he’s weak and frail. Do you want to help him out? Anything you find you get to keep.'}
 				</i>
 				<div className={'mt-6'}>
@@ -225,7 +225,7 @@ function	NewsTab({shouldDisplay}) {
 	return (
 		<div className={'flex flex-col w-full'}>
 			<div className={'pb-10 text-xs leading-6'}>
-				<i>
+				<i className={'text-black text-opacity-60'}>
 					{'OYE OYE ! FIND THE LATEST NEWS IN OUR AMAZING WORLD IN THE DAILY EXTENDED ! GET READY FOR A BIG ADVENTURE, FROM OUR HUMBLE TOWN TO THE DARK FOREST OF SMUGLEWIND ! NEWS, ANNOUNCES, AND PUBLIC WORKS, EVERYTHING IS IN THE DAILY EXTENDED !'}
 				</i>
 				<div className={'mt-10'}>
@@ -242,9 +242,9 @@ function	NewsTab({shouldDisplay}) {
 	);
 }
 
-function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, active}) {
+function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositError, isTxPending, active}) {
 	const	[facuTextIndex, set_facuTextIndex] = useState(0);
-
+	
 	useEffect(() => {
 		set_facuTextIndex(0);
 	}, [router?.query?.tab, hasDeposited]);
@@ -287,15 +287,25 @@ function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, active}) {
 					</>
 				);
 			}
+			if (hasDepositError) {
+				return (
+					<Typer>{'OH YOU CHANGED YOUR MIND!'}</Typer>
+				);
+			}
+			if (isTxPending) {
+				return (
+					<Typer>{'GREAT CHOICE! LET\'S PROCESS YOUR TRANSACTION'}</Typer>
+				);
+			}
 			if (hasDeposited) {
 				return (
 					<>
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>{'This is a great investment ! Trust me ! You can click'}</Typer>&nbsp;
+						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>{'THIS IS A GREAT INVESTMENT! TRUST ME! YOU CAN CLICK'}</Typer>&nbsp;
 						<a className={'text-tag-info hover:underline'} href={'https://ape.tax/the-fantom'} target={'_blank'} rel={'noreferrer'}>
-							<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>{'here'}</Typer>
+							<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>{'HERE'}</Typer>
 						</a>&nbsp;
 						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
-							{'to check your investment, until the bank is build in this humble town !'}
+							{'TO CHECK YOUR INVESTMENT UNTIL THE BANK IS BUILT IN THIS HUMBLE TOWN!'}
 						</Typer>&nbsp;
 					</>
 				);
@@ -315,7 +325,7 @@ function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, active}) {
 						</Typer>
 					</span>
 					<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 4}>
-						{'. DO YOU WANT TO APE-IN'}
+						{'. DO YOU WANT TO APE-IN ?'}
 					</Typer>
 				</>
 			);
@@ -333,7 +343,7 @@ function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, active}) {
 		</h1>
 	);
 }
-function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConnect, active}) {
+function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConnect, active, set_isTxPending}) {
 	if (!active) {
 		return (
 			<DialogBox
@@ -346,9 +356,18 @@ function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConn
 		return (
 			<DialogBox
 				options={[
-					{label: 'Deposit 25%', onClick: () => apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(25).div(100)}, () => onFTMDeposit())},
-					{label: 'Deposit 50%', onClick: () => apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(50).div(100)}, () => onFTMDeposit())},
-					{label: 'Deposit 75%', onClick: () => apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(75).div(100)}, () => onFTMDeposit())},
+					{label: 'Deposit 25%', onClick: () => {
+						set_isTxPending(true);
+						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(25).div(100)}, (e) => onFTMDeposit(e));
+					}},
+					{label: 'Deposit 50%', onClick: () => {
+						set_isTxPending(true);
+						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(50).div(100)}, (e) => onFTMDeposit(e));
+					}},
+					{label: 'Deposit 75%', onClick: () => {
+						set_isTxPending(true);
+						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(75).div(100)}, (e) => onFTMDeposit(e));
+					}},
 					{label: 'Nevermind', onClick: () => router.push('/tavern')},
 				]} />
 		);
@@ -367,7 +386,9 @@ function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConn
 function	Index({fetchRarity, rarities, router}) {
 	const	{provider, address, active} = useWeb3();
 	const	[ftmBalance, set_ftmBalance] = useState(0);
+	const	[isTxPending, set_isTxPending] = useState(false);
 	const	[hasDeposited, set_hasDeposited] = useState(false);
+	const	[hasDepositError, set_hasDepositError] = useState(false);
 	const	[modalLoginOpen, set_modalLoginOpen] = useState(false);
 	const	{data: vaultAPY} = useSWR(`https://ape.tax/api/specificApy?address=${process.env.FTM_VAULT_ADDR}&network=250`, fetcher);
 
@@ -394,6 +415,8 @@ function	Index({fetchRarity, rarities, router}) {
 						router={router}
 						vaultAPY={vaultAPY}
 						ftmBalance={ftmBalance}
+						isTxPending={isTxPending}
+						hasDepositError={hasDepositError}
 						hasDeposited={hasDeposited} />
 				</div>
 				<DialogChoices
@@ -403,9 +426,15 @@ function	Index({fetchRarity, rarities, router}) {
 					ftmBalance={ftmBalance}
 					hasDeposited={hasDeposited}
 					onWalletConnect={() => set_modalLoginOpen(true)}
-					onFTMDeposit={() => {
+					set_isTxPending={set_isTxPending}
+					onFTMDeposit={({error}) => {
+						if (error) {
+							set_hasDepositError(true);
+							return console.error(error);
+						}
 						provider.getBalance(address).then(b => set_ftmBalance(ethers.utils.formatEther(b)));
 						set_hasDeposited(true);
+						set_isTxPending(false);
 					}} />
 				<section>
 					<NewsTab shouldDisplay={!router?.query?.tab} router={router} provider={provider} fetchRarity={fetchRarity} />
