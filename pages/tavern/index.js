@@ -9,16 +9,18 @@ import	React, {useState, useEffect}	from	'react';
 import	Image							from	'next/image';
 import	{ethers}						from	'ethers';
 import	useSWR							from	'swr';
-import	Typer							from	'components/Typer';
+import	dayjs							from	'dayjs';
+import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	{recruitAdventurer, apeInVault}	from	'utils/actions';
 import	{formatAmount, fetcher}			from	'utils';
 import	useWeb3							from	'contexts/useWeb3';
 import	DialogBox						from	'components/DialogBox';
-import	dayjs							from	'dayjs';
-import	relativeTime					from	'dayjs/plugin/relativeTime';
+import	ModalLogin						from	'components/ModalLogin';
+import	Typer							from	'components/Typer';
+
 dayjs.extend(relativeTime);
 
-const		ZAP_VAULT = '0xee2463E7e2Ef526Afa43825318Bf8526E6096F99';
+const		ZAP_VAULT = '0xcfC41cf70aae80E97C36BE9989417fddd438Fd38';
 const		FTM_VAULT = '0x0DEC85e74A92c52b7F708c4B10207D9560CEFaf0';
 
 const	classNameMapping = [
@@ -243,14 +245,19 @@ function	NewsTab({shouldDisplay}) {
 	);
 }
 
-function	FacuHeadline({router, vaultAPY, ftmBalance}) {
+function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, active}) {
 	const	[facuTextIndex, set_facuTextIndex] = useState(0);
 
 	useEffect(() => {
 		set_facuTextIndex(0);
-	}, [router?.query?.tab]);
+	}, [router?.query?.tab, hasDeposited]);
 
 	const	renderFacuText = () => {
+		if (!active) {
+			return (
+				<Typer>{'Hello traveler! Welcome to Facu\'s Tavern!\nPerhaps you should consider connecting your wallet ?'}</Typer>
+			);
+		}
 		if (!router?.query?.tab) {
 			return (
 				<Typer>{'Hello traveler! Welcome to Facu\'s Tavern!\nWhat do you want to do ?'}</Typer>
@@ -280,6 +287,19 @@ function	FacuHeadline({router, vaultAPY, ftmBalance}) {
 						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 4}>
 							{'. Just come back later!'}
 						</Typer>
+					</>
+				);
+			}
+			if (hasDeposited) {
+				return (
+					<>
+						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>{'This is a great investment ! Trust me ! You can click'}</Typer>&nbsp;
+						<a className={'text-tag-info hover:underline'} href={'https://ape.tax/the-fantom'} target={'_blank'} rel={'noreferrer'}>
+							<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>{'here'}</Typer>
+						</a>&nbsp;
+						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
+							{'to check your investment, until the bank is build is this humble town !'}
+						</Typer>&nbsp;
 					</>
 				);
 			}
@@ -316,15 +336,22 @@ function	FacuHeadline({router, vaultAPY, ftmBalance}) {
 		</h1>
 	);
 }
-function	DialogChoices({router, provider, ftmBalance}) {
+function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConnect, active}) {
+	if (!active) {
+		return (
+			<DialogBox
+				options={[
+					{label: 'Connect wallet', onClick: () => onWalletConnect()},
+				]} />
+		);
+	}
 	if (router?.query?.tab === 'ftm-vault' && Number(ftmBalance) > 0) {
 		return (
 			<DialogBox
 				options={[
-					{label: 'Deposit 25%', onClick: () => apeInVault({provider, contractAddress: ZAP_VAULT}, (e) => console.log(e))},
-					{label: 'Deposit 50%', onClick: () => console.log('Deposit 50%')},
-					{label: 'Deposit 75%', onClick: () => console.log('Deposit 75%')},
-					{label: 'Deposit 100%', onClick: () => console.log('Deposit 100%')},
+					{label: 'Deposit 25%', onClick: () => apeInVault({provider, contractAddress: ZAP_VAULT, amount: ethers.utils.parseEther(ftmBalance).mul(25).div(100)}, () => onFTMDeposit())},
+					{label: 'Deposit 50%', onClick: () => apeInVault({provider, contractAddress: ZAP_VAULT, amount: ethers.utils.parseEther(ftmBalance).mul(50).div(100)}, () => onFTMDeposit())},
+					{label: 'Deposit 75%', onClick: () => apeInVault({provider, contractAddress: ZAP_VAULT, amount: ethers.utils.parseEther(ftmBalance).mul(75).div(100)}, () => onFTMDeposit())},
 					{label: 'Nevermind', onClick: () => router.push('/tavern')},
 				]} />
 		);
@@ -341,9 +368,11 @@ function	DialogChoices({router, provider, ftmBalance}) {
 }
 
 function	Index({fetchRarity, rarities, router}) {
-	const	{provider, address} = useWeb3();
+	const	{provider, address, active} = useWeb3();
 	const	[ftmBalance, set_ftmBalance] = useState(0);
-	const	{data: vaultAPY} = useSWR(`https://major.tax/api/specificApy?address=${FTM_VAULT}&network=250`, fetcher);
+	const	[hasDeposited, set_hasDeposited] = useState(false);
+	const	[modalLoginOpen, set_modalLoginOpen] = useState(false);
+	const	{data: vaultAPY} = useSWR(`https://ape.tax/api/specificApy?address=${FTM_VAULT}&network=250`, fetcher);
 
 	useEffect(() => {
 		if (provider && address) {
@@ -363,16 +392,31 @@ function	Index({fetchRarity, rarities, router}) {
 							width={256}
 							height={256} />
 					</div>
-					<FacuHeadline router={router} vaultAPY={vaultAPY} ftmBalance={ftmBalance} />
+					<FacuHeadline
+						active={active && address}
+						router={router}
+						vaultAPY={vaultAPY}
+						ftmBalance={ftmBalance}
+						hasDeposited={hasDeposited} />
 				</div>
-				<DialogChoices provider={provider} router={router} ftmBalance={ftmBalance} />
+				<DialogChoices
+					active={active && address}
+					provider={provider}
+					router={router}
+					ftmBalance={ftmBalance}
+					hasDeposited={hasDeposited}
+					onWalletConnect={() => set_modalLoginOpen(true)}
+					onFTMDeposit={() => {
+						provider.getBalance(address).then(b => set_ftmBalance(ethers.utils.formatEther(b)));
+						set_hasDeposited(true);
+					}} />
 				<section>
 					<NewsTab shouldDisplay={!router?.query?.tab} router={router} provider={provider} fetchRarity={fetchRarity} />
 					<RecruitTab shouldDisplay={router?.query?.tab === 'recruit'} router={router} provider={provider} fetchRarity={fetchRarity} />
 					<DungeonTab shouldDisplay={router?.query?.tab === 'the-cellar'} router={router} rarities={rarities} provider={provider} fetchRarity={fetchRarity} />
 				</section>
 			</div>
-
+			<ModalLogin open={modalLoginOpen} set_open={set_modalLoginOpen} />
 		</section>
 	);
 }
