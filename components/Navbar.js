@@ -47,24 +47,33 @@ function	Navbar({router}) {
 		);
 	}
 	return (
-		<nav className={'w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black mb-20 pb-4'}>
-			<div className={'items-center justify-start flex flex-row whitespace-normal md:whitespace-nowrap  text-lg'}>
-				{'Rarity Extended'}
+		<nav className={'w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black mb-4 md:mb-20 pb-4'}>
+			<div className={'items-center justify-start flex flex-row whitespace-normal md:whitespace-nowrap text-lg'}>
+				<div className={'w-full'}>
+					<p className={'block md:hidden'}>{'RE'}</p>
+					<p className={'hidden md:block'}>{'Rarity Extended'}</p>
+				</div>
 				<div className={'items-center justify-end flex-row flex md:hidden'}>
 					{renderWalletButton()}
 				</div>
 			</div>
-			<div className={'items-center justify-center md:justify-end flex flex-row w-full mt-3 md:mt-0 -ml-6 md:ml-0'}>
+			<div className={'items-center justify-start md:justify-end flex flex-row w-full mt-3 md:mt-0'}>
 				<div className={'items-center justify-end flex-row flex mr-6'}>
 					<label>
 						<input type={'radio'} className={'nes-radio'} name={'tab'} checked={router.pathname === '/'} readOnly onClick={() => router.push('/')}/>
-						<span className={'text-xs md:text-sm'}>{'Adventurers'}</span>
+						<span className={'text-sm'}>
+							<span className={'text-xs hidden md:inline'}>{'Adventurers'}</span>
+							<span className={'text-xs inline md:hidden'}>{'Adv'}</span>
+						</span>
 					</label>
 				</div>
 				<div className={'items-center justify-end flex-row flex mr-6'}>
 					<label>
 						<input type={'radio'} className={'nes-radio'} name={'tab'} checked={router.pathname === '/tavern'} readOnly onClick={() => router.push('/tavern')}/>
-						<span className={'text-xs md:text-sm'}>{'Tavern'}</span>
+						<span className={'text-sm'}>
+							<span className={'text-xs hidden md:inline'}>{'Tavern'}</span>
+							<span className={'text-xs inline md:hidden'}>{'Tavern'}</span>
+						</span>
 					</label>
 				</div>
 				<div className={'items-center justify-end flex-row border-black border-l-4 pl-6 ml-6 hidden md:flex'}>

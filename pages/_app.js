@@ -77,7 +77,7 @@ function	AppWrapper(props) {
 				<Navbar router={router} />
 				<div className={'mb-16 relative'}>
 					{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
-						<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'}>
+						<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
 							{'PLEASE SWITCH TO FANTOM NETWORK'}
 						</div>
 					) : null}

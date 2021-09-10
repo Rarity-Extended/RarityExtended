@@ -130,7 +130,7 @@ export const Web3ContextApp = ({children}) => {
 				deactivate();
 			}
 			const walletconnect = new WalletConnectConnector({
-				rpc: {250: 'https://rpc.ftm.tools'},
+				rpc: {1: 'https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161', 250: 'https://rpc.ftm.tools'},
 				chainId: 250,
 				bridge: 'https://bridge.walletconnect.org',
 				pollingInterval: 12000,
