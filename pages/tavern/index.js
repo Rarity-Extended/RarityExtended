@@ -298,7 +298,7 @@ function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, active}) {
 							<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>{'here'}</Typer>
 						</a>&nbsp;
 						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
-							{'to check your investment, until the bank is build is this humble town !'}
+							{'to check your investment, until the bank is build in this humble town !'}
 						</Typer>&nbsp;
 					</>
 				);
