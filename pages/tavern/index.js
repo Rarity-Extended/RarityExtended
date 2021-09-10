@@ -285,12 +285,12 @@ function	FacuHeadline({router, vaultAPY, ftmBalance}) {
 			}
 			return (
 				<>
-					<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>{'Oh yes. You have what ?'}</Typer>&nbsp;
+					<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>{'OH YES. YOU HAVE WHAT ?'}</Typer>&nbsp;
 					<span className={'text-tag-info'}>
 						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>{`${formatAmount(ftmBalance, 2)} FTM`}</Typer>
 					</span>&nbsp;
 					<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
-						{'? I have a friend, the wife of the uncle of one of my cousin (on my mother\'s side), that has really good plan. The current APY is'}
+						{'? I HAVE A FRIEND, THE WIFE OF THE UNCLE OF ONE OF MY COUSINS (ON MY MOTHER\'S SIDE), THAT HAS A REALLY GOOD PLAN. THE CURRENT APY IS'}
 					</Typer>&nbsp;
 					<span className={'text-tag-info'}>
 						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 3}>
@@ -298,7 +298,7 @@ function	FacuHeadline({router, vaultAPY, ftmBalance}) {
 						</Typer>
 					</span>
 					<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 4}>
-						{'. Do you want to Ape-in ?'}
+						{'. DO YOU WANT TO APE-IN'}
 					</Typer>
 				</>
 			);
