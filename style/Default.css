@@ -135,7 +135,7 @@
 
 /* NES EDITS */
 
-.nes-balloon, .nes-balloon.is-dark, .nes-btn, .nes-container.is-rounded, .nes-container.is-rounded.is-dark, .nes-dialog.is-rounded, .nes-dialog.is-rounded.is-dark, .nes-progress, .nes-progress.is-rounded, .nes-table.is-bordered, .nes-table.is-dark.is-bordered, .nes-input,
+.nes-balloon, .nes-btn, .nes-container.is-rounded, .nes-dialog.is-rounded, .nes-progress, .nes-progress.is-rounded, .nes-table.is-bordered, .nes-table.is-dark.is-bordered, .nes-input,
 .nes-textarea, .nes-select select {
   border-style: solid;
   border-width: 4px;
@@ -143,10 +143,6 @@
 
 .nes-container {
 	position: relative;
-	padding: 1.5rem 2rem;
-	border-color: black;
-	border-style: solid;
-	border-width: 4px;
   }
   
   .nes-container > :last-child {
@@ -166,7 +162,6 @@
 	padding: 0 0.5rem;
 	margin: -2.3rem 0 1rem;
 	font-size: 1rem;
-	background-color: #fff;
   }
   
   .nes-container.with-title.is-centered > .title {
@@ -175,30 +170,6 @@
   
   .nes-container.with-title.is-right > .title {
 	margin: -2rem 0 1rem auto;
-  }
-  
-  .nes-container.is-dark {
-	position: relative;
-	margin: 4px;
-	color: #fff;
-	background-color: #212529;
-	border-color: white;
-  }
-  
-  .nes-container.is-dark::after {
-	position: absolute;
-	top: -7.2px;
-	right: -7.2px;
-	bottom: -7.2px;
-	left: -7.2px;
-	z-index: -1;
-	content: "";
-	background-color: #212529;
-  }
-  
-  .nes-container.is-dark.with-title > .title {
-	color: #fff;
-	background-color: #212529;
   }
   
   .nes-container.is-rounded {
@@ -234,43 +205,6 @@
   .nes-container.is-rounded.with-title.is-right > .title {
 	margin: -1.5rem 0 1rem auto;
   }
-  
-  .nes-container.is-rounded.is-dark {
-	border-image-slice: 3;
-	border-image-width: 3;
-	border-image-repeat: stretch;
-	border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="8" height="8" xmlns="http://www.w3.org/2000/svg"><path d="M3 1 h1 v1 h-1 z M4 1 h1 v1 h-1 z M2 2 h1 v1 h-1 z M5 2 h1 v1 h-1 z M1 3 h1 v1 h-1 z M6 3 h1 v1 h-1 z M1 4 h1 v1 h-1 z M6 4 h1 v1 h-1 z M2 5 h1 v1 h-1 z M5 5 h1 v1 h-1 z M3 6 h1 v1 h-1 z M4 6 h1 v1 h-1 z" fill="rgb(255,255,255)" /></svg>');
-	border-image-outset: 0;
-  }
-  
-  @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
-	.nes-container.is-rounded.is-dark {
-	  border-image-repeat: space;
-	}
-  }
-  
-  @supports (-moz-appearance: meterbar) {
-	.nes-container.is-rounded.is-dark {
-	  border-image-repeat: stretch;
-	}
-  }
-  
-  .nes-container.is-rounded.is-dark::after {
-	content: none;
-  }
-  
-  .nes-container.is-rounded.is-dark.with-title > .title {
-	margin-top: -1.3rem;
-  }
-  
-  .nes-container.is-rounded.is-dark.with-title.is-centered > .title {
-	margin: -1.3rem auto 1rem;
-  }
-  
-  .nes-container.is-rounded.is-dark.with-title.is-right > .title {
-	margin: -1.3rem 0 1rem auto;
-  }
-  
 
   progress {
 	vertical-align: baseline;
@@ -415,17 +349,16 @@
 	}
   
  .nes-balloon {
-	border-image-slice: 3;
+	/* border-image-slice: 3;
 	border-image-width: 3;
 	border-image-repeat: stretch;
-	border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="8" height="8" xmlns="http://www.w3.org/2000/svg"><path d="M3 1 h1 v1 h-1 z M4 1 h1 v1 h-1 z M2 2 h1 v1 h-1 z M5 2 h1 v1 h-1 z M1 3 h1 v1 h-1 z M6 3 h1 v1 h-1 z M1 4 h1 v1 h-1 z M6 4 h1 v1 h-1 z M2 5 h1 v1 h-1 z M5 5 h1 v1 h-1 z M3 6 h1 v1 h-1 z M4 6 h1 v1 h-1 z" fill="rgb(33,37,41)" /></svg>');
+	border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="8" height="8" xmlns="http://www.w3.org/2000/svg"><path d="M3 1 h1 v1 h-1 z M4 1 h1 v1 h-1 z M2 2 h1 v1 h-1 z M5 2 h1 v1 h-1 z M1 3 h1 v1 h-1 z M6 3 h1 v1 h-1 z M1 4 h1 v1 h-1 z M6 4 h1 v1 h-1 z M2 5 h1 v1 h-1 z M5 5 h1 v1 h-1 z M3 6 h1 v1 h-1 z M4 6 h1 v1 h-1 z" fill="rgb(33,37,41)" /></svg>'); */
 	border-image-outset: 2;
 	position: relative;
 	display: inline-block;
 	padding: 1rem 1.5rem;
 	margin: 8px;
 	margin-bottom: 30px;
-	background-color: #fff;
   }
   
   @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
@@ -550,44 +483,6 @@
 	}
   }
   
-  .nes-radio.is-dark + span {
-	color: #fff;
-  }
-  
-  .nes-radio.is-dark + span::before {
-	/* stylelint-disable-line no-descending-specificity */
-	color: #fff;
-  }
-  
-  .nes-radio.is-dark:checked + span::before {
-	width: 2px;
-	height: 2px;
-	color: #adafbc;
-	box-shadow: 2px 2px,4px 2px,2px 4px,4px 4px,6px 4px,8px 4px,2px 6px,4px 6px,6px 6px,8px 6px,10px 6px,2px 8px,4px 8px,6px 8px,8px 8px,10px 8px,12px 8px,2px 10px,4px 10px,6px 10px,8px 10px,10px 10px,2px 12px,4px 12px,6px 12px,8px 12px,2px 14px,4px 14px;
-	color: #fff;
-  }
-  
-  @supports (-moz-appearance: meterbar) {
-	.nes-radio.is-dark:checked + span::before {
-	  box-shadow: 2px 2px 0 0.020em,4px 2px 0 0.020em,2px 4px 0 0.020em,4px 4px 0 0.020em,6px 4px 0 0.020em,8px 4px 0 0.020em,2px 6px 0 0.020em,4px 6px 0 0.020em,6px 6px 0 0.020em,8px 6px 0 0.020em,10px 6px 0 0.020em,2px 8px 0 0.020em,4px 8px 0 0.020em,6px 8px 0 0.020em,8px 8px 0 0.020em,10px 8px 0 0.020em,12px 8px 0 0.020em,2px 10px 0 0.020em,4px 10px 0 0.020em,6px 10px 0 0.020em,8px 10px 0 0.020em,10px 10px 0 0.020em,2px 12px 0 0.020em,4px 12px 0 0.020em,6px 12px 0 0.020em,8px 12px 0 0.020em,2px 14px 0 0.020em,4px 14px 0 0.020em;
-	}
-  }
-  
-  .nes-radio.is-dark:checked:focus + span::before {
-	width: 2px;
-	height: 2px;
-	color: #adafbc;
-	box-shadow: 2px 2px,4px 2px,2px 4px,4px 4px,6px 4px,8px 4px,2px 6px,4px 6px,6px 6px,8px 6px,10px 6px,2px 8px,4px 8px,6px 8px,8px 8px,10px 8px,12px 8px,2px 10px,4px 10px,6px 10px,8px 10px,10px 10px,2px 12px,4px 12px,6px 12px,8px 12px,2px 14px,4px 14px;
-	color: #fff;
-  }
-  
-  @supports (-moz-appearance: meterbar) {
-	.nes-radio.is-dark:checked:focus + span::before {
-	  box-shadow: 2px 2px 0 0.020em,4px 2px 0 0.020em,2px 4px 0 0.020em,4px 4px 0 0.020em,6px 4px 0 0.020em,8px 4px 0 0.020em,2px 6px 0 0.020em,4px 6px 0 0.020em,6px 6px 0 0.020em,8px 6px 0 0.020em,10px 6px 0 0.020em,2px 8px 0 0.020em,4px 8px 0 0.020em,6px 8px 0 0.020em,8px 8px 0 0.020em,10px 8px 0 0.020em,12px 8px 0 0.020em,2px 10px 0 0.020em,4px 10px 0 0.020em,6px 10px 0 0.020em,8px 10px 0 0.020em,10px 10px 0 0.020em,2px 12px 0 0.020em,4px 12px 0 0.020em,6px 12px 0 0.020em,8px 12px 0 0.020em,2px 14px 0 0.020em,4px 14px 0 0.020em;
-	}
-  }
-
-
   .loader {
 	animation: spin 1s linear infinite;
 	height: 10px;

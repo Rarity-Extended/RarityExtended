@@ -107,7 +107,7 @@ const	classes = {
 function	Adventurer({rarityClass, adventurer, router}) {
 	return (
 		<div
-			className={'w-full md:w-60 border-black border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-50 transition-colors cursor-pointer relative mb-4 md:mb-0'}
+			className={'w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-50 dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}
 			onClick={() => {
 				router.push(`/dungeons/the-cellar?adventurer=${adventurer.tokenID}`);
 			}}>
@@ -126,7 +126,7 @@ function	Class({provider, rarityClass, fetchRarity, router}) {
 	const	[isLoading, set_isLoading] = useState(false);
 	return (
 		<div
-			className={'w-full md:w-60 border-black border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-50 transition-colors cursor-pointer relative mb-4 md:mb-0'}
+			className={'w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-50 dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}
 			onClick={() => {
 				if (isLoading) {
 					return;
@@ -311,7 +311,7 @@ function	FacuHeadline({router, vaultAPY, ftmBalance}) {
 		return null;
 	};
 	return (
-		<h1 key={router?.query?.tab} className={'text-lg bg-white leading-10 whitespace-pre-line mt-10'}>
+		<h1 key={router?.query?.tab} className={'text-lg leading-10 whitespace-pre-line mt-10'}>
 			{renderFacuText()}
 		</h1>
 	);

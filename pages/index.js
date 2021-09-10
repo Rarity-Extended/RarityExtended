@@ -52,7 +52,7 @@ function	DailyBalloon({rarity, chainTime, provider, router, updateRarity}) {
 
 	if (ask <= 0 && canAdventure) {
 		return (
-			<div className={'nes-balloon relative from-left text-xs md:text-base'}>
+			<div className={'nes-balloon rounded-lg border-black dark:border-dark-100 border-4 relative from-left text-xs md:text-base'}>
 				<div className={'mb-2'}>
 					{'Would you like to go in an adventure ?'}
 					<div className={'mt-6'}>
@@ -74,6 +74,7 @@ function	DailyBalloon({rarity, chainTime, provider, router, updateRarity}) {
 										updateRarity(data);
 									});
 								}} />
+							<span className={'inline mb-1 mr-2 group-hover:opacity-100'} style={{cursor: 'pointer'}}>{'>'}</span>
 							<span>{'Yes'}</span>
 						</label>
 						<label className={'ml-6'}>
@@ -90,7 +91,7 @@ function	DailyBalloon({rarity, chainTime, provider, router, updateRarity}) {
 	}
 	if (ask <= 1 && canDungeonTheCellar) {
 		return (
-			<div className={'nes-balloon relative from-left text-xs md:text-base'}>
+			<div className={'nes-balloon rounded-lg border-black dark:border-dark-100 border-4 relative from-left text-xs md:text-base'}>
 				<div className={'mb-2'}>
 					{'Would you like to hunt the Big Ugly Rat in the Cellar ?'}
 					<div className={'mt-6'}>
@@ -122,7 +123,7 @@ function	DailyBalloon({rarity, chainTime, provider, router, updateRarity}) {
 	}
 	if (ask <= 2 && canGold) {
 		return (
-			<div className={'nes-balloon relative from-left text-xs md:text-base '}>
+			<div className={'nes-balloon rounded-lg border-black dark:border-dark-100 border-4 relative from-left text-xs md:text-base '}>
 				<div className={'mb-2'}>
 					{`Would you like to claim your ${Number(rarity?.gold?.claimable)} golds ?`}
 					<div className={'mt-6'}>
@@ -156,7 +157,7 @@ function	DailyBalloon({rarity, chainTime, provider, router, updateRarity}) {
 	}
 
 	return (
-		<div className={'nes-balloon relative from-left text-xs md:text-base'}>
+		<div className={'nes-balloon rounded-lg border-black dark:border-dark-100 border-4 relative from-left text-xs md:text-base'}>
 			<p>{`Next adventure ready ${dayjs(new Date(rarity.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}</p>
 		</div>
 	);
@@ -186,7 +187,7 @@ function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute, t
 
 	return (
 		<div className={'flex flex-row items-center w-full py-2'}>
-			<div className={'text-gray-800 text-sm'}>{`${name}: `}</div>
+			<div className={'opacity-80 text-sm'}>{`${name}: `}</div>
 			<div className={'w-full text-right'}>
 				<div className={'flex flex-row items-center justify-end'}>
 					<div 
@@ -265,10 +266,10 @@ function	Attributes({rarity, updateRarity, provider}) {
 	}
 
 	return (
-		<div className={'nes-container with-title w-full md:w-1/3 -mt-1 md:mt-0'}>
-			<div className={'title mb-1'}>{'Attributes'}</div>
+		<div className={'nes-container py-6 px-8 border-4 border-solid border-black dark:border-dark-100 with-title w-full md:w-1/3 -mt-1 md:mt-0'}>
+			<div className={'title bg-white dark:bg-dark-600 mb-1'}>{'Attributes'}</div>
 			{updateAttribute.remainingPoints >= 0 ? (
-				<p onClick={buyPoints} className={` text-xss border-t-2 border-b-2 border-black py-1 my-2 ${updateAttribute.remainingPoints === 0 ? 'animate-pulse text-center cursor-pointer hover:bg-black hover:animate-none hover:text-white' : ''}`}>
+				<p onClick={buyPoints} className={` text-xss border-t-2 border-b-2 border-black dark:border-dark-100 py-1 my-2 ${updateAttribute.remainingPoints === 0 ? 'animate-pulse text-center cursor-pointer hover:bg-black hover:animate-none hover:text-white' : ''}`}>
 					{updateAttribute.remainingPoints === 0 ?
 						'▶ Save you stats ! ◀'
 						:
@@ -347,40 +348,40 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 				</div>
 			</div>
 			<div className={'flex flex-col md:flex-row w-full space-x-0 md:space-x-2'}>
-				<div className={'nes-container with-title w-full md:w-2/3'}>
-					<p className={'title mb-1'}>{rarity.tokenID}</p>
+				<div className={'nes-container py-6 px-8 border-4 border-solid border-black dark:border-dark-100 with-title w-full md:w-2/3'}>
+					<p className={'title bg-white dark:bg-dark-600 mb-1'}>{rarity.tokenID}</p>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'text-gray-800 text-sm w-48'}>{'ID:'}</div>
+						<div className={'opacity-80 text-sm w-48'}>{'ID:'}</div>
 						<div className={'w-full'}>
 							<p>{rarity.tokenID}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'text-gray-800 text-sm w-48'}>{'CLASS:'}</div>
+						<div className={'opacity-80 text-sm w-48'}>{'CLASS:'}</div>
 						<div className={'w-full'}>
 							<p>{classMapping[rarity.class]}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'text-gray-800 text-sm w-48'}>{'LEVEL:'}</div>
+						<div className={'opacity-80 text-sm w-48'}>{'LEVEL:'}</div>
 						<div className={'w-full'}>
 							<p>{rarity.level}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'text-gray-800 text-sm w-48'}>{'GOLD:'}</div>
+						<div className={'opacity-80 text-sm w-48'}>{'GOLD:'}</div>
 						<div className={'w-full'}>
 							<p className={'inline'}>{`${Number(rarity?.gold?.balance || 0) === 0 ? '0' : rarity.gold.balance}`}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'text-gray-800 text-sm w-48'}>{'Rat Skin:'}</div>
+						<div className={'opacity-80 text-sm w-48'}>{'Rat Skin:'}</div>
 						<div className={'w-full'}>
 							<p className={'inline'}>{`${Number(rarity?.dungeons?.cellar?.lootBalance || 0) === 0 ? '0' : rarity?.dungeons?.cellar?.lootBalance}`}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'text-gray-800 text-sm w-48'}>{'XP:'}</div>
+						<div className={'opacity-80 text-sm w-48'}>{'XP:'}</div>
 						<div className={'w-full'}>
 							<div
 								onClick={() => {
