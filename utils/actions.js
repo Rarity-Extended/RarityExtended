@@ -196,17 +196,6 @@ export async function	apeInVault({provider, contractAddress, amount}, callback) 
 	);
 
 	/**********************************************************************
-	**	In order to avoid dumb error, let's first check if the TX would
-	**	be successful with a static call
-	**********************************************************************/
-	try {
-		await rarity.callStatic.deposit({value: amount});
-	} catch (error) {
-		callback({error, data: undefined});
-		return;
-	}
-
-	/**********************************************************************
 	**	If the call is successful, try to perform the actual TX
 	**********************************************************************/
 	try {
