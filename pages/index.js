@@ -325,7 +325,7 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 	return (
 		<div className={'w-full'}>
 			<div className={'flex flex-row w-full mb-6'}>
-				<div className={'w-full flex justify-start flex-row'}>
+				<div className={'w-full flex flex-col-reverse md:flex-row justify-start'}>
 					<div className={'w-64'} style={{minWidth: 256}}>
 						<Image
 							src={classMappingImg[rarity.class]}
@@ -335,7 +335,7 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 							height={256} />
 					</div>
 					<div>
-						<section className={'message -left -mt-16 md:mt-0'}>
+						<section className={'message -left'}>
 							<DailyBalloon
 								rarity={rarity}
 								chainTime={chainTime}

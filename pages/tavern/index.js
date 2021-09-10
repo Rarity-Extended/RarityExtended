@@ -161,8 +161,8 @@ function	Class({provider, rarityClass, fetchRarity, router}) {
 
 function	RecruitTab({shouldDisplay, router, provider, fetchRarity}) {
 	return (
-		<div className={`flex flex-row w-full flex-wrap items-center justify-center ${shouldDisplay ? '' : 'opacity-0 h-0 max-h-0 min-h-0 pointer-events-none'}`}>
-			<div className={`grid-cols-4 gap-8 ${shouldDisplay ? 'grid' : 'flex'}`}>
+		<div className={`flex flex-row w-full flex-wrap items-center justify-center ${shouldDisplay ? '' : 'opacity-0 h-0 max-h-0 min-h-0 w-0 max-w-0 min-w-0 pointer-events-none'}`}>
+			<div className={`grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 ${shouldDisplay ? 'grid' : 'hidden md:flex'}`}>
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Barbarian']} />
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Bard']} />
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Cleric']} />
@@ -188,7 +188,7 @@ function	DungeonTab({shouldDisplay, rarities, router}) {
 	return (
 		<div className={'flex flex-col w-full'}>
 			<div className={'pb-10'}>
-				<i className={'text-xs text-black text-opacity-60'}>
+				<i className={'text-sx md:text-xs text-black text-opacity-60 leading-6'}>
 					{'Facu, the Tavern’s owner, has heard some scurrying about down in his cellar. He went down to check it and found swarms of hungry rats. In his earlier days, Facu the Committer would have squashed those pests, but these days he’s weak and frail. Do you want to help him out? Anything you find you get to keep.'}
 				</i>
 				<div className={'mt-6'}>
@@ -198,13 +198,13 @@ function	DungeonTab({shouldDisplay, rarities, router}) {
 				</div>
 			</div>
 			<div>
-				<div className={'grid grid-cols-4 gap-8'}>
+				<div className={'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8'}>
 					{Object.values(rarities)?.filter((adventurer) => {
 						const	canAdventure = !dayjs(new Date(adventurer?.dungeons?.cellar?.nextAvailability * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
 						return canAdventure;
 					}).map((adventurer) => {
 						return (
-							<div key={adventurer.tokenID} className={'w-1/4'}>
+							<div key={adventurer.tokenID} className={'w-full md:w-1/4'}>
 								<Adventurer
 									router={router}
 									adventurer={adventurer}
@@ -224,18 +224,18 @@ function	NewsTab({shouldDisplay}) {
 	}
 	return (
 		<div className={'flex flex-col w-full'}>
-			<div className={'pb-10 text-xs leading-6'}>
-				<i className={'text-black text-opacity-60'}>
+			<div className={'pb-10'}>
+				<i className={'text-black text-opacity-60 text-sx md:text-xs leading-4 md:leading-4'}>
 					{'OYE OYE ! FIND THE LATEST NEWS IN OUR AMAZING WORLD IN THE DAILY EXTENDED ! GET READY FOR A BIG ADVENTURE, FROM OUR HUMBLE TOWN TO THE DARK FOREST OF SMUGLEWIND ! NEWS, ANNOUNCES, AND PUBLIC WORKS, EVERYTHING IS IN THE DAILY EXTENDED !'}
 				</i>
 				<div className={'mt-10'}>
-					<p className={'text-base'}>{'> THE BIG UGLY RAT IN THE CELLAR'}</p>
-					<p className={'text-xs leading-6'}>{'WHICH OF US WAS SURPRISED TO LEARN THAT THE TAVERN\'S CELLAR WAS HOME TO THE LARGEST AND UGLIEST RAT EVER RECORDED ? THE LEGENDS SAY THAT IT CAN DEFEAT AN ADVENTURER IN A FEW BITES! AND THE TREASURE IS NOT EVEN GREAT! AND YES, I COULDN\'T BEAT THIS RAT, SO WHAT?'}</p>
+					<p className={'text-sm md:text-base mb-2 md:mb-0 leading-4 md:leading-6'}>{'> THE BIG UGLY RAT IN THE CELLAR'}</p>
+					<p className={'text-sx md:text-xs leading-4 md:leading-6'}>{'WHICH OF US WAS SURPRISED TO LEARN THAT THE TAVERN\'S CELLAR WAS HOME TO THE LARGEST AND UGLIEST RAT EVER RECORDED ? THE LEGENDS SAY THAT IT CAN DEFEAT AN ADVENTURER IN A FEW BITES! AND THE TREASURE IS NOT EVEN GREAT! AND YES, I COULDN\'T BEAT THIS RAT, SO WHAT?'}</p>
 				</div>
 
 				<div className={'mt-10'}>
-					<p className={'text-base'}>{'> THE TAVERN KEEPER IS ACTUALLY MOVING !!!'}</p>
-					<p className={'text-xs leading-6'}>{'MAYBE YOU NEVER NOTICED IT, BUT AFTER 4 DAYS SPENT HANGING OUT IN THIS GLOOMY INN, THIS IS THE FIRST TIME I SEE FACU, THE TAVERN KEEPER, MOVING! WHEN HE WINKED, I THOUGHT I WAS GOING CRAZY, BUT NO, HE IS MOVING ! DOES IT MEAN THAT WE WILL ALL MOVE ONE DAY TOO?'}</p>
+					<p className={'text-sm md:text-base mb-2 md:mb-0 leading-4 md:leading-6'}>{'> THE TAVERN KEEPER IS ACTUALLY MOVING !!!'}</p>
+					<p className={'text-sx md:text-xs leading-4 md:leading-6'}>{'MAYBE YOU NEVER NOTICED IT, BUT AFTER 4 DAYS SPENT HANGING OUT IN THIS GLOOMY INN, THIS IS THE FIRST TIME I SEE FACU, THE TAVERN KEEPER, MOVING! WHEN HE WINKED, I THOUGHT I WAS GOING CRAZY, BUT NO, HE IS MOVING ! DOES IT MEAN THAT WE WILL ALL MOVE ONE DAY TOO?'}</p>
 				</div>
 			</div>
 		</div>
@@ -338,7 +338,7 @@ function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositErr
 		return null;
 	};
 	return (
-		<h1 key={router?.query?.tab} className={'text-lg bg-white leading-10 whitespace-pre-line mt-10'}>
+		<h1 key={router?.query?.tab} className={'text-sm md:text-lg bg-white leading-normal md:leading-10 whitespace-pre-line mt-10'}>
 			{renderFacuText()}
 		</h1>
 	);
@@ -399,10 +399,10 @@ function	Index({fetchRarity, rarities, router}) {
 	}, [address, provider]);
 
 	return (
-		<section className={'mt-12'}>
+		<section className={'mt-12  max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<div className={'flex flex-row mb-8'}>
-					<div className={'w-64 mr-16'} style={{minWidth: 256}}>
+				<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-0'}>
+					<div className={'w-auto md:w-64'} style={{minWidth: 256}}>
 						<Image
 							src={'/avatar/facu.gif'}
 							loading={'eager'}
