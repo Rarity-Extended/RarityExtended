@@ -187,7 +187,7 @@ export async function	lootDungeonTheCellar({provider, contractAddress, tokenID},
 }
 
 
-export async function	apeInVault({provider, contractAddress}, callback) {
+export async function	apeInVault({provider, contractAddress, amount}, callback) {
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
 		contractAddress,
@@ -196,22 +196,10 @@ export async function	apeInVault({provider, contractAddress}, callback) {
 	);
 
 	/**********************************************************************
-	**	In order to avoid dumb error, let's first check if the TX would
-	**	be successful with a static call
-	**********************************************************************/
-	console.log(ethers.utils.parseEther('1').toString());
-	// try {
-	// 	await rarity.callStatic.deposit({value: 1});
-	// } catch (error) {
-	// 	callback({error, data: undefined});
-	// 	return;
-	// }
-
-	/**********************************************************************
 	**	If the call is successful, try to perform the actual TX
 	**********************************************************************/
 	try {
-		const	transaction = await rarity.deposit({value: '1'});
+		const	transaction = await rarity.deposit({value: amount});
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: undefined});

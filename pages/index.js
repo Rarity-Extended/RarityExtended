@@ -187,7 +187,7 @@ function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute, t
 
 	return (
 		<div className={'flex flex-row items-center w-full py-2'}>
-			<div className={'opacity-80 text-sm'}>{`${name}: `}</div>
+			<div className={'opacity-80 text-xs md:text-sm'}>{`${name}: `}</div>
 			<div className={'w-full text-right'}>
 				<div className={'flex flex-row items-center justify-end'}>
 					<div 
@@ -326,7 +326,7 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 	return (
 		<div className={'w-full'}>
 			<div className={'flex flex-row w-full mb-6'}>
-				<div className={'w-full flex justify-start flex-row'}>
+				<div className={'w-full flex flex-col-reverse md:flex-row justify-start'}>
 					<div className={'w-64'} style={{minWidth: 256}}>
 						<Image
 							src={classMappingImg[rarity.class]}
@@ -336,7 +336,7 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 							height={256} />
 					</div>
 					<div>
-						<section className={'message -left -mt-16 md:mt-0'}>
+						<section className={'message -left'}>
 							<DailyBalloon
 								rarity={rarity}
 								chainTime={chainTime}
@@ -351,27 +351,27 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 				<div className={'nes-container py-6 px-8 border-4 border-solid border-black dark:border-dark-100 with-title w-full md:w-2/3'}>
 					<p className={'title bg-white dark:bg-dark-600 mb-1'}>{rarity.tokenID}</p>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'opacity-80 text-sm w-48'}>{'ID:'}</div>
-						<div className={'w-full'}>
+						<div className={'opacity-80 text-xs md:text-sm w-48'}>{'ID:'}</div>
+						<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 							<p>{rarity.tokenID}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'opacity-80 text-sm w-48'}>{'CLASS:'}</div>
-						<div className={'w-full'}>
+						<div className={'opacity-80 text-xs md:text-sm w-48'}>{'CLASS:'}</div>
+						<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 							<p>{classMapping[rarity.class]}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'opacity-80 text-sm w-48'}>{'LEVEL:'}</div>
-						<div className={'w-full'}>
+						<div className={'opacity-80 text-xs md:text-sm w-48'}>{'LEVEL:'}</div>
+						<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 							<p>{rarity.level}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'opacity-80 text-sm w-48'}>{'GOLD:'}</div>
-						<div className={'w-full'}>
-							<p className={'inline'}>{`${Number(rarity?.gold?.balance || 0) === 0 ? '0' : rarity.gold.balance}`}</p>
+						<div className={'opacity-80 text-xs md:text-sm w-48'}>{'GOLD:'}</div>
+						<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
+							<p>{`${Number(rarity?.gold?.balance || 0) === 0 ? '0' : rarity.gold.balance}`}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
@@ -418,7 +418,7 @@ function	Index({rarities = [], updateRarity, router}) {
 	const	{provider, chainTime} = useWeb3();
 
 	return (
-		<section className={'mt-12'}>
+		<section className={'mt-24 md:mt-12'}>
 			<div className={'flex flex-col space-y-32 max-w-screen-lg w-full mx-auto'}>
 				{
 					Object.values(rarities)?.map((rarity) => (

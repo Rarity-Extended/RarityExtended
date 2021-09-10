@@ -149,19 +149,19 @@ function	Index({dungeon, adventurer, router}) {
 	return (
 		<section className={'mt-12 relative'}>
 			<div className={`absolute bg-black inset-0 z-10 -top-24 -left-4 -right-4 flex flex-col items-center min-h-screen transition-opacity duration-1000 ${adventurerHealth <= 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-				<p className={'text-2xl text-white pt-64 max-w-screen-sm text-center'}>{'you passed out'}</p>
-				<p className={'text-base text-white pt-8 max-w-screen-sm text-center'}>{'After some time, the rat returns to his hole and Facu the tavernkeeper, worried, finds you lying on the floor'}</p>
+				<p className={'text-2xl text-white pt-20 mx-4 md:mx-0 md:pt-64 max-w-screen-sm text-center'}>{'you passed out'}</p>
+				<p className={'text-base text-white pt-8 mx-4 md:mx-0 max-w-screen-sm text-center'}>{'After some time, the rat returns to his hole and Facu the tavernkeeper, worried, finds you lying on the floor'}</p>
 				<Link href={'/tavern?tab=the-cellar'}>
-					<div className={'text-base text-white mt-16 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 border-white hover:bg-white hover:text-black transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
+					<div className={'text-base text-white mt-16 mx-4 md:mx-0 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 border-white hover:bg-white hover:text-black transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
 						{'Rest weak adventurer, Rest...'}
 					</div>
 				</Link>
 			</div>
 			<div className={'max-w-screen-sm w-full mx-auto'}>
 				<div className={'flex flex-col items-center'}>
-					<div className={'w-full flex flex-row ml-32'}>
+					<div className={'w-full flex flex-row ml-0 md:ml-32'}>
 						<div className={'w-full mr-14'}>
-							<p>{'Big Ugly Rat'}</p>
+							<p className={'whitespace-nowrap'}>{'Big Ugly Rat'}</p>
 							<div className={'flex flex-row items-center w-full py-2'}>
 								<div className={'text-gray-800 text-sm w-32'}>{'HP:'}</div>
 								<progress
@@ -170,7 +170,7 @@ function	Index({dungeon, adventurer, router}) {
 									max={dungeon.dungeonHealth} />
 							</div>
 						</div>
-						<div className={'w-60 transform'} style={{transform: dungeonHealth <= 0 ? 'rotate3d(0, 1, 0, 0deg)' : 'rotate3d(0, 1, 0, 180deg)', minWidth: 240, opacity: ratEscaped ? 0 : 100}}>
+						<div className={'w-60 hidden md:block transform'} style={{transform: dungeonHealth <= 0 ? 'rotate3d(0, 1, 0, 0deg)' : 'rotate3d(0, 1, 0, 180deg)', minWidth: 240, opacity: ratEscaped ? 0 : 100}}>
 							<Image
 								src={dungeonHealth <= 0 ? '/dungeons/rat_dead.png' : '/dungeons/rat.gif'}
 								loading={'eager'}
@@ -178,10 +178,18 @@ function	Index({dungeon, adventurer, router}) {
 								width={240}
 								height={141} />
 						</div>
+						<div className={'w-30 block md:hidden transform'} style={{transform: dungeonHealth <= 0 ? 'rotate3d(0, 1, 0, 0deg)' : 'rotate3d(0, 1, 0, 180deg)', minWidth: 120, opacity: ratEscaped ? 0 : 100}}>
+							<Image
+								src={dungeonHealth <= 0 ? '/dungeons/rat_dead.png' : '/dungeons/rat.gif'}
+								loading={'eager'}
+								quality={100}
+								width={120}
+								height={70.5} />
+						</div>
 					</div>
 
-					<div className={'w-full flex flex-row -mt-10 mr-32'}>
-						<div className={'w-60'} style={{minWidth: 240}}>
+					<div className={'w-full flex flex-row mt-2 md:-mt-10 mr-0 md:mr-32'}>
+						<div className={'w-60 hidden md:block'} style={{minWidth: 240}}>
 							<Image
 								src={classMappingBackImg[adventurer.class]}
 								loading={'eager'}
@@ -189,6 +197,15 @@ function	Index({dungeon, adventurer, router}) {
 								width={240}
 								height={240} />
 						</div>
+						<div className={'w-32 block md:hidden'} style={{minWidth: 120}}>
+							<Image
+								src={classMappingBackImg[adventurer.class]}
+								loading={'eager'}
+								quality={100}
+								width={120}
+								height={120} />
+						</div>
+
 						<div className={'w-full mt-auto mb-2'}>
 							<p>{dungeon.tokenID}</p>
 							<div className={'flex flex-row items-center w-full py-2'}>

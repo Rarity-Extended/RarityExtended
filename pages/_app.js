@@ -73,11 +73,11 @@ function	AppWrapper(props) {
 					site: '@MajorTom_Eth',
 					cardType: 'summary_large_image',
 				}} />
-			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{minHeight: '100vh'}}>
+			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{width: 'calc(100% - 1.5rem)', minHeight: '100vh'}}>
 				<Navbar router={router} />
 				<div className={'mb-16 relative'}>
 					{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
-						<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'}>
+						<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
 							{'PLEASE SWITCH TO FANTOM NETWORK'}
 						</div>
 					) : null}
@@ -91,7 +91,7 @@ function	AppWrapper(props) {
 						rNonce={rNonce}
 						{...pageProps} />
 				</div>
-				<div className={'absolute bottom-3   text-xxs left-0 right-0 flex flex-col justify-center items-center'}>
+				<div className={'absolute bottom-3 text-center text-xxs left-0 right-0 flex flex-col justify-center items-center'}>
 					<div>
 						<a href={'https://ftmscan.com/token/0xce761d788df608bd21bdd59d6f4b54b2e27f25bb#readContract'} target={'_blank'} rel={'noreferrer'} className={'hover:underline'}>
 							{'Rarity Manifested'}

@@ -9,17 +9,16 @@ import	React, {useState, useEffect}	from	'react';
 import	Image							from	'next/image';
 import	{ethers}						from	'ethers';
 import	useSWR							from	'swr';
-import	Typer							from	'components/Typer';
+import	dayjs							from	'dayjs';
+import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	{recruitAdventurer, apeInVault}	from	'utils/actions';
 import	{formatAmount, fetcher}			from	'utils';
 import	useWeb3							from	'contexts/useWeb3';
 import	DialogBox						from	'components/DialogBox';
-import	dayjs							from	'dayjs';
-import	relativeTime					from	'dayjs/plugin/relativeTime';
-dayjs.extend(relativeTime);
+import	ModalLogin						from	'components/ModalLogin';
+import	Typer							from	'components/Typer';
 
-const		ZAP_VAULT = '0xee2463E7e2Ef526Afa43825318Bf8526E6096F99';
-const		FTM_VAULT = '0x0DEC85e74A92c52b7F708c4B10207D9560CEFaf0';
+dayjs.extend(relativeTime);
 
 const	classNameMapping = [
 	'',
@@ -162,8 +161,8 @@ function	Class({provider, rarityClass, fetchRarity, router}) {
 
 function	RecruitTab({shouldDisplay, router, provider, fetchRarity}) {
 	return (
-		<div className={`flex flex-row w-full flex-wrap items-center justify-center ${shouldDisplay ? '' : 'opacity-0 h-0 max-h-0 min-h-0 pointer-events-none'}`}>
-			<div className={`grid-cols-4 gap-8 ${shouldDisplay ? 'grid' : 'flex'}`}>
+		<div className={`flex flex-row w-full flex-wrap items-center justify-center ${shouldDisplay ? '' : 'opacity-0 h-0 max-h-0 min-h-0 w-0 max-w-0 min-w-0 pointer-events-none'}`}>
+			<div className={`grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 ${shouldDisplay ? 'grid' : 'hidden md:flex'}`}>
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Barbarian']} />
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Bard']} />
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Cleric']} />
@@ -189,7 +188,7 @@ function	DungeonTab({shouldDisplay, rarities, router}) {
 	return (
 		<div className={'flex flex-col w-full'}>
 			<div className={'pb-10'}>
-				<i className={'text-xs'}>
+				<i className={'text-sx md:text-xs text-black dark:text-white text-opacity-60 leading-6'}>
 					{'Facu, the Tavern’s owner, has heard some scurrying about down in his cellar. He went down to check it and found swarms of hungry rats. In his earlier days, Facu the Committer would have squashed those pests, but these days he’s weak and frail. Do you want to help him out? Anything you find you get to keep.'}
 				</i>
 				<div className={'mt-6'}>
@@ -199,13 +198,13 @@ function	DungeonTab({shouldDisplay, rarities, router}) {
 				</div>
 			</div>
 			<div>
-				<div className={'grid grid-cols-4 gap-8'}>
+				<div className={'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8'}>
 					{Object.values(rarities)?.filter((adventurer) => {
 						const	canAdventure = !dayjs(new Date(adventurer?.dungeons?.cellar?.nextAvailability * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
 						return canAdventure;
 					}).map((adventurer) => {
 						return (
-							<div key={adventurer.tokenID} className={'w-1/4'}>
+							<div key={adventurer.tokenID} className={'w-full md:w-1/4'}>
 								<Adventurer
 									router={router}
 									adventurer={adventurer}
@@ -225,32 +224,37 @@ function	NewsTab({shouldDisplay}) {
 	}
 	return (
 		<div className={'flex flex-col w-full'}>
-			<div className={'pb-10 text-xs leading-6'}>
-				<i>
+			<div className={'pb-10'}>
+				<i className={'text-black dark:text-white text-opacity-60 text-sx md:text-xs leading-4 md:leading-4'}>
 					{'OYE OYE ! FIND THE LATEST NEWS IN OUR AMAZING WORLD IN THE DAILY EXTENDED ! GET READY FOR A BIG ADVENTURE, FROM OUR HUMBLE TOWN TO THE DARK FOREST OF SMUGLEWIND ! NEWS, ANNOUNCES, AND PUBLIC WORKS, EVERYTHING IS IN THE DAILY EXTENDED !'}
 				</i>
 				<div className={'mt-10'}>
-					<p className={'text-base'}>{'> THE BIG UGLY RAT IN THE CELLAR'}</p>
-					<p className={'text-xs leading-6'}>{'WHICH OF US WAS SURPRISED TO LEARN THAT THE TAVERN\'S CELLAR WAS HOME TO THE LARGEST AND UGLIEST RAT EVER RECORDED ? THE LEGENDS SAY THAT IT CAN DEFEAT AN ADVENTURER IN A FEW BITES! AND THE TREASURE IS NOT EVEN GREAT! AND YES, I COULDN\'T BEAT THIS RAT, SO WHAT?'}</p>
+					<p className={'text-sm md:text-base mb-2 md:mb-0 leading-4 md:leading-6'}>{'> THE BIG UGLY RAT IN THE CELLAR'}</p>
+					<p className={'text-sx md:text-xs leading-4 md:leading-6'}>{'WHICH OF US WAS SURPRISED TO LEARN THAT THE TAVERN\'S CELLAR WAS HOME TO THE LARGEST AND UGLIEST RAT EVER RECORDED ? THE LEGENDS SAY THAT IT CAN DEFEAT AN ADVENTURER IN A FEW BITES! AND THE TREASURE IS NOT EVEN GREAT! AND YES, I COULDN\'T BEAT THIS RAT, SO WHAT?'}</p>
 				</div>
 
 				<div className={'mt-10'}>
-					<p className={'text-base'}>{'> THE TAVERN KEEPER IS ACTUALLY MOVING !!!'}</p>
-					<p className={'text-xs leading-6'}>{'MAYBE YOU NEVER NOTICED IT, BUT AFTER 4 DAYS SPENT HANGING OUT IN THIS GLOOMY INN, THIS IS THE FIRST TIME I SEE FACU, THE TAVERN KEEPER, MOVING! WHEN HE WINKED, I THOUGHT I WAS GOING CRAZY, BUT NO, HE IS MOVING ! DOES IT MEAN THAT WE WILL ALL MOVE ONE DAY TOO?'}</p>
+					<p className={'text-sm md:text-base mb-2 md:mb-0 leading-4 md:leading-6'}>{'> THE TAVERN KEEPER IS ACTUALLY MOVING !!!'}</p>
+					<p className={'text-sx md:text-xs leading-4 md:leading-6'}>{'MAYBE YOU NEVER NOTICED IT, BUT AFTER 4 DAYS SPENT HANGING OUT IN THIS GLOOMY INN, THIS IS THE FIRST TIME I SEE FACU, THE TAVERN KEEPER, MOVING! WHEN HE WINKED, I THOUGHT I WAS GOING CRAZY, BUT NO, HE IS MOVING ! DOES IT MEAN THAT WE WILL ALL MOVE ONE DAY TOO?'}</p>
 				</div>
 			</div>
 		</div>
 	);
 }
 
-function	FacuHeadline({router, vaultAPY, ftmBalance}) {
+function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositError, isTxPending, active}) {
 	const	[facuTextIndex, set_facuTextIndex] = useState(0);
-
+	
 	useEffect(() => {
 		set_facuTextIndex(0);
-	}, [router?.query?.tab]);
+	}, [router?.query?.tab, hasDeposited]);
 
 	const	renderFacuText = () => {
+		if (!active) {
+			return (
+				<Typer>{'Hello traveler! Welcome to Facu\'s Tavern!\nPerhaps you should consider connecting your wallet ?'}</Typer>
+			);
+		}
 		if (!router?.query?.tab) {
 			return (
 				<Typer>{'Hello traveler! Welcome to Facu\'s Tavern!\nWhat do you want to do ?'}</Typer>
@@ -283,14 +287,37 @@ function	FacuHeadline({router, vaultAPY, ftmBalance}) {
 					</>
 				);
 			}
+			if (hasDepositError) {
+				return (
+					<Typer>{'OH YOU CHANGED YOUR MIND!'}</Typer>
+				);
+			}
+			if (isTxPending) {
+				return (
+					<Typer>{'GREAT CHOICE! LET\'S PROCESS YOUR TRANSACTION'}</Typer>
+				);
+			}
+			if (hasDeposited) {
+				return (
+					<>
+						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>{'THIS IS A GREAT INVESTMENT! TRUST ME! YOU CAN CLICK'}</Typer>&nbsp;
+						<a className={'text-tag-info hover:underline'} href={'https://ape.tax/the-fantom'} target={'_blank'} rel={'noreferrer'}>
+							<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>{'HERE'}</Typer>
+						</a>&nbsp;
+						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
+							{'TO CHECK YOUR INVESTMENT UNTIL THE BANK IS BUILT IN THIS HUMBLE TOWN!'}
+						</Typer>&nbsp;
+					</>
+				);
+			}
 			return (
 				<>
-					<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>{'Oh yes. You have what ?'}</Typer>&nbsp;
+					<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>{'OH YES. YOU HAVE WHAT ?'}</Typer>&nbsp;
 					<span className={'text-tag-info'}>
 						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>{`${formatAmount(ftmBalance, 2)} FTM`}</Typer>
 					</span>&nbsp;
 					<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
-						{'? I have a friend, the wife of the uncle of one of my cousin (on my mother\'s side), that has really good plan. The current APY is'}
+						{'? I HAVE A FRIEND, THE WIFE OF THE UNCLE OF ONE OF MY COUSINS (ON MY MOTHER\'S SIDE), THAT HAS A REALLY GOOD PLAN. THE CURRENT APY IS'}
 					</Typer>&nbsp;
 					<span className={'text-tag-info'}>
 						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 3}>
@@ -298,7 +325,7 @@ function	FacuHeadline({router, vaultAPY, ftmBalance}) {
 						</Typer>
 					</span>
 					<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 4}>
-						{'. Do you want to Ape-in ?'}
+						{'. DO YOU WANT TO APE-IN ?'}
 					</Typer>
 				</>
 			);
@@ -311,20 +338,36 @@ function	FacuHeadline({router, vaultAPY, ftmBalance}) {
 		return null;
 	};
 	return (
-		<h1 key={router?.query?.tab} className={'text-lg leading-10 whitespace-pre-line mt-10'}>
+		<h1 key={router?.query?.tab} className={'text-sm md:text-lg leading-normal md:leading-10 whitespace-pre-line mt-10'}>
 			{renderFacuText()}
 		</h1>
 	);
 }
-function	DialogChoices({router, provider, ftmBalance}) {
+function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConnect, active, set_isTxPending}) {
+	if (!active) {
+		return (
+			<DialogBox
+				options={[
+					{label: 'Connect wallet', onClick: () => onWalletConnect()},
+				]} />
+		);
+	}
 	if (router?.query?.tab === 'ftm-vault' && Number(ftmBalance) > 0) {
 		return (
 			<DialogBox
 				options={[
-					{label: 'Deposit 25%', onClick: () => apeInVault({provider, contractAddress: ZAP_VAULT}, (e) => console.log(e))},
-					{label: 'Deposit 50%', onClick: () => console.log('Deposit 50%')},
-					{label: 'Deposit 75%', onClick: () => console.log('Deposit 75%')},
-					{label: 'Deposit 100%', onClick: () => console.log('Deposit 100%')},
+					{label: 'Deposit 25%', onClick: () => {
+						set_isTxPending(true);
+						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(25).div(100)}, (e) => onFTMDeposit(e));
+					}},
+					{label: 'Deposit 50%', onClick: () => {
+						set_isTxPending(true);
+						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(50).div(100)}, (e) => onFTMDeposit(e));
+					}},
+					{label: 'Deposit 75%', onClick: () => {
+						set_isTxPending(true);
+						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(75).div(100)}, (e) => onFTMDeposit(e));
+					}},
 					{label: 'Nevermind', onClick: () => router.push('/tavern')},
 				]} />
 		);
@@ -341,9 +384,13 @@ function	DialogChoices({router, provider, ftmBalance}) {
 }
 
 function	Index({fetchRarity, rarities, router}) {
-	const	{provider, address} = useWeb3();
+	const	{provider, address, active} = useWeb3();
 	const	[ftmBalance, set_ftmBalance] = useState(0);
-	const	{data: vaultAPY} = useSWR(`https://major.tax/api/specificApy?address=${FTM_VAULT}&network=250`, fetcher);
+	const	[isTxPending, set_isTxPending] = useState(false);
+	const	[hasDeposited, set_hasDeposited] = useState(false);
+	const	[hasDepositError, set_hasDepositError] = useState(false);
+	const	[modalLoginOpen, set_modalLoginOpen] = useState(false);
+	const	{data: vaultAPY} = useSWR(`https://ape.tax/api/specificApy?address=${process.env.FTM_VAULT_ADDR}&network=250`, fetcher);
 
 	useEffect(() => {
 		if (provider && address) {
@@ -352,10 +399,10 @@ function	Index({fetchRarity, rarities, router}) {
 	}, [address, provider]);
 
 	return (
-		<section className={'mt-12'}>
+		<section className={'mt-12 max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<div className={'flex flex-row mb-8'}>
-					<div className={'w-64 mr-16'} style={{minWidth: 256}}>
+				<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-0'}>
+					<div className={'w-auto md:w-64'} style={{minWidth: 256}}>
 						<Image
 							src={'/avatar/facu.gif'}
 							loading={'eager'}
@@ -363,16 +410,39 @@ function	Index({fetchRarity, rarities, router}) {
 							width={256}
 							height={256} />
 					</div>
-					<FacuHeadline router={router} vaultAPY={vaultAPY} ftmBalance={ftmBalance} />
+					<FacuHeadline
+						active={active && address}
+						router={router}
+						vaultAPY={vaultAPY}
+						ftmBalance={ftmBalance}
+						isTxPending={isTxPending}
+						hasDepositError={hasDepositError}
+						hasDeposited={hasDeposited} />
 				</div>
-				<DialogChoices provider={provider} router={router} ftmBalance={ftmBalance} />
+				<DialogChoices
+					active={active && address}
+					provider={provider}
+					router={router}
+					ftmBalance={ftmBalance}
+					hasDeposited={hasDeposited}
+					onWalletConnect={() => set_modalLoginOpen(true)}
+					set_isTxPending={set_isTxPending}
+					onFTMDeposit={({error}) => {
+						if (error) {
+							set_hasDepositError(true);
+							return console.error(error);
+						}
+						provider.getBalance(address).then(b => set_ftmBalance(ethers.utils.formatEther(b)));
+						set_hasDeposited(true);
+						set_isTxPending(false);
+					}} />
 				<section>
 					<NewsTab shouldDisplay={!router?.query?.tab} router={router} provider={provider} fetchRarity={fetchRarity} />
 					<RecruitTab shouldDisplay={router?.query?.tab === 'recruit'} router={router} provider={provider} fetchRarity={fetchRarity} />
 					<DungeonTab shouldDisplay={router?.query?.tab === 'the-cellar'} router={router} rarities={rarities} provider={provider} fetchRarity={fetchRarity} />
 				</section>
 			</div>
-
+			<ModalLogin open={modalLoginOpen} set_open={set_modalLoginOpen} />
 		</section>
 	);
 }
