@@ -243,11 +243,13 @@ function	NewsTab({shouldDisplay}) {
 }
 
 function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositError, isTxPending, active}) {
+	const	[nonce, set_nonce] = useState(0);
 	const	[facuTextIndex, set_facuTextIndex] = useState(0);
 	
 	useEffect(() => {
 		set_facuTextIndex(0);
-	}, [router?.query?.tab, hasDeposited]);
+		set_nonce(n => n+1);
+	}, [router?.query?.tab, isTxPending, hasDeposited, hasDepositError]);
 
 	const	renderFacuText = () => {
 		if (!active) {
@@ -287,11 +289,6 @@ function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositErr
 					</>
 				);
 			}
-			if (hasDepositError) {
-				return (
-					<Typer>{'OH YOU CHANGED YOUR MIND!'}</Typer>
-				);
-			}
 			if (isTxPending) {
 				return (
 					<Typer>{'GREAT CHOICE! LET\'S PROCESS YOUR TRANSACTION'}</Typer>
@@ -308,6 +305,11 @@ function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositErr
 							{'TO CHECK YOUR INVESTMENT UNTIL THE BANK IS BUILT IN THIS HUMBLE TOWN!'}
 						</Typer>&nbsp;
 					</>
+				);
+			}
+			if (hasDepositError) {
+				return (
+					<Typer>{'OH YOU CHANGED YOUR MIND!'}</Typer>
 				);
 			}
 			return (
@@ -338,12 +340,12 @@ function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositErr
 		return null;
 	};
 	return (
-		<h1 key={router?.query?.tab} className={'text-sm md:text-lg leading-normal md:leading-10 whitespace-pre-line mt-10'}>
+		<h1 key={nonce} className={'text-sm md:text-lg leading-normal md:leading-10 whitespace-pre-line mt-10'}>
 			{renderFacuText()}
 		</h1>
 	);
 }
-function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConnect, active, set_isTxPending}) {
+function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConnect, active, isTxPending, set_isTxPending, set_hasDeposited}) {
 	if (!active) {
 		return (
 			<DialogBox
@@ -357,16 +359,34 @@ function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConn
 			<DialogBox
 				options={[
 					{label: 'Deposit 25%', onClick: () => {
+						if (isTxPending)
+							return;
 						set_isTxPending(true);
-						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(25).div(100)}, (e) => onFTMDeposit(e));
+						set_hasDeposited(false);
+						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(25).div(100)}, (e) => {
+							set_isTxPending(false);
+							onFTMDeposit(e);
+						});
 					}},
 					{label: 'Deposit 50%', onClick: () => {
+						if (isTxPending)
+							return;
 						set_isTxPending(true);
-						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(50).div(100)}, (e) => onFTMDeposit(e));
+						set_hasDeposited(false);
+						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(50).div(100)}, (e) => {
+							set_isTxPending(false);
+							onFTMDeposit(e);
+						});
 					}},
 					{label: 'Deposit 75%', onClick: () => {
+						if (isTxPending)
+							return;
 						set_isTxPending(true);
-						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(75).div(100)}, (e) => onFTMDeposit(e));
+						set_hasDeposited(false);
+						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(75).div(100)}, (e) => {
+							set_isTxPending(false);
+							onFTMDeposit(e);
+						});
 					}},
 					{label: 'Nevermind', onClick: () => router.push('/tavern')},
 				]} />
@@ -426,13 +446,16 @@ function	Index({fetchRarity, rarities, router}) {
 					ftmBalance={ftmBalance}
 					hasDeposited={hasDeposited}
 					onWalletConnect={() => set_modalLoginOpen(true)}
+					isTxPending={isTxPending}
 					set_isTxPending={set_isTxPending}
+					set_hasDeposited={set_hasDeposited}
 					onFTMDeposit={({error}) => {
 						if (error) {
 							set_hasDepositError(true);
 							return console.error(error);
 						}
 						provider.getBalance(address).then(b => set_ftmBalance(ethers.utils.formatEther(b)));
+						set_hasDepositError(false);
 						set_hasDeposited(true);
 						set_isTxPending(false);
 					}} />

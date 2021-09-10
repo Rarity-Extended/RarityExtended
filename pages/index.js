@@ -44,11 +44,37 @@ const	classMappingImg = [
 	'/wizard.png',
 ];
 
-function	DailyBalloon({rarity, chainTime, provider, router, updateRarity}) {
+function	DailyBalloon({rarity, chainTime, provider, updateRarity}) {
+	const	[option, set_option] = useState(0);
 	const	[ask, set_ask] = useState(0);
 	const	canAdventure = !dayjs(new Date(rarity.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
-	const	canDungeonTheCellar = !dayjs(new Date(rarity?.dungeons?.cellar?.nextAvailability * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
 	const	canGold = Number(rarity?.gold?.claimable || 0) > 0;
+
+	function	onGoToAdventure() {
+		goAdventure({
+			provider,
+			contractAddress: process.env.RARITY_ADDR,
+			tokenID: rarity.tokenID,
+		}, ({error, data}) => {
+			if (error) {
+				return console.error(error);
+			}
+			updateRarity(data);
+		});
+	}
+
+	function	onClaimGold() {
+		claimGold({
+			provider,
+			contractAddress: process.env.RARITY_GOLD_ADDR,
+			tokenID: rarity.tokenID,
+		}, ({error, data}) => {
+			if (error) {
+				return console.error(error);
+			}
+			updateRarity(data);
+		});
+	}
 
 	if (ask <= 0 && canAdventure) {
 		return (
@@ -56,100 +82,39 @@ function	DailyBalloon({rarity, chainTime, provider, router, updateRarity}) {
 				<div className={'mb-2'}>
 					{'Would you like to go in an adventure ?'}
 					<div className={'mt-6'}>
-						<label>
-							<input
-								type={'radio'}
-								className={'nes-radio'}
-								name={`${rarity.tokenID}_adventure`}
-								defaultChecked
-								onClick={() => {
-									goAdventure({
-										provider,
-										contractAddress: process.env.RARITY_ADDR,
-										tokenID: rarity.tokenID,
-									}, ({error, data}) => {
-										if (error) {
-											return console.error(error);
-										}
-										updateRarity(data);
-									});
-								}} />
+						<span className={'cursor-pointer'} onClick={onGoToAdventure}>
 							<span className={'inline mb-1 mr-2 group-hover:opacity-100'} style={{cursor: 'pointer'}}>{'>'}</span>
 							<span>{'Yes'}</span>
-						</label>
-						<label className={'ml-6'}>
-							<input type={'radio'} className={'nes-radio'} name={`${rarity.tokenID}_adventure`} onClick={() => canGold ? set_ask(1) : null}/>
-							<span>{'no'}</span>
-						</label>
+						</span>
+						<span className={'ml-6 cursor-pointer'} onClick={() => canGold ? set_ask(1) : null}>
+							<span className={'inline mb-1 mr-2 opacity-5'} style={{cursor: 'pointer'}}>{'>'}</span>
+							<span className={'opacity-40'}>{'no'}</span>
+						</span>
 					</div>
 				</div>
-				{canDungeonTheCellar || canGold ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(1)}>
-					{'▸'}
-				</div> : null}
-			</div>
-		);
-	}
-	if (ask <= 1 && canDungeonTheCellar) {
-		return (
-			<div className={'nes-balloon rounded-lg border-black dark:border-dark-100 border-4 relative from-left text-xs md:text-base'}>
-				<div className={'mb-2'}>
-					{'Would you like to hunt the Big Ugly Rat in the Cellar ?'}
-					<div className={'mt-6'}>
-						<label>
-							<input
-								type={'radio'}
-								className={'nes-radio'}
-								name={`${rarity.tokenID}_adventure`}
-								defaultChecked
-								onClick={() => {
-									router.push(`/dungeons/the-cellar?adventurer=${rarity.tokenID}`);
-								}} />
-							<span>{'Yes'}</span>
-						</label>
-						<label className={'ml-6'}>
-							<input type={'radio'} className={'nes-radio'} name={`${rarity.tokenID}_adventure`} onClick={() => canGold ? set_ask(1) : null}/>
-							<span>{'no'}</span>
-						</label>
-					</div>
-				</div>
-				{canAdventure ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(0)}>
-					{'◂'}
-				</div> : null}
 				{canGold ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(1)}>
 					{'▸'}
 				</div> : null}
 			</div>
 		);
 	}
-	if (ask <= 2 && canGold) {
+	if (ask <= 1 && canGold) {
 		return (
 			<div className={'nes-balloon rounded-lg border-black dark:border-dark-100 border-4 relative from-left text-xs md:text-base '}>
 				<div className={'mb-2'}>
 					{`Would you like to claim your ${Number(rarity?.gold?.claimable)} golds ?`}
 					<div className={'mt-6'}>
-						<label>
-							<input
-								type={'radio'}
-								className={'nes-radio'}
-								name={`${rarity.tokenID}_gold`}
-								checked
-								onClick={async () => {
-									claimGold({
-										provider,
-										contractAddress: process.env.RARITY_GOLD_ADDR,
-										tokenID: rarity.tokenID,
-									}, ({error, data}) => {
-										if (error) {
-											return console.error(error);
-										}
-										updateRarity(data);
-									});
-								}} />
+						<span className={'cursor-pointer'} onClick={onClaimGold}>
+							<span className={'inline mb-1 mr-2 group-hover:opacity-100'} style={{cursor: 'pointer'}}>{'>'}</span>
 							<span>{'Claim'}</span>
-						</label>
+						</span>
+						<span className={'ml-6 cursor-pointer'} onClick={() => canGold ? set_ask(1) : null}>
+							<span className={'inline mb-1 mr-2 opacity-5'} style={{cursor: 'pointer'}}>{'>'}</span>
+							<span className={'opacity-40'}>{'no'}</span>
+						</span>
 					</div>
 				</div>
-				{canAdventure || canDungeonTheCellar ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(0)}>
+				{canAdventure ? <div className={'absolute right-0 bottom-0 text-xl animate-bounce-r cursor-pointer p-2'} onClick={() => set_ask(0)}>
 					{'◂'}
 				</div> : null}
 			</div>
@@ -269,11 +234,11 @@ function	Attributes({rarity, updateRarity, provider}) {
 		<div className={'nes-container py-6 px-8 border-4 border-solid border-black dark:border-dark-100 with-title w-full md:w-1/3 -mt-1 md:mt-0'}>
 			<div className={'title bg-white dark:bg-dark-600 mb-1'}>{'Attributes'}</div>
 			{updateAttribute.remainingPoints >= 0 ? (
-				<p onClick={buyPoints} className={` text-xss border-t-2 border-b-2 border-black dark:border-dark-100 py-1 my-2 ${updateAttribute.remainingPoints === 0 ? 'animate-pulse text-center cursor-pointer hover:bg-black hover:animate-none hover:text-white' : ''}`}>
+				<p onClick={buyPoints} className={`text-xss border-t-2 border-b-2 border-black dark:border-dark-100 flex justify-center items-center py-1 my-2 ${updateAttribute.remainingPoints === 0 ? 'animate-pulse text-center cursor-pointer hover:bg-black hover:animate-none hover:text-white' : ''}`}>
 					{updateAttribute.remainingPoints === 0 ?
 						'▶ Save you stats ! ◀'
 						:
-						`▶ You have ${updateAttribute.remainingPoints} points to spend !`
+						`▶ You have ${updateAttribute.remainingPoints} points to spend ! ◀`
 					}
 				</p>
 			) : null}
@@ -398,12 +363,12 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 										});
 									}
 								}}
-								className={`nes-progress w-full relative ${rarity.xp >= (rarity.level * 1000) ? 'cursor-pointer' : ''}`}>
+								className={`nes-progress border-solid border-2 border-black dark:border-dark-400 w-full relative ${rarity.xp >= (rarity.level * 1000) ? 'cursor-pointer' : ''}`}>
 								<progress
-									className={`progressbar ${rarity.xp >= (rarity.level * 1000) ? 'is-warning animate-pulse' : 'is-primary'} w-full absolute inset-0`}
+									className={`progressbar h-full ${rarity.xp >= (rarity.level * 1000) ? 'is-warning animate-pulse' : 'is-primary'} w-full absolute p-1.5 inset-0`}
 									value={rarity.xp}
 									max={rarity.level * 1000} />
-								<p className={`text-sm absolute inset-0 w-full text-center ${rarity.xp >= (rarity.level * 1000) ? '' : 'hidden'}`}>{'LEVEL-UP!'}</p>
+								<p className={`text-sm absolute inset-0 h-full w-full text-center flex justify-center items-center ${rarity.xp >= (rarity.level * 1000) ? '' : 'hidden'}`}>{'LEVEL-UP!'}</p>
 							</div>
 						</div>
 					</div>
