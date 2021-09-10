@@ -20,9 +20,6 @@ import	Typer							from	'components/Typer';
 
 dayjs.extend(relativeTime);
 
-const		ZAP_VAULT = '0xcfC41cf70aae80E97C36BE9989417fddd438Fd38';
-const		FTM_VAULT = '0x0DEC85e74A92c52b7F708c4B10207D9560CEFaf0';
-
 const	classNameMapping = [
 	'',
 	'Barbarian',
@@ -349,9 +346,9 @@ function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConn
 		return (
 			<DialogBox
 				options={[
-					{label: 'Deposit 25%', onClick: () => apeInVault({provider, contractAddress: ZAP_VAULT, amount: ethers.utils.parseEther(ftmBalance).mul(25).div(100)}, () => onFTMDeposit())},
-					{label: 'Deposit 50%', onClick: () => apeInVault({provider, contractAddress: ZAP_VAULT, amount: ethers.utils.parseEther(ftmBalance).mul(50).div(100)}, () => onFTMDeposit())},
-					{label: 'Deposit 75%', onClick: () => apeInVault({provider, contractAddress: ZAP_VAULT, amount: ethers.utils.parseEther(ftmBalance).mul(75).div(100)}, () => onFTMDeposit())},
+					{label: 'Deposit 25%', onClick: () => apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(25).div(100)}, () => onFTMDeposit())},
+					{label: 'Deposit 50%', onClick: () => apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(50).div(100)}, () => onFTMDeposit())},
+					{label: 'Deposit 75%', onClick: () => apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(75).div(100)}, () => onFTMDeposit())},
 					{label: 'Nevermind', onClick: () => router.push('/tavern')},
 				]} />
 		);
@@ -372,7 +369,7 @@ function	Index({fetchRarity, rarities, router}) {
 	const	[ftmBalance, set_ftmBalance] = useState(0);
 	const	[hasDeposited, set_hasDeposited] = useState(false);
 	const	[modalLoginOpen, set_modalLoginOpen] = useState(false);
-	const	{data: vaultAPY} = useSWR(`https://ape.tax/api/specificApy?address=${FTM_VAULT}&network=250`, fetcher);
+	const	{data: vaultAPY} = useSWR(`https://ape.tax/api/specificApy?address=${process.env.FTM_VAULT_ADDR}&network=250`, fetcher);
 
 	useEffect(() => {
 		if (provider && address) {
