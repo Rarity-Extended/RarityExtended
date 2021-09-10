@@ -63,7 +63,7 @@ function	Navbar({router}) {
 				</div>
 			</div>
 			<div className={'items-center justify-start md:justify-end flex flex-row w-full mt-3 md:mt-0'}>
-				<div className={'items-center justify-end flex-row flex mr-6 cursor-pointer'} onClick={() => router.push('/')}>
+				<div className={'group items-center justify-end flex-row flex mr-6 cursor-pointer'} onClick={() => router.push('/')}>
 					<span>
 						<span className={`cursor-pointer inline mb-1 mr-2 group-hover:opacity-100 text-xs md:text-sm ${router.pathname === '/' ? 'opacity-100' : 'opacity-5'}`}>{'>'}</span>
 						<span className={'text-sm cursor-pointer'}>
@@ -72,7 +72,7 @@ function	Navbar({router}) {
 						</span>
 					</span>
 				</div>
-				<div className={'items-center justify-end flex-row flex mr-6 cursor-pointer'} onClick={() => router.push('/tavern')}>
+				<div className={'group items-center justify-end flex-row flex mr-6 cursor-pointer'} onClick={() => router.push('/tavern')}>
 					<span>
 						<span className={`cursor-pointer inline mb-1 mr-2 group-hover:opacity-100 text-xs md:text-sm ${router.pathname === '/tavern' ? 'opacity-100' : 'opacity-5'}`}>{'>'}</span>
 						<span className={'text-sm cursor-pointer'}>

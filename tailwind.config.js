@@ -6,8 +6,7 @@ module.exports = {
 		'./components/**/*.js',
 		'./screens/**/*.js'
 	],
-	// darkMode: 'class',
-	darkMode: 'media',
+	darkMode: 'class',
 	corePlugins: {
 		ringColor: false,
 	},
