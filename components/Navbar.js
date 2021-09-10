@@ -5,16 +5,17 @@
 **	@Filename:				Navbar.js
 ******************************************************************************/
 
-import	React, {useState}		from	'react';
-import	useWeb3					from	'contexts/useWeb3';
-import	ModalLogin				from	'components/ModalLogin';
+import	React, {useState, useEffect}	from	'react';
+import	Link							from	'next/link';
+import	useWeb3							from	'contexts/useWeb3';
+import	ModalLogin						from	'components/ModalLogin';
 
 function	Navbar({router}) {
 	const	{active, address, deactivate, onDesactivate} = useWeb3();
 	const	[initialPopup, set_initialPopup] = useState(false);
 	const	[modalLoginOpen, set_modalLoginOpen] = useState(false);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (initialPopup)
 			return;
 
@@ -50,8 +51,12 @@ function	Navbar({router}) {
 		<nav className={'w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black mb-4 md:mb-20 pb-4'}>
 			<div className={'items-center justify-start flex flex-row whitespace-normal md:whitespace-nowrap text-lg'}>
 				<div className={'w-full'}>
-					<p className={'block md:hidden'}>{'RE'}</p>
-					<p className={'hidden md:block'}>{'Rarity Extended'}</p>
+					<Link href={'/'}>
+						<p className={'block md:hidden'}>{'RE'}</p>
+					</Link>
+					<Link href={'/'}>
+						<p className={'hidden md:block'}>{'Rarity Extended'}</p>
+					</Link>
 				</div>
 				<div className={'items-center justify-end flex-row flex md:hidden'}>
 					{renderWalletButton()}

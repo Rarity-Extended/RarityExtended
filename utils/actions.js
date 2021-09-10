@@ -181,3 +181,32 @@ export async function	claimGold({provider, contractAddress, tokenID}, callback) 
 		callback({error, data: undefined});
 	}
 }
+
+export async function	lootDungeonTheCellar({provider, contractAddress, tokenID}, callback) {
+	goAdventure({provider, contractAddress, tokenID}, callback);
+}
+
+
+export async function	apeInVault({provider, contractAddress, amount}, callback) {
+	const	signer = provider.getSigner();
+	const	rarity = new ethers.Contract(
+		contractAddress,
+		['function deposit() public payable'],
+		signer
+	);
+
+	/**********************************************************************
+	**	If the call is successful, try to perform the actual TX
+	**********************************************************************/
+	try {
+		const	transaction = await rarity.deposit({value: amount});
+		const	transactionResult = await transaction.wait();
+		if (transactionResult.status === 1) {
+			callback({error: false, data: undefined});
+		} else {
+			callback({error: true, data: undefined});
+		}
+	} catch (error) {
+		callback({error, data: undefined});
+	}
+}

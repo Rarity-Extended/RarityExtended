@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run open-browser && next dev",
+    "dev": "next dev",
     "open-browser": "open http://localhost:3000",
     "build": "next build",
     "analyze": "ANALYZE=true next build",
