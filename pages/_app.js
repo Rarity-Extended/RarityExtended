@@ -73,7 +73,7 @@ function	AppWrapper(props) {
 					site: '@MajorTom_Eth',
 					cardType: 'summary_large_image',
 				}} />
-			<main id={'app'} className={'p-4 relative font-title uppercase'} style={{width: '100vw', minHeight: '100vh'}}>
+			<main id={'app'} className={'p-4 relative font-title uppercase'} style={{width: 'calc(100% - 1.5rem)', minHeight: '100vh'}}>
 				<Navbar router={router} />
 				<div className={'mb-16 relative'}>
 					{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
