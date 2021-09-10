@@ -378,7 +378,7 @@ function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConn
 				{label: 'What\'s new ?', onClick: () => router.push('/tavern')},
 				{label: 'Recruit a new adventurer', onClick: () => router.push('/tavern?tab=recruit')},
 				{label: 'About the rat ...', onClick: () => router.push('/tavern?tab=the-cellar')},
-				{label: 'You said I could earn FTM ?', onClick: () => router.push('/tavern?tab=ftm-vault')}
+				// {label: 'You said I could earn FTM ?', onClick: () => router.push('/tavern?tab=ftm-vault')}
 			]} />
 	);
 }
