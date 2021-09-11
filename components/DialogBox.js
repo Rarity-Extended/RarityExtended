@@ -6,7 +6,6 @@
 ******************************************************************************/
 
 import	React, {useEffect, useState}	from	'react';
-import	Chevron							from	'components/Chevron';
 import	useKeyPress						from	'hook/useKeyPress';
 
 function	Index({options}) {
