@@ -77,7 +77,7 @@ function	AppWrapper(props) {
 				}} />
 			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{minHeight: '100vh'}}>
 				<Navbar router={router} />
-				<div className={'mb-16 relative'}>
+				<div className={'pb-24 mb-24 relative'}>
 					{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
 						<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
 							{'PLEASE SWITCH TO FANTOM NETWORK'}
