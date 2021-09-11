@@ -9,21 +9,22 @@
 import	React							from	'react';
 import	Head							from	'next/head';
 import	{DefaultSeo}					from	'next-seo';
+import	{Toaster}						from	'react-hot-toast';
 import	{Web3ReactProvider}				from	'@web3-react-fork/core';
 import	{ethers}						from	'ethers';
 import	useWeb3, {Web3ContextApp}		from	'contexts/useWeb3';
 import	useRarity, {RarityContextApp}	from	'contexts/useRarity';
-import	useUI, {UIContextApp}					from	'contexts/useUI';
+import	{UIContextApp}					from	'contexts/useUI';
 import	Navbar							from	'components/Navbar';
+import	Footer							from	'components/Footer';
 
 import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
 
 function	AppWrapper(props) {
-	const	{theme, switchTheme} = useUI();
 	const	{Component, pageProps, router} = props;
 	const	{rarities, updateRarity, fetchRarity, rNonce} = useRarity();
-	const	{switchChain, chainID} = useWeb3();
+	const	{switchChain, chainID, isActivated} = useWeb3();
 
 	React.useEffect(() => {
 		if (Number(chainID) > 0 && (Number(chainID) !== 250 && Number(chainID) !== 1337)) {
@@ -76,51 +77,38 @@ function	AppWrapper(props) {
 					cardType: 'summary_large_image',
 				}} />
 			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{minHeight: '100vh'}}>
+				<Toaster toastOptions={{className: 'text-xs'}} />
 				<Navbar router={router} />
 				<div className={'pb-24 mb-24 relative'}>
-					{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
+					{isActivated ?
+						chainID >= 0 && (chainID !== 250 && chainID !== 1337) ?
+							<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
+								{'PLEASE SWITCH TO FANTOM NETWORK'}
+							</div>
+							:
+							<Component
+								key={router.route}
+								element={props.element}
+								router={props.router}
+								rarities={rarities}
+								updateRarity={updateRarity}
+								fetchRarity={fetchRarity}
+								rNonce={rNonce}
+								{...pageProps} />
+						:
 						<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
-							{'PLEASE SWITCH TO FANTOM NETWORK'}
+							{'PLEASE CONNECT YOUR WALLET'}
 						</div>
-					) : null}
-					<Component
-						key={router.route}
-						element={props.element}
-						router={props.router}
-						rarities={rarities}
-						updateRarity={updateRarity}
-						fetchRarity={fetchRarity}
-						rNonce={rNonce}
-						{...pageProps} />
+					}
 				</div>
-				<div className={'absolute bottom-3 text-center text-xxs left-0 right-0 flex flex-col justify-center items-center'}>
-					<div>
-						<a href={'https://ftmscan.com/token/0xce761d788df608bd21bdd59d6f4b54b2e27f25bb#readContract'} target={'_blank'} rel={'noreferrer'} className={'hover:underline'}>
-							{'Rarity Manifested'}
-						</a>
-						{' - '}
-						<a href={'https://github.com/TBouder/RarityExtended'} target={'_blank'} rel={'noreferrer'} className={'hover:underline'}>
-							{'Source code'}
-						</a>
-						{' - '}
-						<a href={'https://andrecronje.medium.com/loot-rarity-d341faa4485c'} target={'_blank'} rel={'noreferrer'} className={'hover:underline'}>
-							{'Loot & Rarity'}
-						</a>
-					</div>
-					<div onClick={switchTheme} className={'py-2 hover:underline cursor-pointer'}>
-						{`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-					</div>
-					<div>
-						{'Made with 💙 by the 🕹 community'}
-					</div>
-				</div>
+				<Footer />
 			</main>
 		</>
 	);
 }
 
 const getLibrary = (provider) => {
-	return new ethers.providers.Web3Provider(provider);
+	return new ethers.providers.Web3Provider(provider, 'any');
 };
 
 function	MyApp(props) {
