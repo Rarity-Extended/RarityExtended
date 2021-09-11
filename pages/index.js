@@ -15,6 +15,7 @@ import	useUI							from	'contexts/useUI';
 import	useRarity						from	'contexts/useRarity';
 import	Typer							from	'components/Typer';
 import	SectionRecruit					from	'sections/SectionRecruit';
+import	ITEMS							from	'utils/items';
 
 dayjs.extend(relativeTime);
 
@@ -234,7 +235,7 @@ function	Attributes({rarity, updateRarity, provider}) {
 	}
 
 	return (
-		<div className={'nes-container py-6 px-8 border-4 border-solid border-black dark:border-dark-100 with-title w-full md:w-1/3 -mt-1 md:mt-0'}>
+		<div className={'nes-container pt-6 pb-0 px-4 border-4 border-solid border-black dark:border-dark-100 with-title w-full md:w-1/3 -mt-1 md:mt-0'}>
 			<div className={'title bg-white dark:bg-dark-600 mb-1'}>{'Attributes'}</div>
 			{updateAttribute.remainingPoints >= 0 ? (
 				<p onClick={buyPoints} className={`text-xss border-t-2 border-b-2 border-black dark:border-dark-100 flex justify-center items-center py-1 my-2 ${updateAttribute.remainingPoints === 0 ? 'animate-pulse text-center cursor-pointer hover:bg-black hover:animate-none hover:text-white' : ''}`}>
@@ -290,6 +291,48 @@ function	Attributes({rarity, updateRarity, provider}) {
 		</div>
 	);
 }
+function	Inventory({rarity}) {
+	function	renderInventory() {
+		let		hasItem = false;
+		const	toRender = ITEMS.map((item) => {
+			if ((Number(rarity?.inventory?.[item.id]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
+				hasItem = true;
+				return (
+					<div className={'flex flex-row space-x-4 w-full'} key={item.id}>
+						<div className={'w-16 h-16 bg-gray-50 dark:bg-dark-400 flex justify-center items-center relative item'}>
+							<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
+							<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
+							<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
+							<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
+							<Image src={item.img} width={48} height={48} />
+							<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
+							<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
+							<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
+							<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
+						</div>
+						<div>
+							<p>{item.name}</p>
+							<p className={'text-xs'}>{`QTY: ${Number(rarity?.inventory?.[item.id])}`}</p>
+						</div>
+					</div>
+				);
+			}
+			return (null);
+		});
+
+		if (!hasItem) {
+			return null;
+		}
+		return (
+			<div className={'flex flex-col md:flex-row w-full mt-2 space-x-0 md:space-x-2'}>
+				<div className={'nes-container p-4 px-4 border-4 border-solid border-black dark:border-dark-100 w-full grid grid-cols-3 gap-4'}>
+					{toRender}
+				</div>
+			</div>
+		);
+	}
+	return (renderInventory());
+}
 function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 	return (
 		<div className={'w-full'}>
@@ -316,7 +359,7 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 				</div>
 			</div>
 			<div className={'flex flex-col md:flex-row w-full space-x-0 md:space-x-2'}>
-				<div className={'nes-container py-6 px-8 border-4 border-solid border-black dark:border-dark-100 with-title w-full md:w-2/3'}>
+				<div className={'nes-container pt-6 px-4 border-4 border-solid border-black dark:border-dark-100 with-title w-full md:w-2/3'}>
 					<p className={'title bg-white dark:bg-dark-600 mb-1'}>{rarity.tokenID}</p>
 					<div className={'flex flex-row items-center w-full py-2'}>
 						<div className={'opacity-80 text-xs md:text-sm w-48'}>{'ID:'}</div>
@@ -340,12 +383,6 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 						<div className={'opacity-80 text-xs md:text-sm w-48'}>{'GOLD:'}</div>
 						<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 							<p>{`${Number(rarity?.gold?.balance || 0) === 0 ? '0' : rarity.gold.balance}`}</p>
-						</div>
-					</div>
-					<div className={'flex flex-row items-center w-full py-2'}>
-						<div className={'opacity-80 text-sm w-48'}>{'Rat Skin:'}</div>
-						<div className={'w-full'}>
-							<p className={'inline'}>{`${Number(rarity?.dungeons?.cellar?.lootBalance || 0) === 0 ? '0' : rarity?.dungeons?.cellar?.lootBalance}`}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
@@ -378,6 +415,7 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 				</div>
 				<Attributes rarity={rarity} updateRarity={updateRarity} provider={provider} />
 			</div>
+			<Inventory rarity={rarity} />
 		</div>
 	);
 }

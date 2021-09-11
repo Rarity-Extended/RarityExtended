@@ -33,6 +33,14 @@ module.exports = {
 				200: '#46597e',
 				100: '#5d6e8f',
 			},
+			item: {
+				common: 'gray-300',
+				uncommon: 'rgb(73,122,42)',
+				rare: 'rgb(42,94,161)',
+				epic: 'rgb(138,47,146)',
+				legendary: 'rgb(192,109,44)',
+				relic: 'rgb(133,33,24)',
+			}
 		},
 		extend: {
 			lineHeight: {

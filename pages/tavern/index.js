@@ -63,7 +63,7 @@ function	DungeonTab({shouldDisplay, rarities, router}) {
 			<div>
 				<div className={'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8'}>
 					{Object.values(rarities)?.filter((adventurer) => {
-						const	canAdventure = !dayjs(new Date(adventurer?.dungeons?.cellar?.nextAvailability * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
+						const	canAdventure = !dayjs(new Date(adventurer?.dungeons?.cellar * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
 						return canAdventure;
 					}).map((adventurer) => {
 						return (
