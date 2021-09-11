@@ -11,6 +11,7 @@ import	{ethers}						from	'ethers';
 import	useSWR							from	'swr';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
+import	classNameMapping				from	'utils/classNameMapping';
 import	{apeInVault}					from	'utils/actions';
 import	{formatAmount, fetcher}			from	'utils';
 import	classes							from	'utils/classList';
@@ -22,21 +23,6 @@ import	Typer							from	'components/Typer';
 import	SectionRecruit					from	'sections/SectionRecruit';
 
 dayjs.extend(relativeTime);
-
-const	classNameMapping = [
-	'',
-	'Barbarian',
-	'Bard',
-	'Cleric',
-	'Druid',
-	'Fighter',
-	'Monk',
-	'Paladin',
-	'Ranger',
-	'Rogue',
-	'Sorcerer',
-	'Wizard',
-];
 
 function	Adventurer({rarityClass, adventurer, router}) {
 	return (
@@ -222,6 +208,7 @@ function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositErr
 		</h1>
 	);
 }
+
 function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConnect, active, isTxPending, set_isTxPending, set_hasDeposited}) {
 	if (!active) {
 		return (
