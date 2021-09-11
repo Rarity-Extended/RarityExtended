@@ -16,7 +16,7 @@ class MyDocument extends Document {
 
 	render() {
 		return (
-			<Html lang={'en'}>
+			<Html lang={'en'} className={'bg-white dark:bg-dark-600'}>
 				<Head />
 				<body>
 					<Main />

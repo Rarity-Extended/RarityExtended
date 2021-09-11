@@ -6,7 +6,7 @@ module.exports = {
 		'./components/**/*.js',
 		'./screens/**/*.js'
 	],
-	darkMode: false,
+	darkMode: 'class',
 	corePlugins: {
 		ringColor: false,
 	},
@@ -24,21 +24,15 @@ module.exports = {
 				warning: '#fff257',
 				withdraw: '#EF4444'
 			},
-			red: colors.red,
 			white: colors.white,
-			sky: colors.sky,
-			error: '#FF005E',
-			pending: '#FFB800',
-			success: '#A5DF00',
-			ygray: {
-				50: '#F5F5F5',
-				100: '#E1E1E1',
-				200: '#DBDBDB',
-				400: '#7A7A7A',
-				600: '#767676',
-				700: '#2c3e50',
-				900: '#363636',
-			}
+			dark: {
+				900: '#09162E',
+				600: 'rgb(19,38,75)',
+				400: 'rgb(24,48,95)',
+				300: '#2f446f',
+				200: '#46597e',
+				100: '#5d6e8f',
+			},
 		},
 		extend: {
 			lineHeight: {

@@ -12,13 +12,15 @@ import	{DefaultSeo}					from	'next-seo';
 import	{Web3ReactProvider}				from	'@web3-react-fork/core';
 import	{ethers}						from	'ethers';
 import	useWeb3, {Web3ContextApp}		from	'contexts/useWeb3';
-import	useRarity, {RarityContextApp}	from 'contexts/useRarity';
+import	useRarity, {RarityContextApp}	from	'contexts/useRarity';
+import	useUI, {UIContextApp}					from	'contexts/useUI';
 import	Navbar							from	'components/Navbar';
 
 import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
 
 function	AppWrapper(props) {
+	const	{theme, switchTheme} = useUI();
 	const	{Component, pageProps, router} = props;
 	const	{rarities, updateRarity, fetchRarity, rNonce} = useRarity();
 	const	{switchChain, chainID} = useWeb3();
@@ -73,9 +75,9 @@ function	AppWrapper(props) {
 					site: '@MajorTom_Eth',
 					cardType: 'summary_large_image',
 				}} />
-			<main id={'app'} className={'p-4 relative font-title uppercase'} style={{width: 'calc(100% - 1.5rem)', minHeight: '100vh'}}>
+			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{minHeight: '100vh'}}>
 				<Navbar router={router} />
-				<div className={'mb-16 relative'}>
+				<div className={'pb-24 mb-24 relative'}>
 					{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
 						<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
 							{'PLEASE SWITCH TO FANTOM NETWORK'}
@@ -105,6 +107,9 @@ function	AppWrapper(props) {
 							{'Loot & Rarity'}
 						</a>
 					</div>
+					<div onClick={switchTheme} className={'py-2 hover:underline cursor-pointer'}>
+						{`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+					</div>
 					<div>
 						{'Made with 💙 by the 🕹 community'}
 					</div>
@@ -122,17 +127,19 @@ function	MyApp(props) {
 	const	{Component, pageProps} = props;
 	
 	return (
-		<Web3ReactProvider getLibrary={getLibrary}>
-			<Web3ContextApp>
-				<RarityContextApp>
-					<AppWrapper
-						Component={Component}
-						pageProps={pageProps}
-						element={props.element}
-						router={props.router} />
-				</RarityContextApp>
-			</Web3ContextApp>
-		</Web3ReactProvider>
+		<UIContextApp>
+			<Web3ReactProvider getLibrary={getLibrary}>
+				<Web3ContextApp>
+					<RarityContextApp>
+						<AppWrapper
+							Component={Component}
+							pageProps={pageProps}
+							element={props.element}
+							router={props.router} />
+					</RarityContextApp>
+				</Web3ContextApp>
+			</Web3ReactProvider>
+		</UIContextApp>
 	);
 }
 
