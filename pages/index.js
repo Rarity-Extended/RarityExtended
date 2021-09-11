@@ -45,7 +45,6 @@ const	classMappingImg = [
 ];
 
 function	DailyBalloon({rarity, chainTime, provider, updateRarity}) {
-	const	[option, set_option] = useState(0);
 	const	[ask, set_ask] = useState(0);
 	const	canAdventure = !dayjs(new Date(rarity.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
 	const	canGold = Number(rarity?.gold?.claimable || 0) > 0;
