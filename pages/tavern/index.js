@@ -14,6 +14,7 @@ import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	{recruitAdventurer, apeInVault}	from	'utils/actions';
 import	{formatAmount, fetcher}			from	'utils';
 import	useWeb3							from	'contexts/useWeb3';
+import	useUI							from	'contexts/useUI';
 import	DialogBox						from	'components/DialogBox';
 import	ModalLogin						from	'components/ModalLogin';
 import	Typer							from	'components/Typer';
@@ -405,6 +406,7 @@ function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConn
 
 function	Index({fetchRarity, rarities, router}) {
 	const	{provider, address, active} = useWeb3();
+	const	{theme} = useUI();
 	const	[ftmBalance, set_ftmBalance] = useState(0);
 	const	[isTxPending, set_isTxPending] = useState(false);
 	const	[hasDeposited, set_hasDeposited] = useState(false);
@@ -424,7 +426,7 @@ function	Index({fetchRarity, rarities, router}) {
 				<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-0'}>
 					<div className={'w-auto md:w-64'} style={{minWidth: 256}}>
 						<Image
-							src={'/avatar/facu.gif'}
+							src={theme === 'light' ? '/avatar/facu.gif' : '/avatar/facu.png'}
 							loading={'eager'}
 							quality={100}
 							width={256}
