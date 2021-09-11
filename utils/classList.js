@@ -8,7 +8,7 @@
 const	classes = {
 	'Barbarian': {
 		name: 'Barbarian',
-		img: '/barbarian.png',
+		img: '/front/barbarian.svg',
 		description: 'No friend of the books, unlike any librarian.\nStrength, weapons, and anger serve the Barbarian',
 		id: 1,
 	},

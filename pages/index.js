@@ -35,7 +35,7 @@ const	classMapping = [
 
 const	classMappingImg = [
 	'',
-	'/barbarian.png',
+	'/front/barbarian.svg',
 	'/bard.png',
 	'/cleric.png',
 	'/druid.png',
