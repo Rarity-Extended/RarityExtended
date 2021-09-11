@@ -5,16 +5,16 @@
 **	@Filename:				index.js
 ******************************************************************************/
 
-import	React, {useEffect, useState}				from	'react';
+import	React, {useState}				from	'react';
 import	Image							from	'next/image';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	{goAdventure, levelUp, setAttributes, claimGold}	from	'utils/actions';
 import	useWeb3							from	'contexts/useWeb3';
 import	useUI							from	'contexts/useUI';
+import	useRarity						from	'contexts/useRarity';
 import	Typer							from	'components/Typer';
 import	SectionRecruit					from	'sections/SectionRecruit';
-import useRarity from 'contexts/useRarity';
 
 dayjs.extend(relativeTime);
 
