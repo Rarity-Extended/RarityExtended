@@ -13,16 +13,54 @@ import	{Web3ReactProvider}				from	'@web3-react-fork/core';
 import	{ethers}						from	'ethers';
 import	useWeb3, {Web3ContextApp}		from	'contexts/useWeb3';
 import	useRarity, {RarityContextApp}	from	'contexts/useRarity';
-import	useUI, {UIContextApp}					from	'contexts/useUI';
+import	useUI, {UIContextApp}			from	'contexts/useUI';
 import	Navbar							from	'components/Navbar';
+import SectionNoWallet from 'sections/SectionNoWallet';
 
 import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
 
+function	GameWrapper({Component, pageProps, element, router}) {
+	const	{switchChain, active, chainID} = useWeb3();
+	const	{isLoaded, rarities, fetchRarity, updateRarity, rNonce} = useRarity();
+
+	if (!isLoaded) {
+		return (
+			<div className={'absolute inset-0 backdrop-blur-3xl bg-opacity-40 cursor-not-allowed'}>
+				<div className={'loader'} />
+			</div>
+		);
+	}
+
+	if (!active) {
+		return (
+			<SectionNoWallet />
+		);
+	}
+
+	return (
+		<div className={'pb-24 mb-24 relative'}>
+			{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
+				<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
+					{'PLEASE SWITCH TO FANTOM NETWORK'}
+				</div>
+			) : null}
+			<Component
+				key={router.route}
+				element={element}
+				router={router}
+				rarities={rarities}
+				updateRarity={updateRarity}
+				fetchRarity={fetchRarity}
+				rNonce={rNonce}
+				{...pageProps} />
+		</div>
+	);
+}
+
 function	AppWrapper(props) {
 	const	{theme, switchTheme} = useUI();
 	const	{Component, pageProps, router} = props;
-	const	{rarities, updateRarity, fetchRarity, rNonce} = useRarity();
 	const	{switchChain, chainID} = useWeb3();
 
 	React.useEffect(() => {
@@ -77,22 +115,7 @@ function	AppWrapper(props) {
 				}} />
 			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{minHeight: '100vh'}}>
 				<Navbar router={router} />
-				<div className={'pb-24 mb-24 relative'}>
-					{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
-						<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
-							{'PLEASE SWITCH TO FANTOM NETWORK'}
-						</div>
-					) : null}
-					<Component
-						key={router.route}
-						element={props.element}
-						router={props.router}
-						rarities={rarities}
-						updateRarity={updateRarity}
-						fetchRarity={fetchRarity}
-						rNonce={rNonce}
-						{...pageProps} />
-				</div>
+				<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />
 				<div className={'absolute bottom-3 text-center text-xxs left-0 right-0 flex flex-col justify-center items-center'}>
 					<div>
 						<a href={'https://ftmscan.com/token/0xce761d788df608bd21bdd59d6f4b54b2e27f25bb#readContract'} target={'_blank'} rel={'noreferrer'} className={'hover:underline'}>
