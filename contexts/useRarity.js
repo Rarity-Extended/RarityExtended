@@ -131,7 +131,7 @@ export const RarityContextApp = ({children}) => {
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
 	function	setRarity(tokenID, multicallResult, callResult, inventoryCallResult) {
-		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, balanceOfCellar, cellarLog] = multicallResult;
+		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, cellarLog] = multicallResult;
 		const	[claimableGold] = callResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
