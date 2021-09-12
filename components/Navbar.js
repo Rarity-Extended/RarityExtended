@@ -9,6 +9,7 @@ import	React, {useState, useEffect}	from	'react';
 import	Link							from	'next/link';
 import	useWeb3							from	'contexts/useWeb3';
 import	ModalLogin						from	'components/ModalLogin';
+import	FlyoutMenu						from	'components/FlyoutMenu';
 
 function	Navbar({router}) {
 	const	{active, address, deactivate, onDesactivate} = useWeb3();
@@ -72,7 +73,8 @@ function	Navbar({router}) {
 						</span>
 					</span>
 				</div>
-				<div className={'group items-center justify-end flex-row flex mr-6 cursor-pointer'} onClick={() => router.push('/tavern')}>
+				<FlyoutMenu />
+				{/* <div className={'group items-center justify-end flex-row flex mr-6 cursor-pointer'} onClick={() => router.push('/tavern')}>
 					<span>
 						<span className={`cursor-pointer inline mb-1 mr-2 group-hover:opacity-100 text-xs md:text-sm ${router.pathname === '/tavern' ? 'opacity-100' : 'opacity-5'}`}>{'>'}</span>
 						<span className={'text-sm cursor-pointer'}>
@@ -80,7 +82,7 @@ function	Navbar({router}) {
 							<span className={'text-xs inline md:hidden cursor-pointer'}>{'Tavern'}</span>
 						</span>
 					</span>
-				</div>
+				</div> */}
 				<div className={'items-center justify-end flex-row border-black dark:border-dark-100 border-l-4 pl-6 ml-6 hidden md:flex'}>
 					{renderWalletButton()}
 				</div>
