@@ -281,17 +281,17 @@ function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConn
 							onFTMDeposit(e);
 						});
 					}},
-					{label: 'Nevermind', onClick: () => router.push('/tavern')},
+					{label: 'Nevermind', onClick: () => router.push('/town/tavern')},
 				]} />
 		);
 	}
 	return (
 		<DialogBox
 			options={[
-				{label: 'What\'s new ?', onClick: () => router.push('/tavern')},
-				{label: 'Recruit a new adventurer', onClick: () => router.push('/tavern?tab=recruit')},
-				{label: 'About the rat ...', onClick: () => router.push('/tavern?tab=the-cellar')},
-				{label: 'You said I could earn FTM ?', onClick: () => router.push('/tavern?tab=ftm-vault')}
+				{label: 'What\'s new ?', onClick: () => router.push('/town/tavern')},
+				{label: 'Recruit a new adventurer', onClick: () => router.push('/town/tavern?tab=recruit')},
+				{label: 'About the rat ...', onClick: () => router.push('/town/tavern?tab=the-cellar')},
+				{label: 'You said I could earn FTM ?', onClick: () => router.push('/town/tavern?tab=ftm-vault')}
 			]} />
 	);
 }

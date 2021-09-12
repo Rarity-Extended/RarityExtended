@@ -62,8 +62,7 @@ function	GameWrapper({Component, pageProps, element, router}) {
 
 function	AppWrapper(props) {
 	const	{Component, pageProps, router} = props;
-	const	{rarities, updateRarity, fetchRarity, rNonce} = useRarity();
-	const	{switchChain, chainID, isActivated} = useWeb3();
+	const	{switchChain, chainID} = useWeb3();
 
 	React.useEffect(() => {
 		if (Number(chainID) > 0 && (Number(chainID) !== 250 && Number(chainID) !== 1337)) {

@@ -55,6 +55,13 @@ module.exports = {
 				'7xl': '5rem',
 				'sm': '0.8rem',
 			},
+			spacing: {
+				'7.5': '1.875rem',
+				'8.5': '2.125rem',
+			},
+			width: {
+				screen: '100vw'
+			},
 			animation: {
 				'bounce-r': 'bounce-r 1s infinite'
 			},
@@ -74,7 +81,8 @@ module.exports = {
 	},
 	variants: {
 		extend: {
-			animation: ['hover', 'focus'],
+			rotate: ['hover', 'focus', 'group-hover'],
+			animation: ['hover', 'focus', 'group-hover'],
 		}
 	},
 	plugins: [
