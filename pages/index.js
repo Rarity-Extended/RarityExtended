@@ -276,41 +276,56 @@ function	Attributes({rarity, updateRarity, provider}) {
 	);
 }
 function	Inventory({rarity}) {
+	const	OFFSET_SIZE = 9;
+	const	[offset, set_offset] = useState(0);
+	const	allItems = ITEMS;
+	// const	allItems = [...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS, ...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS];
+
 	function	renderInventory() {
 		let		hasItem = false;
-		const	toRender = ITEMS.map((item) => {
-			if ((Number(rarity?.inventory?.[item.id]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
-				hasItem = true;
-				return (
-					<div className={'flex flex-row space-x-4 w-full'} key={item.id}>
-						<div className={'w-16 h-16 bg-gray-50 dark:bg-dark-400 flex justify-center items-center relative item'}>
-							<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
-							<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
-							<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
-							<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
-							<Image src={item.img} width={48} height={48} />
-							<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
-							<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
-							<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
-							<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
+		const	toRender = allItems
+			.filter((e, i) => i >= offset && i < (offset + OFFSET_SIZE))
+			.map((item) => {
+				if ((Number(rarity?.inventory?.[item.id]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
+					hasItem = true;
+					return (
+						<div className={'flex flex-row space-x-4 w-full'} key={item.id}>
+							<div className={'w-16 h-16 bg-gray-50 dark:bg-dark-400 flex justify-center items-center relative item'}>
+								<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
+								<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
+								<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
+								<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
+								<Image src={item.img} width={48} height={48} />
+								<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
+								<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
+								<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
+								<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
+							</div>
+							<div>
+								<p>{item.name}</p>
+								<p className={'text-xs'}>{`QTY: ${Number(rarity?.inventory?.[item.id])}`}</p>
+							</div>
 						</div>
-						<div>
-							<p>{item.name}</p>
-							<p className={'text-xs'}>{`QTY: ${Number(rarity?.inventory?.[item.id])}`}</p>
-						</div>
-					</div>
-				);
-			}
-			return (null);
-		});
+					);
+				}
+				return (null);
+			});
 
 		if (!hasItem) {
 			return null;
 		}
 		return (
 			<div className={'flex flex-col md:flex-row w-full mt-2 space-x-0 md:space-x-2'}>
-				<div className={'nes-container p-4 px-4 border-4 border-solid border-black dark:border-dark-100 w-full grid grid-cols-3 gap-4'}>
-					{toRender}
+				<div className={'w-full nes-container border-4 border-solid border-black dark:border-dark-100'}>
+					<div className={'w-full p-4 grid grid-cols-3 gap-4'}>
+						{toRender}
+					</div>
+					<div className={'-mt-8 h-8 px-4'}>
+						<div className={'w-full h-full flex justify-end items-center space-x-4'}>
+							<p className={`text-xs ${offset > OFFSET_SIZE ? 'opacity-40 hover:opacity-100 cursor-pointer' : 'opacity-0'}`} onClick={() => set_offset(o => o > OFFSET_SIZE ? o - OFFSET_SIZE : 0)}>{'<'}</p>
+							<p className={`text-xs ${offset + OFFSET_SIZE <= allItems.length ? 'opacity-40 hover:opacity-100 cursor-pointer' : 'opacity-0'}`} onClick={() => set_offset(o => o + OFFSET_SIZE <= allItems.length ? o + OFFSET_SIZE : o)}>{'>'}</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		);
