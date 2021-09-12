@@ -48,6 +48,7 @@ function FlyoutMenu() {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
 	});
+
 	return (
 		<div onMouseLeave={() => onHover(open, 'onMouseLeave')}>
 			<Popover className={'flex flex-row h-20 justify-center items-center md:relative'}>
@@ -56,7 +57,7 @@ function FlyoutMenu() {
 						<div onClick={handleClick} className={'group items-center justify-end flex-row flex mr-6 cursor-pointer outline-none focus:outline-none md:hidden'}>
 							<div className={'flex items-center justify-center'}>
 								<div className={`transform transition-all duration-700 md:group-hover:rotate-90 mb-0 mr-2 ${open ? 'rotate-90' : 'rotate-0'}`}>
-									<div className={`cursor-pointer group-hover:opacity-100 text-xs md:text-sm ${router.pathname.startsWith === '/town' || open ? 'opacity-100' : 'opacity-5'}`}>
+									<div className={`cursor-pointer group-hover:opacity-100 text-xs md:text-sm ${router.pathname.startsWith('/town') || open ? 'opacity-100' : 'opacity-5'}`}>
 										{'>'}
 									</div>
 								</div>
@@ -70,7 +71,7 @@ function FlyoutMenu() {
 						<div className={'group items-center justify-end flex-row mr-6 cursor-pointer outline-none focus:outline-none hidden md:flex'}>
 							<div className={'flex items-center justify-center'}>
 								<div className={`transform transition-all duration-700 md:group-hover:rotate-90 mb-0 mr-2 ${open ? 'rotate-90' : 'rotate-0'}`}>
-									<div className={`cursor-pointer group-hover:opacity-100 text-xs md:text-sm ${router.pathname.startsWith === '/town' || open ? 'opacity-100' : 'opacity-5'}`}>
+									<div className={`cursor-pointer group-hover:opacity-100 text-xs md:text-sm ${router.pathname.startsWith('/town') || open ? 'opacity-100' : 'opacity-5'}`}>
 										{'>'}
 									</div>
 								</div>
