@@ -9,30 +9,14 @@ import	React, {useState}				from	'react';
 import	Image							from	'next/image';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
-import	{goAdventure, levelUp, setAttributes, claimGold}	from	'utils/actions';
+import	SectionNoAdventurer				from	'sections/SectionNoAdventurer';
 import	useWeb3							from	'contexts/useWeb3';
-import	useUI							from	'contexts/useUI';
 import	useRarity						from	'contexts/useRarity';
-import	Typer							from	'components/Typer';
-import	SectionRecruit					from	'sections/SectionRecruit';
 import	ITEMS							from	'utils/items';
+import	classNameMapping				from	'utils/classNameMapping';
+import	{goAdventure, levelUp, setAttributes, claimGold}	from	'utils/actions';
 
 dayjs.extend(relativeTime);
-
-const	classMapping = [
-	'',
-	'Barbarian',
-	'Bard',
-	'Cleric',
-	'Druid',
-	'Fighter',
-	'Monk',
-	'Paladin',
-	'Ranger',
-	'Rogue',
-	'Sorcerer',
-	'Wizard',
-];
 
 const	classMappingImg = [
 	'',
@@ -370,7 +354,7 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 					<div className={'flex flex-row items-center w-full py-2'}>
 						<div className={'opacity-80 text-xs md:text-sm w-48'}>{'CLASS:'}</div>
 						<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
-							<p>{classMapping[rarity.class]}</p>
+							<p>{classNameMapping[rarity.class]}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>
@@ -421,72 +405,15 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 }
 
 
-function	FacuHeadline() {
-	const	[facuTextIndex, set_facuTextIndex] = useState(0);
-	
-	const	renderFacuText = () => {
-		return (
-			<>
-				<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>
-					{'WELCOME, ADVENTURER! I AM'}
-				</Typer>&nbsp;
-				<span className={'text-tag-info'}><Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>
-					{'FACU'}
-				</Typer></span>
-				<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
-					{', THE TAVERN KEEPER.'}
-				</Typer>&nbsp;
-				<div />
-				<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 3}>
-					{'YOU ARE ABOUT TO START A JOURNEY BEYOND IMAGINATION. YOU WILL MEET NEW FRIENDS AND FIGHT GREAT DANGERS!'}
-				</Typer>&nbsp;
-				<div className={'my-2'}/>
-				<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 4}>
-					{'WHAT KIND OF ADVENTURER ARE YOU ?'}
-				</Typer>
-			</>
-		);
-	};
-	return (
-		<h1 className={'text-sm md:text-lg leading-normal md:leading-10'}>
-			{renderFacuText()}
-		</h1>
-	);
-}
-
 function	Index({router}) {
-	const	{theme} = useUI();
 	const	{provider, chainTime} = useWeb3();
-	const	{isLoaded, rarities, fetchRarity, updateRarity} = useRarity();
+	const	{rarities, updateRarity} = useRarity();
 	const	adventurers = Object.values(rarities);
 
-	if (!isLoaded) {
+	if (adventurers?.length === 0) {
 		return (
-			<div className={'absolute inset-0 backdrop-blur-3xl bg-white bg-opacity-40 cursor-not-allowed'}>
-				<div className={'loader'} />
-			</div>
+			<SectionNoAdventurer />
 		);
-	}
-
-	if (isLoaded && adventurers?.length === 0) {
-		return (
-			<section className={'mt-12 max-w-full'}>
-				<div className={'max-w-screen-lg w-full mx-auto'}>
-					<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-16'}>
-						<div className={'w-auto md:w-64 mr-0 md:mr-16'} style={{minWidth: 256}}>
-							<Image
-								src={theme === 'light' ? '/avatar/facu.gif' : '/avatar/facu.png'}
-								loading={'eager'}
-								quality={100}
-								width={256}
-								height={256} />
-						</div>
-						<FacuHeadline />
-					</div>
-					<SectionRecruit shouldDisplay={true} router={router} provider={provider} fetchRarity={fetchRarity} />
-				</div>
-			</section>
-		);		
 	}
 
 	return (
