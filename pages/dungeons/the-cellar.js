@@ -16,7 +16,7 @@ import	DialogBox								from	'components/DialogBox';
 
 const	classMappingBackImg = [
 	'',
-	'/back/barbarian.png',
+	'/back/barbarian.svg',
 	'/back/bard.png',
 	'/back/cleric.png',
 	'/back/druid.png',

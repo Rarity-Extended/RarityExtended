@@ -12,84 +12,17 @@ import	useSWR							from	'swr';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	classNameMapping				from	'utils/classNameMapping';
-import	{recruitAdventurer, apeInVault}	from	'utils/actions';
+import	{apeInVault}	from	'utils/actions';
 import	{formatAmount, fetcher}			from	'utils';
+import	classes							from	'utils/classList';
 import	useWeb3							from	'contexts/useWeb3';
 import	useUI							from	'contexts/useUI';
 import	DialogBox						from	'components/DialogBox';
 import	ModalLogin						from	'components/ModalLogin';
 import	Typer							from	'components/Typer';
+import	SectionRecruit					from	'sections/SectionRecruit';
 
 dayjs.extend(relativeTime);
-
-const	classes = {
-	'Barbarian': {
-		name: 'Barbarian',
-		img: '/barbarian.png',
-		description: 'No friend of the books, unlike any librarian.\nStrength, weapons, and anger serve the Barbarian',
-		id: 1,
-	},
-	'Bard': {
-		name: 'Bard',
-		img: '/bard.png',
-		description: 'Words, songs, and music are certainly not hard.\n The magic of the voice is the weapon of the Bard',
-		id: 2,
-	},
-	'Cleric': {
-		name: 'Cleric',
-		img: '/cleric.png',
-		description: 'In the world of adventure, pains and wounds are quite generic.\nIf you live a life or danger, you best know a Cleric',
-		id: 3,
-	},
-	'Druid': {
-		name: 'Druid',
-		img: '/druid.png',
-		description: 'All life is connected in something that is rather fluid.\nThe trees, insects, and animals are all friends of the Druid',
-		id: 4,
-	},
-	'Fighter': {
-		name: 'Fighter',
-		img: '/fighter.png',
-		description: 'Scorn should not be directed at one with a dream to be a writer.\nBut tactics and sword play are what drive the Fighter',
-		id: 5,
-	},
-	'Monk': {
-		name: 'Monk',
-		img: '/monk.png',
-		description: 'Some pursue vanity, and others just want to get drunk.\nInner peace, and control of the body are the goals of a monk',
-		id: 6,
-	},
-	'Paladin': {
-		name: 'Paladin',
-		img: '/paladin.png',
-		description: 'Some hearts when inspected are found with malice therein.\nBut righteous and honor are the tenets of the Paladin',
-		id: 7,
-	},
-	'Ranger': {
-		name: 'Ranger',
-		img: '/ranger.png',
-		description: 'Most, avoid, flee, and fear only a little bit of danger.\nWith a bow in the wilderness, you might find a Ranger',
-		id: 8,
-	},
-	'Rogue': {
-		name: 'Rogue',
-		img: '/rogue.png',
-		description: 'The rich are rich and the poor are poor is in vogue.\nBut with sticky fingers and sharp daggers you find the Rogue',
-		id: 9,
-	},
-	'Sorcerer': {
-		name: 'Sorcerer',
-		img: '/sorcerer.png',
-		description: 'A scholarly teacher of magic seems like a torturer.\nBut this is not of concern to the innate magic of a Sorcerer',
-		id: 10,
-	},
-	'Wizard': {
-		name: 'Wizard',
-		img: '/wizard.png',
-		description: 'Many waste their time on a log, idle like a lizard.\nHowever, through study, immense power is granted to the Wizard',
-		id: 11,
-	},
-};
 
 function	Adventurer({rarityClass, adventurer, router}) {
 	return (
@@ -109,65 +42,7 @@ function	Adventurer({rarityClass, adventurer, router}) {
 	);
 }
 
-function	Class({provider, rarityClass, fetchRarity, router}) {
-	const	[isLoading, set_isLoading] = useState(false);
-	return (
-		<div
-			className={'w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-50 dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}
-			onClick={() => {
-				if (isLoading) {
-					return;
-				}
-				set_isLoading(true);
-				recruitAdventurer({
-					provider,
-					contractAddress: process.env.RARITY_ADDR,
-					classID: rarityClass.id,
-				}, async ({error}) => {
-					if (error) {
-						set_isLoading(false);
-						return console.error(error);
-					}
-					await fetchRarity();
-					set_isLoading(false);
-					router.push('/');
-				});
-			}}>
-			<Image
-				src={rarityClass.img}
-				quality={100}
-				width={240}
-				height={240} />
-			<p className={'text-sm justify-center group-hover:underline'}>{rarityClass.name}</p>
-			<p className={'text-xss justify-center text-center mt-1'}>{rarityClass.description}</p>
-			{isLoading ? <div className={'absolute inset-0 backdrop-blur-3xl bg-white bg-opacity-40 cursor-not-allowed'}>
-				<div className={'loader'} />
-			</div> : null}
-		</div>
-	);
-}
-
-function	RecruitTab({shouldDisplay, router, provider, fetchRarity}) {
-	return (
-		<div className={`flex flex-row w-full flex-wrap items-center justify-center ${shouldDisplay ? '' : 'opacity-0 h-0 max-h-0 min-h-0 w-0 max-w-0 min-w-0 pointer-events-none'}`}>
-			<div className={`grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 ${shouldDisplay ? 'grid' : 'hidden md:flex'}`}>
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Barbarian']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Bard']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Cleric']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Druid']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Fighter']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Monk']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Paladin']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Ranger']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Rogue']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Sorcerer']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Wizard']} />
-			</div>
-		</div>
-	);
-}
-
-function	DungeonTab({shouldDisplay, rarities, router}) {
+function	DungeonTab({shouldDisplay, rarities, router, adventurersCount}) {
 	const	{chainTime} = useWeb3();
 
 	if (!shouldDisplay) {
@@ -179,11 +54,17 @@ function	DungeonTab({shouldDisplay, rarities, router}) {
 				<i className={'text-sx md:text-xs text-black dark:text-white text-opacity-60 leading-6'}>
 					{'Facu, the Tavern’s owner, has heard some scurrying about down in his cellar. He went down to check it and found swarms of hungry rats. In his earlier days, Facu the Committer would have squashed those pests, but these days he’s weak and frail. Do you want to help him out? Anything you find you get to keep.'}
 				</i>
-				<div className={'mt-6'}>
+				{adventurersCount !== 0 ? <div className={'mt-6'}>
 					<p className={'text-xs'}>
 						{'> Which one of your brave adventurer should go ?'}
 					</p>
-				</div>
+				</div> :
+					<div className={'mt-6'}> 
+						<p className={'text-xs'}>
+							{'> You first need to recruit an adventurer !'}
+						</p>
+					</div>
+				}
 			</div>
 			<div>
 				<div className={'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8'}>
@@ -230,7 +111,7 @@ function	NewsTab({shouldDisplay}) {
 	);
 }
 
-function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositError, isTxPending, active}) {
+function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositError, isTxPending, active, adventurersCount}) {
 	const	[nonce, set_nonce] = useState(0);
 	const	[facuTextIndex, set_facuTextIndex] = useState(0);
 	
@@ -251,6 +132,29 @@ function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositErr
 			);
 		}
 		if (router?.query?.tab === 'recruit') {
+			if (adventurersCount === 0) {
+				return (
+					<>
+						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>
+							{'WELCOME, ADVENTURER! I AM'}
+						</Typer>&nbsp;
+						<span className={'text-tag-info'}><Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>
+							{'FACU'}
+						</Typer></span>
+						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
+							{', THE TAVERN KEEPER.'}
+						</Typer>&nbsp;
+						<div />
+						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 3}>
+							{'YOU ARE ABOUT TO START A JOURNEY BEYOND IMAGINATION. YOU WILL MEET NEW FRIENDS AND FIGHT GREAT DANGERS!'}
+						</Typer>&nbsp;
+						<div className={'my-2'}/>
+						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 4}>
+							{'WHAT KIND OF ADVENTURER ARE YOU ?'}
+						</Typer>
+					</>
+				);
+			}
 			return (
 				<Typer>{'Oh you are looking for the new guy over there ?'}</Typer>
 			);
@@ -401,6 +305,7 @@ function	Index({fetchRarity, rarities, router}) {
 	const	[hasDepositError, set_hasDepositError] = useState(false);
 	const	[modalLoginOpen, set_modalLoginOpen] = useState(false);
 	const	{data: vaultAPY} = useSWR(`https://ape.tax/api/specificApy?address=${process.env.FTM_VAULT_ADDR}&network=250`, fetcher);
+	const	adventurers = Object.values(rarities);
 
 	useEffect(() => {
 		if (provider && address) {
@@ -422,6 +327,7 @@ function	Index({fetchRarity, rarities, router}) {
 					</div>
 					<FacuHeadline
 						active={active && address}
+						adventurersCount={adventurers.length}
 						router={router}
 						vaultAPY={vaultAPY}
 						ftmBalance={ftmBalance}
@@ -449,11 +355,11 @@ function	Index({fetchRarity, rarities, router}) {
 						set_hasDeposited(true);
 						set_isTxPending(false);
 					}} />
-				<section>
+				{active ? <section>
 					<NewsTab shouldDisplay={!router?.query?.tab} router={router} provider={provider} fetchRarity={fetchRarity} />
-					<RecruitTab shouldDisplay={router?.query?.tab === 'recruit'} router={router} provider={provider} fetchRarity={fetchRarity} />
-					<DungeonTab shouldDisplay={router?.query?.tab === 'the-cellar'} router={router} rarities={rarities} provider={provider} fetchRarity={fetchRarity} />
-				</section>
+					<SectionRecruit shouldDisplay={router?.query?.tab === 'recruit'} router={router} provider={provider} fetchRarity={fetchRarity} />
+					<DungeonTab shouldDisplay={router?.query?.tab === 'the-cellar'} router={router} rarities={rarities} provider={provider} fetchRarity={fetchRarity} adventurersCount={adventurers.length} />
+				</section> : null}
 			</div>
 			<ModalLogin open={modalLoginOpen} set_open={set_modalLoginOpen} />
 		</section>

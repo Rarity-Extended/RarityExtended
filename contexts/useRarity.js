@@ -5,15 +5,13 @@
 **	@Filename:				useRarity.js
 ******************************************************************************/
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 
 import	React, {useState, useEffect, useContext, createContext}	from	'react';
 import	useWeb3													from	'contexts/useWeb3';
 import	{ethers}												from	'ethers';
 import	{Provider, Contract}									from	'ethcall';
-import	useSWR, {useSWRConfig} 									from	'swr';
-
-import	{chunk, fetcher, toAddress}										from	'utils';
+import	useSWR													from	'swr';
+import	{chunk, fetcher, toAddress}								from	'utils';
 import	RARITY_ABI												from	'utils/rarity.abi';
 import	RARITY_ATTR_ABI											from	'utils/rarityAttr.abi';
 import	RARITY_GOLD_ABI											from	'utils/rarityGold.abi';
@@ -36,14 +34,11 @@ export const RarityContextApp = ({children}) => {
 		&contractaddress=${process.env.RARITY_ADDR}
 		&address=${address}
 		&apikey=${process.env.FMT_KEY}`;
-
-	const	{mutate} = useSWRConfig();
 	const	{data} = useSWR(active && address ? getRaritiesRequestURI : null, fetcher);
 
-	//You rarities are you adventurers
 	const	[rarities, set_rarities] = useState({});
-	//Nonce used to force the re-render of the app
-	const	[rNonce, set_rNonce] = React.useState(0);
+	const	[rNonce, set_rNonce] = useState(0);
+	const	[loaded, set_loaded] = useState(false);
 
 	/**************************************************************************
 	**	Reset the rarities when the chain changes, when the address changes or
@@ -170,6 +165,7 @@ export const RarityContextApp = ({children}) => {
 		tokensIDs?.forEach((tokenID, i) => {
 			setRarity(tokenID, chunkedCallResult[i], chunkedExtraCallResult[i]);
 		});
+		set_loaded(true);
 	}
 
 	/**************************************************************************
@@ -187,7 +183,12 @@ export const RarityContextApp = ({children}) => {
 	**	Trigger a re-fetch of the rarities from an in-app update
 	**************************************************************************/
 	async function	fetchRarity() {
-		const {result} = await mutate(getRaritiesRequestURI);
+		const {result} = await fetcher(`https://api.ftmscan.com/api
+			?module=account
+			&action=tokennfttx
+			&contractaddress=${process.env.RARITY_ADDR}
+			&address=${address}
+			&apikey=${process.env.FMT_KEY}`);
 		await updateRarities(result);
 	}
 
@@ -203,9 +204,14 @@ export const RarityContextApp = ({children}) => {
 		}
 	}, [data, provider]);
 
+	useEffect(() => {
+		setTimeout(() => !active ? set_loaded(true) : null, 1500);
+	}, []);
+
 	return (
 		<RarityContext.Provider
 			value={{
+				isLoaded: loaded,
 				rarities,
 				updateRarity,
 				fetchRarity,

@@ -11,6 +11,8 @@ import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	{goAdventure, levelUp, setAttributes, claimGold}	from	'utils/actions';
 import	useWeb3							from	'contexts/useWeb3';
+import	useRarity						from	'contexts/useRarity';
+import	SectionNoAdventurer				from	'sections/SectionNoAdventurer';
 
 dayjs.extend(relativeTime);
 
@@ -31,7 +33,7 @@ const	classMapping = [
 
 const	classMappingImg = [
 	'',
-	'/barbarian.png',
+	'/front/barbarian.svg',
 	'/bard.png',
 	'/cleric.png',
 	'/druid.png',
@@ -378,14 +380,23 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 	);
 }
 
-function	Index({rarities = [], updateRarity, router}) {
+
+function	Index({router}) {
 	const	{provider, chainTime} = useWeb3();
+	const	{rarities, updateRarity} = useRarity();
+	const	adventurers = Object.values(rarities);
+
+	if (adventurers?.length === 0) {
+		return (
+			<SectionNoAdventurer />
+		);
+	}
 
 	return (
 		<section className={'mt-24 md:mt-12'}>
 			<div className={'flex flex-col space-y-32 max-w-screen-lg w-full mx-auto'}>
 				{
-					Object.values(rarities)?.map((rarity) => (
+					adventurers?.map((rarity) => (
 						<Aventurers
 							key={rarity.tokenID}
 							rarity={rarity}
