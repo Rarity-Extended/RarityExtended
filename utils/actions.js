@@ -47,6 +47,7 @@ async function	_adventure(loader, {provider, contractAddress, tokenID}, callback
 			callback({error: true, data: undefined});
 		}
 	} catch (error) {
+		console.error(error);
 		toast.dismiss(_toast);
 		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
@@ -97,8 +98,9 @@ export async function	levelUp({provider, contractAddress, tokenID}, callback) {
 			callback({error: true, data: undefined});
 		}
 	} catch (error) {
+		console.error(error);
 		toast.dismiss(_toast);
-		toast.error(error.message || 'Something went wrong, please try again later.');
+		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
 	}
 }
@@ -141,8 +143,9 @@ export async function	recruitAdventurer({provider, contractAddress, classID}, ca
 			callback({error: true, data: undefined});
 		}
 	} catch (error) {
+		console.error(error);
 		toast.dismiss(_toast);
-		toast.error(error.message || 'Something went wrong, please try again later.');
+		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
 	}
 }
@@ -185,8 +188,9 @@ export async function	setAttributes({provider, contractAddress, _summoner, _str,
 			callback({error: true, data: undefined});
 		}
 	} catch (error) {
+		console.error(error);
 		toast.dismiss(_toast);
-		toast.error(error.message || 'Something went wrong, please try again later.');
+		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
 	}
 }
@@ -229,8 +233,9 @@ export async function	claimGold({provider, contractAddress, tokenID}, callback) 
 			callback({error: true, data: undefined});
 		}
 	} catch (error) {
+		console.error(error);
 		toast.dismiss(_toast);
-		toast.error(error.message || 'Something went wrong, please try again later.');
+		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
 	}
 }
@@ -260,8 +265,9 @@ export async function	apeInVault({provider, contractAddress, amount}, callback) 
 			callback({error: true, data: undefined});
 		}
 	} catch (error) {
+		console.error(error);
 		toast.dismiss(_toast);
-		toast.error(error.message || 'Something went wrong, please try again later.');
+		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
 	}
 }
