@@ -118,7 +118,6 @@ function	AppWrapper(props) {
 				<Toaster toastOptions={{className: 'text-xs'}} />
 				<Navbar router={router} />
 				<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />
-				</div>
 				<Footer />
 			</main>
 		</>
