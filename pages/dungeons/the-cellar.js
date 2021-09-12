@@ -10,6 +10,7 @@ import	Image									from	'next/image';
 import	Link									from	'next/link';
 import	useDungeon, {DungeonContextApp}			from	'contexts/useDungeonsTheCellar';
 import	useWeb3									from	'contexts/useWeb3';
+import	useRarity								from	'contexts/useRarity';
 import	{lootDungeonTheCellar}					from	'utils/actions';
 import	DialogBox								from	'components/DialogBox';
 
@@ -71,6 +72,7 @@ function	DialogChoices({router, step, stepAuto, ratEscaped, adventurerWon, expec
 function	Index({dungeon, adventurer, router}) {
 	const	STEP_LIMIT = 10;
 	const	{provider} = useWeb3();
+	const	{updateRarity} = useRarity();
 	const	[fightStep, set_fightStep] = useState(0);
 	const	[option, set_option] = useState(0);
 	const	[ratEscaped, set_ratEscaped] = useState(false);
@@ -236,6 +238,7 @@ function	Index({dungeon, adventurer, router}) {
 							if (error) {
 								return console.error(error);
 							}
+							updateRarity(dungeon.tokenID);
 							router.push('/');
 						});
 					}}

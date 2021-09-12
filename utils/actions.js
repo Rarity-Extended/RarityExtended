@@ -5,9 +5,12 @@
 **	@Filename:				actions.js
 ******************************************************************************/
 
-import	{ethers}						from	'ethers';
+import	{ethers}			from	'ethers';
+import	toast				from	'react-hot-toast';
+import	classNameMapping	from	'utils/classNameMapping';
 
-export async function	goAdventure({provider, contractAddress, tokenID}, callback) {
+async function	_adventure(loader, {provider, contractAddress, tokenID}, callback) {
+	const	_toast = toast.loading(loader);
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
 		contractAddress,
@@ -22,6 +25,8 @@ export async function	goAdventure({provider, contractAddress, tokenID}, callback
 	try {
 		await rarity.callStatic.adventure(tokenID);
 	} catch (error) {
+		toast.dismiss(_toast);
+		toast.error('Impossible to submit transaction');
 		callback({error, data: undefined});
 		return;
 	}
@@ -34,15 +39,29 @@ export async function	goAdventure({provider, contractAddress, tokenID}, callback
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
+			toast.dismiss(_toast);
+			toast.success('Transaction successfull');
 		} else {
+			toast.dismiss(_toast);
+			toast.error('Transaction reverted');
 			callback({error: true, data: undefined});
 		}
 	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
 	}
 }
 
+export async function	goAdventure({provider, contractAddress, tokenID}, callback) {
+	_adventure('Going in an adventure...', {provider, contractAddress, tokenID}, callback);
+}
+export async function	lootDungeonTheCellar({provider, contractAddress, tokenID}, callback) {
+	_adventure('Looting the Big Ugly Rat...', {provider, contractAddress, tokenID}, callback);
+}
 export async function	levelUp({provider, contractAddress, tokenID}, callback) {
+	const	_toast = toast.loading(`Level-up ${tokenID}...`);
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
 		contractAddress,
@@ -57,6 +76,8 @@ export async function	levelUp({provider, contractAddress, tokenID}, callback) {
 	try {
 		await rarity.callStatic.level_up(tokenID);
 	} catch (error) {
+		toast.dismiss(_toast);
+		toast.error('Impossible to submit transaction');
 		callback({error, data: undefined});
 		return;
 	}
@@ -69,15 +90,23 @@ export async function	levelUp({provider, contractAddress, tokenID}, callback) {
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
+			toast.dismiss(_toast);
+			toast.success('Transaction successfull');
 		} else {
+			toast.dismiss(_toast);
+			toast.error('Transaction reverted');
 			callback({error: true, data: undefined});
 		}
 	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
 	}
 }
 
 export async function	recruitAdventurer({provider, contractAddress, classID}, callback) {
+	const	_toast = toast.loading(`Recruiting a ${classNameMapping[classID]}...`);
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
 		contractAddress,
@@ -92,6 +121,8 @@ export async function	recruitAdventurer({provider, contractAddress, classID}, ca
 	try {
 		await rarity.callStatic.summon(classID);
 	} catch (error) {
+		toast.dismiss(_toast);
+		toast.error('Impossible to submit transaction');
 		callback({error, data: undefined});
 		return;
 	}
@@ -104,15 +135,23 @@ export async function	recruitAdventurer({provider, contractAddress, classID}, ca
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: classID});
+			toast.dismiss(_toast);
+			toast.success('Transaction successfull');
 		} else {
+			toast.dismiss(_toast);
+			toast.error('Transaction reverted');
 			callback({error: true, data: undefined});
 		}
 	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
 	}
 }
 
 export async function	setAttributes({provider, contractAddress, _summoner, _str, _dex, _const, _int, _wis, _cha}, callback) {
+	const	_toast = toast.loading(`Setting attributes for ${_summoner}...`);
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
 		contractAddress,
@@ -127,6 +166,8 @@ export async function	setAttributes({provider, contractAddress, _summoner, _str,
 	try {
 		await rarity.callStatic.point_buy(_summoner, _str, _dex, _const, _int, _wis, _cha);
 	} catch (error) {
+		toast.dismiss(_toast);
+		toast.error('Impossible to submit transaction');
 		callback({error, data: undefined});
 		return;
 	}
@@ -139,15 +180,23 @@ export async function	setAttributes({provider, contractAddress, _summoner, _str,
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: {_summoner, _str, _dex, _const, _int, _wis, _cha}});
+			toast.dismiss(_toast);
+			toast.success('Transaction successfull');
 		} else {
+			toast.dismiss(_toast);
+			toast.error('Transaction reverted');
 			callback({error: true, data: undefined});
 		}
 	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
 	}
 }
 
 export async function	claimGold({provider, contractAddress, tokenID}, callback) {
+	const	_toast = toast.loading(`Claiming gold for ${tokenID}...`);
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
 		contractAddress,
@@ -162,6 +211,8 @@ export async function	claimGold({provider, contractAddress, tokenID}, callback) 
 	try {
 		await rarity.callStatic.claim(tokenID);
 	} catch (error) {
+		toast.dismiss(_toast);
+		toast.error('Impossible to submit transaction');
 		callback({error, data: undefined});
 		return;
 	}
@@ -174,20 +225,23 @@ export async function	claimGold({provider, contractAddress, tokenID}, callback) 
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
+			toast.dismiss(_toast);
+			toast.success('Transaction successfull');
 		} else {
+			toast.dismiss(_toast);
+			toast.error('Transaction reverted');
 			callback({error: true, data: undefined});
 		}
 	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
 	}
 }
 
-export async function	lootDungeonTheCellar({provider, contractAddress, tokenID}, callback) {
-	goAdventure({provider, contractAddress, tokenID}, callback);
-}
-
-
 export async function	apeInVault({provider, contractAddress, amount}, callback) {
+	const	_toast = toast.loading('Processing deposit...');
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
 		contractAddress,
@@ -203,10 +257,17 @@ export async function	apeInVault({provider, contractAddress, amount}, callback) 
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: undefined});
+			toast.dismiss(_toast);
+			toast.success('Transaction successfull');
 		} else {
+			toast.dismiss(_toast);
+			toast.error('Transaction reverted');
 			callback({error: true, data: undefined});
 		}
 	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
 	}
 }
