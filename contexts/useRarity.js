@@ -204,6 +204,10 @@ export const RarityContextApp = ({children}) => {
 		}
 	}, [data, provider]);
 
+	useEffect(() => {
+		setTimeout(() => !active ? set_loaded(true) : null, 1500);
+	}, []);
+
 	return (
 		<RarityContext.Provider
 			value={{

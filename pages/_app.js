@@ -17,9 +17,48 @@ import	useRarity, {RarityContextApp}	from	'contexts/useRarity';
 import	{UIContextApp}					from	'contexts/useUI';
 import	Navbar							from	'components/Navbar';
 import	Footer							from	'components/Footer';
+import	SectionNoWallet					from	'sections/SectionNoWallet';
 
 import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
+
+function	GameWrapper({Component, pageProps, element, router}) {
+	const	{switchChain, active, chainID} = useWeb3();
+	const	{isLoaded, rarities, fetchRarity, updateRarity, rNonce} = useRarity();
+
+	if (!isLoaded) {
+		return (
+			<div className={'absolute inset-0 backdrop-blur-3xl bg-opacity-40 cursor-not-allowed'}>
+				<div className={'loader'} />
+			</div>
+		);
+	}
+
+	if (!active) {
+		return (
+			<SectionNoWallet />
+		);
+	}
+
+	return (
+		<div className={'pb-24 mb-24 relative'}>
+			{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
+				<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
+					{'PLEASE SWITCH TO FANTOM NETWORK'}
+				</div>
+			) : null}
+			<Component
+				key={router.route}
+				element={element}
+				router={router}
+				rarities={rarities}
+				updateRarity={updateRarity}
+				fetchRarity={fetchRarity}
+				rNonce={rNonce}
+				{...pageProps} />
+		</div>
+	);
+}
 
 function	AppWrapper(props) {
 	const	{Component, pageProps, router} = props;
@@ -79,28 +118,7 @@ function	AppWrapper(props) {
 			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{minHeight: '100vh'}}>
 				<Toaster toastOptions={{className: 'text-xs'}} />
 				<Navbar router={router} />
-				<div className={'pb-24 mb-24 relative'}>
-					{isActivated ?
-						chainID >= 0 && (chainID !== 250 && chainID !== 1337) ?
-							<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
-								{'PLEASE SWITCH TO FANTOM NETWORK'}
-							</div>
-							:
-							<Component
-								key={router.route}
-								element={props.element}
-								router={props.router}
-								rarities={rarities}
-								updateRarity={updateRarity}
-								fetchRarity={fetchRarity}
-								rNonce={rNonce}
-								{...pageProps} />
-						:
-						<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
-							{'PLEASE CONNECT YOUR WALLET'}
-						</div>
-					}
-				</div>
+				<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />
 				<Footer />
 			</main>
 		</>
