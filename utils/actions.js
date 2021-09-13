@@ -60,6 +60,7 @@ export async function	goAdventure({provider, contractAddress, tokenID}, callback
 export async function	lootDungeonTheCellar({provider, contractAddress, tokenID}, callback) {
 	_adventure('Looting the Big Ugly Rat...', {provider, contractAddress, tokenID}, callback);
 }
+
 export async function	levelUp({provider, contractAddress, tokenID}, callback) {
 	const	_toast = toast.loading(`Level-up ${tokenID}...`);
 	const	signer = provider.getSigner();

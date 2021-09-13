@@ -127,7 +127,7 @@ export const Web3ContextApp = ({children}) => {
 			await (window.ethereum.send)('eth_accounts');
 
 			const	injected = new InjectedConnector();
-			await activate(injected, (e) => console.error(e), false);
+			await activate(injected, undefined, true);
 			set_lastWallet(walletType.METAMASK);
 			set_isActivated(true);
 		} else if (_providerType === walletType.WALLET_CONNECT) {
