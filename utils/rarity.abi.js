@@ -1,6 +1,6 @@
 /******************************************************************************
 **	@Author:				Rarity Extended
-**	@Twitter:				@MajorTom_eth
+**	@Twitter:				@RXtended
 **	@Date:					Monday September 6th 2021
 **	@Filename:				rarity.abi.js
 ******************************************************************************/

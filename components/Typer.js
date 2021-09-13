@@ -1,6 +1,6 @@
 /******************************************************************************
 **	@Author:				Rarity Extended
-**	@Twitter:				@MajorTom_eth
+**	@Twitter:				@RXtended
 **	@Date:					Wednesday September 8th 2021
 **	@Filename:				Typer.js
 ******************************************************************************/

@@ -1,6 +1,6 @@
 /******************************************************************************
 **	@Author:				Rarity Extended
-**	@Twitter:				@MajorTom_eth
+**	@Twitter:				@RXtended
 **	@Date:					Tuesday August 31st 2021
 **	@Filename:				useLocalStorage.js
 ******************************************************************************/

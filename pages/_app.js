@@ -1,6 +1,6 @@
 /******************************************************************************
 **	@Author:				Rarity Extended
-**	@Twitter:				@MajorTom_eth
+**	@Twitter:				@RXtended
 **	@Date:					Tuesday August 31st 2021
 **	@Filename:				_app.js
 ******************************************************************************/
@@ -94,14 +94,14 @@ function	AppWrapper(props) {
 			<DefaultSeo
 				title={'Rarity Extended'}
 				defaultTitle={'Rarity Extended'}
-				description={'Write your next adventure with your brave adventurers'}
+				description={'An On-Chain adventure'}
 				openGraph={{
 					type: 'website',
 					locale: 'en_US',
 					url: process.env.WEBSITE_URI,
 					site_name: 'Rarity Extended',
 					title: 'Rarity Extended',
-					description: 'Write your next adventure with your brave adventurers',
+					description: 'An On-Chain adventure',
 					images: [
 						{
 							url: `${process.env.WEBSITE_URI}og.png`,
@@ -112,8 +112,8 @@ function	AppWrapper(props) {
 					]
 				}}
 				twitter={{
-					handle: '@MajorTom_Eth',
-					site: '@MajorTom_Eth',
+					handle: '@RXtended',
+					site: '@RXtended',
 					cardType: 'summary_large_image',
 				}} />
 			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{minHeight: '100vh'}}>
