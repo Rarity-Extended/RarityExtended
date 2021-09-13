@@ -18,13 +18,55 @@ const	items = [
 
 export default items;
 
-
-
-{/* <Image src={'/items/unknown_key.png'} width={48} height={48} />
-<p>{'Unknown Key'}</p>
-
-<Image src={'/items/treasure_map.png'} width={48} height={48} />
-<p>{'Treasure Map'}</p>
-
-<Image src={'/items/dead_king_crown.png'} width={48} height={48} />
-<p>{'Dead King Crown'}</p> */}
+// "Dead King crown" 
+// "Black gauntlet"
+// "Haunted ring"
+// "Ancient book"
+// "Enchanted book"
+// "Gold ring"
+// "Treasure map"
+// "Spell book"
+// "Silver sword"
+// "Ancient Prince Andre's Sword"
+// "Old damaged coin"
+// "Magic necklace"
+// "Mechanical hand"
+// "War helmet"
+// "Fire boots"
+// "War trophy"
+// "Elf skull"
+// "Unknown ring"
+// "Silver ring"
+// "War book"
+// "Gold pot"
+// "Demon head"
+// "Unknown key"
+// "Cursed book"
+// "Giant plant seed"
+// "Old farmer sickle"
+// "Enchanted useless tool"
+// "Dragon egg"
+// "Bear claw"
+// "Rare ring"
+// "Glove with diamonds"
+// "Haunted cloak"
+// "Dead hero cape"
+// "Cursed talisman"
+// "Enchanted talisman"
+// "Time crystal"
+// "Warrior watch"
+// "Paladin eye"
+// "Metal horse saddle"
+// "Witcher book"
+// "Witch book"
+// "Unknown animal eye"
+// "Slain warrior armor"
+// "Antique ring"
+// "King's son sword"
+// "Thunder hammer"
+// "Skull fragment"
+// "Hawk eye"
+// "Meteorite fragment"
+// "Mutant fisheye"
+// "Wolf necklace"
+// "Shadowy rabbit paw"

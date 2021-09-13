@@ -9,6 +9,7 @@ import	React, {useState, useEffect}	from	'react';
 import	Link							from	'next/link';
 import	useWeb3							from	'contexts/useWeb3';
 import	ModalLogin						from	'components/ModalLogin';
+import	FlyoutMenu						from	'components/FlyoutMenu';
 
 function	Navbar({router}) {
 	const	{active, address, deactivate, onDesactivate} = useWeb3();
@@ -48,7 +49,7 @@ function	Navbar({router}) {
 		);
 	}
 	return (
-		<nav className={'w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black dark:border-dark-100 mb-4 md:mb-20 pb-4'}>
+		<nav className={'relative w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black dark:border-dark-100 mb-4 md:mb-20 pb-0 md:pb-4'}>
 			<div className={'items-center justify-start flex flex-row whitespace-normal md:whitespace-nowrap text-lg'}>
 				<div className={'w-full'}>
 					<Link href={'/'}>
@@ -72,15 +73,7 @@ function	Navbar({router}) {
 						</span>
 					</span>
 				</div>
-				<div className={'group items-center justify-end flex-row flex mr-6 cursor-pointer'} onClick={() => router.push('/tavern')}>
-					<span>
-						<span className={`cursor-pointer inline mb-1 mr-2 group-hover:opacity-100 text-xs md:text-sm ${router.pathname === '/tavern' ? 'opacity-100' : 'opacity-5'}`}>{'>'}</span>
-						<span className={'text-sm cursor-pointer'}>
-							<span className={'text-xs hidden md:inline cursor-pointer'}>{'Tavern'}</span>
-							<span className={'text-xs inline md:hidden cursor-pointer'}>{'Tavern'}</span>
-						</span>
-					</span>
-				</div>
+				<FlyoutMenu />
 				<div className={'items-center justify-end flex-row border-black dark:border-dark-100 border-l-4 pl-6 ml-6 hidden md:flex'}>
 					{renderWalletButton()}
 				</div>

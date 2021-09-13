@@ -14,78 +14,15 @@ import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	classNameMapping				from	'utils/classNameMapping';
 import	{apeInVault}					from	'utils/actions';
 import	{formatAmount, fetcher}			from	'utils';
-import	classes							from	'utils/classList';
 import	useWeb3							from	'contexts/useWeb3';
 import	useUI							from	'contexts/useUI';
 import	DialogBox						from	'components/DialogBox';
 import	ModalLogin						from	'components/ModalLogin';
 import	Typer							from	'components/Typer';
 import	SectionRecruit					from	'sections/SectionRecruit';
+import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
 
 dayjs.extend(relativeTime);
-
-function	Adventurer({rarityClass, adventurer, router}) {
-	return (
-		<div
-			className={'w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-50 dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}
-			onClick={() => {
-				router.push(`/dungeons/the-cellar?adventurer=${adventurer.tokenID}`);
-			}}>
-			<Image
-				src={rarityClass.img}
-				quality={100}
-				width={240}
-				height={240} />
-			<p className={'text-sm justify-center group-hover:underline'}>{adventurer.tokenID}</p>
-			<p className={'text-xss justify-center text-center mt-1'}>{`${rarityClass.name} level ${adventurer.level}`}</p>
-		</div>
-	);
-}
-
-function	DungeonTab({shouldDisplay, rarities, router, adventurersCount}) {
-	const	{chainTime} = useWeb3();
-
-	if (!shouldDisplay) {
-		return null;
-	}
-	return (
-		<div className={'flex flex-col w-full'}>
-			<div className={'pb-10'}>
-				<i className={'text-sx md:text-xs text-black dark:text-white text-opacity-60 leading-6'}>
-					{'Facu, the Tavern’s owner, has heard some scurrying about down in his cellar. He went down to check it and found swarms of hungry rats. In his earlier days, Facu the Committer would have squashed those pests, but these days he’s weak and frail. Do you want to help him out? Anything you find you get to keep.'}
-				</i>
-				{adventurersCount !== 0 ? <div className={'mt-6'}>
-					<p className={'text-xs'}>
-						{'> Which one of your brave adventurer should go ?'}
-					</p>
-				</div> :
-					<div className={'mt-6'}> 
-						<p className={'text-xs'}>
-							{'> You first need to recruit an adventurer !'}
-						</p>
-					</div>
-				}
-			</div>
-			<div>
-				<div className={'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8'}>
-					{Object.values(rarities)?.filter((adventurer) => {
-						const	canAdventure = !dayjs(new Date(adventurer?.dungeons?.cellar * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
-						return canAdventure;
-					}).map((adventurer) => {
-						return (
-							<div key={adventurer.tokenID} className={'w-full md:w-1/4'}>
-								<Adventurer
-									router={router}
-									adventurer={adventurer}
-									rarityClass={classes[classNameMapping[adventurer.class]]} />
-							</div>
-						);
-					})}
-				</div>
-			</div>
-		</div>
-	);
-}
 
 function	NewsTab({shouldDisplay}) {
 	if (!shouldDisplay) {
@@ -281,17 +218,17 @@ function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConn
 							onFTMDeposit(e);
 						});
 					}},
-					{label: 'Nevermind', onClick: () => router.push('/tavern')},
+					{label: 'Nevermind', onClick: () => router.push('/town/tavern')},
 				]} />
 		);
 	}
 	return (
 		<DialogBox
 			options={[
-				{label: 'What\'s new ?', onClick: () => router.push('/tavern')},
-				{label: 'Recruit a new adventurer', onClick: () => router.push('/tavern?tab=recruit')},
-				{label: 'About the rat ...', onClick: () => router.push('/tavern?tab=the-cellar')},
-				{label: 'You said I could earn FTM ?', onClick: () => router.push('/tavern?tab=ftm-vault')}
+				{label: 'What\'s new ?', onClick: () => router.push('/town/tavern')},
+				{label: 'Recruit a new adventurer', onClick: () => router.push('/town/tavern?tab=recruit')},
+				{label: 'About the rat ...', onClick: () => router.push('/town/tavern?tab=the-cellar')},
+				{label: 'You said I could earn FTM ?', onClick: () => router.push('/town/tavern?tab=ftm-vault')}
 			]} />
 	);
 }
@@ -317,7 +254,7 @@ function	Index({fetchRarity, rarities, router}) {
 		<section className={'mt-12 max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
 				<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-0'}>
-					<div className={'w-auto md:w-64'} style={{minWidth: 256}}>
+					<div className={'w-auto md:w-64 mr-0 md:mr-16'} style={{minWidth: 256}}>
 						<Image
 							src={theme === 'light' ? '/avatar/facu.gif' : '/avatar/facu.png'}
 							loading={'eager'}
@@ -358,7 +295,11 @@ function	Index({fetchRarity, rarities, router}) {
 				{active ? <section>
 					<NewsTab shouldDisplay={!router?.query?.tab} router={router} provider={provider} fetchRarity={fetchRarity} />
 					<SectionRecruit shouldDisplay={router?.query?.tab === 'recruit'} router={router} provider={provider} fetchRarity={fetchRarity} />
-					<DungeonTab shouldDisplay={router?.query?.tab === 'the-cellar'} router={router} rarities={rarities} provider={provider} fetchRarity={fetchRarity} adventurersCount={adventurers.length} />
+					<SectionDungeonTheCellar
+						shouldDisplay={router?.query?.tab === 'the-cellar'}
+						router={router}
+						adventurers={rarities}
+						adventurersCount={adventurers.length} />
 				</section> : null}
 			</div>
 			<ModalLogin open={modalLoginOpen} set_open={set_modalLoginOpen} />
