@@ -17,11 +17,7 @@ import	useRarity, {RarityContextApp}	from	'contexts/useRarity';
 import	{UIContextApp}					from	'contexts/useUI';
 import	Navbar							from	'components/Navbar';
 import	Footer							from	'components/Footer';
-<<<<<<< HEAD
 import	SectionNoWallet					from	'sections/SectionNoWallet';
-=======
-import	SectionNoWallet from 'sections/SectionNoWallet';
->>>>>>> 03de0c10e6a8d2251002f8409fe9c22fe75538d1
 
 import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
