@@ -11,7 +11,6 @@ import	{ethers}						from	'ethers';
 import	useSWR							from	'swr';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
-import	classNameMapping				from	'utils/classNameMapping';
 import	{apeInVault}					from	'utils/actions';
 import	{formatAmount, fetcher}			from	'utils';
 import	useWeb3							from	'contexts/useWeb3';
