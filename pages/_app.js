@@ -94,14 +94,14 @@ function	AppWrapper(props) {
 			<DefaultSeo
 				title={'Rarity Extended'}
 				defaultTitle={'Rarity Extended'}
-				description={'An On-Chain adventure'}
+				description={'An On-Chain Adventure'}
 				openGraph={{
 					type: 'website',
 					locale: 'en_US',
 					url: process.env.WEBSITE_URI,
 					site_name: 'Rarity Extended',
 					title: 'Rarity Extended',
-					description: 'An On-Chain adventure',
+					description: 'An On-Chain Adventure',
 					images: [
 						{
 							url: `${process.env.WEBSITE_URI}og.png`,
