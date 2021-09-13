@@ -125,6 +125,11 @@ html.dark {
 	color: black;
 }
 
+.item {
+	min-width: 64px;
+	min-height: 64px;
+}
+
 /* NES EDITS */
 
 .nes-balloon, .nes-btn, .nes-container.is-rounded, .nes-dialog.is-rounded, .nes-progress, .nes-progress.is-rounded, .nes-table.is-bordered, .nes-table.is-dark.is-bordered, .nes-input,
@@ -164,21 +169,6 @@ html.dark {
 	margin: -2rem 0 1rem auto;
   }
   
-  @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
-	.nes-container {
-		position: relative;
-		padding: 1.5rem 1rem;
-		border-style: solid;
-		border-width: 4px;
-	  }
-  }
-  
-  @supports (-moz-appearance: meterbar) {
-	.nes-container.is-rounded {
-	  border-image-repeat: stretch;
-	}
-  }
-  
   .nes-container.is-rounded.with-title > .title {
 	margin-top: -1.5rem;
   }
@@ -203,19 +193,7 @@ html.dark {
 	-moz-appearance: none;
 		 appearance: none;
   }
-  
-  @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
-	.nes-progress {
-	  border-image-repeat: space;
-	}
-  }
-  
-  @supports (-moz-appearance: meterbar) {
-	.nes-progress {
-	  border-image-repeat: stretch;
-	}
-  }
-  
+    
 	.progressbar::-webkit-progress-bar,
 	.nes-progress::-webkit-progress-bar {
 		background-color: #fff;

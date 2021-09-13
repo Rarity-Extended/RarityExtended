@@ -40,7 +40,7 @@ async function	_adventure(loader, {provider, contractAddress, tokenID}, callback
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
-			toast.success('Transaction successfull');
+			toast.success('Transaction successful');
 		} else {
 			toast.dismiss(_toast);
 			toast.error('Transaction reverted');
@@ -55,7 +55,7 @@ async function	_adventure(loader, {provider, contractAddress, tokenID}, callback
 }
 
 export async function	goAdventure({provider, contractAddress, tokenID}, callback) {
-	_adventure('Going in an adventure...', {provider, contractAddress, tokenID}, callback);
+	_adventure('Going on an adventure...', {provider, contractAddress, tokenID}, callback);
 }
 export async function	lootDungeonTheCellar({provider, contractAddress, tokenID}, callback) {
 	_adventure('Looting the Big Ugly Rat...', {provider, contractAddress, tokenID}, callback);
@@ -91,7 +91,7 @@ export async function	levelUp({provider, contractAddress, tokenID}, callback) {
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
-			toast.success('Transaction successfull');
+			toast.success('Transaction successful');
 		} else {
 			toast.dismiss(_toast);
 			toast.error('Transaction reverted');
@@ -136,7 +136,7 @@ export async function	recruitAdventurer({provider, contractAddress, classID}, ca
 		if (transactionResult.status === 1) {
 			callback({error: false, data: classID});
 			toast.dismiss(_toast);
-			toast.success('Transaction successfull');
+			toast.success('Transaction successful');
 		} else {
 			toast.dismiss(_toast);
 			toast.error('Transaction reverted');
@@ -181,7 +181,7 @@ export async function	setAttributes({provider, contractAddress, _summoner, _str,
 		if (transactionResult.status === 1) {
 			callback({error: false, data: {_summoner, _str, _dex, _const, _int, _wis, _cha}});
 			toast.dismiss(_toast);
-			toast.success('Transaction successfull');
+			toast.success('Transaction successful');
 		} else {
 			toast.dismiss(_toast);
 			toast.error('Transaction reverted');
@@ -226,7 +226,7 @@ export async function	claimGold({provider, contractAddress, tokenID}, callback) 
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
-			toast.success('Transaction successfull');
+			toast.success('Transaction successful');
 		} else {
 			toast.dismiss(_toast);
 			toast.error('Transaction reverted');
@@ -258,7 +258,7 @@ export async function	apeInVault({provider, contractAddress, amount}, callback) 
 		if (transactionResult.status === 1) {
 			callback({error: false, data: undefined});
 			toast.dismiss(_toast);
-			toast.success('Transaction successfull');
+			toast.success('Transaction successful');
 		} else {
 			toast.dismiss(_toast);
 			toast.error('Transaction reverted');
