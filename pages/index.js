@@ -68,7 +68,7 @@ function	DailyBalloon({rarity, chainTime, provider, updateRarity}) {
 		return (
 			<div className={'nes-balloon rounded-lg border-black dark:border-dark-100 border-4 relative from-left text-xs md:text-base'}>
 				<div className={'mb-2'}>
-					{'Would you like to go in an adventure ?'}
+					{'Would you like to go on an adventure ?'}
 					<div className={'mt-6'}>
 						<span className={'cursor-pointer'} onClick={onGoToAdventure}>
 							<span className={'inline mb-1 mr-2 group-hover:opacity-100'} style={{cursor: 'pointer'}}>{'>'}</span>
