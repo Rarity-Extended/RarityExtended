@@ -18,6 +18,7 @@ import	{UIContextApp}					from	'contexts/useUI';
 import	Navbar							from	'components/Navbar';
 import	Footer							from	'components/Footer';
 import	SectionNoWallet					from	'sections/SectionNoWallet';
+import	useWindowInFocus				from	'hook/useWindowInFocus';
 
 import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
@@ -63,12 +64,13 @@ function	GameWrapper({Component, pageProps, element, router}) {
 function	AppWrapper(props) {
 	const	{Component, pageProps, router} = props;
 	const	{switchChain, chainID} = useWeb3();
+	const	windowInFocus = useWindowInFocus();
 
 	React.useEffect(() => {
-		if (Number(chainID) > 0 && (Number(chainID) !== 250 && Number(chainID) !== 1337)) {
+		if (windowInFocus && Number(chainID) > 0 && (Number(chainID) !== 250 && Number(chainID) !== 1337)) {
 			switchChain();
 		}
-	}, [chainID]);
+	}, [chainID, windowInFocus, switchChain]);
 
 	return (
 		<>
@@ -130,7 +132,7 @@ const getLibrary = (provider) => {
 
 function	MyApp(props) {
 	const	{Component, pageProps} = props;
-	
+
 	return (
 		<UIContextApp>
 			<Web3ReactProvider getLibrary={getLibrary}>

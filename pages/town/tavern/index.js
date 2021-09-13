@@ -35,12 +35,12 @@ function	NewsTab({shouldDisplay}) {
 				</i>
 				<div className={'mt-10'}>
 					<p className={'text-sm md:text-base mb-2 md:mb-0 leading-4 md:leading-6'}>{'> THE BIG UGLY RAT IN THE CELLAR'}</p>
-					<p className={'text-sx md:text-xs leading-4 md:leading-6'}>{'WHICH OF US WAS SURPRISED TO LEARN THAT THE TAVERN\'S CELLAR WAS HOME TO THE LARGEST AND UGLIEST RAT EVER RECORDED ? THE LEGENDS SAY THAT IT CAN DEFEAT AN ADVENTURER IN A FEW BITES! AND THE TREASURE IS NOT EVEN GREAT! AND YES, I COULDN\'T BEAT THIS RAT, SO WHAT?'}</p>
+					<p className={'text-sx md:text-xs leading-4 md:leading-6'}>{'FACU WAS SURPRISED TO LEARN THAT THE TAVERN\'S CELLAR WAS HOME TO THE LARGEST AND UGLIEST RAT EVER RECORDED ! THE LEGENDS SAY THAT IT CAN DEFEAT AN ADVENTURER IN A FEW BITES! WORST OF ALL, THE TREASURE IS NOT EVEN GREAT! FACU IS LOOKING FOR A LITTLE HELP!'}</p>
 				</div>
 
 				<div className={'mt-10'}>
 					<p className={'text-sm md:text-base mb-2 md:mb-0 leading-4 md:leading-6'}>{'> THE TAVERN KEEPER IS ACTUALLY MOVING !!!'}</p>
-					<p className={'text-sx md:text-xs leading-4 md:leading-6'}>{'MAYBE YOU NEVER NOTICED IT, BUT AFTER 4 DAYS SPENT HANGING OUT IN THIS GLOOMY INN, THIS IS THE FIRST TIME I SEE FACU, THE TAVERN KEEPER, MOVING! WHEN HE WINKED, I THOUGHT I WAS GOING CRAZY, BUT NO, HE IS MOVING ! DOES IT MEAN THAT WE WILL ALL MOVE ONE DAY TOO?'}</p>
+					<p className={'text-sx md:text-xs leading-4 md:leading-6'}>{'MAYBE YOU NEVER NOTICED IT, BUT AFTER 4 DAYS SPENT HANGING OUT IN THIS GLOOMY INN, THIS IS THE FIRST TIME I SEE FACU, THE TAVERN KEEPER, MOVING! WHEN HE WINKED, I THOUGHT I WAS GOING CRAZY, OR PERHAPS THE MEAD WAS GOING TO MY HEAD, BUT NO, HE IS MOVING ! DOES IT MEAN THAT WE WILL ALL MOVE ONE DAY TOO?'}</p>
 				</div>
 			</div>
 		</div>
@@ -92,7 +92,7 @@ function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositErr
 				);
 			}
 			return (
-				<Typer>{'Oh you are looking for the new guy over there ?'}</Typer>
+				<Typer>{'OH, THERE IS AN HERO OVER THERE LOOKING FOR SOME ADVENTURE'}</Typer>
 			);
 		}
 		if (router?.query?.tab === 'ftm-vault') {

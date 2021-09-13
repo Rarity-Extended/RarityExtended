@@ -49,9 +49,13 @@ function	Class({provider, rarityClass, fetchRarity, router}) {
 }
 
 function	SectionRecruit({shouldDisplay, router, provider, fetchRarity}) {
+    if (!shouldDisplay) {
+        return null;
+    }
+
 	return (
-		<section className={`flex flex-row w-full flex-wrap items-center justify-center ${shouldDisplay ? '' : 'opacity-0 h-0 max-h-0 min-h-0 w-0 max-w-0 min-w-0 pointer-events-none'}`}>
-			<div className={`grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 ${shouldDisplay ? 'grid' : 'hidden md:flex'}`}>
+		<section className="flex flex-row w-full flex-wrap items-center justify-center">
+			<div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Barbarian']} />
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Bard']} />
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Cleric']} />
