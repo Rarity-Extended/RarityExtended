@@ -85,7 +85,7 @@ export const Web3ContextApp = ({children}) => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [account, chainId, connector, library, onDesactivate, onUpdate]);
 
-	function	switchChain() {
+	const switchChain = useCallback(() => {
 		if (Number(chainID) === 250) {
 			return;
 		}
@@ -104,7 +104,7 @@ export const Web3ContextApp = ({children}) => {
 				'decimals': 18
 			}
 		}, address]).catch((error) => console.error(error));
-	}
+	}, [active, address, chainID, provider]);
 
 	/**************************************************************************
 	**	connect
@@ -126,7 +126,7 @@ export const Web3ContextApp = ({children}) => {
 			}
 			await (window.ethereum.send)('eth_accounts');
 
-			const	injected = new InjectedConnector({supportedChainIds: [1, 250, 1337]});
+			const	injected = new InjectedConnector();
 			await activate(injected, (e) => console.error(e), false);
 			set_lastWallet(walletType.METAMASK);
 			set_isActivated(true);
