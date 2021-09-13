@@ -65,7 +65,6 @@ export const RarityContextApp = ({children}) => {
 			rarityAttr.character_created(tokenID),
 			rarityAttr.ability_scores(tokenID),
 			rarityGold.balanceOf(tokenID),
-			rarityDungeonCellar.balanceOf(tokenID),
 			rarityDungeonCellar.adventurers_log(tokenID),
 		];
 	}
@@ -184,7 +183,7 @@ export const RarityContextApp = ({children}) => {
 		// preparedCalls.push(...prepareAdventurer(258181)); preparedExtraCalls.push(...prepareAdventurerExtra(258181)); tokensIDs.push(258181);
 
 		const	callResults = await fetchAdventurer(preparedCalls);
-		const	chunkedCallResult = chunk(callResults, 7);
+		const	chunkedCallResult = chunk(callResults, 6);
 		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(preparedInventoryCalls);
@@ -201,7 +200,7 @@ export const RarityContextApp = ({children}) => {
 	**************************************************************************/
 	async function	updateRarity(tokenID) {
 		const	callResults = await fetchAdventurer(prepareAdventurer(tokenID));
-		const	chunkedCallResult = chunk(callResults, 7);
+		const	chunkedCallResult = chunk(callResults, 6);
 		const	extraCallResults = await fetchAdventurerExtra(prepareAdventurerExtra(tokenID));
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(prepareAdventurerInventory(tokenID));
