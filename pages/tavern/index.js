@@ -12,7 +12,11 @@ import	useSWR							from	'swr';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	classNameMapping				from	'utils/classNameMapping';
+<<<<<<< HEAD
 import	{apeInVault}					from	'utils/actions';
+=======
+import	{apeInVault}	from	'utils/actions';
+>>>>>>> 03de0c10e6a8d2251002f8409fe9c22fe75538d1
 import	{formatAmount, fetcher}			from	'utils';
 import	classes							from	'utils/classList';
 import	useWeb3							from	'contexts/useWeb3';
