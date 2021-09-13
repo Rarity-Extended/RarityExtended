@@ -13,6 +13,8 @@ import	SectionNoAdventurer				from	'sections/SectionNoAdventurer';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	ITEMS							from	'utils/items';
+import	CLASSES							from	'utils/classList';
+import	SKILLS							from	'utils/skillList';
 import	classNameMapping				from	'utils/classNameMapping';
 import	{goAdventure, levelUp, setAttributes, claimGold}	from	'utils/actions';
 
@@ -332,6 +334,39 @@ function	Inventory({rarity}) {
 	}
 	return (renderInventory());
 }
+function	Skills({rarity}) {
+
+	function	renderSkills() {
+		const	toRender = Object.values(CLASSES)
+			.find((e) => e.id === rarity.class)?.skills
+			.map((_skill) => {
+				const	skill = SKILLS[_skill];
+				if (!skill) {
+					console.log(_skill);
+				}
+				return (
+					<div className={'flex flex-row space-x-4 w-full'} key={skill?.id}>
+						<div>
+							<p>{skill?.name}</p>
+							<p className={'text-xxs'}>{skill?.check}</p>
+						</div>
+					</div>
+				);
+			});
+
+		return (
+			<div className={'flex flex-col md:flex-row w-full mt-2 space-x-0 md:space-x-2'}>
+				<div className={'w-full nes-container border-4 border-solid border-black dark:border-dark-100'}>
+					<div className={'w-full p-4 grid grid-cols-3 gap-4'}>
+						{toRender}
+					</div>
+				</div>
+			</div>
+		);
+	}
+	return (renderSkills());
+}
+
 function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 	return (
 		<div className={'w-full'}>
@@ -415,6 +450,7 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 				<Attributes rarity={rarity} updateRarity={updateRarity} provider={provider} />
 			</div>
 			<Inventory rarity={rarity} />
+			<Skills rarity={rarity} />
 		</div>
 	);
 }
