@@ -17,8 +17,9 @@ import	ITEMS							from	'utils/items';
 import	CLASSES							from	'utils/classList';
 import	SKILLS							from	'utils/skillList';
 import	classNameMapping				from	'utils/classNameMapping';
-import	{goAdventure, levelUp, setAttributes, claimGold}	from	'utils/actions';
-import	{availableSkillPoints}				from	'lib/skills';
+import	{goAdventure, levelUp, setAttributes, claimGold, learnSkills}	from	'utils/actions';
+import	{availableSkillPoints, calculatePointsForSet}				from	'lib/skills';
+import	Chevron							from	'components/Chevron';
 
 dayjs.extend(relativeTime);
 
@@ -335,12 +336,22 @@ function	Inventory({adventurer}) {
 	}
 	return (renderInventory());
 }
-function	Skills({adventurer}) {
+function	Skills({adventurer, updateRarity, provider}) {
 	const	_availableSkillPoints = availableSkillPoints(adventurer.attributes.intelligence, adventurer.class, adventurer.level);
+	const	_pointSpentByAdventurer = calculatePointsForSet(adventurer.class, adventurer?.skills || []);
 	const	_adventurerClass = Object.values(CLASSES).find((e) => e.id === adventurer.class);
 	const	[isOpen, set_isOpen] = useState(false);
 	const	[classTab, set_classTab] = useState(0);
 	const	[attributeTab, set_attributeTab] = useState(0);
+	const	[search, set_search] = useState('');
+	const	[updateSkills, set_updateSkills] = useState(() => {
+		const	skills = {
+			remainingPoints: _availableSkillPoints - _pointSpentByAdventurer < 0 ? 0 : _availableSkillPoints - _pointSpentByAdventurer,
+			canBuyPoint: _availableSkillPoints - _pointSpentByAdventurer > 0,
+		};
+		adventurer.skills.forEach((e, i) => skills[i + 1] = e);
+		return skills;
+	});
 
 	function closeModal() {
 		set_isOpen(false);
@@ -350,44 +361,58 @@ function	Skills({adventurer}) {
 		set_isOpen(true);
 	}
 
-	function	renderSkills() {
-		// console.log(new Array(_availableSkillPoints));
-		const	toRender = Object.values(SKILLS)
-			// .find((e) => e.id === rarity.class)?.skills
-			.map((_skill) => {
-				const	skill = _skill;
-				// const	skill = SKILLS[_skill];
-				// if (!skill) {
-				// 	console.log(_skill);
-				// }
-				return (
-					<div className={'flex flex-row space-x-4 w-full'} key={skill?.id}>
-						<div className={'w-16 h-16 bg-gray-50 dark:bg-dark-400 flex justify-center items-center relative item'}>
-							<Image src={skill.img} width={64} height={64} />
-						</div>
-						<div>
-							<p className={'text-xs mb-1'}>{skill?.name}</p>
-							<p className={'text-megaxs'}>{skill?.attributeName}</p>
-							<p className={'text-megaxs'}>{`Cost: ${_adventurerClass?.skills?.includes(skill.name) ? '1' : '3'}`}</p>
-						</div>
-					</div>
-				);
-			});
+	function	onSetSkills() {
+		const	_skills = [];
+		for (const key in updateSkills) {
+			if (key !== 'remainingPoints' && key !== 'canBuyPoint') {
+				_skills[key - 1] = updateSkills[key];
+			}
+		}
+		learnSkills({
+			provider,
+			contractAddress: process.env.RARITY_SKILLS_ADDR,
+			tokenID: adventurer.tokenID,
+			skills: _skills,
+		}, ({error, data}) => {
+			if (error) {
+				return console.error(error);
+			}
+			updateRarity(data);
+		});
+	}
 
+	function	renderSkills() {
 		return (
 			<div className={'flex flex-col md:flex-row w-full mt-2 space-x-0 md:space-x-2'}>
 				<div className={'w-full p-4'}>
-					<p className={'mb-4'}>{`POINTS LEFT: ${_availableSkillPoints}`}</p>
-					<div className={'w-full grid grid-cols-3 gap-4'}>
-						<div className={'flex flex-row space-x-4 w-full '}>
-							<div
-								onClick={openModal}
-								className={'w-full border-4 border-dashed border-black h-16 text-black hover:bg-gray-100 cursor-pointer transition-colors flex items-center pl-4 mr-4'}>
-								<svg xmlns={'http://www.w3.org/2000/svg'} width={'24'} height={'24'} viewBox={'0 0 24 24'}><path d={'M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z'} fill={'currentcolor'}/></svg>
-								<p className={'ml-4'}>{'ADD SKILL'}</p>
-							</div>
+					<div className={'flex'}>
+						<div
+							onClick={openModal}
+							className={'border-4 border-black px-10 py-2 text-black hover:bg-gray-secondary cursor-pointer transition-colors flex items-center text-xs'}>
+							<p>{'SKILLBOOK'}</p>
+							{updateSkills.remainingPoints > 0 ? <p className={'inline text-megaxs ml-2'}>
+								{`(POINTS LEFT: ${updateSkills.remainingPoints})`}
+							</p> : null}
 						</div>
-						{toRender}
+					</div>
+					<div className={'w-full grid grid-cols-3 gap-4 mt-6'}>
+						{(adventurer?.skills || []).map((level, index) => {
+							if (level === 0) {
+								return null;
+							}
+							const	skill = Object.values(SKILLS).find(e => e.id === index + 1);
+							return (
+								<div className={'flex flex-row space-x-4 w-full'} key={`${adventurer.tokenID}-${skill.name}`}>
+									<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center relative item'}>
+										<Image src={skill.img} width={64} height={64} />
+									</div>
+									<div>
+										<p className={'text-xs mb-1'}>{skill?.name}</p>
+										<p className={'text-megaxs'}>{`level: ${level}`}</p>
+									</div>
+								</div>
+							);
+						})}
 					</div>
 				</div>
 			</div>
@@ -422,137 +447,217 @@ function	Skills({adventurer}) {
 							leave={'ease-in duration-200'}
 							leaveFrom={'opacity-100 scale-100'}
 							leaveTo={'opacity-0 scale-95'}>
-							<div className={'inline-block px-10 py-9 mt-32 text-left transition-all transform bg-white shadow-xl max-w-screen-lg w-full uppercase font-title'}>
-								<Dialog.Title
-									as={'h3'}
-									className={'text-lg font-medium leading-6 text-gray-900'}>
-									{`POINTS LEFT: ${_availableSkillPoints}`}
+							<div className={'inline-block px-10 py-9 mt-32 text-left transition-all transform bg-white shadow-xl max-w-screen-lg w-full uppercase font-title relative'}>
+								<div className={'absolute right-10 top-8 cursor-pointer'} onClick={() => set_isOpen(false)}>
+									<svg width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
+										<path d={'M6.70711 5.29289C6.31658 4.90237 5.68342 4.90237 5.29289 5.29289C4.90237 5.68342 4.90237 6.31658 5.29289 6.70711L10.5858 12L5.29289 17.2929C4.90237 17.6834 4.90237 18.3166 5.29289 18.7071C5.68342 19.0976 6.31658 19.0976 6.70711 18.7071L12 13.4142L17.2929 18.7071C17.6834 19.0976 18.3166 19.0976 18.7071 18.7071C19.0976 18.3166 19.0976 17.6834 18.7071 17.2929L13.4142 12L18.7071 6.70711C19.0976 6.31658 19.0976 5.68342 18.7071 5.29289C18.3166 4.90237 17.6834 4.90237 17.2929 5.29289L12 10.5858L6.70711 5.29289Z'} fill={'#000000'}/>
+									</svg>
+								</div>
+								<Dialog.Title as={'h3'} className={'text-lg font-medium leading-6 text-black'}>
+									{'SKILLBOOK'}
 								</Dialog.Title>
-								<div className={'mt-6 flex flex-row mb-4'}>
-									<input className={'border-4 border-black border-solid h-10 w-96 mr-4 text-xs px-2 focus:outline-none'} placeholder={'SEARCH'} />
-									<button className={'border-4 border-black border-solid h-10 px-12 text-xs'}>
-										{'FIND'}
+								<div className={'mt-6 flex flex-row mb-4 items-center'}>
+									<input
+										onChange={e => set_search(e?.target?.value || '')}
+										className={'border-4 border-black border-solid h-10 w-75 mr-4 text-xs px-2 focus:outline-none'}
+										placeholder={'SEARCH'} />
+									<div className={'ml-auto text-xs mr-6'}>
+										{`POINTS LEFT: ${updateSkills.remainingPoints}`}
+									</div>
+									<button
+										onClick={() => {
+											if (updateSkills.canBuyPoint)
+												onSetSkills();
+										}}
+										disabled={!updateSkills.canBuyPoint}
+										className={`border-4 border-black border-solid h-10 px-12 text-xs ${updateSkills.canBuyPoint ? 'hover:bg-gray-secondary cursor-pointer' : 'cursor-not-allowed'}`}>
+										{'LEARN'}
 									</button>
 								</div>
 								<div className={'w-full flex flex-row text-megaxs mb-4'}>
 									<div
 										onClick={() => set_classTab(0)}
-										className={`p-2 cursor-pointer mr-4 ${classTab === 0 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										className={`p-2 cursor-pointer mr-4 ${classTab === 0 ? 'bg-gray-secondary' : 'bg-white'} hover:bg-gray-secondary`}>
 										{_adventurerClass.name}
 									</div>
 									<div
 										onClick={() => set_classTab(1)}
-										className={`p-2 cursor-pointer ${classTab === 1 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										className={`p-2 cursor-pointer ${classTab === 1 ? 'bg-gray-secondary' : 'bg-white'} hover:bg-gray-secondary`}>
 										{'CROSS-CLASS'}
 									</div>
 
 									<div
 										onClick={() => set_attributeTab(0)}
-										className={`p-2 cursor-pointer mr-4 ${attributeTab === 0 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200 ml-auto`}>
+										className={`p-2 cursor-pointer mr-4 ${attributeTab === 0 ? 'bg-gray-secondary' : 'bg-white'} hover:bg-gray-secondary ml-auto`}>
 										{'ALL'}
 									</div>
 									<div
 										onClick={() => set_attributeTab(1)}
-										className={`p-2 cursor-pointer mr-4 ${attributeTab === 1 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										className={`p-2 cursor-pointer mr-4 ${attributeTab === 1 ? 'bg-gray-secondary' : 'bg-white'} hover:bg-gray-secondary`}>
 										{'STRENGTH'}
 									</div>
 									<div
 										onClick={() => set_attributeTab(2)}
-										className={`p-2 cursor-pointer mr-4 ${attributeTab === 2 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										className={`p-2 cursor-pointer mr-4 ${attributeTab === 2 ? 'bg-gray-secondary' : 'bg-white'} hover:bg-gray-secondary`}>
 										{'DEXTERITY'}
 									</div>
 									<div
 										onClick={() => set_attributeTab(3)}
-										className={`p-2 cursor-pointer mr-4 ${attributeTab === 3 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										className={`p-2 cursor-pointer mr-4 ${attributeTab === 3 ? 'bg-gray-secondary' : 'bg-white'} hover:bg-gray-secondary`}>
 										{'CONSTITUTION'}
 									</div>
 									<div
 										onClick={() => set_attributeTab(4)}
-										className={`p-2 cursor-pointer mr-4 ${attributeTab === 4 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										className={`p-2 cursor-pointer mr-4 ${attributeTab === 4 ? 'bg-gray-secondary' : 'bg-white'} hover:bg-gray-secondary`}>
 										{'INTELLIGENCE'}
 									</div>
 									<div
 										onClick={() => set_attributeTab(5)}
-										className={`p-2 cursor-pointer mr-4 ${attributeTab === 5 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										className={`p-2 cursor-pointer mr-4 ${attributeTab === 5 ? 'bg-gray-secondary' : 'bg-white'} hover:bg-gray-secondary`}>
 										{'WISDOM'}
 									</div>
 									<div
 										onClick={() => set_attributeTab(6)}
-										className={`p-2 cursor-pointer ${attributeTab === 6 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										className={`p-2 cursor-pointer ${attributeTab === 6 ? 'bg-gray-secondary' : 'bg-white'} hover:bg-gray-secondary`}>
 										{'CHARISMA'}
 									</div>
 								</div>
 								
-								<div className={'min-h-120 max-h-120 overflow-y-scroll py-2'}>
+								<div className={'min-h-120 max-h-120 overflow-y-scroll pb-2'}>
 									{
-										Object.values(SKILLS).filter((skill) => {
-											if (classTab === 0) {
-												if (attributeTab === 0) {
-													return _adventurerClass.skills.includes(skill?.name);
-												} else if (attributeTab === 1) {
-													return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'strength';
-												} else if (attributeTab === 2) {
-													return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'dexterity';
-												} else if (attributeTab === 3) {
-													return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'constitution';
-												} else if (attributeTab === 4) {
-													return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'intelligence';
-												} else if (attributeTab === 5) {
-													return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'wisdom';
-												} else if (attributeTab === 6) {
-													return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'charisma';
+										Object.values(SKILLS)
+											.filter((skill) => {
+												if (classTab === 0) {
+													if (attributeTab === 0) {
+														return _adventurerClass.skills.includes(skill?.name);
+													} else if (attributeTab === 1) {
+														return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'strength';
+													} else if (attributeTab === 2) {
+														return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'dexterity';
+													} else if (attributeTab === 3) {
+														return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'constitution';
+													} else if (attributeTab === 4) {
+														return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'intelligence';
+													} else if (attributeTab === 5) {
+														return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'wisdom';
+													} else if (attributeTab === 6) {
+														return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'charisma';
+													}
+												} else {
+													if (attributeTab === 0) {
+														return !_adventurerClass.skills.includes(skill?.name);
+													} else if (attributeTab === 1) {
+														return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'strength';
+													} else if (attributeTab === 2) {
+														return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'dexterity';
+													} else if (attributeTab === 3) {
+														return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'constitution';
+													} else if (attributeTab === 4) {
+														return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'intelligence';
+													} else if (attributeTab === 5) {
+														return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'wisdom';
+													} else if (attributeTab === 6) {
+														return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'charisma';
+													}
 												}
-											} else {
-												if (attributeTab === 0) {
-													return !_adventurerClass.skills.includes(skill?.name);
-												} else if (attributeTab === 1) {
-													return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'strength';
-												} else if (attributeTab === 2) {
-													return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'dexterity';
-												} else if (attributeTab === 3) {
-													return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'constitution';
-												} else if (attributeTab === 4) {
-													return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'intelligence';
-												} else if (attributeTab === 5) {
-													return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'wisdom';
-												} else if (attributeTab === 6) {
-													return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'charisma';
-												}
-											}
-											return skill;
-										}).map((skill, index, arr) => {
-											return (
-												<details key={skill?.id} className={'flex flex-row w-full mb-2 bg-gray-200'}>
-													<summary>
-														<div className={'flex flex-row space-x-4 w-full h-16 bg-gray-200'}>
-															<div className={'w-16 h-16 bg-gray-200 flex justify-center items-center relative item'}>
-																<Image src={skill.img} width={64} height={64} />
-															</div>
-															<div className={'my-2 flex flex-col space-between w-full'}>
-																<p className={'text-xs mb-1'}>{skill?.name}</p>
-																<div className={'flex flex-row mt-auto'}>
-																	<p className={'text-xxs mr-8 w-28'}>{skill?.attributeName}</p>
-																	<p className={'text-xxs mr-8'}>{`ARMOR CHECK PENALITY:${skill?.attributeName ? 'YES' : 'NO'}`}</p>
-																	<p className={'text-xxs mr-8'}>{`RETRY:${skill?.attributeName ? 'YES' : 'NO'}`}</p>
-																	<p className={'text-xxs mr-8'}>{`SYNERGY: ${skill?.synergy > 0 ? arr[skill?.synergy]?.name || '-' : '-'}`}</p>
+												return skill;
+											})
+											.filter((skill) => {
+												if (search === '')
+													return true;
+												return skill?.name.toLowerCase().includes(search.toLowerCase());
+											})
+											.map((skill) => {
+												const	isClassSpecific = classTab === 0;
+												return (
+													<details key={skill?.id} className={'flex flex-row w-full mb-2 transition-colors'}>
+														<summary className={'transition-colors'}>
+															<div className={'flex flex-row space-x-4 w-full h-16 cursor-pointer'}>
+																<div className={'w-16 h-16 flex justify-center items-center relative item'}>
+																	<Image src={skill.img} width={64} height={64} />
+																</div>
+																<div className={'flex flex-row space-between w-full relative'}>
+																	<div className={'mt-3.5 w-57'}>
+																		<p className={'text-megaxs mb-1 text-gray-darker'}>{'SKILL:'}</p>
+																		<p className={'text-sx'}>{skill?.name}</p>
+																	</div>
+																	<div className={'mt-3.5 pr-6'}>
+																		<p className={'text-megaxs mb-1 text-gray-darker'}>{'ATTRIBUTE:'}</p>
+																		<p className={'text-sx'}>{skill?.attributeLabel || '-'}</p>
+																	</div>
+																	<div className={'mt-3.5 pr-6'}>
+																		<p className={'text-megaxs mb-1 text-gray-darker'}>{'COST:'}</p>
+																		<p className={'text-sx'}>{isClassSpecific ? '1' : '2'}</p>
+																	</div>
+																	<div className={'mt-3.5 pr-6'}>
+																		<p className={'text-megaxs mb-1 text-gray-darker'}>{'ARMOR CHECK:'}</p>
+																		<p className={'text-sx'}>{skill?.armorCheckPenalty ? 'YES' : 'NO'}</p>
+																	</div>
+																	<div className={'mt-3.5 pr-6'}>
+																		<p className={'text-megaxs mb-1 text-gray-darker'}>{'RETRY:'}</p>
+																		<p className={'text-sx'}>{skill?.retry ? 'YES' : 'NO'}</p>
+																	</div>
+																	<div className={'mt-3.5'}>
+																		<p className={'text-megaxs mb-1 text-gray-darker'}>{'SYNERGY:'}</p>
+																		<p className={'text-sx'}>{skill?.synergy > 0 ? Object.values(SKILLS).find(s => s.id === skill?.synergy)?.name || '-' : '-'}</p>
+																	</div>
+																	<div className={'mt-3.5 ml-auto px-4 cursor-default'} onClick={(e) => e.preventDefault()}>
+																		<p className={'text-megaxs mb-1 text-gray-darker'}>{'LEVEL:'}</p>
+																		<div className={'flex flex-row'}>
+																			<div
+																				className={adventurer.skills[skill?.id - 1] > 0 || updateSkills[skill?.id] === 0 ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
+																				onClick={() => {
+																					if (adventurer.skills[skill?.id - 1] > 0)
+																						return; //If adventurer skill more than 0, already set, cannot be removed
+																					if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) > _availableSkillPoints || updateSkills[skill?.id] === 0)
+																						return;
+																					set_updateSkills(s => ({
+																						...s,
+																						[skill?.id]: s[skill?.id] - 1,
+																						remainingPoints: s.remainingPoints + (isClassSpecific ? 1 : 2)
+																					}));
+																				}}>
+																				<Chevron className={'mr-2 select-none cursor-pointer'} />
+																			</div>
+																			<p className={'text-xs w-5 text-center'}>{updateSkills[skill?.id]}</p>
+																			<div
+																				className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
+																				onClick={() => {
+																					if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0)
+																						return;
+																					if (isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3)
+																						return;
+																					if (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2))
+																						return;
+																					if (updateSkills.remainingPoints === 0)
+																						return;
+																					set_updateSkills(s => ({
+																						...s,
+																						[skill?.id]: s[skill?.id] + 1,
+																						remainingPoints: s.remainingPoints - (isClassSpecific ? 1 : 2)
+																					}));
+																				}}>
+																				<Chevron className={'ml-2 select-none transform rotate-180'} />
+																			</div>
+																		</div>
+																	</div>
 																</div>
 															</div>
-														</div>
-													</summary>
+														</summary>
 
-													<div className={'flex flex-row space-x-4 w-full py-4 bg-gray-200'}>
-														<div className={'w-16 h-16 bg-gray-200 flex justify-center items-center relative item'} />
-														<div className={'flex flex-col space-between w-full pr-4'}>
-															<p className={'text-xxs mb-2'}>{'CHECK'}</p>
-															<p className={'text-xxs mb-4 text-blackLight capitalize text-justify'}>{skill?.check}</p>
-															<p className={'text-xxs mb-2'}>{'ACTION'}</p>
-															<p className={'text-xxs text-blackLight capitalize text-justify'}>{skill?.action}</p>
+														<div className={'flex flex-row space-x-4 w-full py-4'}>
+															<div className={'w-16 h-16 flex justify-center items-center relative item'} />
+															<div className={'flex flex-col space-between w-full pr-4'}>
+																<p className={'text-megaxs mb-2'}>{'CHECK'}</p>
+																<p className={'text-megaxs mb-4 text-gray-darker capitalize text-justify'}>{skill?.check}</p>
+																<p className={'text-megaxs mb-2'}>{'ACTION'}</p>
+																<p className={'text-megaxs text-gray-darker capitalize text-justify'}>{skill?.action}</p>
+															</div>
 														</div>
-													</div>
 
-												</details>
-											);
-										})
+													</details>
+												);
+											})
 									}
 								</div>
 							</div>
@@ -564,7 +669,7 @@ function	Skills({adventurer}) {
 	);
 }
 
-function	AdventurerTab({adventurer}) {
+function	AdventurerTab({adventurer, updateRarity, provider}) {
 	const	[selectedTab, set_selectedTab] = useState(0);
 
 	return (
@@ -582,7 +687,7 @@ function	AdventurerTab({adventurer}) {
 				</div>
 			</div>
 			<div className={'w-full nes-container border-4 border-solid border-t-0 border-black dark:border-dark-100 py-4 md:-mt-1'}>
-				{selectedTab === 0 ? <Skills adventurer={adventurer} /> : <Inventory adventurer={adventurer} />}
+				{selectedTab === 0 ? <Skills adventurer={adventurer} updateRarity={updateRarity} provider={provider} /> : <Inventory adventurer={adventurer} />}
 			</div>
 		</div>
 	);
@@ -670,7 +775,7 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 				</div>
 				<Attributes rarity={rarity} updateRarity={updateRarity} provider={provider} />
 			</div>
-			<AdventurerTab adventurer={rarity} />
+			<AdventurerTab adventurer={rarity} updateRarity={updateRarity} provider={provider} />
 			{/* <Inventory rarity={rarity} />
 			<Skills rarity={rarity} /> */}
 		</div>

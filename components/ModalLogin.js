@@ -28,7 +28,7 @@ function	ModalLogin({open, set_open}) {
 						as={Fragment}
 						enter={'ease-out duration-300'} enterFrom={'opacity-0'} enterTo={'opacity-100'}
 						leave={'ease-in duration-200'} leaveFrom={'opacity-100'} leaveTo={'opacity-0'}>
-						<Dialog.Overlay className={'fixed inset-0 bg-opacity-50 bg-gray-900 transition-opacity'} />
+						<Dialog.Overlay className={'fixed inset-0 bg-opacity-50 bg-black transition-opacity'} />
 					</Transition.Child>
 
 					<span className={'hidden sm:inline-block sm:align-middle sm:h-screen'} aria-hidden={'true'}>

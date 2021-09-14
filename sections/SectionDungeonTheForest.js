@@ -14,7 +14,7 @@ import	Adventurer						from	'components/Adventurer';
 // import	useWeb3							from	'contexts/useWeb3';
 dayjs.extend(relativeTime);
 
-function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurersCount}) {
+function	SectionDungeonTheForest({shouldDisplay, adventurers, adventurersCount}) {
 	// const	{chainTime} = useWeb3();
 
 	if (!shouldDisplay) {
