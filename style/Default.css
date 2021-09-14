@@ -38,6 +38,12 @@ html.dark {
 	color: #FFFFFF !important;
 	opacity: 0.5;
 }
+summary::-webkit-details-marker {
+	display: none
+}
+summary {
+	list-style: none;
+  }
 
 /******************************************************************************
 **	Styled button style

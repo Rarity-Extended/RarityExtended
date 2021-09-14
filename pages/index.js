@@ -5,10 +5,11 @@
 **	@Filename:				index.js
 ******************************************************************************/
 
-import	React, {useState}				from	'react';
+import	React, {Fragment, useState}		from	'react';
 import	Image							from	'next/image';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
+import	{Dialog, Transition}			from	'@headlessui/react';
 import	SectionNoAdventurer				from	'sections/SectionNoAdventurer';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
@@ -335,10 +336,21 @@ function	Inventory({adventurer}) {
 	return (renderInventory());
 }
 function	Skills({adventurer}) {
+	const	_availableSkillPoints = availableSkillPoints(adventurer.attributes.intelligence, adventurer.class, adventurer.level);
+	const	_adventurerClass = Object.values(CLASSES).find((e) => e.id === adventurer.class);
+	const	[isOpen, set_isOpen] = useState(false);
+	const	[classTab, set_classTab] = useState(0);
+	const	[attributeTab, set_attributeTab] = useState(0);
+
+	function closeModal() {
+		set_isOpen(false);
+	}
+  
+	function openModal() {
+		set_isOpen(true);
+	}
 
 	function	renderSkills() {
-		const	_availableSkillPoints = availableSkillPoints(adventurer.attributes.intelligence, adventurer.class, adventurer.level);
-		const	_adventurerClass = Object.values(CLASSES).find((e) => e.id === adventurer.class);
 		// console.log(new Array(_availableSkillPoints));
 		const	toRender = Object.values(SKILLS)
 			// .find((e) => e.id === rarity.class)?.skills
@@ -368,7 +380,9 @@ function	Skills({adventurer}) {
 					<p className={'mb-4'}>{`POINTS LEFT: ${_availableSkillPoints}`}</p>
 					<div className={'w-full grid grid-cols-3 gap-4'}>
 						<div className={'flex flex-row space-x-4 w-full '}>
-							<div className={'w-full border-4 border-dashed border-tag-info h-16 text-tag-info flex items-center pl-4 mr-4'}>
+							<div
+								onClick={openModal}
+								className={'w-full border-4 border-dashed border-black h-16 text-black hover:bg-gray-100 cursor-pointer transition-colors flex items-center pl-4 mr-4'}>
 								<svg xmlns={'http://www.w3.org/2000/svg'} width={'24'} height={'24'} viewBox={'0 0 24 24'}><path d={'M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z'} fill={'currentcolor'}/></svg>
 								<p className={'ml-4'}>{'ADD SKILL'}</p>
 							</div>
@@ -379,7 +393,175 @@ function	Skills({adventurer}) {
 			</div>
 		);
 	}
-	return (renderSkills());
+	return (
+		<>
+			{renderSkills()}
+			<Transition appear show={isOpen} as={Fragment}>
+				<Dialog as={'div'} className={'fixed inset-0 z-10 overflow-none'} onClose={closeModal}>
+					<div className={'min-h-screen px-4 text-center'}>
+						<Transition.Child
+							as={Fragment}
+							enter={'ease-out duration-300'}
+							enterFrom={'opacity-0'}
+							enterTo={'opacity-100'}
+							leave={'ease-in duration-200'}
+							leaveFrom={'opacity-100'}
+							leaveTo={'opacity-0'}>
+							<Dialog.Overlay className={'fixed inset-0 bg-black bg-opacity-80'} />
+						</Transition.Child>
+
+						<span
+							className={'inline-block h-screen align-middle'}
+							aria-hidden={'true'}>&#8203;
+						</span>
+						<Transition.Child
+							as={Fragment}
+							enter={'ease-out duration-300'}
+							enterFrom={'opacity-0 scale-95'}
+							enterTo={'opacity-100 scale-100'}
+							leave={'ease-in duration-200'}
+							leaveFrom={'opacity-100 scale-100'}
+							leaveTo={'opacity-0 scale-95'}>
+							<div className={'inline-block px-10 py-9 mt-32 text-left transition-all transform bg-white shadow-xl max-w-screen-lg w-full uppercase font-title'}>
+								<Dialog.Title
+									as={'h3'}
+									className={'text-lg font-medium leading-6 text-gray-900'}>
+									{`POINTS LEFT: ${_availableSkillPoints}`}
+								</Dialog.Title>
+								<div className={'mt-6 flex flex-row mb-4'}>
+									<input className={'border-4 border-black border-solid h-10 w-96 mr-4 text-xs px-2 focus:outline-none'} placeholder={'SEARCH'} />
+									<button className={'border-4 border-black border-solid h-10 px-12 text-xs'}>
+										{'FIND'}
+									</button>
+								</div>
+								<div className={'w-full flex flex-row text-megaxs mb-4'}>
+									<div
+										onClick={() => set_classTab(0)}
+										className={`p-2 cursor-pointer mr-4 ${classTab === 0 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										{_adventurerClass.name}
+									</div>
+									<div
+										onClick={() => set_classTab(1)}
+										className={`p-2 cursor-pointer ${classTab === 1 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										{'CROSS-CLASS'}
+									</div>
+
+									<div
+										onClick={() => set_attributeTab(0)}
+										className={`p-2 cursor-pointer mr-4 ${attributeTab === 0 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200 ml-auto`}>
+										{'ALL'}
+									</div>
+									<div
+										onClick={() => set_attributeTab(1)}
+										className={`p-2 cursor-pointer mr-4 ${attributeTab === 1 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										{'STRENGTH'}
+									</div>
+									<div
+										onClick={() => set_attributeTab(2)}
+										className={`p-2 cursor-pointer mr-4 ${attributeTab === 2 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										{'DEXTERITY'}
+									</div>
+									<div
+										onClick={() => set_attributeTab(3)}
+										className={`p-2 cursor-pointer mr-4 ${attributeTab === 3 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										{'CONSTITUTION'}
+									</div>
+									<div
+										onClick={() => set_attributeTab(4)}
+										className={`p-2 cursor-pointer mr-4 ${attributeTab === 4 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										{'INTELLIGENCE'}
+									</div>
+									<div
+										onClick={() => set_attributeTab(5)}
+										className={`p-2 cursor-pointer mr-4 ${attributeTab === 5 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										{'WISDOM'}
+									</div>
+									<div
+										onClick={() => set_attributeTab(6)}
+										className={`p-2 cursor-pointer ${attributeTab === 6 ? 'bg-gray-200' : 'bg-white'} hover:bg-gray-200`}>
+										{'CHARISMA'}
+									</div>
+								</div>
+								
+								<div className={'min-h-120 max-h-120 overflow-y-scroll py-2'}>
+									{
+										Object.values(SKILLS).filter((skill) => {
+											if (classTab === 0) {
+												if (attributeTab === 0) {
+													return _adventurerClass.skills.includes(skill?.name);
+												} else if (attributeTab === 1) {
+													return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'strength';
+												} else if (attributeTab === 2) {
+													return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'dexterity';
+												} else if (attributeTab === 3) {
+													return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'constitution';
+												} else if (attributeTab === 4) {
+													return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'intelligence';
+												} else if (attributeTab === 5) {
+													return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'wisdom';
+												} else if (attributeTab === 6) {
+													return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'charisma';
+												}
+											} else {
+												if (attributeTab === 0) {
+													return !_adventurerClass.skills.includes(skill?.name);
+												} else if (attributeTab === 1) {
+													return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'strength';
+												} else if (attributeTab === 2) {
+													return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'dexterity';
+												} else if (attributeTab === 3) {
+													return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'constitution';
+												} else if (attributeTab === 4) {
+													return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'intelligence';
+												} else if (attributeTab === 5) {
+													return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'wisdom';
+												} else if (attributeTab === 6) {
+													return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'charisma';
+												}
+											}
+											return skill;
+										}).map((skill, index, arr) => {
+											return (
+												<details key={skill?.id} className={'flex flex-row w-full mb-2 bg-gray-200'}>
+													<summary>
+														<div className={'flex flex-row space-x-4 w-full h-16 bg-gray-200'}>
+															<div className={'w-16 h-16 bg-gray-200 flex justify-center items-center relative item'}>
+																<Image src={skill.img} width={64} height={64} />
+															</div>
+															<div className={'my-2 flex flex-col space-between w-full'}>
+																<p className={'text-xs mb-1'}>{skill?.name}</p>
+																<div className={'flex flex-row mt-auto'}>
+																	<p className={'text-xxs mr-8 w-28'}>{skill?.attributeName}</p>
+																	<p className={'text-xxs mr-8'}>{`ARMOR CHECK PENALITY:${skill?.attributeName ? 'YES' : 'NO'}`}</p>
+																	<p className={'text-xxs mr-8'}>{`RETRY:${skill?.attributeName ? 'YES' : 'NO'}`}</p>
+																	<p className={'text-xxs mr-8'}>{`SYNERGY: ${skill?.synergy > 0 ? arr[skill?.synergy]?.name || '-' : '-'}`}</p>
+																</div>
+															</div>
+														</div>
+													</summary>
+
+													<div className={'flex flex-row space-x-4 w-full py-4 bg-gray-200'}>
+														<div className={'w-16 h-16 bg-gray-200 flex justify-center items-center relative item'} />
+														<div className={'flex flex-col space-between w-full pr-4'}>
+															<p className={'text-xxs mb-2'}>{'CHECK'}</p>
+															<p className={'text-xxs mb-4 text-blackLight capitalize text-justify'}>{skill?.check}</p>
+															<p className={'text-xxs mb-2'}>{'ACTION'}</p>
+															<p className={'text-xxs text-blackLight capitalize text-justify'}>{skill?.action}</p>
+														</div>
+													</div>
+
+												</details>
+											);
+										})
+									}
+								</div>
+							</div>
+						</Transition.Child>
+					</div>
+				</Dialog>
+			</Transition>
+		</>
+	);
 }
 
 function	AdventurerTab({adventurer}) {

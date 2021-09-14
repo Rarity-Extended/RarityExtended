@@ -18,6 +18,7 @@ module.exports = {
 		colors: {
 			gray: colors.coolGray,
 			black: '#000000',
+			blackLight: '#828282',
 			tag: {
 				new: '#10B981',
 				info: '#167df0',
@@ -65,6 +66,12 @@ module.exports = {
 			},
 			height: {
 				15: '60px'
+			},
+			minHeight: {
+				120: '480px'
+			},
+			maxHeight: {
+				120: '480px'
 			},
 			animation: {
 				'bounce-r': 'bounce-r 1s infinite'
