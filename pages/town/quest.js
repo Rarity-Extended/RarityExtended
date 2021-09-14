@@ -95,7 +95,7 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 						{'FACU'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
-						{' THE TAVERN KEEPER NEED SOME HELP WITH THIS. DEBUTANT STUFF. IF YOU CAN '}
+						{' THE TAVERN KEEPER NEED SOME HELP WITH THIS. REPULSIVE STUFF. IF YOU CAN '}
 					</Typer>
 					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 						{'DODGE AND HIT HARD'}
@@ -110,13 +110,13 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 			return (
 				<>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
-						{'OH YOU HEARD ABOUT '}
+						{'OH HAVE YOU HEARD ABOUT '}
 					</Typer>
 					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'THE FOREST'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
-						{' ? THIS MAN OVER THERE HAS SOME INFO ABOUT A '}
+						{' ? THE AUSTRIAN STAYING IN FACU\'S TAVERN HAS SOME INFO ABOUT A '}
 					</Typer>
 					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 						{'TREASURE'}
