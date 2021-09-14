@@ -9,6 +9,7 @@ const	classes = {
 	'Appraise': {
 		id: 1,
 		name: 'Appraise',
+		img: '/skills/appraise.png',
 		attributeId: 4,
 		attributeName: 'intelligence',
 		synergy: 6, // craft
@@ -20,6 +21,7 @@ const	classes = {
 	'Balance': {
 		id: 2,
 		name: 'Balance',
+		img: '/skills/balance.png',
 		attributeId: 2,
 		attributeName: 'dexterity',
 		synergy: 34, // tumble
@@ -31,6 +33,7 @@ const	classes = {
 	'Bluff': {
 		id: 3,
 		name: 'Bluff',
+		img: '/skills/bluff.png',
 		attributeId: 6,
 		attributeName: 'charisma',
 		synergy: 0,
@@ -42,6 +45,7 @@ const	classes = {
 	'Climb': {
 		id: 4,
 		name: 'Climb',
+		img: '/skills/climb.png',
 		attributeId: 1,
 		attributeName: 'strength',
 		synergy: 36, // use rope
@@ -53,6 +57,7 @@ const	classes = {
 	'Concentration': {
 		id: 5,
 		name: 'Concentration',
+		img: '/skills/concentration.png',
 		attributeId: 3,
 		attributeName: 'constitution',
 		synergy: 0,
@@ -64,6 +69,7 @@ const	classes = {
 	'Craft': {
 		id: 6,
 		name: 'Craft',
+		img: '/skills/craft.png',
 		attributeId: 4,
 		attributeName: 'intelligence',
 		synergy: 0,
@@ -75,6 +81,7 @@ const	classes = {
 	'Decipher Script': {
 		id: 7,
 		name: 'Decipher Script',
+		img: '/skills/decipher_script.png',
 		attributeId: 4,
 		attributeName: 'intelligence',
 		synergy: 0,
@@ -86,6 +93,7 @@ const	classes = {
 	'Diplomacy': {
 		id: 8,
 		name: 'Diplomacy',
+		img: '/skills/diplomacy.png',
 		attributeId: 6,
 		attributeName: 'charisma',
 		synergy: 3, // bluff
@@ -97,6 +105,7 @@ const	classes = {
 	'Disable Device': {
 		id: 9,
 		name: 'Disable Device',
+		img: '/skills/disable_device.png',
 		attributeId: 4,
 		attributeName: 'intelligence',
 		synergy: 0,
@@ -108,6 +117,7 @@ const	classes = {
 	'Disguise': {
 		id: 10,
 		name: 'Disguise',
+		img: '/skills/disguise.png',
 		attributeId: 6,
 		attributeName: 'charisma',
 		synergy: 3, // bluff
@@ -119,6 +129,7 @@ const	classes = {
 	'Escape Artist': {
 		id: 11,
 		name: 'Escape Artist',
+		img: '/skills/escape_artist.png',
 		attributeId: 2,
 		attributeName: 'dexterity',
 		synergy: 36, // use rope
@@ -130,6 +141,7 @@ const	classes = {
 	'Forgery': {
 		id: 12,
 		name: 'Forgery',
+		img: '/skills/forgery.png',
 		attributeId: 4,
 		attributeName: 'intelligence',
 		synergy: 0,
@@ -141,6 +153,7 @@ const	classes = {
 	'Gather Information': {
 		id: 13,
 		name: 'Gather Information',
+		img: '/skills/gather_information.png',
 		attributeId: 6,
 		attributeName: 'charisma',
 		synergy: 0,
@@ -152,6 +165,7 @@ const	classes = {
 	'Handle Animal': {
 		id: 14,
 		name: 'Handle Animal',
+		img: '/skills/handle_animal.png',
 		attributeId: 6,
 		attributeName: 'charisma',
 		synergy: 0,
@@ -163,6 +177,7 @@ const	classes = {
 	'Heal': {
 		id: 15,
 		name: 'Heal',
+		img: '/skills/heal.png',
 		attributeId: 5,
 		attributeName: 'wisdom',
 		synergy: 0,
@@ -174,6 +189,7 @@ const	classes = {
 	'Hide': {
 		id: 16,
 		name: 'Hide',
+		img: '/skills/hide.png',
 		attributeId: 2,
 		attributeName: 'dexterity',
 		synergy: 0,
@@ -185,6 +201,7 @@ const	classes = {
 	'Intimidate': {
 		id: 17,
 		name: 'Intimidate',
+		img: '/skills/intimidate.png',
 		attributeId: 6,
 		attributeName: 'charisma',
 		synergy: 3, // bluff
@@ -196,6 +213,7 @@ const	classes = {
 	'Jump': {
 		id: 18,
 		name: 'Jump',
+		img: '/skills/jump.png',
 		attributeId: 1,
 		attributeName: 'strength',
 		synergy: 34, // tumble
@@ -207,6 +225,7 @@ const	classes = {
 	'Knowledge': {
 		id: 19,
 		name: 'Knowledge',
+		img: '/skills/knowledge.png',
 		attributeId: 4,
 		attributeName: 'intelligence',
 		synergy: 0,
@@ -218,6 +237,7 @@ const	classes = {
 	'Listen': {
 		id: 20,
 		name: 'Listen',
+		img: '/skills/listen.png',
 		attributeId: 5,
 		attributeName: 'wisdom',
 		synergy: 0,
@@ -229,6 +249,7 @@ const	classes = {
 	'Move Silently': {
 		id: 21,
 		name: 'Move Silently',
+		img: '/skills/move_silently.png',
 		attributeId: 2,
 		attributeName: 'dexterity',
 		synergy: 0,
@@ -240,6 +261,7 @@ const	classes = {
 	'Open Lock': {
 		id: 22,
 		name: 'Open Lock',
+		img: '/skills/open_lock.png',
 		attributeId: 2,
 		attributeName: 'dexterity',
 		synergy: 0,
@@ -251,6 +273,7 @@ const	classes = {
 	'Perform': {
 		id: 23,
 		name: 'Perform',
+		img: '/skills/perform.png',
 		attributeId: 6,
 		attributeName: 'charisma',
 		synergy: 0,
@@ -262,6 +285,7 @@ const	classes = {
 	'Profession': {
 		id: 24,
 		name: 'Profession',
+		img: '/skills/profession.png',
 		attributeId: 5,
 		attributeName: 'wisdom',
 		synergy: 0,
@@ -273,6 +297,7 @@ const	classes = {
 	'Ride': {
 		id: 25,
 		name: 'Ride',
+		img: '/skills/ride.png',
 		attributeId: 2,
 		attributeName: 'dexterity',
 		synergy: 14, // handle animal
@@ -284,6 +309,7 @@ const	classes = {
 	'Search': {
 		id: 26,
 		name: 'Search',
+		img: '/skills/search.png',
 		attributeId: 4,
 		attributeName: 'intelligence',
 		synergy: 0,
@@ -295,6 +321,7 @@ const	classes = {
 	'Sense Motive': {
 		id: 27,
 		name: 'Sense Motive',
+		img: '/skills/sense_motive.png',
 		attributeId: 5,
 		attributeName: 'wisdom',
 		synergy: 0,
@@ -306,6 +333,7 @@ const	classes = {
 	'Sleight Of Hand': {
 		id: 28,
 		name: 'Sleight Of Hand',
+		img: '/skills/sleight_of_hand.png',
 		attributeId: 2,
 		attributeName: 'dexterity',
 		synergy: 3, // bluff
@@ -317,6 +345,7 @@ const	classes = {
 	'Speak Language': {
 		id: 29,
 		name: 'Speak Language',
+		img: '/skills/speak_language.png',
 		attributeId: 0,
 		synergy: 0,
 		retry: false,
@@ -327,6 +356,7 @@ const	classes = {
 	'Spellcraft': {
 		id: 30,
 		name: 'Spellcraft',
+		img: '/skills/spellcraft.png',
 		attributeId: 4,
 		attributeName: 'intelligence',
 		synergy: 0,
@@ -338,6 +368,7 @@ const	classes = {
 	'Spot': {
 		id: 31,
 		name: 'Spot',
+		img: '/skills/spot.png',
 		attributeId: 5,
 		attributeName: 'wisdom',
 		synergy: 0,
@@ -349,6 +380,7 @@ const	classes = {
 	'Survival': {
 		id: 32,
 		name: 'Survival',
+		img: '/skills/survival.png',
 		attributeId: 5,
 		attributeName: 'wisdom',
 		synergy: 0,
@@ -360,6 +392,7 @@ const	classes = {
 	'Swim': {
 		id: 33,
 		name: 'Swim',
+		img: '/skills/swim.png',
 		attributeId: 1,
 		attributeName: 'strength',
 		synergy: 0,
@@ -371,6 +404,7 @@ const	classes = {
 	'Tumble': {
 		id: 34,
 		name: 'Tumble',
+		img: '/skills/tumble.png',
 		attributeId: 2,
 		attributeName: 'dexterity',
 		synergy: 18, // jump
@@ -382,6 +416,7 @@ const	classes = {
 	'Use Magic Device': {
 		id: 35,
 		name: 'Use Magic Device',
+		img: '/skills/use_magic_device.png',
 		attributeId: 6,
 		attributeName: 'charisma',
 		synergy: 0,
@@ -393,6 +428,7 @@ const	classes = {
 	'Use Rope': {
 		id: 36,
 		name: 'Use Rope',
+		img: '/skills/use_rope.png',
 		attributeId: 2,
 		attributeName: 'dexterity',
 		synergy: 0,

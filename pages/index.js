@@ -17,6 +17,7 @@ import	CLASSES							from	'utils/classList';
 import	SKILLS							from	'utils/skillList';
 import	classNameMapping				from	'utils/classNameMapping';
 import	{goAdventure, levelUp, setAttributes, claimGold}	from	'utils/actions';
+import	{availableSkillPoints}				from	'lib/skills';
 
 dayjs.extend(relativeTime);
 
@@ -277,21 +278,22 @@ function	Attributes({rarity, updateRarity, provider}) {
 		</div>
 	);
 }
-function	Inventory({rarity}) {
+function	Inventory({adventurer}) {
 	const	OFFSET_SIZE = 9;
 	const	[offset, set_offset] = useState(0);
-	const	allItems = ITEMS;
-	// const	allItems = [...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS, ...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS];
+	// const	allItems = ITEMS;
+	const	allItems = [...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS, ...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS,...ITEMS, ...ITEMS];
 
 	function	renderInventory() {
 		let		hasItem = false;
 		const	toRender = allItems
 			.filter((e, i) => i >= offset && i < (offset + OFFSET_SIZE))
-			.map((item) => {
-				if ((Number(rarity?.inventory?.[item.id]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
+			.map((item, i) => {
+				// eslint-disable-next-line no-constant-condition
+				if (true || (Number(adventurer?.inventory?.[item.id]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
 					hasItem = true;
 					return (
-						<div className={'flex flex-row space-x-4 w-full'} key={item.id}>
+						<div className={'flex flex-row space-x-4 w-full'} key={`${item.id}_${i}`}>
 							<div className={'w-16 h-16 bg-gray-50 dark:bg-dark-400 flex justify-center items-center relative item'}>
 								<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
 								<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
@@ -303,9 +305,9 @@ function	Inventory({rarity}) {
 								<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
 								<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
 							</div>
-							<div>
+							<div className={'text-left'}>
 								<p>{item.name}</p>
-								<p className={'text-xs'}>{`QTY: ${Number(rarity?.inventory?.[item.id])}`}</p>
+								<p className={'text-xs'}>{`QTY: ${Number(adventurer?.inventory?.[item.id])}`}</p>
 							</div>
 						</div>
 					);
@@ -317,16 +319,14 @@ function	Inventory({rarity}) {
 			return null;
 		}
 		return (
-			<div className={'flex flex-col md:flex-row w-full mt-2 space-x-0 md:space-x-2'}>
-				<div className={'w-full nes-container border-4 border-solid border-black dark:border-dark-100'}>
-					<div className={'w-full p-4 grid grid-cols-3 gap-4'}>
-						{toRender}
-					</div>
-					<div className={'-mt-8 h-8 px-4'}>
-						<div className={'w-full h-full flex justify-end items-center space-x-4'}>
-							<p className={`text-xs ${offset > OFFSET_SIZE ? 'opacity-40 hover:opacity-100 cursor-pointer' : 'opacity-0'}`} onClick={() => set_offset(o => o > OFFSET_SIZE ? o - OFFSET_SIZE : 0)}>{'<'}</p>
-							<p className={`text-xs ${offset + OFFSET_SIZE <= allItems.length ? 'opacity-40 hover:opacity-100 cursor-pointer' : 'opacity-0'}`} onClick={() => set_offset(o => o + OFFSET_SIZE <= allItems.length ? o + OFFSET_SIZE : o)}>{'>'}</p>
-						</div>
+			<div className={'w-full'}>
+				<div className={'w-full p-4 grid grid-cols-3 gap-4'}>
+					{toRender}
+				</div>
+				<div className={'-mt-8 h-8 px-4'}>
+					<div className={'w-full h-full flex justify-end items-center space-x-4'}>
+						<p className={`text-xs ${offset > OFFSET_SIZE ? 'opacity-40 hover:opacity-100 cursor-pointer' : 'opacity-0'}`} onClick={() => set_offset(o => o > OFFSET_SIZE ? o - OFFSET_SIZE : 0)}>{'<'}</p>
+						<p className={`text-xs ${offset + OFFSET_SIZE <= allItems.length ? 'opacity-40 hover:opacity-100 cursor-pointer' : 'opacity-0'}`} onClick={() => set_offset(o => o + OFFSET_SIZE <= allItems.length ? o + OFFSET_SIZE : o)}>{'>'}</p>
 					</div>
 				</div>
 			</div>
@@ -334,21 +334,29 @@ function	Inventory({rarity}) {
 	}
 	return (renderInventory());
 }
-function	Skills({rarity}) {
+function	Skills({adventurer}) {
 
 	function	renderSkills() {
-		const	toRender = Object.values(CLASSES)
-			.find((e) => e.id === rarity.class)?.skills
+		const	_availableSkillPoints = availableSkillPoints(adventurer.attributes.intelligence, adventurer.class, adventurer.level);
+		const	_adventurerClass = Object.values(CLASSES).find((e) => e.id === adventurer.class);
+		// console.log(new Array(_availableSkillPoints));
+		const	toRender = Object.values(SKILLS)
+			// .find((e) => e.id === rarity.class)?.skills
 			.map((_skill) => {
-				const	skill = SKILLS[_skill];
-				if (!skill) {
-					console.log(_skill);
-				}
+				const	skill = _skill;
+				// const	skill = SKILLS[_skill];
+				// if (!skill) {
+				// 	console.log(_skill);
+				// }
 				return (
 					<div className={'flex flex-row space-x-4 w-full'} key={skill?.id}>
+						<div className={'w-16 h-16 bg-gray-50 dark:bg-dark-400 flex justify-center items-center relative item'}>
+							<Image src={skill.img} width={64} height={64} />
+						</div>
 						<div>
-							<p>{skill?.name}</p>
-							<p className={'text-xxs'}>{skill?.check}</p>
+							<p className={'text-xs mb-1'}>{skill?.name}</p>
+							<p className={'text-megaxs'}>{skill?.attributeName}</p>
+							<p className={'text-megaxs'}>{`Cost: ${_adventurerClass?.skills?.includes(skill.name) ? '1' : '3'}`}</p>
 						</div>
 					</div>
 				);
@@ -356,8 +364,15 @@ function	Skills({rarity}) {
 
 		return (
 			<div className={'flex flex-col md:flex-row w-full mt-2 space-x-0 md:space-x-2'}>
-				<div className={'w-full nes-container border-4 border-solid border-black dark:border-dark-100'}>
-					<div className={'w-full p-4 grid grid-cols-3 gap-4'}>
+				<div className={'w-full p-4'}>
+					<p className={'mb-4'}>{`POINTS LEFT: ${_availableSkillPoints}`}</p>
+					<div className={'w-full grid grid-cols-3 gap-4'}>
+						<div className={'flex flex-row space-x-4 w-full '}>
+							<div className={'w-full border-4 border-dashed border-tag-info h-16 text-tag-info flex items-center pl-4 mr-4'}>
+								<svg xmlns={'http://www.w3.org/2000/svg'} width={'24'} height={'24'} viewBox={'0 0 24 24'}><path d={'M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z'} fill={'currentcolor'}/></svg>
+								<p className={'ml-4'}>{'ADD SKILL'}</p>
+							</div>
+						</div>
 						{toRender}
 					</div>
 				</div>
@@ -365,6 +380,30 @@ function	Skills({rarity}) {
 		);
 	}
 	return (renderSkills());
+}
+
+function	AdventurerTab({adventurer}) {
+	const	[selectedTab, set_selectedTab] = useState(0);
+
+	return (
+		<div className={'flex flex-col w-full mt-2'}>
+			<div className={'flex flex-col md:flex-row w-full space-x-0 md:-space-x-1'}>
+				<div
+					onClick={() => set_selectedTab(0)}
+					className={`w-full cursor-pointer nes-container border-4 border-solid ${selectedTab === 0 ? 'border-b-0' : ''} border-black dark:border-dark-100 text-center py-4`}>
+					<p>{'Skills'}</p>
+				</div>
+				<div
+					onClick={() => set_selectedTab(1)}
+					className={`w-full cursor-pointer nes-container border-4 border-solid ${selectedTab === 1 ? 'border-b-0' : ''} border-black dark:border-dark-100 text-center py-4`}>
+					<p>{'Inventory'}</p>
+				</div>
+			</div>
+			<div className={'w-full nes-container border-4 border-solid border-t-0 border-black dark:border-dark-100 py-4 md:-mt-1'}>
+				{selectedTab === 0 ? <Skills adventurer={adventurer} /> : <Inventory adventurer={adventurer} />}
+			</div>
+		</div>
+	);
 }
 
 function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
@@ -449,8 +488,9 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 				</div>
 				<Attributes rarity={rarity} updateRarity={updateRarity} provider={provider} />
 			</div>
-			<Inventory rarity={rarity} />
-			<Skills rarity={rarity} />
+			<AdventurerTab adventurer={rarity} />
+			{/* <Inventory rarity={rarity} />
+			<Skills rarity={rarity} /> */}
 		</div>
 	);
 }

@@ -48,6 +48,7 @@ module.exports = {
 				'120px': '120px'
 			},
 			fontSize: {
+				'megaxs': '0.5rem',
 				'xxs': '0.6rem',
 				'xss': '8px',
 				'sx': '10px',
@@ -61,6 +62,9 @@ module.exports = {
 			},
 			width: {
 				screen: '100vw'
+			},
+			height: {
+				15: '60px'
 			},
 			animation: {
 				'bounce-r': 'bounce-r 1s infinite'
