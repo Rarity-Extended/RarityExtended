@@ -11,12 +11,9 @@ import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	classNameMapping				from	'utils/classNameMapping';
 import	classes							from	'utils/classList';
 import	Adventurer						from	'components/Adventurer';
-// import	useWeb3							from	'contexts/useWeb3';
 dayjs.extend(relativeTime);
 
-function	SectionDungeonTheForest({shouldDisplay, adventurers, adventurersCount}) {
-	// const	{chainTime} = useWeb3();
-
+function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurersCount}) {
 	if (!shouldDisplay) {
 		return null;
 	}
@@ -45,14 +42,33 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, adventurersCount})
 			<div>
 				<div className={'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8'}>
 					{Object.values(adventurers)?.filter((adventurer) => {
-						return adventurer.level >= 2;
+						return adventurer.level >= 2 && adventurer?.dungeons?.forest?.canAdventure;
 					}).map((adventurer) => {
 						return (
 							<div key={adventurer.tokenID} className={'w-full md:w-1/4'}>
 								<Adventurer
-									onClick={() => alert('SOON')}
+									onClick={() => router.push(`/dungeons/the-forest?adventurer=${adventurer.tokenID}`)}
 									adventurer={adventurer}
 									rarityClass={classes[classNameMapping[adventurer.class]]} />
+							</div>
+						);
+					})}
+					{Object.values(adventurers)?.filter((adventurer) => {
+						return adventurer.level >= 2 && !adventurer?.dungeons?.forest?.canAdventure;
+					}).map((adventurer) => {
+						return (
+							<div key={adventurer.tokenID} className={'w-full md:w-1/4 relative'}>
+								<Adventurer
+									onClick={() => router.push(`/dungeons/the-forest?adventurer=${adventurer.tokenID}`)}
+									noHover
+									adventurer={adventurer}
+									rarityClass={classes[classNameMapping[adventurer.class]]}>
+									<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex justify-center items-center text-center p-6'}>
+										<p className={'text-white'}>
+											{`BACK IN ${dayjs(new Date(adventurer?.dungeons?.forest?.endBlockTs * 1000)).from(dayjs(new Date(adventurer?.dungeons?.forest?.initBlockTs * 1000)))}`}
+										</p>
+									</div>
+								</Adventurer>
 							</div>
 						);
 					})}

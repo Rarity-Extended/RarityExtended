@@ -8,10 +8,10 @@
 import	React		from	'react';
 import	Image		from	'next/image';
 
-function	Adventurer({rarityClass, adventurer, onClick}) {
+function	Adventurer({rarityClass, adventurer, onClick, children, noHover}) {
 	return (
 		<div
-			className={'w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}
+			className={`w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col ${noHover ? '' : 'group hover:bg-gray-principal dark:hover:bg-dark-100'} transition-colors cursor-pointer relative mb-4 md:mb-0`}
 			onClick={onClick}>
 			<Image
 				src={rarityClass.img}
@@ -20,6 +20,7 @@ function	Adventurer({rarityClass, adventurer, onClick}) {
 				height={240} />
 			<p className={'text-sm justify-center group-hover:underline'}>{adventurer.tokenID}</p>
 			<p className={'text-xss justify-center text-center mt-1'}>{`${rarityClass.name} level ${adventurer.level}`}</p>
+			{children}
 		</div>
 	);
 }
