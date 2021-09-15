@@ -38,6 +38,25 @@ html.dark {
 	color: #FFFFFF !important;
 	opacity: 0.5;
 }
+summary::-webkit-details-marker {
+	display: none
+}
+summary {
+	list-style: none;
+}
+
+details,
+details summary {
+	background: #F2F2F2;
+}
+
+details summary:hover {
+	background: #E0E0E0;
+}
+details[open],
+details[open] summary {
+	background: #E0E0E0;
+}
 
 /******************************************************************************
 **	Styled button style
