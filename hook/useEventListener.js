@@ -1,6 +1,6 @@
 /******************************************************************************
 **	@Author:				Rarity Extended
-**	@Twitter:				@MajorTom_eth
+**	@Twitter:				@RXtended
 **	@Date:					Thursday September 9th 2021
 **	@Filename:				useEventListener.js
 ******************************************************************************/

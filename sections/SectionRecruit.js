@@ -1,6 +1,6 @@
 /******************************************************************************
 **	@Author:				Rarity Extended
-**	@Twitter:				@MajorTom_eth
+**	@Twitter:				@RXtended
 **	@Date:					Saturday September 11th 2021
 **	@Filename:				SectionRecruit.js
 ******************************************************************************/
@@ -49,13 +49,13 @@ function	Class({provider, rarityClass, fetchRarity, router}) {
 }
 
 function	SectionRecruit({shouldDisplay, router, provider, fetchRarity}) {
-    if (!shouldDisplay) {
-        return null;
-    }
+	if (!shouldDisplay) {
+		return null;
+	}
 
 	return (
-		<section className="flex flex-row w-full flex-wrap items-center justify-center">
-			<div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
+		<section className={'flex flex-row w-full flex-wrap items-center justify-center'}>
+			<div className={'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8'}>
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Barbarian']} />
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Bard']} />
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Cleric']} />

@@ -1,6 +1,6 @@
 /******************************************************************************
 **	@Author:				Rarity Extended
-**	@Twitter:				@MajorTom_eth
+**	@Twitter:				@RXtended
 **	@Date:					Tuesday September 7th 2021
 **	@Filename:				tavern.js
 ******************************************************************************/

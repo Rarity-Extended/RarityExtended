@@ -1,6 +1,6 @@
 /******************************************************************************
 **	@Author:				Rarity Extended
-**	@Twitter:				@MajorTom_eth
+**	@Twitter:				@RXtended
 **	@Date:					Sunday September 12th 2021
 **	@Filename:				FlyoutMenu.js
 ******************************************************************************/

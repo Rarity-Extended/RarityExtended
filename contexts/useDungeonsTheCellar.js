@@ -1,6 +1,6 @@
 /******************************************************************************
 **	@Author:				Rarity Extended
-**	@Twitter:				@MajorTom_eth
+**	@Twitter:				@RXtended
 **	@Date:					Sunday September 5th 2021
 **	@Filename:				useDungeon.js
 ******************************************************************************/
