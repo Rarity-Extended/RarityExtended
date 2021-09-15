@@ -32,7 +32,7 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 				</i>
 				{adventurersCount !== 0 ? <div className={'mt-6'}>
 					<p className={'text-xs'}>
-						{'> Which one of your brave adventurer should go ?'}
+						{'>  WOULD YOU LIKE TO HEAD TO THE FOREST?'}
 					</p>
 				</div> :
 					<div className={'mt-6'}> 
