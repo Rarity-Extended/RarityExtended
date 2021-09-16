@@ -90,6 +90,7 @@ function	AppWrapper(props) {
 				<meta name={'robots'} content={'index,nofollow'} />
 				<meta name={'googlebot'} content={'index,nofollow'} />
 				<meta charSet={'utf-8'} />
+				<script defer data-domain={'rarityextended.com'} src={'https://plausible.io/js/plausible.js'} />
 			</Head>
 			<DefaultSeo
 				title={'Rarity Extended'}
