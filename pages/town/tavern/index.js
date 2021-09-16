@@ -108,7 +108,7 @@ function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositErr
 						</Typer>&nbsp;
 						<span className={'text-tag-info'}>
 							<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 3}>
-								{`${(Number(vaultAPY?.data?.week || 0) / 7 * 365).toFixed(2)}%`}
+								{`${vaultAPY?.data?.week}`}
 							</Typer>
 						</span>
 						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 4}>
@@ -151,7 +151,7 @@ function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositErr
 					</Typer>&nbsp;
 					<span className={'text-tag-info'}>
 						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 3}>
-							{`${(Number(vaultAPY?.data?.week || 0) / 7 * 365).toFixed(2)}%`}
+							{`${vaultAPY?.data?.week}`}
 						</Typer>
 					</span>
 					<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 4}>
