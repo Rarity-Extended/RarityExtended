@@ -139,6 +139,7 @@ export const RarityContextApp = ({children}) => {
 		if (toAddress(owner) !== toAddress(address)) {
 			return;
 		}
+
 		set_rarities((prev) => ({...prev, [tokenID]: {
 			tokenID: tokenID,
 			owner: owner,
@@ -183,6 +184,11 @@ export const RarityContextApp = ({children}) => {
 			preparedInventoryCalls.push(...prepareAdventurerInventory(token.tokenID));
 			tokensIDs.push(token.tokenID);
 		});
+
+		// preparedCalls.push(...prepareAdventurer(441099));
+		// preparedExtraCalls.push(...prepareAdventurerExtra(441099));
+		// preparedInventoryCalls.push(...prepareAdventurerInventory(441099));
+		// tokensIDs.push(441099);
 
 		const	callResults = await fetchAdventurer(preparedCalls);
 		const	chunkedCallResult = chunk(callResults, 7);

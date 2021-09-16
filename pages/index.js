@@ -324,7 +324,7 @@ function	Inventory({adventurer}) {
 						{'You have no items yet, traveler, find them in Dungeons!'}
 					</div>
 					<div className={'flex flex-col md:flex-row'}>
-						<div className={'flex w-full md:w-1/2 px-4 pb-4 mb:pb-0'}>
+						<div className={'flex w-full md:w-1/2 px-4 pb-4 md:pb-0'}>
 							<Link href={'/town/quest'}>
 								<div
 									className={'border-4 border-black dark:border-dark-100 px-10 py-2 text-black dark:text-white hover:bg-gray-secondary dark:hover:bg-dark-400 cursor-pointer transition-colors flex items-center text-center justify-center text-xs w-full'}>
@@ -370,6 +370,7 @@ function	Skills({adventurer, updateRarity, provider}) {
 	const	[search, set_search] = useState('');
 	const	[updateSkills, set_updateSkills] = useState(() => {
 		const	skills = {
+			initialPointsToSend: _availableSkillPoints - _pointSpentByAdventurer < 0 ? 0 : _availableSkillPoints - _pointSpentByAdventurer,
 			remainingPoints: _availableSkillPoints - _pointSpentByAdventurer < 0 ? 0 : _availableSkillPoints - _pointSpentByAdventurer,
 			canBuyPoint: _availableSkillPoints - _pointSpentByAdventurer > 0,
 		};
@@ -532,11 +533,11 @@ function	Skills({adventurer, updateRarity, provider}) {
 									</div>
 									<button
 										onClick={() => {
-											if (updateSkills.canBuyPoint)
+											if (updateSkills.canBuyPoint && updateSkills.remainingPoints !== updateSkills.initialPointsToSend)
 												onSetSkills();
 										}}
-										disabled={!updateSkills.canBuyPoint}
-										className={`border-4 border-black dark:border-dark-100 border-solid my-4 md:my-0 w-full md:w-auto h-10 px-12 text-xs text-black dark:text-white ${updateSkills.canBuyPoint ? 'hover:bg-gray-secondary dark:hover:bg-dark-900 cursor-pointer' : 'cursor-not-allowed'}`}>
+										disabled={!updateSkills.canBuyPoint || updateSkills.remainingPoints === updateSkills.initialPointsToSend}
+										className={`border-4 border-black dark:border-dark-100 border-solid my-4 md:my-0 w-full md:w-auto h-10 px-12 text-xs text-black dark:text-white ${updateSkills.canBuyPoint && updateSkills.remainingPoints !== updateSkills.initialPointsToSend ? 'hover:bg-gray-secondary dark:hover:bg-dark-900 cursor-pointer' : 'cursor-not-allowed'}`}>
 										{'LEARN'}
 									</button>
 									<div className={'text-xs text-black dark:text-white block md:hidden text-center'}>
@@ -819,7 +820,7 @@ function	AdventurerTab({adventurer, updateRarity, provider}) {
 				</div>
 				<div
 					onClick={() => set_selectedTab(1)}
-					className={`w-full cursor-pointer nes-container border-4 text-center border-solid ${selectedTab === 1 ? 'border-b-4 mb:border-b-0 border-t-0 md:border-t-4 bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600' : ''} border-black dark:border-dark-100 text-center py-4`}>
+					className={`w-full cursor-pointer nes-container border-4 text-center border-solid ${selectedTab === 1 ? 'border-b-4 md:border-b-0 border-t-0 md:border-t-4 bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600' : ''} border-black dark:border-dark-100 text-center py-4`}>
 					<p>{'Inventory'}</p>
 				</div>
 			</div>
