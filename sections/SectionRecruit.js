@@ -14,7 +14,7 @@ function	Class({provider, rarityClass, fetchRarity, router}) {
 	const	[isLoading, set_isLoading] = useState(false);
 	return (
 		<div
-			className={'w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-50 dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}
+			className={'w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}
 			onClick={() => {
 				if (isLoading) {
 					return;

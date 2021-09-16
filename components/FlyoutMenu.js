@@ -95,7 +95,7 @@ function FlyoutMenu() {
 								<div className={'overflow-hidden shadow-xl ring-1 ring-black ring-opacity-5 border-4 border-black dark:border-dark-100'}>
 									<div className={'relative grid gap-4 bg-white dark:bg-dark-400 p-2 md:p-6'}>
 										<Link href={'/town/tavern'}>
-											<a className={'flex items-center p-2 -m-3 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-dark-300 focus:outline-none'}>
+											<a className={'flex items-center p-2 -m-3 transition duration-150 ease-in-out hover:bg-gray-principal dark:hover:bg-dark-300 focus:outline-none'}>
 												<div className={'w-20 h-20 rounded-lg flex justify-center items-center'} style={{minWidth: 80}}>
 													<Image
 														src={'/menu/tavern.png'}
@@ -117,7 +117,7 @@ function FlyoutMenu() {
 											</a>
 										</Link>
 										<Link href={'/town/blacksmith'}>
-											<a className={'flex items-center p-2 -m-3 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-dark-300 focus:outline-none'}>
+											<a className={'flex items-center p-2 -m-3 transition duration-150 ease-in-out hover:bg-gray-principal dark:hover:bg-dark-300 focus:outline-none'}>
 												<div className={'w-20 h-20 rounded-lg flex justify-center items-center'} style={{minWidth: 80}}>
 													<Image
 														src={'/menu/blacksmith.png'}
@@ -139,7 +139,7 @@ function FlyoutMenu() {
 											</a>
 										</Link>
 										<Link href={'/town/quest'}>
-											<a className={'flex items-center p-2 -m-3 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-dark-300 focus:outline-none'}>
+											<a className={'flex items-center p-2 -m-3 transition duration-150 ease-in-out hover:bg-gray-principal dark:hover:bg-dark-300 focus:outline-none'}>
 												<div className={'w-20 h-20 rounded-lg flex justify-center items-center'} style={{minWidth: 80}}>
 													<Image
 														src={'/menu/quest.png'}
@@ -161,7 +161,7 @@ function FlyoutMenu() {
 											</a>
 										</Link>
 										<Link href={'/town/market'}>
-											<a className={'flex items-center p-2 -m-3 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-dark-300 focus:outline-none'}>
+											<a className={'flex items-center p-2 -m-3 transition duration-150 ease-in-out hover:bg-gray-principal dark:hover:bg-dark-300 focus:outline-none'}>
 												<div className={'w-20 h-20 rounded-lg flex justify-center items-center'} style={{minWidth: 80}}>
 													<Image
 														src={'/menu/market.png'}
@@ -183,7 +183,7 @@ function FlyoutMenu() {
 											</a>
 										</Link>
 										<Link href={'/town/bank'}>
-											<a className={'flex items-center p-2 -m-3 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-dark-300 focus:outline-none'}>
+											<a className={'flex items-center p-2 -m-3 transition duration-150 ease-in-out hover:bg-gray-principal dark:hover:bg-dark-300 focus:outline-none'}>
 												<div className={'w-20 h-20 rounded-lg flex justify-center items-center'} style={{minWidth: 80}}>
 													<Image
 														src={'/menu/banker.png'}

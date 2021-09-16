@@ -16,8 +16,14 @@ module.exports = {
 			mono: ['IBM Plex Mono', 'monospace']
 		},
 		colors: {
-			gray: colors.coolGray,
 			black: '#000000',
+			blackLight: '#828282',
+			darkWhite: '#F2F2F2',
+			gray: {
+				principal: '#F2F2F2',
+				secondary: '#E0E0E0',
+				darker: '#828282',
+			},
 			tag: {
 				new: '#10B981',
 				info: '#167df0',
@@ -48,6 +54,7 @@ module.exports = {
 				'120px': '120px'
 			},
 			fontSize: {
+				'megaxs': '0.5rem',
 				'xxs': '0.6rem',
 				'xss': '8px',
 				'sx': '10px',
@@ -60,7 +67,19 @@ module.exports = {
 				'8.5': '2.125rem',
 			},
 			width: {
+				57: '14.25rem',
+				75: '18.75rem',
+				77: '19.25rem',
 				screen: '100vw'
+			},
+			height: {
+				15: '60px'
+			},
+			minHeight: {
+				120: '480px'
+			},
+			maxHeight: {
+				120: '480px'
 			},
 			animation: {
 				'bounce-r': 'bounce-r 1s infinite'
