@@ -321,7 +321,7 @@ function	Inventory({adventurer}) {
 			return (
 				<div className={'w-full'}>
 					<div className={'p-4 flex text-black dark:text-white text-sx capitalize w-1/2 pr-32'}>
-						{'You have no items yet, traveler, find them in adventures!'}
+						{'You have no items yet, traveler, find them in Dungeons!'}
 					</div>
 					<div className={'flex flex-row'}>
 						<div className={'flex w-1/2 px-4'}>
@@ -415,12 +415,13 @@ function	Skills({adventurer, updateRarity, provider}) {
 			hasSkills = true;
 			const	skill = Object.values(SKILLS).find(e => e.id === index + 1);
 			return (
-				<div className={'flex flex-row space-x-4 w-full mb-4'} key={`${adventurer.tokenID}-${skill.name}`}>
+				<div className={'flex flex-row space-x-4 w-full mb-6'} key={`${adventurer.tokenID}-${skill.name}`}>
 					<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center relative item'}>
 						<Image src={skill.img} width={64} height={64} />
 					</div>
-					<div>
-						<p className={'text-xs mb-1'}>{skill?.name}</p>
+					<div className={'h-16 flex flex-col justify-between'}>
+						<p className={'text-xs'}>{skill?.name}</p>
+						<p className={'text-megaxs mt-auto'}>{skill?.attributeName}</p>
 						<p className={'text-megaxs'}>{`level: ${level}`}</p>
 					</div>
 				</div>
@@ -450,17 +451,17 @@ function	Skills({adventurer, updateRarity, provider}) {
 		return (
 			<div className={'flex flex-col md:flex-row w-full space-x-0 md:space-x-2'}>
 				<div className={'w-full px-4 -mb-6'}>
-					<div className={'flex'}>
+					<div className={'flex w-1/2 pr-4'}>
 						<div
 							onClick={openModal}
-							className={'border-4 border-black px-10 py-2 text-black hover:bg-gray-secondary cursor-pointer transition-colors flex items-center text-xs'}>
+							className={'border-4 border-black dark:border-dark-100 px-10 py-2 text-black dark:text-white hover:bg-gray-secondary dark:hover:bg-dark-400 cursor-pointer transition-colors flex items-center text-center justify-center text-xs w-full'}>
 							<p>{'SKILLBOOK'}</p>
 							{updateSkills.remainingPoints > 0 ? <p className={'inline text-megaxs ml-2'}>
 								{`(POINTS LEFT: ${updateSkills.remainingPoints})`}
 							</p> : null}
 						</div>
 					</div>
-					<div className={'w-full grid grid-cols-3 gap-x-4 pt-6'}>
+					<div className={'w-full grid grid-cols-4 gap-x-6 pt-6'}>
 						{skillList}
 					</div>
 				</div>
@@ -497,13 +498,19 @@ function	Skills({adventurer, updateRarity, provider}) {
 							leaveFrom={'opacity-100 scale-100'}
 							leaveTo={'opacity-0 scale-95'}>
 							<div className={'inline-block px-10 py-9 mt-32 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative'}>
-								<div className={'absolute right-10 top-8 cursor-pointer text-black dark:text-white'} onClick={() => set_isOpen(false)}>
+								<Dialog.Title as={'h3'} className={'text-lg font-medium leading-6 text-black dark:text-white flex flex-row justify-between'}>
+									{'SKILLBOOK'}
+									<div className={'flex flex-row text-megaxs space-x-4 text-gray-darker dark:text-dark-100 -ml-20'}>
+										<p>{`STR: ${adventurer?.attributes?.strength || 8}`}</p>
+										<p>{`DEX: ${adventurer?.attributes?.dexterity || 8}`}</p>
+										<p>{`CONST: ${adventurer?.attributes?.constitution || 8}`}</p>
+										<p>{`INT: ${adventurer?.attributes?.intelligence || 8}`}</p>
+										<p>{`WIS: ${adventurer?.attributes?.wisdom || 8}`}</p>
+										<p>{`CHA: ${adventurer?.attributes?.charisma || 8}`}</p>
+									</div>
 									<svg width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
 										<path d={'M6.70711 5.29289C6.31658 4.90237 5.68342 4.90237 5.29289 5.29289C4.90237 5.68342 4.90237 6.31658 5.29289 6.70711L10.5858 12L5.29289 17.2929C4.90237 17.6834 4.90237 18.3166 5.29289 18.7071C5.68342 19.0976 6.31658 19.0976 6.70711 18.7071L12 13.4142L17.2929 18.7071C17.6834 19.0976 18.3166 19.0976 18.7071 18.7071C19.0976 18.3166 19.0976 17.6834 18.7071 17.2929L13.4142 12L18.7071 6.70711C19.0976 6.31658 19.0976 5.68342 18.7071 5.29289C18.3166 4.90237 17.6834 4.90237 17.2929 5.29289L12 10.5858L6.70711 5.29289Z'} fill={'currentcolor'}/>
 									</svg>
-								</div>
-								<Dialog.Title as={'h3'} className={'text-lg font-medium leading-6 text-black dark:text-white'}>
-									{'SKILLBOOK'}
 								</Dialog.Title>
 								<div className={'mt-6 flex flex-row mb-4 items-center'}>
 									<input
