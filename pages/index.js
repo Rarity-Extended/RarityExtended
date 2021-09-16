@@ -675,10 +675,10 @@ function	Skills({adventurer, updateRarity, provider}) {
 																		<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'LEVEL:'}</p>
 																		<div className={'flex flex-row'}>
 																			<div
-																				className={adventurer.skills[skill?.id - 1] > 0 || updateSkills[skill?.id] === 0 ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
+																				className={adventurer.skills[skill?.id - 1] === updateSkills[skill?.id] || updateSkills[skill?.id] === 0 ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
 																				onClick={() => {
-																					if (adventurer.skills[skill?.id - 1] > 0)
-																						return; //If adventurer skill more than 0, already set, cannot be removed
+																					if (adventurer.skills[skill?.id - 1] === updateSkills[skill?.id])
+																						return;
 																					if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) > _availableSkillPoints || updateSkills[skill?.id] === 0)
 																						return;
 																					set_updateSkills(s => ({
@@ -743,10 +743,10 @@ function	Skills({adventurer, updateRarity, provider}) {
 																		<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'LEVEL:'}</p>
 																		<div className={'flex flex-row'}>
 																			<div
-																				className={adventurer.skills[skill?.id - 1] > 0 || updateSkills[skill?.id] === 0 ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
+																				className={adventurer.skills[skill?.id - 1] === updateSkills[skill?.id] || updateSkills[skill?.id] === 0 ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
 																				onClick={() => {
-																					if (adventurer.skills[skill?.id - 1] > 0)
-																						return; //If adventurer skill more than 0, already set, cannot be removed
+																					if (adventurer.skills[skill?.id - 1] === updateSkills[skill?.id])
+																						return;
 																					if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) > _availableSkillPoints || updateSkills[skill?.id] === 0)
 																						return;
 																					set_updateSkills(s => ({
