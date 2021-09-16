@@ -320,7 +320,7 @@ function	Inventory({adventurer}) {
 		if (!hasItem) {
 			return (
 				<div className={'w-full'}>
-					<div className={'p-4 flex text-black dark:text-white text-sx capitalize w-1/2 pr-32'}>
+					<div className={'p-4 flex text-black dark:text-white text-sx normal-case w-1/2 pr-32'}>
 						{'You have no items yet, traveler, find them in Dungeons!'}
 					</div>
 					<div className={'flex flex-row'}>
@@ -428,10 +428,20 @@ function	Skills({adventurer, updateRarity, provider}) {
 			);
 		});
 
+		if (!adventurer?.attributes?.isInit) {
+			return (
+				<div className={'w-full'}>
+					<div className={'p-4 pb-0 flex text-black dark:text-white text-sx normal-case w-1/2 pr-20'} onClick={openModal}>
+						{'You first need to set your attributes adventurer! Spend your points!'}
+					</div>
+				</div>
+			);
+		}
+
 		if (!hasSkills) {
 			return (
 				<div className={'w-full'}>
-					<div className={'p-4 flex text-black dark:text-white text-sx capitalize w-1/2 pr-32'} onClick={openModal}>
+					<div className={'p-4 flex text-black dark:text-white text-sx normal-case w-1/2 pr-32'} onClick={openModal}>
 						{'You have no skills yet, traveler, spend your points!'}
 					</div>
 					<div className={'flex w-1/2 px-4'}>
@@ -705,9 +715,9 @@ function	Skills({adventurer, updateRarity, provider}) {
 															<div className={'w-16 h-16 flex justify-center items-center relative item'} />
 															<div className={'flex flex-col space-between w-full pr-4'}>
 																<p className={'text-megaxs mb-2 text-black dark:text-white'}>{'CHECK'}</p>
-																<p className={'text-megaxs leading-4 mb-4 text-gray-darker dark:text-white dark:text-opacity-60 capitalize text-justify'}>{skill?.check}</p>
+																<p className={'text-megaxs leading-4 mb-4 text-gray-darker dark:text-white dark:text-opacity-60 normal-case text-justify'}>{skill?.check}</p>
 																<p className={'text-megaxs mb-2 text-black dark:text-white'}>{'ACTION'}</p>
-																<p className={'text-megaxs leading-4 text-gray-darker dark:text-white dark:text-opacity-60 capitalize text-justify'}>{skill?.action}</p>
+																<p className={'text-megaxs leading-4 text-gray-darker dark:text-white dark:text-opacity-60 normal-case text-justify'}>{skill?.action}</p>
 															</div>
 														</div>
 
