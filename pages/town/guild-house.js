@@ -1,8 +1,8 @@
 /******************************************************************************
 **	@Author:				Rarity Extended
-**	@Twitter:				@MajorTom_eth
+**	@Twitter:				@RXtended
 **	@Date:					Saturday September 11th 2021
-**	@Filename:				guild.js
+**	@Filename:				guild-house.js
 ******************************************************************************/
 
 import	dayjs							from	'dayjs';
@@ -27,7 +27,7 @@ function	FacuHeadline() {
 					{'WELCOME TO THE'}
 				</Typer>&nbsp;
 				<span className={'text-tag-info'}><Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>
-					{'GUILD'}
+					{'GUILD HOUSE'}
 				</Typer></span>
 				<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
 					{'! SOMETHING TO DOING?'}
@@ -97,7 +97,7 @@ function	Index({rarities, updateRarity}) {
 				</div>
 				<DialogBox
 					options={[
-						canAdventureRarities.length ? {label: `Send ${canAdventureRarities.length} adventurers to adventures`, onClick: () => handleGoAdventure(canAdventureRarities, provider, updateRarity)} : {label: nextAdventureTime ? `Next adventure ready ${nextAdventureTime}` : 'No adventurer available', onClick: () => {}},
+						canAdventureRarities.length ? {label: `Send everyone (${canAdventureRarities.length}) to adventures`, onClick: () => handleGoAdventure(canAdventureRarities, provider, updateRarity)} : {label: nextAdventureTime ? `Next adventure ready ${nextAdventureTime}` : 'No adventurer available', onClick: () => {}},
 						canGoldRarities.length ? {label: `Claim gold for ${canGoldRarities.length} adventurers`, onClick: () => handleClaimGold(canGoldRarities, provider, updateRarity)} : {label: 'No gold to claim!', onClick: () => {}},
 					]} />
 			</div>
