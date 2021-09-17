@@ -17,6 +17,7 @@ import	useRarity						from	'contexts/useRarity';
 import	ITEMS							from	'utils/items';
 import	CLASSES							from	'utils/classList';
 import	SKILLS							from	'utils/skillList';
+import	THE_FOREST_LOOT					from	'utils/theForestLoot';
 import	classNameMapping				from	'utils/classNameMapping';
 import	{goAdventure, levelUp, setAttributes, claimGold, learnSkills}	from	'utils/actions';
 import	{availableSkillPoints, calculatePointsForSet}					from	'lib/skills';
@@ -329,7 +330,7 @@ function	Inventory({adventurer}) {
 									<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
 									<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
 									<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
-									<Image src={item.img} width={48} height={48} />
+									<Image src={THE_FOREST_LOOT[subItem.itemName].img} width={64} height={64} />
 									<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
 									<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
 									<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />

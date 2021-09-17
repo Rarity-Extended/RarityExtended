@@ -144,10 +144,6 @@ export const RarityContextApp = ({children}) => {
 			return;
 		}
 
-		if (tokenID === '455179') {
-			console.log(inventoryCallResult);
-		}
-
 		set_rarities((prev) => ({...prev, [tokenID]: {
 			tokenID: tokenID,
 			owner: owner,
