@@ -22,6 +22,7 @@ import	{goAdventure, levelUp, setAttributes, claimGold, learnSkills}	from	'utils
 import	{availableSkillPoints, calculatePointsForSet}					from	'lib/skills';
 import	{xpRequired}					from	'lib/levels';
 import	Chevron							from	'components/Chevron';
+import {ethers} from 'ethers';
 
 dayjs.extend(relativeTime);
 
@@ -293,27 +294,55 @@ function	Inventory({adventurer}) {
 		const	toRender = allItems
 			.filter((e, i) => i >= offset && i < (offset + OFFSET_SIZE))
 			.map((item, i) => {
-				if ((Number(adventurer?.inventory?.[item.id]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
-					hasItem = true;
-					return (
-						<div className={'flex flex-row space-x-4 w-full'} key={`${item.id}_${i}`}>
-							<div className={'w-16 h-16 bg-gray-50 dark:bg-dark-400 flex justify-center items-center relative item'}>
-								<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
-								<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
-								<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
-								<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
-								<Image src={item.img} width={48} height={48} />
-								<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
-								<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
-								<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
-								<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
+				if (ethers.BigNumber.isBigNumber(adventurer?.inventory?.[item.id])) {
+					if ((Number(adventurer?.inventory?.[item.id]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
+						hasItem = true;
+						return (
+							<div className={'flex flex-row space-x-4 w-full'} key={`${item.id}_${i}`}>
+								<div className={'w-16 h-16 bg-gray-50 dark:bg-dark-400 flex justify-center items-center relative item'}>
+									<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
+									<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
+									<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
+									<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
+									<Image src={item.img} width={48} height={48} />
+									<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
+									<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
+									<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
+									<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
+								</div>
+								<div className={'text-left flex flex-col py-0.5'}>
+									<p className={'text-xs'}>{item.name}</p>
+									<p className={'text-megaxs mt-2'}>{`QTY: ${Number(adventurer?.inventory?.[item.id])}`}</p>
+								</div>
 							</div>
-							<div className={'text-left'}>
-								<p>{item.name}</p>
-								<p className={'text-xs'}>{`QTY: ${Number(adventurer?.inventory?.[item.id])}`}</p>
+						);
+					}
+					return null;
+				}
+				if(Array.isArray(adventurer?.inventory?.[item.id]) && item?.dungeon === 'The Forest') {
+					return adventurer?.inventory?.[item.id].map((subItem, subi) => {
+						hasItem = true;
+						return (
+							<div className={'flex flex-row space-x-4 w-full h-16'} key={`${item.id}_${i}_${subi}`}>
+								<div className={'w-16 h-16 bg-gray-50 dark:bg-dark-400 flex justify-center items-center relative item'}>
+									<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
+									<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
+									<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
+									<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
+									<Image src={item.img} width={48} height={48} />
+									<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
+									<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
+									<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
+									<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
+								</div>
+								<div className={'text-left flex flex-col py-0.5'}>
+									<p className={'text-xs'}>{subItem.itemName}</p>
+									<p className={'text-megaxs mt-2'}>{`LVL: ${Number(subItem.level)}`}</p>
+									<p className={'text-megaxs'}>{`MAGIC: ${Number(subItem.magic)}`}</p>
+								</div>
 							</div>
-						</div>
-					);
+						);
+					});
 				}
 				return (null);
 			});

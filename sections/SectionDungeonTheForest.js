@@ -10,13 +10,17 @@ import	Image							from	'next/image';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	useWeb3							from	'contexts/useWeb3';
+import	useRarity						from	'contexts/useRarity';
 import	classNameMapping				from	'utils/classNameMapping';
 import	classes							from	'utils/classList';
 import	Adventurer						from	'components/Adventurer';
+import	{discoverTreasureTheForest}				from	'utils/actions';
+
 dayjs.extend(relativeTime);
 
 function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurersCount}) {
-	const	{chainTime} = useWeb3();
+	const	{provider, chainTime} = useWeb3();
+	const	{updateRarity} = useRarity();
 
 	if (!shouldDisplay) {
 		return null;
@@ -65,6 +69,16 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 						if (isBack) {
 							return (
 								<div
+									onClick={() => {
+										discoverTreasureTheForest({provider, contractAddress: process.env.DUNGEON_THE_FOREST_ADDR, tokenID: adventurer.tokenID},
+											({error}) => {
+												if (error) {
+													return console.error(error);
+												}
+												updateRarity(adventurer.tokenID);
+												router.push('/');
+											});
+									}}
 									className={'w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}>
 									<Image
 										src={'/menu/shovel.png'}

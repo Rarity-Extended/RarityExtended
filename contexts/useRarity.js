@@ -72,7 +72,7 @@ export const RarityContextApp = ({children}) => {
 			raritySkills.get_skills(tokenID),
 			rarityDungeonCellar.adventurers_log(tokenID),
 			rarityDungeonForest.getResearchBySummoner(tokenID),
-			rarityDungeonForest.getTreasuresBySummoner(tokenID),
+			// rarityDungeonForest.getTreasuresBySummoner(tokenID),
 		];
 	}
 	/**************************************************************************
@@ -96,7 +96,7 @@ export const RarityContextApp = ({children}) => {
 	**	Prepare the multicall to get most of the data
 	**************************************************************************/
 	function		prepareAdventurerInventory(tokenID) {
-		return ITEMS.map(item => new Contract(item.address, RARITY_GOLD_ABI).balanceOf(tokenID));
+		return ITEMS.map(item => item.fetch(tokenID));
 	}
 
 	/**************************************************************************
@@ -137,11 +137,15 @@ export const RarityContextApp = ({children}) => {
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
 	function	setRarity(tokenID, multicallResult, callResult, inventoryCallResult) {
-		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, skills, cellarLog, forestResearch, forestTreasure] = multicallResult;
+		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, skills, cellarLog, forestResearch] = multicallResult;
 		const	[claimableGold] = callResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
 			return;
+		}
+
+		if (tokenID === '455179') {
+			console.log(inventoryCallResult);
 		}
 
 		set_rarities((prev) => ({...prev, [tokenID]: {
@@ -171,11 +175,10 @@ export const RarityContextApp = ({children}) => {
 				forest: {
 					initBlockTs: forestResearch.initBlockTs,
 					endBlockTs: forestResearch.endBlockTs,
-					canAdventure: forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0,
-					forestTreasure
+					canAdventure: forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0
 				}
 			},
-			inventory: inventoryCallResult.map(item => Number(item))
+			inventory: inventoryCallResult
 		}}));
 		set_rNonce(prev => prev + 1);
 	}
@@ -201,7 +204,7 @@ export const RarityContextApp = ({children}) => {
 		// tokensIDs.push(441099);
 
 		const	callResults = await fetchAdventurer(preparedCalls);
-		const	chunkedCallResult = chunk(callResults, 9);
+		const	chunkedCallResult = chunk(callResults, 8);
 		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(preparedInventoryCalls);
@@ -218,7 +221,7 @@ export const RarityContextApp = ({children}) => {
 	**************************************************************************/
 	async function	updateRarity(tokenID) {
 		const	callResults = await fetchAdventurer(prepareAdventurer(tokenID));
-		const	chunkedCallResult = chunk(callResults, 9);
+		const	chunkedCallResult = chunk(callResults, 8);
 		const	extraCallResults = await fetchAdventurerExtra(prepareAdventurerExtra(tokenID));
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(prepareAdventurerInventory(tokenID));

@@ -362,3 +362,48 @@ export async function	exploreTheForest({provider, contractAddress, tokenID, time
 		callback({error, data: undefined});
 	}
 }
+
+export async function	discoverTreasureTheForest({provider, contractAddress, tokenID}, callback) {
+	const	_toast = toast.loading('Digging in the Forest...');
+	const	signer = provider.getSigner();
+	const	rarity = new ethers.Contract(
+		contractAddress,
+		['function discover(uint256 _summoner) public'],
+		signer
+	);
+
+	/**********************************************************************
+	**	In order to avoid dumb error, let's first check if the TX would
+	**	be successful with a static call
+	**********************************************************************/
+	try {
+		await rarity.callStatic.discover(tokenID);
+	} catch (error) {
+		toast.dismiss(_toast);
+		toast.error('Your shovel broke ... Try another one');
+		callback({error, data: undefined});
+		return;
+	}
+
+	/**********************************************************************
+	**	If the call is successful, try to perform the actual TX
+	**********************************************************************/
+	try {
+		const	transaction = await rarity.discover(tokenID);
+		const	transactionResult = await transaction.wait();
+		if (transactionResult.status === 1) {
+			callback({error: false, data: tokenID});
+			toast.dismiss(_toast);
+			toast.success('Transaction successful');
+		} else {
+			toast.dismiss(_toast);
+			toast.error('Transaction reverted');
+			callback({error: true, data: undefined});
+		}
+	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Your shovel broke ... Try another one');
+		callback({error, data: undefined});
+	}
+}
