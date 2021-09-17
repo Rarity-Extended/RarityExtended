@@ -19,7 +19,8 @@ import	CLASSES							from	'utils/classList';
 import	SKILLS							from	'utils/skillList';
 import	classNameMapping				from	'utils/classNameMapping';
 import	{goAdventure, levelUp, setAttributes, claimGold, learnSkills}	from	'utils/actions';
-import	{availableSkillPoints, calculatePointsForSet}				from	'lib/skills';
+import	{availableSkillPoints, calculatePointsForSet}					from	'lib/skills';
+import	{xpRequired}					from	'lib/levels';
 import	Chevron							from	'components/Chevron';
 
 dayjs.extend(relativeTime);
@@ -479,6 +480,7 @@ function	Skills({adventurer, updateRarity, provider}) {
 			</div>
 		);
 	}
+
 	return (
 		<>
 			{renderSkills()}
@@ -888,7 +890,7 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 						<div className={'w-full'}>
 							<div
 								onClick={() => {
-									if (rarity.xp >= (rarity.level * 1000)) {
+									if (rarity.xp >= (xpRequired(rarity.level))) {
 										levelUp({
 											provider,
 											contractAddress: process.env.RARITY_ADDR,
@@ -901,12 +903,12 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 										});
 									}
 								}}
-								className={`nes-progress border-solid border-2 border-black dark:border-dark-400 w-full relative ${rarity.xp >= (rarity.level * 1000) ? 'cursor-pointer' : ''}`}>
+								className={`nes-progress border-solid border-2 border-black dark:border-dark-400 w-full relative ${rarity.xp >= (xpRequired(rarity.level)) ? 'cursor-pointer' : ''}`}>
 								<progress
-									className={`progressbar h-full ${rarity.xp >= (rarity.level * 1000) ? 'is-warning animate-pulse' : 'is-primary'} w-full absolute p-1.5 inset-0`}
+									className={`progressbar h-full ${rarity.xp >= (xpRequired(rarity.level)) ? 'is-warning animate-pulse' : 'is-primary'} w-full absolute p-1.5 inset-0`}
 									value={rarity.xp}
-									max={rarity.level * 1000} />
-								<p className={`text-sm absolute inset-0 h-full w-full text-center flex justify-center items-center ${rarity.xp >= (rarity.level * 1000) ? '' : 'hidden'}`}>{'LEVEL-UP!'}</p>
+									max={xpRequired(rarity.level)} />
+								<p className={`text-sm absolute inset-0 h-full w-full text-center flex justify-center items-center ${rarity.xp >= (xpRequired(rarity.level)) ? '' : 'hidden'}`}>{'LEVEL-UP!'}</p>
 							</div>
 						</div>
 					</div>
