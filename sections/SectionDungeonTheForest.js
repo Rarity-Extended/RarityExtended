@@ -6,14 +6,18 @@
 ******************************************************************************/
 
 import	React							from	'react';
+import	Image							from	'next/image';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
+import	useWeb3							from	'contexts/useWeb3';
 import	classNameMapping				from	'utils/classNameMapping';
 import	classes							from	'utils/classList';
 import	Adventurer						from	'components/Adventurer';
 dayjs.extend(relativeTime);
 
 function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurersCount}) {
+	const	{chainTime} = useWeb3();
+
 	if (!shouldDisplay) {
 		return null;
 	}
@@ -56,16 +60,37 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 					{Object.values(adventurers)?.filter((adventurer) => {
 						return adventurer.level >= 2 && !adventurer?.dungeons?.forest?.canAdventure;
 					}).map((adventurer) => {
+						const	isBack = dayjs(new Date(adventurer?.dungeons?.forest?.endBlockTs * 1000)).isBefore(dayjs(new Date(chainTime * 1000)));
+
+						if (isBack) {
+							return (
+								<div
+									className={'w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}>
+									<Image
+										src={'/menu/shovel.png'}
+										quality={100}
+										width={240}
+										height={240} />
+									<p className={'text-sm justify-center group-hover:underline'}>{adventurer.tokenID}</p>
+									<p className={'text-xss justify-center text-center mt-1'}>{`${classes[classNameMapping[adventurer.class]].name} level ${adventurer.level}`}</p>
+									<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-pointer flex justify-center items-center text-center p-6'}>
+										<p className={'text-white'}>
+											{'YOU FOUND A TRESURE !'}
+										</p>
+									</div>
+								</div>
+							);
+						}
+
 						return (
 							<div key={adventurer.tokenID} className={'w-full md:w-1/4 relative'}>
 								<Adventurer
-									onClick={() => router.push(`/dungeons/the-forest?adventurer=${adventurer.tokenID}`)}
 									noHover
 									adventurer={adventurer}
 									rarityClass={classes[classNameMapping[adventurer.class]]}>
 									<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex justify-center items-center text-center p-6'}>
 										<p className={'text-white'}>
-											{`BACK IN ${dayjs(new Date(adventurer?.dungeons?.forest?.endBlockTs * 1000)).from(dayjs(new Date(adventurer?.dungeons?.forest?.initBlockTs * 1000)))}`}
+											{`BACK IN ${dayjs(new Date(adventurer?.dungeons?.forest?.endBlockTs * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}
 										</p>
 									</div>
 								</Adventurer>
