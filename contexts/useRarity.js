@@ -242,7 +242,7 @@ export const RarityContextApp = ({children}) => {
 	}, [data, provider]);
 
 	useEffect(() => {
-		setTimeout(() => !active ? set_loaded(true) : null, 1500);
+		setTimeout(() => !active ? set_loaded(true) : null, 10000); //10s before unlock
 	}, []);
 
 	return (
