@@ -7,10 +7,9 @@
 
 import	React, {useState}				from	'react';
 import	Image							from	'next/image';
-import	useUI							from	'contexts/useUI';
 import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
-import	SectionArtifactsTheForest			from	'sections/SectionArtifactsTheForest';
+import	SectionArtifactsTheForest		from	'sections/SectionArtifactsTheForest';
 
 function	DialogChoices({router, adventurersCount}) {
 	if (adventurersCount === 0) {
@@ -57,7 +56,6 @@ function	NCPHeadline() {
 }
 
 function	Index({rarities, router}) {
-	const	{theme} = useUI();
 	const	adventurers = Object.values(rarities);
 
 	return (
@@ -66,7 +64,7 @@ function	Index({rarities, router}) {
 				<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-8'}>
 					<div className={'w-auto md:w-64 mr-0 md:mr-16'} style={{minWidth: 256}}>
 						<Image
-							src={theme === 'light' ? '/avatar/facu.gif' : '/avatar/facu.png'}
+							src={'/avatar/ceazor.gif'}
 							loading={'eager'}
 							quality={100}
 							width={256}
