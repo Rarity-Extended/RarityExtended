@@ -31,6 +31,9 @@ function	GameWrapper({Component, pageProps, element, router}) {
 		return (
 			<div className={'absolute inset-0 backdrop-blur-3xl bg-opacity-40 cursor-not-allowed'}>
 				<div className={'loader'} />
+				<div className={'absolute inset-0 mt-32 flex justify-center items-center'}>
+					<p className={'center-text text-white z-40'}>{'Retrieving your adventurers...'}</p>
+				</div>
 			</div>
 		);
 	}

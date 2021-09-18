@@ -97,7 +97,7 @@ function	DailyBalloon({rarity, chainTime, provider, updateRarity}) {
 		return (
 			<div className={'nes-balloon rounded-lg border-black dark:border-dark-100 border-4 relative from-left text-xs md:text-base '}>
 				<div className={'mb-2'}>
-					{`Would you like to claim your ${Number(rarity?.gold?.claimable)} golds ?`}
+					{`WOULD YOU LIKE TO CLAIM YOUR GOLD (${Number(rarity?.gold?.claimable)} coins) ?`}
 					<div className={'mt-6'}>
 						<span className={'cursor-pointer'} onClick={onClaimGold}>
 							<span className={'inline mb-1 mr-2 group-hover:opacity-100'} style={{cursor: 'pointer'}}>{'>'}</span>
@@ -399,11 +399,11 @@ function	Skills({adventurer, updateRarity, provider}) {
 			contractAddress: process.env.RARITY_SKILLS_ADDR,
 			tokenID: adventurer.tokenID,
 			skills: _skills,
-		}, ({error, data}) => {
+		}, ({error}) => {
 			if (error) {
 				return console.error(error);
 			}
-			updateRarity(data);
+			updateRarity(adventurer.tokenID);
 			closeModal();
 		});
 	}
@@ -693,7 +693,7 @@ function	Skills({adventurer, updateRarity, provider}) {
 																			</div>
 																			<p className={'text-xs w-5 text-center'}>{updateSkills[skill?.id]}</p>
 																			<div
-																				className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
+																				className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) || (updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0 ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
 																				onClick={() => {
 																					if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0)
 																						return;
@@ -761,7 +761,7 @@ function	Skills({adventurer, updateRarity, provider}) {
 																			</div>
 																			<p className={'text-xs w-5 text-center'}>{updateSkills[skill?.id]}</p>
 																			<div
-																				className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
+																				className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) || (updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0 ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
 																				onClick={() => {
 																					if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0)
 																						return;
