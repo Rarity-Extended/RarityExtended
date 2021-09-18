@@ -300,7 +300,7 @@ function	Inventory({adventurer}) {
 						hasItem = true;
 						return (
 							<div className={'flex flex-row space-x-4 w-full'} key={`${item.id}_${i}`}>
-								<div className={'w-16 h-16 bg-gray-50 dark:bg-dark-400 flex justify-center items-center relative item'}>
+								<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center relative item'}>
 									<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
 									<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
 									<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
@@ -325,16 +325,16 @@ function	Inventory({adventurer}) {
 						hasItem = true;
 						return (
 							<div className={'flex flex-row space-x-4 w-full h-16'} key={`${item.id}_${i}_${subi}`}>
-								<div className={'w-16 h-16 bg-gray-50 dark:bg-dark-400 flex justify-center items-center relative item'}>
-									<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
-									<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
-									<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
-									<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
+								<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center relative item'}>
+									<div className={`absolute ${THE_FOREST_LOOT[subItem.itemName].levelClassName} left-0 top-0 w-2 h-1`} />
+									<div className={`absolute ${THE_FOREST_LOOT[subItem.itemName].levelClassName} left-0 top-0 w-1 h-2`} />
+									<div className={`absolute ${THE_FOREST_LOOT[subItem.itemName].levelClassName} right-0 top-0 w-2 h-1`} />
+									<div className={`absolute ${THE_FOREST_LOOT[subItem.itemName].levelClassName} right-0 top-0 w-1 h-2`} />
 									<Image src={THE_FOREST_LOOT[subItem.itemName].img} width={64} height={64} />
-									<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
-									<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
-									<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
-									<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
+									<div className={`absolute ${THE_FOREST_LOOT[subItem.itemName].levelClassName} left-0 bottom-0 w-2 h-1`} />
+									<div className={`absolute ${THE_FOREST_LOOT[subItem.itemName].levelClassName} left-0 bottom-0 w-1 h-2`} />
+									<div className={`absolute ${THE_FOREST_LOOT[subItem.itemName].levelClassName} right-0 bottom-0 w-2 h-1`} />
+									<div className={`absolute ${THE_FOREST_LOOT[subItem.itemName].levelClassName} right-0 bottom-0 w-1 h-2`} />
 								</div>
 								<div className={'text-left flex flex-col py-0.5'}>
 									<p className={'text-xs'}>{subItem.itemName}</p>

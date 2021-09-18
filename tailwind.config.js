@@ -39,8 +39,8 @@ module.exports = {
 				200: '#46597e',
 				100: '#5d6e8f',
 			},
-			item: {
-				common: 'gray-300',
+			items: {
+				common: '#5d6e8f',
 				uncommon: 'rgb(73,122,42)',
 				rare: 'rgb(42,94,161)',
 				epic: 'rgb(138,47,146)',
