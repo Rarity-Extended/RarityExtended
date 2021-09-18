@@ -12,6 +12,7 @@ import	THE_FOREST_ABI			from	'utils/abi/dungeonTheForest.abi';
 const	items = [
 	{
 		name: 'Rat Skin',
+		description: 'This skin looks like the best possible material for an armor. No?',
 		img: '/items/rat_skin.png',
 		address: process.env.DUNGEON_THE_CELLAR_ADDR,
 		level: 'Common',

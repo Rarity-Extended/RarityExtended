@@ -81,6 +81,9 @@ module.exports = {
 			maxHeight: {
 				120: '480px'
 			},
+			transitionProperty: {
+				'visibility': 'visibility',
+			},
 			animation: {
 				'bounce-r': 'bounce-r 1s infinite'
 			},
@@ -102,6 +105,7 @@ module.exports = {
 		extend: {
 			rotate: ['hover', 'focus', 'group-hover'],
 			animation: ['hover', 'focus', 'group-hover'],
+			visibility: ['hover', 'focus', 'group-hover'],
 		}
 	},
 	plugins: [

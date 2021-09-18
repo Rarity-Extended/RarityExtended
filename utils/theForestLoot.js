@@ -14,7 +14,7 @@ const	THE_FOREST_LOOT = {
 		levelClassName: 'bg-items-uncommon',
 		modifier: [{
 			type: 'skill',
-			name: 'diplomacy',
+			name: 'Diplomacy',
 			id: 8,
 			change: 1
 		}]
@@ -640,7 +640,7 @@ const	THE_FOREST_LOOT = {
 		}]
 	},
 	'Ancient Prince Andre\'s Sword': {
-		name: 'Ancient Prince Andre\'s Sword',
+		name: 'Ancient Prince Sword',
 		description: 'Hope the prince doesn\'t claim his sword.',
 		img: '/items/ancient_prince_andre_s_sword.png',
 		level: 'Legendary',
