@@ -11,7 +11,7 @@ import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
-import	{levelUp}						from	'utils/actions';
+import	{levelUpTreasureTheForest}		from	'utils/actions';
 import	THE_FOREST_LOOT					from	'utils/theForestLoot';
 import	{xpRequired}					from	'lib/levels';
 
@@ -27,7 +27,7 @@ function	Artifact({img, name, cost, onClick, children, noHover}) {
 				quality={100}
 				width={240}
 				height={240} />
-			<p className={'text-xs justify-center group-hover:underline'}>{name}</p>
+			<p className={'text-xs justify-center text-center group-hover:underline'}>{name}</p>
 			<p className={'text-xss justify-center text-center mt-1'}>{`Upgrade for ${cost} XP`}</p>
 			{children}
 		</div>
@@ -72,14 +72,19 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, router, adventur
 									<Artifact
 										key={`${item.id}_${i}`}
 										onClick={() => {
-											levelUp({provider, contractAddress: process.env.DUNGEON_THE_FOREST_ADDR, tokenID: adventurer.tokenID},
-												({error}) => {
-													if (error) {
-														return console.error(error);
-													}
-													updateRarity(adventurer.tokenID);
-													router.push('/');
-												});
+											levelUpTreasureTheForest({
+												provider,
+												contractAddress: process.env.DUNGEON_THE_FOREST_ADDR,
+												tokenID: item.treasureId.toString(),
+												adventurerID: adventurer.tokenID,
+												treasureName: item.itemName
+											}, ({error}) => {
+												if (error) {
+													return console.error(error);
+												}
+												updateRarity(adventurer.tokenID);
+												router.push('/');
+											});
 										}}
 										noHover={Number(adventurer.xp) < xpRequired(item.level)}
 										img={THE_FOREST_LOOT[item.itemName].img}
