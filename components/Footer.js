@@ -10,7 +10,6 @@ import	useUI			from	'contexts/useUI';
 
 function	Footer() {
 	const	{theme, switchTheme} = useUI();
-
 	return (
 		<div className={'absolute bottom-3 text-center text-xxs left-0 right-0 flex flex-col justify-center items-center'}>
 			<div>
