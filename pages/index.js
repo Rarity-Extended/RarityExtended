@@ -693,7 +693,7 @@ function	Skills({adventurer, updateRarity, provider}) {
 																			</div>
 																			<p className={'text-xs w-5 text-center'}>{updateSkills[skill?.id]}</p>
 																			<div
-																				className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
+																				className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) || (updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0 ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
 																				onClick={() => {
 																					if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0)
 																						return;
@@ -761,7 +761,7 @@ function	Skills({adventurer, updateRarity, provider}) {
 																			</div>
 																			<p className={'text-xs w-5 text-center'}>{updateSkills[skill?.id]}</p>
 																			<div
-																				className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
+																				className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) || (updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0 ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
 																				onClick={() => {
 																					if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0)
 																						return;
