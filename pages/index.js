@@ -393,7 +393,7 @@ function	Inventory({adventurer}) {
 		}
 		return (
 			<div className={'w-full'}>
-				<div className={'w-full px-4 grid grid-cols-4 gap-6'}>
+				<div className={'w-full px-4 grid grid-cols-1 md:grid-cols-4 gap-6'}>
 					{toRender}
 				</div>
 				<div className={'-mt-8 h-8 px-4'}>
@@ -519,7 +519,7 @@ function	Skills({adventurer, updateRarity, provider}) {
 							</p> : null}
 						</div>
 					</div>
-					<div className={'w-full grid grid-cols-4 gap-x-6 pt-6'}>
+					<div className={'w-full grid grid-cols-1 md:grid-cols-4 gap-x-6 pt-6'}>
 						{skillList}
 					</div>
 				</div>
