@@ -399,11 +399,11 @@ function	Skills({adventurer, updateRarity, provider}) {
 			contractAddress: process.env.RARITY_SKILLS_ADDR,
 			tokenID: adventurer.tokenID,
 			skills: _skills,
-		}, ({error, data}) => {
+		}, ({error}) => {
 			if (error) {
 				return console.error(error);
 			}
-			updateRarity(data);
+			updateRarity(adventurer.tokenID);
 			closeModal();
 		});
 	}
