@@ -18,7 +18,7 @@ function	Footer() {
 					{'Rarity Manifested'}
 				</a>
 				{' - '}
-				<a href={'https://github.com/TBouder/RarityExtended'} target={'_blank'} rel={'noreferrer'} className={'hover:underline'}>
+				<a href={'https://github.com/Rarity-Extended/RarityExtended'} target={'_blank'} rel={'noreferrer'} className={'hover:underline'}>
 					{'Source code'}
 				</a>
 				{' - '}
