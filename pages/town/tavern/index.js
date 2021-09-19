@@ -35,7 +35,7 @@ function	NewsTab({shouldDisplay}) {
 					{'OYE OYE ! FIND THE LATEST NEWS IN OUR AMAZING WORLD IN THE DAILY EXTENDED ! GET READY FOR A BIG ADVENTURE, FROM OUR HUMBLE TOWN TO THE DARK FOREST OF SMUGLEWIND ! NEWS, ANNOUNCES, AND PUBLIC WORKS, EVERYTHING IS IN THE DAILY EXTENDED !'}
 				</i>
 				<div className={'divide-y-2 divide-black dark:divide-white dark:divide-opacity-60'}>
-					{TAVERN_NEWS.reverse().map((news, i) => (
+					{TAVERN_NEWS.map((news, i) => (
 						<div className={'mt-10 pt-10'} key={i}>
 							<p className={'text-xs md:text-base mb-2 md:mb-0 leading-4 md:leading-6'}>{`> ${news.headline}`}</p>
 							<p className={'text-megaxs md:text-xs leading-4 md:leading-6 text-gray-darker dark:text-white dark:text-opacity-60'}>{news.text}</p>
