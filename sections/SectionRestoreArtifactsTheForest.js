@@ -141,7 +141,7 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, adventurersCount
 			if (data?.status === 0) {
 				return setTimeout(() => fetchArtifacts(), 100);
 			}
-			prepareArtifacts(data?.result);
+			prepareArtifacts(data?.result || []);
 		}
 	}, [data]);
 
