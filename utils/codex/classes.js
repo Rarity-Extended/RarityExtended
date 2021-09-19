@@ -5,7 +5,15 @@
 **	@Filename:				ClassList.js
 ******************************************************************************/
 
-const	classes = {
+/******************************************************************************
+**	Classes structure :
+**	- id : the id of the class as in the solidity file
+**	- name : the name of the class
+**	- img : the image used to represent this class
+**	- skills : an array of string, matching the skills for the class
+**	- baseSill : a number corresponding to the base point of skills for it
+******************************************************************************/
+const	_CLASSES = {
 	'Barbarian': {
 		id: 1,
 		name: 'Barbarian',
@@ -96,4 +104,14 @@ const	classes = {
 	},
 };
 
-export default classes;
+function _prepareClasses() {
+	const	_classes = {};
+	for (const key in _CLASSES) {
+		_classes[key] = _CLASSES[key];
+		_classes[_CLASSES[key].id] = _CLASSES[key];
+	}
+	return _classes;
+}
+
+const	CLASSES = _prepareClasses();
+export default CLASSES;

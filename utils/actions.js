@@ -7,7 +7,7 @@
 
 import	{ethers}			from	'ethers';
 import	toast				from	'react-hot-toast';
-import	classNameMapping	from	'utils/classNameMapping';
+import	CLASSES				from	'utils/codex/classes';
 
 async function	_adventure(loader, {provider, contractAddress, tokenID}, callback) {
 	const	_toast = toast.loading(loader);
@@ -152,7 +152,7 @@ export async function	learnSkills({provider, contractAddress, tokenID, skills}, 
 }
 
 export async function	recruitAdventurer({provider, contractAddress, classID}, callback) {
-	const	_toast = toast.loading(`Recruiting a ${classNameMapping[classID]}...`);
+	const	_toast = toast.loading(`Recruiting a ${CLASSES[classID].name}...`);
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
 		contractAddress,

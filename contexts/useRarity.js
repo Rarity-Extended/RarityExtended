@@ -12,7 +12,7 @@ import	{ethers}												from	'ethers';
 import	{Provider, Contract}									from	'ethcall';
 import	useSWR													from	'swr';
 import	{chunk, fetcher, toAddress}								from	'utils';
-import	ITEMS													from	'utils/items';
+import	ITEMS													from	'utils/codex/items';
 import	RARITY_ABI												from	'utils/abi/rarity.abi';
 import	RARITY_ATTR_ABI											from	'utils/abi/rarityAttr.abi';
 import	RARITY_GOLD_ABI											from	'utils/abi/rarityGold.abi';
@@ -251,7 +251,7 @@ export const RarityContextApp = ({children}) => {
 	}, [data, provider]);
 
 	useEffect(() => {
-		setTimeout(() => !active ? set_loaded(true) : null, 1500);
+		setTimeout(() => !active ? set_loaded(true) : null, 10000); //10s before unlock
 	}, []);
 
 	return (

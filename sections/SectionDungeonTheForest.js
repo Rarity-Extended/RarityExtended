@@ -11,10 +11,9 @@ import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
-import	classNameMapping				from	'utils/classNameMapping';
-import	classes							from	'utils/classList';
+import	CLASSES							from	'utils/codex/classes';
 import	Adventurer						from	'components/Adventurer';
-import	{discoverTreasureTheForest}				from	'utils/actions';
+import	{discoverTreasureTheForest}		from	'utils/actions';
 
 dayjs.extend(relativeTime);
 
@@ -57,7 +56,7 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 								<Adventurer
 									onClick={() => router.push(`/dungeons/the-forest?adventurer=${adventurer.tokenID}`)}
 									adventurer={adventurer}
-									rarityClass={classes[classNameMapping[adventurer.class]]} />
+									rarityClass={CLASSES[adventurer.class]} />
 							</div>
 						);
 					})}
@@ -86,7 +85,7 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 										width={240}
 										height={240} />
 									<p className={'text-sm justify-center group-hover:underline'}>{adventurer.tokenID}</p>
-									<p className={'text-xss justify-center text-center mt-1'}>{`${classes[classNameMapping[adventurer.class]].name} level ${adventurer.level}`}</p>
+									<p className={'text-xss justify-center text-center mt-1'}>{`${CLASSES[adventurer.class].name} level ${adventurer.level}`}</p>
 									<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-pointer flex justify-center items-center text-center p-6'}>
 										<p className={'text-white'}>
 											{'YOU FOUND A TRESURE !'}
@@ -101,7 +100,7 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 								<Adventurer
 									noHover
 									adventurer={adventurer}
-									rarityClass={classes[classNameMapping[adventurer.class]]}>
+									rarityClass={CLASSES[adventurer.class]}>
 									<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex justify-center items-center text-center p-6'}>
 										<p className={'text-white'}>
 											{`BACK IN ${dayjs(new Date(adventurer?.dungeons?.forest?.endBlockTs * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}

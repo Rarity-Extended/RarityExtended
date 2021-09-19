@@ -12,7 +12,7 @@ import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	{levelUpTreasureTheForest}		from	'utils/actions';
-import	THE_FOREST_LOOT					from	'utils/theForestLoot';
+import	THE_FOREST_LOOT					from	'utils/codex/theForestLoot';
 import	{xpRequired}					from	'lib/levels';
 
 dayjs.extend(relativeTime);
