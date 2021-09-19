@@ -12,7 +12,7 @@ import	{Provider, Contract}			from	'ethcall';
 import	{ethers}						from	'ethers';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
-import	{fetcher}						from	'utils';
+import	{toAddress, fetcher}			from	'utils';
 import	{restoreTreasureTheForest}		from	'utils/actions';
 import	CLASSES							from	'utils/codex/classes';
 import	THE_FOREST_LOOT					from	'utils/codex/theForestLoot.json';
@@ -84,7 +84,7 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, adventurersCount
 		const	addr = address;
 		const	addressArtifacts = {};
 		artifacts.forEach((artifact) => {
-			if (artifact.to === addr) {
+			if (toAddress(artifact.to) === toAddress(addr)) {
 				addressArtifacts[artifact.tokenID] = {...artifact, isOwner: true};
 			} else {
 				addressArtifacts[artifact.tokenID] = {...artifact, isOwner: false};
