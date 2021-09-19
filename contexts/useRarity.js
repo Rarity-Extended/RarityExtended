@@ -72,7 +72,6 @@ export const RarityContextApp = ({children}) => {
 			raritySkills.get_skills(tokenID),
 			rarityDungeonCellar.adventurers_log(tokenID),
 			rarityDungeonForest.getResearchBySummoner(tokenID),
-			// rarityDungeonForest.getTreasuresBySummoner(tokenID),
 		];
 	}
 	/**************************************************************************
@@ -90,7 +89,6 @@ export const RarityContextApp = ({children}) => {
 			return (callResult);
 		}
 	}
-
 
 	/**************************************************************************
 	**	Prepare the multicall to get most of the data
@@ -136,7 +134,7 @@ export const RarityContextApp = ({children}) => {
 	/**************************************************************************
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
-	function	setRarity(tokenID, multicallResult, callResult, inventoryCallResult) {
+	function		setRarity(tokenID, multicallResult, callResult, inventoryCallResult) {
 		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, skills, cellarLog, forestResearch] = multicallResult;
 		const	[claimableGold] = callResult;
 
@@ -194,18 +192,12 @@ export const RarityContextApp = ({children}) => {
 			tokensIDs.push(token.tokenID);
 		});
 
-		// preparedCalls.push(...prepareAdventurer(441099));
-		// preparedExtraCalls.push(...prepareAdventurerExtra(441099));
-		// preparedInventoryCalls.push(...prepareAdventurerInventory(441099));
-		// tokensIDs.push(441099);
-
 		const	callResults = await fetchAdventurer(preparedCalls);
 		const	chunkedCallResult = chunk(callResults, 8);
 		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(preparedInventoryCalls);
 		const	chunkedinventoryCallResult = chunk(inventoryCallResult, ITEMS.length);
-
 		tokensIDs?.forEach((tokenID, i) => {
 			setRarity(tokenID, chunkedCallResult[i], chunkedExtraCallResult[i], chunkedinventoryCallResult[i]);
 		});

@@ -24,7 +24,7 @@ function	Index({router}) {
 
 	return (
 		<section className={'mt-24 md:mt-12'}>
-			<div className={'flex flex-col space-y-32 max-w-screen-lg w-full mx-auto'}>
+			<div className={'flex flex-col space-y-36 max-w-screen-lg w-full mx-auto'}>
 				{
 					adventurers?.map((rarity) => (
 						<SectionCharacterSheet

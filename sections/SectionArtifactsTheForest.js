@@ -7,15 +7,11 @@
 
 import	React							from	'react';
 import	Image							from	'next/image';
-import	dayjs							from	'dayjs';
-import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	{levelUpTreasureTheForest}		from	'utils/actions';
 import	{xpRequired}					from	'utils/libs/rarity';
 import	THE_FOREST_LOOT					from	'utils/codex/theForestLoot.json';
-
-dayjs.extend(relativeTime);
 
 function	Artifact({img, name, cost, onClick, children, noHover}) {
 	return (

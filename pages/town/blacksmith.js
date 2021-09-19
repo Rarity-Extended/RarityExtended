@@ -5,11 +5,12 @@
 **	@Filename:				blacksmith.js
 ******************************************************************************/
 
-import	React, {useState}				from	'react';
-import	Image							from	'next/image';
-import	Typer							from	'components/Typer';
-import	DialogBox						from	'components/DialogBox';
-import	SectionArtifactsTheForest		from	'sections/SectionArtifactsTheForest';
+import	React, {useState}					from	'react';
+import	Image								from	'next/image';
+import	Typer								from	'components/Typer';
+import	DialogBox							from	'components/DialogBox';
+import	SectionArtifactsTheForest			from	'sections/SectionArtifactsTheForest';
+import	SectionRestoreArtifactsTheForest	from	'sections/SectionRestoreArtifactsTheForest';
 
 function	DialogChoices({router, adventurersCount}) {
 	if (adventurersCount === 0) {
@@ -25,7 +26,7 @@ function	DialogChoices({router, adventurersCount}) {
 			options={[
 				{label: 'WELCOME', onClick: () => router.push('/town/blacksmith')},
 				{label: 'Upgrade an Artifact', onClick: () => router.push('/town/blacksmith?tab=upgrade')},
-				// {label: 'Restore an Artifact', onClick: () => router.push('/town/blacksmith?tab=restore')},
+				{label: 'Restore an Artifact', onClick: () => router.push('/town/blacksmith?tab=restore')},
 			]} />
 	);
 }
@@ -80,6 +81,11 @@ function	Index({rarities, router}) {
 					shouldDisplay={router?.query?.tab === 'upgrade'}
 					router={router}
 					adventurers={rarities}
+					adventurersCount={adventurers.length} />
+				<SectionRestoreArtifactsTheForest
+					shouldDisplay={router?.query?.tab === 'restore'}
+					router={router}
+					adventurers={Object.values(rarities)}
 					adventurersCount={adventurers.length} />
 			</div>
 		</section>

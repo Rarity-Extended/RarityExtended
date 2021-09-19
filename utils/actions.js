@@ -487,3 +487,83 @@ export async function	levelUpTreasureTheForest({provider, contractAddress, token
 		callback({error, data: undefined});
 	}
 }
+
+export async function	restoreTreasureTheForest({provider, contractAddress, tokenID, treasureName, adventurerID}, callback) {
+	let		_toast = toast.loading(`1/2 - Approving treasure ${treasureName}...`);
+	const	signer = provider.getSigner();
+	const	rarity = new ethers.Contract(
+		contractAddress,
+		['function restoreTreasure(uint256 tokenId, uint256 receiver) public'],
+		signer
+	);
+
+	/**********************************************************************
+	**	First, we need to approve this TX
+	**********************************************************************/
+	try {
+		const	raritySource = new ethers.Contract(
+			process.env.DUNGEON_THE_FOREST_V1_ADDR, [
+				'function getApproved(uint256 tokenId) external view returns (address operator)',
+				'function approve(address to, uint256 tokenId) external'
+			],
+			signer
+		);
+		const	approvedAddr = await raritySource.getApproved(tokenID);
+		if (approvedAddr === contractAddress) {
+			toast.dismiss(_toast);
+		} else {
+			const	transaction = await raritySource.approve(contractAddress, tokenID);
+			const	transactionResult = await transaction.wait();
+			if (transactionResult.status === 1) {
+				toast.dismiss(_toast);
+			} else {
+				toast.dismiss(_toast);
+				toast.error('Approve reverted');
+				callback({error: true, data: undefined});
+				return;
+			}
+		}
+	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
+		callback({error, data: undefined});
+		return;
+	}
+
+	_toast = toast.loading(`2/2 - Restoring treasure ${treasureName}...`);
+	/**********************************************************************
+	**	In order to avoid dumb error, let's first check if the TX would
+	**	be successful with a static call
+	**********************************************************************/
+	try {
+		await rarity.callStatic.restoreTreasure(tokenID, adventurerID);
+	} catch (error) {
+		toast.dismiss(_toast);
+		toast.error('Impossible to submit transaction');
+		callback({error, data: undefined});
+		return;
+	}
+
+	/**********************************************************************
+	**	If the call is successful, try to perform the actual TX
+	**********************************************************************/
+	try {
+		const	transaction = await rarity.restoreTreasure(tokenID, adventurerID);
+		const	transactionResult = await transaction.wait();
+		if (transactionResult.status === 1) {
+			callback({error: false, data: tokenID});
+			toast.dismiss(_toast);
+			toast.success('Transaction successful');
+		} else {
+			toast.dismiss(_toast);
+			toast.error('Transaction reverted');
+			callback({error: true, data: undefined});
+		}
+	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
+		callback({error, data: undefined});
+	}
+}
