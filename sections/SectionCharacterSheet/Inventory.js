@@ -10,7 +10,7 @@ import	Image						from	'next/image';
 import	Link						from	'next/link';
 import	{ethers}					from	'ethers';
 import	ITEMS						from	'utils/codex/items';
-import	THE_FOREST_LOOT				from	'utils/codex/theForestLoot';
+import	THE_FOREST_LOOT				from	'utils/codex/theForestLoot.json';
 
 function	Inventory({adventurer}) {
 	const	OFFSET_SIZE = 9;

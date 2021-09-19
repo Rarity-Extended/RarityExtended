@@ -8,11 +8,11 @@
 import	React, {Fragment, useState}						from	'react';
 import	Image											from	'next/image';
 import	{Dialog, Transition}							from	'@headlessui/react';
-import	CLASSES											from	'utils/codex/classes';
-import	SKILLS											from	'utils/codex/skills';
+import	Chevron											from	'components/Chevron';
 import	{learnSkills}									from	'utils/actions';
 import	{availableSkillPoints, calculatePointsForSet}	from	'utils/libs/raritySkills';
-import	Chevron											from	'components/Chevron';
+import	CLASSES											from	'utils/codex/classes';
+import	SKILLS											from	'utils/codex/skills.json';
 
 function	Skills({adventurer, updateRarity, provider}) {
 	const	_availableSkillPoints = availableSkillPoints(adventurer.attributes.intelligence, adventurer.class, adventurer.level);

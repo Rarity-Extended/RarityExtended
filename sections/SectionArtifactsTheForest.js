@@ -12,8 +12,8 @@ import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	{levelUpTreasureTheForest}		from	'utils/actions';
-import	THE_FOREST_LOOT					from	'utils/codex/theForestLoot';
-import	{xpRequired}					from	'lib/levels';
+import	{xpRequired}					from	'utils/libs/rarity';
+import	THE_FOREST_LOOT					from	'utils/codex/theForestLoot.json';
 
 dayjs.extend(relativeTime);
 
@@ -35,7 +35,7 @@ function	Artifact({img, name, cost, onClick, children, noHover}) {
 }
 
 function	SectionArtifactsTheForest({shouldDisplay, adventurers, router, adventurersCount}) {
-	const	{provider, chainTime} = useWeb3();
+	const	{provider} = useWeb3();
 	const	{updateRarity} = useRarity();
 
 	if (!shouldDisplay) {
@@ -44,19 +44,12 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, router, adventur
 	return (
 		<div className={'flex flex-col w-full'}>
 			<div className={'pb-10'}>
-				<i className={'text-sx md:text-xs text-black dark:text-white text-opacity-60 leading-6'}>
-					{'****'}
-				</i>
-				<div />
-				<i className={'text-sx md:text-xs text-black dark:text-white text-opacity-60 leading-6'}>
-					{'****'}
-				</i>
-				{adventurersCount !== 0 ? <div className={'mt-6'}>
+				{adventurersCount !== 0 ? <div>
 					<p className={'text-xs'}>
 						{'> WHICH ARTIFACT WOULD YOU LIKE TO UPGRADE?'}
 					</p>
 				</div> :
-					<div className={'mt-6'}> 
+					<div> 
 						<p className={'text-xs'}>
 							{'> You first need to recruit an adventurer !'}
 						</p>
