@@ -5,23 +5,22 @@
 **	@Filename:				index.js
 ******************************************************************************/
 
-import	React, {Fragment, useState}		from	'react';
-import	Image							from	'next/image';
-import	Link							from	'next/link';
-import	dayjs							from	'dayjs';
-import	relativeTime					from	'dayjs/plugin/relativeTime';
-import	{Dialog, Transition}			from	'@headlessui/react';
-import	SectionNoAdventurer				from	'sections/SectionNoAdventurer';
-import	useWeb3							from	'contexts/useWeb3';
-import	useRarity						from	'contexts/useRarity';
-import	ITEMS							from	'utils/items';
-import	CLASSES							from	'utils/classList';
-import	SKILLS							from	'utils/skillList';
-import	classNameMapping				from	'utils/classNameMapping';
+import	React, {Fragment, useState}										from	'react';
+import	Image															from	'next/image';
+import	Link															from	'next/link';
+import	dayjs															from	'dayjs';
+import	relativeTime													from	'dayjs/plugin/relativeTime';
+import	{Dialog, Transition}											from	'@headlessui/react';
+import	SectionNoAdventurer												from	'sections/SectionNoAdventurer';
+import	useWeb3															from	'contexts/useWeb3';
+import	useRarity														from	'contexts/useRarity';
+import	ITEMS															from	'utils/codex/items';
+import	CLASSES															from	'utils/codex/classes';
+import	SKILLS															from	'utils/codex/skills';
 import	{goAdventure, levelUp, setAttributes, claimGold, learnSkills}	from	'utils/actions';
-import	{availableSkillPoints, calculatePointsForSet}					from	'lib/skills';
-import	{xpRequired}					from	'lib/levels';
-import	Chevron							from	'components/Chevron';
+import	{availableSkillPoints, calculatePointsForSet}					from	'utils/libs/raritySkills';
+import	{xpRequired}													from	'utils/libs/rarity';
+import	Chevron															from	'components/Chevron';
 
 dayjs.extend(relativeTime);
 
@@ -870,7 +869,7 @@ function	Aventurers({rarity, provider, updateRarity, router, chainTime}) {
 					<div className={'flex flex-row items-center w-full py-2'}>
 						<div className={'opacity-80 text-xs md:text-sm w-48'}>{'CLASS:'}</div>
 						<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
-							<p>{classNameMapping[rarity.class]}</p>
+							<p>{CLASSES[rarity.class].name}</p>
 						</div>
 					</div>
 					<div className={'flex flex-row items-center w-full py-2'}>

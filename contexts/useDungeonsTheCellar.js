@@ -10,7 +10,7 @@ import	React, {useState, useEffect, useContext, createContext}	from	'react';
 import	useWeb3													from	'contexts/useWeb3';
 import	{ethers}												from	'ethers';
 import	{Provider, Contract}									from	'ethcall';
-import	THE_CELLAR_ABI											from	'utils/dungeonTheCellar.abi';
+import	THE_CELLAR_ABI											from	'utils/abi/dungeonTheCellar.abi';
 
 const	DungeonContext = createContext();
 
