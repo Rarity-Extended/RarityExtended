@@ -131,7 +131,7 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, adventurersCount
 			&contractaddress=${process.env.DUNGEON_THE_FOREST_V1_ADDR}
 			&address=${address}
 			&apikey=${process.env.FMT_KEY}`);
-		prepareArtifacts(result);
+		prepareArtifacts(result || []);
 	}
 	/**************************************************************************
 	**	Once we got data from FTMScan, try detect old artifacts
