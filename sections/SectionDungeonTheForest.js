@@ -8,8 +8,7 @@
 import	React							from	'react';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
-import	classNameMapping				from	'utils/classNameMapping';
-import	classes							from	'utils/classList';
+import	CLASSES							from	'utils/codex/classes';
 import	Adventurer						from	'components/Adventurer';
 // import	useWeb3							from	'contexts/useWeb3';
 dayjs.extend(relativeTime);
@@ -52,7 +51,7 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, adventurersCount})
 								<Adventurer
 									onClick={() => alert('SOON')}
 									adventurer={adventurer}
-									rarityClass={classes[classNameMapping[adventurer.class]]} />
+									rarityClass={CLASSES[adventurer.class]} />
 							</div>
 						);
 					})}

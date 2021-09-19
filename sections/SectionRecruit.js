@@ -8,7 +8,7 @@
 import	React, {useState}		from	'react';
 import	Image					from	'next/image';
 import	{recruitAdventurer}		from	'utils/actions';
-import	classes					from	'utils/classList';
+import	CLASSES					from	'utils/codex/classes';
 
 function	Class({provider, rarityClass, fetchRarity, router}) {
 	const	[isLoading, set_isLoading] = useState(false);
@@ -56,17 +56,17 @@ function	SectionRecruit({shouldDisplay, router, provider, fetchRarity}) {
 	return (
 		<section className={'flex flex-row w-full flex-wrap items-center justify-center'}>
 			<div className={'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8'}>
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Barbarian']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Bard']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Cleric']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Druid']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Fighter']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Monk']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Paladin']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Ranger']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Rogue']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Sorcerer']} />
-				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={classes['Wizard']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Barbarian']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Bard']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Cleric']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Druid']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Fighter']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Monk']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Paladin']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Ranger']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Rogue']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Sorcerer']} />
+				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Wizard']} />
 			</div>
 		</section>
 	);

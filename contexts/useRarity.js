@@ -12,12 +12,12 @@ import	{ethers}												from	'ethers';
 import	{Provider, Contract}									from	'ethcall';
 import	useSWR													from	'swr';
 import	{chunk, fetcher, toAddress}								from	'utils';
-import	ITEMS													from	'utils/items';
-import	RARITY_ABI												from	'utils/rarity.abi';
-import	RARITY_ATTR_ABI											from	'utils/rarityAttr.abi';
-import	RARITY_GOLD_ABI											from	'utils/rarityGold.abi';
-import	RARITY_SKILLS_ABI										from	'utils/raritySkills.abi';
-import	THE_CELLAR_ABI											from	'utils/dungeonTheCellar.abi';
+import	ITEMS													from	'utils/codex/items';
+import	RARITY_ABI												from	'utils/abi/rarity.abi';
+import	RARITY_ATTR_ABI											from	'utils/abi/rarityAttr.abi';
+import	RARITY_GOLD_ABI											from	'utils/abi/rarityGold.abi';
+import	RARITY_SKILLS_ABI										from	'utils/abi/raritySkills.abi';
+import	THE_CELLAR_ABI											from	'utils/abi/dungeonTheCellar.abi';
 
 const	RarityContext = createContext();
 

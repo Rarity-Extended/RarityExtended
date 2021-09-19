@@ -20,6 +20,7 @@ import	ModalLogin						from	'components/ModalLogin';
 import	Typer							from	'components/Typer';
 import	SectionRecruit					from	'sections/SectionRecruit';
 import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
+import	TAVERN_NEWS						from	'utils/codex/tavernNews.json';
 
 dayjs.extend(relativeTime);
 
@@ -33,24 +34,13 @@ function	NewsTab({shouldDisplay}) {
 				<i className={'text-black dark:text-white text-opacity-60 text-sx md:text-xs leading-4 md:leading-4'}>
 					{'OYE OYE ! FIND THE LATEST NEWS IN OUR AMAZING WORLD IN THE DAILY EXTENDED ! GET READY FOR A BIG ADVENTURE, FROM OUR HUMBLE TOWN TO THE DARK FOREST OF SMUGLEWIND ! NEWS, ANNOUNCES, AND PUBLIC WORKS, EVERYTHING IS IN THE DAILY EXTENDED !'}
 				</i>
-				<div className={'mt-10'}>
-					<p className={'text-sm md:text-base mb-2 md:mb-0 leading-4 md:leading-6'}>{'> THE SKILLBOOKS WENT OUT!'}</p>
-					<p className={'text-sx md:text-xs leading-4 md:leading-6'}>{'OUR SAGE, ANDRE, HAS SENT OUT EVERYONES SKILLBOOKS. YOU WILL FIND THEM IN YOUR INVENTORY. OPEN THEM UP, STUDY YOUR ATTRIBUTES. MAKE SOME CHOICES. DO YOU WANT TO BE WELL-ROUNDED? PUT POINTS IN SKILLS THAT YOU HAVE WEAK ATTRIBUTES IN. WANT TO BECOME A SUPER FOCUSED HERO. PUT POINTS IN SKILLS THAT YOU HAVE STRONG ATTRIBUTES IN. EACH CLASS SKILL LEVEL COSTS 1 POINT. EACH CROSS CLASS SKILL LEVEL COSTS 2 POINT. CAREFUL! THEY ARE IMMUTABLE'}</p>
-				</div>
-
-				<div className={'mt-10'}>
-					<p className={'text-sm md:text-base mb-2 md:mb-0 leading-4 md:leading-6'}>{'> JANET THE GUILD MASTER OPENS SHOP!'}</p>
-					<p className={'text-sx md:text-xs leading-4 md:leading-6'}>{'JANET HAS OPENED UP A GUILD HOUSE. THIS IS A GREAT PLACE TO COMMAND YOUR HEROES TO GO ON ADVENTURES AND TO COLLECT YOUR GOLD PAYMENTS.'}</p>
-				</div>
-
-				<div className={'mt-10'}>
-					<p className={'text-sm md:text-base mb-2 md:mb-0 leading-4 md:leading-6'}>{'> THE BIG UGLY RAT IN THE CELLAR'}</p>
-					<p className={'text-sx md:text-xs leading-4 md:leading-6'}>{'FACU WAS SURPRISED TO LEARN THAT THE TAVERN\'S CELLAR WAS HOME TO THE LARGEST AND UGLIEST RAT EVER RECORDED ! THE LEGENDS SAY THAT IT CAN DEFEAT AN ADVENTURER IN A FEW BITES! WORST OF ALL, THE TREASURE IS NOT EVEN GREAT! FACU IS LOOKING FOR A LITTLE HELP!'}</p>
-				</div>
-
-				<div className={'mt-10'}>
-					<p className={'text-sm md:text-base mb-2 md:mb-0 leading-4 md:leading-6'}>{'> THE TAVERN KEEPER IS ACTUALLY MOVING !!!'}</p>
-					<p className={'text-sx md:text-xs leading-4 md:leading-6'}>{'MAYBE YOU NEVER NOTICED IT, BUT AFTER 4 DAYS SPENT HANGING OUT IN THIS GLOOMY INN, THIS IS THE FIRST TIME I SEE FACU, THE TAVERN KEEPER, MOVING! WHEN HE WINKED, I THOUGHT I WAS GOING CRAZY, OR PERHAPS THE MEAD WAS GOING TO MY HEAD, BUT NO, HE IS MOVING ! DOES IT MEAN THAT WE WILL ALL MOVE ONE DAY TOO?'}</p>
+				<div className={'divide-y-2 divide-black dark:divide-white dark:divide-opacity-60'}>
+					{TAVERN_NEWS.reverse().map((news, i) => (
+						<div className={'mt-10 pt-10'} key={i}>
+							<p className={'text-xs md:text-base mb-2 md:mb-0 leading-4 md:leading-6'}>{`> ${news.headline}`}</p>
+							<p className={'text-megaxs md:text-xs leading-4 md:leading-6 text-gray-darker dark:text-white dark:text-opacity-60'}>{news.text}</p>
+						</div>
+					))}
 				</div>
 			</div>
 		</div>
