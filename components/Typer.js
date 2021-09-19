@@ -4,6 +4,7 @@
 **	@Date:					Wednesday September 8th 2021
 **	@Filename:				Typer.js
 ******************************************************************************/
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import	React, {useState, useEffect, Fragment}	from	'react';
 
