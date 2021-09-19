@@ -9,3 +9,4 @@ This could be for the Items, the Skills, the adventurer, the news, etc.
 - `classes`, list of all the classes available with some metadata
 - `items`, list of all the items available with some metadata
 - `skills`, list of all the skills available with some metadata
+- `tavernNews`, list of all the news that will be displayed in the tavern
