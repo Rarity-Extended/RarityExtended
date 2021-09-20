@@ -106,14 +106,6 @@ function	Inventory({adventurer}) {
 								</div>
 							</Link>
 						</div>
-						<div className={'flex w-full md:w-1/2 px-4'}>
-							<Link href={'/town/tavern'}>
-								<div
-									className={'border-4 border-black dark:border-dark-100 px-10 py-2 text-black dark:text-white hover:bg-gray-secondary dark:hover:bg-dark-400 cursor-pointer transition-colors flex items-center text-center justify-center text-xs w-full'}>
-									<p>{'GO TO THE TAVERN'}</p>
-								</div>
-							</Link>
-						</div>
 					</div>
 				</div>
 			);

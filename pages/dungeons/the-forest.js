@@ -81,7 +81,7 @@ function	Index({dungeon, adventurer, router}) {
 										return console.error(error);
 									}
 									updateRarity(dungeon.tokenID);
-									router.push('/');
+									router.push('/town/quest?tab=the-forest');
 								});
 						}},
 						{label: 'Go for 5 days', onClick: () => {
@@ -91,7 +91,7 @@ function	Index({dungeon, adventurer, router}) {
 										return console.error(error);
 									}
 									updateRarity(dungeon.tokenID);
-									router.push('/');
+									router.push('/town/quest?tab=the-forest');
 								});
 						}},
 						{label: 'Go for 6 days', onClick: () => {
@@ -101,7 +101,7 @@ function	Index({dungeon, adventurer, router}) {
 										return console.error(error);
 									}
 									updateRarity(dungeon.tokenID);
-									router.push('/');
+									router.push('/town/quest?tab=the-forest');
 								});
 						}},
 						{label: 'Go for 7 days', onClick: () => {
@@ -111,7 +111,7 @@ function	Index({dungeon, adventurer, router}) {
 										return console.error(error);
 									}
 									updateRarity(dungeon.tokenID);
-									router.push('/');
+									router.push('/town/quest?tab=the-forest');
 								});
 						}},
 					]} />
@@ -134,7 +134,7 @@ function	WithContext({rarities, router}) {
 	}
 	if (!rarities[router?.query?.adventurer]) {
 		if (typeof(window) !== 'undefined')
-			router.push('/');
+			router.push('/town/quest?tab=the-forest');
 		return null;
 	}
 	return (
