@@ -1,0 +1,38 @@
+{
+	"Strength": {
+		"id": 1,
+		"name": "Strength",
+		"label": "STR",
+		"description": "Strength measures your character’s muscle and physical power. This ability is especially important for fighters, barbarians, paladins, rangers, and monks because it helps them prevail in combat. Strength also limits the amount of equipment your character can carry."
+	},
+	"Dexterity": {
+		"id": 2,
+		"name": "Dexterity",
+		"label": "DEX",
+		"description": "Dexterity measures hand-eye coordination, agility, reflexes, and balance. This ability is the most important one for rogues, but it’s also high on the list for characters who typically wear light or medium armor (rangers and barbarians) or no armor at all (monks, wizards, and sorcerers), and for anyone who wants to be a skilled archer."
+	},
+	"Constitution": {
+		"id": 3,
+		"name": "Constitution",
+		"label": "CONST",
+		"description": "Constitution represents your character’s health and stamina. A Constitution bonus increases a character’s hit points, so the ability is important for all classes."
+	},
+	"Intelligence": {
+		"id": 4,
+		"name": "Intelligence",
+		"label": "INT",
+		"description": "Intelligence determines how well your character learns and reasons. This ability is important for wizards because it affects how many spells they can cast, how hard their spells are to resist, and how powerful their spells can be. It’s also important for any character who wants to have a wide assortment of skills."
+	},
+	"Wisdom": {
+		"id": 5,
+		"name": "Wisdom",
+		"label": "WIS",
+		"description": "Wisdom describes a character’s willpower, common sense, perception, and intuition. While Intelligence represents one’s ability to analyze information, Wisdom represents being in tune with and aware of one’s surroundings. Wisdom is the most important ability for clerics and druids, and it is also important for paladins and rangers. If you want your character to have acute senses, put a high score in Wisdom. Every creature has a Wisdom score."
+	},
+	"Charisma": {
+		"id": 6,
+		"name": "Charisma",
+		"label": "CHA",
+		"description": "Charisma measures a character’s force of personality, persuasiveness, personal magnetism, ability to lead, and physical attractiveness. This ability represents actual strength of personality, not merely how one is perceived by others in a social setting. Charisma is most important for paladins, sorcerers, and bards. It is also important for clerics, since it affects their ability to turn undead. Every creature has a Charisma score."
+	}
+}
