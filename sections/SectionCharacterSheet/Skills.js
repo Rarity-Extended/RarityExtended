@@ -8,11 +8,11 @@
 import	React, {Fragment, useState}						from	'react';
 import	Image											from	'next/image';
 import	{Dialog, Transition}							from	'@headlessui/react';
-import	CLASSES											from	'utils/codex/classes';
-import	SKILLS											from	'utils/codex/skills';
+import	Chevron											from	'components/Chevron';
 import	{learnSkills}									from	'utils/actions';
 import	{availableSkillPoints, calculatePointsForSet}	from	'utils/libs/raritySkills';
-import	Chevron											from	'components/Chevron';
+import	CLASSES											from	'utils/codex/classes';
+import	SKILLS											from	'utils/codex/skills.json';
 
 function	Skills({adventurer, updateRarity, provider}) {
 	const	_availableSkillPoints = availableSkillPoints(adventurer.attributes.intelligence, adventurer.class, adventurer.level);
@@ -52,11 +52,11 @@ function	Skills({adventurer, updateRarity, provider}) {
 			contractAddress: process.env.RARITY_SKILLS_ADDR,
 			tokenID: adventurer.tokenID,
 			skills: _skills,
-		}, ({error}) => {
+		}, ({error, data}) => {
 			if (error) {
 				return console.error(error);
 			}
-			updateRarity(adventurer.tokenID);
+			updateRarity(data);
 			closeModal();
 		});
 	}
@@ -126,7 +126,7 @@ function	Skills({adventurer, updateRarity, provider}) {
 							</p> : null}
 						</div>
 					</div>
-					<div className={'w-full grid grid-cols-4 gap-x-6 pt-6'}>
+					<div className={'w-full grid grid-cols-1 md:grid-cols-4 gap-x-6 pt-6'}>
 						{skillList}
 					</div>
 				</div>
@@ -346,7 +346,7 @@ function	Skills({adventurer, updateRarity, provider}) {
 																			</div>
 																			<p className={'text-xs w-5 text-center'}>{updateSkills[skill?.id]}</p>
 																			<div
-																				className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) || (updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0 ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
+																				className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
 																				onClick={() => {
 																					if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0)
 																						return;
@@ -414,7 +414,7 @@ function	Skills({adventurer, updateRarity, provider}) {
 																			</div>
 																			<p className={'text-xs w-5 text-center'}>{updateSkills[skill?.id]}</p>
 																			<div
-																				className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) || (updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0 ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
+																				className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
 																				onClick={() => {
 																					if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0)
 																						return;

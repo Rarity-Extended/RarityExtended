@@ -18,6 +18,7 @@ import	RARITY_ATTR_ABI											from	'utils/abi/rarityAttr.abi';
 import	RARITY_GOLD_ABI											from	'utils/abi/rarityGold.abi';
 import	RARITY_SKILLS_ABI										from	'utils/abi/raritySkills.abi';
 import	THE_CELLAR_ABI											from	'utils/abi/dungeonTheCellar.abi';
+import	THE_FOREST_ABI											from	'utils/abi/dungeonTheForest.abi';
 
 const	RarityContext = createContext();
 
@@ -60,6 +61,7 @@ export const RarityContextApp = ({children}) => {
 		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI);
 		const	raritySkills = new Contract(process.env.RARITY_SKILLS_ADDR, RARITY_SKILLS_ABI);
 		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, THE_CELLAR_ABI);
+		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, THE_FOREST_ABI);
 
 		return [
 			rarity.ownerOf(tokenID),
@@ -69,6 +71,7 @@ export const RarityContextApp = ({children}) => {
 			rarityGold.balanceOf(tokenID),
 			raritySkills.get_skills(tokenID),
 			rarityDungeonCellar.adventurers_log(tokenID),
+			rarityDungeonForest.getResearchBySummoner(tokenID),
 		];
 	}
 	/**************************************************************************
@@ -87,12 +90,11 @@ export const RarityContextApp = ({children}) => {
 		}
 	}
 
-
 	/**************************************************************************
 	**	Prepare the multicall to get most of the data
 	**************************************************************************/
 	function		prepareAdventurerInventory(tokenID) {
-		return ITEMS.map(item => new Contract(item.address, RARITY_GOLD_ABI).balanceOf(tokenID));
+		return ITEMS.map(item => item.fetch(tokenID));
 	}
 
 	/**************************************************************************
@@ -132,8 +134,8 @@ export const RarityContextApp = ({children}) => {
 	/**************************************************************************
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
-	function	setRarity(tokenID, multicallResult, callResult, inventoryCallResult) {
-		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, skills, cellarLog] = multicallResult;
+	function		setRarity(tokenID, multicallResult, callResult, inventoryCallResult) {
+		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, skills, cellarLog, forestResearch] = multicallResult;
 		const	[claimableGold] = callResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
@@ -164,8 +166,13 @@ export const RarityContextApp = ({children}) => {
 			skills: skills,
 			dungeons: {
 				cellar: Number(cellarLog),
+				forest: {
+					initBlockTs: forestResearch.initBlockTs,
+					endBlockTs: forestResearch.endBlockTs,
+					canAdventure: forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0
+				}
 			},
-			inventory: inventoryCallResult.map(item => Number(item))
+			inventory: inventoryCallResult
 		}}));
 		set_rNonce(prev => prev + 1);
 	}
@@ -185,18 +192,12 @@ export const RarityContextApp = ({children}) => {
 			tokensIDs.push(token.tokenID);
 		});
 
-		// preparedCalls.push(...prepareAdventurer(441099));
-		// preparedExtraCalls.push(...prepareAdventurerExtra(441099));
-		// preparedInventoryCalls.push(...prepareAdventurerInventory(441099));
-		// tokensIDs.push(441099);
-
 		const	callResults = await fetchAdventurer(preparedCalls);
-		const	chunkedCallResult = chunk(callResults, 7);
+		const	chunkedCallResult = chunk(callResults, 8);
 		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(preparedInventoryCalls);
 		const	chunkedinventoryCallResult = chunk(inventoryCallResult, ITEMS.length);
-
 		tokensIDs?.forEach((tokenID, i) => {
 			setRarity(tokenID, chunkedCallResult[i], chunkedExtraCallResult[i], chunkedinventoryCallResult[i]);
 		});
@@ -208,7 +209,7 @@ export const RarityContextApp = ({children}) => {
 	**************************************************************************/
 	async function	updateRarity(tokenID) {
 		const	callResults = await fetchAdventurer(prepareAdventurer(tokenID));
-		const	chunkedCallResult = chunk(callResults, 7);
+		const	chunkedCallResult = chunk(callResults, 8);
 		const	extraCallResults = await fetchAdventurerExtra(prepareAdventurerExtra(tokenID));
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(prepareAdventurerInventory(tokenID));

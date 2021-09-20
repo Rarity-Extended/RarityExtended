@@ -1128,4 +1128,15 @@ details[open] summary {
 		-20px -20px transparent,
 		-10px -30px transparent;
 	}
-	}
+}
+
+.tooltip {
+	position: relative;
+}
+  
+.tooltip .tooltiptext {
+	position: absolute;
+	left: -16px;
+	top: calc(100% + 8px);
+	z-index: 1;
+}

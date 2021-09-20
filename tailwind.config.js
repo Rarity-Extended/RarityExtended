@@ -39,8 +39,8 @@ module.exports = {
 				200: '#46597e',
 				100: '#5d6e8f',
 			},
-			item: {
-				common: 'gray-300',
+			items: {
+				common: '#5d6e8f',
 				uncommon: 'rgb(73,122,42)',
 				rare: 'rgb(42,94,161)',
 				epic: 'rgb(138,47,146)',
@@ -81,6 +81,9 @@ module.exports = {
 			maxHeight: {
 				120: '480px'
 			},
+			transitionProperty: {
+				'visibility': 'visibility',
+			},
 			animation: {
 				'bounce-r': 'bounce-r 1s infinite'
 			},
@@ -102,6 +105,7 @@ module.exports = {
 		extend: {
 			rotate: ['hover', 'focus', 'group-hover'],
 			animation: ['hover', 'focus', 'group-hover'],
+			visibility: ['hover', 'focus', 'group-hover'],
 		}
 	},
 	plugins: [
