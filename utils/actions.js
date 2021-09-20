@@ -54,8 +54,8 @@ async function	_adventure(loader, {provider, contractAddress, tokenID}, callback
 	}
 }
 
-export async function	goAdventure({provider, contractAddress, tokenID}, callback) {
-	_adventure('Going on an adventure...', {provider, contractAddress, tokenID}, callback);
+export async function	goAdventure({loader, provider, contractAddress, tokenID}, callback) {
+	_adventure(loader || 'Going on an adventure...', {provider, contractAddress, tokenID}, callback);
 }
 export async function	lootDungeonTheCellar({provider, contractAddress, tokenID}, callback) {
 	_adventure('Looting the Big Ugly Rat...', {provider, contractAddress, tokenID}, callback);

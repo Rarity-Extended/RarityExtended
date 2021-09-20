@@ -43,7 +43,9 @@ function	NCPHeadline() {
 
 function	handleGoAdventure(rarities, provider, updateRarity) {
 	rarities.forEach(rarity => {
+		const	isInTheForest = rarity.level >= 2 && !rarity?.dungeons?.forest?.canAdventure;
 		goAdventure({
+			loader: isInTheForest ? 'Claiming XP...' : 'Going on an adventure...',
 			provider,
 			contractAddress: process.env.RARITY_ADDR,
 			tokenID: rarity.tokenID,

@@ -20,6 +20,7 @@ function	Balloon({adventurer, chainTime, provider, updateRarity}) {
 
 	function	onGoToAdventure() {
 		goAdventure({
+			loader: isInTheForest ? 'Claiming XP...' : 'Going on an adventure...',
 			provider,
 			contractAddress: process.env.RARITY_ADDR,
 			tokenID: adventurer.tokenID,
