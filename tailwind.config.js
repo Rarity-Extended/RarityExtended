@@ -4,7 +4,8 @@ module.exports = {
 	purge: [
 		'./pages/**/*.js',
 		'./components/**/*.js',
-		'./sections/**/*.js'
+		'./sections/**/*.js',
+		'./utils/**/*.js'
 	],
 	darkMode: 'class',
 	corePlugins: {
