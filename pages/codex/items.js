@@ -110,6 +110,12 @@ function	Index() {
 					{renderTheForestLoot()}
 				</div>
 
+				<div className={'absolute bg-items-uncommon left-0 top-0 w-0 h-0 bg-opacity-0'} />
+				<div className={'absolute bg-items-rare left-0 top-0 w-0 h-0 bg-opacity-0'} />
+				<div className={'absolute bg-items-epic left-0 top-0 w-0 h-0 bg-opacity-0'} />
+				<div className={'absolute bg-items-legendary left-0 top-0 w-0 h-0 bg-opacity-0'} />
+				<div className={'absolute bg-items-relic left-0 top-0 w-0 h-0 bg-opacity-0'} />
+
 			</div>
 		</section>
 	);
