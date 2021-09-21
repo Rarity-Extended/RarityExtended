@@ -8,7 +8,7 @@
 import	React						from	'react';
 import	Image						from	'next/image';
 import	ITEMS						from	'utils/codex/items';
-import	THE_FOREST_LOOT				from	'utils/codex/theForestLoot.json';
+import	THE_FOREST_LOOT				from	'utils/codex/items_dungeon_theForest.json';
 
 function	Index() {
 	function	sortByRarity(a, b) {
