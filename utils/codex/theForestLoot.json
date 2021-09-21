@@ -220,7 +220,7 @@
 	"Unknown ring": {
 		"name": "Unknown ring",
 		"description": "A mystery created in the hardest metal.",
-		"img": "/items/aaaaaa.png",
+		"img": "/items/silver_ring.png",
 		"level": "Epic",
 		"levelClassName": "bg-items-epic",
 		"modifier": [{
