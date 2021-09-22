@@ -5,19 +5,40 @@
 **	@Filename:				SectionCrafting.js
 ******************************************************************************/
 
-import	React, {Fragment, useState}						from	'react';
-import	Image											from	'next/image';
-import	{Listbox, Transition}							from	'@headlessui/react';
-import	Chevron											from	'components/Chevron';
-import	{availableSkillPoints, calculatePointsForSet}	from	'utils/libs/raritySkills';
-import	CLASSES											from	'utils/codex/classes';
-import	SKILLS											from	'utils/codex/skills.json';
+import Chevron from 'components/Chevron';
+import ListBox from 'components/ListBox';
+import Image from 'next/image';
+import React, {Fragment, useState} from 'react';
+import CLASSES from 'utils/codex/classes';
+import SKILLS from 'utils/codex/skills.json';
+import	MANIFEST_GOODS				from	'utils/codex/items_manifest_goods.json';
+import	MANIFEST_ARMORS				from	'utils/codex/items_manifest_armors.json';
+import	MANIFEST_WEAPONS			from	'utils/codex/items_manifest_weapons.json';
 
-const people = [
+import {availableSkillPoints, calculatePointsForSet} from 'utils/libs/raritySkills';
+import {ethers} from 'ethers';
+
+const	proficiencyOptions = [
+	{name: 'All'},
 	{name: 'Simple'},
 	{name: 'Martial'},
 	{name: 'Exotic'},
 ];
+const	encumbranceOptions = [
+	{name: 'All'},
+	{name: 'Unarmed'},
+	{name: 'Light Melee Weapons'},
+	{name: 'One-Handed Melee Weapons'},
+	{name: 'Two-Handed Melee Weapons'},
+	{name: 'Ranged Weapons'},
+];
+const	damageTypeOptions = [
+	{name: 'All'},
+	{name: 'Bludgeoning'},
+	{name: 'Piercing'},
+	{name: 'Slashing'},
+];
+
 
 function	Crafting({adventurer}) {
 	const	_availableSkillPoints = availableSkillPoints(adventurer.attributes.intelligence, adventurer.class, adventurer.level);
@@ -36,7 +57,10 @@ function	Crafting({adventurer}) {
 		return skills;
 	});
 
-	const [selected, setSelected] = useState(people[0]);
+	const	[armorType, set_armorType] = useState('All');
+	const	[proficiency, set_proficiency] = useState(proficiencyOptions[0]);
+	const	[encumbrance, set_encumbrance] = useState(encumbranceOptions[0]);
+	const	[damageType, set_damageType] = useState(damageTypeOptions[0]);
 
 
 	function	renderCategories() {
@@ -69,93 +93,349 @@ function	Crafting({adventurer}) {
 			return (
 				<>
 					<div
-						onClick={() => set_subCategory(0)}
-						className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${subCategory === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary ml-auto`}>
+						onClick={() => set_armorType('All')}
+						className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${armorType === 'All' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary ml-auto`}>
+						{'All'}
+					</div>
+					<div
+						onClick={() => set_armorType('Light')}
+						className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${armorType === 'Light' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 						{'Light'}
 					</div>
 					<div
-						onClick={() => set_subCategory(1)}
-						className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${subCategory === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+						onClick={() => set_armorType('Medium')}
+						className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${armorType === 'Medium' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 						{'Medium'}
 					</div>
 					<div
-						onClick={() => set_subCategory(2)}
-						className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${subCategory === 2 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+						onClick={() => set_armorType('Heavy')}
+						className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${armorType === 'Heavy' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 						{'Heavy'}
 					</div>
 					<div
-						onClick={() => set_subCategory(3)}
-						className={`hidden md:block p-2 cursor-pointer text-black dark:text-white ${subCategory === 3 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+						onClick={() => set_armorType('Shields')}
+						className={`hidden md:block p-2 cursor-pointer text-black dark:text-white ${armorType === 'Shields' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 						{'Shields'}
 					</div>
 				</>
 			);
 		}
 		return (
-			<div className={'ml-auto'}>
-				<Listbox value={selected} onChange={setSelected}>
-					<div className={'relative'}>
-						<Listbox.Button className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${subCategory === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary text-megaxs border-none uppercase relative`}>
-							<span className={'block truncate'}>{selected.name}</span>
-						</Listbox.Button>
-						<Transition
-							as={Fragment}
-							leave={'transition ease-in duration-100'}
-							leaveFrom={'opacity-100'}
-							leaveTo={'opacity-0'}>
-							<Listbox.Options className={'absolute mt-1 overflow-auto text-sx bg-white max-h-60 focus:outline-none z-20 min-w-full border-2 border-black -left-7 w-28'}>
-								{people.map((person, personIdx) => (
-									<Listbox.Option
-										key={personIdx}
-										className={({active}) => `${active ? 'bg-gray-principal' : 'bg-white'} cursor-pointer select-none relative p-2`}
-										value={person}>
-										<span className={'block truncate'}>
-											{person.name}
-										</span>
-									</Listbox.Option>
-								))}
-							</Listbox.Options>
-						</Transition>
-					</div>
-				</Listbox>
-				{/* <select
-					onChange={e => set_subCategory(e.target.value)}
-					className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${subCategory === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary ml-auto text-megaxs border-none`}>
-					<option className={'text-xs'} value={'Simple'}>{'Simple'}</option>
-					<option className={'text-xs'} value={'Martial'}>{'Martial'}</option>
-					<option className={'text-xs'} value={'Exotic'}>{'Exotic'}</option>
-				</select>
-
-				<select
-					onChange={e => set_subCategory(e.target.value)}
-					className={'bg-opacity-0 bg-black ml-4 border-2 border-black dark:border-dark-100 focus:outline-none text-xs uppercase'}>
-					<option value={'Unarmed'}>{'Unarmed'}</option>
-					<option value={'Light Melee Weapons'}>{'Light Melee Weapons'}</option>
-					<option value={'One-Handed Melee Weapons'}>{'One-Handed Melee Weapons'}</option>
-					<option value={'Two-Handed Melee Weapons'}>{'Two-Handed Melee Weapons'}</option>
-					<option value={'Ranged Weapons'}>{'Ranged Weapons'}</option>
-				</select> */}
+			<div className={'ml-auto flex flex-row'}>
+				<ListBox
+					options={proficiencyOptions}
+					className={'mr-4'}
+					set_selected={set_proficiency}
+					selected={proficiency}
+				/>
+				<ListBox
+					options={encumbranceOptions}
+					className={'mr-4'}
+					set_selected={set_encumbrance}
+					selected={encumbrance}
+				/>
+				<ListBox
+					options={damageTypeOptions}
+					className={''}
+					set_selected={set_damageType}
+					selected={damageType} />
 			</div>
 		);
+	}
 
+	function	renderGoods() {
 		return (
-			<>
-				<div
-					onClick={() => set_category(0)}
-					className={`p-2 cursor-pointer text-black dark:text-white mr-4 ${category === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
-					{'GOODS'}
-				</div>
-				<div
-					onClick={() => set_category(1)}
-					className={`p-2 cursor-pointer text-black dark:text-white mr-4 ${category === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
-					{'ARMOR'}
-				</div>
-				<div
-					onClick={() => set_category(2)}
-					className={`p-2 cursor-pointer text-black dark:text-white ${category === 2 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
-					{'WEAPONS'}
-				</div>
-			</>
+			<div className={'min-h-0 md:min-h-120 max-h-64 md:max-h-120 overflow-y-scroll'}>
+				{
+					Object.values(MANIFEST_GOODS)
+						.filter((skill) => {
+							if (search === '')
+								return true;
+							return skill?.name.toLowerCase().includes(search.toLowerCase());
+						})
+						.map((item) => {
+							return (
+								<details key={item?.id} className={'flex flex-row w-full mb-2 transition-colors'}>
+									<summary className={'transition-colors'}>
+										<div className={'flex flex-row space-x-4 w-full h-auto md:h-16 cursor-pointer'}>
+											<div className={'w-16 h-16 flex justify-center items-center relative item'}>
+												<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
+												<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
+												<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
+												<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
+												<Image src={item.img} width={64} height={64} />
+												<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
+												<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
+												<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
+												<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
+
+											</div>
+											<div className={'hidden md:flex flex-row space-between w-full relative text-black dark:text-white'}>
+												<div className={'mt-3.5 w-56'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'NAME:'}</p>
+													<p className={'text-sx'}>{item?.name}</p>
+												</div>
+												<div className={'mt-3.5 pr-16'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'WEIGHT:'}</p>
+													<p className={'text-sx'}>{item?.weight || '0'}</p>
+												</div>
+												<div className={'mt-3.5 pr-6'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'COST:'}</p>
+													<p className={'text-sx'}>{`${item.cost}G`}</p>
+												</div>
+											</div>
+
+											<div className={'md:hidden grid grid-cols-2 space-between w-full relative text-black dark:text-white pb-4'}>
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'NAME:'}</p>
+													<p className={'text-sx'}>{item?.name}</p>
+												</div>
+												<div />
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'WEIGHT:'}</p>
+													<p className={'text-sx'}>{item?.weight || '0'}</p>
+												</div>
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'COST:'}</p>
+													<p className={'text-sx'}>{`${item.cost}G`}</p>
+												</div>
+											</div>
+										</div>
+									</summary>
+
+									<div className={'flex flex-row space-x-4 w-full py-4'}>
+										<div className={'w-16 h-1 hidden justify-center items-center relative md:flex'} />
+										<div className={'flex flex-col space-between w-full pr-4'}>
+											<p className={'text-megaxs mb-2 text-black dark:text-white'}>{'DESCRIPTION'}</p>
+											<p className={'text-megaxs leading-4 text-gray-darker dark:text-white dark:text-opacity-60 normal-case text-left md:text-justify'}>{item?.description}</p>
+										</div>
+									</div>
+
+								</details>
+							);
+						})
+				}
+			</div>
+		);
+	}
+	function	renderArmors() {
+		return (
+			<div className={'min-h-0 md:min-h-120 max-h-64 md:max-h-120 overflow-y-scroll'}>
+				{
+					Object.values(MANIFEST_ARMORS)
+						.filter((item) => {
+							if (armorType === 'All')
+								return true;
+							return item.proficiency === armorType; 
+						})
+						.filter((item) => {
+							if (search === '')
+								return true;
+							return item?.name.toLowerCase().includes(search.toLowerCase());
+						})
+						.map((item) => {
+							return (
+								<details key={item?.id} className={'flex flex-row w-full mb-2 transition-colors'}>
+									<summary className={'transition-colors'}>
+										<div className={'flex flex-row space-x-4 w-full h-auto md:h-16 cursor-pointer'}>
+											<div className={'w-16 h-16 flex justify-center items-center relative item'}>
+												<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
+												<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
+												<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
+												<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
+												<Image src={item.img} width={64} height={64} />
+												<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
+												<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
+												<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
+												<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
+
+											</div>
+											<div className={'hidden md:flex flex-row space-between w-full relative text-black dark:text-white'}>
+												<div className={'mt-3.5 w-56'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'NAME:'}</p>
+													<p className={'text-sx'}>{item?.name}</p>
+												</div>
+												<div className={'mt-3.5 pr-6'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'WEIGHT:'}</p>
+													<p className={'text-sx'}>{item?.weight || '0'}</p>
+												</div>
+												<div className={'mt-3.5 pr-6'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'COST:'}</p>
+													<p className={'text-sx'}>{`${item.cost}G`}</p>
+												</div>
+												<div className={'mt-3.5 pr-6'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'ARMOR:'}</p>
+													<p className={'text-sx'}>{`${item?.armor_bonus || 0}`}</p>
+												</div>
+												<div className={'mt-3.5 pr-6'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'PENALTY:'}</p>
+													<p className={'text-sx'}>{`${item?.penalty || 0}`}</p>
+												</div>
+												<div className={'mt-3.5 pr-6'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'SPELL FAILURE:'}</p>
+													<p className={'text-sx'}>{`${item?.spell_failure || 0}`}</p>
+												</div>
+											</div>
+
+											<div className={'md:hidden grid grid-cols-2 space-between w-full relative text-black dark:text-white pb-4'}>
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'NAME:'}</p>
+													<p className={'text-sx'}>{item?.name}</p>
+												</div>
+												<div />
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'WEIGHT:'}</p>
+													<p className={'text-sx'}>{item?.weight || '0'}</p>
+												</div>
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'COST:'}</p>
+													<p className={'text-sx'}>{`${item.cost}G`}</p>
+												</div>
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'ARMOR:'}</p>
+													<p className={'text-sx'}>{`${item?.armor_bonus || 0}`}</p>
+												</div>
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'PENALTY:'}</p>
+													<p className={'text-sx'}>{`${item?.penalty || 0}`}</p>
+												</div>
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'SPELL FAILURE:'}</p>
+													<p className={'text-sx'}>{`${item?.spell_failure || 0}`}</p>
+												</div>
+											</div>
+										</div>
+									</summary>
+
+									<div className={'flex flex-row space-x-4 w-full py-4'}>
+										<div className={'w-16 h-1 hidden justify-center items-center relative md:flex'} />
+										<div className={'flex flex-col space-between w-full pr-4'}>
+											<p className={'text-megaxs mb-2 text-black dark:text-white'}>{'DESCRIPTION'}</p>
+											<p className={'text-megaxs leading-4 text-gray-darker dark:text-white dark:text-opacity-60 normal-case text-left md:text-justify'}>{item?.description}</p>
+										</div>
+									</div>
+
+								</details>
+							);
+						})
+				}
+			</div>
+		);
+	}
+	function	renderWeapons() {
+		return (
+			<div className={'min-h-0 md:min-h-120 max-h-64 md:max-h-120 overflow-y-scroll'}>
+				{
+					Object.values(MANIFEST_WEAPONS)
+						.filter((item) => {
+							if (proficiency.name === 'All')
+								return true;
+							return item.proficiency === proficiency.name; 
+						})
+						.filter((item) => {
+							if (encumbrance.name === 'All')
+								return true;
+							return item.encumbrance === encumbrance.name; 
+						})
+						.filter((item) => {
+							if (damageType.name === 'All')
+								return true;
+							return item.damageType === damageType.name; 
+						})
+						.filter((item) => {
+							if (search === '')
+								return true;
+							return item?.name.toLowerCase().includes(search.toLowerCase());
+						})
+						.map((item) => {
+							return (
+								<details key={item?.id} className={'flex flex-row w-full mb-2 transition-colors'}>
+									<summary className={'transition-colors'}>
+										<div className={'flex flex-row space-x-4 w-full h-auto md:h-16 cursor-pointer'}>
+											<div className={'w-16 h-16 flex justify-center items-center relative item'}>
+												<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
+												<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
+												<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
+												<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
+												<Image src={item.img} width={64} height={64} />
+												<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
+												<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
+												<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
+												<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
+
+											</div>
+											<div className={'hidden md:flex flex-row space-between w-full relative text-black dark:text-white'}>
+												<div className={'mt-3.5 w-56'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'NAME:'}</p>
+													<p className={'text-sx'}>{item?.name}</p>
+												</div>
+												<div className={'mt-3.5 pr-6'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'WEIGHT:'}</p>
+													<p className={'text-sx'}>{item?.weight || '0'}</p>
+												</div>
+												<div className={'mt-3.5 pr-6'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'COST:'}</p>
+													<p className={'text-sx'}>{`${item.cost}G`}</p>
+												</div>
+												<div className={'mt-3.5 pr-6'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'DAMAGE:'}</p>
+													<p className={'text-sx'}>{`${item?.damage || 0}`}</p>
+												</div>
+												<div className={'mt-3.5 pr-6'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'CRITICAL:'}</p>
+													<p className={'text-sx normal-case'}>
+														{item?.critical_modifier ? `${`${(20+item?.critical_modifier)}-20`}/x${item?.critical || 0}` : `x${item?.critical || 0}`}
+													</p>
+												</div>
+												<div className={'mt-3.5 pr-6'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'RANGE:'}</p>
+													<p className={'text-sx'}>{`${item?.range_increment || 0}`}</p>
+												</div>
+											</div>
+
+											<div className={'md:hidden grid grid-cols-2 space-between w-full relative text-black dark:text-white pb-4'}>
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'NAME:'}</p>
+													<p className={'text-sx'}>{item?.name}</p>
+												</div>
+												<div />
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'WEIGHT:'}</p>
+													<p className={'text-sx'}>{item?.weight || '0'}</p>
+												</div>
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'COST:'}</p>
+													<p className={'text-sx'}>{`${item.cost}G`}</p>
+												</div>
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'ARMOR:'}</p>
+													<p className={'text-sx'}>{`${item?.armor_bonus || 0}`}</p>
+												</div>
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'PENALTY:'}</p>
+													<p className={'text-sx'}>{`${item?.penalty || 0}`}</p>
+												</div>
+												<div className={'mt-3.5'}>
+													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'SPELL FAILURE:'}</p>
+													<p className={'text-sx'}>{`${item?.spell_failure || 0}`}</p>
+												</div>
+											</div>
+										</div>
+									</summary>
+
+									<div className={'flex flex-row space-x-4 w-full py-4'}>
+										<div className={'w-16 h-1 hidden justify-center items-center relative md:flex'} />
+										<div className={'flex flex-col space-between w-full pr-4'}>
+											<p className={'text-megaxs mb-2 text-black dark:text-white'}>{'DESCRIPTION'}</p>
+											<p className={'text-megaxs leading-4 text-gray-darker dark:text-white dark:text-opacity-60 normal-case text-left md:text-justify'}>{item?.description}</p>
+										</div>
+									</div>
+
+								</details>
+							);
+						})
+				}
+			</div>
 		);
 	}
 
@@ -190,211 +470,11 @@ function	Crafting({adventurer}) {
 					{renderCategories()}
 					{renderSubCategories()}
 				</div>
-								
-				<div className={'min-h-0 md:min-h-120 max-h-64 md:max-h-120 overflow-y-scroll'}>
-					{
-						Object.values(SKILLS)
-							.filter((skill) => {
-								if (category === 0) {
-									if (subCategory === 0) {
-										return _adventurerClass.skills.includes(skill?.name);
-									} else if (subCategory === 1) {
-										return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'strength';
-									} else if (subCategory === 2) {
-										return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'dexterity';
-									} else if (subCategory === 3) {
-										return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'constitution';
-									} else if (subCategory === 4) {
-										return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'intelligence';
-									} else if (subCategory === 5) {
-										return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'wisdom';
-									} else if (subCategory === 6) {
-										return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'charisma';
-									}
-								} else {
-									if (subCategory === 0) {
-										return !_adventurerClass.skills.includes(skill?.name);
-									} else if (subCategory === 1) {
-										return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'strength';
-									} else if (subCategory === 2) {
-										return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'dexterity';
-									} else if (subCategory === 3) {
-										return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'constitution';
-									} else if (subCategory === 4) {
-										return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'intelligence';
-									} else if (subCategory === 5) {
-										return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'wisdom';
-									} else if (subCategory === 6) {
-										return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'charisma';
-									}
-								}
-								return skill;
-							})
-							.filter((skill) => {
-								if (search === '')
-									return true;
-								return skill?.name.toLowerCase().includes(search.toLowerCase());
-							})
-							.map((skill) => {
-								const	isClassSpecific = category === 0;
-								return (
-									<details key={skill?.id} className={'flex flex-row w-full mb-2 transition-colors'}>
-										<summary className={'transition-colors'}>
-											<div className={'flex flex-row space-x-4 w-full h-auto md:h-16 cursor-pointer'}>
-												<div className={'w-16 h-16 flex justify-center items-center relative item'}>
-													<Image src={skill.img} width={64} height={64} />
-												</div>
-												<div className={'hidden md:flex flex-row space-between w-full relative text-black dark:text-white'}>
-													<div className={'mt-3.5 w-57'}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'SKILL:'}</p>
-														<p className={'text-sx'}>{skill?.name}</p>
-													</div>
-													<div className={'mt-3.5 pr-6'}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'ATTRIBUTE:'}</p>
-														<p className={'text-sx'}>{skill?.attributeLabel || '-'}</p>
-													</div>
-													<div className={'mt-3.5 pr-6'}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'COST:'}</p>
-														<p className={'text-sx'}>{isClassSpecific ? '1' : '2'}</p>
-													</div>
-													<div className={'mt-3.5 pr-6'}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'ARMOR CHECK:'}</p>
-														<p className={'text-sx'}>{skill?.armorCheckPenalty ? 'YES' : 'NO'}</p>
-													</div>
-													<div className={'mt-3.5 pr-6'}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'RETRY:'}</p>
-														<p className={'text-sx'}>{skill?.retry ? 'YES' : 'NO'}</p>
-													</div>
-													<div className={'mt-3.5'}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'SYNERGY:'}</p>
-														<p className={'text-sx'}>{skill?.synergy > 0 ? Object.values(SKILLS).find(s => s.id === skill?.synergy)?.name || '-' : '-'}</p>
-													</div>
-													<div className={'mt-3.5 ml-auto px-4 cursor-default'} onClick={(e) => e.preventDefault()}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'LEVEL:'}</p>
-														<div className={'flex flex-row'}>
-															<div
-																className={adventurer.skills[skill?.id - 1] === updateSkills[skill?.id] || updateSkills[skill?.id] === 0 ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
-																onClick={() => {
-																	if (adventurer.skills[skill?.id - 1] === updateSkills[skill?.id])
-																		return;
-																	if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) > _availableSkillPoints || updateSkills[skill?.id] === 0)
-																		return;
-																	set_updateSkills(s => ({
-																		...s,
-																		[skill?.id]: s[skill?.id] - 1,
-																		remainingPoints: s.remainingPoints + (isClassSpecific ? 1 : 2)
-																	}));
-																}}>
-																<Chevron className={'mr-2 select-none cursor-pointer text-black dark:text-white'} />
-															</div>
-															<p className={'text-xs w-5 text-center'}>{updateSkills[skill?.id]}</p>
-															<div
-																className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
-																onClick={() => {
-																	if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0)
-																		return;
-																	if (isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3)
-																		return;
-																	if (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2))
-																		return;
-																	if (updateSkills.remainingPoints === 0)
-																		return;
-																	set_updateSkills(s => ({
-																		...s,
-																		[skill?.id]: s[skill?.id] + 1,
-																		remainingPoints: s.remainingPoints - (isClassSpecific ? 1 : 2)
-																	}));
-																}}>
-																<Chevron className={'ml-2 select-none transform rotate-180 text-black dark:text-white'} />
-															</div>
-														</div>
-													</div>
-												</div>
 
-												<div className={'md:hidden grid grid-cols-2 space-between w-full relative text-black dark:text-white pb-4'}>
-													<div className={'mt-3.5'}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'SKILL:'}</p>
-														<p className={'text-sx'}>{skill?.name}</p>
-													</div>
-													<div />
-													<div className={'mt-3.5'}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'ATTRIBUTE:'}</p>
-														<p className={'text-sx'}>{skill?.attributeLabel || '-'}</p>
-													</div>
-													<div className={'mt-3.5'}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'COST:'}</p>
-														<p className={'text-sx'}>{isClassSpecific ? '1' : '2'}</p>
-													</div>
-													<div className={'mt-3.5'}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'ARMOR CHECK:'}</p>
-														<p className={'text-sx'}>{skill?.armorCheckPenalty ? 'YES' : 'NO'}</p>
-													</div>
-													<div className={'mt-3.5'}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'RETRY:'}</p>
-														<p className={'text-sx'}>{skill?.retry ? 'YES' : 'NO'}</p>
-													</div>
-													<div className={'mt-3.5'}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'SYNERGY:'}</p>
-														<p className={'text-sx'}>{skill?.synergy > 0 ? Object.values(SKILLS).find(s => s.id === skill?.synergy)?.name || '-' : '-'}</p>
-													</div>
-													<div className={'mt-3.5 cursor-default'} onClick={(e) => e.preventDefault()}>
-														<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'LEVEL:'}</p>
-														<div className={'flex flex-row'}>
-															<div
-																className={adventurer.skills[skill?.id - 1] === updateSkills[skill?.id] || updateSkills[skill?.id] === 0 ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
-																onClick={() => {
-																	if (adventurer.skills[skill?.id - 1] === updateSkills[skill?.id])
-																		return;
-																	if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) > _availableSkillPoints || updateSkills[skill?.id] === 0)
-																		return;
-																	set_updateSkills(s => ({
-																		...s,
-																		[skill?.id]: s[skill?.id] - 1,
-																		remainingPoints: s.remainingPoints + (isClassSpecific ? 1 : 2)
-																	}));
-																}}>
-																<Chevron className={'mr-2 select-none cursor-pointer text-black dark:text-white'} />
-															</div>
-															<p className={'text-xs w-5 text-center'}>{updateSkills[skill?.id]}</p>
-															<div
-																className={(updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2)) ? 'opacity-0 pointer-events-none' : 'p-2 -m-2 cursor-pointer'}
-																onClick={() => {
-																	if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0)
-																		return;
-																	if (isClassSpecific && updateSkills[skill?.id] >= adventurer.level + 3)
-																		return;
-																	if (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((adventurer.level + 3) / 2))
-																		return;
-																	if (updateSkills.remainingPoints === 0)
-																		return;
-																	set_updateSkills(s => ({
-																		...s,
-																		[skill?.id]: s[skill?.id] + 1,
-																		remainingPoints: s.remainingPoints - (isClassSpecific ? 1 : 2)
-																	}));
-																}}>
-																<Chevron className={'ml-2 select-none transform rotate-180 text-black dark:text-white'} />
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</summary>
-
-										<div className={'flex flex-row space-x-4 w-full py-4'}>
-											<div className={'w-16 h-16 hidden justify-center items-center relative item md:flex'} />
-											<div className={'flex flex-col space-between w-full pr-4'}>
-												<p className={'text-megaxs mb-2 text-black dark:text-white'}>{'CHECK'}</p>
-												<p className={'text-megaxs leading-4 mb-4 text-gray-darker dark:text-white dark:text-opacity-60 normal-case text-left md:text-justify'}>{skill?.check}</p>
-												<p className={'text-megaxs mb-2 text-black dark:text-white'}>{'ACTION'}</p>
-												<p className={'text-megaxs leading-4 text-gray-darker dark:text-white dark:text-opacity-60 normal-case text-left md:text-justify'}>{skill?.action}</p>
-											</div>
-										</div>
-
-									</details>
-								);
-							})
-					}
+				<div>
+					{category === 0 ? renderGoods() : null}
+					{category === 1 ? renderArmors() : null}
+					{category === 2 ? renderWeapons() : null}
 				</div>
 			</div>
 		</>
