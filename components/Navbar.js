@@ -10,9 +10,10 @@ import	Link							from	'next/link';
 import	useWeb3							from	'contexts/useWeb3';
 import	ModalLogin						from	'components/ModalLogin';
 import	FlyoutMenu						from	'components/FlyoutMenu';
+import	AdventurerModalMenu				from	'components/AdventurerModalMenu';
 
 function	Navbar({router}) {
-	const	{active, address, deactivate, onDesactivate} = useWeb3();
+	const	{active, address} = useWeb3();
 	const	[initialPopup, set_initialPopup] = useState(false);
 	const	[modalLoginOpen, set_modalLoginOpen] = useState(false);
 
@@ -39,13 +40,9 @@ function	Navbar({router}) {
 			);
 		}
 		return (
-			<p
-				onClick={() => {deactivate(); onDesactivate();}}
-				suppressHydrationWarning
-				className={'inline-flex px-3 py-2 items-center leading-4 text-xs cursor-pointer whitespace-nowrap font-semibold  hover:underline'}>
-				<span className={'flex md:hidden'}>{`${address.slice(0, 4)}`}</span>
-				<span className={'hidden md:flex'}>{`${address.slice(0, 4)}...${address.slice(-4)}`}</span>
-			</p>
+			<>
+				<AdventurerModalMenu />
+			</>
 		);
 	}
 	return (

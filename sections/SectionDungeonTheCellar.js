@@ -44,7 +44,7 @@ function	SectionDungeonTheCellar({shouldDisplay, adventurers, router, adventurer
 						return canAdventure;
 					}).map((adventurer) => {
 						return (
-							<div key={adventurer.tokenID} className={'w-full md:w-1/4'}>
+							<div key={adventurer.tokenID} className={'w-full'}>
 								<Adventurer
 									onClick={() => router.push(`/dungeons/the-cellar?adventurer=${adventurer.tokenID}`)}
 									adventurer={adventurer}

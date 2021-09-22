@@ -52,7 +52,7 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 						return adventurer.level >= 2 && adventurer?.dungeons?.forest?.canAdventure;
 					}).map((adventurer) => {
 						return (
-							<div key={adventurer.tokenID} className={'w-full md:w-1/4'}>
+							<div key={adventurer.tokenID} className={'w-full'}>
 								<Adventurer
 									onClick={() => router.push(`/dungeons/the-forest?adventurer=${adventurer.tokenID}`)}
 									adventurer={adventurer}
@@ -96,7 +96,7 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 						}
 
 						return (
-							<div key={adventurer.tokenID} className={'w-full md:w-1/4 relative'}>
+							<div key={adventurer.tokenID} className={'w-full relative'}>
 								<Adventurer
 									noHover
 									adventurer={adventurer}
