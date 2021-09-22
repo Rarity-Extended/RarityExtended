@@ -5,13 +5,15 @@
 **	@Filename:				blacksmith.js
 ******************************************************************************/
 
-import	React, {useState}					from	'react';
+import	React, {useEffect, useState}		from	'react';
 import	Image								from	'next/image';
+// import	{ethers}							from	'ethers';
+import	useWeb3								from	'contexts/useWeb3';
 import	Typer								from	'components/Typer';
 import	DialogBox							from	'components/DialogBox';
 import	SectionArtifactsTheForest			from	'sections/SectionArtifactsTheForest';
 import	SectionRestoreArtifactsTheForest	from	'sections/SectionRestoreArtifactsTheForest';
-import	SectionCrafting						from	'sections/SectionCrafting';
+// import	SectionCrafting						from	'sections/SectionCrafting';
 
 function	DialogChoices({router, adventurersCount}) {
 	if (adventurersCount === 0) {
@@ -26,39 +28,67 @@ function	DialogChoices({router, adventurersCount}) {
 		<DialogBox
 			options={[
 				{label: 'WELCOME', onClick: () => router.push('/town/blacksmith')},
+				// {label: 'Access the Workshop', onClick: () => router.push('/town/blacksmith?tab=workshop')},
 				{label: 'Upgrade an Artifact', onClick: () => router.push('/town/blacksmith?tab=upgrade')},
 				{label: 'Restore an Artifact', onClick: () => router.push('/town/blacksmith?tab=restore')},
 			]} />
 	);
 }
 
-function	NCPHeadline() {
-	const	[facuTextIndex, set_facuTextIndex] = useState(0);
+function	NCPHeadline({router, active, address}) {
+	const	[nonce, set_nonce] = useState(0);
+	const	[npcTextIndex, set_npcTextIndex] = useState(0);
 	
+	useEffect(() => {
+		set_npcTextIndex(0);
+		set_nonce(n => n+1);
+	}, [router?.query?.tab, active, address]);
+
 	const	renderNCPText = () => {
+		if (router?.query?.tab === 'workshop') {
+			return (
+				<>
+					<Typer>
+						{'OH YES. WHICH ADVENTURER WANTS TO GO IN MY WORKSHOP ? '}
+					</Typer>
+				</>
+			);
+		}
 		return (
 			<>
-				<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>
+				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 					{'WELCOME! I AM '}
 				</Typer>&nbsp;
-				<span className={'text-tag-info'}><Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>
+				<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 					{'CEAZOR THE BLACKSMITH'}
 				</Typer></span>
-				<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
+				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 					{'. MY WORKSHOP IS UNDER CONSTRUCTION, BUT IF YOU FOUND SOME ITEMS IN THE FOREST, MAYBE I CAN UPGRADE THEM FOR XP. OR RESTORE THE ONES FROM THE FORMER FOREST.'}
 				</Typer>
 			</>
 		);
 	};
 	return (
-		<h1 className={'text-sm md:text-lg leading-normal md:leading-10'}>
+		<h1 key={nonce} className={'text-sm md:text-lg leading-normal md:leading-10'}>
 			{renderNCPText()}
 		</h1>
 	);
 }
 
 function	Index({rarities, router}) {
+	const	{active, address} = useWeb3();
 	const	adventurers = Object.values(rarities);
+
+	// useEffect(() => {
+	// 	const	rarityManifest = new ethers.Contract(
+	// 		process.env.RARITY_ADDR, [
+	// 			'function getApproved(uint256 tokenId) external view returns (address operator)'
+	// 		],
+	// 		provider
+	// 	);
+	// 	rarityManifest.getApproved(tokenID);
+	// }, []);
+
 
 	return (
 		<section className={'mt-12 max-w-full'}>
@@ -72,14 +102,18 @@ function	Index({rarities, router}) {
 							width={256}
 							height={256} />
 					</div>
-					<NCPHeadline />
+					<NCPHeadline
+						address={address}
+						active={active}
+						router={router}
+					/>
 				</div>
 				<DialogChoices
 					router={router}
 					adventurersCount={adventurers.length}
 					adventurer={rarities} />
-				<SectionCrafting adventurer={adventurers[0]} />
-				{/* <SectionArtifactsTheForest
+				{/* <SectionCrafting adventurer={adventurers[0]} /> */}
+				<SectionArtifactsTheForest
 					shouldDisplay={router?.query?.tab === 'upgrade'}
 					router={router}
 					adventurers={rarities}
@@ -88,7 +122,7 @@ function	Index({rarities, router}) {
 					shouldDisplay={router?.query?.tab === 'restore'}
 					router={router}
 					adventurers={Object.values(rarities)}
-					adventurersCount={adventurers.length} /> */}
+					adventurersCount={adventurers.length} />
 			</div>
 		</section>
 	);		

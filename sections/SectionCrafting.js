@@ -5,18 +5,15 @@
 **	@Filename:				SectionCrafting.js
 ******************************************************************************/
 
-import Chevron from 'components/Chevron';
 import ListBox from 'components/ListBox';
 import Image from 'next/image';
 import React, {Fragment, useState} from 'react';
 import CLASSES from 'utils/codex/classes';
-import SKILLS from 'utils/codex/skills.json';
 import	MANIFEST_GOODS				from	'utils/codex/items_manifest_goods.json';
 import	MANIFEST_ARMORS				from	'utils/codex/items_manifest_armors.json';
 import	MANIFEST_WEAPONS			from	'utils/codex/items_manifest_weapons.json';
 
 import {availableSkillPoints, calculatePointsForSet} from 'utils/libs/raritySkills';
-import {ethers} from 'ethers';
 
 const	proficiencyOptions = [
 	{name: 'All'},
@@ -87,7 +84,13 @@ function	Crafting({adventurer}) {
 
 	function	renderSubCategories() {
 		if (category === 0) {
-			return null;
+			return (
+				<div
+					onClick={() => set_armorType('All')}
+					className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${armorType === 'All' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary ml-auto`}>
+					{'All'}
+				</div>
+			);
 		}
 		if (category === 1) {
 			return (
@@ -175,7 +178,7 @@ function	Crafting({adventurer}) {
 													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'NAME:'}</p>
 													<p className={'text-sx'}>{item?.name}</p>
 												</div>
-												<div className={'mt-3.5 pr-16'}>
+												<div className={'mt-3.5 pr-6'}>
 													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'WEIGHT:'}</p>
 													<p className={'text-sx'}>{item?.weight || '0'}</p>
 												</div>
@@ -259,7 +262,7 @@ function	Crafting({adventurer}) {
 													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'WEIGHT:'}</p>
 													<p className={'text-sx'}>{item?.weight || '0'}</p>
 												</div>
-												<div className={'mt-3.5 pr-6'}>
+												<div className={'mt-3.5 pr-6 w-20'}>
 													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'COST:'}</p>
 													<p className={'text-sx'}>{`${item.cost}G`}</p>
 												</div>
@@ -273,7 +276,7 @@ function	Crafting({adventurer}) {
 												</div>
 												<div className={'mt-3.5 pr-6'}>
 													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'SPELL FAILURE:'}</p>
-													<p className={'text-sx'}>{`${item?.spell_failure || 0}`}</p>
+													<p className={'text-sx'}>{`${item?.spell_failure || 0}%`}</p>
 												</div>
 											</div>
 
@@ -373,7 +376,7 @@ function	Crafting({adventurer}) {
 													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'WEIGHT:'}</p>
 													<p className={'text-sx'}>{item?.weight || '0'}</p>
 												</div>
-												<div className={'mt-3.5 pr-6'}>
+												<div className={'mt-3.5 pr-6 w-20'}>
 													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'COST:'}</p>
 													<p className={'text-sx'}>{`${item.cost}G`}</p>
 												</div>
@@ -381,7 +384,7 @@ function	Crafting({adventurer}) {
 													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'DAMAGE:'}</p>
 													<p className={'text-sx'}>{`${item?.damage || 0}`}</p>
 												</div>
-												<div className={'mt-3.5 pr-6'}>
+												<div className={'mt-3.5 pr-6 w-28'}>
 													<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'CRITICAL:'}</p>
 													<p className={'text-sx normal-case'}>
 														{item?.critical_modifier ? `${`${(20+item?.critical_modifier)}-20`}/x${item?.critical || 0}` : `x${item?.critical || 0}`}
@@ -441,7 +444,7 @@ function	Crafting({adventurer}) {
 
 	return (
 		<>
-			<div className={'inline-block px-4 md:px-10 py-9 mt-16 md:mt-32 text-left transition-all transform bg-white dark:bg-dark-600 max-w-screen-lg w-full uppercase font-title relative border-4 border-black dark:border-dark-100'}>
+			<div className={'inline-block px-4 md:px-10 py-9 text-left transition-all transform bg-white dark:bg-dark-600 max-w-screen-lg w-full uppercase font-title relative border-4 border-black dark:border-dark-100'}>
 				<h3 className={'relative text-lg font-medium leading-6 text-black dark:text-white flex flex-col md:flex-row justify-between'}>
 					{'WORKSHOP'}
 				</h3>

@@ -17,6 +17,7 @@ import	RARITY_ABI												from	'utils/abi/rarity.abi';
 import	RARITY_ATTR_ABI											from	'utils/abi/rarityAttr.abi';
 import	RARITY_GOLD_ABI											from	'utils/abi/rarityGold.abi';
 import	RARITY_SKILLS_ABI										from	'utils/abi/raritySkills.abi';
+import	RARITY_CRAFTING_ABI										from	'utils/abi/rarityCrafting.abi';
 import	THE_CELLAR_ABI											from	'utils/abi/dungeonTheCellar.abi';
 import	THE_FOREST_ABI											from	'utils/abi/dungeonTheForest.abi';
 
@@ -60,6 +61,7 @@ export const RarityContextApp = ({children}) => {
 		const	rarityAttr = new Contract(process.env.RARITY_ATTR_ADDR, RARITY_ATTR_ABI);
 		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI);
 		const	raritySkills = new Contract(process.env.RARITY_SKILLS_ADDR, RARITY_SKILLS_ABI);
+		const	rarityCrafting = new Contract(process.env.RARITY_CRAFTING_ADDR, RARITY_CRAFTING_ABI);
 		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, THE_CELLAR_ABI);
 		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, THE_FOREST_ABI);
 
@@ -72,6 +74,7 @@ export const RarityContextApp = ({children}) => {
 			raritySkills.get_skills(tokenID),
 			rarityDungeonCellar.adventurers_log(tokenID),
 			rarityDungeonForest.getResearchBySummoner(tokenID),
+			// rarityCrafting.
 		];
 	}
 	/**************************************************************************
