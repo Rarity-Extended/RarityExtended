@@ -337,12 +337,13 @@ details[open] summary {
 	}
   
  .nes-balloon {
-	border-image-outset: 2;
+	 border: 0;
+	/* border-image-outset: 2;
 	position: relative;
 	display: inline-block;
 	padding: 1rem 1.5rem;
 	margin: 8px;
-	margin-bottom: 30px;
+	margin-bottom: 30px; */
   }
   
   @media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
@@ -371,10 +372,11 @@ details[open] summary {
   }
   
   .nes-balloon.from-left::before {
-	bottom: -14px;
+	bottom: -6px;
 	width: 26px;
 	height: 10px;
 	background-color: #fff;
+	z-index: 100;
 	border-right: 4px solid #212529;
 	border-left: 4px solid #212529;
   }
@@ -384,7 +386,7 @@ details[open] summary {
 	border-left: 4px solid #5d6e8f;
   }
   .nes-balloon.from-left::after {
-	bottom: -18px;
+	bottom: -8px;
 	width: 18px;
 	height: 4px;
 	margin-right: 8px;
