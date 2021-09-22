@@ -9,6 +9,9 @@ import	React						from	'react';
 import	Image						from	'next/image';
 import	ITEMS						from	'utils/codex/items';
 import	THE_FOREST_LOOT				from	'utils/codex/items_dungeon_theForest.json';
+import	MANIFEST_GOODS				from	'utils/codex/items_manifest_goods.json';
+import	MANIFEST_ARMORS				from	'utils/codex/items_manifest_armors.json';
+import	MANIFEST_WEAPONS			from	'utils/codex/items_manifest_weapons.json';
 
 function	Index() {
 	function	sortByRarity(a, b) {
@@ -93,6 +96,84 @@ function	Index() {
 			</div>
 		);
 	}
+	function	renderManifestGoods() {
+		return Object.values(MANIFEST_GOODS).map((item) => (
+			<div className={'flex flex-row space-x-4 w-full tooltip cursor-help group'} key={`goods_${item.name}`}>
+				<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
+					<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
+					<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
+					<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
+					<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
+					<Image src={item.img} width={64} height={64} />
+					<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
+					<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
+					<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
+					<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
+				</div>
+				<div className={'text-left flex flex-col py-0.5'}>
+					<p className={'text-xs'}>{item.name}</p>
+				</div>
+				<div className={'tooltiptext invisible group-hover:visible bg-white dark:bg-dark-600 border-4 border-black dark:border-dark-100'}>
+					<div className={'p-4'}>
+						<p className={'text-sx mb-2'}>{item.level}</p>
+						<p className={'text-megaxs mt-4 text-gray-darker dark:text-white dark:text-opacity-60'}>{item.description}</p>
+					</div>
+				</div>
+			</div>
+		));
+	}
+	function	renderManifestArmors() {
+		return Object.values(MANIFEST_ARMORS).map((item) => (
+			<div className={'flex flex-row space-x-4 w-full tooltip cursor-help group'} key={`goods_${item.name}`}>
+				<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
+					<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
+					<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
+					<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
+					<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
+					<Image src={item.img} width={64} height={64} />
+					<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
+					<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
+					<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
+					<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
+				</div>
+				<div className={'text-left flex flex-col py-0.5'}>
+					<p className={'text-xs'}>{item.name}</p>
+				</div>
+				<div className={'tooltiptext invisible group-hover:visible bg-white dark:bg-dark-600 border-4 border-black dark:border-dark-100'}>
+					<div className={'p-4'}>
+						<p className={'text-sx mb-2'}>{item.level}</p>
+						<p className={'text-megaxs mt-4 text-gray-darker dark:text-white dark:text-opacity-60'}>{item.description}</p>
+					</div>
+				</div>
+			</div>
+		));
+	}
+	function	renderManifestWeapons() {
+		return Object.values(MANIFEST_WEAPONS).map((item) => (
+			<div className={'flex flex-row space-x-4 w-full tooltip cursor-help group'} key={`goods_${item.name}`}>
+				<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
+					<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
+					<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
+					<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
+					<div className={`absolute ${item.levelClassName} right-0 top-0 w-1 h-2`} />
+					<Image src={item.img} width={64} height={64} />
+					<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-2 h-1`} />
+					<div className={`absolute ${item.levelClassName} left-0 bottom-0 w-1 h-2`} />
+					<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
+					<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
+				</div>
+				<div className={'text-left flex flex-col py-0.5'}>
+					<p className={'text-xs'}>{item.name}</p>
+				</div>
+				<div className={'tooltiptext invisible group-hover:visible bg-white dark:bg-dark-600 border-4 border-black dark:border-dark-100'}>
+					<div className={'p-4'}>
+						<p className={'text-sx mb-2'}>{item.level}</p>
+						<p className={'text-megaxs mt-4 text-gray-darker dark:text-white dark:text-opacity-60'}>{item.description}</p>
+					</div>
+				</div>
+			</div>
+		));
+	}
 
 	return (
 		<section className={'mt-24 md:mt-12'}>
@@ -108,6 +189,19 @@ function	Index() {
 				<h2 className={'text-black dark:text-white text-xs mt-24 mb-6'}>{'The Forest'}</h2>
 				<div className={'w-full grid grid-cols-1 md:grid-cols-4 gap-6'}>
 					{renderTheForestLoot()}
+				</div>
+
+				<h2 className={'text-black dark:text-white text-xs mt-24 mb-6'}>{'Generic Goods'}</h2>
+				<div className={'w-full grid grid-cols-1 md:grid-cols-4 gap-6'}>
+					{renderManifestGoods()}
+				</div>
+				<h2 className={'text-black dark:text-white text-xs mt-24 mb-6'}>{'Generic Armors'}</h2>
+				<div className={'w-full grid grid-cols-1 md:grid-cols-4 gap-6'}>
+					{renderManifestArmors()}
+				</div>
+				<h2 className={'text-black dark:text-white text-xs mt-24 mb-6'}>{'Generic Weapons'}</h2>
+				<div className={'w-full grid grid-cols-1 md:grid-cols-4 gap-6'}>
+					{renderManifestWeapons()}
 				</div>
 
 				<div className={'absolute bg-items-uncommon left-0 top-0 w-0 h-0 bg-opacity-0'} />
