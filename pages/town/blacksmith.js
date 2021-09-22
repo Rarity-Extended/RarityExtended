@@ -11,6 +11,7 @@ import	Typer								from	'components/Typer';
 import	DialogBox							from	'components/DialogBox';
 import	SectionArtifactsTheForest			from	'sections/SectionArtifactsTheForest';
 import	SectionRestoreArtifactsTheForest	from	'sections/SectionRestoreArtifactsTheForest';
+import	SectionCrafting						from	'sections/SectionCrafting';
 
 function	DialogChoices({router, adventurersCount}) {
 	if (adventurersCount === 0) {
@@ -77,7 +78,8 @@ function	Index({rarities, router}) {
 					router={router}
 					adventurersCount={adventurers.length}
 					adventurer={rarities} />
-				<SectionArtifactsTheForest
+				<SectionCrafting adventurer={adventurers[0]} />
+				{/* <SectionArtifactsTheForest
 					shouldDisplay={router?.query?.tab === 'upgrade'}
 					router={router}
 					adventurers={rarities}
@@ -86,7 +88,7 @@ function	Index({rarities, router}) {
 					shouldDisplay={router?.query?.tab === 'restore'}
 					router={router}
 					adventurers={Object.values(rarities)}
-					adventurersCount={adventurers.length} />
+					adventurersCount={adventurers.length} /> */}
 			</div>
 		</section>
 	);		
