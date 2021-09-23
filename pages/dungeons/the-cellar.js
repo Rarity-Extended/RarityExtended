@@ -239,7 +239,8 @@ function	Index({dungeon, adventurer, router}) {
 								return console.error(error);
 							}
 							updateRarity(dungeon.tokenID);
-							router.push('/');
+							if (router.pathname === '/dungeons/the-cellar')						
+								router.push('/town/quest?tab=the-cellar');
 						});
 					}}
 				/>

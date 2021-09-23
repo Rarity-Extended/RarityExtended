@@ -29,19 +29,19 @@ const	classMappingImg = [
 	'/wizard.png',
 ];
 
-function	FacuHeadline() {
-	const	[facuTextIndex, set_facuTextIndex] = useState(0);
+function	NPCHeadline() {
+	const	[npcTextIndex, set_npcTextIndex] = useState(0);
 	
-	const	renderFacuText = () => {
+	const	renderNPCText = () => {
 		return (
 			<>
-				<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>
+				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 					{'YOU ARE ABOUT TO LEAVE THE TOWN TO EXPLORE '}
 				</Typer>
-				<span className={'text-tag-info'}><Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>
+				<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 					{'THE FOREST'}
 				</Typer></span>
-				<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
+				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 					{'. FOR HOW LONG DO YOU WANT TO TAKE PROVISIONS FOR ?'}
 				</Typer>
 			</>
@@ -49,7 +49,7 @@ function	FacuHeadline() {
 	};
 	return (
 		<h1 className={'text-sm md:text-lg leading-normal md:leading-10'}>
-			{renderFacuText()}
+			{renderNPCText()}
 		</h1>
 	);
 }
@@ -57,6 +57,22 @@ function	FacuHeadline() {
 function	Index({dungeon, adventurer, router}) {
 	const	{provider} = useWeb3();
 	const	{updateRarity} = useRarity();
+
+	function	onExploreTheForest(time) {
+		exploreTheForest({
+			provider,
+			contractAddress: process.env.DUNGEON_THE_FOREST_ADDR,
+			tokenID: adventurer.tokenID,
+			timeInDays: time
+		}, ({error}) => {
+			if (error) {
+				return console.error(error);
+			}
+			updateRarity(dungeon.tokenID);
+			if (router.pathname === '/dungeons/the-forest')
+				router.push('/town/quest?tab=the-forest');
+		});
+	}
 
 	return (
 		<section className={'max-w-full'}>
@@ -70,50 +86,14 @@ function	Index({dungeon, adventurer, router}) {
 							width={256}
 							height={256} />
 					</div>
-					<FacuHeadline />
+					<NPCHeadline />
 				</div>
 				<DialogBox
 					options={[
-						{label: 'Go for 4 days', onClick: () => {
-							exploreTheForest({provider, contractAddress: process.env.DUNGEON_THE_FOREST_ADDR, tokenID: adventurer.tokenID, timeInDays: 4},
-								({error}) => {
-									if (error) {
-										return console.error(error);
-									}
-									updateRarity(dungeon.tokenID);
-									router.push('/town/quest?tab=the-forest');
-								});
-						}},
-						{label: 'Go for 5 days', onClick: () => {
-							exploreTheForest({provider, contractAddress: process.env.DUNGEON_THE_FOREST_ADDR, tokenID: adventurer.tokenID, timeInDays: 5},
-								({error}) => {
-									if (error) {
-										return console.error(error);
-									}
-									updateRarity(dungeon.tokenID);
-									router.push('/town/quest?tab=the-forest');
-								});
-						}},
-						{label: 'Go for 6 days', onClick: () => {
-							exploreTheForest({provider, contractAddress: process.env.DUNGEON_THE_FOREST_ADDR, tokenID: adventurer.tokenID, timeInDays: 6},
-								({error}) => {
-									if (error) {
-										return console.error(error);
-									}
-									updateRarity(dungeon.tokenID);
-									router.push('/town/quest?tab=the-forest');
-								});
-						}},
-						{label: 'Go for 7 days', onClick: () => {
-							exploreTheForest({provider, contractAddress: process.env.DUNGEON_THE_FOREST_ADDR, tokenID: adventurer.tokenID, timeInDays: 7},
-								({error}) => {
-									if (error) {
-										return console.error(error);
-									}
-									updateRarity(dungeon.tokenID);
-									router.push('/town/quest?tab=the-forest');
-								});
-						}},
+						{label: 'Go for 4 days', onClick: () => onExploreTheForest(4)},
+						{label: 'Go for 5 days', onClick: () => onExploreTheForest(5)},
+						{label: 'Go for 6 days', onClick: () => onExploreTheForest(6)},
+						{label: 'Go for 7 days', onClick: () => onExploreTheForest(7)}
 					]} />
 			</div>
 		</section>

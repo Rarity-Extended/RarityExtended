@@ -26,7 +26,7 @@ function	Footer() {
 				</a>
 			</div>
 			<div onClick={switchTheme} className={'py-2 hover:underline cursor-pointer'}>
-				{`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+				{`Switch to ${theme === 'light' || theme === 'light-initial' ? 'dark' : 'light'} mode`}
 			</div>
 			<div>
 				{'Made with 💙 by the 🕹 community'}
