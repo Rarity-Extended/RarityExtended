@@ -14,6 +14,7 @@ import	useUI							from	'contexts/useUI';
 import	DialogBox						from	'components/DialogBox';
 import	ModalLogin						from	'components/ModalLogin';
 import	Typer							from	'components/Typer';
+import	Box								from	'components/Box';
 import	SectionRecruit					from	'sections/SectionRecruit';
 import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
 import	TAVERN_NEWS						from	'utils/codex/tavernNews.json';
@@ -43,64 +44,163 @@ function	NewsTab({shouldDisplay}) {
 	);
 }
 
-function	FacuHeadline({router, active, adventurersCount}) {
+function	NPCHeadline({router, active, adventurersCount}) {
 	const	[nonce, set_nonce] = useState(0);
-	const	[facuTextIndex, set_facuTextIndex] = useState(0);
+	const	[ncpTextIndex, set_ncpTextIndex] = useState(0);
 	
+	const	[hadInitialMessage, set_hadInitialMessage] = useState(false);
+	const	[hadRecruitMessage, set_hadRecruitMessage] = useState(false);
+	const	[hadTheCellarMessage, set_hadTheCellarMessage] = useState(false);
+
 	useEffect(() => {
-		set_facuTextIndex(0);
+		set_ncpTextIndex(0);
 		set_nonce(n => n+1);
 	}, [router?.query?.tab]);
 
-	const	renderFacuText = () => {
+	const	renderNPCText = () => {
 		if (!active) {
 			return (
-				<Typer>{'Hello traveler! Welcome to Facu\'s Tavern!\nPerhaps you should consider connecting your wallet ?'}</Typer>
+				<>
+					<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 0}>
+						{'WELCOME, ADVENTURER! I AM'}
+					</Typer>&nbsp;
+					<span className={'text-tag-info'}><Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 1}>
+						{'FACU THE TAVERN KEEPER'}
+					</Typer></span>
+					<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 2}>
+						{'!'}
+					</Typer>&nbsp;
+					<div />
+					<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 3}>
+						{'PERHAPS YOU SHOULD CONSIDER CONNECTING YOUR WALLET?'}
+					</Typer>
+				</>
 			);
 		}
 		if (!router?.query?.tab) {
+			if (hadInitialMessage) {
+				return (
+					<>
+						{'WELCOME, ADVENTURER! I AM '}
+						<span className={'text-tag-info'}>{'FACU THE TAVERN KEEPER'}</span>
+						{'!'}
+						<div />
+						{'WHAT DO YOU WANT TO DO ? I CAN FIND THE LAST NEWS JUST BELLOW!'}
+					</>		
+				);
+			}
 			return (
-				<Typer>{'Hello traveler! Welcome to Facu\'s Tavern!\nWhat do you want to do ?'}</Typer>
+				<>
+					<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 0}>
+						{'WELCOME, ADVENTURER! I AM'}
+					</Typer>&nbsp;
+					<span className={'text-tag-info'}><Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 1}>
+						{'FACU THE TAVERN KEEPER'}
+					</Typer></span>
+					<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 2}>
+						{'!'}
+					</Typer>&nbsp;
+					<div />
+					<Typer
+						onDone={() => {
+							set_ncpTextIndex(i => i + 1);
+							set_hadInitialMessage(true);
+						}}
+						shouldStart={ncpTextIndex === 3}>
+						{'WHAT DO YOU WANT TO DO ? I CAN FIND THE LAST NEWS JUST BELLOW!'}
+					</Typer>
+				</>
 			);
 		}
 		if (router?.query?.tab === 'recruit') {
 			if (adventurersCount === 0) {
+				if (hadRecruitMessage) {
+					return (
+						<>
+							{'WELCOME, ADVENTURER! I AM '}
+							<span className={'text-tag-info'}>{'FACU THE TAVERN KEEPER'}</span>
+							{'!'}
+							<div />
+							{'YOU ARE ABOUT TO START A JOURNEY BEYOND IMAGINATION. YOU WILL MEET NEW FRIENDS AND FIGHT GREAT DANGERS!'}
+							<div className={'my-2'}/>
+							{'WHAT KIND OF ADVENTURER ARE YOU ?'}
+						</>		
+					);
+				}
 				return (
 					<>
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>
+						<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 0}>
 							{'WELCOME, ADVENTURER! I AM'}
 						</Typer>&nbsp;
-						<span className={'text-tag-info'}><Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>
-							{'FACU'}
+						<span className={'text-tag-info'}><Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 1}>
+							{'FACU THE TAVERN KEEPER'}
 						</Typer></span>
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
-							{', THE TAVERN KEEPER.'}
+						<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 2}>
+							{'!'}
 						</Typer>&nbsp;
 						<div />
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 3}>
+						<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 3}>
 							{'YOU ARE ABOUT TO START A JOURNEY BEYOND IMAGINATION. YOU WILL MEET NEW FRIENDS AND FIGHT GREAT DANGERS!'}
 						</Typer>&nbsp;
 						<div className={'my-2'}/>
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 4}>
+						<Typer
+							onDone={() => {
+								set_ncpTextIndex(i => i + 1);
+								set_hadRecruitMessage(true);
+							}}
+							shouldStart={ncpTextIndex === 4}>
 							{'WHAT KIND OF ADVENTURER ARE YOU ?'}
 						</Typer>
 					</>
 				);
 			}
+			if (hadRecruitMessage) {
+				return (
+					<>
+						{'OH, THERE IS A '}
+						<span className={'text-tag-info'}>{'HERO'}</span>
+						{' OVER THERE LOOKING FOR SOME ADVENTURE ! MAYBE YOU SHOULD TALK TO HIM ? OR HER, I CAN\'T SEE FROM HERE.'}
+					</>		
+				);
+			}
 			return (
-				<Typer>{'OH, THERE IS AN HERO OVER THERE LOOKING FOR SOME ADVENTURE'}</Typer>
+				<>
+					<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 0}>
+						{'OH, THERE IS A '}
+					</Typer>
+					<span className={'text-tag-info'}><Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 1}>
+						{'HERO'}
+					</Typer></span>
+					<Typer
+						onDone={() => {
+							set_ncpTextIndex(i => i + 1);
+							set_hadRecruitMessage(true);
+						}}
+						shouldStart={ncpTextIndex === 2}>
+						{'  OVER THERE LOOKING FOR SOME ADVENTURE ! MAYBE YOU SHOULD TALK TO HIM ? OR HER, I CAN\'T SEE FROM HERE.'}
+					</Typer>
+				</>
 			);
 		}
 		if (router?.query?.tab === 'the-cellar') {
+			if (hadTheCellarMessage) {
+				return (
+					<>
+						{'THOSE RATS BE HUNGRY. THOSE RATS BE MANY. BEST IF YE CONSTITUTION BE PLENTY !'}
+					</>		
+				);
+			}
 			return (
-				<Typer>{'Those rats be hungry. Those rats be many. Best if ye Constitution be plenty !'}</Typer>
+				<Typer onDone={() => set_hadTheCellarMessage(true)}>
+					{'Those rats be hungry. Those rats be many. Best if ye Constitution be plenty !'}
+				</Typer>
 			);
 		}
 		return null;
 	};
 	return (
-		<h1 key={nonce} className={'text-sm md:text-lg leading-normal md:leading-10 whitespace-pre-line mt-10'}>
-			{renderFacuText()}
+		<h1 key={nonce} className={'text-xs md:text-xs leading-normal md:leading-8'}>
+			{renderNPCText()}
 		</h1>
 	);
 }
@@ -133,8 +233,8 @@ function	Index({fetchRarity, rarities, router}) {
 	return (
 		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-0'}>
-					<div className={'w-auto md:w-64 mr-0 md:mr-16'} style={{minWidth: 256}}>
+				<div className={'flex flex-col md:flex-row items-center mb-8 md:mb-8'}>
+					<div className={'w-auto md:w-64 mr-0 md:mr-8'} style={{minWidth: 256}}>
 						<Image
 							src={theme === 'light' ? '/avatar/facu.gif' : '/avatar/facu.png'}
 							loading={'eager'}
@@ -142,11 +242,15 @@ function	Index({fetchRarity, rarities, router}) {
 							width={256}
 							height={256} />
 					</div>
-					<FacuHeadline
-						active={active && address}
-						adventurersCount={adventurers.length}
-						router={router} />
+					<Box className={'p-4'}>
+						<NPCHeadline
+							adventurersCount={adventurers.length}
+							address={address}
+							active={active && address}
+							router={router} />
+					</Box>
 				</div>
+				
 				<DialogChoices
 					active={active && address}
 					router={router}

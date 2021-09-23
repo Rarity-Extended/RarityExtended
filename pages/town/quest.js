@@ -17,7 +17,6 @@ import	SectionDungeonTheForest			from	'sections/SectionDungeonTheForest';
 import	Box								from	'components/Box';
 import	CLASSES							from	'utils/codex/classes';
 
-
 function	DialogChoices({router, adventurersCount}) {
 	const	[selectedOption, set_selectedOption] = useState(0);
 	const	[dialogNonce, set_dialogNonce] = useState(0);
@@ -126,129 +125,7 @@ function	DialogChoices({router, adventurersCount}) {
 	);
 }
 
-// eslint-disable-next-line no-unused-vars
 function	NPCHeadline({router, active, address, adventurersCount}) {
-	const	[nonce, set_nonce] = useState(0);
-	const	[npcTextIndex, set_npcTextIndex] = useState(0);
-	
-	useEffect(() => {
-		set_npcTextIndex(0);
-		set_nonce(n => n+1);
-	}, [router?.query?.tab, active, address]);
-	
-	const	renderNPCText = () => {
-		if (!active) {
-			return (
-				<>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
-						{'HELLO, I AM '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
-						{'LARA'}
-					</Typer></span>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
-						{' FROM THE '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
-						{'QUEST OFFICE'}
-					</Typer></span>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 4}>
-						{'. WE ONLY WORK WITH TRUE ADVENTURERS. CONNECT YOUR WALLET FIRST.'}
-					</Typer>
-				</>
-			);
-		}
-		if (adventurersCount === 0) {
-			return (
-				<>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
-						{'HELLO, I AM '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
-						{'LARA'}
-					</Typer></span>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
-						{' FROM THE '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
-						{'QUEST OFFICE'}
-					</Typer></span>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 4}>
-						{'. YOU NEED AN ADVENTURER TO START HERE. GO TO THE TAVERN TO RECRUIT ONE.'}
-					</Typer>
-				</>
-			);
-		}
-		if (router?.query?.tab === 'the-cellar') {
-			return (
-				<>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
-						{'YES. THE BIG UGLY RAT. '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
-						{'FACU'}
-					</Typer></span>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
-						{' THE TAVERN KEEPER NEED SOME HELP WITH THIS. REPULSIVE STUFF. IF YOU CAN '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
-						{'DODGE AND HIT HARD'}
-					</Typer></span>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 4}>
-						{', YOU SHOULD GO.'}
-					</Typer>
-				</>
-			);
-		}
-		if (router?.query?.tab === 'the-forest') {
-			return (
-				<>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
-						{'OH HAVE YOU HEARD ABOUT '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
-						{'THE FOREST'}
-					</Typer></span>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
-						{' ? THE AUSTRIAN STAYING IN FACU\'S TAVERN HAS SOME INFO ABOUT A '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
-						{'TREASURE'}
-					</Typer></span>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 4}>
-						{' OR SOMETHING LIKE THAT. YOU SHOULD TALK TO HIM.'}
-					</Typer>
-				</>
-			);
-		}
-		return (
-			<>
-				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
-					{'HELLO, I AM '}
-				</Typer>
-				<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
-					{'LARA'}
-				</Typer></span>
-				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
-					{' FROM THE '}
-				</Typer>
-				<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
-					{'QUEST OFFICE'}
-				</Typer></span>
-				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 4}>
-					{'. WE HAVE A LOT OF WORK TO DO. SELECT YOUR TASK AND GO !'}
-				</Typer>
-			</>
-		);
-	};
-	return (
-		<h1 key={nonce} className={'text-sm md:text-lg leading-normal md:leading-10'}>
-			{renderNPCText()}
-		</h1>
-	);
-}
-
-function	NPCHeadlineAlt({router, active, address, adventurersCount}) {
 	const	[nonce, set_nonce] = useState(0);
 	const	[npcTextIndex, set_npcTextIndex] = useState(0);
 
@@ -440,18 +317,12 @@ function	Index({rarities, router}) {
 							height={256} />
 					</div>
 					<Box className={'p-4'}>
-						<NPCHeadlineAlt
+						<NPCHeadline
 							adventurersCount={adventurers.length}
 							address={address}
 							active={active}
 							router={router} />
 					</Box>
-					{/* <NPCHeadline
-						adventurersCount={adventurers.length}
-						address={address}
-						active={active}
-						router={router}
-					/> */}
 				</div>
 			
 				<DialogChoices
