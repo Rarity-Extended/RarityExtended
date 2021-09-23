@@ -121,7 +121,7 @@ function	AppWrapper(props) {
 					cardType: 'summary_large_image',
 				}} />
 			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{minHeight: '100vh'}}>
-				<Toaster position={'top-right'} toastOptions={{className: 'text-xs border-4 border-black noBr shadow-xl'}} />
+				<Toaster position={'bottom-right'} toastOptions={{className: 'text-xs border-4 border-black noBr shadow-xl'}} />
 				<Navbar router={router} />
 				<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />
 				<Footer />
