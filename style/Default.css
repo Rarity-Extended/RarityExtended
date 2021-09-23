@@ -1140,3 +1140,7 @@ details[open] summary {
 	top: calc(100% + 8px);
 	z-index: 1;
 }
+
+.noBr {
+	border-radius: 0 !important;
+}

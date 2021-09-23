@@ -332,7 +332,7 @@ export async function	exploreTheForest({provider, contractAddress, tokenID, time
 	**	be successful with a static call
 	**********************************************************************/
 	try {
-		await rarity.callStatic.startResearch(tokenID, timeInDays);
+		await rarity.callStatic.startResearch(tokenID, timeInDays, {gasLimit: 200_000});
 	} catch (error) {
 		toast.dismiss(_toast);
 		toast.error('Impossible to explore The Forest');
@@ -344,7 +344,7 @@ export async function	exploreTheForest({provider, contractAddress, tokenID, time
 	**	If the call is successful, try to perform the actual TX
 	**********************************************************************/
 	try {
-		const	transaction = await rarity.startResearch(tokenID, timeInDays);
+		const	transaction = await rarity.startResearch(tokenID, timeInDays, {gasLimit: 200_000});
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
@@ -377,7 +377,7 @@ export async function	discoverTreasureTheForest({provider, contractAddress, toke
 	**	be successful with a static call
 	**********************************************************************/
 	try {
-		await rarity.callStatic.discover(tokenID);
+		await rarity.callStatic.discover(tokenID, {gasLimit: 300_000});
 	} catch (error) {
 		toast.dismiss(_toast);
 		toast.error('Your shovel broke ... Try another one');
@@ -389,7 +389,7 @@ export async function	discoverTreasureTheForest({provider, contractAddress, toke
 	**	If the call is successful, try to perform the actual TX
 	**********************************************************************/
 	try {
-		const	transaction = await rarity.discover(tokenID);
+		const	transaction = await rarity.discover(tokenID, {gasLimit: 300_000});
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
@@ -457,7 +457,7 @@ export async function	levelUpTreasureTheForest({provider, contractAddress, token
 	**	be successful with a static call
 	**********************************************************************/
 	try {
-		await rarity.callStatic.levelUp(tokenID);
+		await rarity.callStatic.levelUp(tokenID, {gasLimit: 200_000});
 	} catch (error) {
 		toast.dismiss(_toast);
 		toast.error('Impossible to submit transaction');
@@ -469,7 +469,7 @@ export async function	levelUpTreasureTheForest({provider, contractAddress, token
 	**	If the call is successful, try to perform the actual TX
 	**********************************************************************/
 	try {
-		const	transaction = await rarity.levelUp(tokenID);
+		const	transaction = await rarity.levelUp(tokenID, {gasLimit: 200_000});
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
@@ -537,7 +537,7 @@ export async function	restoreTreasureTheForest({provider, contractAddress, token
 	**	be successful with a static call
 	**********************************************************************/
 	try {
-		await rarity.callStatic.restoreTreasure(tokenID, adventurerID);
+		await rarity.callStatic.restoreTreasure(tokenID, adventurerID, {gasLimit: 300_000});
 	} catch (error) {
 		toast.dismiss(_toast);
 		toast.error('Impossible to submit transaction');
@@ -549,7 +549,7 @@ export async function	restoreTreasureTheForest({provider, contractAddress, token
 	**	If the call is successful, try to perform the actual TX
 	**********************************************************************/
 	try {
-		const	transaction = await rarity.restoreTreasure(tokenID, adventurerID);
+		const	transaction = await rarity.restoreTreasure(tokenID, adventurerID, {gasLimit: 300_000});
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
