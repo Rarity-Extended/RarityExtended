@@ -12,7 +12,6 @@ import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
-import	DialogNoBox						from	'components/DialogNoBox';
 import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
 import	SectionDungeonTheForest			from	'sections/SectionDungeonTheForest';
 import	Box								from	'components/Box';
@@ -127,6 +126,7 @@ function	DialogChoices({router, adventurersCount}) {
 	);
 }
 
+// eslint-disable-next-line no-unused-vars
 function	NPCHeadline({router, active, address, adventurersCount}) {
 	const	[nonce, set_nonce] = useState(0);
 	const	[npcTextIndex, set_npcTextIndex] = useState(0);
