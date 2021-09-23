@@ -48,14 +48,14 @@ function	NewsTab({shouldDisplay}) {
 
 function	NPCHeadline({router, active, adventurersCount}) {
 	const	[nonce, set_nonce] = useState(0);
-	const	[ncpTextIndex, set_ncpTextIndex] = useState(0);
+	const	[npcTextIndex, set_npcTextIndex] = useState(0);
 	
 	const	[hadInitialMessage, set_hadInitialMessage] = useState(false);
 	const	[hadRecruitMessage, set_hadRecruitMessage] = useState(false);
 	const	[hadTheCellarMessage, set_hadTheCellarMessage] = useState(false);
 
 	useEffect(() => {
-		set_ncpTextIndex(0);
+		set_npcTextIndex(0);
 		set_nonce(n => n+1);
 	}, [router?.query?.tab]);
 
@@ -63,17 +63,17 @@ function	NPCHeadline({router, active, adventurersCount}) {
 		if (!active) {
 			return (
 				<>
-					<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 0}>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'WELCOME, ADVENTURER! I AM'}
 					</Typer>&nbsp;
-					<span className={'text-tag-info'}><Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 1}>
+					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'FACU THE TAVERN KEEPER'}
 					</Typer></span>
-					<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 2}>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 						{'!'}
 					</Typer>&nbsp;
 					<div />
-					<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 3}>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 						{'PERHAPS YOU SHOULD CONSIDER CONNECTING YOUR WALLET?'}
 					</Typer>
 				</>
@@ -93,22 +93,22 @@ function	NPCHeadline({router, active, adventurersCount}) {
 			}
 			return (
 				<>
-					<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 0}>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'WELCOME, ADVENTURER! I AM'}
 					</Typer>&nbsp;
-					<span className={'text-tag-info'}><Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 1}>
+					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'FACU THE TAVERN KEEPER'}
 					</Typer></span>
-					<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 2}>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 						{'!'}
 					</Typer>&nbsp;
 					<div />
 					<Typer
 						onDone={() => {
-							set_ncpTextIndex(i => i + 1);
+							set_npcTextIndex(i => i + 1);
 							set_hadInitialMessage(true);
 						}}
-						shouldStart={ncpTextIndex === 3}>
+						shouldStart={npcTextIndex === 3}>
 						{'WHAT DO YOU WANT TO DO ? I CAN FIND THE LAST NEWS JUST BELLOW!'}
 					</Typer>
 				</>
@@ -131,26 +131,26 @@ function	NPCHeadline({router, active, adventurersCount}) {
 				}
 				return (
 					<>
-						<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 0}>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 							{'WELCOME, ADVENTURER! I AM'}
 						</Typer>&nbsp;
-						<span className={'text-tag-info'}><Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 1}>
+						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 							{'FACU THE TAVERN KEEPER'}
 						</Typer></span>
-						<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 2}>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 							{'!'}
 						</Typer>&nbsp;
 						<div />
-						<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 3}>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 							{'YOU ARE ABOUT TO START A JOURNEY BEYOND IMAGINATION. YOU WILL MEET NEW FRIENDS AND FIGHT GREAT DANGERS!'}
 						</Typer>&nbsp;
 						<div className={'my-2'}/>
 						<Typer
 							onDone={() => {
-								set_ncpTextIndex(i => i + 1);
+								set_npcTextIndex(i => i + 1);
 								set_hadRecruitMessage(true);
 							}}
-							shouldStart={ncpTextIndex === 4}>
+							shouldStart={npcTextIndex === 4}>
 							{'WHAT KIND OF ADVENTURER ARE YOU ?'}
 						</Typer>
 					</>
@@ -167,18 +167,18 @@ function	NPCHeadline({router, active, adventurersCount}) {
 			}
 			return (
 				<>
-					<Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 0}>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'OH, THERE IS A '}
 					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_ncpTextIndex(i => i + 1)} shouldStart={ncpTextIndex === 1}>
+					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'HERO'}
 					</Typer></span>
 					<Typer
 						onDone={() => {
-							set_ncpTextIndex(i => i + 1);
+							set_npcTextIndex(i => i + 1);
 							set_hadRecruitMessage(true);
 						}}
-						shouldStart={ncpTextIndex === 2}>
+						shouldStart={npcTextIndex === 2}>
 						{'  OVER THERE LOOKING FOR SOME ADVENTURE ! MAYBE YOU SHOULD TALK TO HIM ? OR HER, I CAN\'T SEE FROM HERE.'}
 					</Typer>
 				</>
