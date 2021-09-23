@@ -38,7 +38,7 @@ function	SectionDungeonTheCellar({shouldDisplay, adventurers, router, adventurer
 				}
 			</div>
 			<div>
-				<div className={'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8'}>
+				<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4'}>
 					{Object.values(adventurers)?.filter((adventurer) => {
 						const	canAdventure = !dayjs(new Date(adventurer?.dungeons?.cellar * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
 						return canAdventure;

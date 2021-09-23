@@ -11,7 +11,7 @@ import	useWeb3													from	'contexts/useWeb3';
 import	{ethers}												from	'ethers';
 import	{Provider, Contract}									from	'ethcall';
 import	useSWR													from	'swr';
-// import	useLocalStorage											from	'hook/useLocalStorage';
+import	ModalCurrentAdventurer									from	'components/ModalCurrentAdventurer';
 import	{chunk, fetcher, toAddress}								from	'utils';
 import	ITEMS													from	'utils/codex/items';
 import	RARITY_ABI												from	'utils/abi/rarity.abi';
@@ -44,6 +44,7 @@ export const RarityContextApp = ({children}) => {
 	const	[rarities, set_rarities] = useState({});
 	const	[rNonce, set_rNonce] = useState(0);
 	const	[loaded, set_loaded] = useState(false);
+	const	[isModalOpen, set_isModalOpen] = useState(false);
 
 	/**************************************************************************
 	**	Reset the rarities when the chain changes, when the address changes or
@@ -51,8 +52,13 @@ export const RarityContextApp = ({children}) => {
 	**************************************************************************/
 	useEffect(() => {
 		set_rarities({});
+		set_currentAdventurer(null);
 		set_rNonce(n => n + 1);
-	}, [active, address, chainID]);
+		if (active && provider && address) {
+			set_loaded(false);
+			fetchRarity();
+		}
+	}, [active, address, chainID, provider]);
 
 	/**************************************************************************
 	**	Prepare the multicall to get most of the data
@@ -278,8 +284,9 @@ export const RarityContextApp = ({children}) => {
 	}, [data, provider]);
 
 	useEffect(() => {
-		setTimeout(() => !active ? set_loaded(true) : null, 10000); //10s before unlock
-	}, []);
+		if (loaded === false)
+			setTimeout(() => !active ? set_loaded(true) : null, 10000); //10s before unlock
+	}, [loaded]);
 
 	return (
 		<RarityContext.Provider
@@ -291,8 +298,10 @@ export const RarityContextApp = ({children}) => {
 				updateRarity,
 				fetchRarity,
 				rNonce,
+				openCurrentAventurerModal: () => set_isModalOpen(true)
 			}}>
 			{children}
+			<ModalCurrentAdventurer isOpen={isModalOpen} closeModal={() => set_isModalOpen(false)} />
 		</RarityContext.Provider>
 	);
 };

@@ -250,7 +250,7 @@ function	Index({fetchRarity, rarities, router}) {
 	}, [address, provider]);
 
 	return (
-		<section className={'mt-12 max-w-full'}>
+		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
 				<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-0'}>
 					<div className={'w-auto md:w-64 mr-0 md:mr-16'} style={{minWidth: 256}}>

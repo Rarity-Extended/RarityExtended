@@ -138,7 +138,11 @@ function	Skills({adventurer, updateRarity, provider}) {
 		<>
 			{renderSkills()}
 			<Transition appear show={isOpen} as={Fragment}>
-				<Dialog as={'div'} className={'fixed inset-0 z-10 overflow-none'} onClose={closeModal}>
+				<Dialog
+					as={'div'}
+					className={'fixed inset-0 z-10 overflow-none'}
+					style={{zIndex: 1000}}
+					onClose={closeModal}>
 					<div className={'min-h-screen px-4 text-center'}>
 						<Transition.Child
 							as={Fragment}
@@ -151,10 +155,6 @@ function	Skills({adventurer, updateRarity, provider}) {
 							<Dialog.Overlay className={'fixed inset-0 bg-black bg-opacity-80'} />
 						</Transition.Child>
 
-						<span
-							className={'inline-block h-screen align-middle'}
-							aria-hidden={'true'}>&#8203;
-						</span>
 						<Transition.Child
 							as={Fragment}
 							enter={'ease-out duration-300'}
@@ -163,7 +163,7 @@ function	Skills({adventurer, updateRarity, provider}) {
 							leave={'ease-in duration-200'}
 							leaveFrom={'opacity-100 scale-100'}
 							leaveTo={'opacity-0 scale-95'}>
-							<div className={'inline-block px-4 md:px-10 py-9 mt-16 md:mt-32 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative'}>
+							<div className={'inline-block px-4 md:px-10 py-9 mt-16 md:mt-23 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative border-4 border-black'}>
 								<Dialog.Title as={'h3'} className={'relative text-lg font-medium leading-6 text-black dark:text-white flex flex-col md:flex-row justify-between'}>
 									{'SKILLBOOK'}
 									<div className={'flex flex-row text-megaxs space-x-2 md:space-x-4 text-gray-darker dark:text-dark-100 mt-2 md:mt-0 ml-0 md:-ml-20 leading-3'}>
@@ -174,7 +174,7 @@ function	Skills({adventurer, updateRarity, provider}) {
 										<p>{`WIS: ${adventurer?.attributes?.wisdom || 8}`}</p>
 										<p>{`CHA: ${adventurer?.attributes?.charisma || 8}`}</p>
 									</div>
-									<svg onClick={closeModal} className={'absolute md:relative top-0 right-0'} width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
+									<svg onClick={closeModal} className={'cursor-pointer absolute md:relative top-0 right-0'} width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
 										<path d={'M6.70711 5.29289C6.31658 4.90237 5.68342 4.90237 5.29289 5.29289C4.90237 5.68342 4.90237 6.31658 5.29289 6.70711L10.5858 12L5.29289 17.2929C4.90237 17.6834 4.90237 18.3166 5.29289 18.7071C5.68342 19.0976 6.31658 19.0976 6.70711 18.7071L12 13.4142L17.2929 18.7071C17.6834 19.0976 18.3166 19.0976 18.7071 18.7071C19.0976 18.3166 19.0976 17.6834 18.7071 17.2929L13.4142 12L18.7071 6.70711C19.0976 6.31658 19.0976 5.68342 18.7071 5.29289C18.3166 4.90237 17.6834 4.90237 17.2929 5.29289L12 10.5858L6.70711 5.29289Z'} fill={'currentcolor'}/>
 									</svg>
 								</Dialog.Title>

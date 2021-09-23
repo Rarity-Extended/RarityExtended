@@ -40,13 +40,11 @@ function	Navbar({router}) {
 			);
 		}
 		return (
-			<>
-				<AdventurerModalMenu />
-			</>
+			<AdventurerModalMenu />
 		);
 	}
 	return (
-		<nav className={'relative w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black dark:border-dark-100 mb-4 md:mb-20 pb-0 md:pb-4'}>
+		<nav className={'relative w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black dark:border-dark-100 mb-4 md:mb-4 pb-0 md:pb-4'}>
 			<div className={'items-center justify-start flex flex-row whitespace-normal md:whitespace-nowrap text-lg'}>
 				<div className={'w-full'}>
 					<Link href={'/'}>
@@ -56,7 +54,7 @@ function	Navbar({router}) {
 						<p className={'hidden md:block'}>{'Rarity Extended'}</p>
 					</Link>
 				</div>
-				<div className={'items-center justify-end flex-row flex md:hidden'}>
+				<div className={'items-center justify-end flex-row flex md:hidden w-full'}>
 					{renderWalletButton()}
 				</div>
 			</div>

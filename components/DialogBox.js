@@ -7,12 +7,18 @@
 
 import	React, {useEffect, useState}	from	'react';
 import	useKeyPress						from	'hook/useKeyPress';
+import	Box								from	'components/Box';
 
-function	Index({options}) {
-	const	[option, set_option] = useState(0);
+function	Index({options, nonce, selectedOption = -1}) {
+	const	[option, set_option] = useState(selectedOption > 0 ? selectedOption : 0);
 	const	keyUp = useKeyPress('ArrowUp');
 	const	keyDown = useKeyPress('ArrowDown');
 	const	keyEnter = useKeyPress('Enter');
+
+	useEffect(() => {
+		if (selectedOption !== -1)
+			set_option(selectedOption);
+	}, [selectedOption, nonce]);
 
 	useEffect(() => {
 		if (keyDown)
@@ -25,13 +31,13 @@ function	Index({options}) {
 	}, [keyDown, keyUp, keyEnter]);
 
 	return (
-		<div className={'flex flex-col w-full'}>
+		<div className={'flex flex-col w-full mb-6'}>
 			<div>
-				<div className={'py-6 px-8 border-4 border-solid border-black dark:border-dark-100 mt-0 text-sm mb-8'}>
+				<Box className={'p-4'}>
 					{options.map((opt, index) => (
 						<div
 							key={index}
-							className={`py-4 px-2 group hover:bg-gray-principal dark:hover:bg-dark-100 cursor-pointer ${option === index ? 'bg-gray-principal dark:bg-dark-100' : 'bg-white dark:bg-dark-600'}`}
+							className={`py-3 px-2 group hover:bg-gray-principal dark:hover:bg-dark-100 cursor-pointer ${option === index ? 'bg-gray-principal dark:bg-dark-100' : 'bg-white dark:bg-dark-600'}`}
 							style={{cursor: 'pointer'}}
 							onClick={() => {
 								set_option(index);
@@ -39,11 +45,11 @@ function	Index({options}) {
 							}}>
 							<span className={'cursor-pointer'} style={{cursor: 'pointer'}}>
 								<span className={`inline mb-1 mr-2 group-hover:opacity-100 ${option === index ? 'opacity-100' : 'opacity-5'}`} style={{cursor: 'pointer'}}>{'>'}</span>
-								<span className={'cursor-pointer'} style={{cursor: 'pointer'}}>{opt.label}</span>
+								<span className={'cursor-pointer text-xs'} style={{cursor: 'pointer'}}>{opt.label}</span>
 							</span>
 						</div>	
 					))}
-				</div>
+				</Box>
 			</div>
 		</div>
 	);

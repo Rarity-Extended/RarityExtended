@@ -59,7 +59,7 @@ function	Index({dungeon, adventurer, router}) {
 	const	{updateRarity} = useRarity();
 
 	return (
-		<section className={'mt-12 max-w-full'}>
+		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
 				<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-8'}>
 					<div className={'w-auto md:w-64 mr-0 md:mr-16'} style={{minWidth: 256}}>
