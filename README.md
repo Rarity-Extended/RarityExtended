@@ -23,3 +23,6 @@ If you want to run the UI yourself, check the following steps:
 yarn
 yarn run dev
 ```
+
+## External Credits
+- [Rarity WTF](https://docs.google.com/spreadsheets/d/19GzfnCt9rofQPmA9GMUjvF3z5ObYfqCP3pCNX-7XePQ/edit#gid=1782675491) for details on attributes and classes
