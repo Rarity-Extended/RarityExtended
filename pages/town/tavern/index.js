@@ -11,6 +11,7 @@ import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	useWeb3							from	'contexts/useWeb3';
 import	useUI							from	'contexts/useUI';
+import	useRarity						from	'contexts/useRarity';
 import	DialogBox						from	'components/DialogBox';
 import	ModalLogin						from	'components/ModalLogin';
 import	Typer							from	'components/Typer';
@@ -18,6 +19,7 @@ import	Box								from	'components/Box';
 import	SectionRecruit					from	'sections/SectionRecruit';
 import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
 import	TAVERN_NEWS						from	'utils/codex/tavernNews.json';
+import	CLASSES							from	'utils/codex/classes';
 
 dayjs.extend(relativeTime);
 
@@ -206,6 +208,16 @@ function	NPCHeadline({router, active, adventurersCount}) {
 }
 
 function	DialogChoices({router, onWalletConnect, active}) {
+	const	{chainTime} = useWeb3();
+	const	{currentAdventurer, openCurrentAventurerModal} = useRarity();
+	const	[selectedOption, set_selectedOption] = useState(0);
+	const	[dialogNonce, set_dialogNonce] = useState(0);
+
+	useEffect(() => {
+		set_selectedOption(0);
+		set_dialogNonce(n => n + 1);
+	}, [currentAdventurer?.tokenID, router?.asPath]);
+
 	if (!active) {
 		return (
 			<DialogBox
@@ -214,8 +226,43 @@ function	DialogChoices({router, onWalletConnect, active}) {
 				]} />
 		);
 	}
+	if (router?.query?.tab === 'the-cellar') {
+		const	canAdventure = !dayjs(new Date(currentAdventurer?.dungeons?.cellar * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
+
+		return (
+			<>
+				<DialogBox
+					selectedOption={selectedOption}
+					nonce={dialogNonce}
+					options={[
+						{label: (
+							canAdventure ?
+								<>
+									{'FIGHT THE RAT WITH '}
+									<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+								</>
+								:
+								<>
+									<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+									{' NEED SOME REST BEFORE FIGHTING THE RAT AGAIN'}
+								</>
+						),
+						onClick: () => {
+							if (canAdventure)
+								router.push(`/dungeons/the-cellar?adventurer=${currentAdventurer.tokenID}`);
+							else
+								openCurrentAventurerModal();
+						}},
+						{label: 'SELECT ANOTHER ADVENTURER', onClick: () => openCurrentAventurerModal()},
+						{label: 'CANCEL', onClick: () => router.push('/town/tavern')},
+					]} />
+			</>
+		);
+	}
 	return (
 		<DialogBox
+			selectedOption={selectedOption}
+			nonce={dialogNonce}
 			options={[
 				{label: 'What\'s new ?', onClick: () => router.push('/town/tavern')},
 				{label: 'Recruit a new adventurer', onClick: () => router.push('/town/tavern?tab=recruit')},

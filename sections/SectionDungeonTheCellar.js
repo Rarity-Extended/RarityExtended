@@ -52,6 +52,25 @@ function	SectionDungeonTheCellar({shouldDisplay, adventurers, router, adventurer
 							</div>
 						);
 					})}
+					{Object.values(adventurers)?.filter((adventurer) => {
+						const	canAdventure = !dayjs(new Date(adventurer?.dungeons?.cellar * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
+						return !canAdventure;
+					}).map((adventurer) => {
+						return (
+							<div key={adventurer.tokenID} className={'w-full'}>
+								<Adventurer
+									noHover
+									adventurer={adventurer}
+									rarityClass={CLASSES[adventurer.class]}>
+									<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex justify-center items-center text-center p-6'}>
+										<p className={'text-white'}>
+											{`READY IN ${dayjs(new Date(adventurer?.dungeons?.cellar * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}
+										</p>
+									</div>
+								</Adventurer>
+							</div>
+						);
+					})}
 				</div>
 			</div>
 		</div>
