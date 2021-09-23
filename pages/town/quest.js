@@ -305,7 +305,7 @@ function	Index({rarities, router}) {
 	const	adventurers = Object.values(rarities);
 
 	return (
-		<section className={'max-w-full mt-12'}>
+		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
 				<div className={'flex flex-col md:flex-row items-center mb-8 md:mb-8'}>
 					<div className={'w-auto md:w-64 mr-0 md:mr-0'} style={{minWidth: 256}}>

@@ -10,6 +10,7 @@ import	Image							from	'next/image';
 import	useUI							from	'contexts/useUI';
 import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
+import	Box								from	'components/Box';
 
 function	FacuHeadline() {
 	const	[facuTextIndex, set_facuTextIndex] = useState(0);
@@ -30,7 +31,7 @@ function	FacuHeadline() {
 		);
 	};
 	return (
-		<h1 className={'text-sm md:text-lg leading-normal md:leading-10'}>
+		<h1 className={'text-xs md:text-xs leading-normal md:leading-8'}>
 			{renderFacuText()}
 		</h1>
 	);
@@ -42,8 +43,8 @@ function	Index({router}) {
 	return (
 		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-8'}>
-					<div className={'w-auto md:w-64 mr-0 md:mr-16'} style={{minWidth: 256}}>
+				<div className={'flex flex-col md:flex-row items-center mb-8 md:mb-8'}>
+					<div className={'w-auto md:w-64 mr-0 md:mr-8'} style={{minWidth: 256}}>
 						<Image
 							src={theme === 'light' ? '/avatar/facu.gif' : '/avatar/facu.png'}
 							loading={'eager'}
@@ -51,7 +52,9 @@ function	Index({router}) {
 							width={256}
 							height={256} />
 					</div>
-					<FacuHeadline />
+					<Box className={'p-4'}>
+						<FacuHeadline />
+					</Box>
 				</div>
 				<DialogBox
 					options={[

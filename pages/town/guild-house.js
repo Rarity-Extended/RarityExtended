@@ -12,6 +12,7 @@ import	Image							from	'next/image';
 import	useWeb3							from	'contexts/useWeb3';
 import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
+import	Box								from	'components/Box';
 import	{goAdventure, claimGold}		from	'utils/actions';
 
 dayjs.extend(relativeTime);
@@ -35,7 +36,7 @@ function	NCPHeadline() {
 		);
 	};
 	return (
-		<h1 className={'text-sm md:text-lg leading-normal md:leading-10'}>
+		<h1 className={'text-xs md:text-xs leading-normal md:leading-8'}>
 			{renderNPCText()}
 		</h1>
 	);
@@ -84,8 +85,8 @@ function	Index({rarities, updateRarity}) {
 	return (
 		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-8'}>
-					<div className={'w-auto md:w-64 mr-0 md:mr-16'} style={{minWidth: 256}}>
+				<div className={'flex flex-col md:flex-row items-center mb-8 md:mb-8'}>
+					<div className={'w-auto md:w-64 mr-0 md:mr-8'} style={{minWidth: 256}}>
 						<Image
 							src={'/avatar/janet.gif'}
 							loading={'eager'}
@@ -93,7 +94,9 @@ function	Index({rarities, updateRarity}) {
 							width={256}
 							height={256} />
 					</div>
-					<NCPHeadline />
+					<Box className={'p-4'}>
+						<NCPHeadline />
+					</Box>
 				</div>
 				<DialogBox
 					options={[

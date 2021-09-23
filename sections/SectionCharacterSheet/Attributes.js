@@ -7,7 +7,7 @@
 
 import	React, {useState}			from	'react';
 import	{setAttributes}				from	'utils/actions';
-
+import	Box							from	'components/Box';
 
 function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute, toUpdate}) {
 	function pointCost(val) {
@@ -112,8 +112,8 @@ function	Attributes({adventurer, updateRarity, provider}) {
 	}
 
 	return (
-		<div className={'nes-container pt-6 pb-0 px-4 border-4 border-solid border-black dark:border-dark-100 with-title w-full md:w-1/3 -mt-1 md:mt-0'}>
-			<div className={'title bg-white dark:bg-dark-600 mb-1'}>{'Attributes'}</div>
+		<Box className={'nes-container pt-6 pb-0 px-4 with-title w-full md:w-1/3 -mt-1 md:mt-0'}>
+			<div className={'title bg-white dark:bg-dark-600 z-50 relative'} style={{paddingTop: 2}}>{'Attributes'}</div>
 			{updateAttribute.remainingPoints >= 0 ? (
 				<p onClick={buyPoints} className={`text-xss border-t-2 border-b-2 border-black dark:border-dark-100 flex justify-center items-center py-1 my-2 ${updateAttribute.remainingPoints === 0 ? 'animate-pulse text-center cursor-pointer hover:bg-black hover:animate-none hover:text-white' : ''}`}>
 					{updateAttribute.remainingPoints === 0 ?
@@ -165,7 +165,7 @@ function	Attributes({adventurer, updateRarity, provider}) {
 				set_updateAttribute={set_updateAttribute}
 				toUpdate={updateAttribute.remainingPoints >= 0}
 				name={'charisma'} />
-		</div>
+		</Box>
 	);
 }
 
