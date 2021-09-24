@@ -7,14 +7,17 @@
 
 import	React, {useState}		from	'react';
 import	Image					from	'next/image';
+import	{useRouter}				from	'next/router';
 import	{recruitAdventurer}		from	'utils/actions';
 import	CLASSES					from	'utils/codex/classes';
+import	Box						from	'components/Box';
 
-function	Class({provider, rarityClass, fetchRarity, router}) {
+function	Class({provider, rarityClass, fetchRarity}) {
+	const	router = useRouter();
 	const	[isLoading, set_isLoading] = useState(false);
 	return (
-		<div
-			className={'w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}
+		<Box
+			className={'w-full p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-100 transition-colors cursor-pointer relative'}
 			onClick={() => {
 				if (isLoading) {
 					return;
@@ -40,11 +43,11 @@ function	Class({provider, rarityClass, fetchRarity, router}) {
 				width={240}
 				height={240} />
 			<p className={'text-sm justify-center group-hover:underline'}>{rarityClass.name}</p>
-			<p className={'text-xss justify-center text-center mt-1'}>{rarityClass.description}</p>
+			<p className={'text-xss justify-center text-center mt-1 leading-normal'}>{rarityClass.description}</p>
 			{isLoading ? <div className={'absolute inset-0 backdrop-blur-3xl bg-white bg-opacity-40 cursor-not-allowed'}>
 				<div className={'loader'} />
 			</div> : null}
-		</div>
+		</Box>
 	);
 }
 
@@ -55,7 +58,7 @@ function	SectionRecruit({shouldDisplay, router, provider, fetchRarity}) {
 
 	return (
 		<section className={'flex flex-row w-full flex-wrap items-center justify-center'}>
-			<div className={'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8'}>
+			<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4'}>
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Barbarian']} />
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Bard']} />
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Cleric']} />

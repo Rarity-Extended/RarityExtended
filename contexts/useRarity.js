@@ -11,6 +11,7 @@ import	useWeb3													from	'contexts/useWeb3';
 import	{ethers}												from	'ethers';
 import	{Provider, Contract}									from	'ethcall';
 import	useSWR													from	'swr';
+import	ModalCurrentAdventurer									from	'components/ModalCurrentAdventurer';
 import	{chunk, fetcher, toAddress}								from	'utils';
 import	ITEMS													from	'utils/codex/items';
 import	RARITY_ABI												from	'utils/abi/rarity.abi';
@@ -40,9 +41,11 @@ export const RarityContextApp = ({children}) => {
 		&apikey=${process.env.FMT_KEY}`;
 	const	{data} = useSWR(active && address ? getRaritiesRequestURI : null, fetcher);
 
+	const	[currentAdventurer, set_currentAdventurer] = useState(null);
 	const	[rarities, set_rarities] = useState({});
 	const	[rNonce, set_rNonce] = useState(0);
 	const	[loaded, set_loaded] = useState(false);
+	const	[isModalOpen, set_isModalOpen] = useState(false);
 
 	/**************************************************************************
 	**	Reset the rarities when the chain changes, when the address changes or
@@ -50,8 +53,13 @@ export const RarityContextApp = ({children}) => {
 	**************************************************************************/
 	useEffect(() => {
 		set_rarities({});
+		set_currentAdventurer(null);
 		set_rNonce(n => n + 1);
-	}, [active, address, chainID]);
+		if (active && provider && address) {
+			set_loaded(false);
+			fetchRarity();
+		}
+	}, [active, address, chainID, provider]);
 
 	/**************************************************************************
 	**	Prepare the multicall to get most of the data
@@ -144,7 +152,40 @@ export const RarityContextApp = ({children}) => {
 		if (toAddress(owner) !== toAddress(address)) {
 			return;
 		}
-
+		if (!currentAdventurer) {
+			set_currentAdventurer(p => !p ? {
+				tokenID: tokenID,
+				owner: owner,
+				xp: ethers.utils.formatEther(adventurer['_xp']),
+				class: Number(adventurer['_class']),
+				level: Number(adventurer['_level']),
+				log: Number(adventurer['_log']),
+				gold: {
+					balance: ethers.utils.formatEther(balanceOfGold),
+					claimable: claimableGold ? ethers.utils.formatEther(claimableGold) : '0'
+				},
+				attributes: {
+					isInit: initialAttributes,
+					remainingPoints: initialAttributes ? -1 : 32,
+					strength: initialAttributes ? abilityScores['strength'] : 8,
+					dexterity: initialAttributes ? abilityScores['dexterity'] : 8,
+					constitution: initialAttributes ? abilityScores['constitution'] : 8,
+					intelligence: initialAttributes ? abilityScores['intelligence'] : 8,
+					wisdom: initialAttributes ? abilityScores['wisdom'] : 8,
+					charisma: initialAttributes ? abilityScores['charisma'] : 8,
+				},
+				skills: skills,
+				dungeons: {
+					cellar: Number(cellarLog),
+					forest: {
+						initBlockTs: forestResearch.initBlockTs,
+						endBlockTs: forestResearch.endBlockTs,
+						canAdventure: forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0
+					}
+				},
+				inventory: inventoryCallResult
+			} : p);
+		}
 		set_rarities((prev) => ({...prev, [tokenID]: {
 			tokenID: tokenID,
 			owner: owner,
@@ -246,19 +287,24 @@ export const RarityContextApp = ({children}) => {
 	}, [data, provider]);
 
 	useEffect(() => {
-		setTimeout(() => !active ? set_loaded(true) : null, 10000); //10s before unlock
-	}, []);
+		if (loaded === false)
+			setTimeout(() => !active ? set_loaded(true) : null, 10000); //10s before unlock
+	}, [loaded]);
 
 	return (
 		<RarityContext.Provider
 			value={{
 				isLoaded: loaded,
 				rarities,
+				currentAdventurer,
+				set_currentAdventurer,
 				updateRarity,
 				fetchRarity,
 				rNonce,
+				openCurrentAventurerModal: () => set_isModalOpen(true)
 			}}>
 			{children}
+			<ModalCurrentAdventurer isOpen={isModalOpen} closeModal={() => set_isModalOpen(false)} />
 		</RarityContext.Provider>
 	);
 };
