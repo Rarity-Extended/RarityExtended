@@ -1144,3 +1144,6 @@ details[open] summary {
 .noBr {
 	border-radius: 0 !important;
 }
+.text-shadow {
+	text-shadow: -2px 0 #333, 0 2px #333, 2px 0 #333, 0 -2px #333;
+}

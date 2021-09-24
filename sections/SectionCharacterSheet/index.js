@@ -55,6 +55,7 @@ function	AdventurerTab({adventurer, updateRarity, provider}) {
 }
 
 function	Info({adventurer, updateRarity, provider}) {
+	const	canLevelUp = adventurer.xp >= (xpRequired(adventurer.level));
 	return (
 		<div className={'nes-container pt-6 px-4 border-4 border-solid border-black dark:border-dark-100 with-title w-full md:w-2/3'}>
 			<p className={'title bg-white dark:bg-dark-600 mb-1'}>{adventurer.tokenID}</p>
@@ -82,12 +83,12 @@ function	Info({adventurer, updateRarity, provider}) {
 					<p>{`${Number(adventurer?.gold?.balance || 0) === 0 ? '0' : adventurer.gold.balance}`}</p>
 				</div>
 			</div>
-			<div className={'flex flex-row items-center w-full py-2'}>
+			<div className={'flex flex-row items-center w-full py-2 relative'}>
 				<div className={'opacity-80 text-sm w-48'}>{'XP:'}</div>
 				<div className={'w-full'}>
 					<div
 						onClick={() => {
-							if (adventurer.xp >= (xpRequired(adventurer.level))) {
+							if (canLevelUp) {
 								levelUp({
 									provider,
 									contractAddress: process.env.RARITY_ADDR,
@@ -100,12 +101,14 @@ function	Info({adventurer, updateRarity, provider}) {
 								});
 							}
 						}}
-						className={`nes-progress border-solid border-2 border-black dark:border-dark-400 w-full relative ${adventurer.xp >= (xpRequired(adventurer.level)) ? 'cursor-pointer' : ''}`}>
+						className={`nes-progress border-solid border-2 border-black dark:border-dark-400 w-full relative ${canLevelUp ? 'cursor-pointer' : ''}`}>
 						<progress
-							className={`progressbar h-full ${adventurer.xp >= (xpRequired(adventurer.level)) ? 'is-warning animate-pulse' : 'is-primary'} w-full absolute p-1.5 inset-0`}
+							className={`progressbar h-full ${canLevelUp ? 'is-warning animate-pulse' : 'is-primary'} w-full absolute p-1 inset-0`}
 							value={adventurer.xp}
 							max={xpRequired(adventurer.level)} />
-						<p className={`text-sm absolute inset-0 h-full w-full text-center flex justify-center items-center ${adventurer.xp >= (xpRequired(adventurer.level)) ? '' : 'hidden'}`}>{'LEVEL-UP!'}</p>
+						<p className={`text-sx absolute inset-0 h-full w-full text-center flex justify-center items-center ${canLevelUp ? 'text-black' : 'text-white text-shadow'}`}>
+							{canLevelUp ? 'LEVEL-UP!' : `${Number(adventurer.xp)} / ${xpRequired(adventurer.level)}`}
+						</p>
 					</div>
 				</div>
 			</div>
