@@ -28,7 +28,7 @@ function	DialogChoices({router, adventurersCount}) {
 			options={[
 				{label: 'WELCOME', onClick: () => router.push('/town/quest')},
 				{label: 'THE RAT IN THE CELLAR', onClick: () => router.push('/town/quest?tab=the-cellar')},
-				{label: 'THE TRESURE IN THE FOREST', onClick: () => router.push('/town/quest?tab=the-forest')},
+				{label: 'THE TREASURE IN THE FOREST', onClick: () => router.push('/town/quest?tab=the-forest')},
 			]} />
 	);
 }
