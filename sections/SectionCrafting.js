@@ -87,7 +87,7 @@ function	SectionCraftAction({currentAdventurer, item, isSimulationError, selecte
 			<div className={'flex-1'}>
 				<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>&nbsp;</p>
 				<Button
-					onClick={onCraft}
+					onClick={() => onCraft()}
 					className={`${hasEnoughGold ? 'cursor-pointer hover:bg-white focus:bg-white dark:hover:bg-dark-600 dark:focus:bg-dark-600' : 'cursor-not-allowed'} bg-gray-principal dark:bg-dark-400 text-center`}
 					backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
 					{!hasEnoughGold ? 'NOT ENOUGH GOLD' : isSimulationError ? 'YOU WILL PROBABLY FAIL IF YOU CRAFT NOW' : 'TRY TO CRAFT'}

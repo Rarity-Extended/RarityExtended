@@ -115,7 +115,7 @@ function	DialogChoices({router, adventurersCount}) {
 				{
 					label: (
 						<>
-							{'THE TRESURE IN '}
+							{'THE TREASURE IN '}
 							<span className={'text-tag-info'}>{'THE FOREST'}</span>
 						</>
 					),

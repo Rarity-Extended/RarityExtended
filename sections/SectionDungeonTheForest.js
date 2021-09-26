@@ -88,7 +88,7 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 									<p className={'text-xss justify-center text-center mt-1'}>{`${CLASSES[adventurer.class].name} level ${adventurer.level}`}</p>
 									<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-pointer flex justify-center items-center text-center p-6'}>
 										<p className={'text-white'}>
-											{'YOU FOUND A TRESURE !'}
+											{'YOU FOUND A TREASURE !'}
 										</p>
 									</div>
 								</div>

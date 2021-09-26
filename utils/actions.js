@@ -860,7 +860,8 @@ export async function	craft({
 			tokenID,
 			baseType,
 			itemType,
-			craftingMaterials
+			craftingMaterials,
+			{gasLimit: 400_000}
 		);
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
