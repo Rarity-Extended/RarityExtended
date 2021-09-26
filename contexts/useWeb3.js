@@ -38,6 +38,7 @@ export const Web3ContextApp = ({children}) => {
 	const	[, set_nonce] = useState(0);
 	const	[chainTime, set_chainTime] = useState(new Date());
 	const	[isActivated, set_isActivated] = useState(false);
+	const	[currentBlock, set_currentBlock] = useState(0);
 
 	const	{activate, active, library, connector, account, chainId, deactivate} = web3;
 	const	{data: chainTimeNonce} = useSWR('chainTime', fakeFetcher, {refreshInterval: 10 * 1000});
@@ -78,6 +79,7 @@ export const Web3ContextApp = ({children}) => {
 		set_address(toAddress(account));
 		library.getNetwork().then(e => set_chainID(e.chainId));
 		library.getNetwork().then(e => set_chainTime(e.timestamp));
+		library.on('block', (block) => set_currentBlock(block));
 
 		connector
 			.on(ConnectorEvent.Update, onUpdate)
@@ -193,7 +195,8 @@ export const Web3ContextApp = ({children}) => {
 				chainTime,
 				provider,
 				getProvider,
-				currentRPCProvider: provider
+				currentRPCProvider: provider,
+				currentBlock
 			}}>
 			{children}
 		</Web3Context.Provider>

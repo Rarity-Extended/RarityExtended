@@ -6,27 +6,137 @@
 ******************************************************************************/
 
 import	React, {useState, useEffect}		from	'react';
-import	Image								from	'next/image';
 import	{ethers}							from	'ethers';
-import	useWeb3								from	'contexts/useWeb3';
+import	{Provider, Contract}				from	'ethcall';
+import	Image								from	'next/image';
 import	Typer								from	'components/Typer';
 import	DialogBox							from	'components/DialogBox';
 import	Box									from	'components/Box';
+import	ModalSkills							from	'components/ModalSkills';
+import	useWeb3								from	'contexts/useWeb3';
+import	useRarity							from	'contexts/useRarity';
 import	SectionArtifactsTheForest			from	'sections/SectionArtifactsTheForest';
 import	SectionRestoreArtifactsTheForest	from	'sections/SectionRestoreArtifactsTheForest';
 import	SectionCrafting						from	'sections/SectionCrafting';
+import	RARITY_ABI							from	'utils/abi/rarity.abi';
+import	RARITY_GOLD_ABI						from	'utils/abi/rarityGold.abi';
+import	THE_CELLAR_ABI						from	'utils/abi/dungeonTheCellar.abi';
+import	{approveERC20}						from	'utils/actions';
 
-function	DialogChoices({router, adventurersCount}) {
+
+async function newEthCallProvider(provider, devMode) {
+	const	ethcallProvider = new Provider();
+	if (devMode) {
+		await	ethcallProvider.init(new ethers.providers.JsonRpcProvider('http://localhost:8545'));
+		ethcallProvider.multicallAddress = '0xc04d660976c923ddba750341fe5923e47900cf24';
+		return ethcallProvider;
+	}
+	await	ethcallProvider.init(provider);
+	return	ethcallProvider;
+}
+
+function	DialogChoices({router, adventurersCount, set_category, approveStatus, adventurerCanCraft, adventurerHasXp, approveGold, approveCraftingMaterials, openModalSkills}) {
+	const	[selectedOption, set_selectedOption] = useState(0);
+	const	[dialogNonce, set_dialogNonce] = useState(0);
+	const	{currentAdventurer} = useRarity();
+
+	useEffect(() => {
+		set_selectedOption(0);
+		set_dialogNonce(n => n + 1);
+	}, [currentAdventurer?.tokenID, router?.asPath]);
+
 	if (adventurersCount === 0) {
 		return (
 			<DialogBox
+				selectedOption={selectedOption}
+				nonce={dialogNonce}
 				options={[
 					{label: 'GO TO THE TAVERN', onClick: () => router.push('/town/tavern?tab=recruit')},
 				]} />
 		);
 	}
+	if (router?.query?.tab === 'workshop') {
+		const	options = [];
+
+		if (!adventurerCanCraft) {
+			if (!currentAdventurer?.attributes?.isInit) {
+				return (
+					<DialogBox
+						selectedOption={selectedOption}
+						nonce={dialogNonce}
+						options={[{label: 'Nevermind', onClick: () => router.push('/town/blacksmith')}]} />
+				);	
+			}
+			return (
+				<DialogBox
+					selectedOption={selectedOption}
+					nonce={dialogNonce}
+					options={[
+						{
+							label: (<>{'LEARN HOW TO '}<span className={'text-tag-info'}>{'CRAFT'}</span></>),
+							onClick: () => openModalSkills()
+						},
+						{label: 'Nevermind', onClick: () => router.push('/town/blacksmith')},
+					]} />
+			);
+		}
+		if (!adventurerHasXp) {
+			return (
+				<DialogBox
+					selectedOption={selectedOption}
+					nonce={dialogNonce}
+					options={[
+						{label: 'Nevermind', onClick: () => router.push('/town/blacksmith')},
+					]} />
+			);
+		}
+		if (!approveStatus.approvedGold) {
+			options.push({
+				label: 'APPROVE GOLD FOR CRAFTING',
+				onClick: () => approveGold()
+			});
+		}
+		if (!approveStatus.approvedCraftingMaterials) {
+			options.push({
+				label: 'APPROVE CRAFTING MATERIALS',
+				onClick: () => approveCraftingMaterials()
+			});
+		}
+		if (options.length > 0) {
+			options.push({label: 'Nevermind', onClick: () => router.push('/town/blacksmith')});
+			return (
+				<DialogBox
+					selectedOption={selectedOption}
+					nonce={dialogNonce}
+					options={options} />
+			);
+		}
+
+		return (
+			<DialogBox
+				selectedOption={selectedOption}
+				nonce={dialogNonce}
+				options={[
+					{
+						label: (<>{'CRAFT SOME '}<span className={'text-tag-info'}>{'GOODS'}</span></>),
+						onClick: () => set_category(0)
+					},
+					{
+						label: (<>{'CRAFT SOME '}<span className={'text-tag-info'}>{'ARMORS'}</span></>),
+						onClick: () => set_category(1)
+					},
+					{
+						label: (<>{'CRAFT SOME '}<span className={'text-tag-info'}>{'WEAPONS'}</span></>),
+						onClick: () => set_category(2)
+					},
+					{label: 'Nevermind', onClick: () => router.push('/town/blacksmith')},
+				]} />
+		);
+	}
 	return (
 		<DialogBox
+			selectedOption={selectedOption}
+			nonce={dialogNonce}
 			options={[
 				{label: 'WELCOME', onClick: () => router.push('/town/blacksmith')},
 				{label: 'Access the Workshop', onClick: () => router.push('/town/blacksmith?tab=workshop')},
@@ -36,18 +146,19 @@ function	DialogChoices({router, adventurersCount}) {
 	);
 }
 
-function	NCPHeadline({router}) {
+function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp, currentAdventurer}) {
 	const	[nonce, set_nonce] = useState(0);
 	const	[npcTextIndex, set_npcTextIndex] = useState(0);
 	
 	const	[hadInitialMessage, set_hadInitialMessage] = useState(false);
 	const	[hadUpgradeMessage, set_hadUpgradeMessage] = useState(false);
 	const	[hadRestoreMessage, set_hadRestoreMessage] = useState(false);
+	const	[hadWorkshopMessage, set_hadWorkshopMessage] = useState(false);
 
 	useEffect(() => {
 		set_npcTextIndex(0);
-		set_nonce(n => n);
-	}, [router?.query?.tab]);
+		set_nonce(n => n+1);
+	}, [router?.query?.tab, approveStatus, currentAdventurer?.tokenID, adventurerCanCraft, adventurerHasXp]);
 
 	const	renderNCPText = () => {
 		if (router?.query?.tab === 'upgrade') {
@@ -116,6 +227,242 @@ function	NCPHeadline({router}) {
 				</>
 			);
 		}
+		if (router?.query?.tab === 'workshop') {
+			if (!adventurerCanCraft) {
+				if (hadWorkshopMessage) {
+					return (
+						<>
+							{'ONLY SOMEONE WHO KNOW THE '}
+							<span className={'text-tag-info'}>{'CRAFT SKILL'}</span>
+							{' CAN ACCESS THIS WORKSHOP! LEARN IT FIRST THEN COME BACK!'}
+						</>		
+					);
+				}
+				return (
+					<>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
+							{'ONLY SOMEONE WHO KNOW THE '}
+						</Typer>
+						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+							{'CRAFT SKILL'}
+						</Typer></span>
+						<Typer
+							onDone={() => {
+								set_npcTextIndex(i => i + 1);
+								set_hadWorkshopMessage(true);
+							}}
+							shouldStart={npcTextIndex === 2}>
+							{' CAN ACCESS THIS WORKSHOP! LEARN IT FIRST THEN COME BACK!'}
+						</Typer>
+					</>
+				);
+			}
+			if (!adventurerHasXp) {
+				if (hadWorkshopMessage) {
+					return (
+						<>
+							{'YOU LOOK TIRED TODAY. YOU NEED AT LEAST '}
+							<span className={'text-tag-info'}>{'250 XP'}</span>
+							{' TO CRAFT SOMETHING. GO ON AN ADVENTURE AND COME BACK WHEN YOU ARE READY!'}
+						</>		
+					);
+				}
+				return (
+					<>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
+							{'YOU LOOK TIRED TODAY. YOU NEED AT LEAST '}
+						</Typer>
+						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+							{'250 XP'}
+						</Typer></span>
+						<Typer
+							onDone={() => {
+								set_npcTextIndex(i => i + 1);
+								set_hadWorkshopMessage(true);
+							}}
+							shouldStart={npcTextIndex === 2}>
+							{' TO CRAFT SOMETHING. GO ON AN ADVENTURE AND COME BACK WHEN YOU ARE READY!'}
+						</Typer>
+					</>
+				);
+			}
+			if (!approveStatus.approvedGold && !approveStatus.approvedCraftingMaterials) {
+				if (hadWorkshopMessage) {
+					return (
+						<>
+							{'YOU ARE HERE TO '}
+							<span className={'text-tag-info'}>{'CRAFT'}</span>
+							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
+							<span className={'text-tag-info'}>{'GOLD'}</span>
+							{' AS WELL AS SOME OF YOUR '}
+							<span className={'text-tag-info'}>{'RAT SKINS'}</span>
+							{'! WE WILL BEGIN AFTER THAT!'}
+						</>		
+					);
+				}
+				return (
+					<>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
+							{'YOU ARE HERE TO '}
+						</Typer>
+						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+							{'CRAFT'}
+						</Typer></span>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
+							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
+						</Typer>
+						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+							{'GOLD'}
+						</Typer></span>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 4}>
+							{' AS WELL AS SOME OF YOUR '}
+						</Typer>
+						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 5}>
+							{'RAT SKINS'}
+						</Typer></span>
+						<Typer
+							onDone={() => {
+								set_npcTextIndex(i => i + 1);
+								set_hadWorkshopMessage(true);
+							}}
+							shouldStart={npcTextIndex === 6}>
+							{'! WE WILL BEGIN AFTER THAT!'}
+						</Typer>
+					</>
+				);
+			}
+			if (!approveStatus.approvedGold) {
+				if (hadWorkshopMessage) {
+					return (
+						<>
+							{'YOU ARE HERE TO '}
+							<span className={'text-tag-info'}>{'CRAFT'}</span>
+							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
+							<span className={'text-tag-info'}>{'GOLD'}</span>
+							{'! WE WILL BEGIN AFTER THAT!'}
+						</>		
+					);
+				}
+				return (
+					<>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
+							{'YOU ARE HERE TO '}
+						</Typer>
+						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+							{'CRAFT'}
+						</Typer></span>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
+							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
+						</Typer>
+						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+							{'GOLD'}
+						</Typer></span>
+						<Typer
+							onDone={() => {
+								set_npcTextIndex(i => i + 1);
+								set_hadWorkshopMessage(true);
+							}}
+							shouldStart={npcTextIndex === 4}>
+							{'! WE WILL BEGIN AFTER THAT!'}
+						</Typer>
+					</>
+				);
+			}
+			if (!approveStatus.approvedCraftingMaterials) {
+				if (hadWorkshopMessage) {
+					return (
+						<>
+							{'YOU ARE HERE TO '}
+							<span className={'text-tag-info'}>{'CRAFT'}</span>
+							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
+							<span className={'text-tag-info'}>{'RAT SKINS'}</span>
+							{'! WE WILL BEGIN AFTER THAT!'}
+						</>		
+					);
+				}
+				return (
+					<>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
+							{'YOU ARE HERE TO '}
+						</Typer>
+						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+							{'CRAFT'}
+						</Typer></span>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
+							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
+						</Typer>
+						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+							{'RAT SKINS'}
+						</Typer></span>
+						<Typer
+							onDone={() => {
+								set_npcTextIndex(i => i + 1);
+								set_hadWorkshopMessage(true);
+							}}
+							shouldStart={npcTextIndex === 4}>
+							{'! WE WILL BEGIN AFTER THAT!'}
+						</Typer>
+					</>
+				);
+			}
+			if (hadWorkshopMessage) {
+				return (
+					<>
+						{'LET\'S '}
+						<span className={'text-tag-info'}>{'CRAFT'}</span>
+						{'! REMEMBER, WHEN YOU TRY TO CRAFT SOMETHING, YOU MAY '}
+						<span className={'text-tag-info'}>{'FAIL'}</span>
+						{', IT\'S A DIFFICULT TASK. '}
+						<span className={'text-tag-info'}>{'INTELLIGENCE AND CRAFT SKILL'}</span>
+						{' CAN HELP YOU.'}
+						<div />
+						{'EACH ATTEMPT WILL COST YOU '}
+						<span className={'text-tag-info'}>{'250XP'}</span>
+						{'.'}
+					</>		
+				);
+			}
+			return (
+				<>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
+						{'LET\'S '}
+					</Typer>
+					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						{'CRAFT'}
+					</Typer></span>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
+						{'! REMEMBER, WHEN YOU TRY TO CRAFT SOMETHING, YOU MAY '}
+					</Typer>
+					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+						{'FAIL'}
+					</Typer></span>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 4}>
+						{', IT\'S A DIFFICULT TASK. '}
+					</Typer>
+					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 5}>
+						{'INTELLIGENCE AND CRAFT SKILL'}
+					</Typer></span>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 6}>
+						{' CAN HELP YOU.'}
+					</Typer>
+					<div />
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 7}>
+						{'EACH ATTEMPT WILL COST YOU '}
+					</Typer>
+					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 8}>
+						{'250XP'}
+					</Typer></span>
+					<Typer
+						onDone={() => {
+							set_npcTextIndex(i => i + 1);
+							set_hadRestoreMessage(true);
+						}}
+						shouldStart={npcTextIndex === 9}>
+						{'.'}
+					</Typer>
+				</>
+			);
+		}
 		if (hadInitialMessage) {
 			return (
 				<>
@@ -152,19 +499,65 @@ function	NCPHeadline({router}) {
 }
 
 function	Index({rarities, router}) {
-	const	{active, address} = useWeb3();
+	const	{provider, chainID} = useWeb3();
+	const	{currentAdventurer} = useRarity();
+	const	[category, set_category] = useState(0);
+	const	[isModalSkillsOpen, set_isModalSkillsOpen] = useState(false);
+	const	[approveStatus, set_approveStatus] = useState({approvedGold: false, approvedCraftingMaterials: false});
 	const	adventurers = Object.values(rarities);
 
-	// useEffect(() => {
-	// 	const	rarityManifest = new ethers.Contract(
-	// 		process.env.RARITY_ADDR, [
-	// 			'function getApproved(uint256 tokenId) external view returns (address operator)'
-	// 		],
-	// 		provider
-	// 	);
-	// 	rarityManifest.getApproved(tokenID);
-	// }, []);
+	async function	checkCraftingStatus() {
+		const	rarity = new Contract(process.env.RARITY_ADDR, RARITY_ABI);
+		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI);
+		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, THE_CELLAR_ABI);
+		const calls = [
+			rarity.getApproved(currentAdventurer?.tokenID),
+			rarityGold.allowance(currentAdventurer?.tokenID, process.env.RARITY_CRAFTING_ID),
+			rarityDungeonCellar.allowance(currentAdventurer?.tokenID, process.env.RARITY_CRAFTING_ID),
+		];
 
+		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
+		const	callResult = await ethcallProvider.all(calls);
+		const	[rarityApprovedAddr, goldAllowance, craftingMaterialsAllowance] = callResult;
+		set_approveStatus({
+			approvedAdventurer: rarityApprovedAddr === process.env.RARITY_CRAFTING_ADDR,
+			approvedGold: !ethers.BigNumber.from(goldAllowance).isZero(),
+			approvedCraftingMaterials: !ethers.BigNumber.from(craftingMaterialsAllowance).isZero(),
+		});
+		return (callResult);
+	}
+	async function	approveGold() {
+		approveERC20({
+			provider,
+			contractAddress: process.env.RARITY_GOLD_ADDR,
+			spender: process.env.RARITY_CRAFTING_ID,
+			adventurerID: currentAdventurer.tokenID,
+			amount: ethers.constants.MaxUint256,
+			name: 'gold'
+		}, ({error}) => {
+			if (!error) {
+				checkCraftingStatus();
+			}
+		});
+	}
+	async function	approveCraftingMaterials() {
+		approveERC20({
+			provider,
+			contractAddress: process.env.DUNGEON_THE_CELLAR_ADDR,
+			spender: process.env.RARITY_CRAFTING_ID,
+			adventurerID: currentAdventurer.tokenID,
+			amount: ethers.constants.MaxUint256,
+			name: 'Rat Skins'
+		}, ({error}) => {
+			if (!error) {
+				checkCraftingStatus();
+			}
+		});
+	}
+
+	useEffect(() => {
+		checkCraftingStatus();
+	}, [currentAdventurer?.tokenID]);
 
 	return (
 		<section className={'max-w-full'}>
@@ -181,15 +574,30 @@ function	Index({rarities, router}) {
 					<Box className={'p-4'}>
 						<NCPHeadline
 							router={router}
+							approveStatus={approveStatus}
+							currentAdventurer={currentAdventurer}
+							adventurerCanCraft={currentAdventurer?.skills?.[5] > 0}
+							adventurerHasXp={currentAdventurer?.xp >= 250}
 						/>
 					</Box>
 				</div>
 				<DialogChoices
 					router={router}
+					set_category={set_category}
 					adventurersCount={adventurers.length}
-					adventurer={rarities} />
+					approveStatus={approveStatus}
+					adventurer={rarities}
+					approveCraftingMaterials={approveCraftingMaterials}
+					approveGold={approveGold}
+					adventurerCanCraft={currentAdventurer?.skills?.[5] > 0}
+					adventurerHasXp={currentAdventurer?.xp >= 250}
+					openModalSkills={() => set_isModalSkillsOpen(true)}
+				/>
 				<SectionCrafting
-					shouldDisplay={router?.query?.tab === 'workshop'} />
+					category={category}
+					set_category={set_category}
+					approveStatus={approveStatus}
+					shouldDisplay={router?.query?.tab === 'workshop' && approveStatus.approvedGold && approveStatus.approvedCraftingMaterials} />
 				<SectionArtifactsTheForest
 					shouldDisplay={router?.query?.tab === 'upgrade'}
 					router={router}
@@ -201,6 +609,10 @@ function	Index({rarities, router}) {
 					adventurers={Object.values(rarities)}
 					adventurersCount={adventurers.length} />
 			</div>
+			{isModalSkillsOpen && <ModalSkills
+				adventurer={currentAdventurer}
+				isOpen={isModalSkillsOpen}
+				closeModal={() => set_isModalSkillsOpen(false)} />}
 		</section>
 	);		
 }

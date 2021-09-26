@@ -14,7 +14,8 @@
 		"damage": 3,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Dagger": {
 		"id": 2,
@@ -31,7 +32,8 @@
 		"damage": 4,
 		"critical": 2,
 		"critical_modifier": -1,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Gauntlet, spiked": {
 		"id": 3,
@@ -48,7 +50,8 @@
 		"damage": 4,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Mace, light": {
 		"id": 4,
@@ -65,7 +68,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Sickle": {
 		"id": 5,
@@ -82,7 +86,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Club": {
 		"id": 6,
@@ -99,7 +104,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Mace, heavy": {
 		"id": 7,
@@ -116,7 +122,8 @@
 		"damage": 8,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Morningstar": {
 		"id": 8,
@@ -133,7 +140,8 @@
 		"damage": 8,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Shortspear": {
 		"id": 9,
@@ -150,7 +158,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Longspear": {
 		"id": 10,
@@ -167,7 +176,8 @@
 		"damage": 8,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Quarterstaff": {
 		"id": 11,
@@ -184,7 +194,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Spear": {
 		"id": 12,
@@ -201,7 +212,8 @@
 		"damage": 8,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Crossbow, heavy": {
 		"id": 13,
@@ -218,7 +230,8 @@
 		"damage": 10,
 		"critical": 2,
 		"critical_modifier": -1,
-		"range_increment": 120
+		"range_increment": 120,
+		"type": 3
 	},
 	"Crossbow, light": {
 		"id": 14,
@@ -235,7 +248,8 @@
 		"damage": 8,
 		"critical": 2,
 		"critical_modifier": -1,
-		"range_increment": 80
+		"range_increment": 80,
+		"type": 3
 	},
 	"Dart": {
 		"id": 15,
@@ -252,7 +266,8 @@
 		"damage": 4,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 20
+		"range_increment": 20,
+		"type": 3
 	},
 	"Javelin": {
 		"id": 16,
@@ -269,7 +284,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 30
+		"range_increment": 30,
+		"type": 3
 	},
 	"Sling": {
 		"id": 17,
@@ -286,7 +302,8 @@
 		"damage": 4,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 50
+		"range_increment": 50,
+		"type": 3
 	},
 	"Axe": {
 		"id": 18,
@@ -303,7 +320,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Hammer, light": {
 		"id": 19,
@@ -320,7 +338,8 @@
 		"damage": 4,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Handaxe": {
 		"id": 20,
@@ -337,7 +356,8 @@
 		"damage": 6,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Kukri": {
 		"id": 21,
@@ -354,7 +374,8 @@
 		"damage": 4,
 		"critical": 2,
 		"critical_modifier": -2,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Pick, light": {
 		"id": 22,
@@ -371,7 +392,8 @@
 		"damage": 4,
 		"critical": 4,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Sap": {
 		"id": 23,
@@ -388,7 +410,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Sword, short": {
 		"id": 24,
@@ -405,7 +428,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": -1,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Battleaxe": {
 		"id": 25,
@@ -422,7 +446,8 @@
 		"damage": 8,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Flail": {
 		"id": 26,
@@ -439,7 +464,8 @@
 		"damage": 8,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Longsword": {
 		"id": 27,
@@ -456,7 +482,8 @@
 		"damage": 8,
 		"critical": 2,
 		"critical_modifier": -1,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Pick, heavy": {
 		"id": 28,
@@ -473,7 +500,8 @@
 		"damage": 6,
 		"critical": 4,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Rapier": {
 		"id": 29,
@@ -490,7 +518,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": -2,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Scimitar": {
 		"id": 30,
@@ -507,7 +536,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": -2,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Trident": {
 		"id": 31,
@@ -524,7 +554,8 @@
 		"damage": 8,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Warhammer": {
 		"id": 32,
@@ -541,7 +572,8 @@
 		"damage": 8,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Falchion": {
 		"id": 33,
@@ -558,7 +590,8 @@
 		"damage": 8,
 		"critical": 2,
 		"critical_modifier": -2,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Glaive": {
 		"id": 34,
@@ -575,7 +608,8 @@
 		"damage": 10,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Greataxe": {
 		"id": 35,
@@ -592,7 +626,8 @@
 		"damage": 12,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Greatclub": {
 		"id": 36,
@@ -609,7 +644,8 @@
 		"damage": 10,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Flail, heavy": {
 		"id": 37,
@@ -626,7 +662,8 @@
 		"damage": 10,
 		"critical": 2,
 		"critical_modifier": -1,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Greatsword": {
 		"id": 38,
@@ -643,7 +680,8 @@
 		"damage": 12,
 		"critical": 2,
 		"critical_modifier": -1,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Guisarme": {
 		"id": 39,
@@ -660,7 +698,8 @@
 		"damage": 8,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Halberd": {
 		"id": 40,
@@ -677,7 +716,8 @@
 		"damage": 10,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Lance": {
 		"id": 41,
@@ -694,7 +734,8 @@
 		"damage": 8,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Ranseur": {
 		"id": 42,
@@ -711,7 +752,8 @@
 		"damage": 8,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Scythe": {
 		"id": 43,
@@ -728,7 +770,8 @@
 		"damage": 8,
 		"critical": 4,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Longbow": {
 		"id": 44,
@@ -745,7 +788,8 @@
 		"damage": 8,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 100
+		"range_increment": 100,
+		"type": 3
 	},
 	"Longbow, composite": {
 		"id": 45,
@@ -762,7 +806,8 @@
 		"damage": 8,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 110
+		"range_increment": 110,
+		"type": 3
 	},
 	"Shortbow": {
 		"id": 46,
@@ -779,7 +824,8 @@
 		"damage": 6,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 60
+		"range_increment": 60,
+		"type": 3
 	},
 	"Shortbow, composite": {
 		"id": 47,
@@ -796,7 +842,8 @@
 		"damage": 6,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 70
+		"range_increment": 70,
+		"type": 3
 	},
 	"Kama": {
 		"id": 48,
@@ -813,7 +860,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Nunchaku": {
 		"id": 49,
@@ -830,7 +878,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Sai": {
 		"id": 50,
@@ -847,7 +896,8 @@
 		"damage": 4,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Siangham": {
 		"id": 51,
@@ -864,7 +914,8 @@
 		"damage": 6,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Sword, bastard": {
 		"id": 52,
@@ -881,7 +932,8 @@
 		"damage": 10,
 		"critical": 2,
 		"critical_modifier": -1,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Waraxe, dwarven": {
 		"id": 53,
@@ -898,7 +950,8 @@
 		"damage": 10,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Axe, orc double": {
 		"id": 54,
@@ -915,7 +968,8 @@
 		"damage": 8,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Chain, spiked": {
 		"id": 55,
@@ -932,7 +986,8 @@
 		"damage": 8,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Flail, dire": {
 		"id": 56,
@@ -949,7 +1004,8 @@
 		"damage": 8,
 		"critical": 2,
 		"critical_modifier": 0,
-		"range_increment": 0
+		"range_increment": 0,
+		"type": 3
 	},
 	"Crossbow, hand": {
 		"id": 57,
@@ -966,7 +1022,8 @@
 		"damage": 4,
 		"critical": 2,
 		"critical_modifier": -1,
-		"range_increment": 30
+		"range_increment": 30,
+		"type": 3
 	},
 	"Crossbow, repeating heavy": {
 		"id": 58,
@@ -983,7 +1040,8 @@
 		"damage": 10,
 		"critical": 2,
 		"critical_modifier": -1,
-		"range_increment": 120
+		"range_increment": 120,
+		"type": 3
 	},
 	"Crossbow, repeating light": {
 		"id": 59,
@@ -1000,6 +1058,7 @@
 		"damage": 8,
 		"critical": 2,
 		"critical_modifier": -1,
-		"range_increment": 80
+		"range_increment": 80,
+		"type": 3
 	}
 }

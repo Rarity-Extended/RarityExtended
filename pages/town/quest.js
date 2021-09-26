@@ -5,7 +5,7 @@
 **	@Filename:				quest.js
 ******************************************************************************/
 
-import	React, {Fragment, useState, useEffect}	from	'react';
+import	React, {useState, useEffect}	from	'react';
 import	Image							from	'next/image';
 import	useUI							from	'contexts/useUI';
 import	useWeb3							from	'contexts/useWeb3';

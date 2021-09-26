@@ -28,7 +28,7 @@ module.exports = {
 			tag: {
 				new: '#059669',
 				info: '#167df0',
-				warning: '#fff257',
+				warning: '#FBBF24',
 				withdraw: '#EF4444'
 			},
 			white: colors.white,
@@ -55,6 +55,7 @@ module.exports = {
 				'120px': '120px'
 			},
 			fontSize: {
+				'regular': ['10px', '16px'],
 				'megaxs': '0.5rem',
 				'xxs': '0.6rem',
 				'xss': '8px',

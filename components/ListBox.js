@@ -6,9 +6,10 @@
 ******************************************************************************/
 
 import	React, {Fragment, useRef, useState}		from	'react';
-import	{Listbox, Transition}			from	'@headlessui/react';
-import	Chevron							from	'components/Chevron';
-import	useOnClickOutside				from	'hook/useOnClickOutside';
+import	{Listbox, Transition}					from	'@headlessui/react';
+import	Chevron									from	'components/Chevron';
+import	Box										from	'components/Box';
+import	useOnClickOutside						from	'hook/useOnClickOutside';
 
 function	Crafting({options, selected, set_selected, className}) {
 	const	[isOpen, set_isOpen] = useState(false);
@@ -37,17 +38,19 @@ function	Crafting({options, selected, set_selected, className}) {
 					leaveTo={'opacity-0'}>
 					<Listbox.Options
 						static
-						className={'absolute -mx-1 overflow-auto text-sx bg-white max-h-48 focus:outline-none z-20 min-w-full border-4 border-black left-0 right-0'}>
-						{options.map((person, personIdx) => (
-							<Listbox.Option
-								key={personIdx}
-								className={({active}) => `${active ? 'bg-gray-secondary' : 'bg-white hover:bg-gray-secondary'} cursor-pointer select-none relative p-2`}
-								value={person}>
-								<span className={'block truncate'}>
-									{person.name}
-								</span>
-							</Listbox.Option>
-						))}
+						className={'absolute text-sx bg-white dark:bg-dark-600 max-h-48 focus:outline-none z-20 min-w-full left-0 right-0 top-full shadow-xl'}>
+						<Box className={'-mt-2 py-2'}>
+							{options.map((person, personIdx) => (
+								<Listbox.Option
+									key={personIdx}
+									className={({active}) => `${active ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white hover:bg-gray-secondary dark:bg-dark-600 dark:hover:bg-dark-400'} cursor-pointer select-none relative p-2`}
+									value={person}>
+									<span className={'block truncate'}>
+										{person.name}
+									</span>
+								</Listbox.Option>
+							))}
+						</Box>
 					</Listbox.Options>
 				</Transition>
 			</div>

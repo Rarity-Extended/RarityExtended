@@ -7,7 +7,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 2,
-		"cost": 1
+		"cost": 1,
+		"type": 1
 	},
 	"Candle": {
 		"id": 2,
@@ -17,7 +18,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 0,
-		"cost": 0.01
+		"cost": 0.01,
+		"type": 1
 	},
 	"Chain": {
 		"id": 3,
@@ -27,7 +29,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 2,
-		"cost": 30
+		"cost": 30,
+		"type": 1
 	},
 	"Crowbar": {
 		"id": 4,
@@ -37,7 +40,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 5,
-		"cost": 2
+		"cost": 2,
+		"type": 1
 	},
 	"Flint and Steel": {
 		"id": 5,
@@ -47,7 +51,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 0,
-		"cost": 1
+		"cost": 1,
+		"type": 1
 	},
 	"Grappling Hook": {
 		"id": 6,
@@ -57,7 +62,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 4,
-		"cost": 1
+		"cost": 1,
+		"type": 1
 	},
 	"Hammer": {
 		"id": 7,
@@ -67,7 +73,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 2,
-		"cost": 0.5
+		"cost": 0.5,
+		"type": 1
 	},
 	"Ink": {
 		"id": 8,
@@ -77,7 +84,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 0,
-		"cost": 8
+		"cost": 8,
+		"type": 1
 	},
 	"Jug, Clay": {
 		"id": 9,
@@ -87,7 +95,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 9,
-		"cost": 0.03
+		"cost": 0.03,
+		"type": 1
 	},
 	"Lamp, Common": {
 		"id": 10,
@@ -97,7 +106,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 1,
-		"cost": 0.1
+		"cost": 0.1,
+		"type": 1
 	},
 	"Lantern, Bullseye": {
 		"id": 11,
@@ -107,7 +117,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 3,
-		"cost": 12
+		"cost": 12,
+		"type": 1
 	},
 	"Lantern, Hooded": {
 		"id": 12,
@@ -117,7 +128,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 2,
-		"cost": 7
+		"cost": 7,
+		"type": 1
 	},
 	"Lock (very simple)": {
 		"id": 13,
@@ -127,7 +139,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 1,
-		"cost": 20
+		"cost": 20,
+		"type": 1
 	},
 	"Lock (average)": {
 		"id": 14,
@@ -137,7 +150,8 @@
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"weight": 1,
-		"cost": 40
+		"cost": 40,
+		"type": 1
 	},
 	"Lock (good)": {
 		"id": 15,
@@ -147,7 +161,8 @@
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"weight": 1,
-		"cost": 80
+		"cost": 80,
+		"type": 1
 	},
 	"Lock (amazing)": {
 		"id": 16,
@@ -157,7 +172,8 @@
 		"level": "Epic",
 		"levelClassName": "bg-items-epic",
 		"weight": 1,
-		"cost": 150
+		"cost": 150,
+		"type": 1
 	},
 	"Manacles": {
 		"id": 17,
@@ -167,7 +183,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 2,
-		"cost": 15
+		"cost": 15,
+		"type": 1
 	},
 	"Manacles, masterwork": {
 		"id": 18,
@@ -177,7 +194,8 @@
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"weight": 2,
-		"cost": 50
+		"cost": 50,
+		"type": 1
 	},
 	"Oil": {
 		"id": 19,
@@ -187,7 +205,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 1,
-		"cost": 0.1
+		"cost": 0.1,
+		"type": 1
 	},
 	"Rope, Hempen": {
 		"id": 20,
@@ -197,7 +216,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 10,
-		"cost": 1
+		"cost": 1,
+		"type": 1
 	},
 	"Rope, Silk": {
 		"id": 21,
@@ -207,7 +227,8 @@
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"weight": 5,
-		"cost": 10
+		"cost": 10,
+		"type": 1
 	},
 	"Spyglass": {
 		"id": 22,
@@ -217,7 +238,8 @@
 		"level": "Epic",
 		"levelClassName": "bg-items-epic",
 		"weight": 1,
-		"cost": 1000
+		"cost": 1000,
+		"type": 1
 	},
 	"Torch": {
 		"id": 23,
@@ -227,7 +249,8 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 1,
-		"cost": 0.01
+		"cost": 0.01,
+		"type": 1
 	},
 	"Vial": {
 		"id": 24,
@@ -237,6 +260,7 @@
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"weight": 1,
-		"cost": 1
+		"cost": 1,
+		"type": 1
 	}
 }
