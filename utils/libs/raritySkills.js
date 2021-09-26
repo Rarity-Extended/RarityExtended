@@ -40,7 +40,6 @@ export function modifierForAttribute(_attribute) {
 
 function skillsPerLevel(_int, _class, _level) {
 	const	modifier = modifierForAttribute(_int);
-
 	return ((basePerClass(_class)) + modifier) * (_level + 3);
 }
 function classSkills(_class) {

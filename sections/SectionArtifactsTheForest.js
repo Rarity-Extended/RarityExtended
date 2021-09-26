@@ -11,7 +11,7 @@ import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	{levelUpTreasureTheForest}		from	'utils/actions';
 import	{xpRequired}					from	'utils/libs/rarity';
-import	THE_FOREST_LOOT					from	'utils/codex/theForestLoot.json';
+import	THE_FOREST_LOOT					from	'utils/codex/items_dungeon_theForest.json';
 
 function	Artifact({img, name, cost, onClick, children, noHover}) {
 	return (
