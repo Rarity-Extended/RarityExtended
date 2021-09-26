@@ -103,6 +103,7 @@ function	DialogChoices({router, adventurersCount}) {
 			selectedOption={selectedOption}
 			nonce={dialogNonce}
 			options={[
+<<<<<<< HEAD
 				{
 					label: (
 						<>
@@ -121,6 +122,11 @@ function	DialogChoices({router, adventurersCount}) {
 					),
 					onClick: () => router.push('/town/quest?tab=the-forest')
 				},
+=======
+				{label: 'WELCOME', onClick: () => router.push('/town/quest')},
+				{label: 'THE RAT IN THE CELLAR', onClick: () => router.push('/town/quest?tab=the-cellar')},
+				{label: 'THE TREASURE IN THE FOREST', onClick: () => router.push('/town/quest?tab=the-forest')},
+>>>>>>> 824a9ee1d73be9a0adfc82d849766c061f381227
 			]} />
 	);
 }
