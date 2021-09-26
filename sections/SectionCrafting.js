@@ -378,20 +378,20 @@ function	Crafting({shouldDisplay, category}) {
 			);
 		}
 		return (
-			<div className={'ml-auto flex flex-row'}>
+			<div className={'ml-auto flex flex-row w-full md:w-auto'}>
 				<ListBox
 					options={proficiencyOptions}
-					className={'mr-4 w-28'}
+					className={'mr-4 w-24 md:w-28'}
 					set_selected={set_proficiency}
 					selected={proficiency} />
 				<ListBox
 					options={encumbranceOptions}
-					className={'mr-4 w-40'}
+					className={'mr-4 w-24 md:w-40'}
 					set_selected={set_encumbrance}
 					selected={encumbrance} />
 				<ListBox
 					options={damageTypeOptions}
-					className={'w-32'}
+					className={'w-24 md:w-32'}
 					set_selected={set_damageType}
 					selected={damageType} />
 			</div>
@@ -557,7 +557,7 @@ function	Crafting({shouldDisplay, category}) {
 	return (
 		<>
 			<div className={'inline-block py-9 text-left transition-all transform bg-white dark:bg-dark-600 max-w-screen-lg w-full uppercase font-title relative'}>
-				<div className={'w-full flex flex-row text-megaxs mb-4'}>
+				<div className={'w-full flex flex-col md:flex-row text-megaxs mb-4'}>
 					<Box>
 						<input
 							onChange={e => set_search(e?.target?.value || '')}
