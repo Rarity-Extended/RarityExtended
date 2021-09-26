@@ -59,8 +59,34 @@ function	SectionCraftAction({currentAdventurer, item, isSimulationError, selecte
 	const	hasEnoughGold = (currentAdventurer?.gold?.balance || 0) >= item.cost;
 
 	return (
-		<div className={'flex flex-row space-x-2'}>
-			<div className={''}>
+		<div className={'flex flex-col md:flex-row space-x-0 md:space-x-2'}>
+			<div className={'flex flex-row md:hidden justify-between'}>
+				<div>
+					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'Add materials'}</p>
+					<div>
+						<ButtonCounter
+							className={'bg-gray-principal hover:bg-white focus:bg-white dark:bg-dark-400 dark:hover:bg-dark-600 dark:focus:bg-dark-600'}
+							backgroundColor={'bg-gray-principal dark:bg-dark-400'}
+							value={selectedCraftingMaterials}
+							threshold={10}
+							inc={() => set_selectedCraftingMaterials(s => s + 10)}
+							dec={() => set_selectedCraftingMaterials(s => s - 10)}
+							setMin={() => set_selectedCraftingMaterials(0)}
+							max={Number(currentAdventurer?.inventory?.[0] || 0)}
+							isMax={craftSkillCheck(currentAdventurer.skills[5], currentAdventurer.attributes.intelligence, (getDifficulty(item) - selectedCraftingMaterials / 10)) === 100}
+						/>
+					</div>
+				</div>
+				<div>
+					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'Chance to Craft'}</p>
+					<BoxAlternate
+						className={'bg-gray-principal dark:bg-dark-400'}
+						backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
+						{`${craftSkillCheck(currentAdventurer.skills[5], currentAdventurer.attributes.intelligence, (getDifficulty(item) - selectedCraftingMaterials / 10))}%`}
+					</BoxAlternate>
+				</div>
+			</div>
+			<div className={'hidden md:block'}>
 				<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'Add materials'}</p>
 				<div>
 					<ButtonCounter
@@ -76,7 +102,7 @@ function	SectionCraftAction({currentAdventurer, item, isSimulationError, selecte
 					/>
 				</div>
 			</div>
-			<div className={''}>
+			<div className={'hidden md:block'}>
 				<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'Chance to Craft'}</p>
 				<BoxAlternate
 					className={'bg-gray-principal dark:bg-dark-400'}
@@ -113,7 +139,7 @@ function	ItemRow({isExpanded, set_isExpanded, item, craftingSuccessPercent, chil
 						<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-2 h-1`} />
 						<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
 					</div>
-					<div className={'grid grid-cols-5 gap-x-4 pt-4 ml-16 w-full'}>
+					<div className={'grid grid-cols-1 md:grid-cols-5 gap-x-0 md:gap-x-4 gap-y-4 md:gap-y-0 pt-4 ml-16 w-full pb-4 md:pb-0'}>
 						<div className={'w-full'}>
 							<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'Name'}</p>
 							<p className={'text-xs text-black dark:text-white'}>{item?.name}</p>
@@ -128,11 +154,11 @@ function	ItemRow({isExpanded, set_isExpanded, item, craftingSuccessPercent, chil
 						</div>
 						<div className={'w-full'}>
 							<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'Crafting success'}</p>
-							<p className={`text-xs ${craftingSuccessPercent > 75 ? 'text-tag-new' : craftingSuccessPercent >= 50 ? 'text-tag-warning' : 'text-tag-withdraw'} ml-2`}>
+							<p className={`text-xs ${craftingSuccessPercent > 75 ? 'text-tag-new' : craftingSuccessPercent >= 50 ? 'text-tag-warning' : 'text-tag-withdraw'}`}>
 								{`${craftingSuccessPercent}%`}
 							</p>
 						</div>
-						<div className={'w-full'}>
+						<div className={'hidden md:flex w-full'}>
 							<p className={'text-sx text-black dark:text-dark-100 text-opacity-50 pb-2'}>&nbsp;</p>
 							<div className={'text-xs text-black dark:text-white flex flex-row justify-end items-center'}>
 								<Chevron className={`ml-2 select-none cursor-pointer text-black dark:text-white transform transition-transform ${isExpanded ? '-rotate-90' : '-rotate-180'}`} />
@@ -374,7 +400,7 @@ function	Crafting({shouldDisplay, category}) {
 
 	function	renderGoods() {
 		return (
-			<div className={'grid grid-cols-1 gap-4 md:gap-8 gap-y-0 md:gap-y-4'}>
+			<div className={'grid grid-cols-1 gap-4 md:gap-8 gap-y-4'}>
 				{
 					Object.values(MANIFEST_GOODS)
 						.filter((item) => {
@@ -388,7 +414,7 @@ function	Crafting({shouldDisplay, category}) {
 									<>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'WEIGHT'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.weight || 0}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.weight || 0}</p>
 										</div>
 									</>
 								</SectionCraft>
@@ -401,7 +427,7 @@ function	Crafting({shouldDisplay, category}) {
 
 	function	renderArmors() {
 		return (
-			<div className={'grid grid-cols-1 gap-4 md:gap-8 gap-y-0 md:gap-y-4'}>
+			<div className={'grid grid-cols-1 gap-4 md:gap-8 gap-y-4'}>
 				{
 					Object.values(MANIFEST_ARMORS)
 						.filter((item) => {
@@ -420,28 +446,28 @@ function	Crafting({shouldDisplay, category}) {
 									<>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'ARMOR TYPE'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.proficiency}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.proficiency}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'ARMOR'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.armor_bonus}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.armor_bonus}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'MAX DEX BONUS'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.max_dex_bonus}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.max_dex_bonus}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'PENALTY'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.penalty}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.penalty}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'SPELL FAILURE'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.spell_failure}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.spell_failure}</p>
 										</div>
 
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'WEIGHT'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.weight || 0}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.weight || 0}</p>
 										</div>
 									</>
 								</SectionCraft>
@@ -454,7 +480,7 @@ function	Crafting({shouldDisplay, category}) {
 
 	function	renderWeapons() {
 		return (
-			<div className={'grid grid-cols-1 gap-4 md:gap-8 gap-y-0 md:gap-y-4'}>
+			<div className={'grid grid-cols-1 gap-4 md:gap-8 gap-y-4'}>
 				{
 					Object.values(MANIFEST_WEAPONS)
 						.filter((item) => {
@@ -488,33 +514,33 @@ function	Crafting({shouldDisplay, category}) {
 									<>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'DMG TYPE'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.damageType}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.damageType}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'ENCUMBRANCE'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.encumbrance}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.encumbrance}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'PROFICIENCY'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.proficiency}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.proficiency}</p>
 										</div>
 
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'DAMAGE'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.damage || 0}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.damage || 0}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'CRITICAL'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.critical_modifier ? `${`${(20+item?.critical_modifier)}-20`}/x${item?.critical || 0}` : `x${item?.critical || 0}`}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.critical_modifier ? `${`${(20+item?.critical_modifier)}-20`}/x${item?.critical || 0}` : `x${item?.critical || 0}`}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'RANGE'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.range_increment || 0}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.range_increment || 0}</p>
 										</div>
 
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'WEIGHT'}</p>
-											<p className={'text-sx text-black dark:text-white'}>{item?.weight || 0}</p>
+											<p className={'text-sx text-black dark:text-white break-words'}>{item?.weight || 0}</p>
 										</div>
 									</>
 								</SectionCraft>

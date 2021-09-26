@@ -16,36 +16,36 @@ function	SectionItem({item}) {
 			<>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'NAME'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.name}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.name}</p>
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'DAMAGE'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.damage || 0}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.damage || 0}</p>
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'DMG TYPE'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.damageType}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.damageType}</p>
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'ENCUMBRANCE'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.encumbrance}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.encumbrance}</p>
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'PROFICIENCY'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.proficiency}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.proficiency}</p>
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'CRITICAL'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.critical_modifier ? `${`${(20+item?.critical_modifier)}-20`}/x${item?.critical || 0}` : `x${item?.critical || 0}`}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.critical_modifier ? `${`${(20+item?.critical_modifier)}-20`}/x${item?.critical || 0}` : `x${item?.critical || 0}`}</p>
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'RANGE'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.range_increment || 0}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.range_increment || 0}</p>
 				</div>
 
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'WEIGHT'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.weight || 0}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.weight || 0}</p>
 				</div>
 			</>
 		);
@@ -55,31 +55,31 @@ function	SectionItem({item}) {
 			<>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'NAME'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.name}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.name}</p>
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'ARMOR'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.armor_bonus}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.armor_bonus}</p>
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'ARMOR TYPE'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.proficiency}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.proficiency}</p>
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'MAX DEX BONUS'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.max_dex_bonus}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.max_dex_bonus}</p>
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'PENALTY'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.penalty}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.penalty}</p>
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'SPELL FAILURE'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.spell_failure}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.spell_failure}</p>
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'WEIGHT'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.weight || 0}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.weight || 0}</p>
 				</div>
 			</>
 		);
@@ -89,11 +89,11 @@ function	SectionItem({item}) {
 			<>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'NAME'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.name}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.name}</p>
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'WEIGHT'}</p>
-					<p className={'text-sx text-black dark:text-white'}>{item?.weight || 0}</p>
+					<p className={'text-sx text-black dark:text-white break-words'}>{item?.weight || 0}</p>
 				</div>
 			</>
 		);
@@ -113,7 +113,7 @@ function	SectionItem({item}) {
 					<div className={`absolute ${item.levelClassName} right-0 bottom-0 w-1 h-2`} />
 				</div>
 				<div className={'w-full flex flex-col px-4 pt-4 pb-6 space-y-6 cursor-default'}>
-					<div className={'grid grid-cols-3 gap-x-4 gap-y-6'}>
+					<div className={'grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-6'}>
 						{item.type === 1 ? renderGoodChildren() : null}
 						{item.type === 2 ? renderArmorChildren() : null}
 						{item.type === 3 ? renderWeaponChildren() : null}

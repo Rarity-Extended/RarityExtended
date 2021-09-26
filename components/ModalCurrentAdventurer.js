@@ -70,7 +70,7 @@ function ModalCurrentAdventurer({isOpen, closeModal}) {
 						leave={'ease-in duration-200'}
 						leaveFrom={'opacity-100 scale-100'}
 						leaveTo={'opacity-0 scale-95'}>
-						<div className={'inline-block px-4 md:px-10 py-9 mt-16 md:mt-23 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative border-4 border-black'}>
+						<div className={'inline-block px-4 md:px-10 pt-9 pb-0 md:pb-9 mt-16 md:mt-23 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative border-4 border-black'}>
 							<Dialog.Title as={'h3'} className={'relative text-lg font-medium leading-6 text-black dark:text-white flex flex-col md:flex-row justify-between'}>
 								{'ADVENTURER'}
 								<svg onClick={closeModal} className={'absolute md:relative top-0 right-0 cursor-pointer'} width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
