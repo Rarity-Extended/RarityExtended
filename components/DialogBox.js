@@ -33,7 +33,7 @@ function	Index({options, nonce, selectedOption = -1}) {
 	return (
 		<div className={'flex flex-col w-full mb-6'}>
 			<div>
-				<Box className={'p-4'}>
+				<Box className={'p-2 md:p-4'}>
 					{options.map((opt, index) => (
 						<div
 							key={index}

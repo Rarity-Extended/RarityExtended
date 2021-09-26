@@ -369,7 +369,7 @@ function	Index() {
 		}
 		return (
 			<Box className={'py-6 px-8 mt-0 text-sm mb-8'}>
-				<div className={'flex flex-row items-center text-megaxs text-black dark:text-white text-opacity-60 mb-4'}>
+				<div className={'hidden md:flex flex-row items-center text-megaxs text-black dark:text-white text-opacity-60 mb-4'}>
 					<div className={'w-4/12'}><p>{'Vault:'}</p></div>
 					<div className={'w-2/12'}><p>{'Token:'}</p></div>
 					<div className={'w-2/12'}><p>{'APY:'}</p></div>
@@ -388,14 +388,29 @@ function	Index() {
 						share: ftmShare,
 						shareRaw: ftmShareRaw
 					})}
-					className={`py-4 flex flex-row items-center text-xs text-black dark:text-white group ${selectedVault?.id === 1 ? 'bg-gray-principal dark:bg-dark-100' : ''} hover:bg-gray-principal dark:hover:bg-dark-100 cursor-pointer -ml-4 px-2`}>
-					<span className={`inline mb-1 mr-2 group-hover:opacity-100 opacity-5 ${selectedVault?.id === 1 ? 'opacity-100' : ''}`} style={{cursor: 'pointer'}}>{'>'}</span>
+					className={`py-4 flex flex-col md:flex-row items-start md:items-center text-xs text-black dark:text-white group ${selectedVault?.id === 1 ? 'bg-gray-principal dark:bg-dark-100' : ''} hover:bg-gray-principal dark:hover:bg-dark-100 cursor-pointer -ml-4 px-2`}>
+					<span className={`hidden md:inline mb-1 mr-2 group-hover:opacity-100 opacity-5 ${selectedVault?.id === 1 ? 'opacity-100' : ''}`} style={{cursor: 'pointer'}}>{'>'}</span>
 
-					<div className={'w-4/12'}><p>{'The Fantom'}</p></div>
-					<div className={'w-2/12'}><p>{'wFTM'}</p></div>
-					<div className={'w-2/12'}><p>{vaultTheFantom?.data?.week}</p></div>
-					<div className={'w-2/12'}><p>{Number(ftmBalance || 0)?.toFixed(2)}</p></div>
-					<div className={'w-2/12'}><p>{Number(ftmShare || 0)?.toFixed(2)}</p></div>
+					<div className={'w-full md:w-4/12 flex flex-row'}>
+						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'Vault:'}</p>
+						<p>{'The Fantom'}</p>
+					</div>
+					<div className={'w-full md:w-2/12 flex flex-row'}>
+						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'Token:'}</p>
+						<p>{'wFTM'}</p>
+					</div>
+					<div className={'w-full md:w-2/12 flex flex-row'}>
+						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'APY:'}</p>
+						<p>{vaultTheFantom?.data?.week}</p>
+					</div>
+					<div className={'w-full md:w-2/12 flex flex-row'}>
+						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'Available:'}</p>
+						<p>{Number(ftmBalance || 0)?.toFixed(2)}</p>
+					</div>
+					<div className={'w-full md:w-2/12 flex flex-row'}>
+						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'In Vault:'}</p>
+						<p>{Number(ftmShare || 0)?.toFixed(2)}</p>
+					</div>
 				</div>
 				<div
 					onClick={() => set_selectedVault({
@@ -408,14 +423,29 @@ function	Index() {
 						share: daiShare,
 						shareRaw: daiShareRaw
 					})}
-					className={`py-4 flex flex-row items-center text-xs text-black dark:text-white group ${selectedVault?.id === 2 ? 'bg-gray-principal dark:bg-dark-100' : ''} hover:bg-gray-principal dark:hover:bg-dark-100 cursor-pointer -ml-4 px-2`}>
-					<span className={`inline mb-1 mr-2 group-hover:opacity-100 opacity-5 ${selectedVault?.id === 2 ? 'opacity-100' : ''}`} style={{cursor: 'pointer'}}>{'>'}</span>
+					className={`pt-6 md:pt-4 py-4 flex flex-col md:flex-row items-center text-xs text-black dark:text-white group ${selectedVault?.id === 2 ? 'bg-gray-principal dark:bg-dark-100' : ''} hover:bg-gray-principal dark:hover:bg-dark-100 cursor-pointer -ml-4 px-2`}>
+					<span className={`hidden md:inline mb-1 mr-2 group-hover:opacity-100 opacity-5 ${selectedVault?.id === 2 ? 'opacity-100' : ''}`} style={{cursor: 'pointer'}}>{'>'}</span>
 
-					<div className={'w-4/12'}><p>{'Fantom\'s Dai Hard'}</p></div>
-					<div className={'w-2/12'}><p>{'DAI'}</p></div>
-					<div className={'w-2/12'}><p>{vaultDaiHard?.data?.week}</p></div>
-					<div className={'w-2/12'}><p>{Number(daiBalance || 0)?.toFixed(2)}</p></div>
-					<div className={'w-2/12'}><p>{Number(daiShare || 0)?.toFixed(2)}</p></div>
+					<div className={'w-full md:w-4/12 flex flex-row'}>
+						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'Vault:'}</p>
+						<p>{'Fantom\'s Dai Hard'}</p>
+					</div>
+					<div className={'w-full md:w-2/12 flex flex-row'}>
+						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'Token:'}</p>
+						<p>{'DAI'}</p>
+					</div>
+					<div className={'w-full md:w-2/12 flex flex-row'}>
+						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'APY:'}</p>
+						<p>{vaultDaiHard?.data?.week}</p>
+					</div>
+					<div className={'w-full md:w-2/12 flex flex-row'}>
+						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'Available:'}</p>
+						<p>{Number(daiBalance || 0)?.toFixed(2)}</p>
+					</div>
+					<div className={'w-full md:w-2/12 flex flex-row'}>
+						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'In Vault:'}</p>
+						<p>{Number(daiShare || 0)?.toFixed(2)}</p>
+					</div>
 				</div>
 			</Box>
 		);
