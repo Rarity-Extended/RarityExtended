@@ -21,7 +21,7 @@ const	classMappingBackImg = [
 	'/back/cleric.png',
 	'/back/druid.png',
 	'/back/fighter.png',
-	'/back/monk.png',
+	'/back/monk.svg',
 	'/back/paladin.png',
 	'/back/ranger.png',
 	'/back/rogue.png',

@@ -90,7 +90,7 @@ const	_CLASSES = {
 	'Monk': {
 		id: 6,
 		name: 'Monk',
-		img: '/monk.png',
+		img: '/front/monk.svg',
 		description: 'Some pursue vanity, and others just want to get drunk.\nInner peace, and control of the body are the goals of a monk',
 		skills: ['Balance', 'Climb', 'Concentration', 'Craft', 'Diplomacy', 'Escape Artist', 'Hide', 'Jump', 'Knowledge', 'Knowledge', 'Listen', 'Move Silently', 'Perform', 'Profession', 'Sense Motive', 'Spot', 'Swim', 'Tumble'],
 		baseSkill: 4,
