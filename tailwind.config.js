@@ -84,6 +84,7 @@ module.exports = {
 				'23': '5.75rem',
 			},
 			width: {
+				22: '88px',
 				57: '14.25rem',
 				69: '276px',
 				75: '18.75rem',
@@ -93,6 +94,7 @@ module.exports = {
 				screen: '100vw'
 			},
 			minWidth: {
+				22: '88px',
 				69: '276px',
 				81: '324px',
 				82: '328px',
