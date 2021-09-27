@@ -9,7 +9,7 @@
 import	React, {useState, useEffect, Fragment}	from	'react';
 
 const	DEFAULT_SPEED = 15;
-function	Typer({children, onDone, shouldStart = true}) {
+function	Typer({children, onDone, shouldStart = true, speed = DEFAULT_SPEED}) {
 	const	[idx, set_idx] = useState(0);
 
 	useEffect(() => {
@@ -18,7 +18,7 @@ function	Typer({children, onDone, shouldStart = true}) {
 		if (children.length <= idx) {
 			return;
 		}
-		let	timer = window.setInterval(() => set_idx(v => v + 1), DEFAULT_SPEED);
+		let	timer = window.setInterval(() => set_idx(v => v + 1), speed);
 		return () => window.clearInterval(timer);
 	}, [shouldStart]);
 
