@@ -2,7 +2,7 @@
 	"Padded": {
 		"id": 1,
 		"name": "Padded",
-		"description": "This armore is made of several layers or tough cloth stuffed with padding",
+		"description": "This armor is made of several layers or tough cloth stuffed with padding",
 		"img": "/items/PIXEL_padded.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
