@@ -269,7 +269,7 @@ function	SectionCraft({item, currentAdventurer, children}) {
 		if (txStatus.isSimulationFailed) {
 			return (
 				<div className={'absolute inset-0 backdrop-blur-3xl bg-white dark:bg-black bg-opacity-70 dark:bg-opacity-70 cursor-not-allowed flex flex-col justify-center items-center text-center p-6'}>
-					<p>{'THE CRAFTMASTER STOPPED YOU.'}</p>
+					<p>{'CEAZOR HAS STOPPED YOU.'}</p>
 					<p>{'YOU WILL FAIL IF YOU TRY IT NOW.'}</p>
 					<div className={'flex flex-row space-x-4'}>
 						<Button
