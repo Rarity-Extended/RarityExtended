@@ -14,7 +14,7 @@ import	{Web3ReactProvider}				from	'@web3-react-fork/core';
 import	{ethers}						from	'ethers';
 import	useWeb3, {Web3ContextApp}		from	'contexts/useWeb3';
 import	useRarity, {RarityContextApp}	from	'contexts/useRarity';
-import	{UIContextApp}					from	'contexts/useUI';
+import	useUI, {UIContextApp}			from	'contexts/useUI';
 import	Navbar							from	'components/Navbar';
 import	Footer							from	'components/Footer';
 import	SectionNoWallet					from	'sections/SectionNoWallet';
@@ -66,6 +66,7 @@ function	GameWrapper({Component, pageProps, element, router}) {
 
 function	AppWrapper(props) {
 	const	{Component, pageProps, router} = props;
+	const	{customTheme} = useUI();
 	const	{switchChain, chainID} = useWeb3();
 	const	windowInFocus = useWindowInFocus();
 
@@ -120,7 +121,7 @@ function	AppWrapper(props) {
 					site: '@RXtended',
 					cardType: 'summary_large_image',
 				}} />
-			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{minHeight: '100vh'}}>
+			<main id={'app'} className={`${customTheme === 'stone' ? 'p-0' : 'p-4'} relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600`} style={{minHeight: '100vh'}}>
 				<Toaster position={'bottom-right'} toastOptions={{className: 'text-sx border-4 border-black dark:border-dark-100 text-black dark:text-white bg-white dark:bg-dark-600 noBr shadow-xl'}} />
 				<Navbar router={router} />
 				<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />

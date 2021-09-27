@@ -35,6 +35,7 @@ export const UIContextApp = ({children}) => {
 		<UI.Provider
 			value={{
 				theme,
+				customTheme: 'stone',
 				setTheme: set_theme,
 				switchTheme: () => set_theme(t => t === 'dark' ? 'light' : 'dark')
 			}}>

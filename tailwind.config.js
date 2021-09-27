@@ -40,6 +40,15 @@ module.exports = {
 				200: '#46597e',
 				100: '#5d6e8f',
 			},
+			stone: {
+				'primary': '#383A39',
+				'secondary': '#5D625F',
+				'primary-highlight': '#535956',
+				'secondary-highlight': '#798080',
+				'primary-shadow': '#202221',
+				'secondary-shadow': '#2A2D2B',
+				'hover': '#69706C',
+			},
 			items: {
 				common: '#5d6e8f',
 				uncommon: 'rgb(73,122,42)',
@@ -71,12 +80,22 @@ module.exports = {
 			},
 			width: {
 				57: '14.25rem',
+				69: '276px',
 				75: '18.75rem',
 				77: '19.25rem',
+				81: '324px',
+				82: '328px',
 				screen: '100vw'
 			},
+			minWidth: {
+				69: '276px',
+				81: '324px',
+				82: '328px',
+			},
 			height: {
-				15: '60px'
+				15: '60px',
+				22: '88px',
+				82: '328px',
 			},
 			minHeight: {
 				120: '480px',
