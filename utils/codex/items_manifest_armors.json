@@ -2,7 +2,7 @@
 	"Padded": {
 		"id": 1,
 		"name": "Padded",
-		"description": "",
+		"description": "This armore is made of several layers or tough cloth stuffed with padding",
 		"img": "/items/PIXEL_padded.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -18,7 +18,7 @@
 	"Leather": {
 		"id": 2,
 		"name": "Leather",
-		"description": "",
+		"description": "This armor is made of toughed animal skin. It's great protection for someone that wants to stay fully mobile.",
 		"img": "/items/PIXEL_leather.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -34,7 +34,7 @@
 	"Studded leather": {
 		"id": 3,
 		"name": "Studded leather",
-		"description": "",
+		"description": "This leather armor has metal rivets attached to it in a pattern.",
 		"img": "/items/PIXEL_studded_leather.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -66,7 +66,7 @@
 	"Hide": {
 		"id": 5,
 		"name": "Hide",
-		"description": "",
+		"description": "This armor is made of animal skin, but usually still contains the thick fur. It's great for keeping the wearer warm and stopping weapons from finding purchase.",
 		"img": "/items/PIXEL_hide.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -82,7 +82,7 @@
 	"Scale mail": {
 		"id": 6,
 		"name": "Scale mail",
-		"description": "The suit includes gauntlets.",
+		"description": "This armor is made of small scales of metal or animal. The suit includes gauntlets.",
 		"img": "/items/PIXEL_scalemail.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -98,7 +98,7 @@
 	"Chainmail": {
 		"id": 7,
 		"name": "Chainmail",
-		"description": "The suit includes gauntlets",
+		"description": "This armor is a long clock that is fashioned of rings and offers great protection from cuts. The suit includes gauntlets.",
 		"img": "/items/PIXEL_chainmail.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -114,7 +114,7 @@
 	"Breastplate": {
 		"id": 8,
 		"name": "Breastplate",
-		"description": "It comes with a helmet and greaves.",
+		"description": "This armor is great for protecting the vital area of the body, but still allowing mobility. It comes with a helmet and greaves.",
 		"img": "/items/PIXEL_breastplate.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -130,7 +130,7 @@
 	"Splint mail": {
 		"id": 9,
 		"name": "Splint mail",
-		"description": "The suit includes gauntlets.",
+		"description": "This armor is made of long strips of metal, or tough wood, that hand vertically. The suit includes gauntlets.",
 		"img": "/items/PIXEL_splint_mail.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -146,7 +146,7 @@
 	"Banded mail": {
 		"id": 10,
 		"name": "Banded mail",
-		"description": "The suit includes gauntlets.",
+		"description": "This armor is made of long strips of metal that encricle the wearer. The suit includes gauntlets.",
 		"img": "/items/PIXEL_banded_mail.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -162,7 +162,7 @@
 	"Half-plate": {
 		"id": 11,
 		"name": "Half-plate",
-		"description": "The suit includes gauntlets.",
+		"description": "This armor offers the most proctection for those that can't quite, or don't desire to, handle full plate. The suit includes gauntlets.",
 		"img": "/items/PIXEL_half_plate.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
