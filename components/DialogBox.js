@@ -27,7 +27,7 @@ function	Index({options}) {
 	return (
 		<div className={'flex flex-col w-full'}>
 			<div>
-				<div className={'py-6 px-8 border-4 border-solid border-black dark:border-dark-100 mt-0 text-sm mb-8'}>
+				<div className={'py-6 px-2 md:px-8 border-4 border-solid border-black dark:border-dark-100 mt-0 text-sm mb-8'}>
 					{options.map((opt, index) => (
 						<div
 							key={index}
