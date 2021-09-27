@@ -259,6 +259,7 @@ function	DialogChoices({router, onWalletConnect, active}) {
 			</>
 		);
 	}
+  
 	return (
 		<DialogBox
 			selectedOption={selectedOption}
