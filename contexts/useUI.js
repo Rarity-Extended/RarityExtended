@@ -21,6 +21,7 @@ export const UIContextApp = ({children}) => {
 	}, []);
 
 	useEffect(() => {
+		document.documentElement.classList.add('stone');
 		if (theme === 'dark') {
 			document.documentElement.classList.add('dark');
 			document.documentElement.classList.remove('light');

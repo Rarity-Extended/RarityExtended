@@ -64,7 +64,12 @@ module.exports = {
 				'120px': '120px'
 			},
 			fontSize: {
+				'caption': ['8px', '16px'],
 				'regular': ['10px', '16px'],
+				'regular-bigger': ['12px', '16px'],
+				'heading': ['16px', '16px'],
+				'heading-bigger': ['24px', '32px'],
+
 				'megaxs': '0.5rem',
 				'xxs': '0.6rem',
 				'xss': '8px',
@@ -95,13 +100,19 @@ module.exports = {
 			height: {
 				15: '60px',
 				22: '88px',
+				25: '100px',
 				82: '328px',
+				83: '332px',
 			},
 			minHeight: {
+				25: '100px',
+				83: '332px',
 				120: '480px',
 				133: '33.25rem'
 			},
 			maxHeight: {
+				25: '100px',
+				83: '332px',
 				120: '480px',
 				133: '33.25rem'
 			},

@@ -12,6 +12,9 @@
 html.dark {
 	background: rgb(19,38,75);
 }
+html.stone {
+	background: #2A2D2B;
+}
 
 #crafting {
 	scroll-margin-top: 91px;

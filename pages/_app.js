@@ -121,7 +121,7 @@ function	AppWrapper(props) {
 					site: '@RXtended',
 					cardType: 'summary_large_image',
 				}} />
-			<main id={'app'} className={`${customTheme === 'stone' ? 'p-0' : 'p-4'} relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600`} style={{minHeight: '100vh'}}>
+			<main id={'app'} className={`${customTheme === 'stone' ? 'p-0 bg-stone-secondary-shadow text-white' : 'p-4 bg-white dark:bg-dark-600 text-black dark:text-white'} relative font-title uppercase`} style={{minHeight: '100vh'}}>
 				<Toaster position={'bottom-right'} toastOptions={{className: 'text-sx border-4 border-black dark:border-dark-100 text-black dark:text-white bg-white dark:bg-dark-600 noBr shadow-xl'}} />
 				<Navbar router={router} />
 				<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />
