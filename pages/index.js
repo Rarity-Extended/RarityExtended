@@ -16,6 +16,11 @@ import	FragmentFull				from	'components/Chains/FragmentFull';
 import	FragmentR					from	'components/Letters/FragmentR';
 import	FragmentA					from	'components/Letters/FragmentA';
 import	FragmentI					from	'components/Letters/FragmentI';
+import	FragmentT					from	'components/Letters/FragmentT';
+import	FragmentY					from	'components/Letters/FragmentY';
+import	FragmentX					from	'components/Letters/FragmentX';
+import	FragmentE					from	'components/Letters/FragmentE';
+import	FragmentD					from	'components/Letters/FragmentD';
 import	PanelSimple					from	'components/Panel/PanelSimple';
 import	FrameType0					from	'components/Frame/Stone/Type0';
 import	Gold						from	'components/Icons/Gold';
@@ -156,7 +161,7 @@ function	Index({router}) {
 			</div>
 			<div className={'flex flex-row max-w-screen-lg w-full mx-auto'}>
 				<div className={'relative w-full flex flex-row border-4 border-black -mt-1 bg-stone-primary'}>
-					<div className={'w-1/3'}>
+					<div className={'w-full'}>
 						<div className={'w-full'}>
 							<div className={'w-full h-83 flex justify-center items-center bg-black relative'}>
 								<Image
@@ -210,7 +215,7 @@ function	Index({router}) {
 						</div>
 					</div>
 
-					<div className={'w-1/3'}>
+					<div className={'w-full'}>
 						<div className={'flex flex-col w-full h-full'}>
 							<div className={'w-full flex flex-row border-b-4 border-r-4 border-black'}>
 								<div className={'relative h-17 w-full'}>
@@ -231,7 +236,7 @@ function	Index({router}) {
 						</div>
 					</div>
 
-					<div className={'w-1/3'}>
+					<div className={'w-76 min-w-76'}>
 						<div className={'flex flex-col w-full h-full'}>
 							<div className={'w-full flex flex-row border-b-4 border-black'}>
 								<div className={'relative h-17 w-full'}>
@@ -262,16 +267,21 @@ function	Index({router}) {
 									<PanelSimple />
 									<div className={'flex items-center text-white flex-col justify-center w-full h-full z-10 relative px-5'}>
 										<div className={'w-full h-1 mb-2.5 bg-black'} />
-										<div className={'relative h-9 w-full flex space-x-1.5'}>
+										<div className={'relative h-9 flex w-full justify-between'}>
 											<FragmentR />
 											<FragmentA />
 											<FragmentR />
+											<div />
 											<FragmentI />
-											{/* <div className={'absolute bg-black w-1 top-0 bottom-0 left-0'} />
-											<div className={'absolute bg-black w-1 top-0 bottom-0 left-6'} />
-											<div className={'absolute bg-black w-1 top-0 bottom-0 left-10'} />
-											<div className={'absolute bg-black w-1 top-0 bottom-0 left-16'} /> */}
-
+											<FragmentT />
+											<FragmentI />
+											<div className={'w-0.5'} />
+											<FragmentY />
+											<FragmentX />
+											<FragmentT />
+											<FragmentY />
+											<FragmentE />
+											<FragmentD />
 										</div>
 										<div className={'w-full h-1 mt-2.5 bg-black'} />
 									</div>

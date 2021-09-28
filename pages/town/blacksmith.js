@@ -23,7 +23,6 @@ import	RARITY_GOLD_ABI						from	'utils/abi/rarityGold.abi';
 import	THE_CELLAR_ABI						from	'utils/abi/dungeonTheCellar.abi';
 import	{approveERC20}						from	'utils/actions';
 
-
 async function newEthCallProvider(provider, devMode) {
 	const	ethcallProvider = new Provider();
 	if (devMode) {
