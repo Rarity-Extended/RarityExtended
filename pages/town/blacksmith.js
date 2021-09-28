@@ -468,7 +468,9 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 				<>
 					{'WELCOME! I AM '}
 					<span className={'text-tag-info'}>{'CEAZOR THE BLACKSMITH'}</span>
-					{'. MY WORKSHOP IS OPEN FOR BUSINESS. YOU CAN NOW \'CRAFT AN ITEM\' IF YOU HAVE THE SKILL AND MATERIALS TO PULL IT OFF. DON\'T WORRY I WILL HELP YOU OUT.  ALSO, IF YOU FOUND SOME ITEMS IN THE FOREST,  I CAN STILL UPGRADE THEM FOR XP. OR RESTORE THE ONES FROM THE OLD FOREST.'}
+					{'. MY WORKSHOP IS OPEN FOR BUSINESS. YOU CAN NOW '}
+					<span className={'text-tag-info'}>{'CRAFT AN ITEM'}</span>
+					{' IF YOU HAVE THE SKILL AND MATERIALS TO PULL IT OFF. DON\'T WORRY I WILL HELP YOU OUT.  ALSO, IF YOU FOUND SOME ITEMS IN THE FOREST,  I CAN STILL UPGRADE THEM FOR XP. OR RESTORE THE ONES FROM THE OLD FOREST.'}
 				</>		
 			);
 		}
@@ -476,17 +478,23 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 			<>
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 					{'WELCOME! I AM '}
-				</Typer>&nbsp;
+				</Typer>
 				<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 					{'CEAZOR THE BLACKSMITH'}
+				</Typer></span>
+				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
+					{'. MY WORKSHOP IS OPEN FOR BUSINESS. YOU CAN NOW '}
+				</Typer>
+				<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+					{'CRAFT AN ITEM'}
 				</Typer></span>
 				<Typer
 					onDone={() => {
 						set_npcTextIndex(i => i + 1);
 						set_hadInitialMessage(true);
 					}}
-					shouldStart={npcTextIndex === 2}>
-					{'. MY WORKSHOP IS OPEN FOR BUSINESS. YOU CAN NOW \'CRAFT AN ITEM\' IF YOU HAVE THE SKILL AND MATERIALS TO PULL IT OFF. DON\'T WORRY I WILL HELP YOU OUT.  ALSO, IF YOU FOUND SOME ITEMS IN THE FOREST,  I CAN STILL UPGRADE THEM FOR XP. OR RESTORE THE ONES FROM THE OLD FOREST.'}
+					shouldStart={npcTextIndex === 4}>
+					{' IF YOU HAVE THE SKILL AND MATERIALS TO PULL IT OFF. DON\'T WORRY I WILL HELP YOU OUT.  ALSO, IF YOU FOUND SOME ITEMS IN THE FOREST,  I CAN STILL UPGRADE THEM FOR XP. OR RESTORE THE ONES FROM THE OLD FOREST.'}
 				</Typer>
 			</>
 		);
