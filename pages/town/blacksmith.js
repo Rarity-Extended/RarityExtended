@@ -232,7 +232,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 				if (hadWorkshopMessage) {
 					return (
 						<>
-							{'ONLY SOMEONE WHO KNOW THE '}
+							{'ONLY SOMEONE WHO KNOWS THE '}
 							<span className={'text-tag-info'}>{'CRAFT SKILL'}</span>
 							{' CAN ACCESS THIS WORKSHOP! LEARN IT FIRST THEN COME BACK!'}
 						</>		
@@ -241,7 +241,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 				return (
 					<>
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
-							{'ONLY SOMEONE WHO KNOW THE '}
+							{'ONLY SOMEONE WHO KNOWS THE '}
 						</Typer>
 						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 							{'CRAFT SKILL'}
@@ -296,7 +296,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 							<span className={'text-tag-info'}>{'GOLD'}</span>
 							{' AS WELL AS SOME OF YOUR '}
 							<span className={'text-tag-info'}>{'RAT SKINS'}</span>
-							{'! WE WILL BEGIN AFTER THAT!'}
+							{'! WE WILL BEGIN IMMEDIATELY!'}
 						</>		
 					);
 				}
@@ -326,7 +326,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 								set_hadWorkshopMessage(true);
 							}}
 							shouldStart={npcTextIndex === 6}>
-							{'! WE WILL BEGIN AFTER THAT!'}
+							{'! WE WILL BEGIN IMMEDIATELY!'}
 						</Typer>
 					</>
 				);
@@ -339,7 +339,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 							<span className={'text-tag-info'}>{'CRAFT'}</span>
 							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
 							<span className={'text-tag-info'}>{'GOLD'}</span>
-							{'! WE WILL BEGIN AFTER THAT!'}
+							{'! WE WILL BEGIN IMMEDIATELY!'}
 						</>		
 					);
 				}
@@ -363,7 +363,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 								set_hadWorkshopMessage(true);
 							}}
 							shouldStart={npcTextIndex === 4}>
-							{'! WE WILL BEGIN AFTER THAT!'}
+							{'! WE WILL BEGIN IMMEDIATELY!'}
 						</Typer>
 					</>
 				);
@@ -376,7 +376,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 							<span className={'text-tag-info'}>{'CRAFT'}</span>
 							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
 							<span className={'text-tag-info'}>{'RAT SKINS'}</span>
-							{'! WE WILL BEGIN AFTER THAT!'}
+							{'! WE WILL BEGIN IMMEDIATELY!'}
 						</>		
 					);
 				}
@@ -400,7 +400,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 								set_hadWorkshopMessage(true);
 							}}
 							shouldStart={npcTextIndex === 4}>
-							{'! WE WILL BEGIN AFTER THAT!'}
+							{'! WE WILL BEGIN IMMEDIATELY!'}
 						</Typer>
 					</>
 				);
@@ -413,7 +413,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 						{'! REMEMBER, WHEN YOU TRY TO CRAFT SOMETHING, YOU MAY '}
 						<span className={'text-tag-info'}>{'FAIL'}</span>
 						{', IT\'S A DIFFICULT TASK. '}
-						<span className={'text-tag-info'}>{'INTELLIGENCE AND CRAFT SKILL'}</span>
+						<span className={'text-tag-info'}>{'YOUR INTELLIGENCE AND CRAFT SKILL'}</span>
 						{' CAN HELP YOU.'}
 						<div />
 						{'EACH ATTEMPT WILL COST YOU '}
@@ -440,7 +440,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 						{', IT\'S A DIFFICULT TASK. '}
 					</Typer>
 					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 5}>
-						{'INTELLIGENCE AND CRAFT SKILL'}
+						{'YOUR INTELLIGENCE AND CRAFT SKILL'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 6}>
 						{' CAN HELP YOU.'}
@@ -468,7 +468,9 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 				<>
 					{'WELCOME! I AM '}
 					<span className={'text-tag-info'}>{'CEAZOR THE BLACKSMITH'}</span>
-					{'. MY WORKSHOP IS UNDER CONSTRUCTION, BUT IF YOU FOUND SOME ITEMS IN THE FOREST, MAYBE I CAN UPGRADE THEM FOR XP. OR RESTORE THE ONES FROM THE FORMER FOREST.'}
+					{'. MY WORKSHOP IS OPEN FOR BUSINESS. YOU CAN NOW '}
+					<span className={'text-tag-info'}>{'CRAFT AN ITEM'}</span>
+					{' IF YOU HAVE THE SKILL AND MATERIALS TO PULL IT OFF. DON\'T WORRY I WILL HELP YOU OUT.  ALSO, IF YOU FOUND SOME ITEMS IN THE FOREST,  I CAN STILL UPGRADE THEM FOR XP. OR RESTORE THE ONES FROM THE OLD FOREST.'}
 				</>		
 			);
 		}
@@ -476,17 +478,23 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 			<>
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 					{'WELCOME! I AM '}
-				</Typer>&nbsp;
+				</Typer>
 				<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 					{'CEAZOR THE BLACKSMITH'}
+				</Typer></span>
+				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
+					{'. MY WORKSHOP IS OPEN FOR BUSINESS. YOU CAN NOW '}
+				</Typer>
+				<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+					{'CRAFT AN ITEM'}
 				</Typer></span>
 				<Typer
 					onDone={() => {
 						set_npcTextIndex(i => i + 1);
 						set_hadInitialMessage(true);
 					}}
-					shouldStart={npcTextIndex === 2}>
-					{'. MY WORKSHOP IS UNDER CONSTRUCTION, BUT IF YOU FOUND SOME ITEMS IN THE FOREST, MAYBE I CAN UPGRADE THEM FOR XP. OR RESTORE THE ONES FROM THE FORMER FOREST.'}
+					shouldStart={npcTextIndex === 4}>
+					{' IF YOU HAVE THE SKILL AND MATERIALS TO PULL IT OFF. DON\'T WORRY I WILL HELP YOU OUT.  ALSO, IF YOU FOUND SOME ITEMS IN THE FOREST,  I CAN STILL UPGRADE THEM FOR XP. OR RESTORE THE ONES FROM THE OLD FOREST.'}
 				</Typer>
 			</>
 		);

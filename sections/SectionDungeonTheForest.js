@@ -103,7 +103,7 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 									rarityClass={CLASSES[adventurer.class]}>
 									<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex justify-center items-center text-center p-6'}>
 										<p className={'text-white'}>
-											{`BACK IN ${dayjs(new Date(adventurer?.dungeons?.forest?.endBlockTs * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}
+											{`BACK ${dayjs(new Date(adventurer?.dungeons?.forest?.endBlockTs * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}
 										</p>
 									</div>
 								</Adventurer>

@@ -56,7 +56,7 @@
 	"Mace, light": {
 		"id": 4,
 		"name": "Mace, light",
-		"description": "",
+		"description": "A light mace is used by heroes that want to defend themselves, but would rather not sever limbs or see a lot of blood otherwise.",
 		"img": "/items/mace_light.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -92,7 +92,7 @@
 	"Club": {
 		"id": 6,
 		"name": "Club",
-		"description": "",
+		"description": "This is basically a sturdy stick.",
 		"img": "/items/club.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -110,7 +110,7 @@
 	"Mace, heavy": {
 		"id": 7,
 		"name": "Mace, heavy",
-		"description": "",
+		"description": "This is a larger sized mace, a bit heavier than the light version. A bit harder to swing, but packs a slightly harder punch.",
 		"img": "/items/mace_heavy.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -128,7 +128,7 @@
 	"Morningstar": {
 		"id": 8,
 		"name": "Morningstar",
-		"description": "",
+		"description": "This wicked looking club is jagged. The small spikes help to dent armor and crack bones.",
 		"img": "/items/morningstar.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -200,7 +200,7 @@
 	"Spear": {
 		"id": 12,
 		"name": "Spear",
-		"description": "",
+		"description": "This spear is too long for single handed us, but short enough to not be unwieldy.",
 		"img": "/items/spear.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -254,7 +254,7 @@
 	"Dart": {
 		"id": 15,
 		"name": "Dart",
-		"description": "",
+		"description": "Darts are not particularly lethal, but in the right hands, can be thrown with deadly intent.",
 		"img": "/items/dart.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -308,7 +308,7 @@
 	"Axe": {
 		"id": 18,
 		"name": "Axe",
-		"description": "",
+		"description": "Great for chopping logs, and limbs.",
 		"img": "/items/axe.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -326,7 +326,7 @@
 	"Hammer, light": {
 		"id": 19,
 		"name": "Hammer, light",
-		"description": "",
+		"description": "Great for whacking nails and cracking skulls.",
 		"img": "/items/hammer_light.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -344,7 +344,7 @@
 	"Handaxe": {
 		"id": 20,
 		"name": "Handaxe",
-		"description": "",
+		"description": "The 'hatchet' sized axe, can both chop with the best of them and be thrown at a close range.",
 		"img": "/items/hand_axe.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -356,13 +356,13 @@
 		"damage": 6,
 		"critical": 3,
 		"critical_modifier": 0,
-		"range_increment": 0,
+		"range_increment": 10,
 		"type": 3
 	},
 	"Kukri": {
 		"id": 21,
 		"name": "Kukri",
-		"description": "",
+		"description": "The kukri is a multiuse blade that is great for clearing out brush and overgrown, while also serving as a great weapon.",
 		"img": "/items/kukri.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -380,7 +380,7 @@
 	"Pick, light": {
 		"id": 22,
 		"name": "Pick, light",
-		"description": "",
+		"description": "Any digger worth their weight in ore, would always we equipped with a light pick. If it can break up rock, think what it can do to flesh.",
 		"img": "/items/pick.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -398,7 +398,7 @@
 	"Sap": {
 		"id": 23,
 		"name": "Sap",
-		"description": "",
+		"description": "Whack a fool in the head, and knock him out. This weapon is great for dealing non-fatal blows.",
 		"img": "/items/sap.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -416,7 +416,7 @@
 	"Sword, short": {
 		"id": 24,
 		"name": "Sword, short",
-		"description": "",
+		"description": "This sword is rough the lenght of an arm. It's easy to wield, and a skilled fighter might even be able to dual wield these.",
 		"img": "/items/sword_short.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -434,7 +434,7 @@
 	"Battleaxe": {
 		"id": 25,
 		"name": "Battleaxe",
-		"description": "",
+		"description": "This axe is designed for the fight. It can chop wood, no doubt, but shines covered in blood.",
 		"img": "/items/battle_axe.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -470,7 +470,7 @@
 	"Longsword": {
 		"id": 27,
 		"name": "Longsword",
-		"description": "",
+		"description": "The longsword is a favorite of a warrior that dons a shield. It grants them a bit more reach when swinging from behind their protection.",
 		"img": "/items/longsword.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -488,7 +488,7 @@
 	"Pick, heavy": {
 		"id": 28,
 		"name": "Pick, heavy",
-		"description": "",
+		"description": "This pick, like the light version, is great for digging in rock and gravel, but can make a deadly weapon nonetheless.",
 		"img": "/items/pick_heavy.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -524,7 +524,7 @@
 	"Scimitar": {
 		"id": 30,
 		"name": "Scimitar",
-		"description": "",
+		"description": "This sword may look delicate, it is quite capable of trading blows with most weapons, but fast enough to find its way around them as well.",
 		"img": "/items/scimitar.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -560,7 +560,7 @@
 	"Warhammer": {
 		"id": 32,
 		"name": "Warhammer",
-		"description": "",
+		"description": "This hammer is not for building, rather for smashing. Swing this weapon when you want to crack bones.",
 		"img": "/items/war_hammer.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -578,7 +578,7 @@
 	"Falchion": {
 		"id": 33,
 		"name": "Falchion",
-		"description": "",
+		"description": "This bladeside heavy sword is great for long swooping strokes that cut ememies to ribbons.",
 		"img": "/items/falchion.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -614,7 +614,7 @@
 	"Greataxe": {
 		"id": 35,
 		"name": "Greataxe",
-		"description": "",
+		"description": "The 'big daddy' axe is heavy and cumbersome, but is take off a head in a single swing.",
 		"img": "/items/greataxe.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -632,7 +632,7 @@
 	"Greatclub": {
 		"id": 36,
 		"name": "Greatclub",
-		"description": "",
+		"description": "If you have the strength to pick this up, you can really smash your way through your enemies.",
 		"img": "/items/greatclub.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
@@ -668,7 +668,7 @@
 	"Greatsword": {
 		"id": 38,
 		"name": "Greatsword",
-		"description": "",
+		"description": "This is a big blade indeed. No shorter than 6' this blade is long and heavy, but it's thirsty for blood.",
 		"img": "/items/greatsword.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
