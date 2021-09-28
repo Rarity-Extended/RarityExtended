@@ -72,7 +72,7 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, router, adventur
 													return console.error(error);
 												}
 												updateRarity(adventurer.tokenID);
-												router.push('/');
+												router.push('/town/blacksmith?tab=restore');
 											});
 										}}
 										noHover={Number(adventurer.xp) < xpRequired(item.level)}
