@@ -11,7 +11,7 @@ import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	{levelUpTreasureTheForest}		from	'utils/actions';
 import	{xpRequired}					from	'utils/libs/rarity';
-import	THE_FOREST_LOOT					from	'utils/codex/theForestLoot.json';
+import	THE_FOREST_LOOT					from	'utils/codex/items_dungeon_theForest.json';
 
 function	Artifact({img, name, cost, onClick, children, noHover}) {
 	return (
@@ -37,14 +37,61 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, router, adventur
 	if (!shouldDisplay) {
 		return null;
 	}
+	const artifactList = Object.values(adventurers).map((adventurer) => {
+		return (
+			adventurer?.inventory[1].map((item, i) => {
+				return (
+					<Artifact
+						key={`${item.id}_${i}`}
+						onClick={() => {
+							levelUpTreasureTheForest({
+								provider,
+								contractAddress: process.env.DUNGEON_THE_FOREST_ADDR,
+								tokenID: item.treasureId.toString(),
+								adventurerID: adventurer.tokenID,
+								treasureName: item.itemName
+							}, ({error}) => {
+								if (error) {
+									return console.error(error);
+								}
+								updateRarity(adventurer.tokenID);
+								router.push('/town/blacksmith?tab=restore');
+							});
+						}}
+						noHover={Number(adventurer.xp) < xpRequired(item.level)}
+						img={THE_FOREST_LOOT[item.itemName].img}
+						name={item.itemName}
+						cost={xpRequired(item.level)}>
+						{Number(adventurer.xp) < xpRequired(item.level) ?
+							<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex justify-center items-center text-center p-6'}>
+								<p className={'text-white'}>
+									{'YOU NEED MORE XP'}
+								</p>
+							</div>
+							:
+							null
+						}
+					</Artifact>
+				);
+			})
+		);
+	});
+
 	return (
 		<div className={'flex flex-col w-full'}>
 			<div className={'pb-10'}>
-				{adventurersCount !== 0 ? <div>
-					<p className={'text-xs'}>
-						{'> WHICH ARTIFACT WOULD YOU LIKE TO UPGRADE?'}
-					</p>
-				</div> :
+				{adventurersCount !== 0 ?
+					artifactList.length === 0 ?
+						<div>
+							<p className={'text-xs'}>
+								{'> YOU HAVE NO ARTIFACT TO UPGRADE'}
+							</p>
+						</div> :
+						<div>
+							<p className={'text-xs'}>
+								{'> WHICH ARTIFACT WOULD YOU LIKE TO UPGRADE?'}
+							</p>
+						</div> :
 					<div> 
 						<p className={'text-xs'}>
 							{'> You first need to recruit an adventurer !'}
@@ -54,46 +101,7 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, router, adventur
 			</div>
 			<div>
 				<div className={'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8'}>
-					{Object.values(adventurers).map((adventurer) => {
-						return (
-							adventurer?.inventory[1].map((item, i) => {
-								return (
-									<Artifact
-										key={`${item.id}_${i}`}
-										onClick={() => {
-											levelUpTreasureTheForest({
-												provider,
-												contractAddress: process.env.DUNGEON_THE_FOREST_ADDR,
-												tokenID: item.treasureId.toString(),
-												adventurerID: adventurer.tokenID,
-												treasureName: item.itemName
-											}, ({error}) => {
-												if (error) {
-													return console.error(error);
-												}
-												updateRarity(adventurer.tokenID);
-												router.push('/');
-											});
-										}}
-										noHover={Number(adventurer.xp) < xpRequired(item.level)}
-										img={THE_FOREST_LOOT[item.itemName].img}
-										name={item.itemName}
-										cost={xpRequired(item.level)}>
-										{Number(adventurer.xp) < xpRequired(item.level) ?
-											<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex justify-center items-center text-center p-6'}>
-												<p className={'text-white'}>
-													{'YOU NEED MORE XP'}
-												</p>
-											</div>
-											:
-											null
-										}
-									</Artifact>
-								);
-							})
-						);
-					})}
-					
+					{artifactList}
 				</div>
 			</div>
 		</div>

@@ -5,6 +5,7 @@
 **	@Filename:				items.js
 ******************************************************************************/
 
+import	{ethers}				from	'ethers';
 import	{Contract}				from	'ethcall';
 import	RARITY_GOLD_ABI			from	'utils/abi/rarityGold.abi';
 import	THE_FOREST_ABI			from	'utils/abi/dungeonTheForest.abi';
@@ -24,14 +25,18 @@ const	items = [
 	},
 	{
 		name: 'TheForest_treasure',
-		img: '/items/default_artifact.png',
 		address: process.env.DUNGEON_THE_FOREST_ADDR,
-		level: 'Relic',
-		levelClassName: 'bg-items-relic',
 		fetch: (adventurerID) => new Contract(process.env.DUNGEON_THE_FOREST_ADDR, THE_FOREST_ABI).getTreasuresBySummoner(adventurerID),
 		dungeon: 'The Forest',
 		parse: (item) => item,
 		id: 1,
+	},
+	{
+		name: 'Craft_weapons',
+		address: process.env.RARITY_CRAFTING_ADDR,
+		fetch: (adventurerID) => new Contract(process.env.DUNGEON_THE_FOREST_ADDR, THE_FOREST_ABI).getTreasuresBySummoner(adventurerID),
+		parse: (item) => item,
+		id: 2,
 	}
 ];
 

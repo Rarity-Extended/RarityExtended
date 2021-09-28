@@ -8,6 +8,7 @@
 import	{ethers}			from	'ethers';
 import	toast				from	'react-hot-toast';
 import	CLASSES				from	'utils/codex/classes';
+import	RARITY_CRAFTING_ABI	from	'utils/abi/rarityCrafting.abi';
 
 async function	_adventure(loader, {provider, contractAddress, tokenID}, callback) {
 	const	_toast = toast.loading(loader);
@@ -755,5 +756,202 @@ export async function	restoreTreasureTheForest({provider, contractAddress, token
 		toast.dismiss(_toast);
 		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
+	}
+}
+
+export async function	craft({
+	provider,
+	contractAddress,
+	tokenID,
+	itemName,
+	baseType,
+	itemType,
+	craftingMaterials,
+	forced = false
+}, callback) {
+	let		hadApprove = false;
+	let		_toast;
+	const	signer = provider.getSigner();
+	const	rarityCraft = new ethers.Contract(
+		contractAddress,
+		RARITY_CRAFTING_ABI,
+		signer
+	);
+
+	/**********************************************************************
+	**	First, we need to approve this TX
+	**********************************************************************/
+	try {
+		const	raritySource = new ethers.Contract(
+			process.env.RARITY_ADDR, [
+				'function getApproved(uint256 tokenId) external view returns (address operator)',
+				'function approve(address to, uint256 tokenId) external'
+			],
+			signer
+		);
+		const	approvedAddr = await raritySource.getApproved(tokenID);
+		if (approvedAddr !== contractAddress) {
+			hadApprove = true;
+			_toast = toast.loading('1/2 - Approving craft ...');
+			const	transaction = await raritySource.approve(contractAddress, tokenID);
+			const	transactionResult = await transaction.wait();
+			if (transactionResult.status === 1) {
+				toast.dismiss(_toast);
+			} else {
+				toast.dismiss(_toast);
+				toast.error('Approve reverted');
+				callback({error: true, data: undefined});
+				return;
+			}
+		}
+	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
+		callback({error, data: undefined});
+		return;
+	}
+	
+	/**********************************************************************
+	**	Then, we need to simulate the crafting to avoid absolute errors
+	**********************************************************************/
+	if (!forced) {
+		const	simulation = await rarityCraft.simulate(
+			tokenID,
+			baseType,
+			itemType,
+			craftingMaterials
+		);
+		if (!simulation.crafted) {
+			callback({error: 'SIMULATION_FAILED', data: tokenID});
+			toast.error('IT\'S A BAD IDEA TO CRAFT THAT RIGHT NOW. TRY AGAIN LATER');
+			return;
+		}
+	}
+
+	if (hadApprove) {
+		_toast = toast.loading(`2/2 Trying to craft ${itemName}...`);
+	} else {
+		_toast = toast.loading(`Trying to craft ${itemName}...`);
+	}
+	/**********************************************************************
+	**	In order to avoid dumb error, let's first check if the TX would
+	**	be successful with a static call
+	**********************************************************************/
+	try {
+		await rarityCraft.callStatic.craft(
+			tokenID,
+			baseType,
+			itemType,
+			craftingMaterials
+		);
+	} catch (error) {
+		toast.dismiss(_toast);
+		toast.error('You have a bad feeling about this. You should retry later.');
+		callback({error, data: undefined});
+		return;
+	}
+
+	/**********************************************************************
+	**	If the call is successful, try to perform the actual TX
+	**********************************************************************/
+	try {
+		const	transaction = await rarityCraft.craft(
+			tokenID,
+			baseType,
+			itemType,
+			craftingMaterials,
+			{gasLimit: 400_000}
+		);
+		const	transactionResult = await transaction.wait();
+		if (transactionResult.status === 1) {
+			if (transactionResult.logs.length === 0) {
+				callback({error: 'CRAFT_FAILED', data: tokenID});
+				toast.dismiss(_toast);
+				toast.error('YOU FAILED YOUR CRAFT ATTEMPT');	
+				return;
+			}
+			callback({error: false, data: tokenID});
+			toast.dismiss(_toast);
+			toast.success('Transaction successful');
+		} else {
+			toast.dismiss(_toast);
+			toast.error('Transaction reverted');
+			callback({error: true, data: undefined});
+		}
+	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
+		callback({error, data: undefined});
+	}
+}
+
+export async function	approveERC721({provider, contractAddress, spender, tokenID, name}, callback) {
+	let		_toast = toast.loading(`Approving ${name}...`);
+	const	signer = provider.getSigner();
+
+	/**********************************************************************
+	**	First, we need to approve this TX
+	**********************************************************************/
+	try {
+		const	contract = new ethers.Contract(
+			contractAddress, [
+				'function approve(address spender, uint256 tokenID) external'
+			],
+			signer
+		);
+		const	transaction = await contract.approve(spender, tokenID);
+		const	transactionResult = await transaction.wait();
+		if (transactionResult.status === 1) {
+			toast.dismiss(_toast);
+			callback({error: false, data: undefined});
+			return;
+		} else {
+			toast.dismiss(_toast);
+			toast.error('Approve reverted');
+			callback({error: true, data: undefined});
+			return;
+		}
+	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
+		callback({error, data: undefined});
+		return;
+	}
+}
+export async function	approveERC20({provider, contractAddress, adventurerID, spender, amount, name}, callback) {
+	let		_toast = toast.loading(`Approving ${name}...`);
+	const	signer = provider.getSigner();
+
+	/**********************************************************************
+	**	First, we need to approve this TX
+	**********************************************************************/
+	try {
+		const	contract = new ethers.Contract(
+			contractAddress, [
+				'function approve(uint256 from, uint256 spender, uint256 amount) external'
+			],
+			signer
+		);
+		const	transaction = await contract.approve(adventurerID, spender, amount);
+		const	transactionResult = await transaction.wait();
+		if (transactionResult.status === 1) {
+			toast.dismiss(_toast);
+			callback({error: false, data: undefined});
+			return;
+		} else {
+			toast.dismiss(_toast);
+			toast.error('Approve reverted');
+			callback({error: true, data: undefined});
+			return;
+		}
+	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
+		callback({error, data: undefined});
+		return;
 	}
 }

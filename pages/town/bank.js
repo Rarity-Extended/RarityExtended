@@ -12,12 +12,14 @@ import	useSWR							from	'swr';
 import	useWeb3							from	'contexts/useWeb3';
 import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
+import	Box								from	'components/Box';
 import	{fetcher}						from	'utils';
 import	{apeInVault, apeOutVault, depositInVault, withdrawFromVault}					from	'utils/actions';
 
 function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError, isDeposit}) {
 	const	[nonce, set_nonce] = useState(0);
 	const	[npcTextIndex, set_npcTextIndex] = useState(0);
+	const	[hadInitialMessage, set_hadInitialMessage] = useState(false);
 	
 	useEffect(() => {
 		set_npcTextIndex(0);
@@ -107,6 +109,15 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 				</>
 			);
 		}
+		if (hadInitialMessage) {
+			return (
+				<>
+					{'LOOK WHO IS HERE! WELCOME TO '}
+					<span className={'text-tag-info'}>{'IVAN’S BANK'}</span>
+					{', MIGHTY HERO! SO YOU’VE EARNED SOME COINS IN YOUR LEGENDARY ADVENTURES, HAVEN’T YOU? I CAN EARN YOU EVEN MORE! JUST DEPOSIT IN THE ONE OF THESE VERY NICE VAULTS...'}
+				</>
+			);
+		}
 		return (
 			<>
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
@@ -115,14 +126,19 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 				<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 					{'IVAN’S BANK'}
 				</Typer></span>
-				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
+				<Typer
+					onDone={() => {
+						set_npcTextIndex(i => i + 1);
+						set_hadInitialMessage(true);
+					}}
+					shouldStart={npcTextIndex === 2}>
 					{', MIGHTY HERO! SO YOU’VE EARNED SOME COINS IN YOUR LEGENDARY ADVENTURES, HAVEN’T YOU? I CAN EARN YOU EVEN MORE! JUST DEPOSIT IN THE ONE OF THESE VERY NICE VAULTS...'}
 				</Typer>
 			</>
 		);
 	};
 	return (
-		<h1 key={nonce} className={'text-sm md:text-lg leading-normal md:leading-10'}>
+		<h1 key={nonce} className={'text-xs md:text-xs leading-normal md:leading-8'}>
 			{renderNPCText()}
 		</h1>
 	);
@@ -352,7 +368,7 @@ function	Index() {
 			);
 		}
 		return (
-			<div className={'py-6 px-8 border-4 border-solid border-black dark:border-dark-100 mt-0 text-sm mb-8'}>
+			<Box className={'py-6 px-8 mt-0 text-sm mb-8'}>
 				<div className={'hidden md:flex flex-row items-center text-megaxs text-black dark:text-white text-opacity-60 mb-4'}>
 					<div className={'w-4/12'}><p>{'Vault:'}</p></div>
 					<div className={'w-2/12'}><p>{'Token:'}</p></div>
@@ -431,15 +447,15 @@ function	Index() {
 						<p>{Number(daiShare || 0)?.toFixed(2)}</p>
 					</div>
 				</div>
-			</div>
+			</Box>
 		);
 	}
 
 	return (
-		<section className={'mt-12 max-w-full'}>
+		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-8'}>
-					<div className={'w-auto md:w-64 mr-0 md:mr-16'} style={{minWidth: 256}}>
+				<div className={'flex flex-col md:flex-row items-center mb-8 md:mb-8'}>
+					<div className={'w-auto md:w-64 mr-0 md:mr-8'} style={{minWidth: 256}}>
 						<Image
 							src={'/avatar/ivan.gif'}
 							loading={'eager'}
@@ -447,13 +463,14 @@ function	Index() {
 							width={256}
 							height={256} />
 					</div>
-					<NPCHeadline
-						selectedVault={selectedVault}
-						isTxPending={isTxPending}
-						hasDeposited={hasDeposited}
-						hasDepositError={hasDepositError}
-						isDeposit={isDeposit}
-					/>
+					<Box className={'p-4'}>
+						<NPCHeadline
+							selectedVault={selectedVault}
+							isTxPending={isTxPending}
+							hasDeposited={hasDeposited}
+							hasDepositError={hasDepositError}
+							isDeposit={isDeposit} />
+					</Box>
 				</div>
 				{renderNPCDialog()}
 			</div>

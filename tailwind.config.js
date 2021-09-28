@@ -4,7 +4,8 @@ module.exports = {
 	purge: [
 		'./pages/**/*.js',
 		'./components/**/*.js',
-		'./sections/**/*.js'
+		'./sections/**/*.js',
+		'./utils/**/*.js'
 	],
 	darkMode: 'class',
 	corePlugins: {
@@ -25,9 +26,9 @@ module.exports = {
 				darker: '#828282',
 			},
 			tag: {
-				new: '#10B981',
+				new: '#059669',
 				info: '#167df0',
-				warning: '#fff257',
+				warning: '#FBBF24',
 				withdraw: '#EF4444'
 			},
 			white: colors.white,
@@ -54,6 +55,7 @@ module.exports = {
 				'120px': '120px'
 			},
 			fontSize: {
+				'regular': ['10px', '16px'],
 				'megaxs': '0.5rem',
 				'xxs': '0.6rem',
 				'xss': '8px',
@@ -65,6 +67,7 @@ module.exports = {
 			spacing: {
 				'7.5': '1.875rem',
 				'8.5': '2.125rem',
+				'23': '5.75rem',
 			},
 			width: {
 				57: '14.25rem',
@@ -76,10 +79,12 @@ module.exports = {
 				15: '60px'
 			},
 			minHeight: {
-				120: '480px'
+				120: '480px',
+				133: '33.25rem'
 			},
 			maxHeight: {
-				120: '480px'
+				120: '480px',
+				133: '33.25rem'
 			},
 			transitionProperty: {
 				'visibility': 'visibility',

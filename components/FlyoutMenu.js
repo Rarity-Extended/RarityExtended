@@ -91,7 +91,7 @@ function FlyoutMenu() {
 							leave={'transition ease-in duration-150'}
 							leaveFrom={'opacity-100 translate-y-0'}
 							leaveTo={'opacity-0 translate-y-1'}>
-							<Popover.Panel className={'absolute z-10 w-screen md:w-screen max-w-sm px-4 pt-7.5 md:pt-9 -left-4 -right-4 transform translate-x-0 md:-translate-x-1/2 md:left-1/2'}>
+							<Popover.Panel className={'absolute w-screen md:w-screen max-w-sm px-4 pt-7.5 md:pt-9 -left-4 -right-4 transform translate-x-0 md:-translate-x-1/2 md:left-1/2'} style={{zIndex: 1000}}>
 								<div className={'overflow-hidden shadow-xl ring-1 ring-black ring-opacity-5 border-4 border-black dark:border-dark-100'}>
 									<div className={'relative grid gap-4 bg-white dark:bg-dark-400 p-2 md:p-6'}>
 										<Link href={'/town/tavern'}>
@@ -205,7 +205,7 @@ function FlyoutMenu() {
 											</a>
 										</Link>
 										<Link href={'/town/guild-house'}>
-											<a className={'flex items-center p-2 -m-3 transition duration-150 ease-in-out hover:bg-gray-50 dark:hover:bg-dark-300 focus:outline-none'}>
+											<a className={'flex items-center p-2 -m-3 transition duration-150 ease-in-out hover:bg-gray-principal dark:hover:bg-dark-300 focus:outline-none'}>
 												<div className={'w-20 h-20 rounded-lg flex justify-center items-center'} style={{minWidth: 80}}>
 													<Image
 														src={'/menu/guild house.png'}
