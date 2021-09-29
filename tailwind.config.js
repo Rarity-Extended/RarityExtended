@@ -147,6 +147,7 @@ module.exports = {
 	},
 	variants: {
 		extend: {
+			backgroundColor: ['active', 'group-active'],
 			rotate: ['hover', 'focus', 'group-hover'],
 			animation: ['hover', 'focus', 'group-hover'],
 			visibility: ['hover', 'focus', 'group-hover'],
@@ -155,6 +156,7 @@ module.exports = {
 	plugins: [
 		require('@tailwindcss/typography'),
 		require('@tailwindcss/forms'),
-		require('@tailwindcss/aspect-ratio')
+		require('@tailwindcss/aspect-ratio'),
+		require('tailwindcss-interaction-variants'),
 	],
 };

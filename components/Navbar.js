@@ -16,94 +16,10 @@ import	BoxAlternate					from	'components/BoxAlternate';
 import	useUI							from	'contexts/useUI';
 import	useRarity						from	'contexts/useRarity';
 import	CLASSES							from	'utils/codex/classes';
+import	FrameArrow						from	'components/Frame/Stone/Arrow';
+import	FrameButton						from	'components/Frame/Stone/Button';
 
-function	Arrow({iconClassName}) {
-	return (
-		<button>
-			<div className={'relative w-10 h-10 flex justify-center items-center text-regular bg-stone-secondary'}>
-				{/* CHEVRON */}
-				<svg className={`${iconClassName}`} width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
-					<path d={'M8 2H12V6H16V10H20V14H16V18H12V22H8V18H12V14H16V10H12V6H8V2Z'} fill={'currentcolor'}/>
-				</svg>
 
-				{/* PIXEL CUSTOM BORDER */}
-				<div className={'bg-black absolute h-1 top-0 left-1 right-1'} />
-				<div className={'bg-black absolute h-1 w-1 top-1 left-0'} />
-				<div className={'bg-black absolute h-1 w-1 top-1 right-0'} />
-				<div className={'bg-black absolute w-1 top-2 bottom-2 left-0'} />
-				<div className={'bg-black absolute w-1 top-2 bottom-2 right-0'} />
-				<div className={'bg-black absolute h-1 bottom-0 left-1 right-1'} />
-				<div className={'bg-black absolute h-1 w-1 top-0 right-0'} />
-				<div className={'bg-black absolute h-1 w-1 top-0 left-0'} />
-				<div className={'bg-black absolute h-1 w-1 bottom-0 right-0'} />
-				<div className={'bg-black absolute h-1 w-1 bottom-0 left-0'} />
-
-				{/* PIXEL CUSTOM EXTRA BORDER */}
-				<div className={'bg-black absolute h-1 w-1 top-1 left-2'} />
-				<div className={'bg-black absolute h-1 w-1 top-1 right-2'} />
-				<div className={'bg-black absolute h-1 w-1 top-2 left-1'} />
-				<div className={'bg-black absolute h-1 w-1 top-2 right-1'} />
-				<div className={'bg-black absolute h-1 w-1 bottom-1 left-2'} />
-				<div className={'bg-black absolute h-1 w-1 bottom-1 right-2'} />
-				<div className={'bg-black absolute h-1 w-1 bottom-2 left-1'} />
-				<div className={'bg-black absolute h-1 w-1 bottom-2 right-1'} />
-
-				{/* PIXEL CUSTOM BACKGROUND */}
-				<div className={'bg-stone-primary absolute h-1 w-1 top-1 right-0'} />
-				<div className={'bg-stone-primary absolute h-1 w-1 top-0 right-1'} />
-				<div className={'bg-stone-primary absolute h-1 w-1 top-1 right-1'} />
-				<div className={'bg-stone-primary absolute h-1 w-1 bottom-1 right-0'} />
-				<div className={'bg-stone-primary absolute h-1 w-1 bottom-0 right-1'} />
-				<div className={'bg-stone-primary absolute h-1 w-1 bottom-1 right-1'} />
-				<div className={'bg-stone-primary absolute h-1 w-1 top-1 left-0'} />
-				<div className={'bg-stone-primary absolute h-1 w-1 top-1 left-1'} />
-				<div className={'bg-stone-primary absolute h-1 w-1 bottom-1 left-0'} />
-				<div className={'bg-stone-primary absolute h-1 w-1 bottom-1 left-1'} />
-				<div className={'bg-stone-secondary-highlight absolute h-1 w-4 top-1 left-3'} />
-				<div className={'bg-stone-secondary-highlight absolute h-4 w-1 top-3 left-1'} />
-				<div className={'bg-stone-secondary-shadow absolute h-1 w-4 bottom-1 right-3'} />
-				<div className={'bg-stone-secondary-shadow absolute h-4 w-1 bottom-3 right-1'} />
-
-			</div>
-		</button>
-	);
-}
-
-function	Box({children}) {
-	return (
-		<div className={'relative bg-stone-secondary flex justify-center pl-4 w-full h-10 items-center text-regular text-white'}>
-			{children}
-			<div className={'bg-black absolute h-1 top-0 left-1 right-1'} />
-			<div className={'bg-black absolute h-1 w-1 top-1 left-0'} />
-			<div className={'bg-black absolute h-1 w-1 top-1 right-0'} />
-			<div className={'bg-black absolute w-1 top-2 bottom-2 left-0'} />
-			<div className={'bg-black absolute w-1 top-2 bottom-2 right-0'} />
-			<div className={'bg-black absolute h-1 bottom-0 left-1 right-1'} />
-			<div className={'bg-stone-primary absolute h-1 w-1 top-1 right-0'} />
-			<div className={'bg-stone-primary absolute h-1 w-1 top-0 right-1'} />
-			<div className={'bg-stone-primary absolute h-1 w-1 bottom-1 right-0'} />
-			<div className={'bg-stone-primary absolute h-1 w-1 bottom-0 right-1'} />
-			<div className={'bg-stone-primary absolute h-1 w-1 top-1 left-0'} />
-			<div className={'bg-stone-primary absolute h-1 w-1 top-0 left-1'} />
-			<div className={'bg-stone-primary absolute h-1 w-1 bottom-1 left-0'} />
-			<div className={'bg-stone-primary absolute h-1 w-1 bottom-0 left-1'} />
-			<div className={'bg-black absolute h-1 w-1 top-1 left-1'} />
-			<div className={'bg-black absolute h-1 w-1 bottom-1 left-1'} />
-			<div className={'bg-black absolute h-1 w-1 top-1 right-1'} />
-			<div className={'bg-black absolute h-1 w-1 bottom-1 right-1'} />
-
-			<div className={'bg-stone-primary absolute h-1 w-1 bottom-0 left-0'} />
-			<div className={'bg-stone-primary absolute h-1 w-1 bottom-0 right-0'} />
-			<div className={'bg-stone-primary absolute h-1 w-1 top-0 left-0'} />
-			<div className={'bg-stone-primary absolute h-1 w-1 top-0 right-0'} />
-
-			<div className={'bg-stone-secondary-highlight absolute h-1 top-1 left-2 right-2'} />
-			<div className={'bg-stone-secondary-highlight absolute w-1 top-2 bottom-2 left-1'} />
-			<div className={'bg-stone-secondary-shadow absolute h-1 bottom-1 left-2 right-2'} />
-			<div className={'bg-stone-secondary-shadow absolute w-1 top-2 bottom-2 right-1'} />
-		</div>
-	);
-}
 function	BoxExpandable({children}) {
 	return (
 		<div className={'relative flex justify-center w-full items-center text-regular bg-stone-primary'}>
@@ -223,7 +139,7 @@ function	Navbar({router}) {
 						backgroundColor={'bg-stone-primary'}
 						borderStyle={'bg-black'}>
 						{'TOWN'}
-						<Arrow iconClassName={menuOpen ? 'transform rotate-90 transition-transform ml-0' : 'transform transition-transform'} />
+						<FrameArrow iconClassName={menuOpen ? 'transform rotate-90 transition-transform ml-0' : 'transform transition-transform'} />
 						<div className={`absolute top-full mt-1 w-full left-0 ${menuOpen ? 'visible' : 'hidden'}`}>
 							<BoxExpandable>
 								<div className={'h-full grid text-white'}>
@@ -498,7 +414,7 @@ function	Navbar({router}) {
 						backgroundColor={'bg-stone-primary'}
 						borderStyle={'bg-black'}>
 						{currentAdventurer ? `${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}` : 'NOBODY'}
-						<Arrow iconClassName={currentAdventurerMenuOpen ? 'transform rotate-90 transition-transform ml-0' : 'transform transition-transform'} />
+						<FrameArrow iconClassName={currentAdventurerMenuOpen ? 'transform rotate-90 transition-transform ml-0' : 'transform transition-transform'} />
 						<div className={`absolute top-full mt-1 w-full left-0 ${currentAdventurerMenuOpen ? 'visible' : 'hidden'}`}>
 							<BoxExpandable>
 								<div className={'h-full w-full grid text-white'}>
@@ -577,14 +493,12 @@ function	Navbar({router}) {
 				<div className={'h-1 w-2 absolute bottom-5 right-2 bg-stone-primary-shadow'} />
 				<div className={'h-10 w-1 absolute bottom-5 right-2 bg-stone-primary-shadow'} />
 
-				<div className={'px-5 h-full flex items-center w-full'}>
-					<Box
-						className={'bg-stone-primary flex justify-between pl-4 text-white'}
-						backgroundColor={'bg-stone-primary'}
-						borderStyle={'bg-black'}>
+				<div className={'px-5 flex items-center w-full'}>
+					<FrameButton>
 						{address && active ? `${address.slice(0, 4)}...${address.slice(-4)}` : 'CONNECT WALLET'}
-					</Box>
+					</FrameButton>
 				</div>
+
 			</div>
 		);
 	}
