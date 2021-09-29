@@ -23,7 +23,7 @@ const	classMappingImg = [
 	'/cleric.png',
 	'/druid.png',
 	'/fighter.png',
-	'/monk.png',
+	'/front/monk.svg',
 	'/paladin.png',
 	'/ranger.png',
 	'/rogue.png',
