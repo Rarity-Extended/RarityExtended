@@ -121,7 +121,7 @@ function ModalCurrentAdventurer({isOpen, closeModal}) {
 								</div>
 							</div>
 								
-							<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4 min-h-0 md:min-h-133 max-h-64 md:max-h-133 overflow-y-scroll px-1'}>
+							<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4 min-h-0 md:min-h-133 max-h-72 md:max-h-133 overflow-y-scroll px-1'}>
 								{[...Object.values(rarities)]
 									.filter((adventurer) => {
 										if (level.value === 0)

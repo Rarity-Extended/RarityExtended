@@ -63,7 +63,7 @@ function	FeatsModals({adventurer, updateRarity, provider, isOpen, closeModal}) {
 						leave={'ease-in duration-200'}
 						leaveFrom={'opacity-100 scale-100'}
 						leaveTo={'opacity-0 scale-95'}>
-						<div className={'inline-block px-4 md:px-10 py-9 mt-16 md:mt-32 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative'}>
+						<div className={'inline-block px-4 md:px-10 pt-9 pb-0 md:pb-9 mt-16 md:mt-23 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative'}>
 							<Dialog.Title as={'h3'} className={'relative text-lg font-medium leading-6 text-black dark:text-white flex flex-col md:flex-row justify-between'}>
 								{'FEAT LIST'}
 								<svg onClick={closeModal} className={'absolute md:relative top-0 right-0'} width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
@@ -78,7 +78,7 @@ function	FeatsModals({adventurer, updateRarity, provider, isOpen, closeModal}) {
 								<div className={'ml-auto text-xs mr-6 text-black dark:text-white hidden md:block'}>
 									{`POINTS LEFT: ${_pointLefts}`}
 								</div>
-								<div className={'text-xs text-black dark:text-white block md:hidden text-center'}>
+								<div className={'text-xs mt-4 text-black dark:text-white block md:hidden text-center'}>
 									{`POINTS LEFT: ${_pointLefts}`}
 								</div>
 							</div>
@@ -123,7 +123,7 @@ function	FeatsModals({adventurer, updateRarity, provider, isOpen, closeModal}) {
 
 							</div>
 						
-							<div className={'min-h-0 md:min-h-120 max-h-64 md:max-h-120 overflow-y-scroll'}>
+							<div className={'min-h-0 md:min-h-120 max-h-96 md:max-h-120 overflow-y-scroll'}>
 								{
 									Object.values(FEATS)
 										.filter((feat) => {
@@ -166,7 +166,7 @@ function	FeatsModals({adventurer, updateRarity, provider, isOpen, closeModal}) {
 												<details key={feat?.id} className={'flex flex-row w-full mb-2 transition-colors'}>
 													<summary className={'transition-colors'}>
 														<div className={'flex flex-row space-x-4 w-full h-auto md:h-16 cursor-pointer'}>
-															<div className={'flex flex-row w-full relative text-black dark:text-white px-4'}>
+															<div className={'flex flex-col md:flex-row w-full relative text-black dark:text-white px-4'}>
 																<div className={'mt-3.5 pr-6 w-75'}>
 																	<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'FEAT:'}</p>
 																	<p className={'text-sx'}>{feat?.name}</p>
@@ -177,7 +177,7 @@ function	FeatsModals({adventurer, updateRarity, provider, isOpen, closeModal}) {
 																		{feat?.prerequisites ? Object.values(FEATS).find(s => s.id === feat?.prerequisites_feat)?.name || '-' : '-'}
 																	</p>
 																</div>
-																<div className={'mt-3.5 ml-auto'} onClick={(e) => e.preventDefault()}>
+																<div className={'mt-3.5 ml-0 md:ml-auto'} onClick={(e) => e.preventDefault()}>
 																	{learnTab === 0 || (learnTab === 2 && !_unlockedFeats.includes(feat.id)) ? <button
 																		onClick={() => {
 																			if (_pointLefts > 0)
@@ -251,7 +251,7 @@ function	Feats({adventurer, updateRarity, provider}) {
 						<div
 							onClick={openModal}
 							className={'border-4 border-black dark:border-dark-100 px-10 py-2 text-black dark:text-white hover:bg-gray-secondary dark:hover:bg-dark-400 cursor-pointer transition-colors flex items-center text-center justify-center text-xs w-full'}>
-							<p>{'FEAT LIST'}</p>
+							<p className={'whitespace-nowrap'}>{'FEAT LIST'}</p>
 							{_pointLefts > 0 ? <p className={'inline text-megaxs ml-2'}>
 								{`(POINTS LEFT: ${_pointLefts})`}
 							</p> : null}
