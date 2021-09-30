@@ -34,7 +34,10 @@ This repo makes use of the following contracts deployed by AC himself on Fantom 
 - [Class Skills]		(https://ftmscan.com/address/0x83f9d594e327eafe466fbb2cf050bf13beccb165)	
 - [Codex Skills]		(https://ftmscan.com/address/0x67ae39a2Ee91D7258a86CD901B17527e19E493B3)		
 - [The Cellar]			(https://ftmscan.com/address/0x2a0f1cb17680161cf255348ddfdee94ea8ca196a)	
-- [Crafting]			(https://ftmscan.com/address/0xf41270836df4db1d28f7fd0935270e3a603e78cc)	
+- [Crafting]			(https://ftmscan.com/address/0xf41270836df4db1d28f7fd0935270e3a603e78cc)
+
+It has also incorperated the following contracts.
+- [The Rarity Forest]	(https://ftmscan.com/address/0x9e894cd5dCC5Bad1eD3663077871d9D010f654b5)		
 
 
 
