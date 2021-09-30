@@ -10,6 +10,7 @@ import	Image				from	'next/image';
 import	CLASSES				from	'utils/codex/classes';
 import	{levelUp}			from	'utils/actions';
 import	{xpRequired}		from	'utils/libs/rarity';
+import	Box					from	'components/Box';
 import	Attributes			from	'sections/SectionCharacterSheet/Attributes';	
 import	Balloon				from	'sections/SectionCharacterSheet/Balloon';	
 import	Skills				from	'sections/SectionCharacterSheet/Skills';	
@@ -23,7 +24,7 @@ const	classMappingImg = [
 	'/cleric.png',
 	'/druid.png',
 	'/fighter.png',
-	'/monk.png',
+	'/front/monk.svg',
 	'/paladin.png',
 	'/ranger.png',
 	'/rogue.png',
@@ -35,37 +36,38 @@ function	AdventurerTab({adventurer, updateRarity, provider}) {
 	const	[selectedTab, set_selectedTab] = useState(0);
 
 	return (
-		<div className={'flex flex-col w-full mt-2'}>
+		<Box className={'flex flex-col w-full mt-2'}>
 			<div className={'flex flex-col md:flex-row w-full space-x-0 md:-space-x-1'}>
 				<div
 					onClick={() => set_selectedTab(0)}
-					className={`w-full cursor-pointer nes-container border-4 text-center border-solid ${selectedTab === 0 ? 'border-b-0 bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600' : ''} border-black dark:border-dark-100 text-center py-4`}>
+					className={`w-full cursor-pointer text-center border-solid ${selectedTab === 0 ? 'border-b-0 bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600' : 'border-b-0 md:border-b-4'} border-black dark:border-dark-100 text-center py-4`}>
 					<p>{'Skills'}</p>
 				</div>
 				<div
 					onClick={() => set_selectedTab(1)}
-					className={`w-full cursor-pointer nes-container border-4 text-center border-solid ${selectedTab === 1 ? 'border-b-0 bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600' : ''} border-black dark:border-dark-100 text-center py-4`}>
+					className={`w-full cursor-pointer text-center border-solid border-l-0 md:border-l-4 ${selectedTab === 1 ? 'bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600 border-b-4 md:border-b-0' : 'border-b-4 md:border-b-4'} border-black dark:border-dark-100 text-center py-4`}>
 					<p>{'Feats'}</p>
 				</div>
 				<div
 					onClick={() => set_selectedTab(2)}
-					className={`w-full cursor-pointer nes-container border-4 text-center border-solid ${selectedTab === 2 ? 'border-b-4 md:border-b-0 border-t-0 md:border-t-4 bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600' : ''} border-black dark:border-dark-100 text-center py-4`}>
+					className={`w-full cursor-pointer text-center border-solid border-l-0 md:border-l-4 ${selectedTab === 2 ? 'bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600 border-b-4 md:border-b-0' : 'border-b-4 md:border-b-4'} border-black dark:border-dark-100 text-center py-4`}>
 					<p>{'Inventory'}</p>
 				</div>
 			</div>
-			<div className={'w-full nes-container border-4 border-solid border-t-0 border-black dark:border-dark-100 py-4 md:-mt-1'}>
+			<div className={'w-full border-black dark:border-dark-100 py-4 md:-mt-1'}>
 				{selectedTab === 0 ? <Skills adventurer={adventurer} updateRarity={updateRarity} provider={provider} /> : null}
 				{selectedTab === 1 ? <Feats adventurer={adventurer} updateRarity={updateRarity} provider={provider} /> : null}
 				{selectedTab === 2 ? <Inventory adventurer={adventurer} /> : null}
 			</div>
-		</div>
+		</Box>
 	);
 }
 
 function	Info({adventurer, updateRarity, provider}) {
+	const	canLevelUp = adventurer.xp >= (xpRequired(adventurer.level));
 	return (
-		<div className={'nes-container pt-6 px-4 border-4 border-solid border-black dark:border-dark-100 with-title w-full md:w-2/3'}>
-			<p className={'title bg-white dark:bg-dark-600 mb-1'}>{adventurer.tokenID}</p>
+		<Box className={'nes-container pt-6 px-4 with-title w-full md:w-2/3'}>
+			<p className={'title bg-white dark:bg-dark-600 z-50 relative'} style={{paddingTop: 2}}>{adventurer.tokenID}</p>
 			<div className={'flex flex-row items-center w-full py-2'}>
 				<div className={'opacity-80 text-xs md:text-sm w-48'}>{'ID:'}</div>
 				<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
@@ -90,12 +92,12 @@ function	Info({adventurer, updateRarity, provider}) {
 					<p>{`${Number(adventurer?.gold?.balance || 0) === 0 ? '0' : adventurer.gold.balance}`}</p>
 				</div>
 			</div>
-			<div className={'flex flex-row items-center w-full py-2'}>
+			<div className={'flex flex-row items-center w-full py-2 relative'}>
 				<div className={'opacity-80 text-sm w-48'}>{'XP:'}</div>
 				<div className={'w-full'}>
 					<div
 						onClick={() => {
-							if (adventurer.xp >= (xpRequired(adventurer.level))) {
+							if (canLevelUp) {
 								levelUp({
 									provider,
 									contractAddress: process.env.RARITY_ADDR,
@@ -108,16 +110,18 @@ function	Info({adventurer, updateRarity, provider}) {
 								});
 							}
 						}}
-						className={`nes-progress border-solid border-2 border-black dark:border-dark-400 w-full relative ${adventurer.xp >= (xpRequired(adventurer.level)) ? 'cursor-pointer' : ''}`}>
+						className={`nes-progress border-solid border-2 border-black dark:border-dark-400 w-full relative ${canLevelUp ? 'cursor-pointer' : ''}`}>
 						<progress
-							className={`progressbar h-full ${adventurer.xp >= (xpRequired(adventurer.level)) ? 'is-warning animate-pulse' : 'is-primary'} w-full absolute p-1.5 inset-0`}
+							className={`progressbar h-full ${canLevelUp ? 'is-warning animate-pulse' : 'is-primary'} w-full absolute p-1 inset-0`}
 							value={adventurer.xp}
 							max={xpRequired(adventurer.level)} />
-						<p className={`text-sm absolute inset-0 h-full w-full text-center flex justify-center items-center ${adventurer.xp >= (xpRequired(adventurer.level)) ? '' : 'hidden'}`}>{'LEVEL-UP!'}</p>
+						<p className={`text-sx absolute inset-0 h-full w-full text-center flex justify-center items-center ${canLevelUp ? 'text-black' : 'text-white text-shadow'}`}>
+							{canLevelUp ? 'LEVEL-UP!' : `${Number(adventurer.xp)} / ${xpRequired(adventurer.level)}`}
+						</p>
 					</div>
 				</div>
 			</div>
-		</div>
+		</Box>
 	);
 }
 
@@ -146,7 +150,7 @@ function	Aventurer({rarity, provider, updateRarity, router, chainTime}) {
 					</div>
 				</div>
 			</div>
-			<div className={'flex flex-col md:flex-row w-full space-x-0 md:space-x-2'}>
+			<div className={'flex flex-col md:flex-row w-full space-x-0 md:space-x-4 space-y-6 md:space-y-0'}>
 				<Info adventurer={rarity} updateRarity={updateRarity} provider={provider} />
 				<Attributes adventurer={rarity} updateRarity={updateRarity} provider={provider} />
 			</div>

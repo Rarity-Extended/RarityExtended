@@ -21,7 +21,7 @@ const	classMappingBackImg = [
 	'/back/cleric.png',
 	'/back/druid.png',
 	'/back/fighter.png',
-	'/back/monk.png',
+	'/back/monk.svg',
 	'/back/paladin.png',
 	'/back/ranger.png',
 	'/back/rogue.png',
@@ -149,7 +149,7 @@ function	Index({dungeon, adventurer, router}) {
 	}
 
 	return (
-		<section className={'mt-12 relative'}>
+		<section className={'relative'}>
 			<div className={`absolute bg-black inset-0 z-10 -top-24 -left-4 -right-4 flex flex-col items-center min-h-screen transition-opacity duration-1000 ${adventurerHealth <= 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
 				<p className={'text-2xl text-white pt-20 mx-4 md:mx-0 md:pt-64 max-w-screen-sm text-center'}>{'you passed out'}</p>
 				<p className={'text-base text-white pt-8 mx-4 md:mx-0 max-w-screen-sm text-center'}>{'After some time, the rat returns to his hole and Facu the tavernkeeper, worried, finds you lying on the floor'}</p>
@@ -159,7 +159,7 @@ function	Index({dungeon, adventurer, router}) {
 					</div>
 				</Link>
 			</div>
-			<div className={'max-w-screen-sm w-full mx-auto'}>
+			<div className={'max-w-screen-sm w-full mx-auto mt-12'}>
 				<div className={'flex flex-col items-center'}>
 					<div className={'w-full flex flex-row ml-0 md:ml-32'}>
 						<div className={'w-full mr-14'}>
@@ -239,7 +239,8 @@ function	Index({dungeon, adventurer, router}) {
 								return console.error(error);
 							}
 							updateRarity(dungeon.tokenID);
-							router.push('/');
+							if (router.pathname === '/dungeons/the-cellar')						
+								router.push('/town/quest?tab=the-cellar');
 						});
 					}}
 				/>

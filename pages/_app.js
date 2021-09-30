@@ -29,7 +29,7 @@ function	GameWrapper({Component, pageProps, element, router}) {
 
 	if (!isLoaded) {
 		return (
-			<div className={'absolute inset-0 backdrop-blur-3xl bg-opacity-40 cursor-not-allowed'}>
+			<div className={'absolute inset-0 backdrop-blur-3xl bg-opacity-40 pointer-events-none'}>
 				<div className={'loader'} />
 				<div className={'absolute inset-0 mt-32 flex justify-center items-center'}>
 					<p className={'center-text text-white z-40'}>{'Retrieving your adventurers...'}</p>
@@ -45,7 +45,7 @@ function	GameWrapper({Component, pageProps, element, router}) {
 	}
 
 	return (
-		<div className={'pb-24 mb-24 relative'}>
+		<div className={'pb-24 mb-24 relative z-10'}>
 			{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
 				<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
 					{'PLEASE SWITCH TO FANTOM NETWORK'}
@@ -121,7 +121,7 @@ function	AppWrapper(props) {
 					cardType: 'summary_large_image',
 				}} />
 			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{minHeight: '100vh'}}>
-				<Toaster toastOptions={{className: 'text-xs'}} />
+				<Toaster position={'bottom-right'} toastOptions={{className: 'text-sx border-4 border-black dark:border-dark-100 text-black dark:text-white bg-white dark:bg-dark-600 noBr shadow-xl'}} />
 				<Navbar router={router} />
 				<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />
 				<Footer />
