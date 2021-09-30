@@ -17,6 +17,7 @@ import	RARITY_ABI												from	'utils/abi/rarity.abi';
 import	RARITY_ATTR_ABI											from	'utils/abi/rarityAttr.abi';
 import	RARITY_GOLD_ABI											from	'utils/abi/rarityGold.abi';
 import	RARITY_SKILLS_ABI										from	'utils/abi/raritySkills.abi';
+import	RARITY_FEATS_ABI										from	'utils/abi/rarityFeats.abi';
 import	THE_CELLAR_ABI											from	'utils/abi/dungeonTheCellar.abi';
 import	THE_FOREST_ABI											from	'utils/abi/dungeonTheForest.abi';
 
@@ -60,6 +61,7 @@ export const RarityContextApp = ({children}) => {
 		const	rarityAttr = new Contract(process.env.RARITY_ATTR_ADDR, RARITY_ATTR_ABI);
 		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI);
 		const	raritySkills = new Contract(process.env.RARITY_SKILLS_ADDR, RARITY_SKILLS_ABI);
+		const	rarityFeats = new Contract(process.env.RARITY_FEATS_ADDR, RARITY_FEATS_ABI);
 		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, THE_CELLAR_ABI);
 		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, THE_FOREST_ABI);
 
@@ -70,6 +72,7 @@ export const RarityContextApp = ({children}) => {
 			rarityAttr.ability_scores(tokenID),
 			rarityGold.balanceOf(tokenID),
 			raritySkills.get_skills(tokenID),
+			rarityFeats.get_feats_by_id(tokenID),
 			rarityDungeonCellar.adventurers_log(tokenID),
 			rarityDungeonForest.getResearchBySummoner(tokenID),
 		];
@@ -135,7 +138,7 @@ export const RarityContextApp = ({children}) => {
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
 	function		setRarity(tokenID, multicallResult, callResult, inventoryCallResult) {
-		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, skills, cellarLog, forestResearch] = multicallResult;
+		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, skills, feats, cellarLog, forestResearch] = multicallResult;
 		const	[claimableGold] = callResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
@@ -164,6 +167,7 @@ export const RarityContextApp = ({children}) => {
 				charisma: initialAttributes ? abilityScores['charisma'] : 8,
 			},
 			skills: skills,
+			feats: (feats || []).map(f => Number(f)),
 			dungeons: {
 				cellar: Number(cellarLog),
 				forest: {
@@ -193,7 +197,7 @@ export const RarityContextApp = ({children}) => {
 		});
 
 		const	callResults = await fetchAdventurer(preparedCalls);
-		const	chunkedCallResult = chunk(callResults, 8);
+		const	chunkedCallResult = chunk(callResults, 9);
 		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(preparedInventoryCalls);
@@ -209,7 +213,7 @@ export const RarityContextApp = ({children}) => {
 	**************************************************************************/
 	async function	updateRarity(tokenID) {
 		const	callResults = await fetchAdventurer(prepareAdventurer(tokenID));
-		const	chunkedCallResult = chunk(callResults, 8);
+		const	chunkedCallResult = chunk(callResults, 9);
 		const	extraCallResults = await fetchAdventurerExtra(prepareAdventurerExtra(tokenID));
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(prepareAdventurerInventory(tokenID));

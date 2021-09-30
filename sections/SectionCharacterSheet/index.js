@@ -13,6 +13,7 @@ import	{xpRequired}		from	'utils/libs/rarity';
 import	Attributes			from	'sections/SectionCharacterSheet/Attributes';	
 import	Balloon				from	'sections/SectionCharacterSheet/Balloon';	
 import	Skills				from	'sections/SectionCharacterSheet/Skills';	
+import	Feats				from	'sections/SectionCharacterSheet/Feats';	
 import	Inventory			from	'sections/SectionCharacterSheet/Inventory';	
 
 const	classMappingImg = [
@@ -43,12 +44,19 @@ function	AdventurerTab({adventurer, updateRarity, provider}) {
 				</div>
 				<div
 					onClick={() => set_selectedTab(1)}
-					className={`w-full cursor-pointer nes-container border-4 text-center border-solid ${selectedTab === 1 ? 'border-b-4 md:border-b-0 border-t-0 md:border-t-4 bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600' : ''} border-black dark:border-dark-100 text-center py-4`}>
+					className={`w-full cursor-pointer nes-container border-4 text-center border-solid ${selectedTab === 1 ? 'border-b-0 bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600' : ''} border-black dark:border-dark-100 text-center py-4`}>
+					<p>{'Feats'}</p>
+				</div>
+				<div
+					onClick={() => set_selectedTab(2)}
+					className={`w-full cursor-pointer nes-container border-4 text-center border-solid ${selectedTab === 2 ? 'border-b-4 md:border-b-0 border-t-0 md:border-t-4 bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600' : ''} border-black dark:border-dark-100 text-center py-4`}>
 					<p>{'Inventory'}</p>
 				</div>
 			</div>
 			<div className={'w-full nes-container border-4 border-solid border-t-0 border-black dark:border-dark-100 py-4 md:-mt-1'}>
-				{selectedTab === 0 ? <Skills adventurer={adventurer} updateRarity={updateRarity} provider={provider} /> : <Inventory adventurer={adventurer} />}
+				{selectedTab === 0 ? <Skills adventurer={adventurer} updateRarity={updateRarity} provider={provider} /> : null}
+				{selectedTab === 1 ? <Feats adventurer={adventurer} updateRarity={updateRarity} provider={provider} /> : null}
+				{selectedTab === 2 ? <Inventory adventurer={adventurer} /> : null}
 			</div>
 		</div>
 	);
