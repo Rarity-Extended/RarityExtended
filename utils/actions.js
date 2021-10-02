@@ -955,3 +955,37 @@ export async function	approveERC20({provider, contractAddress, adventurerID, spe
 		return;
 	}
 }
+
+
+export async function	recruitMercenary({provider, contractAddress, adventurerID}, callback) {
+	const	_toast = toast.loading('Recruiting a mercenary...');
+	const	signer = provider.getSigner();
+	const	rarity = new ethers.Contract(
+		contractAddress,
+		['function hireMercenary(uint adventurerID) external payable'],
+		signer
+	);
+
+	/**********************************************************************
+	**	If the call is successful, try to perform the actual TX
+	**********************************************************************/
+	try {
+		const	transaction = await rarity.hireMercenary(adventurerID, {value: ethers.utils.parseEther('1')});
+		callback({error: false, wait: true, data: adventurerID});
+		const	transactionResult = await transaction.wait();
+		if (transactionResult.status === 1) {
+			callback({error: false, data: adventurerID});
+			toast.dismiss(_toast);
+			toast.success('The mercenary comes back with the Rat Skin for you');
+		} else {
+			toast.dismiss(_toast);
+			toast.error('Transaction reverted');
+			callback({error: true, data: undefined});
+		}
+	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
+		callback({error, data: undefined});
+	}
+}

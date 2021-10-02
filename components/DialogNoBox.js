@@ -8,11 +8,16 @@
 import	React, {useEffect, useState}	from	'react';
 import	useKeyPress						from	'hook/useKeyPress';
 
-function	Index({options}) {
-	const	[option, set_option] = useState(0);
+function	Index({options, nonce, selectedOption = -1}) {
+	const	[option, set_option] = useState(selectedOption > 0 ? selectedOption : 0);
 	const	keyUp = useKeyPress('ArrowUp');
 	const	keyDown = useKeyPress('ArrowDown');
 	const	keyEnter = useKeyPress('Enter');
+
+	useEffect(() => {
+		if (selectedOption !== -1)
+			set_option(selectedOption);
+	}, [selectedOption, nonce]);
 
 	useEffect(() => {
 		if (keyDown)
@@ -25,11 +30,11 @@ function	Index({options}) {
 	}, [keyDown, keyUp, keyEnter]);
 
 	return (
-		<div className={'flex flex-col w-full mt-2'}>
+		<div className={'flex flex-col w-full'}>
 			{options.map((opt, index) => (
 				<div
 					key={index}
-					className={`py-1 px-2 group hover:bg-gray-principal dark:hover:bg-dark-100 cursor-pointer ${option === index ? 'bg-gray-principal dark:bg-dark-100' : 'bg-white dark:bg-dark-600'}`}
+					className={`py-3 px-2 group hover:bg-gray-principal dark:hover:bg-dark-300 cursor-pointer ${option === index ? 'bg-gray-principal dark:bg-dark-300' : 'bg-white dark:bg-dark-600'}`}
 					style={{cursor: 'pointer'}}
 					onClick={() => {
 						set_option(index);
