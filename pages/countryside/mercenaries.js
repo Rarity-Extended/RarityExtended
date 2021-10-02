@@ -131,7 +131,7 @@ function	Index({router}) {
 								loading={'eager'}
 								objectFit={'cover'}
 								objectPosition={'bottom'}
-								quality={90}
+								quality={85}
 								width={1123.2}
 								height={250} />
 						</div>
@@ -171,7 +171,7 @@ function	Index({router}) {
 										}
 									},
 									{label: 'SELECT ANOTHER ADVENTURER', onClick: () => openCurrentAventurerModal()},
-									{label: 'CANCEL', onClick: () => router.push('/town/quest')},
+									{label: 'GO BACK IN TOWN', onClick: () => router.back()},
 								]} />
 						</div>
 					</NCPHeadline>

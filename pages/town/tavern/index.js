@@ -254,6 +254,15 @@ function	DialogChoices({router, onWalletConnect, active}) {
 								openCurrentAventurerModal();
 						}},
 						{label: 'SELECT ANOTHER ADVENTURER', onClick: () => openCurrentAventurerModal()},
+						{
+							label: (
+								<>
+									{'RECRUIT A MERCENARY TO GET '}
+									<span className={'text-tag-info'}>{'12 RAT SKINS'}</span>
+								</>
+							),
+							onClick: () => router.push('/countryside/mercenaries')
+						},
 						{label: 'CANCEL', onClick: () => router.push('/town/tavern')},
 					]} />
 			</>
