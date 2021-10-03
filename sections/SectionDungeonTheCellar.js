@@ -40,7 +40,7 @@ function	SectionDungeonTheCellar({shouldDisplay, adventurers, router, adventurer
 			<div>
 				<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4'}>
 					{Object.values(adventurers)?.filter((adventurer) => {
-						const	canAdventure = !dayjs(new Date(adventurer?.dungeons?.cellar * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
+						const	canAdventure = !dayjs(new Date(adventurer?.dungeons?.cellar?.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
 						return canAdventure;
 					}).map((adventurer) => {
 						return (
@@ -53,7 +53,7 @@ function	SectionDungeonTheCellar({shouldDisplay, adventurers, router, adventurer
 						);
 					})}
 					{Object.values(adventurers)?.filter((adventurer) => {
-						const	canAdventure = !dayjs(new Date(adventurer?.dungeons?.cellar * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
+						const	canAdventure = !dayjs(new Date(adventurer?.dungeons?.cellar?.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
 						return !canAdventure;
 					}).map((adventurer) => {
 						return (
@@ -64,7 +64,7 @@ function	SectionDungeonTheCellar({shouldDisplay, adventurers, router, adventurer
 									rarityClass={CLASSES[adventurer.class]}>
 									<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex justify-center items-center text-center p-6'}>
 										<p className={'text-white'}>
-											{`READY IN ${dayjs(new Date(adventurer?.dungeons?.cellar * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}
+											{`READY IN ${dayjs(new Date(adventurer?.dungeons?.cellar?.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}
 										</p>
 									</div>
 								</Adventurer>

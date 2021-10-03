@@ -227,7 +227,7 @@ function	DialogChoices({router, onWalletConnect, active}) {
 		);
 	}
 	if (router?.query?.tab === 'the-cellar') {
-		const	canAdventure = !dayjs(new Date(currentAdventurer?.dungeons?.cellar * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
+		const	canAdventure = !dayjs(new Date(currentAdventurer?.dungeons?.cellar?.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
 
 		return (
 			<>

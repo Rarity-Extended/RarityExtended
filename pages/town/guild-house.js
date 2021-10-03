@@ -7,13 +7,18 @@
 
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
-import	React, {useState}				from	'react';
+import	React, {useEffect, useState}				from	'react';
 import	Image							from	'next/image';
 import	useWeb3							from	'contexts/useWeb3';
 import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
 import	Box								from	'components/Box';
-import	{goAdventure, claimGold}		from	'utils/actions';
+import	CLASSES							from	'utils/codex/classes';
+import	Adventurer						from	'components/Adventurer';
+import	{xpRequired}		from	'utils/libs/rarity';
+
+import	{careOfAll, adventureAll, adventureCellarAll, adventureLevelupAll, adventureClaimGold}		from	'utils/actions';
+import useRarity from 'contexts/useRarity';
 
 dayjs.extend(relativeTime);
 
@@ -30,7 +35,13 @@ function	NCPHeadline() {
 					{'JANET'}
 				</Typer></span>
 				<Typer onDone={() => set_NPCTextIndex(i => i + 1)} shouldStart={NPCTextIndex === 2}>
-					{', I\'LL HELP YOU COORDINATE YOUR PARTY OF HEROES. FREE OF CHARGE! THE TOWN PAYS ME. WHAT ARE YOUR COMMANDS.'}
+					{', I\'LL HELP YOU COORDINATE YOUR PARTY OF HEROES. FREE OF CHARGE! THE TOWN PAYS ME. PLEASE '}
+				</Typer>
+				<span className={'text-tag-info'}><Typer onDone={() => set_NPCTextIndex(i => i + 1)} shouldStart={NPCTextIndex === 3}>
+					{'SELECT THE ADVENTURERS'}
+				</Typer></span>
+				<Typer onDone={() => set_NPCTextIndex(i => i + 1)} shouldStart={NPCTextIndex === 4}>
+					{' YOU WANT TO TAKE CARE OF.'}
 				</Typer>
 			</>
 		);
@@ -42,45 +53,94 @@ function	NCPHeadline() {
 	);
 }
 
-function	handleGoAdventure(rarities, provider, updateRarity) {
-	rarities.forEach(rarity => {
-		const	isInTheForest = rarity.level >= 2 && !rarity?.dungeons?.forest?.canAdventure;
-		goAdventure({
-			loader: isInTheForest ? 'Claiming XP...' : 'Going on an adventure...',
-			provider,
-			contractAddress: process.env.RARITY_ADDR,
-			tokenID: rarity.tokenID,
-		}, ({error, data}) => {
-			if (error) {
-				return console.error(error);
-			}
-			updateRarity(data);
-		});
-	});
-}
-
-function	handleClaimGold(rarities, provider, updateRarity) {
-	rarities.forEach(rarity => {
-		claimGold({
-			provider,
-			contractAddress: process.env.RARITY_GOLD_ADDR,
-			tokenID: rarity.tokenID,
-		}, ({error, data}) => {
-			if (error) {
-				return console.error(error);
-			}
-			updateRarity(data);
-		});
-	});
-}
-
-function	Index({rarities, updateRarity}) {
+function	Index({rarities}) {
 	const	{provider, chainTime} = useWeb3();
+	const	{rNonce, updateBatchRarity} = useRarity();
 
 	const	adventurers = Object.values(rarities);
-	const	canAdventureRarities = adventurers.filter(rarity => !dayjs(new Date(rarity.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000))));
-	const	nextAdventureTime = adventurers.length && dayjs(new Date(Math.min(...adventurers.map(rarity => rarity.log)) * 1000)).from(dayjs(new Date(chainTime * 1000)));
-	const	canGoldRarities = adventurers.filter(rarity => Number(rarity?.gold?.claimable || 0) > 0);
+	const	[selectedAdventurers, set_selectedAdventurers] = useState([]);
+	const	[selectedAdventurersActions, set_selectedAdventurersActions] = useState({canAdventure: 0, canClaimGold: 0, canAdventureCellar: 0, canLevelUp: 0});
+
+	useEffect(() => {
+		let	canAdventure = 0;
+		let	canAdventureCellar = 0;
+		let	canLevelUp = 0;
+		let	canClaimGold = 0;
+		for (let index = 0; index < selectedAdventurers.length; index++) {
+			const adventurer = adventurers.find(e => e.tokenID === selectedAdventurers[index]);
+			if (dayjs(new Date(adventurer.log * 1000)).isBefore(dayjs(new Date(chainTime * 1000)))) {
+				canAdventure++;
+			}
+			if (Number(adventurer?.gold?.claimable || 0) > 0) {
+				canClaimGold++;
+			}
+			if (dayjs(new Date(adventurer?.dungeons?.cellar?.log * 1000)).isBefore(dayjs(new Date(chainTime * 1000)))) {
+				if (Number(adventurer?.dungeons?.cellar?.scout || 0) >= 1) {
+					canAdventureCellar++;
+				}
+			}
+			if (adventurer.xp >= xpRequired(adventurer.level)) {
+				canLevelUp++;
+			}
+		}
+		set_selectedAdventurersActions({canAdventure, canClaimGold, canAdventureCellar, canLevelUp});
+	}, [selectedAdventurers.length, rNonce]);
+
+	function	onCareOf() {
+		careOfAll({
+			provider,
+			tokensID: selectedAdventurers,
+		}, ({error, data}) => {
+			if (error) {
+				return console.error(error);
+			}
+			updateBatchRarity(data);
+		});
+	}
+	function	onAdventure() {
+		adventureAll({
+			provider,
+			tokensID: selectedAdventurers,
+		}, ({error, data}) => {
+			if (error) {
+				return console.error(error);
+			}
+			updateBatchRarity(data);
+		});
+	}
+	function	onAdventureCellar() {
+		adventureCellarAll({
+			provider,
+			tokensID: selectedAdventurers,
+		}, ({error, data}) => {
+			if (error) {
+				return console.error(error);
+			}
+			updateBatchRarity(data);
+		});
+	}
+	function	onLevelUp() {
+		adventureLevelupAll({
+			provider,
+			tokensID: selectedAdventurers,
+		}, ({error, data}) => {
+			if (error) {
+				return console.error(error);
+			}
+			updateBatchRarity(data);
+		});
+	}
+	function	onClaimGold() {
+		adventureClaimGold({
+			provider,
+			tokensID: selectedAdventurers,
+		}, ({error, data}) => {
+			if (error) {
+				return console.error(error);
+			}
+			updateBatchRarity(data);
+		});
+	}
 
 	return (
 		<section className={'max-w-full'}>
@@ -98,10 +158,79 @@ function	Index({rarities, updateRarity}) {
 						<NCPHeadline />
 					</Box>
 				</div>
+				<div className={'mb-4'}>
+					<p
+						className={'mb-4 text-regular cursor-pointer'}
+						onClick={() => {
+							if (selectedAdventurers.length !== adventurers.length) {
+								set_selectedAdventurers(adventurers.map(e => e.tokenID));
+							} else {
+								set_selectedAdventurers([]);
+							}
+						}}>
+						{selectedAdventurers.length !== adventurers.length ? '> SELECT ALL' : '> UNSELECT ALL'}
+					</p>
+					<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4'}>
+						{adventurers.map((adventurer) => {
+							return (
+								<div key={adventurer.tokenID} className={'w-full'}>
+									<Adventurer
+										onClick={() => set_selectedAdventurers(selectedAdventurers.includes(adventurer.tokenID) ? selectedAdventurers.filter(id => id !== adventurer.tokenID) : [...selectedAdventurers, adventurer.tokenID])}
+										adventurer={adventurer}
+										rarityClass={CLASSES[adventurer.class]}>
+										<div className={'absolute right-4 top-4'}>
+											<div className={'rounded-full border-black dark:border-dark-100 border-2'}>
+												<div className={`rounded-full p-2 ${selectedAdventurers.includes(adventurer.tokenID) ? 'bg-tag-info dark:bg-dark-100' : 'bg-transparent'} border-white dark:border-dark-600 border-2`} />
+											</div>
+										</div>
+									</Adventurer>
+								</div>
+							);
+						})}
+					</div>
+				</div>
 				<DialogBox
 					options={[
-						canAdventureRarities.length ? {label: `Send everyone (${canAdventureRarities.length}) to adventures`, onClick: () => handleGoAdventure(canAdventureRarities, provider, updateRarity)} : {label: nextAdventureTime ? `Next adventure ready ${nextAdventureTime}` : 'No adventurer available', onClick: () => {}},
-						canGoldRarities.length ? {label: `Claim gold for ${canGoldRarities.length} heroes`, onClick: () => handleClaimGold(canGoldRarities, provider, updateRarity)} : {label: 'No gold to claim!', onClick: () => {}},
+						{
+							label: 'Take care of everyone (Adventure, The Cellar, LevelUp & Claim Gold)',
+							onClick: () => onCareOf()
+						},
+						{
+							label: (
+								<>
+									{'Only Send everyone in an Adventure '}
+									<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canAdventure} adventurers)`}</span>
+								</>
+							),
+							onClick: () => onAdventure()
+						},
+						{
+							label: (
+								<>
+									{'Only Send everyone in The Cellar '}
+									<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canAdventureCellar} adventurers)`}</span>
+								</>
+							),
+							onClick: () => onAdventureCellar()
+						},
+						{
+							label: (
+								<>
+									{'Only Level up everyone '}
+									<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canLevelUp} adventurers)`}</span>
+								</>
+							),
+							onClick: () => onLevelUp()
+						},
+						{
+							label: (
+								<>
+									{'Only Claim gold for everyone '}
+									<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canClaimGold} adventurers)`}</span>
+								</>
+							),
+							onClick: () => onClaimGold()
+						}
 					]} />
 			</div>
 		</section>
