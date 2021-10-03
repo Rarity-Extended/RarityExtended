@@ -14,6 +14,7 @@ import	useRarity						from	'contexts/useRarity';
 import	CLASSES							from	'utils/codex/classes';
 import	Adventurer						from	'components/Adventurer';
 import	{discoverTreasureTheForest}		from	'utils/actions';
+import	Box								from	'components/Box';
 
 dayjs.extend(relativeTime);
 
@@ -67,7 +68,7 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 
 						if (isBack) {
 							return (
-								<div
+								<Box
 									onClick={() => {
 										discoverTreasureTheForest({provider, contractAddress: process.env.DUNGEON_THE_FOREST_ADDR, tokenID: adventurer.tokenID},
 											({error}) => {
@@ -78,12 +79,12 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 												router.push('/');
 											});
 									}}
-									className={'w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}>
+									className={'w-full p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}>
 									<Image
 										src={'/menu/shovel.png'}
 										quality={100}
-										width={240}
-										height={240} />
+										width={160}
+										height={160} />
 									<p className={'text-sm justify-center group-hover:underline'}>{adventurer.tokenID}</p>
 									<p className={'text-xss justify-center text-center mt-1'}>{`${CLASSES[adventurer.class].name} level ${adventurer.level}`}</p>
 									<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-pointer flex justify-center items-center text-center p-6'}>
@@ -91,7 +92,7 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 											{'YOU FOUND A TREASURE !'}
 										</p>
 									</div>
-								</div>
+								</Box>
 							);
 						}
 
