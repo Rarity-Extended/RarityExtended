@@ -599,7 +599,7 @@ export async function	discoverTreasureTheForest({provider, contractAddress, toke
 	}
 }
 
-export async function	levelUpTreasureTheForest({provider, contractAddress, tokenID, adventurerID, treasureName}, callback) {
+export async function	levelUpTreasureTheForestOld({provider, contractAddress, tokenID, adventurerID, treasureName}, callback) {
 	let		_toast = toast.loading(`1/2 - Approving adventurer ${adventurerID}...`);
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
@@ -679,7 +679,7 @@ export async function	levelUpTreasureTheForest({provider, contractAddress, token
 	}
 }
 
-export async function	levelUpTreasureTheForestnew({provider, contractAddress, tokenID, adventurerID, treasureName, xpRequired}, callback) {
+export async function	levelUpTreasureTheForest({provider, contractAddress, tokenID, adventurerID, treasureName, xpRequired}, callback) {
 	let		_toast = toast.loading(`1/3 - Approving Proxy Spender ${adventurerID}...`);
 	const	signer = provider.getSigner();
 	const	address = await signer.getAddress();
