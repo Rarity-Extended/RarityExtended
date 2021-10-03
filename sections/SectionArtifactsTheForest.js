@@ -7,6 +7,7 @@
 
 import	React							from	'react';
 import	Image							from	'next/image';
+import	{ethers}						from	'ethers';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	{levelUpTreasureTheForest}		from	'utils/actions';
@@ -49,7 +50,8 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, router, adventur
 								contractAddress: process.env.DUNGEON_THE_FOREST_ADDR,
 								tokenID: item.treasureId.toString(),
 								adventurerID: adventurer.tokenID,
-								treasureName: item.itemName
+								treasureName: item.itemName,
+								xpRequired: ethers.utils.parseEther(String(xpRequired(item.level)))
 							}, ({error}) => {
 								if (error) {
 									return console.error(error);

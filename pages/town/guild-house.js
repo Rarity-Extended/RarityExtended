@@ -7,18 +7,19 @@
 
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
-import	React, {useEffect, useState}				from	'react';
+import	React, {useEffect, useState}	from	'react';
 import	Image							from	'next/image';
 import	useWeb3							from	'contexts/useWeb3';
+import	useRarity						from	'contexts/useRarity';
 import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
 import	Box								from	'components/Box';
-import	CLASSES							from	'utils/codex/classes';
 import	Adventurer						from	'components/Adventurer';
-import	{xpRequired}		from	'utils/libs/rarity';
+import	CLASSES							from	'utils/codex/classes';
+import	{chunk}							from	'utils';
+import	{xpRequired}					from	'utils/libs/rarity';
 
 import	{careOfAll, adventureAll, adventureCellarAll, adventureLevelupAll, adventureClaimGold}		from	'utils/actions';
-import useRarity from 'contexts/useRarity';
 
 dayjs.extend(relativeTime);
 
@@ -86,60 +87,80 @@ function	Index({rarities}) {
 		set_selectedAdventurersActions({canAdventure, canClaimGold, canAdventureCellar, canLevelUp});
 	}, [selectedAdventurers.length, rNonce]);
 
-	function	onCareOf() {
-		careOfAll({
-			provider,
-			tokensID: selectedAdventurers,
-		}, ({error, data}) => {
-			if (error) {
-				return console.error(error);
-			}
-			updateBatchRarity(data);
-		});
+	async function	onCareOf() {
+		if (selectedAdventurersActions.canAdventure === 0 && selectedAdventurersActions.canAdventureCellar === 0 && selectedAdventurersActions.canLevelUp === 0 && selectedAdventurersActions.canClaimGold === 0) {
+			return;
+		}
+		const	chuncked = chunk(selectedAdventurers, 10);
+		for (let index = 0; index < chuncked.length; index++) {
+			const tokensID = chuncked[index];
+			careOfAll({provider, tokensID}, ({error, data}) => {
+				if (error) {
+					return console.error(error);
+				}
+				updateBatchRarity(data);
+			});	
+		}
 	}
 	function	onAdventure() {
-		adventureAll({
-			provider,
-			tokensID: selectedAdventurers,
-		}, ({error, data}) => {
-			if (error) {
-				return console.error(error);
-			}
-			updateBatchRarity(data);
-		});
+		if (selectedAdventurersActions.canAdventure === 0) {
+			return;
+		}
+		const	chuncked = chunk(selectedAdventurers, 10);
+		for (let index = 0; index < chuncked.length; index++) {
+			const tokensID = chuncked[index];
+			adventureAll({provider, tokensID}, ({error, data}) => {
+				if (error) {
+					return console.error(error);
+				}
+				updateBatchRarity(data);
+			});
+		}
 	}
 	function	onAdventureCellar() {
-		adventureCellarAll({
-			provider,
-			tokensID: selectedAdventurers,
-		}, ({error, data}) => {
-			if (error) {
-				return console.error(error);
-			}
-			updateBatchRarity(data);
-		});
+		if (selectedAdventurersActions.canAdventureCellar === 0) {
+			return;
+		}
+		const	chuncked = chunk(selectedAdventurers, 10);
+		for (let index = 0; index < chuncked.length; index++) {
+			const tokensID = chuncked[index];
+			adventureCellarAll({provider, tokensID}, ({error, data}) => {
+				if (error) {
+					return console.error(error);
+				}
+				updateBatchRarity(data);
+			});
+		}
 	}
 	function	onLevelUp() {
-		adventureLevelupAll({
-			provider,
-			tokensID: selectedAdventurers,
-		}, ({error, data}) => {
-			if (error) {
-				return console.error(error);
-			}
-			updateBatchRarity(data);
-		});
+		if (selectedAdventurersActions.canLevelUp === 0) {
+			return;
+		}
+		const	chuncked = chunk(selectedAdventurers, 10);
+		for (let index = 0; index < chuncked.length; index++) {
+			const tokensID = chuncked[index];
+			adventureLevelupAll({provider, tokensID}, ({error, data}) => {
+				if (error) {
+					return console.error(error);
+				}
+				updateBatchRarity(data);
+			});
+		}
 	}
 	function	onClaimGold() {
-		adventureClaimGold({
-			provider,
-			tokensID: selectedAdventurers,
-		}, ({error, data}) => {
-			if (error) {
-				return console.error(error);
-			}
-			updateBatchRarity(data);
-		});
+		if (selectedAdventurersActions.canClaimGold === 0) {
+			return;
+		}
+		const	chuncked = chunk(selectedAdventurers, 10);
+		for (let index = 0; index < chuncked.length; index++) {
+			const tokensID = chuncked[index];
+			adventureClaimGold({provider, tokensID}, ({error, data}) => {
+				if (error) {
+					return console.error(error);
+				}
+				updateBatchRarity(data);
+			});
+		}
 	}
 
 	return (
@@ -192,46 +213,75 @@ function	Index({rarities}) {
 				<DialogBox
 					options={[
 						{
-							label: 'Take care of everyone (Adventure, The Cellar, LevelUp & Claim Gold)',
+							label: (
+								selectedAdventurersActions.canAdventure === 0 && selectedAdventurersActions.canAdventureCellar === 0 && selectedAdventurersActions.canLevelUp === 0 && selectedAdventurersActions.canClaimGold === 0
+									?
+									<>{'YOUR ADVENTURERS ARE ALL RESTING'}</>
+									:
+									<>
+										{'Take care of everyone (Adventure, The Cellar, LevelUp & Claim Gold)'}
+									</>
+							),
 							onClick: () => onCareOf()
 						},
 						{
 							label: (
-								<>
-									{'Only Send everyone in an Adventure '}
-									<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canAdventure} adventurers)`}</span>
-								</>
+								selectedAdventurersActions.canAdventure === 0
+									?
+									<>{'NO ONE CAN ADVENTURE RIGHT NOW'}</>
+									:
+									<>
+										{'ONLY THE DAILY ADVENTURE '}
+										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canAdventure} adventurers)`}</span>
+									</>
 							),
 							onClick: () => onAdventure()
 						},
 						{
 							label: (
-								<>
-									{'Only Send everyone in The Cellar '}
-									<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canAdventureCellar} adventurers)`}</span>
-								</>
+								selectedAdventurersActions.canAdventureCellar === 0
+									?
+									<>{'NO ONE CAN GO IN THE CELLAR RIGHT NOW'}</>
+									:
+									<>
+										{'ONLY THE CELLAR '}
+										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canAdventureCellar} adventurers)`}</span>
+									</>
 							),
 							onClick: () => onAdventureCellar()
 						},
 						{
 							label: (
-								<>
-									{'Only Level up everyone '}
-									<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canLevelUp} adventurers)`}</span>
-								</>
+								selectedAdventurersActions.canLevelUp === 0
+									?
+									<>{'NO ONE CAN LEVEL-UP RIGHT NOW'}</>
+									:
+									<>
+										{'ONLY LEVEL-UP '}
+										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canLevelUp} adventurers)`}</span>
+									</>
 							),
 							onClick: () => onLevelUp()
 						},
 						{
 							label: (
-								<>
-									{'Only Claim gold for everyone '}
-									<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canClaimGold} adventurers)`}</span>
-								</>
+								selectedAdventurersActions.canClaimGold === 0
+									?
+									<>{'NO ONE CAN CLAIM GOLD RIGHT NOW'}</>
+									:
+									<>
+										{'ONLY CLAIM GOLD '}
+										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canClaimGold} adventurers)`}</span>
+									</>
 							),
 							onClick: () => onClaimGold()
 						}
 					]} />
+				<div className={'-mt-4'}>
+					<i className={'text-megaxs text-opacity-40 text-black dark:text-dark-100'}>
+						{'Transactions are processed by batch of 10 adventurer because of block limit'}
+					</i>
+				</div>
 			</div>
 		</section>
 	);
