@@ -7,20 +7,19 @@
 
 import	React, {useState, useEffect}	from	'react';
 import	Image							from	'next/image';
-import	{ethers}						from	'ethers';
-import	useSWR							from	'swr';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
-import	{apeInVault}					from	'utils/actions';
-import	{formatAmount, fetcher}			from	'utils';
 import	useWeb3							from	'contexts/useWeb3';
 import	useUI							from	'contexts/useUI';
+import	useRarity						from	'contexts/useRarity';
 import	DialogBox						from	'components/DialogBox';
 import	ModalLogin						from	'components/ModalLogin';
 import	Typer							from	'components/Typer';
+import	Box								from	'components/Box';
 import	SectionRecruit					from	'sections/SectionRecruit';
 import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
 import	TAVERN_NEWS						from	'utils/codex/tavernNews.json';
+import	CLASSES							from	'utils/codex/classes';
 
 dayjs.extend(relativeTime);
 
@@ -47,134 +46,178 @@ function	NewsTab({shouldDisplay}) {
 	);
 }
 
-function	FacuHeadline({router, vaultAPY, ftmBalance, hasDeposited, hasDepositError, isTxPending, active, adventurersCount}) {
+function	NPCHeadline({router, active, adventurersCount}) {
 	const	[nonce, set_nonce] = useState(0);
-	const	[facuTextIndex, set_facuTextIndex] = useState(0);
+	const	[npcTextIndex, set_npcTextIndex] = useState(0);
 	
-	useEffect(() => {
-		set_facuTextIndex(0);
-		set_nonce(n => n+1);
-	}, [router?.query?.tab, isTxPending, hasDeposited, hasDepositError]);
+	const	[hadInitialMessage, set_hadInitialMessage] = useState(false);
+	const	[hadRecruitMessage, set_hadRecruitMessage] = useState(false);
+	const	[hadTheCellarMessage, set_hadTheCellarMessage] = useState(false);
 
-	const	renderFacuText = () => {
+	useEffect(() => {
+		set_npcTextIndex(0);
+		set_nonce(n => n+1);
+	}, [router?.query?.tab]);
+
+	const	renderNPCText = () => {
 		if (!active) {
 			return (
-				<Typer>{'Hello traveler! Welcome to Facu\'s Tavern!\nPerhaps you should consider connecting your wallet ?'}</Typer>
+				<>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
+						{'WELCOME, ADVENTURER! I AM'}
+					</Typer>&nbsp;
+					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						{'FACU THE TAVERN KEEPER'}
+					</Typer></span>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
+						{'!'}
+					</Typer>&nbsp;
+					<div />
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+						{'PERHAPS YOU SHOULD CONSIDER CONNECTING YOUR WALLET?'}
+					</Typer>
+				</>
 			);
 		}
 		if (!router?.query?.tab) {
+			if (hadInitialMessage) {
+				return (
+					<>
+						{'WELCOME, ADVENTURER! I AM '}
+						<span className={'text-tag-info'}>{'FACU THE TAVERN KEEPER'}</span>
+						{'!'}
+						<div />
+						{'WHAT DO YOU WANT TO DO ? I CAN FIND THE LAST NEWS JUST BELLOW!'}
+					</>		
+				);
+			}
 			return (
-				<Typer>{'Hello traveler! Welcome to Facu\'s Tavern!\nWhat do you want to do ?'}</Typer>
+				<>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
+						{'WELCOME, ADVENTURER! I AM'}
+					</Typer>&nbsp;
+					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						{'FACU THE TAVERN KEEPER'}
+					</Typer></span>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
+						{'!'}
+					</Typer>&nbsp;
+					<div />
+					<Typer
+						onDone={() => {
+							set_npcTextIndex(i => i + 1);
+							set_hadInitialMessage(true);
+						}}
+						shouldStart={npcTextIndex === 3}>
+						{'WHAT DO YOU WANT TO DO ? I CAN FIND THE LAST NEWS JUST BELLOW!'}
+					</Typer>
+				</>
 			);
 		}
 		if (router?.query?.tab === 'recruit') {
 			if (adventurersCount === 0) {
+				if (hadRecruitMessage) {
+					return (
+						<>
+							{'WELCOME, ADVENTURER! I AM '}
+							<span className={'text-tag-info'}>{'FACU THE TAVERN KEEPER'}</span>
+							{'!'}
+							<div />
+							{'YOU ARE ABOUT TO START A JOURNEY BEYOND IMAGINATION. YOU WILL MEET NEW FRIENDS AND FIGHT GREAT DANGERS!'}
+							<div className={'my-2'}/>
+							{'WHAT KIND OF ADVENTURER ARE YOU ?'}
+						</>		
+					);
+				}
 				return (
 					<>
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 							{'WELCOME, ADVENTURER! I AM'}
 						</Typer>&nbsp;
-						<span className={'text-tag-info'}><Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>
-							{'FACU'}
+						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+							{'FACU THE TAVERN KEEPER'}
 						</Typer></span>
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
-							{', THE TAVERN KEEPER.'}
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
+							{'!'}
 						</Typer>&nbsp;
 						<div />
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 3}>
+						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 							{'YOU ARE ABOUT TO START A JOURNEY BEYOND IMAGINATION. YOU WILL MEET NEW FRIENDS AND FIGHT GREAT DANGERS!'}
 						</Typer>&nbsp;
 						<div className={'my-2'}/>
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 4}>
+						<Typer
+							onDone={() => {
+								set_npcTextIndex(i => i + 1);
+								set_hadRecruitMessage(true);
+							}}
+							shouldStart={npcTextIndex === 4}>
 							{'WHAT KIND OF ADVENTURER ARE YOU ?'}
 						</Typer>
 					</>
 				);
 			}
-			return (
-				<Typer>{'OH, THERE IS AN HERO OVER THERE LOOKING FOR SOME ADVENTURE'}</Typer>
-			);
-		}
-		if (router?.query?.tab === 'ftm-vault') {
-			if (Number(ftmBalance) === 0) {
+			if (hadRecruitMessage) {
 				return (
 					<>
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>{'Oh yes. You have what ?'}</Typer>&nbsp;
-						<span className={'text-tag-info'}>
-							<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>{`${formatAmount(ftmBalance, 2)} FTM`}</Typer>
-						</span>&nbsp;
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
-							{'? No can\'t do ... But if you find some, I have a really good plan where you can earn up to'}
-						</Typer>&nbsp;
-						<span className={'text-tag-info'}>
-							<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 3}>
-								{`${vaultAPY?.data?.week}`}
-							</Typer>
-						</span>
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 4}>
-							{'. Just come back later!'}
-						</Typer>
-					</>
-				);
-			}
-			if (isTxPending) {
-				return (
-					<Typer>{'GREAT CHOICE! LET\'S PROCESS YOUR TRANSACTION'}</Typer>
-				);
-			}
-			if (hasDeposited) {
-				return (
-					<>
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>{'THIS IS A GREAT INVESTMENT! TRUST ME! YOU CAN CLICK'}</Typer>&nbsp;
-						<a className={'text-tag-info hover:underline'} href={'https://ape.tax/the-fantom'} target={'_blank'} rel={'noreferrer'}>
-							<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>{'HERE'}</Typer>
-						</a>&nbsp;
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
-							{'TO CHECK YOUR INVESTMENT UNTIL THE BANK IS BUILT IN THIS HUMBLE TOWN!'}
-						</Typer>&nbsp;
-					</>
-				);
-			}
-			if (hasDepositError) {
-				return (
-					<Typer>{'OH YOU CHANGED YOUR MIND!'}</Typer>
+						{'OH, THERE IS A '}
+						<span className={'text-tag-info'}>{'HERO'}</span>
+						{' OVER THERE LOOKING FOR SOME ADVENTURE ! MAYBE YOU SHOULD TALK TO HIM ? OR HER, I CAN\'T SEE FROM HERE.'}
+					</>		
 				);
 			}
 			return (
 				<>
-					<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>{'OH YES. YOU HAVE WHAT ?'}</Typer>&nbsp;
-					<span className={'text-tag-info'}>
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>{`${formatAmount(ftmBalance, 2)} FTM`}</Typer>
-					</span>&nbsp;
-					<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>
-						{'? I HAVE A FRIEND, THE WIFE OF THE UNCLE OF ONE OF MY COUSINS (ON MY MOTHER\'S SIDE), THAT HAS A REALLY GOOD PLAN. THE CURRENT APY IS'}
-					</Typer>&nbsp;
-					<span className={'text-tag-info'}>
-						<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 3}>
-							{`${vaultAPY?.data?.week}`}
-						</Typer>
-					</span>
-					<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 4}>
-						{'. DO YOU WANT TO APE-IN ?'}
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
+						{'OH, THERE IS A '}
+					</Typer>
+					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						{'HERO'}
+					</Typer></span>
+					<Typer
+						onDone={() => {
+							set_npcTextIndex(i => i + 1);
+							set_hadRecruitMessage(true);
+						}}
+						shouldStart={npcTextIndex === 2}>
+						{'  OVER THERE LOOKING FOR SOME ADVENTURE ! MAYBE YOU SHOULD TALK TO HIM ? OR HER, I CAN\'T SEE FROM HERE.'}
 					</Typer>
 				</>
 			);
 		}
 		if (router?.query?.tab === 'the-cellar') {
+			if (hadTheCellarMessage) {
+				return (
+					<>
+						{'THOSE RATS BE HUNGRY. THOSE RATS BE MANY. BEST IF YE CONSTITUTION BE PLENTY !'}
+					</>		
+				);
+			}
 			return (
-				<Typer>{'Those rats be hungry. Those rats be many. Best if ye Constitution be plenty !'}</Typer>
+				<Typer onDone={() => set_hadTheCellarMessage(true)}>
+					{'Those rats be hungry. Those rats be many. Best if ye Constitution be plenty !'}
+				</Typer>
 			);
 		}
 		return null;
 	};
 	return (
-		<h1 key={nonce} className={'text-sm md:text-lg leading-normal md:leading-10 whitespace-pre-line mt-10'}>
-			{renderFacuText()}
+		<h1 key={nonce} className={'text-xs md:text-xs leading-normal md:leading-8'}>
+			{renderNPCText()}
 		</h1>
 	);
 }
 
-function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConnect, active, isTxPending, set_isTxPending, set_hasDeposited}) {
+function	DialogChoices({router, onWalletConnect, active}) {
+	const	{chainTime} = useWeb3();
+	const	{currentAdventurer, openCurrentAventurerModal} = useRarity();
+	const	[selectedOption, set_selectedOption] = useState(0);
+	const	[dialogNonce, set_dialogNonce] = useState(0);
+
+	useEffect(() => {
+		set_selectedOption(0);
+		set_dialogNonce(n => n + 1);
+	}, [currentAdventurer?.tokenID, router?.asPath]);
+
 	if (!active) {
 		return (
 			<DialogBox
@@ -183,51 +226,48 @@ function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConn
 				]} />
 		);
 	}
-	if (router?.query?.tab === 'ftm-vault' && Number(ftmBalance) > 0) {
+	if (router?.query?.tab === 'the-cellar') {
+		const	canAdventure = !dayjs(new Date(currentAdventurer?.dungeons?.cellar * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
+
 		return (
-			<DialogBox
-				options={[
-					{label: 'Deposit 25%', onClick: () => {
-						if (isTxPending)
-							return;
-						set_isTxPending(true);
-						set_hasDeposited(false);
-						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(25).div(100)}, (e) => {
-							set_isTxPending(false);
-							onFTMDeposit(e);
-						});
-					}},
-					{label: 'Deposit 50%', onClick: () => {
-						if (isTxPending)
-							return;
-						set_isTxPending(true);
-						set_hasDeposited(false);
-						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(50).div(100)}, (e) => {
-							set_isTxPending(false);
-							onFTMDeposit(e);
-						});
-					}},
-					{label: 'Deposit 75%', onClick: () => {
-						if (isTxPending)
-							return;
-						set_isTxPending(true);
-						set_hasDeposited(false);
-						apeInVault({provider, contractAddress: process.env.ZAP_VAULT_ADDR, amount: ethers.utils.parseEther(ftmBalance).mul(75).div(100)}, (e) => {
-							set_isTxPending(false);
-							onFTMDeposit(e);
-						});
-					}},
-					{label: 'Nevermind', onClick: () => router.push('/town/tavern')},
-				]} />
+			<>
+				<DialogBox
+					selectedOption={selectedOption}
+					nonce={dialogNonce}
+					options={[
+						{label: (
+							canAdventure ?
+								<>
+									{'FIGHT THE RAT WITH '}
+									<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+								</>
+								:
+								<>
+									<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+									{' NEED SOME REST BEFORE FIGHTING THE RAT AGAIN'}
+								</>
+						),
+						onClick: () => {
+							if (canAdventure)
+								router.push(`/dungeons/the-cellar?adventurer=${currentAdventurer.tokenID}`);
+							else
+								openCurrentAventurerModal();
+						}},
+						{label: 'SELECT ANOTHER ADVENTURER', onClick: () => openCurrentAventurerModal()},
+						{label: 'CANCEL', onClick: () => router.push('/town/tavern')},
+					]} />
+			</>
 		);
 	}
+
 	return (
 		<DialogBox
+			selectedOption={selectedOption}
+			nonce={dialogNonce}
 			options={[
 				{label: 'What\'s new ?', onClick: () => router.push('/town/tavern')},
 				{label: 'Recruit a new adventurer', onClick: () => router.push('/town/tavern?tab=recruit')},
-				{label: 'About the rat ...', onClick: () => router.push('/town/tavern?tab=the-cellar')},
-				{label: 'You said I could earn FTM ?', onClick: () => router.push('/town/tavern?tab=ftm-vault')}
+				{label: 'About the rat ...', onClick: () => router.push('/town/tavern?tab=the-cellar')}
 			]} />
 	);
 }
@@ -235,25 +275,14 @@ function	DialogChoices({router, provider, ftmBalance, onFTMDeposit, onWalletConn
 function	Index({fetchRarity, rarities, router}) {
 	const	{provider, address, active} = useWeb3();
 	const	{theme} = useUI();
-	const	[ftmBalance, set_ftmBalance] = useState(0);
-	const	[isTxPending, set_isTxPending] = useState(false);
-	const	[hasDeposited, set_hasDeposited] = useState(false);
-	const	[hasDepositError, set_hasDepositError] = useState(false);
 	const	[modalLoginOpen, set_modalLoginOpen] = useState(false);
-	const	{data: vaultAPY} = useSWR(`https://ape.tax/api/specificApy?address=${process.env.FTM_VAULT_ADDR}&network=250`, fetcher);
 	const	adventurers = Object.values(rarities);
 
-	useEffect(() => {
-		if (provider && address) {
-			provider.getBalance(address).then(b => set_ftmBalance(ethers.utils.formatEther(b)));
-		}
-	}, [address, provider]);
-
 	return (
-		<section className={'mt-12 max-w-full'}>
+		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-0'}>
-					<div className={'w-auto md:w-64 mr-0 md:mr-16'} style={{minWidth: 256}}>
+				<div className={'flex flex-col md:flex-row items-center mb-8 md:mb-8'}>
+					<div className={'w-auto md:w-64 mr-0 md:mr-8'} style={{minWidth: 256}}>
 						<Image
 							src={theme === 'light' ? '/avatar/facu.gif' : '/avatar/facu.png'}
 							loading={'eager'}
@@ -261,36 +290,19 @@ function	Index({fetchRarity, rarities, router}) {
 							width={256}
 							height={256} />
 					</div>
-					<FacuHeadline
-						active={active && address}
-						adventurersCount={adventurers.length}
-						router={router}
-						vaultAPY={vaultAPY}
-						ftmBalance={ftmBalance}
-						isTxPending={isTxPending}
-						hasDepositError={hasDepositError}
-						hasDeposited={hasDeposited} />
+					<Box className={'p-4'}>
+						<NPCHeadline
+							adventurersCount={adventurers.length}
+							address={address}
+							active={active && address}
+							router={router} />
+					</Box>
 				</div>
+				
 				<DialogChoices
 					active={active && address}
-					provider={provider}
 					router={router}
-					ftmBalance={ftmBalance}
-					hasDeposited={hasDeposited}
-					onWalletConnect={() => set_modalLoginOpen(true)}
-					isTxPending={isTxPending}
-					set_isTxPending={set_isTxPending}
-					set_hasDeposited={set_hasDeposited}
-					onFTMDeposit={({error}) => {
-						if (error) {
-							set_hasDepositError(true);
-							return console.error(error);
-						}
-						provider.getBalance(address).then(b => set_ftmBalance(ethers.utils.formatEther(b)));
-						set_hasDepositError(false);
-						set_hasDeposited(true);
-						set_isTxPending(false);
-					}} />
+					onWalletConnect={() => set_modalLoginOpen(true)} />
 				{active ? <section>
 					<NewsTab shouldDisplay={!router?.query?.tab} router={router} provider={provider} fetchRarity={fetchRarity} />
 					<SectionRecruit shouldDisplay={router?.query?.tab === 'recruit'} router={router} provider={provider} fetchRarity={fetchRarity} />

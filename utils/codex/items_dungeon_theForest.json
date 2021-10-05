@@ -220,7 +220,7 @@
 	"Unknown ring": {
 		"name": "Unknown ring",
 		"description": "A mystery created in the hardest metal.",
-		"img": "/items/aaaaaa.png",
+		"img": "/items/unknown_ring.png",
 		"level": "Epic",
 		"levelClassName": "bg-items-epic",
 		"modifier": [{
@@ -433,7 +433,7 @@
 	"Glove with diamonds": {
 		"name": "Glove with diamonds",
 		"description": "Glamor is just one of its characteristics.",
-		"img": "/items/glove_with_diamonds.png",
+		"img": "/items/PIXEL_glove_with_diamonds.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -825,7 +825,7 @@
 	"Red Tanned Gloves": {
 		"name": "Red Tanned Gloves",
 		"description": "Were these tanned with blood? No one can know.",
-		"img": "/items/red_tanned_gloves.png",
+		"img": "/items/PIXEL_red_tanned_gloves.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -838,7 +838,7 @@
 	"Cat Claw glove": {
 		"name": "Cat Claw glove",
 		"description": "Which feline was the owner of such claws? Matters not. You may wear don them now.",
-		"img": "/items/cat_claw_glove.png",
+		"img": "/items/PIXEL_cat_clow_glove.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{

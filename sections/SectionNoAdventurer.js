@@ -46,13 +46,13 @@ function	FacuHeadline() {
 	);
 }
 
-function	SectionNoAdventurer({router}) {
+function	SectionNoAdventurer() {
 	const	{theme} = useUI();
 	const	{provider} = useWeb3();
 	const	{fetchRarity} = useRarity();
 
 	return (
-		<section className={'mt-12 max-w-full'}>
+		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
 				<div className={'flex flex-col md:flex-row items-center md:items-center mb-8 md:mb-16'}>
 					<div className={'w-auto md:w-64 mr-0 md:mr-16'} style={{minWidth: 256}}>
@@ -65,7 +65,7 @@ function	SectionNoAdventurer({router}) {
 					</div>
 					<FacuHeadline />
 				</div>
-				<SectionRecruit shouldDisplay={true} router={router} provider={provider} fetchRarity={fetchRarity} />
+				<SectionRecruit shouldDisplay={true} provider={provider} fetchRarity={fetchRarity} />
 			</div>
 		</section>
 	);		

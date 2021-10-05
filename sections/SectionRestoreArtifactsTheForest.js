@@ -15,7 +15,7 @@ import	useRarity						from	'contexts/useRarity';
 import	{toAddress, fetcher}			from	'utils';
 import	{restoreTreasureTheForest}		from	'utils/actions';
 import	CLASSES							from	'utils/codex/classes';
-import	THE_FOREST_LOOT					from	'utils/codex/theForestLoot.json';
+import	THE_FOREST_LOOT					from	'utils/codex/items_dungeon_theForest.json';
 import	THE_FORESTV1_ABI				from	'utils/abi/dungeonTheForestV1.abi';
 
 async function newEthCallProvider(provider) {

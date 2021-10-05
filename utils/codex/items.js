@@ -24,10 +24,7 @@ const	items = [
 	},
 	{
 		name: 'TheForest_treasure',
-		img: '/items/default_artifact.png',
 		address: process.env.DUNGEON_THE_FOREST_ADDR,
-		level: 'Relic',
-		levelClassName: 'bg-items-relic',
 		fetch: (adventurerID) => new Contract(process.env.DUNGEON_THE_FOREST_ADDR, THE_FOREST_ABI).getTreasuresBySummoner(adventurerID),
 		dungeon: 'The Forest',
 		parse: (item) => item,
