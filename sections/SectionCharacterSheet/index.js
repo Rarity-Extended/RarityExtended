@@ -7,6 +7,7 @@
 
 import	React, {useState}	from	'react';
 import	AutowidthInput		from	'react-autowidth-input';
+import	toast				from	'react-hot-toast';
 import	Box					from	'components/Box';
 import	Image				from	'next/image';
 import	Attributes			from	'sections/SectionCharacterSheet/Attributes';
@@ -77,10 +78,11 @@ function	Info({adventurer, updateRarity, provider}) {
 								name,
 								tokenID: adventurer.tokenID
 							}, ({error}) => {
-								if (error) {
-									return console.error(error);
-								}
+								console.error(error);
+							}, (_toast) => {
 								updateRarity(adventurer.tokenID);
+								toast.dismiss(_toast);
+								toast.success(`You can now call ${adventurer.tokenID}: ${name}!`);
 							});
 						}
 					}}

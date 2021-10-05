@@ -11,6 +11,11 @@ import	CLASSES				from	'utils/codex/classes';
 import	RARITY_CRAFTING_ABI	from	'utils/abi/rarityCrafting.abi';
 import	EXTENDED_NAME_ABI	from	'utils/abi/rarityExtendedName.abi';
 
+function	onSuccessToast(_toast) {
+	toast.dismiss(_toast);
+	toast.success('Transaction successful');
+}
+
 async function	_adventure(loader, {provider, contractAddress, tokenID}, callback) {
 	const	_toast = toast.loading(loader);
 	const	signer = provider.getSigner();
@@ -1075,7 +1080,7 @@ export async function	approveERC20({provider, contractAddress, adventurerID, spe
 	}
 }
 
-export async function	setName({provider, tokenID, name}, callback) {
+export async function	setName({provider, tokenID, name}, onError, onSuccess = onSuccessToast) {
 	const	_toast = toast.loading(`Name ${tokenID} to ${name}...`);
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
@@ -1093,7 +1098,7 @@ export async function	setName({provider, tokenID, name}, callback) {
 	} catch (error) {
 		toast.dismiss(_toast);
 		toast.error('Impossible to name your adventurer');
-		callback({error, data: undefined});
+		onError({error, data: undefined});
 		return;
 	}
 
@@ -1104,18 +1109,16 @@ export async function	setName({provider, tokenID, name}, callback) {
 		const	transaction = await rarity.set_name(tokenID, name);
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
-			callback({error: false, data: tokenID});
-			toast.dismiss(_toast);
-			toast.success(`You can now call ${tokenID}: ${name}!`);
+			onSuccess(_toast);
 		} else {
 			toast.dismiss(_toast);
 			toast.error('Transaction reverted');
-			callback({error: true, data: undefined});
+			onError({error: true, data: undefined});
 		}
 	} catch (error) {
 		console.error(error);
 		toast.dismiss(_toast);
 		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
+		onError({error, data: undefined});
 	}
 }
