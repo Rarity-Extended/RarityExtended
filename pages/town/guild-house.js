@@ -9,6 +9,7 @@ import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	React, {useEffect, useState}	from	'react';
 import	Image							from	'next/image';
+import	toast							from	'react-hot-toast';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	Typer							from	'components/Typer';
@@ -19,7 +20,7 @@ import	CLASSES							from	'utils/codex/classes';
 import	{chunk}							from	'utils';
 import	{xpRequired}					from	'utils/libs/rarity';
 
-import	{careOfAll, adventureAll, adventureCellarAll, adventureLevelupAll, adventureClaimGold}		from	'utils/actions';
+import	{careOfAll, careAdventure, careCellar, careLevelup, careGold}		from	'utils/actions/daycare';
 
 dayjs.extend(relativeTime);
 
@@ -94,12 +95,16 @@ function	Index({rarities}) {
 		const	chuncked = chunk(selectedAdventurers, 10);
 		for (let index = 0; index < chuncked.length; index++) {
 			const tokensID = chuncked[index];
-			careOfAll({provider, tokensID}, ({error, data}) => {
-				if (error) {
+			careOfAll(
+				{provider, tokensID},
+				({error}) => {
 					return console.error(error);
-				}
-				updateBatchRarity(data);
-			});	
+				},
+				(_toast) => {
+					updateBatchRarity(tokensID);
+					toast.dismiss(_toast);
+					toast.success('Transaction successful');
+				});
 		}
 	}
 	function	onAdventure() {
@@ -109,12 +114,16 @@ function	Index({rarities}) {
 		const	chuncked = chunk(selectedAdventurers, 10);
 		for (let index = 0; index < chuncked.length; index++) {
 			const tokensID = chuncked[index];
-			adventureAll({provider, tokensID}, ({error, data}) => {
-				if (error) {
+			careAdventure(
+				{provider, tokensID},
+				({error}) => {
 					return console.error(error);
-				}
-				updateBatchRarity(data);
-			});
+				},
+				(_toast) => {
+					updateBatchRarity(tokensID);
+					toast.dismiss(_toast);
+					toast.success('Transaction successful');
+				});
 		}
 	}
 	function	onAdventureCellar() {
@@ -124,12 +133,16 @@ function	Index({rarities}) {
 		const	chuncked = chunk(selectedAdventurers, 10);
 		for (let index = 0; index < chuncked.length; index++) {
 			const tokensID = chuncked[index];
-			adventureCellarAll({provider, tokensID}, ({error, data}) => {
-				if (error) {
+			careCellar(
+				{provider, tokensID},
+				({error}) => {
 					return console.error(error);
-				}
-				updateBatchRarity(data);
-			});
+				},
+				(_toast) => {
+					updateBatchRarity(tokensID);
+					toast.dismiss(_toast);
+					toast.success('Transaction successful');
+				});
 		}
 	}
 	function	onLevelUp() {
@@ -139,12 +152,16 @@ function	Index({rarities}) {
 		const	chuncked = chunk(selectedAdventurers, 10);
 		for (let index = 0; index < chuncked.length; index++) {
 			const tokensID = chuncked[index];
-			adventureLevelupAll({provider, tokensID}, ({error, data}) => {
-				if (error) {
+			careLevelup(
+				{provider, tokensID},
+				({error}) => {
 					return console.error(error);
-				}
-				updateBatchRarity(data);
-			});
+				},
+				(_toast) => {
+					updateBatchRarity(tokensID);
+					toast.dismiss(_toast);
+					toast.success('Transaction successful');
+				});
 		}
 	}
 	function	onClaimGold() {
@@ -154,12 +171,18 @@ function	Index({rarities}) {
 		const	chuncked = chunk(selectedAdventurers, 10);
 		for (let index = 0; index < chuncked.length; index++) {
 			const tokensID = chuncked[index];
-			adventureClaimGold({provider, tokensID}, ({error, data}) => {
-				if (error) {
-					return console.error(error);
-				}
-				updateBatchRarity(data);
-			});
+			careGold(
+				{provider, tokensID},
+				({error}) => {
+					if (error) {
+						return console.error(error);
+					}
+				},
+				(_toast) => {
+					updateBatchRarity(tokensID);
+					toast.dismiss(_toast);
+					toast.success('Transaction successful');
+				});
 		}
 	}
 

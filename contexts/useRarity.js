@@ -327,17 +327,34 @@ export const RarityContextApp = ({children}) => {
 	/**************************************************************************
 	**	Prepare the rarities update from in-app update
 	**************************************************************************/
-	async function	updateBatchRarity(tokensID) {
-		for (let index = 0; index < tokensID.length; index++) {
-			const tokenID = tokensID[index];
-			const	callResults = await fetchAdventurer(prepareAdventurer(tokenID));
-			const	chunkedCallResult = chunk(callResults, 9);
-			const	extraCallResults = await fetchAdventurerExtra(prepareAdventurerExtra(tokenID));
-			const	chunkedExtraCallResult = chunk(extraCallResults, 1);
-			const	inventoryCallResult = await fetchAdventurerInventory(prepareAdventurerInventory(tokenID));
-			const	chunkedinventoryCallResult = chunk(inventoryCallResult, ITEMS.length);
-			setRarity(tokenID, chunkedCallResult[0], chunkedExtraCallResult[0], chunkedinventoryCallResult[0]);
+	async function	updateBatchRarity(elements, callback = () => null) {
+		if (isUpdatingRarities) {
+			return;
 		}
+		isUpdatingRarities = true;
+		const	preparedCalls = [];
+		const	preparedExtraCalls = [];
+		const	preparedInventoryCalls = [];
+		const	tokensIDs = [];
+
+		elements?.forEach((token) => {
+			preparedCalls.push(...prepareAdventurer(token));
+			preparedExtraCalls.push(...prepareAdventurerExtra(token));
+			preparedInventoryCalls.push(...prepareAdventurerInventory(token));
+			tokensIDs.push(token);
+		});
+
+		const	callResults = await fetchAdventurer(preparedCalls);
+		const	chunkedCallResult = chunk(callResults, 9);
+		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
+		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
+		const	inventoryCallResult = await fetchAdventurerInventory(preparedInventoryCalls);
+		const	chunkedinventoryCallResult = chunk(inventoryCallResult, ITEMS.length);
+		tokensIDs?.forEach((tokenID, i) => {
+			setRarity(tokenID, chunkedCallResult[i], chunkedExtraCallResult[i], chunkedinventoryCallResult[i]);
+		});
+		isUpdatingRarities = false;
+		callback();
 	}
 
 	/**************************************************************************
