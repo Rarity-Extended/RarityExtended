@@ -43,7 +43,7 @@ async function	approveRarityExtendedCare({provider, steps}) {
 	}
 }
 
-export async function	careOfAll({provider, tokensID}, onError, onSucces = onSuccessToast) {
+export async function	careOfAll({provider, tokensID}, onError, onSuccess = onSuccessToast) {
 	const	[hadToApprove, success] = await approveRarityExtendedCare({provider, steps: 2});
 	if (!success) {
 		toast.error('Approve reverted');
@@ -76,7 +76,7 @@ export async function	careOfAll({provider, tokensID}, onError, onSucces = onSucc
 		);
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
-			onSucces(_toast);
+			onSuccess(_toast);
 		} else {
 			toast.dismiss(_toast);
 			toast.error('Transaction reverted');
@@ -90,7 +90,7 @@ export async function	careOfAll({provider, tokensID}, onError, onSucces = onSucc
 	}
 }
 
-export async function	careAdventure({provider, tokensID}, onError, onSucces = onSuccessToast) {
+export async function	careAdventure({provider, tokensID}, onError, onSuccess = onSuccessToast) {
 	const	[hadToApprove, success] = await approveRarityExtendedCare({provider, steps: 2});
 	if (!success) {
 		toast.error('Approve reverted');
@@ -119,7 +119,7 @@ export async function	careAdventure({provider, tokensID}, onError, onSucces = on
 		const	transaction = await rarity.adventure(tokensID);
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
-			onSucces(_toast);
+			onSuccess(_toast);
 		} else {
 			toast.dismiss(_toast);
 			toast.error('Transaction reverted');
@@ -133,7 +133,7 @@ export async function	careAdventure({provider, tokensID}, onError, onSucces = on
 	}
 }
 
-export async function	careCellar({provider, tokensID}, onError, onSucces = onSuccessToast) {
+export async function	careCellar({provider, tokensID}, onError, onSuccess = onSuccessToast) {
 	const	[hadToApprove, success] = await approveRarityExtendedCare({provider, steps: 2});
 	if (!success) {
 		toast.error('Approve reverted');
@@ -162,7 +162,7 @@ export async function	careCellar({provider, tokensID}, onError, onSucces = onSuc
 		const	transaction = await rarity.adventure_cellar(tokensID, 1);
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
-			onSucces(_toast);
+			onSuccess(_toast);
 		} else {
 			toast.dismiss(_toast);
 			toast.error('Transaction reverted');
@@ -176,7 +176,7 @@ export async function	careCellar({provider, tokensID}, onError, onSucces = onSuc
 	}
 }
 
-export async function	careLevelup({provider, tokensID}, onError, onSucces = onSuccessToast) {
+export async function	careLevelup({provider, tokensID}, onError, onSuccess = onSuccessToast) {
 	const	[hadToApprove, success] = await approveRarityExtendedCare({provider, steps: 2});
 	if (!success) {
 		toast.error('Approve reverted');
@@ -205,7 +205,7 @@ export async function	careLevelup({provider, tokensID}, onError, onSucces = onSu
 		const	transaction = await rarity.level_up(tokensID);
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
-			onSucces(_toast);
+			onSuccess(_toast);
 		} else {
 			toast.dismiss(_toast);
 			toast.error('Transaction reverted');
@@ -219,7 +219,7 @@ export async function	careLevelup({provider, tokensID}, onError, onSucces = onSu
 	}
 }
 
-export async function	careGold({provider, tokensID}, onError, onSucces = onSuccessToast) {
+export async function	careGold({provider, tokensID}, onError, onSuccess = onSuccessToast) {
 	const	[hadToApprove, success] = await approveRarityExtendedCare({provider, steps: 2});
 	if (!success) {
 		toast.error('Approve reverted');
@@ -248,7 +248,7 @@ export async function	careGold({provider, tokensID}, onError, onSucces = onSucce
 		const	transaction = await rarity.claim_gold(tokensID);
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
-			onSucces(_toast);
+			onSuccess(_toast);
 		} else {
 			toast.dismiss(_toast);
 			toast.error('Transaction reverted');
