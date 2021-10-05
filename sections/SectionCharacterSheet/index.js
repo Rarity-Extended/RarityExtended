@@ -6,15 +6,16 @@
 ******************************************************************************/
 
 import	React, {useState}	from	'react';
-import	Image				from	'next/image';
-import	CLASSES				from	'utils/codex/classes';
-import	{levelUp}			from	'utils/actions';
-import	{xpRequired}		from	'utils/libs/rarity';
+import	AutowidthInput		from	'react-autowidth-input';
 import	Box					from	'components/Box';
-import	Attributes			from	'sections/SectionCharacterSheet/Attributes';	
-import	Balloon				from	'sections/SectionCharacterSheet/Balloon';	
-import	Skills				from	'sections/SectionCharacterSheet/Skills';	
-import	Inventory			from	'sections/SectionCharacterSheet/Inventory';	
+import	Image				from	'next/image';
+import	Attributes			from	'sections/SectionCharacterSheet/Attributes';
+import	Balloon				from	'sections/SectionCharacterSheet/Balloon';
+import	Inventory			from	'sections/SectionCharacterSheet/Inventory';
+import	Skills				from	'sections/SectionCharacterSheet/Skills';
+import	{levelUp, setName}	from	'utils/actions';
+import	CLASSES				from	'utils/codex/classes';
+import	{xpRequired}		from	'utils/libs/rarity';
 
 const	classMappingImg = [
 	'',
@@ -56,16 +57,49 @@ function	AdventurerTab({adventurer, updateRarity, provider}) {
 }
 
 function	Info({adventurer, updateRarity, provider}) {
+	const	[name, set_name] = useState(adventurer.name || adventurer.tokenID);
 	const	canLevelUp = adventurer.xp >= (xpRequired(adventurer.level));
 	return (
 		<Box className={'nes-container pt-6 px-4 with-title w-full md:w-2/3'}>
-			<p className={'title bg-white dark:bg-dark-600 z-50 relative'} style={{paddingTop: 2}}>{adventurer.tokenID}</p>
+			<p
+				className={'title bg-white dark:bg-dark-600 z-50 relative cursor-pointer'}
+				style={{paddingTop: 2}}>
+				<AutowidthInput
+					value={name}
+					onChange={(e) => set_name(e.target.value)}
+					extraWidth={24}
+					className={'bg-opacity-0 bg-white focus:outline-none pl-3 relative uppercase'} />
+				<div
+					onClick={() => {
+						if (name && (name !== (adventurer.name || adventurer.tokenID))) {
+							setName({
+								provider,
+								name,
+								tokenID: adventurer.tokenID
+							}, ({error}) => {
+								if (error) {
+									return console.error(error);
+								}
+								updateRarity(adventurer.tokenID);
+							});
+						}
+					}}
+					className={`absolute right-2 top-1 p-1 -m-1 transition-opacity ${name && (name !== (adventurer.name || adventurer.tokenID)) ? 'opacity-100 cursor-pointer' : 'opacity-0 cursor-default'}`}>
+					<svg width={'16'} height={'16'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
+						<rect x={'8'} y={'18'} width={'4'} height={'4'} fill={'currentcolor'}/>
+						<rect x={'4'} y={'14'} width={'4'} height={'4'} fill={'currentcolor'}/>
+						<rect x={'16'} y={'2'} width={'4'} height={'8'} fill={'currentcolor'}/>
+						<rect x={'12'} y={'10'} width={'4'} height={'8'} fill={'currentcolor'}/>
+					</svg>
+				</div>
+			</p>
 			<div className={'flex flex-row items-center w-full py-2'}>
 				<div className={'opacity-80 text-xs md:text-sm w-48'}>{'ID:'}</div>
 				<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 					<p>{adventurer.tokenID}</p>
 				</div>
 			</div>
+			
 			<div className={'flex flex-row items-center w-full py-2'}>
 				<div className={'opacity-80 text-xs md:text-sm w-48'}>{'CLASS:'}</div>
 				<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
