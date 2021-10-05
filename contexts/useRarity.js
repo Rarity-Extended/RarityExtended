@@ -41,7 +41,7 @@ async function newEthCallProvider(provider, devMode) {
 }
 
 export const RarityContextApp = ({children}) => {
-	const	{active, address, chainID, provider} = useWeb3();
+	const	{active, address, chainID, provider, chainTime} = useWeb3();
 	const	getRaritiesRequestURI = `
 		https://api.ftmscan.com/api
 		?module=account
@@ -218,7 +218,7 @@ export const RarityContextApp = ({children}) => {
 					forest: {
 						initBlockTs: forestResearch.initBlockTs,
 						endBlockTs: forestResearch.endBlockTs,
-						canAdventure: forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0
+						canAdventure: Number(forestResearch.endBlockTs) <= chainTime && (forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0)
 					}
 				},
 				inventory: inventoryCallResult
@@ -251,7 +251,7 @@ export const RarityContextApp = ({children}) => {
 				forest: {
 					initBlockTs: forestResearch.initBlockTs,
 					endBlockTs: forestResearch.endBlockTs,
-					canAdventure: forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0
+					canAdventure: Number(forestResearch.endBlockTs) <= chainTime && (forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0)
 				}
 			},
 			inventory: inventoryCallResult
