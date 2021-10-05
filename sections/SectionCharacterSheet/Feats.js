@@ -162,6 +162,15 @@ function	FeatsModals({adventurer, updateRarity, provider, isOpen, closeModal}) {
 											return feat?.name.toLowerCase().includes(search.toLowerCase());
 										})
 										.map((feat) => {
+											const	isLearned = _unlockedFeats.includes(feat.id);
+											let		canLearn = !isLearned;
+											if (feat.prerequisites) {
+												const	hasPrerequisitesFeat = feat.prerequisites_feat === 0 || _unlockedFeats.includes(feat.prerequisites_feat);
+												const	hasPrerequisitesLevel = (feat.prerequisites_level <= adventurer.level);
+												const	hasPrerequisitesClass = (feat.prerequisites_class.includes(adventurer.class));
+												canLearn = hasPrerequisitesLevel && hasPrerequisitesClass && hasPrerequisitesFeat && !isLearned;
+											}
+
 											return (
 												<details key={feat?.id} className={'flex flex-row w-full mb-2 transition-colors'}>
 													<summary className={'transition-colors'}>
@@ -180,11 +189,11 @@ function	FeatsModals({adventurer, updateRarity, provider, isOpen, closeModal}) {
 																<div className={'mt-3.5 ml-0 md:ml-auto'} onClick={(e) => e.preventDefault()}>
 																	{learnTab === 0 || (learnTab === 2 && !_unlockedFeats.includes(feat.id)) ? <button
 																		onClick={() => {
-																			if (_pointLefts > 0)
+																			if (_pointLefts > 0 && canLearn)
 																				onLearnFeat(feat.id);
 																		}}
 																		disabled={!(_pointLefts > 0)}
-																		className={`border-4 border-black dark:border-dark-100 border-solid my-4 md:my-0 w-full md:w-auto py-2 px-12 text-xs text-black dark:text-white ${_pointLefts > 0 ? 'hover:bg-gray-secondary dark:hover:bg-dark-900 cursor-pointer' : 'cursor-not-allowed'}`}>
+																		className={`border-4 border-black dark:border-dark-100 border-solid my-4 md:my-0 w-full md:w-auto py-2 px-12 text-xs text-black dark:text-white ${_pointLefts > 0 && canLearn ? 'hover:bg-gray-secondary dark:hover:bg-dark-900 cursor-pointer' : 'cursor-not-allowed'}`}>
 																		{'LEARN'}
 																	</button> : null}
 																</div>
