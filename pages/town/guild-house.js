@@ -234,15 +234,18 @@ function	Index({rarities}) {
 					</div>
 				</div>
 				<DialogBox
-					options={[
-						{
+					options={
+						selectedAdventurers.length === 0 ? [{
+							label: 'NO ADVENTURERS SELECTED, PLEASE SELECT ONE OR MORE OF THEM',
+							onClick: () => onCareOf()
+						}] : [{
 							label: (
 								selectedAdventurersActions.canAdventure === 0 && selectedAdventurersActions.canAdventureCellar === 0 && selectedAdventurersActions.canLevelUp === 0 && selectedAdventurersActions.canClaimGold === 0
 									?
 									<>{'YOUR ADVENTURERS ARE ALL RESTING'}</>
 									:
 									<>
-										{'Take care of everyone (Adventure, The Cellar, LevelUp & Claim Gold)'}
+										{'TAKE CARE OF EVERYTHING (ADVENTURE, THE CELLAR, LEVELUP & CLAIM GOLD)'}
 									</>
 							),
 							onClick: () => onCareOf()
@@ -255,7 +258,7 @@ function	Index({rarities}) {
 									:
 									<>
 										{'ONLY THE DAILY ADVENTURE '}
-										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canAdventure} adventurers)`}</span>
+										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canAdventure} ADVENTURERS)`}</span>
 									</>
 							),
 							onClick: () => onAdventure()
@@ -268,7 +271,7 @@ function	Index({rarities}) {
 									:
 									<>
 										{'ONLY THE CELLAR '}
-										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canAdventureCellar} adventurers)`}</span>
+										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canAdventureCellar} ADVENTURERS)`}</span>
 									</>
 							),
 							onClick: () => onAdventureCellar()
@@ -281,7 +284,7 @@ function	Index({rarities}) {
 									:
 									<>
 										{'ONLY LEVEL-UP '}
-										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canLevelUp} adventurers)`}</span>
+										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canLevelUp} ADVENTURERS)`}</span>
 									</>
 							),
 							onClick: () => onLevelUp()
@@ -294,12 +297,12 @@ function	Index({rarities}) {
 									:
 									<>
 										{'ONLY CLAIM GOLD '}
-										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canClaimGold} adventurers)`}</span>
+										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canClaimGold} ADVENTURERS)`}</span>
 									</>
 							),
 							onClick: () => onClaimGold()
 						}
-					]} />
+						]} />
 				<div className={'-mt-4'}>
 					<i className={'text-megaxs text-opacity-40 text-black dark:text-dark-100'}>
 						{'Transactions are processed by batch of 10 adventurer because of block limit'}

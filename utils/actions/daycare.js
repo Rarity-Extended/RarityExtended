@@ -29,13 +29,20 @@ async function	approveRarityExtendedCare({provider, steps}) {
 	if (isApprovedForAll) {
 		return [false, true];
 	} else {
-		_toast = toast.loading(`1/${steps} - Approving Extended Care...`);
-		const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EXTENDED_CARE, true);
-		const	transactionResult = await transaction.wait();
-		if (transactionResult.status === 1) {
-			toast.dismiss(_toast);
-			return [true, true];
-		} else {
+		try {
+			_toast = toast.loading(`1/${steps} - Approving Extended Care...`);
+			const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EXTENDED_CARE, true);
+			const	transactionResult = await transaction.wait();
+			if (transactionResult.status === 1) {
+				toast.dismiss(_toast);
+				return [true, true];
+			} else {
+				toast.dismiss(_toast);
+				toast.error('Approve reverted');
+				return [false, false];
+			}
+		} catch (error) {
+			console.error(error);
 			toast.dismiss(_toast);
 			toast.error('Approve reverted');
 			return [false, false];
@@ -46,6 +53,7 @@ async function	approveRarityExtendedCare({provider, steps}) {
 export async function	careOfAll({provider, tokensID}, onError, onSuccess = onSuccessToast) {
 	const	[hadToApprove, success] = await approveRarityExtendedCare({provider, steps: 2});
 	if (!success) {
+		toast.dismiss(_toast);
 		toast.error('Approve reverted');
 		onError({error: true, data: undefined});
 		return;
