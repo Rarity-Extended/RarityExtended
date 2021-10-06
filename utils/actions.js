@@ -152,6 +152,51 @@ export async function	learnSkills({provider, contractAddress, tokenID, skills}, 
 	}
 }
 
+export async function	learnFeat({provider, contractAddress, tokenID, feat}, callback) {
+	const	_toast = toast.loading('Learning new feat...');
+	const	signer = provider.getSigner();
+	const	rarity = new ethers.Contract(
+		contractAddress,
+		['function select_feat(uint _summoner, uint _feat)'],
+		signer
+	);
+
+	/**********************************************************************
+	**	In order to avoid dumb error, let's first check if the TX would
+	**	be successful with a static call
+	**********************************************************************/
+	try {
+		await rarity.callStatic.select_feat(tokenID, feat);
+	} catch (error) {
+		toast.dismiss(_toast);
+		toast.error('Impossible to submit transaction');
+		callback({error, data: undefined});
+		return;
+	}
+
+	/**********************************************************************
+	**	If the call is successful, try to perform the actual TX
+	**********************************************************************/
+	try {
+		const	transaction = await rarity.select_feat(tokenID, feat);
+		const	transactionResult = await transaction.wait();
+		if (transactionResult.status === 1) {
+			callback({error: false, data: tokenID});
+			toast.dismiss(_toast);
+			toast.success('Your knowledge increased');
+		} else {
+			toast.dismiss(_toast);
+			toast.error('You failed to learn a new feat');
+			callback({error: true, data: undefined});
+		}
+	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
+		callback({error, data: undefined});
+	}
+}
+
 export async function	recruitAdventurer({provider, contractAddress, classID}, callback) {
 	const	_toast = toast.loading(`Recruiting a ${CLASSES[classID].name}...`);
 	const	signer = provider.getSigner();
