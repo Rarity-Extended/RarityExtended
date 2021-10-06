@@ -88,6 +88,7 @@ module.exports = {
 			},
 			transitionProperty: {
 				'visibility': 'visibility',
+				'width': 'width',
 			},
 			animation: {
 				'bounce-r': 'bounce-r 1s infinite'
@@ -109,6 +110,8 @@ module.exports = {
 	variants: {
 		extend: {
 			rotate: ['hover', 'focus', 'group-hover'],
+			width: ['hover', 'focus', 'group-hover'],
+			transform: ['hover', 'focus', 'group-hover'],
 			animation: ['hover', 'focus', 'group-hover'],
 			visibility: ['hover', 'focus', 'group-hover'],
 		}

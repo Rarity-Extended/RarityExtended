@@ -62,65 +62,75 @@ function	Info({adventurer, updateRarity, provider}) {
 	const	canLevelUp = adventurer.xp >= (xpRequired(adventurer.level));
 	return (
 		<Box className={'nes-container pt-6 px-4 with-title w-full md:w-2/3'}>
-			<p
-				className={'title bg-white dark:bg-dark-600 z-50 relative cursor-pointer'}
-				style={{paddingTop: 2}}>
-				<AutowidthInput
-					value={name}
-					onChange={(e) => set_name(e.target.value)}
-					extraWidth={24}
-					className={'bg-opacity-0 bg-white focus:outline-none pl-3 relative uppercase'} />
-				<div
-					onClick={() => {
-						if (name && (name !== (adventurer.name || adventurer.tokenID))) {
-							setName({
-								provider,
-								name,
-								tokenID: adventurer.tokenID
-							}, ({error}) => {
-								console.error(error);
-							}, (_toast) => {
-								updateRarity(adventurer.tokenID);
-								toast.dismiss(_toast);
-								toast.success(`You can now call ${adventurer.tokenID}: ${name}!`);
-							});
+			<p className={'title bg-white dark:bg-dark-600 z-50 relative cursor-pointer group'} style={{paddingTop: 2}}>
+				<div className={'flex flex-row items-center'}>
+					<AutowidthInput
+						value={name}
+						onChange={(e) => set_name(e.target.value)}
+						extraWidth={0}
+						placeholder={adventurer.name || adventurer.tokenID}
+						className={'bg-opacity-0 bg-white focus:outline-none pl-1 relative uppercase'} />
+					<div
+						onClick={() => {
+							if (name && (name !== (adventurer.name || adventurer.tokenID))) {
+								setName({
+									provider,
+									name,
+									tokenID: adventurer.tokenID
+								}, ({error}) => {
+									console.error(error);
+								}, (_toast) => {
+									updateRarity(adventurer.tokenID);
+									toast.dismiss(_toast);
+									toast.success(`You can now call ${adventurer.tokenID}: ${name}!`);
+								});
+							}
+						}}
+						className={`ml-1 p-1 -m-1 transition-all opacity-0 ${name && (name !== (adventurer.name || adventurer.tokenID)) ? 'w-7 opacity-100 cursor-pointer' : 'w-0 group-hover:opacity-100 group-hover:w-7 cursor-default'}`}>
+						{name && (name !== (adventurer.name || adventurer.tokenID)) ?
+							<svg width={'20'} height={'20'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
+								<rect x={'6'} y={'16'} width={'4'} height={'4'} fill={'currentcolor'}/>
+								<rect x={'2'} y={'12'} width={'4'} height={'4'} fill={'currentcolor'}/>
+								<rect x={'14'} y={'8'} width={'4'} height={'4'} fill={'currentcolor'}/>
+								<rect x={'18'} y={'4'} width={'4'} height={'4'} fill={'currentcolor'}/>
+								<rect x={'10'} y={'12'} width={'4'} height={'4'} fill={'currentcolor'}/>
+							</svg>
+							:
+							<svg width={'20'} height={'20'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
+								<path d={'M6.82861 14.6066L9.65704 17.435L5.4144 18.8492L6.82861 14.6066Z'} fill={'currentcolor'}/>
+								<rect x={'13.1929'} y={'8.24255'} width={'4'} height={'7'} transform={'rotate(45 13.1929 8.24255)'} fill={'currentcolor'}/>
+								<rect x={'17.4351'} y={'4'} width={'4'} height={'4'} transform={'rotate(45 17.4351 4)'} fill={'currentcolor'}/>
+							</svg>
 						}
-					}}
-					className={`absolute right-2 top-1 p-1 -m-1 transition-opacity ${name && (name !== (adventurer.name || adventurer.tokenID)) ? 'opacity-100 cursor-pointer' : 'opacity-0 cursor-default'}`}>
-					<svg width={'16'} height={'16'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
-						<rect x={'8'} y={'18'} width={'4'} height={'4'} fill={'currentcolor'}/>
-						<rect x={'4'} y={'14'} width={'4'} height={'4'} fill={'currentcolor'}/>
-						<rect x={'16'} y={'2'} width={'4'} height={'8'} fill={'currentcolor'}/>
-						<rect x={'12'} y={'10'} width={'4'} height={'8'} fill={'currentcolor'}/>
-					</svg>
+					</div>
 				</div>
 			</p>
-			<div className={'flex flex-row items-center w-full py-2'}>
+			<div className={'flex flex-row items-center w-full py-2 pl-3.5'}>
 				<div className={'opacity-80 text-xs md:text-sm w-48'}>{'ID:'}</div>
 				<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 					<p>{adventurer.tokenID}</p>
 				</div>
 			</div>
 			
-			<div className={'flex flex-row items-center w-full py-2'}>
+			<div className={'flex flex-row items-center w-full py-2 pl-3.5'}>
 				<div className={'opacity-80 text-xs md:text-sm w-48'}>{'CLASS:'}</div>
 				<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 					<p>{CLASSES[adventurer.class].name}</p>
 				</div>
 			</div>
-			<div className={'flex flex-row items-center w-full py-2'}>
+			<div className={'flex flex-row items-center w-full py-2 pl-3.5'}>
 				<div className={'opacity-80 text-xs md:text-sm w-48'}>{'LEVEL:'}</div>
 				<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 					<p>{adventurer.level}</p>
 				</div>
 			</div>
-			<div className={'flex flex-row items-center w-full py-2'}>
+			<div className={'flex flex-row items-center w-full py-2 pl-3.5'}>
 				<div className={'opacity-80 text-xs md:text-sm w-48'}>{'GOLD:'}</div>
 				<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 					<p>{`${Number(adventurer?.gold?.balance || 0) === 0 ? '0' : adventurer.gold.balance}`}</p>
 				</div>
 			</div>
-			<div className={'flex flex-row items-center w-full py-2 relative'}>
+			<div className={'flex flex-row items-center w-full py-2 pl-3.5 relative'}>
 				<div className={'opacity-80 text-sm w-48'}>{'XP:'}</div>
 				<div className={'w-full'}>
 					<div
