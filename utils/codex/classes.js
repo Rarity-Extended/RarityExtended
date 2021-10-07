@@ -21,6 +21,13 @@ const	_CLASSES = {
 		description: 'No friend of the books, unlike any librarian.\nStrength, weapons, and anger serve the Barbarian',
 		skills: ['Climb', 'Craft', 'Handle Animal', 'Intimidate', 'Jump', 'Listen', 'Ride', 'Survival', 'Swim'],
 		baseSkill: 4,
+		baseFeats: [
+			'Simple Weapon Proficiency',
+			'Martial Weapon Proficiency',
+			'Armor Proficiency (Light)',
+			'Armor Proficiency (Medium)',
+			'Shield Proficiency'
+		],
 		info: [
 			'For ability scores, there are two different paths you can take when building a barbarian. The first is to take your highest roll and put it into Str. This will maximize your ability to hit and deal damage with melee weapons and with your barbarian abilities. If you choose this option, put your second-highest roll into Con to get as much HP as possible when you level, but without sacrificing Str. Consider spending your ability increases until you get your Strength to at least 18.',
 			'The second path for a barbarian build is to put your highest roll into Con. This will maximize your HP as you level. Since barbarians do not wear heavy armor, some players believe this to be the best build for the class. If you choose this option, put your second-highest roll into Str so as not to harm your ability to use barbarian features and melee attacks.',
@@ -35,6 +42,12 @@ const	_CLASSES = {
 		description: 'Words, songs, and music are certainly not hard.\n The magic of the voice is the weapon of the Bard',
 		skills: ['Appraise', 'Balance', 'Bluff', 'Climb', 'Concentration', 'Craft', 'Decipher Script', 'Diplomacy', 'Disguise', 'Escape Artist', 'Gather Information', 'Hide', 'Jump', 'Knowledge', 'Listen', 'Move Silently', 'Perform', 'Profession', 'Sense Motive', 'Sleight Of Hand', 'Speak Language', 'Spellcraft', 'Swim', 'Tumble', 'Use Magic Device'],
 		baseSkill: 6,
+		baseFeats: [
+			'Simple Weapon Proficiency',
+			'Martial Weapon Proficiency',
+			'Armor Proficiency (Light)',
+			'Shield Proficiency',
+		],
 		info: [
 			'Charisma is your spell casting ability score for bards, and no matter what build (there’s probably some obscure build to prove me wrong here) you’ll want your Charisma to be high, if not your highest ability score.',
 			'Next, you’ll need Dexterity, both for raising your AC to stay alive, but also for utilizing the ranged or finesse weapons that are typically a bard’s go-to.',
@@ -50,6 +63,13 @@ const	_CLASSES = {
 		description: 'In the world of adventure, pains and wounds are quite generic.\nIf you live a life or danger, you best know a Cleric',
 		skills: ['Concentration', 'Craft', 'Diplomacy', 'Heal', 'Knowledge', 'Knowledge', 'Knowledge', 'Knowledge', 'Profession', 'Spellcraft'],
 		baseSkill: 2,
+		baseFeats: [
+			'Simple Weapon Proficiency',
+			'Armor Proficiency (Light)',
+			'Armor Proficiency (Medium)',
+			'Armor Proficiency (Heavy)',
+			'Shield Proficiency',
+		],
 		info: [
 			'Wisdom is your spellcasting ability score for clerics, and you\'re going to want your Wisdom to be high and quite likely your highest ability score.',
 			'Past that it gets more complicated because of all the routes you can take when building your cleric. Most if it revolves around what armor you plan on taking, and if you plan on being a "combat cleric" or more of a "spellcasting cleric". Strength, Dexterity, and Constitution are all in the running here for your 2nd highest ability score.',
@@ -65,6 +85,12 @@ const	_CLASSES = {
 		description: 'All life is connected in something that is rather fluid.\nThe trees, insects, and animals are all friends of the Druid',
 		skills: ['Concentration', 'Craft', 'Diplomacy', 'Handle Animal', 'Heal', 'Knowledge', 'Listen', 'Profession', 'Ride', 'Spellcraft', 'Spot', 'Survival', 'Swim'],
 		baseSkill: 4,
+		baseFeats: [
+			'Simple Weapon Proficiency',
+			'Armor Proficiency (Light)',
+			'Armor Proficiency (Medium)',
+			'Shield Proficiency',
+		],
 		info: [
 			'Wisdom is your spellcasting ability score for druids and you’re going to want it to be as high as possible.',
 			'Next, many druid spells rely on concentration, which means you’ll want to prioritize Constitution as your second highest ability score. This will also make you far more survivable if you’re trying to serve more of a tank or DPS role for your party.',
@@ -79,6 +105,15 @@ const	_CLASSES = {
 		description: 'Scorn should not be directed at one with a dream to be a writer.\nBut tactics and sword play are what drive the Fighter',
 		skills: ['Climb', 'Craft', 'Handle Animal', 'Intimidate', 'Jump', 'Ride', 'Swim'],
 		baseSkill: 2,
+		baseFeats: [
+			'Simple Weapon Proficiency',
+			'Martial Weapon Proficiency',
+			'Armor Proficiency (Light)',
+			'Armor Proficiency (Medium)',
+			'Armor Proficiency (Heavy)',
+			'Shield Proficiency',
+			'Tower Shield Proficiency'
+		],
 		info: [
 			'For a traditional fighter build, put your highest ability roll into strength and strongly consider spending your ability score improvements on Strength.',
 			'Another option is to create a fighter that uses ranged or finesse weapons, such as crossbows, rapiers, scimitars, or shortswords. These weapons are lighter, and do not require high strength to use effectively. Because of this, they use Dex instead of Str for attack rolls. If you plan on playing this type of fighter, put your highest roll into Dex instead of Str and strongly consider spending your ability score improvement in Dexterity.',
@@ -94,6 +129,10 @@ const	_CLASSES = {
 		description: 'Some pursue vanity, and others just want to get drunk.\nInner peace, and control of the body are the goals of a monk',
 		skills: ['Balance', 'Climb', 'Concentration', 'Craft', 'Diplomacy', 'Escape Artist', 'Hide', 'Jump', 'Knowledge', 'Knowledge', 'Listen', 'Move Silently', 'Perform', 'Profession', 'Sense Motive', 'Spot', 'Swim', 'Tumble'],
 		baseSkill: 4,
+		baseFeats: [
+			'Exotic Weapon Proficiency',
+			'Improved Unarmed Strike',
+		],
 		info: [
 			'To maximize the advantages of the monk class, put your highest ability roll into Dexterity. Most of the weapons you use as a monk will rely on your Dexterity score for attack rolls. So Dex will be your most important ability.',
 			'Monk’s use ki, the mystical energy that flows through living bodies, to enhance their physical power. But the use of ki often requires Wisdom. So put your second-highest roll into Wis.',
@@ -108,6 +147,14 @@ const	_CLASSES = {
 		description: 'Some hearts when inspected are found with malice therein.\nBut righteous and honor are the tenets of the Paladin',
 		skills: ['Concentration', 'Craft', 'Diplomacy', 'Handle Animal', 'Heal', 'Knowledge', 'Knowledge', 'Profession', 'Ride', 'Sense Motive'],
 		baseSkill: 2,
+		baseFeats: [
+			'Simple Weapon Proficiency',
+			'Martial Weapon Proficiency',
+			'Armor Proficiency (Light)',
+			'Armor Proficiency (Medium)',
+			'Armor Proficiency (Heavy)',
+			'Shield Proficiency',
+		],
 		info: [
 			'Paladins are very straightforward when it comes to their abilities, they want high Strength, high Charisma, and high Constitution.',
 			'There is a strong argument to be made about dropping Charisma, your Lay on Hands, and Divine Smite abilities don’t need it, and you can essentially drop it if you don’t care about spellcasting, oath features, or party face roleplaying.',
@@ -122,6 +169,12 @@ const	_CLASSES = {
 		description: 'Most, avoid, flee, and fear only a little bit of danger.\nWith a bow in the wilderness, you might find a Ranger',
 		skills: ['Climb', 'Concentration', 'Craft', 'Handle Animal', 'Heal', 'Hide', 'Jump', 'Knowledge', 'Knowledge', 'Knowledge', 'Listen', 'Move Silently', 'Profession', 'Ride', 'Search', 'Spot', 'Survival', 'Swim', 'Use Rope'],
 		baseSkill: 6,
+		baseFeats: [
+			'Simple Weapon Proficiency',
+			'Martial Weapon Proficiency',
+			'Armor Proficiency (Light)',
+			'Shield Proficiency'
+		],
 		info: [
 			'For your standard ranger using archery or most forms of two-weapon fighting, you’ll want to make Dexterity your highest ability score, followed closely by Wisdom, and then Constitution.',
 			'Wisdom is the spellcasting ability for rangers, and while there are some builds that will utilize Strength, the majority of standard builds will be using Dexterity.',
@@ -136,6 +189,11 @@ const	_CLASSES = {
 		description: 'The rich are rich and the poor are poor is in vogue.\nBut with sticky fingers and sharp daggers you find the Rogue',
 		skills: ['Appraise', 'Balance', 'Bluff', 'Climb', 'Craft', 'Decipher Script', 'Diplomacy', 'Disable Device', 'Disguise', 'Escape Artist', 'Forgery', 'Gather Information', 'Hide', 'Intimidate', 'Jump', 'Knowledge', 'Listen', 'Move Silently', 'Open Lock', 'Perform', 'Profession', 'Search', 'Sense Motive', 'Sleight Of Hand', 'Spot', 'Swim', 'Tumble', 'Use Magic Device', 'Use Rope'],
 		baseSkill: 8,
+		baseFeats: [
+			'Simple Weapon Proficiency',
+			'Martial Weapon Proficiency',
+			'Armor Proficiency (Light)',
+		],
 		info: [
 			'Rogues more than most classes get their ability priorities shifted around depending on what archetype they take but there are a few constants that you should consider on character creation and when your ability increases.',
 			'With very few exceptions, Dexterity is always going to be the ability score you\'ll want as high as possible. The attacks you\'ll be making rely on Dexterity, and you\'ll likely be wearing light armor which will be enhanced by a high Dexterity score. At character creation you\'ll want to try and get your Dexterity up to 16, and you\'ll likely want it up to 18 with your first ability score improvement and may very well be best served by spending all of your ability score increases in Dex at later levels.',
@@ -151,6 +209,9 @@ const	_CLASSES = {
 		description: 'A scholarly teacher of magic seems like a torturer.\nBut this is not of concern to the innate magic of a Sorcerer',
 		skills: ['Bluff', 'Concentration', 'Craft', 'Knowledge', 'Profession', 'Spellcraft'],
 		baseSkill: 2,
+		baseFeats: [
+			'Simple Weapon Proficiency',
+		],
 		info: [
 			'A sorcerer\'s magic comes from their ancestor as an deep wellspring that resides within them, and their Charisma score is their spellcasting ability that shows how well they tap into those sorcerous powers. Regardless of what sorcerer build you\'re shooting for, you\'ll want your Charisma spellcasting ability to be at least 16, and usually you\'ll want it as high as possible. You\'ll also probably want to spend your first ability score improvement to reach a Charisma of 18 to get up to a +4 attack modifier on those spell attack rolls.',
 			'Sorcerers don\'t normally get any armor, which means they\'re typically on the squishy end. Having some Dexterity improves your AC which you\'ll want high to save you from whatever attacks make it to you. You\'ll want a Dexterity of at least 14, and possibly higher if you can manage it.',
@@ -166,6 +227,10 @@ const	_CLASSES = {
 		description: 'Many waste their time on a log, idle like a lizard.\nHowever, through study, immense power is granted to the Wizard',
 		skills: ['Concentration', 'Craft', 'Decipher Script', 'Knowledge', 'Profession', 'Spellcraft'],
 		baseSkill: 2,
+		baseFeats: [
+			'Simple Weapon Proficiency',
+			'Scribe Scroll',
+		],
 		info: [
 			'Wizard spells are powered up by your Intelligence bonus, so you should always make sure your Intelligence modifier is as high as possible. High Intelligence bonuses boosts your spell attack bonus and difficulty, so your spell attack rolls will be higher and will deal more damage to creatures if you have a higher Intelligence modifier.',
 			'Dexterity and Constitution are also important to wizards. Your Mage Armor spell will make your AC 13 + Dexterity modifier. So, the higher your Dexterity is, the harder it will be for your foes to hit you. And wizards have naturally low hit points, so having a high Constitution helps to reduce this problem. Additionally, "concentration spells" require you to concentrate, and keeping that concentration requires a decent Constitution. Since you won\'t be able to add your proficiency bonus (wizards aren\'t proficient in Constitution saves) you\'ll need at least a bit of Constitution score buffer. Put your second and third highest rolls into Constitution and Dexterity.',
