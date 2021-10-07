@@ -114,7 +114,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 				<>
 					{'LOOK WHO IS HERE! WELCOME TO '}
 					<span className={'text-tag-info'}>{'IVAN’S BANK'}</span>
-					{', MIGHTY HERO! SO YOU’VE EARNED SOME COINS IN YOUR LEGENDARY ADVENTURES, HAVEN’T YOU? I CAN EARN YOU EVEN MORE! JUST DEPOSIT IN THE ONE OF THESE VERY NICE VAULTS...'}
+					{', MIGHTY HERO! SO YOU’VE EARNED SOME COINS IN YOUR LEGENDARY ADVENTURES, HAVEN’T YOU? I CAN EARN YOU EVEN MORE! JUST DEPOSIT IN ONE OF THESE VERY NICE VAULTS...'}
 				</>
 			);
 		}
@@ -132,7 +132,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 						set_hadInitialMessage(true);
 					}}
 					shouldStart={npcTextIndex === 2}>
-					{', MIGHTY HERO! SO YOU’VE EARNED SOME COINS IN YOUR LEGENDARY ADVENTURES, HAVEN’T YOU? I CAN EARN YOU EVEN MORE! JUST DEPOSIT IN THE ONE OF THESE VERY NICE VAULTS...'}
+					{', MIGHTY HERO! SO YOU’VE EARNED SOME COINS IN YOUR LEGENDARY ADVENTURES, HAVEN’T YOU? I CAN EARN YOU EVEN MORE! JUST DEPOSIT IN ONE OF THESE VERY NICE VAULTS...'}
 				</Typer>
 			</>
 		);

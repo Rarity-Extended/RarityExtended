@@ -87,7 +87,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 						<span className={'text-tag-info'}>{'FACU THE TAVERN KEEPER'}</span>
 						{'!'}
 						<div />
-						{'WHAT DO YOU WANT TO DO ? I CAN FIND THE LAST NEWS JUST BELLOW!'}
+						{'WHAT CAN I DO FOR YA? LOOKING FOR THE LASTED NEWS, CHECK BELOW!'}
 					</>		
 				);
 			}
@@ -109,7 +109,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 							set_hadInitialMessage(true);
 						}}
 						shouldStart={npcTextIndex === 3}>
-						{'WHAT DO YOU WANT TO DO ? I CAN FIND THE LAST NEWS JUST BELLOW!'}
+						{'WHAT CAN I DO FOR YA? LOOKING FOR THE LASTED NEWS, CHECK BELOW!'}
 					</Typer>
 				</>
 			);
@@ -125,7 +125,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 							<div />
 							{'YOU ARE ABOUT TO START A JOURNEY BEYOND IMAGINATION. YOU WILL MEET NEW FRIENDS AND FIGHT GREAT DANGERS!'}
 							<div className={'my-2'}/>
-							{'WHAT KIND OF ADVENTURER ARE YOU ?'}
+							{'WHAT KIND OF ADVENTURER ARE YOU?'}
 						</>		
 					);
 				}
@@ -161,7 +161,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 					<>
 						{'OH, THERE IS A '}
 						<span className={'text-tag-info'}>{'HERO'}</span>
-						{' OVER THERE LOOKING FOR SOME ADVENTURE ! MAYBE YOU SHOULD TALK TO HIM ? OR HER, I CAN\'T SEE FROM HERE.'}
+						{' OVER THERE LOOKING FOR SOME ADVENTURE ! MAYBE YOU SHOULD TALK TO HIM ? OR HER.'}
 					</>		
 				);
 			}
@@ -179,7 +179,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 							set_hadRecruitMessage(true);
 						}}
 						shouldStart={npcTextIndex === 2}>
-						{'  OVER THERE LOOKING FOR SOME ADVENTURE ! MAYBE YOU SHOULD TALK TO HIM ? OR HER, I CAN\'T SEE FROM HERE.'}
+						{'  OVER THERE LOOKING FOR SOME ADVENTURE ! MAYBE YOU SHOULD TALK TO HIM ? OR HER.'}
 					</Typer>
 				</>
 			);
@@ -267,7 +267,7 @@ function	DialogChoices({router, onWalletConnect, active}) {
 			options={[
 				{label: 'What\'s new ?', onClick: () => router.push('/town/tavern')},
 				{label: 'Recruit a new adventurer', onClick: () => router.push('/town/tavern?tab=recruit')},
-				{label: 'About the rat ...', onClick: () => router.push('/town/tavern?tab=the-cellar')}
+				{label: 'About the rats ...', onClick: () => router.push('/town/tavern?tab=the-cellar')}
 			]} />
 	);
 }
