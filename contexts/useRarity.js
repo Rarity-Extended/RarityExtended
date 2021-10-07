@@ -220,9 +220,9 @@ export const RarityContextApp = ({children}) => {
 						scout: Number(cellarScout),
 					},
 					forest: {
-						initBlockTs: forestResearch.initBlockTs,
-						endBlockTs: forestResearch.endBlockTs,
-						canAdventure: Number(forestResearch.endBlockTs) <= chainTime && (forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0)
+						initBlockTs: forestResearch?.initBlockTs,
+						endBlockTs: forestResearch?.endBlockTs,
+						canAdventure: Number(forestResearch?.endBlockTs) <= chainTime && (forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0)
 					}
 				},
 				inventory: inventoryCallResult
@@ -257,9 +257,9 @@ export const RarityContextApp = ({children}) => {
 					scout: Number(cellarScout),
 				},
 				forest: {
-					initBlockTs: forestResearch.initBlockTs,
-					endBlockTs: forestResearch.endBlockTs,
-					canAdventure: Number(forestResearch.endBlockTs) <= chainTime && (forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0)
+					initBlockTs: forestResearch?.initBlockTs,
+					endBlockTs: forestResearch?.endBlockTs,
+					canAdventure: Number(forestResearch?.endBlockTs) <= chainTime && (forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0)
 				}
 			},
 			inventory: inventoryCallResult
