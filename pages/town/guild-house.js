@@ -236,7 +236,7 @@ function	Index({rarities}) {
 				<DialogBox
 					options={
 						selectedAdventurers.length === 0 ? [{
-							label: 'NO ADVENTURERS SELECTED, PLEASE SELECT ONE OR MORE OF THEM',
+							label: 'NO ADVENTURER SELECTED, PLEASE SELECT ONE OR MORE OF THEM',
 							onClick: () => onCareOf()
 						}] : [{
 							label: (
@@ -254,7 +254,7 @@ function	Index({rarities}) {
 							label: (
 								selectedAdventurersActions.canAdventure === 0
 									?
-									<>{'NO ONE CAN ADVENTURE RIGHT NOW'}</>
+									<>{'NOBODY CAN ADVENTURE RIGHT NOW'}</>
 									:
 									<>
 										{'ONLY THE DAILY ADVENTURE '}
@@ -267,7 +267,7 @@ function	Index({rarities}) {
 							label: (
 								selectedAdventurersActions.canAdventureCellar === 0
 									?
-									<>{'NO ONE CAN GO IN THE CELLAR RIGHT NOW'}</>
+									<>{'NOBODY CAN GO IN THE CELLAR RIGHT NOW'}</>
 									:
 									<>
 										{'ONLY THE CELLAR '}
@@ -280,7 +280,7 @@ function	Index({rarities}) {
 							label: (
 								selectedAdventurersActions.canLevelUp === 0
 									?
-									<>{'NO ONE CAN LEVEL-UP RIGHT NOW'}</>
+									<>{'NOBODY CAN LEVEL-UP RIGHT NOW'}</>
 									:
 									<>
 										{'ONLY LEVEL-UP '}
@@ -293,7 +293,7 @@ function	Index({rarities}) {
 							label: (
 								selectedAdventurersActions.canClaimGold === 0
 									?
-									<>{'NO ONE CAN CLAIM GOLD RIGHT NOW'}</>
+									<>{'NOBODY CAN CLAIM GOLD RIGHT NOW'}</>
 									:
 									<>
 										{'ONLY CLAIM GOLD '}
@@ -305,7 +305,7 @@ function	Index({rarities}) {
 						]} />
 				<div className={'-mt-4'}>
 					<i className={'text-megaxs text-opacity-40 text-black dark:text-dark-100'}>
-						{'Transactions are processed by batch of 10 adventurer because of block limit'}
+						{'TRANSACTIONS ARE PROCESSED IN BATCHES OF 10 ADVENTURERS BECAUSE OF THE BLOCK LIMIT'}
 					</i>
 				</div>
 			</div>
