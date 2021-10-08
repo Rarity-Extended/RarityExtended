@@ -665,10 +665,10 @@ export async function	levelUpTreasureTheForestOld({provider, contractAddress, to
 			signer
 		);
 		const	approvedAddr = await raritySource.getApproved(adventurerID);
-		if (approvedAddr === process.env.RARITY_XP_PROXY) {
+		if (approvedAddr === process.env.RARITY_EXTENDED_XP) {
 			toast.dismiss(_toast);
 		} else {
-			const	transaction = await raritySource.approve(process.env.RARITY_XP_PROXY, adventurerID);
+			const	transaction = await raritySource.approve(process.env.RARITY_EXTENDED_XP, adventurerID);
 			const	transactionResult = await transaction.wait();
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
@@ -745,11 +745,11 @@ export async function	levelUpTreasureTheForest({provider, contractAddress, token
 			],
 			signer
 		);
-		const	isApprovedForAll = await raritySource.isApprovedForAll(address, process.env.RARITY_XP_PROXY);
+		const	isApprovedForAll = await raritySource.isApprovedForAll(address, process.env.RARITY_EXTENDED_XP);
 		if (isApprovedForAll) {
 			//
 		} else {
-			const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_XP_PROXY, true);
+			const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EXTENDED_XP, true);
 			const	transactionResult = await transaction.wait();
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
@@ -774,7 +774,7 @@ export async function	levelUpTreasureTheForest({provider, contractAddress, token
 	try {
 		_toast = toast.loading(`2/3 - Approving ${ethers.utils.formatEther(xpRequired)} XP to be used...`);
 		const	rarityXpProxy = new ethers.Contract(
-			process.env.RARITY_XP_PROXY, [
+			process.env.RARITY_EXTENDED_XP, [
 				'function allowance(address _owner, uint _adventurer, address _operator) external view returns (uint256)',
 				'function approve(uint _adventurer, address _operator, uint _amount) external returns (bool)',
 			],
