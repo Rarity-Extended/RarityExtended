@@ -5,7 +5,6 @@
 **	@Filename:				items.js
 ******************************************************************************/
 
-import	{ethers}				from	'ethers';
 import	{Contract}				from	'ethcall';
 import	RARITY_GOLD_ABI			from	'utils/abi/rarityGold.abi';
 import	THE_FOREST_ABI			from	'utils/abi/dungeonTheForest.abi';
@@ -30,13 +29,6 @@ const	items = [
 		dungeon: 'The Forest',
 		parse: (item) => item,
 		id: 1,
-	},
-	{
-		name: 'Craft_weapons',
-		address: process.env.RARITY_CRAFTING_ADDR,
-		fetch: (adventurerID) => new Contract(process.env.DUNGEON_THE_FOREST_ADDR, THE_FOREST_ABI).getTreasuresBySummoner(adventurerID),
-		parse: (item) => item,
-		id: 2,
 	}
 ];
 
