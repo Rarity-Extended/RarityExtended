@@ -11,9 +11,12 @@ import	useWeb3													from	'contexts/useWeb3';
 import	{ethers}												from	'ethers';
 import	{Provider, Contract}									from	'ethcall';
 import	useSWR													from	'swr';
+import	dayjs													from	'dayjs';
+import	relativeTime											from	'dayjs/plugin/relativeTime';
 import	ModalCurrentAdventurer									from	'components/ModalCurrentAdventurer';
 import	{chunk, fetcher, toAddress}								from	'utils';
 import	ITEMS													from	'utils/codex/items';
+import	CLASSES													from	'utils/codex/classes';
 import	RARITY_ABI												from	'utils/abi/rarity.abi';
 import	RARITY_ATTR_ABI											from	'utils/abi/rarityAttr.abi';
 import	RARITY_GOLD_ABI											from	'utils/abi/rarityGold.abi';
@@ -22,10 +25,11 @@ import	RARITY_FEATS_ABI										from	'utils/abi/rarityFeats.abi';
 import	RARITY_CRAFTING_HELPER_ABI								from	'utils/abi/rarityCraftingHelper.abi';
 import	THE_CELLAR_ABI											from	'utils/abi/dungeonTheCellar.abi';
 import	THE_FOREST_ABI											from	'utils/abi/dungeonTheForest.abi';
-
 import	MANIFEST_GOODS											from	'utils/codex/items_manifest_goods.json';
 import	MANIFEST_ARMORS											from	'utils/codex/items_manifest_armors.json';
 import	MANIFEST_WEAPONS										from	'utils/codex/items_manifest_weapons.json';
+
+dayjs.extend(relativeTime);
 
 const	RarityContext = createContext();
 let		isUpdatingRarities = false;
@@ -41,8 +45,27 @@ async function newEthCallProvider(provider, devMode) {
 	return	ethcallProvider;
 }
 
+function	triggerNotification(title, options) {
+	if (typeof(window) === 'undefined') {
+		return;
+	}
+	if (!('Notification' in window)) {
+		return;
+	}
+
+	if (Notification.permission !== 'granted') {
+		Notification.requestPermission().then(permission => {
+			if (permission === 'granted') {
+				new Notification(title, options);
+			}
+		});
+	} else {
+		new Notification(title, options);
+	}
+}
+
 export const RarityContextApp = ({children}) => {
-	const	{active, address, chainID, provider, chainTime} = useWeb3();
+	const	{active, address, chainID, chainTime, provider} = useWeb3();
 	const	getRaritiesRequestURI = `
 		https://api.ftmscan.com/api
 		?module=account
@@ -51,13 +74,34 @@ export const RarityContextApp = ({children}) => {
 		&address=${address}
 		&apikey=${process.env.FMT_KEY}`;
 	const	{data} = useSWR(active && address ? getRaritiesRequestURI : null, fetcher);
-
 	const	[currentAdventurer, set_currentAdventurer] = useState(null);
 	const	[rarities, set_rarities] = useState({});
 	const	[inventory, set_inventory] = useState({});
 	const	[rNonce, set_rNonce] = useState(0);
 	const	[loaded, set_loaded] = useState(false);
 	const	[isModalOpen, set_isModalOpen] = useState(false);
+
+	//NOTIFICATION SYSTEM
+	useEffect(() => {
+		Object.values(rarities).forEach((adventurer) => {
+			if (!adventurer.logCanAdventure) {
+				const	nowCanAdventure = dayjs(new Date(adventurer.log * 1000)).isBefore(dayjs(new Date(chainTime * 1000)));
+				if (nowCanAdventure) {
+					triggerNotification(
+						`${adventurer.tokenID} IS READY FOR A NEW ADVENTURE`,
+						{
+							body: `Your adventurer ${adventurer.tokenID}, a ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}, is ready for a new adventure!`,
+							icon: CLASSES[currentAdventurer?.class].img,
+							onclick: () => console.log('HELLLOOO')
+						});
+					set_rarities((prev) => ({...prev, [adventurer.tokenID]: {
+						...prev[adventurer.tokenID],
+						logCanAdventure: true,
+					}}));
+				}
+			}
+		});
+	}, [chainTime]);
 
 	/**************************************************************************
 	**	Reset the rarities when the chain changes, when the address changes or
@@ -131,6 +175,7 @@ export const RarityContextApp = ({children}) => {
 			rarityDungeonForest.getResearchBySummoner(tokenID),
 		];
 	}
+
 	/**************************************************************************
 	**	Fetch the data from the prepared multicall to get most of the data
 	**************************************************************************/
@@ -228,6 +273,7 @@ export const RarityContextApp = ({children}) => {
 				inventory: inventoryCallResult
 			} : p);
 		}
+
 		set_rarities((prev) => ({...prev, [tokenID]: {
 			tokenID: tokenID,
 			owner: owner,
@@ -235,6 +281,7 @@ export const RarityContextApp = ({children}) => {
 			class: Number(adventurer['_class']),
 			level: Number(adventurer['_level']),
 			log: Number(adventurer['_log']),
+			logCanAdventure: dayjs(new Date(Number(adventurer['_log']) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
 			gold: {
 				balance: ethers.utils.formatEther(balanceOfGold),
 				claimable: claimableGold ? ethers.utils.formatEther(claimableGold) : '0'

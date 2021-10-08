@@ -17,7 +17,8 @@ const	_CLASSES = {
 	'Barbarian': {
 		id: 1,
 		name: 'Barbarian',
-		img: '/front/barbarian.svg',
+		img: '/classes/front/barbarian.svg',
+		icon: '/classes/icon/barbarian.png',
 		description: 'No friend of the books, unlike any librarian.\nStrength, weapons, and anger serve the Barbarian',
 		skills: ['Climb', 'Craft', 'Handle Animal', 'Intimidate', 'Jump', 'Listen', 'Ride', 'Survival', 'Swim'],
 		baseSkill: 4,
@@ -38,7 +39,8 @@ const	_CLASSES = {
 	'Bard': {
 		id: 2,
 		name: 'Bard',
-		img: '/bard.png',
+		img: '/classes/front/bard.png',
+		icon: '/classes/icon/bard.png',
 		description: 'Words, songs, and music are certainly not hard.\n The magic of the voice is the weapon of the Bard',
 		skills: ['Appraise', 'Balance', 'Bluff', 'Climb', 'Concentration', 'Craft', 'Decipher Script', 'Diplomacy', 'Disguise', 'Escape Artist', 'Gather Information', 'Hide', 'Jump', 'Knowledge', 'Listen', 'Move Silently', 'Perform', 'Profession', 'Sense Motive', 'Sleight Of Hand', 'Speak Language', 'Spellcraft', 'Swim', 'Tumble', 'Use Magic Device'],
 		baseSkill: 6,
@@ -59,7 +61,8 @@ const	_CLASSES = {
 	'Cleric': {
 		id: 3,
 		name: 'Cleric',
-		img: '/cleric.png',
+		img: '/classes/front/cleric.png',
+		icon: '/classes/icon/cleric.png',
 		description: 'In the world of adventure, pains and wounds are quite generic.\nIf you live a life or danger, you best know a Cleric',
 		skills: ['Concentration', 'Craft', 'Diplomacy', 'Heal', 'Knowledge', 'Knowledge', 'Knowledge', 'Knowledge', 'Profession', 'Spellcraft'],
 		baseSkill: 2,
@@ -81,7 +84,8 @@ const	_CLASSES = {
 	'Druid': {
 		id: 4,
 		name: 'Druid',
-		img: '/druid.png',
+		img: '/classes/front/druid.png',
+		icon: '/classes/icon/druid.png',
 		description: 'All life is connected in something that is rather fluid.\nThe trees, insects, and animals are all friends of the Druid',
 		skills: ['Concentration', 'Craft', 'Diplomacy', 'Handle Animal', 'Heal', 'Knowledge', 'Listen', 'Profession', 'Ride', 'Spellcraft', 'Spot', 'Survival', 'Swim'],
 		baseSkill: 4,
@@ -101,7 +105,8 @@ const	_CLASSES = {
 	'Fighter': {
 		id: 5,
 		name: 'Fighter',
-		img: '/fighter.png',
+		img: '/classes/front/fighter.png',
+		icon: '/classes/icon/fighter.png',
 		description: 'Scorn should not be directed at one with a dream to be a writer.\nBut tactics and sword play are what drive the Fighter',
 		skills: ['Climb', 'Craft', 'Handle Animal', 'Intimidate', 'Jump', 'Ride', 'Swim'],
 		baseSkill: 2,
@@ -125,7 +130,8 @@ const	_CLASSES = {
 	'Monk': {
 		id: 6,
 		name: 'Monk',
-		img: '/front/monk.svg',
+		img: '/classes/front/monk.svg',
+		icon: '/classes/icon/monk.png',
 		description: 'Some pursue vanity, and others just want to get drunk.\nInner peace, and control of the body are the goals of a monk',
 		skills: ['Balance', 'Climb', 'Concentration', 'Craft', 'Diplomacy', 'Escape Artist', 'Hide', 'Jump', 'Knowledge', 'Knowledge', 'Listen', 'Move Silently', 'Perform', 'Profession', 'Sense Motive', 'Spot', 'Swim', 'Tumble'],
 		baseSkill: 4,
@@ -143,7 +149,8 @@ const	_CLASSES = {
 	'Paladin': {
 		id: 7,
 		name: 'Paladin',
-		img: '/paladin.png',
+		img: '/classes/front/paladin.png',
+		icon: '/classes/icon/paladin.png',
 		description: 'Some hearts when inspected are found with malice therein.\nBut righteous and honor are the tenets of the Paladin',
 		skills: ['Concentration', 'Craft', 'Diplomacy', 'Handle Animal', 'Heal', 'Knowledge', 'Knowledge', 'Profession', 'Ride', 'Sense Motive'],
 		baseSkill: 2,
@@ -165,7 +172,8 @@ const	_CLASSES = {
 	'Ranger': {
 		id: 8,
 		name: 'Ranger',
-		img: '/ranger.png',
+		img: '/classes/front/ranger.png',
+		icon: '/classes/icon/ranger.png',
 		description: 'Most, avoid, flee, and fear only a little bit of danger.\nWith a bow in the wilderness, you might find a Ranger',
 		skills: ['Climb', 'Concentration', 'Craft', 'Handle Animal', 'Heal', 'Hide', 'Jump', 'Knowledge', 'Knowledge', 'Knowledge', 'Listen', 'Move Silently', 'Profession', 'Ride', 'Search', 'Spot', 'Survival', 'Swim', 'Use Rope'],
 		baseSkill: 6,
@@ -185,7 +193,8 @@ const	_CLASSES = {
 	'Rogue': {
 		id: 9,
 		name: 'Rogue',
-		img: '/rogue.png',
+		img: '/classes/front/rogue.png',
+		icon: '/classes/icon/rogue.png',
 		description: 'The rich are rich and the poor are poor is in vogue.\nBut with sticky fingers and sharp daggers you find the Rogue',
 		skills: ['Appraise', 'Balance', 'Bluff', 'Climb', 'Craft', 'Decipher Script', 'Diplomacy', 'Disable Device', 'Disguise', 'Escape Artist', 'Forgery', 'Gather Information', 'Hide', 'Intimidate', 'Jump', 'Knowledge', 'Listen', 'Move Silently', 'Open Lock', 'Perform', 'Profession', 'Search', 'Sense Motive', 'Sleight Of Hand', 'Spot', 'Swim', 'Tumble', 'Use Magic Device', 'Use Rope'],
 		baseSkill: 8,
@@ -205,7 +214,8 @@ const	_CLASSES = {
 	'Sorcerer': {
 		id: 10,
 		name: 'Sorcerer',
-		img: '/sorcerer.png',
+		img: '/classes/front/sorcerer.png',
+		icon: '/classes/icon/sorcerer.png',
 		description: 'A scholarly teacher of magic seems like a torturer.\nBut this is not of concern to the innate magic of a Sorcerer',
 		skills: ['Bluff', 'Concentration', 'Craft', 'Knowledge', 'Profession', 'Spellcraft'],
 		baseSkill: 2,
@@ -223,7 +233,8 @@ const	_CLASSES = {
 	'Wizard': {
 		id: 11,
 		name: 'Wizard',
-		img: '/wizard.png',
+		img: '/classes/front/wizard.png',
+		icon: '/classes/icon/wizard.png',
 		description: 'Many waste their time on a log, idle like a lizard.\nHowever, through study, immense power is granted to the Wizard',
 		skills: ['Concentration', 'Craft', 'Decipher Script', 'Knowledge', 'Profession', 'Spellcraft'],
 		baseSkill: 2,
