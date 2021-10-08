@@ -13,6 +13,7 @@ import	Image				from	'next/image';
 import	Attributes			from	'sections/SectionCharacterSheet/Attributes';
 import	Balloon				from	'sections/SectionCharacterSheet/Balloon';
 import	Inventory			from	'sections/SectionCharacterSheet/Inventory';
+import	Feats				from	'sections/SectionCharacterSheet/Feats';	
 import	Skills				from	'sections/SectionCharacterSheet/Skills';
 import	{levelUp, setName}	from	'utils/actions';
 import	CLASSES				from	'utils/codex/classes';
@@ -46,12 +47,19 @@ function	AdventurerTab({adventurer, updateRarity, provider}) {
 				</div>
 				<div
 					onClick={() => set_selectedTab(1)}
-					className={`w-full cursor-pointer text-center border-solid border-l-0 md:border-l-4 ${selectedTab === 1 ? 'bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600 border-b-4 md:border-b-0' : 'border-b-4 md:border-b-4'} border-black dark:border-dark-100 text-center py-4`}>
+					className={`w-full cursor-pointer text-center border-solid border-l-0 md:border-l-4 ${selectedTab === 1 ? 'bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600 border-b-0' : 'border-b-0 md:border-b-4'} border-black dark:border-dark-100 text-center py-4`}>
+					<p>{'Feats'}</p>
+				</div>
+				<div
+					onClick={() => set_selectedTab(2)}
+					className={`w-full cursor-pointer text-center border-solid border-l-0 md:border-l-4 ${selectedTab === 2 ? 'bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600 border-b-4 md:border-b-0' : 'border-b-4 md:border-b-4'} border-black dark:border-dark-100 text-center py-4`}>
 					<p>{'Inventory'}</p>
 				</div>
 			</div>
 			<div className={'w-full border-black dark:border-dark-100 py-4 md:-mt-1'}>
-				{selectedTab === 0 ? <Skills adventurer={adventurer} updateRarity={updateRarity} provider={provider} /> : <Inventory adventurer={adventurer} />}
+				{selectedTab === 0 ? <Skills adventurer={adventurer} updateRarity={updateRarity} provider={provider} /> : null}
+				{selectedTab === 1 ? <Feats adventurer={adventurer} updateRarity={updateRarity} provider={provider} /> : null}
+				{selectedTab === 2 ? <Inventory adventurer={adventurer} /> : null}
 			</div>
 		</Box>
 	);
