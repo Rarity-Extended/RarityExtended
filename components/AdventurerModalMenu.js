@@ -39,7 +39,7 @@ function AdventurerModalMenu() {
 						</div>
 					</div> : <div className={'flex items-center justify-center'}>
 						<Image
-							src={'/front/placeholder.svg'}
+							src={'/classes/front/placeholder.svg'}
 							quality={100}
 							width={60}
 							height={60} />
@@ -80,7 +80,7 @@ function AdventurerModalMenu() {
 							</div>
 						</div>
 						<Image
-							src={'/front/placeholder.svg'}
+							src={'/classes/front/placeholder.svg'}
 							quality={100}
 							width={60}
 							height={60} />
