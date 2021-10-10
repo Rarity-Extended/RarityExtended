@@ -16,17 +16,17 @@ import	{exploreTheForest}					from	'utils/actions';
 
 const	classMappingImg = [
 	'',
-	'/front/barbarian.svg',
-	'/bard.png',
-	'/cleric.png',
-	'/druid.png',
-	'/fighter.png',
-	'/front/monk.svg',
-	'/paladin.png',
-	'/ranger.png',
-	'/rogue.png',
-	'/sorcerer.png',
-	'/wizard.png',
+	'/classes/front/barbarian.svg',
+	'/classes/front/bard.png',
+	'/classes/front/cleric.png',
+	'/classes/front/druid.png',
+	'/classes/front/fighter.png',
+	'/classes/front/monk.svg',
+	'/classes/front/paladin.png',
+	'/classes/front/ranger.png',
+	'/classes/front/rogue.png',
+	'/classes/front/sorcerer.png',
+	'/classes/front/wizard.png',
 ];
 
 function	NPCHeadline() {

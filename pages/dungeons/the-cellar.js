@@ -16,17 +16,17 @@ import	DialogBox								from	'components/DialogBox';
 
 const	classMappingBackImg = [
 	'',
-	'/back/barbarian.svg',
-	'/back/bard.png',
-	'/back/cleric.png',
-	'/back/druid.png',
-	'/back/fighter.png',
-	'/back/monk.svg',
-	'/back/paladin.png',
-	'/back/ranger.png',
-	'/back/rogue.png',
-	'/back/sorcerer.png',
-	'/back/wizard.png',
+	'/classes/back/barbarian.svg',
+	'/classes/back/bard.png',
+	'/classes/back/cleric.png',
+	'/classes/back/druid.png',
+	'/classes/back/fighter.png',
+	'/classes/back/monk.svg',
+	'/classes/back/paladin.png',
+	'/classes/back/ranger.png',
+	'/classes/back/rogue.png',
+	'/classes/back/sorcerer.png',
+	'/classes/back/wizard.png',
 ];
 
 function sleep(ms) {
