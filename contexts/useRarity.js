@@ -25,6 +25,7 @@ import	RARITY_FEATS_ABI										from	'utils/abi/rarityFeats.abi';
 import	RARITY_CRAFTING_HELPER_ABI								from	'utils/abi/rarityCraftingHelper.abi';
 import	THE_CELLAR_ABI											from	'utils/abi/dungeonTheCellar.abi';
 import	THE_FOREST_ABI											from	'utils/abi/dungeonTheForest.abi';
+import	EXTENDED_NAME_ABI										from	'utils/abi/rarityExtendedName.abi';
 import	MANIFEST_GOODS											from	'utils/codex/items_manifest_goods.json';
 import	MANIFEST_ARMORS											from	'utils/codex/items_manifest_armors.json';
 import	MANIFEST_WEAPONS										from	'utils/codex/items_manifest_weapons.json';
@@ -158,9 +159,10 @@ export const RarityContextApp = ({children}) => {
 		const	rarityAttr = new Contract(process.env.RARITY_ATTR_ADDR, RARITY_ATTR_ABI);
 		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI);
 		const	raritySkills = new Contract(process.env.RARITY_SKILLS_ADDR, RARITY_SKILLS_ABI);
-		const	rarityFeats = new Contract(process.env.RARITY_FEATS_ADDR, RARITY_FEATS_ABI);
 		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, THE_CELLAR_ABI);
 		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, THE_FOREST_ABI);
+		const	rarityExtendedName = new Contract(process.env.RARITY_EXTENDED_NAME, EXTENDED_NAME_ABI);
+		const	rarityFeats = new Contract(process.env.RARITY_FEATS_ADDR, RARITY_FEATS_ABI);
 
 		return [
 			rarity.ownerOf(tokenID),
@@ -173,6 +175,7 @@ export const RarityContextApp = ({children}) => {
 			rarityDungeonCellar.adventurers_log(tokenID),
 			rarityDungeonCellar.scout(tokenID),
 			rarityDungeonForest.getResearchBySummoner(tokenID),
+			rarityExtendedName.get_name(tokenID),
 		];
 	}
 
@@ -230,7 +233,7 @@ export const RarityContextApp = ({children}) => {
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
 	function		setRarity(tokenID, multicallResult, callResult, inventoryCallResult) {
-		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, skills, feats, cellarLog, cellarScout, forestResearch] = multicallResult;
+		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, skills, feats, cellarLog, cellarScout, forestResearch, name] = multicallResult;
 		const	[claimableGold] = callResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
@@ -240,6 +243,7 @@ export const RarityContextApp = ({children}) => {
 			set_currentAdventurer(p => (!p || (p && tokenID === p.tokenID)) ? {
 				tokenID: tokenID,
 				owner: owner,
+				name: name,
 				xp: ethers.utils.formatEther(adventurer['_xp']),
 				class: Number(adventurer['_class']),
 				level: Number(adventurer['_level']),
@@ -277,6 +281,7 @@ export const RarityContextApp = ({children}) => {
 		set_rarities((prev) => ({...prev, [tokenID]: {
 			tokenID: tokenID,
 			owner: owner,
+			name: name,
 			xp: ethers.utils.formatEther(adventurer['_xp']),
 			class: Number(adventurer['_class']),
 			level: Number(adventurer['_level']),
@@ -345,7 +350,7 @@ export const RarityContextApp = ({children}) => {
 		});
 
 		const	callResults = await fetchAdventurer(preparedCalls);
-		const	chunkedCallResult = chunk(callResults, 10);
+		const	chunkedCallResult = chunk(callResults, 11);
 		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(preparedInventoryCalls);
@@ -364,7 +369,7 @@ export const RarityContextApp = ({children}) => {
 	**************************************************************************/
 	async function	updateRarity(tokenID) {
 		const	callResults = await fetchAdventurer(prepareAdventurer(tokenID));
-		const	chunkedCallResult = chunk(callResults, 10);
+		const	chunkedCallResult = chunk(callResults, 11);
 		const	extraCallResults = await fetchAdventurerExtra(prepareAdventurerExtra(tokenID));
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(prepareAdventurerInventory(tokenID));

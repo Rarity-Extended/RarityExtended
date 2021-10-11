@@ -40,7 +40,7 @@ function	ItemsTheCellar({item, adventurer}) {
 	);
 }
 
-function	ItemsTheForest({item, subItem}) {
+function	ItemsTheForest({subItem}) {
 	return (
 		<div className={'flex flex-row space-x-4 w-full tooltip cursor-help group'}>
 			<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
