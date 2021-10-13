@@ -14,6 +14,7 @@ import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
 import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
 import	SectionDungeonTheForest			from	'sections/SectionDungeonTheForest';
+import	SectionDungeonOpenMic			from	'sections/SectionDungeonOpenMic';
 import	Box								from	'components/Box';
 import	CLASSES							from	'utils/codex/classes';
 
@@ -25,6 +26,7 @@ function	DialogChoices({router, adventurersCount}) {
 	useEffect(() => {
 		set_selectedOption(0);
 		set_dialogNonce(n => n + 1);
+		console.log("router?.asPath", router?.asPath)
 	}, [currentAdventurer?.tokenID, router?.asPath]);
 
 	if (adventurersCount === 0) {
@@ -96,7 +98,44 @@ function	DialogChoices({router, adventurersCount}) {
 			</>
 		);
 	}
+	if (router?.query?.tab === 'the-stage') {
+		const	canAdventure = currentAdventurer?.class === 2
+			&& currentAdventurer?.level > 1;
+		const firstOption = <>
+			{currentAdventurer && canAdventure && (<>
+					{'TAKE THE STAGE WITH '}
+					<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+				</>)}
+			{currentAdventurer && !canAdventure && (<>
+					<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+					{' CANNOT PERFORM, CHOOSE SOMEONE ELSE '}
+					</>)}
+			{!currentAdventurer && (<>
+					{'CHOOSE A BARD WITH LEVEL > 1 and PERFORM > 0 '}
+					</>)}
+		</>;
 
+		return (
+			<>
+				<DialogBox
+					selectedOption={selectedOption}
+					nonce={dialogNonce}
+					options={[
+						{
+							label: firstOption,
+							onClick: () => {
+								if (canAdventure) {
+									router.push(`/dungeons/the-stage?adventurer=${currentAdventurer.tokenID}`);
+								} else if (currentAdventurer && !canAdventure) {
+									openCurrentAventurerModal();
+								}
+							}
+						},
+						{label: 'CANCEL', onClick: () => router.push('/town/quest')},
+					]} />
+			</>
+		);
+	}
 
 	return (
 		<DialogBox
@@ -121,6 +160,15 @@ function	DialogChoices({router, adventurersCount}) {
 					),
 					onClick: () => router.push('/town/quest?tab=the-forest')
 				},
+				{
+					label: (
+						<>
+							{'THE HOOLIGANS IN '}
+							<span className={'text-tag-info'}>{'THE TAVERN'}</span>
+						</>
+					),
+					onClick: () => router.push('/town/quest?tab=the-stage')
+				},
 			]} />
 	);
 }
@@ -132,6 +180,7 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 	const	[hadInitialMessage, set_hadInitialMessage] = useState(false);
 	const	[hadTheCellarMessage, set_hadTheCellarMessage] = useState(false);
 	const	[hadTheForestMessage, set_hadTheForestMessage] = useState(false);
+	const	[hadOpenMicMessage, set_hadOpenMicMessage] = useState(false);
 	
 	useEffect(() => {
 		set_npcTextIndex(0);
@@ -160,6 +209,7 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 				</>
 			);
 		}
+
 		if (adventurersCount === 0) {
 			return (
 				<>
@@ -255,6 +305,43 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 				</>
 			);
 		}
+		if (router?.query?.tab === 'the-stage') {
+			if (hadOpenMicMessage) {
+				return (
+					<>
+						{'HOOLIGANS ARE TRASHING THE TAVERN ! '}
+						<span className={'text-tag-info'}>{'FACU'}</span>
+						{' THE TAVERN KEEPER WANTS BARDS WITH '}
+						<span className={'text-tag-info'}>{'PERFORM'}</span>
+						{' SKILLS AND LEVEL > 1 TO TRY CALMING THEM DOWN.'}&nbsp;
+					</>	
+				);
+			}
+			return (
+				<>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
+						{'HOOLIGANS ARE TRASHING THE TAVERN ! '}
+					</Typer>
+					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						{'FACU'}
+					</Typer></span>
+					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
+						{' THE TAVERN KEEPER WANTS BARDS WITH '}
+					</Typer>
+					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+						{'PERFORM'}
+					</Typer></span>
+					<Typer
+						shouldStart={npcTextIndex === 4}
+						onDone={() => {
+							set_npcTextIndex(i => i + 1);
+							set_hadOpenMicMessage(true);
+						}}>
+						{' SKILLS TO TRY CALMING THEM DOWN.'}
+					</Typer>&nbsp;
+				</>
+			);
+		}
 		if (hadInitialMessage) {
 			return (
 				<>
@@ -267,6 +354,7 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 				</>	
 			);
 		}
+
 		return (
 			<>
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
@@ -337,6 +425,11 @@ function	Index({rarities, router}) {
 						adventurersCount={adventurers.length} />
 					<SectionDungeonTheForest
 						shouldDisplay={router?.query?.tab === 'the-forest'}
+						router={router}
+						adventurers={rarities}
+						adventurersCount={adventurers.length} />
+					<SectionDungeonOpenMic
+						shouldDisplay={router?.query?.tab === 'the-stage'}
 						router={router}
 						adventurers={rarities}
 						adventurersCount={adventurers.length} />

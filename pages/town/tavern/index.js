@@ -20,6 +20,7 @@ import	SectionRecruit					from	'sections/SectionRecruit';
 import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
 import	TAVERN_NEWS						from	'utils/codex/tavernNews.json';
 import	CLASSES							from	'utils/codex/classes';
+import	Adventurer						from	'components/Adventurer';
 
 dayjs.extend(relativeTime);
 
@@ -53,6 +54,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 	const	[hadInitialMessage, set_hadInitialMessage] = useState(false);
 	const	[hadRecruitMessage, set_hadRecruitMessage] = useState(false);
 	const	[hadTheCellarMessage, set_hadTheCellarMessage] = useState(false);
+	const	[hadOpenMicMessage, set_hadOpenMicMessage] = useState(false);
 
 	useEffect(() => {
 		set_npcTextIndex(0);
@@ -198,6 +200,20 @@ function	NPCHeadline({router, active, adventurersCount}) {
 				</Typer>
 			);
 		}
+		if (router?.query?.tab === 'the-stage') {
+			if (hadOpenMicMessage) {
+				return (
+					<>
+						{'I\'VE HAD ENOUGH OF THESE HOOLIGANS. GET UP THERE AND GIVE THEM A SHOW. KEEP IT CLEAN THIS TIME ! OH AND MAKE SURE YOU\'RE AT LEAST AT LEVEL 2 WITH PERFORM SKILL > 1'}
+					</>		
+				);
+			}
+			return (
+				<Typer onDone={() => set_hadOpenMicMessage(true)}>
+					{'I\'ve had enough of these hooligans. Get up there and give them a show. Keep it clean this time !'}
+				</Typer>
+			);
+		}
 		return null;
 	};
 	return (
@@ -209,7 +225,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 
 function	DialogChoices({router, onWalletConnect, active}) {
 	const	{chainTime} = useWeb3();
-	const	{currentAdventurer, openCurrentAventurerModal} = useRarity();
+	const	{rarities, currentAdventurer, openCurrentAventurerModal} = useRarity();
 	const	[selectedOption, set_selectedOption] = useState(0);
 	const	[dialogNonce, set_dialogNonce] = useState(0);
 
@@ -226,6 +242,7 @@ function	DialogChoices({router, onWalletConnect, active}) {
 				]} />
 		);
 	}
+
 	if (router?.query?.tab === 'the-cellar') {
 		const	canAdventure = !dayjs(new Date(currentAdventurer?.dungeons?.cellar?.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
 
@@ -260,6 +277,60 @@ function	DialogChoices({router, onWalletConnect, active}) {
 		);
 	}
 
+	if (router?.query?.tab === 'the-stage') {
+		const	canAdventure = currentAdventurer?.class === 2
+			&& currentAdventurer?.level > 1;
+		const bards = rarities ? Object.values(rarities)?.filter(a => CLASSES[a.class].id === 2) : [];
+		const firstOption = <>
+			{currentAdventurer && canAdventure && (<>
+					{'TAKE THE STAGE WITH '}
+					<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+				</>)}
+			{currentAdventurer && !canAdventure && (<>
+					<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+					{' CANNOT PERFORM, CHOOSE SOMEONE ELSE '}
+					</>)}
+			{!currentAdventurer && (<>
+					{'CHOOSE A BARD WITH LEVEL > 1 and PERFORM > 0 '}
+					</>)}
+		</>;
+
+		const options = [];
+		if(bards.length > 0) {
+			options.push({
+				label: firstOption,
+				onClick: () => {
+					if (canAdventure) {
+						router.push(`/dungeons/the-stage?adventurer=${currentAdventurer.tokenID}`);
+					} else if (currentAdventurer && !canAdventure) {
+						openCurrentAventurerModal();
+					}
+				}});
+		} else {
+			options.push({label: 'RECRUIT A BARD FIRST !', onClick: () => router.push('/town/tavern?tab=recruit')});
+		}
+		options.push({label: 'GO BACK', onClick: () => router.push('/town/tavern')});
+
+		return (<>
+				<DialogBox options={options}
+					selectedOption={selectedOption}
+					nonce={dialogNonce} />
+
+				<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4'}>
+					{bards.map((adventurer) => {
+						return (
+							<div key={adventurer.tokenID} className={'w-full'}>
+								<Adventurer
+									onClick={() => router.push(`/dungeons/the-stage?adventurer=${adventurer.tokenID}`)}
+									adventurer={adventurer}
+									rarityClass={CLASSES[adventurer.class]} />
+							</div>
+						);
+					})}
+				</div>
+			</>);
+	}
+
 	return (
 		<DialogBox
 			selectedOption={selectedOption}
@@ -267,7 +338,8 @@ function	DialogChoices({router, onWalletConnect, active}) {
 			options={[
 				{label: 'What\'s new ?', onClick: () => router.push('/town/tavern')},
 				{label: 'Recruit a new adventurer', onClick: () => router.push('/town/tavern?tab=recruit')},
-				{label: 'About the rats ...', onClick: () => router.push('/town/tavern?tab=the-cellar')}
+				{label: 'About the rats ...', onClick: () => router.push('/town/tavern?tab=the-cellar')},
+				{label: 'Tavern hooligans ...', onClick: () => router.push('/town/tavern?tab=the-stage')}
 			]} />
 	);
 }
