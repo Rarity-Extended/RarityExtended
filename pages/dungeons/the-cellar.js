@@ -16,17 +16,17 @@ import	DialogBox								from	'components/DialogBox';
 
 const	classMappingBackImg = [
 	'',
-	'/back/barbarian.svg',
-	'/back/bard.png',
-	'/back/cleric.png',
-	'/back/druid.png',
-	'/back/fighter.png',
-	'/back/monk.svg',
-	'/back/paladin.png',
-	'/back/ranger.png',
-	'/back/rogue.png',
-	'/back/sorcerer.png',
-	'/back/wizard.png',
+	'/classes/back/barbarian.svg',
+	'/classes/back/bard.png',
+	'/classes/back/cleric.png',
+	'/classes/back/druid.png',
+	'/classes/back/fighter.png',
+	'/classes/back/monk.svg',
+	'/classes/back/paladin.png',
+	'/classes/back/ranger.png',
+	'/classes/back/rogue.png',
+	'/classes/back/sorcerer.png',
+	'/classes/back/wizard.png',
 ];
 
 function sleep(ms) {
@@ -98,13 +98,13 @@ function	Index({dungeon, adventurer, router}) {
 				set_adventurerWon(true);
 				return true;
 			}
-			set_logs(l => [...l, `Your adventurer attacks the Big Ugly Rat and deals ${dungeon.adventurerDamage} dmg.`]);
+			set_logs(l => [...l, `${adventurer?.name || 'Your adventurer'} attacks the Big Ugly Rat and deals ${dungeon.adventurerDamage} dmg.`]);
 			await sleep(0);
 			if (dungeon.adventurerArmor < dungeon.dungeonToHit) {
 				set_adventurerHealth(h => h -= dungeon.dungeonDamage);
 				_adventurerHealth -= dungeon.dungeonDamage;
 				if (_adventurerHealth <= 0) {
-					set_logs(l => [...l, 'Your adventurer fades out']);
+					set_logs(l => [...l, `${adventurer?.name || 'Your adventurer'} fades out`]);
 					return false;
 				}
 			}
@@ -133,13 +133,13 @@ function	Index({dungeon, adventurer, router}) {
 			set_adventurerWon(true);
 			return true;
 		}
-		set_logs(l => [...l, `Your adventurer attacks the Big Ugly Rat and deals ${dungeon.adventurerDamage} dmg.`]);
+		set_logs(l => [...l, `${adventurer?.name || 'Your adventurer'} attacks the Big Ugly Rat and deals ${dungeon.adventurerDamage} dmg.`]);
 		await sleep(450);
 		if (dungeon.adventurerArmor < dungeon.dungeonToHit) {
 			set_adventurerHealth(h => h -= dungeon.dungeonDamage);
 			_adventurerHealth -= dungeon.dungeonDamage;
 			if (_adventurerHealth <= 0) {
-				set_logs(l => [...l, 'Your adventurer fades out']);
+				set_logs(l => [...l, `${adventurer?.name || 'Your adventurer'} fades out`]);
 				return false;
 			}
 		}

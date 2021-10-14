@@ -29,7 +29,7 @@ function	Index({options}) {
 			{options.map((opt, index) => (
 				<div
 					key={index}
-					className={`py-1 px-2 group hover:bg-gray-principal dark:hover:bg-dark-100 cursor-pointer ${option === index ? 'bg-gray-principal dark:bg-dark-100' : 'bg-white dark:bg-dark-600'}`}
+					className={`py-1 px-2 group hover:bg-gray-principal dark:hover:bg-dark-300 cursor-pointer ${option === index ? 'bg-gray-principal dark:bg-dark-300' : 'bg-white dark:bg-dark-600'}`}
 					style={{cursor: 'pointer'}}
 					onClick={() => {
 						set_option(index);
