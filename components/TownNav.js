@@ -1,6 +1,6 @@
 /******************************************************************************
-**	@Author:				@hanahem
-**	@Twitter:				@WssmHnhm
+**	@Author:				Rarity Extended
+**	@Twitter:				@RXtended
 **	@Date:					Friday October 15th 2021
 **	@Filename:				TownNav.js
 ******************************************************************************/
