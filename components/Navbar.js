@@ -50,7 +50,7 @@ function	Navbar({router}) {
 						<p className={'block md:hidden'}>{'RE'}</p>
 					</Link>
 					<Link href={'/'}>
-						<p className={'hidden md:block'}>{'Rarity Extended'}</p>
+						<p className={'hidden md:block cursor-pointer'}>{'Rarity Extended'}</p>
 					</Link>
 				</div>
 				<div className={'items-center justify-end flex-row flex md:hidden w-full'}>
