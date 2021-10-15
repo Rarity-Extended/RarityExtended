@@ -48,7 +48,7 @@ function TownNav() {
 					{'You can navigate the town through this widget.'}
 				</p>
 			</div>
-			<div className={'grid grid-cols-3 grid-rows-2 gap-8 mt-8 mb-24'}>
+			<div className={'grid gap-4 sm:grid-cols-3 sm:grid-rows-2 sm:gap-8 mt-4 mb-12 sm:mt-8 sm:mb-24'}>
 				{
 					Object.keys(TOWN).map(key => {
 						return (
