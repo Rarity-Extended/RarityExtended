@@ -165,13 +165,6 @@ export const RarityContextApp = ({children}) => {
 		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, THE_FOREST_ABI);
 		const	rarityExtendedName = new Contract(process.env.RARITY_EXTENDED_NAME, EXTENDED_NAME_ABI);
 		const	rarityFeats = new Contract(process.env.RARITY_FEATS_ADDR, RARITY_FEATS_ABI);
-
-		const	adventureBoarsMushroom = new Contract(process.env.LOOT_MUSHROOM_ADDR, LOOT_ERC20_ABI);
-		const	adventureBoarsBerries = new Contract(process.env.LOOT_BERRIES_ADDR, LOOT_ERC20_ABI);
-		const	adventureBoarsWood = new Contract(process.env.LOOT_WOOD_ADDR, LOOT_ERC20_ABI);
-		const	adventureBoarsLeather = new Contract(process.env.LOOT_LEATHER_ADDR, LOOT_ERC20_ABI);
-		const	adventureBoarsMeat = new Contract(process.env.LOOT_MEAT_ADDR, LOOT_ERC20_ABI);
-		const	adventureBoarsTusks = new Contract(process.env.LOOT_TUSKS_ADDR, LOOT_ERC20_ABI);
 		const	rarityDungeonBoars = new Contract(process.env.DUNGEON_BOARS_ADDR, BOARS_ABI);
 
 		return [
@@ -188,12 +181,6 @@ export const RarityContextApp = ({children}) => {
 			rarityExtendedName.get_name(tokenID),
 			rarityDungeonBoars.actions_log(tokenID),
 			rarityDungeonBoars.simulate_kill(tokenID),
-			adventureBoarsMushroom.balanceOf(tokenID),
-			adventureBoarsBerries.balanceOf(tokenID),
-			adventureBoarsWood.balanceOf(tokenID),
-			adventureBoarsLeather.balanceOf(tokenID),
-			adventureBoarsMeat.balanceOf(tokenID),
-			adventureBoarsTusks.balanceOf(tokenID),
 		];
 	}
 
@@ -251,7 +238,7 @@ export const RarityContextApp = ({children}) => {
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
 	function		setRarity(tokenID, multicallResult, callResult, inventoryCallResult) {
-		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, skills, feats, cellarLog, cellarScout, forestResearch, name] = multicallResult;
+		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, skills, feats, cellarLog, cellarScout, forestResearch, name, boarsLog, boarsScout] = multicallResult;
 		const	[claimableGold] = callResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
@@ -325,6 +312,10 @@ export const RarityContextApp = ({children}) => {
 				cellar: {
 					log: Number(cellarLog),
 					scout: Number(cellarScout),
+				},
+				boars: {
+					log: Number(boarsLog),
+					scout: Number(boarsScout),
 				},
 				forest: {
 					initBlockTs: forestResearch?.initBlockTs,
