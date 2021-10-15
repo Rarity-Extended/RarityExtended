@@ -49,3 +49,42 @@ export function	formatValue(value, decimals = 2) {
 export const chunk = (arr, size) => arr.reduce((acc, e, i) => (i % size ? acc[acc.length - 1].push(e) : acc.push([e]), acc), []);
 
 export const fetcher = (...args) => fetch(...args).then(res => res.json());
+
+export const TOWN = {
+	'tavern': {
+		label: 'Tavern',
+		icon: '/menu/tavern.png',
+		text: 'Best place to get some news!',
+		href: '/town/tavern'
+	},
+	'blacksmith': {
+		label: 'Blacksmith',
+		icon: '/menu/blacksmith.png',
+		text: 'Come and craft mighty armors!',
+		href: '/town/blacksmith'
+	},
+	'quest': {
+		label: 'Quest',
+		icon: '/menu/quest.png',
+		text: 'Loot is not guaranteed.',
+		href: '/town/quest'
+	},
+	'market': {
+		label: 'Market',
+		icon: '/menu/market.png',
+		text: 'Spend all your gold!',
+		href: '/town/market'
+	},
+	'bank': {
+		label: 'Bank',
+		icon: '/menu/banker.png',
+		text: 'Trust us with your gold!',
+		href: '/town/bank'
+	},
+	'guildHouse': {
+		label: 'Guild House',
+		icon: '/menu/guild house.png',
+		text: 'Hustle and bustle!',
+		href: '/town/guild-house'
+	},
+}
