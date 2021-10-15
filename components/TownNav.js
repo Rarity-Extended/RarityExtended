@@ -2,7 +2,7 @@
 **	@Author:				@hanahem
 **	@Twitter:				@WssmHnhm
 **	@Date:					Friday October 15th 2021
-**	@Filename:				TownWidget.js
+**	@Filename:				TownNav.js
 ******************************************************************************/
 
 import  { TOWN }    from    'utils';
