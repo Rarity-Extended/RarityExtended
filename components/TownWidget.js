@@ -5,60 +5,38 @@
 **	@Filename:				TownWidget.js
 ******************************************************************************/
 
-import  { TOWN }    from    'utils';
 import  React       from    'react';
 import  Box         from    './Box';
-import	Image       from    'next/image';
-import	Link        from    'next/link';
+import  Link        from    'next/link';
+import  Image       from    'next/image';
 
-function TownItem({ town }) {
+function Townwidget({ location }) {
     return (
-        <Link href={town.href}>
-            <Box className="p-6 cursor-pointer dark:bg-dark-400 hover:bg-gray-principal dark:hover:bg-items-rare">
-                <span className="flex items-center">
-                    <div className={'w-16 h-16 rounded-lg flex justify-center items-center mr-4'}>
-                        <Image
-                            src={town.icon}
-                            loading={'eager'}
-                            width={80}
-                            height={80} />
-                    </div>
-                    <div className="flex flex-col items-start">
-                        <h4>
-                            {town.label}
-                        </h4>
-                        <p className="text-xxs opacity-60">
-                            {town.text}
-                        </p>
-                    </div>
-                </span>
-            </Box>
-        </Link>
-    )
-}
-
-function TownWidget({ router }) {
-    return (
-        <div className="max-w-screen-lg w-full mx-auto">
+        <Box className="flex items-center p-6 dark:bg-dark-400">
+            <div className={'w-22 h-22 rounded-lg flex justify-center items-center mr-4'}>
+                <Image
+                    src={location.icon}
+                    loading={'eager'}
+                    width={80}
+                    height={80} />
+            </div>
             <div>
-                <h2 className="text-xl">
-                    {'TOWN NAVIGATION'}
-                </h2>
-                <p className="text-xs opacity-60 mt-2">
-                    {'You can navigate the town through this widget.'}
-                </p>
+                <div className="mb-2 cursor-pointer">
+                    <Link href="/">
+                        <p className="text-xxs opacity-60">
+                            {'< back to town hall'}
+                        </p>
+                    </Link>
+                </div>
+                <div>
+                    {'YOU ARE NOW IN THE '}
+                    <span className={'text-tag-info'}>
+                        {location.label}
+                    </span>
+                </div>
             </div>
-            <div className="grid grid-cols-3 grid-rows-2 gap-8 mt-8 mb-24">
-                {
-                    Object.keys(TOWN).map(key => {
-                        return (
-                            <TownItem town={TOWN[key]} />
-                        )
-                    })
-                }
-            </div>
-        </div>
+        </Box>
     );
 }
 
-export default TownWidget;
+export default Townwidget;

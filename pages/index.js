@@ -10,7 +10,7 @@ import	SectionNoAdventurer			from	'sections/SectionNoAdventurer';
 import	SectionCharacterSheet		from	'sections/SectionCharacterSheet';
 import	useWeb3						from	'contexts/useWeb3';
 import	useRarity					from	'contexts/useRarity';
-import 	TownWidget 					from 	'components/TownWidget';
+import 	TownNav 					from 	'components/TownNav';
 
 function	Index({router}) {
 	const	{provider, chainTime} = useWeb3();
@@ -25,7 +25,7 @@ function	Index({router}) {
 
 	return (
 		<section className={'mt-24 md:mt-12'}>
-			<TownWidget />
+			<TownNav />
 			<div className={'flex flex-col space-y-36 max-w-screen-lg w-full mx-auto'}>
 				{
 					adventurers?.map((rarity) => (

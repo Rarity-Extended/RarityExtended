@@ -20,6 +20,8 @@ import	SectionRecruit					from	'sections/SectionRecruit';
 import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
 import	TAVERN_NEWS						from	'utils/codex/tavernNews.json';
 import	CLASSES							from	'utils/codex/classes';
+import Townwidget from 'components/TownWidget';
+import { TOWN } from 'utils';
 
 dayjs.extend(relativeTime);
 
@@ -281,6 +283,7 @@ function	Index({fetchRarity, rarities, router}) {
 	return (
 		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
+				<Townwidget location={TOWN.tavern} />
 				<div className={'flex flex-col md:flex-row items-center mb-8 md:mb-8'}>
 					<div className={'w-auto md:w-64 mr-0 md:mr-8'} style={{minWidth: 256}}>
 						<Image
