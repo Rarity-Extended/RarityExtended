@@ -42,7 +42,7 @@ function TownNav({ router }) {
         <div className="max-w-screen-lg w-full mx-auto">
             <div>
                 <h2 className="text-xl">
-                    {'TOWN NAVIGATION'}
+                    {'TOWN HALL'}
                 </h2>
                 <p className="text-xs opacity-60 mt-2">
                     {'You can navigate the town through this widget.'}
