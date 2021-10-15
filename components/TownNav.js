@@ -14,7 +14,7 @@ import	Link        from    'next/link';
 function TownItem({location}) {
 	return (
 		<Link href={location.href}>
-			<Box className={'p-6 cursor-pointer dark:bg-dark-400 hover:bg-gray-principal dark:hover:bg-items-rare'}>
+			<Box className={'p-6 cursor-pointer hover:bg-gray-principal dark:hover:bg-dark-400'}>
 				<span className={'flex items-center'}>
 					<div className={'w-16 h-16 rounded-lg flex justify-center items-center mr-4'}>
 						<Image

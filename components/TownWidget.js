@@ -12,7 +12,7 @@ import  Image       from    'next/image';
 
 function Townwidget({location}) {
 	return (
-		<Box className={'flex items-center p-6 dark:bg-dark-400'}>
+		<Box className={'flex items-center p-6 hover:bg-gray-principal dark:hover:bg-dark-400'}>
 			<div className={'w-22 h-22 rounded-lg flex justify-center items-center mr-4'}>
 				<Image
 					src={location.icon}
