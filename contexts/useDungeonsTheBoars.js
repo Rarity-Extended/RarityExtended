@@ -10,7 +10,7 @@ import	React, {useState, useEffect, useContext, createContext}	from	'react';
 import	useWeb3													from	'contexts/useWeb3';
 import	{ethers}												from	'ethers';
 import	{Provider, Contract}									from	'ethcall';
-import	THE_CELLAR_ABI											from	'utils/abi/dungeonTheCellar.abi';
+import	BOARS_ABI												from	'utils/abi/dungeonBoars.abi';
 
 const	DungeonContext = createContext();
 
@@ -28,9 +28,9 @@ export const DungeonContextApp = ({children, adventurer}) => {
 	**	Prepare the multicall to get most of the data
 	**************************************************************************/
 	function		prepareDungeonCalls() {
-		const	dungeon = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, THE_CELLAR_ABI);
+		const	dungeon = new Contract(process.env.DUNGEON_BOARS_ADDR, BOARS_ABI);
 		return [
-			dungeon.adventurers_log(adventurer.tokenID),
+			dungeon.actions_log(adventurer.tokenID),
 			dungeon.base_attack_bonus_by_class_and_level(adventurer.tokenID, adventurer.level),
 			dungeon.armor_class(adventurer.attributes.dexterity),
 			dungeon.attack_bonus(adventurer.class, adventurer.attributes.strength, adventurer.level),
@@ -40,7 +40,7 @@ export const DungeonContextApp = ({children, adventurer}) => {
 			dungeon.dungeon_damage(),
 			dungeon.dungeon_health(),
 			dungeon.dungeon_to_hit(),
-			dungeon.scout(adventurer.tokenID),
+			dungeon.simulate_kill(adventurer.tokenID),
 		];
 	}
 	/**************************************************************************
@@ -63,7 +63,7 @@ export const DungeonContextApp = ({children, adventurer}) => {
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
 	function	setDungeon(multicallResult) {
-		const	[log, adventurerBaseAttack, adventurerArmor, adventurerBonusAttack, adventurerHealth, adventurerDamage, scout] = multicallResult;
+		const	[log, adventurerBaseAttack, adventurerArmor, adventurerBonusAttack, adventurerHealth, adventurerDamage, dungeon_armor_class, dungeon_damage, dungeon_health, dungeon_to_hit, scout] = multicallResult;
 
 		set_dungeon({
 			tokenID: adventurer.tokenID,
@@ -73,10 +73,10 @@ export const DungeonContextApp = ({children, adventurer}) => {
 			adventurerBonusAttack: Number(adventurerBonusAttack),
 			adventurerHealth: Number(adventurerHealth),
 			adventurerDamage: Number(adventurerDamage),
-			dungeonArmor: Number(2),
-			dungeonDamage: Number(2),
-			dungeonHealth: Number(10),
-			dungeonToHit: Number(3),
+			dungeonArmor: Number(dungeon_armor_class),
+			dungeonDamage: Number(dungeon_damage),
+			dungeonHealth: Number(dungeon_health),
+			dungeonToHit: Number(dungeon_to_hit),
 			scout: Number(scout),
 		});
 	}
@@ -96,32 +96,6 @@ export const DungeonContextApp = ({children, adventurer}) => {
 
 	return (
 		<DungeonContext.Provider value={{dungeon}}>
-			<div className={'absolute top-8 left-8 p-4 border-4 border-black flex flex-col z-50'}>
-				<label className={'text-xss'}>{'DUNGEON_ARMOR'}</label>
-				<input
-					value={dungeon?.dungeonArmor}
-					onChange={(e) => set_dungeon({...dungeon, dungeonArmor: Number(e.target.value)})}
-					type={'number'}
-					className={'w-28 bg-gray-principal my-1 text-xs p-2'} />
-				<label className={'text-xss mt-2'}>{'DUNGEON_DAMAGE'}</label>
-				<input
-					value={dungeon?.dungeonDamage}
-					onChange={(e) => set_dungeon({...dungeon, dungeonDamage: Number(e.target.value)})}
-					type={'number'}
-					className={'w-28 bg-gray-principal my-1 text-xs p-2'} />
-				<label className={'text-xss mt-2'}>{'DUNGEON_HEALTH'}</label>
-				<input
-					value={dungeon?.dungeonHealth}
-					onChange={(e) => set_dungeon({...dungeon, dungeonHealth: Number(e.target.value)})}
-					type={'number'}
-					className={'w-28 bg-gray-principal my-1 text-xs p-2'} />
-				<label className={'text-xss mt-2'}>{'DUNGEON_TOHIT'}</label>
-				<input
-					value={dungeon?.dungeonToHit}
-					onChange={(e) => set_dungeon({...dungeon, dungeonToHit: Number(e.target.value)})}
-					type={'number'}
-					className={'w-28 bg-gray-principal my-1 text-xs p-2'} />
-			</div>
 			{children}
 		</DungeonContext.Provider>
 	);

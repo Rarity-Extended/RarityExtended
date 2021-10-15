@@ -25,6 +25,8 @@ import	RARITY_FEATS_ABI										from	'utils/abi/rarityFeats.abi';
 import	RARITY_CRAFTING_HELPER_ABI								from	'utils/abi/rarityCraftingHelper.abi';
 import	THE_CELLAR_ABI											from	'utils/abi/dungeonTheCellar.abi';
 import	THE_FOREST_ABI											from	'utils/abi/dungeonTheForest.abi';
+import	BOARS_ABI												from	'utils/abi/dungeonBoars.abi';
+import	LOOT_ERC20_ABI											from	'utils/abi/lootERC20.abi.js';
 import	EXTENDED_NAME_ABI										from	'utils/abi/rarityExtendedName.abi';
 import	MANIFEST_GOODS											from	'utils/codex/items_manifest_goods.json';
 import	MANIFEST_ARMORS											from	'utils/codex/items_manifest_armors.json';
@@ -164,6 +166,14 @@ export const RarityContextApp = ({children}) => {
 		const	rarityExtendedName = new Contract(process.env.RARITY_EXTENDED_NAME, EXTENDED_NAME_ABI);
 		const	rarityFeats = new Contract(process.env.RARITY_FEATS_ADDR, RARITY_FEATS_ABI);
 
+		const	adventureBoarsMushroom = new Contract(process.env.LOOT_MUSHROOM_ADDR, LOOT_ERC20_ABI);
+		const	adventureBoarsBerries = new Contract(process.env.LOOT_BERRIES_ADDR, LOOT_ERC20_ABI);
+		const	adventureBoarsWood = new Contract(process.env.LOOT_WOOD_ADDR, LOOT_ERC20_ABI);
+		const	adventureBoarsLeather = new Contract(process.env.LOOT_LEATHER_ADDR, LOOT_ERC20_ABI);
+		const	adventureBoarsMeat = new Contract(process.env.LOOT_MEAT_ADDR, LOOT_ERC20_ABI);
+		const	adventureBoarsTusks = new Contract(process.env.LOOT_TUSKS_ADDR, LOOT_ERC20_ABI);
+		const	rarityDungeonBoars = new Contract(process.env.DUNGEON_BOARS_ADDR, BOARS_ABI);
+
 		return [
 			rarity.ownerOf(tokenID),
 			rarity.summoner(tokenID),
@@ -176,6 +186,14 @@ export const RarityContextApp = ({children}) => {
 			rarityDungeonCellar.scout(tokenID),
 			rarityDungeonForest.getResearchBySummoner(tokenID),
 			rarityExtendedName.get_name(tokenID),
+			rarityDungeonBoars.actions_log(tokenID),
+			rarityDungeonBoars.simulate_kill(tokenID),
+			adventureBoarsMushroom.balanceOf(tokenID),
+			adventureBoarsBerries.balanceOf(tokenID),
+			adventureBoarsWood.balanceOf(tokenID),
+			adventureBoarsLeather.balanceOf(tokenID),
+			adventureBoarsMeat.balanceOf(tokenID),
+			adventureBoarsTusks.balanceOf(tokenID),
 		];
 	}
 
@@ -342,6 +360,7 @@ export const RarityContextApp = ({children}) => {
 			}
 		}
 
+		const	chunkSize = prepareAdventurer(0).length;
 		uniqueElements?.forEach((token) => {
 			preparedCalls.push(...prepareAdventurer(token.tokenID));
 			preparedExtraCalls.push(...prepareAdventurerExtra(token.tokenID));
@@ -350,7 +369,7 @@ export const RarityContextApp = ({children}) => {
 		});
 
 		const	callResults = await fetchAdventurer(preparedCalls);
-		const	chunkedCallResult = chunk(callResults, 11);
+		const	chunkedCallResult = chunk(callResults, chunkSize);
 		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(preparedInventoryCalls);
@@ -368,8 +387,9 @@ export const RarityContextApp = ({children}) => {
 	**	Prepare the rarity update from in-app update
 	**************************************************************************/
 	async function	updateRarity(tokenID) {
+		const	chunkSize = prepareAdventurer(0).length;
 		const	callResults = await fetchAdventurer(prepareAdventurer(tokenID));
-		const	chunkedCallResult = chunk(callResults, 11);
+		const	chunkedCallResult = chunk(callResults, chunkSize);
 		const	extraCallResults = await fetchAdventurerExtra(prepareAdventurerExtra(tokenID));
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(prepareAdventurerInventory(tokenID));
@@ -390,6 +410,7 @@ export const RarityContextApp = ({children}) => {
 		const	preparedInventoryCalls = [];
 		const	tokensIDs = [];
 
+		const	chunkSize = prepareAdventurer(0).length;
 		elements?.forEach((token) => {
 			preparedCalls.push(...prepareAdventurer(token));
 			preparedExtraCalls.push(...prepareAdventurerExtra(token));
@@ -398,7 +419,7 @@ export const RarityContextApp = ({children}) => {
 		});
 
 		const	callResults = await fetchAdventurer(preparedCalls);
-		const	chunkedCallResult = chunk(callResults, 9);
+		const	chunkedCallResult = chunk(callResults, chunkSize);
 		const	extraCallResults = await fetchAdventurerExtra(preparedExtraCalls);
 		const	chunkedExtraCallResult = chunk(extraCallResults, 1);
 		const	inventoryCallResult = await fetchAdventurerInventory(preparedInventoryCalls);
