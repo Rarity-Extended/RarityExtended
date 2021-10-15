@@ -9,7 +9,6 @@ import	React, {useState, useEffect}	from	'react';
 import	Link							from	'next/link';
 import	useWeb3							from	'contexts/useWeb3';
 import	ModalLogin						from	'components/ModalLogin';
-import	FlyoutMenu						from	'components/FlyoutMenu';
 import	AdventurerModalMenu				from	'components/AdventurerModalMenu';
 
 function	Navbar({router}) {
@@ -77,7 +76,6 @@ function	Navbar({router}) {
 						</span>
 					</span>
 				</div>
-				<FlyoutMenu />
 				<div className={'items-center justify-end flex-row border-black dark:border-dark-100 border-l-4 pl-6 ml-6 hidden md:flex'}>
 					{renderWalletButton()}
 				</div>
