@@ -39,7 +39,7 @@ function	DialogChoices({router, step, stepAuto, boarEscaped, adventurerWon, expe
 		return (
 			<DialogNoBox
 				options={[
-					{label: 'THE BIG UGLY RAT HAS ESCAPED', onClick: () => router.push('/town/quest?tab=the-cellar')},
+					{label: 'THE WILD BOAR HAS ESCAPED', onClick: () => router.push('/town/quest?tab=the-boars')},
 				]} />
 		);
 	}
@@ -48,14 +48,14 @@ function	DialogChoices({router, step, stepAuto, boarEscaped, adventurerWon, expe
 			return (
 				<DialogNoBox
 					options={[
-						{label: 'YOU HAVE DEFEATED THE RAT ! UNFORTUNATELY, THERE IS NOTHING TO RECOVER', onClick: () => router.push('/town/quest?tab=the-cellar')},
+						{label: 'YOU HAVE DEFEATED THE WILD BOAR ! UNFORTUNATELY, THERE IS NOTHING TO RECOVER', onClick: () => router.push('/town/quest?tab=the-boars')},
 					]} />
 			);
 		}
 		return (
 			<DialogNoBox
 				options={[
-					{label: `YOU HAVE DEFEATED THE RAT ! YOU CAN LOOT ${expectedLoot} SKIN${expectedLoot > 0 ? 's' : ''}`, onClick: loot},
+					{label: 'YOU HAVE DEFEATED THE WILD BOAR ! COLLECT YOUR LOOT!', onClick: loot},
 				]} />
 		);
 	}
@@ -64,7 +64,7 @@ function	DialogChoices({router, step, stepAuto, boarEscaped, adventurerWon, expe
 			options={[
 				{label: 'FIGHT', onClick: step},
 				{label: 'FIGHT (AUTO)', onClick: stepAuto},
-				{label: 'ESCAPE', onClick: () => router.push('/town/quest?tab=the-cellar')},
+				{label: 'ESCAPE', onClick: () => router.push('/town/quest?tab=the-boars')},
 			]} />
 	);
 }
@@ -80,7 +80,6 @@ function	Index({dungeon, adventurer, router}) {
 	const	[adventurerWon, set_adventurerWon] = useState(false);
 	const	[adventurerHealth, set_adventurerHealth] = useState(dungeon.adventurerHealth);
 	const	[dungeonHealth, set_dungeonHealth] = useState(dungeon.dungeonHealth);
-	const	[logs, set_logs] = useState([]);
 
 	useEffect(() => {
 		set_adventurerHealth(dungeon.adventurerHealth);
@@ -95,24 +94,19 @@ function	Index({dungeon, adventurer, router}) {
 			set_dungeonHealth(h => h -= dungeon.adventurerDamage);
 			_dungeonHealth -= dungeon.adventurerDamage;
 			if (_dungeonHealth <= 0) {
-				set_logs(l => [...l, 'Facu will be happy, you killed this Ugly rat!']);
 				set_adventurerWon(true);
 				return true;
 			}
-			set_logs(l => [...l, `Your adventurer attacks the Angry Boar and deals ${dungeon.adventurerDamage} dmg.`]);
 			await sleep(0);
 			if (dungeon.adventurerArmor < dungeon.dungeonToHit) {
 				set_adventurerHealth(h => h -= dungeon.dungeonDamage);
 				_adventurerHealth -= dungeon.dungeonDamage;
 				if (_adventurerHealth <= 0) {
-					set_logs(l => [...l, 'Your adventurer fades out']);
 					return false;
 				}
 			}
-			set_logs(l => [...l, `The Angry Boar attacks your adventurer and deals ${dungeon.dungeonDamage} dmg.`]);
 			await sleep(0);
 		}
-		set_logs(l => [...l, 'The Angry Boar escaped']);
 		set_boarEscaped(true);
 	}
 	async function	step() {
@@ -123,28 +117,23 @@ function	Index({dungeon, adventurer, router}) {
 		let	_adventurerHealth = adventurerHealth;
 		let	_dungeonHealth = dungeonHealth;
 		if (fightStep === STEP_LIMIT) {
-			set_logs(l => [...l, 'The Angry Boar escaped']);
 			set_boarEscaped(true);
 			return;
 		}
 		set_dungeonHealth(h => h -= dungeon.adventurerDamage);
 		_dungeonHealth -= dungeon.adventurerDamage;
 		if (_dungeonHealth <= 0) {
-			set_logs(l => [...l, 'Facu will be happy, you killed this Ugly rat!']);
 			set_adventurerWon(true);
 			return true;
 		}
-		set_logs(l => [...l, `Your adventurer attacks the Angry Boar and deals ${dungeon.adventurerDamage} dmg.`]);
 		await sleep(450);
 		if (dungeon.adventurerArmor < dungeon.dungeonToHit) {
 			set_adventurerHealth(h => h -= dungeon.dungeonDamage);
 			_adventurerHealth -= dungeon.dungeonDamage;
 			if (_adventurerHealth <= 0) {
-				set_logs(l => [...l, 'Your adventurer fades out']);
 				return false;
 			}
 		}
-		set_logs(l => [...l, `The Angry Boar attacks your adventurer and deals ${dungeon.dungeonDamage} dmg.`]);
 		await sleep(450);
 		set_fightStep(f => f + 1);
 	}
@@ -154,7 +143,7 @@ function	Index({dungeon, adventurer, router}) {
 			<div className={`absolute bg-black inset-0 z-10 -top-24 -left-4 -right-4 flex flex-col items-center min-h-screen transition-opacity duration-1000 ${adventurerHealth <= 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
 				<p className={'text-2xl text-white pt-20 mx-4 md:mx-0 md:pt-64 max-w-screen-sm text-center'}>{'you passed out'}</p>
 				<p className={'text-base text-white pt-8 mx-4 md:mx-0 max-w-screen-sm text-center'}>{'After some time, the rat returns to his hole and Facu the tavernkeeper, worried, finds you lying on the floor'}</p>
-				<Link href={'/town/quest?tab=the-cellar'}>
+				<Link href={'/town/quest?tab=the-boars'}>
 					<div className={'text-base text-white mt-16 mx-4 md:mx-0 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 border-white hover:bg-white hover:text-black transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
 						{'Rest weak adventurer, Rest...'}
 					</div>
@@ -243,18 +232,13 @@ function	Index({dungeon, adventurer, router}) {
 										return console.error(error);
 									}
 									updateRarity(dungeon.tokenID);
-									// if (router.pathname === '/dungeons/the-cellar')	
-									// 	router.push('/town/quest?tab=the-cellar');
+									if (router.pathname === '/dungeons/the-boars')	
+										router.push('/town/quest?tab=the-boars');
 								});
 							}}
 						/>
 					</div>
 				</Box>
-				<div className={'max-w-screen-md w-full mx-auto'}>
-					<div className={'space-y-4 text-center'}>
-						{/* {logs.map((log, i) => <p key={i} className={'text-sx'}>{log}</p>)} */}
-					</div>
-				</div>
 			</div>
 		</section>
 	);
