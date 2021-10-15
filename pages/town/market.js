@@ -12,7 +12,7 @@ import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
 import	Box								from	'components/Box';
 import 	Townwidget 						from 	'components/TownWidget';
-import { TOWN } 						from 	'utils';
+import {TOWN} 						from 	'utils';
 
 function	FacuHeadline() {
 	const	[facuTextIndex, set_facuTextIndex] = useState(0);

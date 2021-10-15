@@ -87,4 +87,4 @@ export const TOWN = {
 		text: 'Hustle and bustle!',
 		href: '/town/guild-house'
 	},
-}
+};

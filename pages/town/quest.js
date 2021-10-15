@@ -17,7 +17,7 @@ import	SectionDungeonTheForest			from	'sections/SectionDungeonTheForest';
 import	Box								from	'components/Box';
 import	CLASSES							from	'utils/codex/classes';
 import 	Townwidget 						from 	'components/TownWidget';
-import { TOWN } 						from 	'utils';
+import {TOWN} 						from 	'utils';
 
 function	DialogChoices({router, adventurersCount}) {
 	const	[selectedOption, set_selectedOption] = useState(0);

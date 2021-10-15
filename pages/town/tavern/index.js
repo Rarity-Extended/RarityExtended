@@ -21,7 +21,7 @@ import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
 import	TAVERN_NEWS						from	'utils/codex/tavernNews.json';
 import	CLASSES							from	'utils/codex/classes';
 import Townwidget from 'components/TownWidget';
-import { TOWN } from 'utils';
+import {TOWN} from 'utils';
 
 dayjs.extend(relativeTime);
 

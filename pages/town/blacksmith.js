@@ -23,7 +23,7 @@ import	RARITY_GOLD_ABI						from	'utils/abi/rarityGold.abi';
 import	THE_CELLAR_ABI						from	'utils/abi/dungeonTheCellar.abi';
 import	{approveERC20}						from	'utils/actions';
 import 	Townwidget 							from 	'components/TownWidget';
-import 	{ TOWN } 							from 	'utils';
+import 	{TOWN} 							from 	'utils';
 
 
 async function newEthCallProvider(provider, devMode) {
