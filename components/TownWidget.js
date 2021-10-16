@@ -6,22 +6,19 @@
 ******************************************************************************/
 
 import  React       from    'react';
-import  Box         from    './Box';
 import  Link        from    'next/link';
-import  Image       from    'next/image';
+import	{useRouter}	from	'next/router';
+import {TOWN} from 'utils';
 
-function Townwidget({location}) {
+function Townwidget() {
+	const	router = useRouter();
+	if (router.pathname === '/') {
+		return null;
+	}
 	return (
-		<Box className={'flex items-center p-6 hover:bg-gray-principal dark:hover:bg-dark-400'}>
-			<div className={'w-22 h-22 rounded-lg flex justify-center items-center mr-4'}>
-				<Image
-					src={location.icon}
-					loading={'eager'}
-					width={80}
-					height={80} />
-			</div>
+		<div className={'flex items-center w-full justify-center'}>
 			<div>
-				<div className={'mb-2 cursor-pointer'}>
+				<div className={'mb-2 cursor-pointer text-center'}>
 					<Link href={'/'}>
 						<p className={'text-xxs opacity-60'}>
 							{'< back to town hall'}
@@ -29,13 +26,13 @@ function Townwidget({location}) {
 					</Link>
 				</div>
 				<div>
-					{'YOU ARE NOW IN THE '}
+					{'YOU ARE VISITING THE '}
 					<span className={'text-tag-info'}>
-						{location.label}
+						{Object.values(TOWN).find(town => town.href === router.pathname)?.label}
 					</span>
 				</div>
 			</div>
-		</Box>
+		</div>
 	);
 }
 

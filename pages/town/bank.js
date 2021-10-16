@@ -13,9 +13,8 @@ import	useWeb3							from	'contexts/useWeb3';
 import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
 import	Box								from	'components/Box';
-import	{fetcher, TOWN}					from	'utils';
+import	{fetcher}						from	'utils';
 import	{apeInVault, apeOutVault, depositInVault, withdrawFromVault}					from	'utils/actions';
-import 	Townwidget 						from 	'components/TownWidget';
 
 function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError, isDeposit}) {
 	const	[nonce, set_nonce] = useState(0);
@@ -455,7 +454,6 @@ function	Index() {
 	return (
 		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<Townwidget location={TOWN.bank} />
 				<div className={'flex flex-col md:flex-row items-center mb-8 md:mb-8'}>
 					<div className={'w-auto md:w-64 mr-0 md:mr-8'} style={{minWidth: 256}}>
 						<Image

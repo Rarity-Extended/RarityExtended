@@ -11,8 +11,6 @@ import	useUI							from	'contexts/useUI';
 import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
 import	Box								from	'components/Box';
-import 	Townwidget 						from 	'components/TownWidget';
-import {TOWN} 						from 	'utils';
 
 function	FacuHeadline() {
 	const	[facuTextIndex, set_facuTextIndex] = useState(0);
@@ -45,7 +43,6 @@ function	Index({router}) {
 	return (
 		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<Townwidget location={TOWN.market} />
 				<div className={'flex flex-col md:flex-row items-center mb-8 md:mb-8'}>
 					<div className={'w-auto md:w-64 mr-0 md:mr-8'} style={{minWidth: 256}}>
 						<Image

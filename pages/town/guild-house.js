@@ -17,10 +17,9 @@ import	DialogBox						from	'components/DialogBox';
 import	Box								from	'components/Box';
 import	Adventurer						from	'components/Adventurer';
 import	CLASSES							from	'utils/codex/classes';
-import	{chunk, TOWN}					from	'utils';
+import	{chunk}							from	'utils';
 import	{xpRequired}					from	'utils/libs/rarity';
 import	{careOfAll, careAdventure, careCellar, careLevelup, careGold}		from	'utils/actions/daycare';
-import Townwidget 						from 	'components/TownWidget';
 
 dayjs.extend(relativeTime);
 
@@ -189,7 +188,6 @@ function	Index({rarities}) {
 	return (
 		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<Townwidget location={TOWN.guildHouse} />
 				<div className={'flex flex-col md:flex-row items-center mb-8 md:mb-8'}>
 					<div className={'w-auto md:w-64 mr-0 md:mr-8'} style={{minWidth: 256}}>
 						<Image
