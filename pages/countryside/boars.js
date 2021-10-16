@@ -33,7 +33,7 @@ function	Tooltip({children}) {
 	);
 }
 
-function	NCPHeadline({population, chainTime}) {
+function	NCPHeadline({population, choice, chainTime, loot}) {
 	const	renderNCPText = () => {
 		if (Number(population.count) === 0) {
 			return (
@@ -70,6 +70,65 @@ function	NCPHeadline({population, chainTime}) {
 				</>
 			);
 		}
+
+		if (choice === 'kill') {
+			return (
+				<>
+					{'The farmer directed you to the place he saw the boar.'}
+					<div className={'my-4'} />
+
+					{'You are in a big glade, hemmed all around by tall trees, except for a narrow trail leading in, obviously the trail the farmer came in by. There are ruts in the trail, traces of wheels and cart tracks. A patch of dry brown grass, trampled flat in some places, is growing here. There are small bushes, some of which have been bent almost flat to the ground.'}
+					<div className={'my-4'} />
+
+					{'In the center of it, the boar. The boar is angry. It is angry because the forest is angry. It is angry because it must prove its strength.'}
+					<div className={'my-4'} />
+
+					{'Judging by its size, you can expect to collect up to '}
+					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						{`${loot} loots.`}
+						<Tooltip>
+							<p className={'text-sm leading-normal inline'}>{'Loot can be '}</p>
+							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Meat'}</p>
+							<p className={'text-sm leading-normal inline'}>{', '}</p>
+							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Tusks'}</p>
+							<p className={'text-sm leading-normal inline'}>{' or '}</p>
+							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Leather'}</p>
+							<p className={'text-sm leading-normal inline'}>{'. Distribution between these 3 is random.'}</p>
+						</Tooltip>
+					</span>
+
+				</>
+			);
+		}
+
+		if (choice === 'protect') {
+			return (
+				<>
+					{'You take the direction of the forest to find these wild animals.'}
+					<div className={'my-4'} />
+
+					{'You are in a big glade, hemmed all around by tall trees, except for a narrow trail leading in, obviously the trail the farmer came in by. There are ruts in the trail, traces of wheels and cart tracks. A patch of dry brown grass, trampled flat in some places, is growing here. There are small bushes, some of which have been bent almost flat to the ground. There are many piles of wood in the clearing and the air is filled with scents of animals and plants. Some you can identify easily, while some you can\'t.'}
+					<div className={'my-4'} />
+
+					{'While searching for the boars, you could stop to gather some berries, mushroom or wood. You could get up to '}
+					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						{`${loot} loots.`}
+						<Tooltip>
+							<p className={'text-sm leading-normal inline'}>{'Loot can be '}</p>
+							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Berries'}</p>
+							<p className={'text-sm leading-normal inline'}>{', '}</p>
+							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Mushrooms'}</p>
+							<p className={'text-sm leading-normal inline'}>{' or '}</p>
+							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Woods'}</p>
+							<p className={'text-sm leading-normal inline'}>{'. Distribution between these 3 is random.'}</p>
+						</Tooltip>
+					</span>
+
+				</>
+			);
+		}
+
+
 		return (
 			<>
 				{'You are walking near a large forest. The air fills with the scent of sap, leaves, and decaying leaves. The sun dips below the mountains, revealing the speckled green of forest floor, the slender trunks of stunted trees, the bird nests in the tops of branches.'}
@@ -160,7 +219,7 @@ function	NCPHeadline({population, chainTime}) {
 	);
 }
 
-function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, provider, updateRarity, remainingBoars, chainTime}) {
+function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, provider, updateRarity, remainingBoars, chainTime, choice, onChoice}) {
 	if (Number(remainingBoars) === 0) {
 		return (
 			<DialogNoBox
@@ -190,18 +249,75 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, pr
 				]} />
 		);
 	}
+	if (choice === 'kill') {
+		return (
+			<DialogNoBox
+				options={[
+					{
+						label: (
+							<>
+								{'FIGHT THE BOAR WITH '}
+								<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
+								{'.'}
+							</>
+						),
+						onClick: () => router.push(`/dungeons/the-boar-fight?adventurer=${currentAdventurer.tokenID}`)
+					},
+					{
+						label: 'NEVERMIND, GO BACK TO THE EDGE OF THE FOREST.',
+						onClick: () => onChoice(''),
+					}
+				]} />
+		);
+	}
+
+	if (choice === 'protect') {
+		return (
+			<DialogNoBox
+				options={[
+					{
+						label: (
+							<>
+								{'SPEND SOME TIME GATHERING RESOURCES WITH '}
+								<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
+								{'.'}
+							</>
+						),
+						onClick: () => {
+							protectBoars({
+								provider,
+								tokenID: currentAdventurer?.tokenID,
+							}, ({error, wait}) => {
+								if (wait) {
+									return;	
+								}
+								if (error) {
+									return console.error(error);
+								}
+								updateRarity(currentAdventurer.tokenID);
+							});
+						}
+					},
+					{
+						label: 'NEVERMIND, GO BACK TO THE EDGE OF THE FOREST.',
+						onClick: () => onChoice(''),
+					}
+				]} />
+		);
+	}
+
 	return (
 		<DialogNoBox
 			options={[
 				{
 					label: (
 						<>
-							{'KILL THE BOAR TO HELP THE HUMBLE FARMER WITH '}
+							{'HUNT THE BOAR TO HELP THE HUMBLE FARMER WITH '}
 							<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
 							{'.'}
 						</>
 					),
-					onClick: () => router.push(`/dungeons/the-boar-fight?adventurer=${currentAdventurer.tokenID}`)
+					onClick: () => onChoice('kill'),
 				},
 				{
 					label: (
@@ -211,20 +327,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, pr
 							{'.'}
 						</>
 					),
-					onClick: () => {
-						protectBoars({
-							provider,
-							tokenID: currentAdventurer?.tokenID,
-						}, ({error, wait}) => {
-							if (wait) {
-								return;	
-							}
-							if (error) {
-								return console.error(error);
-							}
-							updateRarity(currentAdventurer.tokenID);
-						});
-					}
+					onClick: () => onChoice('protect'),
 				},
 				{label: 'SELECT ANOTHER ADVENTURER', onClick: () => openCurrentAventurerModal()},
 				{label: 'NO, JUST HEAD BACK TO TOWN', onClick: () => router.back()},
@@ -234,13 +337,14 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, pr
 
 function	Index({router}) {
 	const	[population, set_population] = useState({count: -1, extinction: 0, extinctionBy: 0});
+	const	[choice, set_choice] = useState('');
 	const	{currentAdventurer, openCurrentAventurerModal, updateRarity} = useRarity();
 	const	{provider, chainID, chainTime} = useWeb3();
 
 	async function	fetchBoarsData(calls) {
 		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
 		const	multicallResult = await ethcallProvider.all(calls);
-		const	[boar_population, extinction, extinctionBy] = multicallResult;
+		const	[boar_population, extinction, extinctionBy, simulate_reproduce, simulate_kill] = multicallResult;
 		let		extinctionByName = '';
 
 		if (extinctionBy > 0) {
@@ -251,7 +355,7 @@ function	Index({router}) {
 			);
 			extinctionByName = await nameContract.get_name(extinctionBy);
 		}
-		set_population({count: boar_population, extinction: extinction, extinctionBy: extinctionByName || extinctionBy});
+		set_population({count: boar_population, extinction: extinction, extinctionBy: extinctionByName || extinctionBy, lootReproduce: Number(simulate_reproduce || 0), lootKill: Number(simulate_kill || 0)});
 	}
 
 	useEffect(() => {
@@ -260,8 +364,10 @@ function	Index({router}) {
 			contract.boar_population(),
 			contract.extinction(),
 			contract.extinctionBy(),
+			currentAdventurer?.tokenID ? contract.simulate_reproduce(currentAdventurer?.tokenID) : null,
+			currentAdventurer?.tokenID ? contract.simulate_kill(currentAdventurer?.tokenID) : null,
 		]);
-	}, [chainTime]);
+	}, [chainTime, currentAdventurer.tokenID]);
 
 	return (
 		<section>
@@ -279,7 +385,12 @@ function	Index({router}) {
 								height={400} />
 						</div>
 					</div>
-					<NCPHeadline population={population} chainTime={chainTime} />
+					<NCPHeadline
+						population={population}
+						chainTime={chainTime}
+						choice={choice}
+						loot={choice === 'kill' ? population.lootKill : population.lootReproduce}
+					/>
 					<div className={'pt-2 mt-4 border-t-2 border-black dark:border-dark-100 font-story font-bold text-base uppercase'}>
 						<DialogChoices
 							router={router}
@@ -289,6 +400,8 @@ function	Index({router}) {
 							provider={provider}
 							updateRarity={updateRarity}
 							chainTime={chainTime}
+							choice={choice}
+							onChoice={set_choice}
 						/>
 					</div>
 				</Box>
