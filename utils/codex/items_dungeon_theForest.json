@@ -852,8 +852,8 @@
 			"id": 21,
 			"change": 1
 		}]
-	}
-		"Foreign Armor": {
+	},
+	"Foreign Armor": {
 		"name": "Foreign Armor",
 		"description": "Made of foreign metal, by foreign hands.",
 		"img": "",
