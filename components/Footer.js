@@ -14,7 +14,7 @@ import TownNav from './TownNav';
 
 function	Footer() {
 	const	{theme, switchTheme} = useUI();
-	const	[open, set_open] = useState(true);
+	const	[open, set_open] = useState(false);
 	const	router = useRouter();
 
 	useEffect(() => {

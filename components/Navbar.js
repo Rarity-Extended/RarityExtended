@@ -51,10 +51,10 @@ function	Navbar() {
 						<p className={'block md:hidden'}>{'RE'}</p>
 					</Link>
 					<Link href={'/'}>
-						<>
+						<div>
 							<p className={'hidden md:block cursor-pointer'}>{'Rarity'}</p>
 							<p className={'hidden md:block cursor-pointer'}>{'Extended'}</p>
-						</>
+						</div>
 					</Link>
 				</div>
 				<div className={'items-center justify-end flex-row flex md:hidden w-full'}>
@@ -66,7 +66,7 @@ function	Navbar() {
 			</div>
 
 			<div className={'items-center justify-start md:justify-end flex flex-row w-3/12 mt-3 md:mt-0'}>
-				<div className={'items-center justify-end flex-row border-black dark:border-dark-100 border-l-4 pl-6 ml-6 hidden md:flex'}>
+				<div className={'items-center justify-end flex-row pl-6 ml-6 hidden md:flex'}>
 					{renderWalletButton()}
 				</div>
 			</div>
