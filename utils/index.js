@@ -49,3 +49,61 @@ export function	formatValue(value, decimals = 2) {
 export const chunk = (arr, size) => arr.reduce((acc, e, i) => (i % size ? acc[acc.length - 1].push(e) : acc.push([e]), acc), []);
 
 export const fetcher = (...args) => fetch(...args).then(res => res.json());
+
+
+export const TOWN = {
+	'tavern': {
+		label: 'Tavern',
+		icon: '/menu/tavern.png',
+		text: 'Best place to get some news!',
+		href: '/town/tavern'
+	},
+	'blacksmith': {
+		label: 'Blacksmith',
+		icon: '/menu/blacksmith.png',
+		text: 'Come and craft mighty armors!',
+		href: '/town/blacksmith'
+	},
+	'quest': {
+		label: 'Quest Office',
+		icon: '/menu/quest.png',
+		text: 'Find an adventure worth your time',
+		href: '/town/quest'
+	},
+	'market': {
+		label: 'Market',
+		icon: '/menu/market.png',
+		text: 'Spend all your gold!',
+		href: '/town/market'
+	},
+	'bank': {
+		label: 'Bank',
+		icon: '/menu/banker.png',
+		text: 'Earn some yield on your Tokens',
+		href: '/town/bank'
+	},
+	'guildHouse': {
+		label: 'Guild House',
+		icon: '/menu/guild house.png',
+		text: 'Care for all your party',
+		href: '/town/guild-house'
+	},
+	'apothecary': {
+		label: 'Apothecary',
+		icon: '/menu/apothecary.png',
+		text: 'Craft potions, remedies and poisons',
+		href: '/town/apothecary'
+	},
+	'cook': {
+		label: 'Cook',
+		icon: '/menu/cook.png',
+		text: 'Become a Chef',
+		href: '/town/cook'
+	},
+	'storage': {
+		label: 'Storage',
+		icon: '/menu/storage.png',
+		text: 'Store some extra items',
+		href: '/town/storage'
+	},
+};
