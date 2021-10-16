@@ -248,6 +248,7 @@ export const RarityContextApp = ({children}) => {
 				class: Number(adventurer['_class']),
 				level: Number(adventurer['_level']),
 				log: Number(adventurer['_log']),
+				logCanAdventure: dayjs(new Date(Number(adventurer['_log']) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
 				gold: {
 					balance: ethers.utils.formatEther(balanceOfGold),
 					claimable: claimableGold ? ethers.utils.formatEther(claimableGold) : '0'

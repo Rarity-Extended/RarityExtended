@@ -12,7 +12,7 @@ import	Box			from	'components/Box';
 function	Adventurer({rarityClass, adventurer, onClick, children, noHover}) {
 	return (
 		<Box
-			className={`w-full p-4 flex justify-center items-center flex-col ${noHover ? '' : 'group hover:bg-gray-principal dark:hover:bg-dark-100 cursor-pointer'} transition-colors relative mb-4 md:mb-0`}
+			className={`w-full p-4 flex justify-center items-center flex-col ${noHover ? '' : 'group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer'} transition-colors relative mb-4 md:mb-0`}
 			onClick={onClick}>
 			<Image
 				src={rarityClass.img}
