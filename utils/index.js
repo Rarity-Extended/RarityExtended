@@ -69,12 +69,12 @@ export const TOWN = {
 		text: 'Find an adventure worth your time',
 		href: '/town/quest'
 	},
-	'market': {
-		label: 'Market',
-		icon: '/menu/market.png',
-		text: 'Spend all your gold!',
-		href: '/town/market'
-	},
+	// 'market': {
+	// 	label: 'Market',
+	// 	icon: '/menu/market.png',
+	// 	text: 'Spend all your gold!',
+	// 	href: '/town/market'
+	// },
 	'bank': {
 		label: 'Bank',
 		icon: '/menu/banker.png',
@@ -87,18 +87,18 @@ export const TOWN = {
 		text: 'Care for all your party',
 		href: '/town/guild-house'
 	},
-	'apothecary': {
-		label: 'Apothecary',
-		icon: '/menu/apothecary.png',
-		text: 'Craft potions, remedies and poisons',
-		href: '/town/apothecary'
-	},
-	'cook': {
-		label: 'Cook',
-		icon: '/menu/cook.png',
-		text: 'Become a Chef',
-		href: '/town/cook'
-	},
+	// 'apothecary': {
+	// 	label: 'Apothecary',
+	// 	icon: '/menu/apothecary.png',
+	// 	text: 'Craft potions, remedies and poisons',
+	// 	href: '/town/apothecary'
+	// },
+	// 'cook': {
+	// 	label: 'Cook',
+	// 	icon: '/menu/cook.png',
+	// 	text: 'Become a Chef',
+	// 	href: '/town/cook'
+	// },
 	'storage': {
 		label: 'Storage',
 		icon: '/menu/storage.png',

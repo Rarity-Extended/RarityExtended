@@ -45,7 +45,7 @@ function	Navbar() {
 	}
 	return (
 		<nav className={'relative w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black dark:border-dark-100 mb-4 md:mb-4 pb-0 md:pb-4'}>
-			<div className={'items-center justify-start flex flex-row w-3/12 whitespace-normal md:whitespace-nowrap text-lg'}>
+			<div className={'items-center justify-start flex flex-row w-full md:w-3/12 whitespace-normal md:whitespace-nowrap text-lg'}>
 				<div className={'w-full'}>
 					<Link href={'/'}>
 						<p className={'block md:hidden'}>{'RE'}</p>
@@ -61,7 +61,7 @@ function	Navbar() {
 					{renderWalletButton()}
 				</div>
 			</div>
-			<div className={'items-center flex w-6/12 mt-3 md:mt-0'}>
+			<div className={'items-center flex w-full md:w-6/12 mt-3 md:mt-0'}>
 				<Townwidget />
 			</div>
 

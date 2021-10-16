@@ -38,7 +38,7 @@ function TownItem({location}) {
 
 function TownNav({start = 0, step = 6}) {
 	return (
-		<div className={'grid gap-4 grid-cols-2'}>
+		<div className={'grid gap-0 md:gap-4 grid-cols-1 md:grid-cols-2 font-title uppercase text-black dark:text-white'}>
 			{
 				Object.keys(TOWN)
 					.slice(start, start + step)

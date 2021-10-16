@@ -55,7 +55,7 @@ function	AdventurerList({favoritesAdventurers, set_favoritesAdventurers}) {
 
 	return (
 		<>
-			<h1 className={'text-black dark:text-white text-base mb-2'}>
+			<h1 className={'text-black dark:text-white text-base mb-2 text-center md:text-left'}>
 				{'CHOOSE ANOTHER ADVENTURER'}
 			</h1>
 
@@ -67,7 +67,7 @@ function	AdventurerList({favoritesAdventurers, set_favoritesAdventurers}) {
 						placeholder={'SEARCH'} />
 				</div>
 				<div className={'w-full'}>
-					<div className={'w-full flex flex-row'}>
+					<div className={'w-full hidden md:flex flex-row'}>
 						<div
 							onClick={() => set_classTab(0)}
 							className={`p-2 cursor-pointer text-black dark:text-white mr-4 ${classTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
@@ -186,7 +186,7 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 
 	return (
 		<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4 px-1 mb-24'}>
-			<div className={'w-full col-span-1'}>
+			<div className={'w-full col-span-4 md:col-span-1'}>
 				<Adventurer
 					onClick={() => router.push(`/adventurer/${currentAdventurer.tokenID}`)}
 					adventurer={currentAdventurer}
@@ -236,7 +236,7 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 					</div>
 				</div>
 			</div>
-			<div className={'w-full col-span-3'}>
+			<div className={'w-full col-span-4 md:col-span-3 mt-4 md:mt-0 hidden md:block'}>
 				<Box
 					style={{height: 328}}
 					className={'w-full flex flex-col relative'}>
@@ -247,14 +247,14 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 						<Chevron
 							width={12}
 							height={12}
-							onClick={() => set_page(page - 1)}
+							onClick={() => page !== 0 && set_page(page - 1)}
 							className={`mr-2 select-none ${page === 0 ? 'opacity-0' : 'cursor-pointer text-black dark:text-dark-100 dark:hover:text-white'}`} />
-						{`${page + 1}/2`}
+						{`${page + 1}/1`}
 						<Chevron
 							width={12}
 							height={12}
-							onClick={() => set_page(page + 1)}
-							className={`ml-2 select-none transform rotate-180 ${page === 1 ? 'opacity-0' : 'cursor-pointer text-black dark:text-dark-100 dark:hover:text-white'}`} />
+							onClick={() => page !== 0 && set_page(page + 1)}
+							className={`ml-2 select-none transform rotate-180 ${page === 0 ? 'opacity-0' : 'cursor-pointer text-black dark:text-dark-100 dark:hover:text-white'}`} />
 
 					</div>
 				</Box>

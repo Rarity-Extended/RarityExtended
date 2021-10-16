@@ -16,7 +16,7 @@ function	Index({router}) {
 	const	adventurer = Object.values(rarities).find(rarity => rarity.tokenID === router.query.tokenID);
 
 	return (
-		<section className={'mt-24 md:mt-12'}>
+		<section className={'mt-12'}>
 			<div className={'flex flex-col space-y-36 max-w-screen-lg w-full mx-auto'}>
 				<SectionCharacterSheet
 					key={adventurer.tokenID}

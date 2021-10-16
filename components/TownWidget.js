@@ -15,25 +15,28 @@ function Townwidget() {
 	if (router.pathname === '/') {
 		return null;
 	}
-	return (
-		<div className={'flex items-center w-full justify-center'}>
-			<div>
-				<div className={'mb-2 cursor-pointer text-center'}>
-					<Link href={'/'}>
-						<p className={'text-xxs opacity-60'}>
-							{'< back to town hall'}
-						</p>
-					</Link>
-				</div>
+	if (Object.values(TOWN).find(town => town.href === router.pathname)) {
+		return (
+			<div className={'flex items-center w-full justify-center mt-6 md:mt-0'}>
 				<div>
-					{'YOU ARE VISITING THE '}
-					<span className={'text-tag-info'}>
-						{Object.values(TOWN).find(town => town.href === router.pathname)?.label}
-					</span>
+					<div className={'mb-2 cursor-pointer text-center'}>
+						<Link href={'/'}>
+							<p className={'text-xxs opacity-60'}>
+								{'< back to town hall'}
+							</p>
+						</Link>
+					</div>
+					<div className={'text-xs md:text-base text-center leading-loose'}>
+						{'YOU ARE VISITING THE '}
+						<span className={'text-tag-info'}>
+							{Object.values(TOWN).find(town => town.href === router.pathname)?.label}
+						</span>
+					</div>
 				</div>
 			</div>
-		</div>
-	);
+		);
+	}
+	return null;
 }
 
 export default Townwidget;
