@@ -88,24 +88,13 @@ function	Footer() {
 	return (
 		<>
 			<div className={'absolute bottom-3 text-center text-xxs left-0 right-0 flex flex-col justify-center items-center'}>
-				<div>
-					<a href={'https://ftmscan.com/token/0xce761d788df608bd21bdd59d6f4b54b2e27f25bb#readContract'} target={'_blank'} rel={'noreferrer'} className={'hover:underline'}>
-						{'Rarity Manifested'}
-					</a>
-					{' - '}
-					<a href={'https://github.com/Rarity-Extended/RarityExtended'} target={'_blank'} rel={'noreferrer'} className={'hover:underline'}>
-						{'Source code'}
-					</a>
-					{' - '}
-					<a href={'https://andrecronje.medium.com/loot-rarity-d341faa4485c'} target={'_blank'} rel={'noreferrer'} className={'hover:underline'}>
-						{'Loot & Rarity'}
-					</a>
-				</div>
 				<div onClick={switchTheme} className={'py-2 hover:underline cursor-pointer'}>
 					{`Switch to ${theme === 'light' || theme === 'light-initial' ? 'dark' : 'light'} mode`}
 				</div>
 				<div>
-					{'Made with 💙 by the 🕹 community'}
+					<a href={'https://github.com/Rarity-Extended/RarityExtended'} target={'_blank'} rel={'noreferrer'} className={'hover:underline'}>
+						{'Made with 💙 by the 🕹 community'}
+					</a>
 				</div>
 			</div>
 			<div
@@ -114,18 +103,18 @@ function	Footer() {
 				<div className={'flex flex-row items-center justify-between text-lightGray text-base font-bold p-4 px-12'}>
 					<Link href={'/'}>
 						<p className={'cursor-pointer hover:text-tangerine-dark transition-colors'}>
-							<svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M10 2h4v4h-4V2zM7 7h10v2h-2v13h-2v-6h-2v6H9V9H7V7zm-2 4h2V9H5v2zm0 0v2H3v-2h2zm14 0h-2V9h2v2zm0 0h2v2h-2v-2z'} fill={'white'}/> </svg>
+							<svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M10 2h4v4h-4V2zM7 7h10v2h-2v13h-2v-6h-2v6H9V9H7V7zm-2 4h2V9H5v2zm0 0v2H3v-2h2zm14 0h-2V9h2v2zm0 0h2v2h-2v-2z'} fill={'currentcolor'}/> </svg>
 						</p>
 					</Link>
 					<div onClick={() => set_open(!open)}>
 						<p className={'cursor-pointer hover:text-tangerine-dark transition-colors'}>
-							<svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M14 2h-4v2H8v2H6v2H4v2H2v2h2v10h7v-6h2v6h7V12h2v-2h-2V8h-2V6h-2V4h-2V2zm0 2v2h2v2h2v2h2v2h-2v8h-3v-6H9v6H6v-8H4v-2h2V8h2V6h2V4h4z'} fill={'white'}/> </svg>
+							<svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M14 2h-4v2H8v2H6v2H4v2H2v2h2v10h7v-6h2v6h7V12h2v-2h-2V8h-2V6h-2V4h-2V2zm0 2v2h2v2h2v2h2v2h-2v8h-3v-6H9v6H6v-8H4v-2h2V8h2V6h2V4h4z'} fill={'currentcolor'}/> </svg>
 						</p>
 					</div>
 
 					<Link href={'/town/guild-house'}>
 						<p className={'cursor-pointer hover:text-tangerine-dark transition-colors'}>
-							<svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M9 2H5v2H3v2H1v6h2v2h2v2h2v2h2v2h2v2h2v-2h2v-2h2v-2h2v-2h2v-2h2V6h-2V4h-2V2h-4v2h-2v2h-2V4H9V2zm0 2v2h2v2h2V6h2V4h4v2h2v6h-2v2h-2v2h-2v2h-2v2h-2v-2H9v-2H7v-2H5v-2H3V6h2V4h4z'} fill={'white'}/> </svg>
+							<svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M9 2H5v2H3v2H1v6h2v2h2v2h2v2h2v2h2v2h2v-2h2v-2h2v-2h2v-2h2v-2h2V6h-2V4h-2V2h-4v2h-2v2h-2V4H9V2zm0 2v2h2v2h2V6h2V4h4v2h2v6h-2v2h-2v2h-2v2h-2v2h-2v-2H9v-2H7v-2H5v-2H3V6h2V4h4z'} fill={'currentcolor'}/> </svg>
 						</p>
 					</Link>
 				</div>
