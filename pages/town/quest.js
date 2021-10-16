@@ -16,6 +16,8 @@ import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
 import	SectionDungeonTheForest			from	'sections/SectionDungeonTheForest';
 import	Box								from	'components/Box';
 import	CLASSES							from	'utils/codex/classes';
+import 	Townwidget 						from 	'components/TownWidget';
+import {TOWN} 						from 	'utils';
 
 function	DialogChoices({router, adventurersCount}) {
 	const	[selectedOption, set_selectedOption] = useState(0);
@@ -307,6 +309,7 @@ function	Index({rarities, router}) {
 	return (
 		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
+				<Townwidget location={TOWN.quest} />
 				<div className={'flex flex-col md:flex-row items-center mb-8 md:mb-8'}>
 					<div className={'w-auto md:w-64 mr-0 md:mr-0'} style={{minWidth: 256}}>
 						<Image

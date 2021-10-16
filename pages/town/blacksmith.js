@@ -22,6 +22,8 @@ import	RARITY_ABI							from	'utils/abi/rarity.abi';
 import	RARITY_GOLD_ABI						from	'utils/abi/rarityGold.abi';
 import	THE_CELLAR_ABI						from	'utils/abi/dungeonTheCellar.abi';
 import	{approveERC20}						from	'utils/actions';
+import 	Townwidget 							from 	'components/TownWidget';
+import 	{TOWN} 							from 	'utils';
 
 
 async function newEthCallProvider(provider, devMode) {
@@ -570,6 +572,7 @@ function	Index({rarities, router}) {
 	return (
 		<section className={'max-w-full'}>
 			<div className={'max-w-screen-lg w-full mx-auto'}>
+				<Townwidget location={TOWN.blacksmith} />
 				<div className={'flex flex-col md:flex-row items-center mb-8 md:mb-8'}>
 					<div className={'w-auto md:w-64 mr-0 md:mr-8'} style={{minWidth: 256}}>
 						<Image

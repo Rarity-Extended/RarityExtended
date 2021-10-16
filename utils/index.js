@@ -50,7 +50,6 @@ export const chunk = (arr, size) => arr.reduce((acc, e, i) => (i % size ? acc[ac
 
 export const fetcher = (...args) => fetch(...args).then(res => res.json());
 
-
 export const TOWN = {
 	'tavern': {
 		label: 'Tavern',
