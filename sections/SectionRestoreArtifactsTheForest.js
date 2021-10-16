@@ -5,24 +5,17 @@
 **	@Filename:				SectionArtifactsTheForest.js
 ******************************************************************************/
 
-import	React, {useEffect, useState}	from	'react';
-import	Image							from	'next/image';
-import	useSWR							from	'swr';
-import	{Provider, Contract}			from	'ethcall';
-import	{ethers}						from	'ethers';
-import	useWeb3							from	'contexts/useWeb3';
-import	useRarity						from	'contexts/useRarity';
-import	{toAddress, fetcher}			from	'utils';
-import	{restoreTreasureTheForest}		from	'utils/actions';
-import	CLASSES							from	'utils/codex/classes';
-import	THE_FOREST_LOOT					from	'utils/codex/items_dungeon_theForest.json';
-import	THE_FORESTV1_ABI				from	'utils/abi/dungeonTheForestV1.abi';
-
-async function newEthCallProvider(provider) {
-	const	ethcallProvider = new Provider();
-	await	ethcallProvider.init(provider);
-	return	ethcallProvider;
-}
+import	React, {useEffect, useState}				from	'react';
+import	Image										from	'next/image';
+import	useSWR										from	'swr';
+import	{Contract}									from	'ethcall';
+import	useWeb3										from	'contexts/useWeb3';
+import	useRarity									from	'contexts/useRarity';
+import	{toAddress, fetcher, newEthCallProvider}	from	'utils';
+import	{restoreTreasureTheForest}					from	'utils/actions';
+import	CLASSES										from	'utils/codex/classes';
+import	THE_FOREST_LOOT								from	'utils/codex/items_dungeon_theForest.json';
+import	THE_FORESTV1_ABI							from	'utils/abi/dungeonTheForestV1.abi';
 
 function	Artifact({img, name, level, magic, onClick}) {
 	return (
@@ -68,16 +61,9 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, adventurersCount
 	**	Fetch the data from the prepared multicall to get most of the data
 	**************************************************************************/
 	async function	fetchV1Artifacts(calls) {
-		if (Number(chainID) === 1337) {
-			const	ethcallProvider = await newEthCallProvider(new ethers.providers.JsonRpcProvider('http://localhost:8545'));
-			ethcallProvider.multicallAddress = '0xc04d660976c923ddba750341fe5923e47900cf24';
-			const	callResult = await ethcallProvider.all(calls);
-			return (callResult);
-		} else {
-			const	ethcallProvider = await newEthCallProvider(provider);
-			const	callResult = await ethcallProvider.all(calls);
-			return (callResult);
-		}
+		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
+		const	callResult = await ethcallProvider.all(calls);
+		return (callResult);
 	}
 
 	async function	prepareArtifacts(artifacts) {

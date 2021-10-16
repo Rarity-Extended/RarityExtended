@@ -6,6 +6,7 @@
 ******************************************************************************/
 
 import	{ethers}						from	'ethers';
+import	{Provider}						from	'ethcall';
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
 
@@ -49,3 +50,19 @@ export function	formatValue(value, decimals = 2) {
 export const chunk = (arr, size) => arr.reduce((acc, e, i) => (i % size ? acc[acc.length - 1].push(e) : acc.push([e]), acc), []);
 
 export const fetcher = (...args) => fetch(...args).then(res => res.json());
+
+export function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+export async function newEthCallProvider(provider, devMode) {
+	const	ethcallProvider = new Provider();
+	if (devMode) {
+		await	ethcallProvider.init(new ethers.providers.JsonRpcProvider('http://localhost:8545'));
+		ethcallProvider.multicallAddress = '0xc04d660976c923ddba750341fe5923e47900cf24';
+		return ethcallProvider;
+	}
+	await	ethcallProvider.init(provider);
+	return	ethcallProvider;
+}

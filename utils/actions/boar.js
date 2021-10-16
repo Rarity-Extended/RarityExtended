@@ -35,7 +35,7 @@ export async function	killBoar({provider, tokenID}, callback) {
 	**	If the call is successful, try to perform the actual TX
 	**********************************************************************/
 	try {
-		const	transaction = await rarity.kill(tokenID);
+		const	transaction = await rarity.kill(tokenID, {gasLimit: 300_000});
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
@@ -80,7 +80,7 @@ export async function	protectBoars({provider, tokenID}, callback) {
 	**	If the call is successful, try to perform the actual TX
 	**********************************************************************/
 	try {
-		const	transaction = await rarity.reproduce(tokenID);
+		const	transaction = await rarity.reproduce(tokenID, {gasLimit: 300_000});
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});

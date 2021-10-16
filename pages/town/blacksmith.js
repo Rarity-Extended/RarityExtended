@@ -7,7 +7,7 @@
 
 import	React, {useState, useEffect}		from	'react';
 import	{ethers}							from	'ethers';
-import	{Provider, Contract}				from	'ethcall';
+import	{Contract}							from	'ethcall';
 import	Image								from	'next/image';
 import	Typer								from	'components/Typer';
 import	DialogBox							from	'components/DialogBox';
@@ -18,22 +18,11 @@ import	useRarity							from	'contexts/useRarity';
 import	SectionArtifactsTheForest			from	'sections/SectionArtifactsTheForest';
 import	SectionRestoreArtifactsTheForest	from	'sections/SectionRestoreArtifactsTheForest';
 import	SectionCrafting						from	'sections/SectionCrafting';
+import	{newEthCallProvider}				from	'utils';
 import	RARITY_ABI							from	'utils/abi/rarity.abi';
 import	RARITY_GOLD_ABI						from	'utils/abi/rarityGold.abi';
 import	THE_CELLAR_ABI						from	'utils/abi/dungeonTheCellar.abi';
 import	{approveERC20}						from	'utils/actions';
-
-
-async function newEthCallProvider(provider, devMode) {
-	const	ethcallProvider = new Provider();
-	if (devMode) {
-		await	ethcallProvider.init(new ethers.providers.JsonRpcProvider('http://localhost:8545'));
-		ethcallProvider.multicallAddress = '0xc04d660976c923ddba750341fe5923e47900cf24';
-		return ethcallProvider;
-	}
-	await	ethcallProvider.init(provider);
-	return	ethcallProvider;
-}
 
 function	DialogChoices({router, adventurersCount, set_category, approveStatus, adventurerCanCraft, adventurerHasXp, approveGold, approveCraftingMaterials, openModalSkills}) {
 	const	[selectedOption, set_selectedOption] = useState(0);

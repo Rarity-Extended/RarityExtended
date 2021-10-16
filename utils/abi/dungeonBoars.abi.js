@@ -2,7 +2,7 @@
 **	@Author:				Rarity Extended
 **	@Twitter:				@RXtended
 **	@Date:					Wednesday September 15th 2021
-**	@Filename:				dungeonTheForest.abi.js
+**	@Filename:				dungeonBoars.abi.js
 ******************************************************************************/
 
 const	ABI = [
@@ -142,20 +142,44 @@ const	ABI = [
 			{
 				'indexed': false,
 				'internalType': 'uint256',
-				'name': 'reward_qty',
+				'name': 'reward_qty_one',
 				'type': 'uint256'
+			},
+			{
+				'indexed': false,
+				'internalType': 'enum boarAdventure.RewardReproduce',
+				'name': 'RewardTypeOne',
+				'type': 'uint8'
+			},
+			{
+				'indexed': false,
+				'internalType': 'uint256',
+				'name': 'reward_qty_two',
+				'type': 'uint256'
+			},
+			{
+				'indexed': false,
+				'internalType': 'enum boarAdventure.RewardReproduce',
+				'name': 'RewardTypeTwo',
+				'type': 'uint8'
+			},
+			{
+				'indexed': false,
+				'internalType': 'uint256',
+				'name': 'reward_qty_three',
+				'type': 'uint256'
+			},
+			{
+				'indexed': false,
+				'internalType': 'enum boarAdventure.RewardReproduce',
+				'name': 'RewardTypeThree',
+				'type': 'uint8'
 			},
 			{
 				'indexed': false,
 				'internalType': 'uint256',
 				'name': 'litter',
 				'type': 'uint256'
-			},
-			{
-				'indexed': false,
-				'internalType': 'enum boarAdventure.RewardReproduce',
-				'name': 'RewardType',
-				'type': 'uint8'
 			}
 		],
 		'name': 'Reproduced',
@@ -214,30 +238,6 @@ const	ABI = [
 			}
 		],
 		'stateMutability': 'view',
-		'type': 'function'
-	},
-	{
-		'inputs': [
-			{
-				'internalType': 'uint256',
-				'name': '_perc',
-				'type': 'uint256'
-			},
-			{
-				'internalType': 'uint256',
-				'name': '_total',
-				'type': 'uint256'
-			}
-		],
-		'name': 'apply_percentage',
-		'outputs': [
-			{
-				'internalType': 'uint256',
-				'name': '',
-				'type': 'uint256'
-			}
-		],
-		'stateMutability': 'pure',
 		'type': 'function'
 	},
 	{
@@ -357,6 +357,16 @@ const	ABI = [
 				'internalType': 'uint256',
 				'name': 'reward',
 				'type': 'uint256'
+			},
+			{
+				'internalType': 'uint256',
+				'name': 'pop',
+				'type': 'uint256'
+			},
+			{
+				'internalType': 'uint256',
+				'name': 'expected',
+				'type': 'uint256'
 			}
 		],
 		'name': 'boost_reward_for_kill',
@@ -367,7 +377,7 @@ const	ABI = [
 				'type': 'uint256'
 			}
 		],
-		'stateMutability': 'view',
+		'stateMutability': 'pure',
 		'type': 'function'
 	},
 	{
@@ -376,33 +386,19 @@ const	ABI = [
 				'internalType': 'uint256',
 				'name': 'reward',
 				'type': 'uint256'
-			}
-		],
-		'name': 'boost_reward_for_reproduce',
-		'outputs': [
+			},
 			{
 				'internalType': 'uint256',
-				'name': '',
-				'type': 'uint256'
-			}
-		],
-		'stateMutability': 'view',
-		'type': 'function'
-	},
-	{
-		'inputs': [
-			{
-				'internalType': 'uint256',
-				'name': '_total',
+				'name': 'pop',
 				'type': 'uint256'
 			},
 			{
 				'internalType': 'uint256',
-				'name': '_partial',
+				'name': 'expected',
 				'type': 'uint256'
 			}
 		],
-		'name': 'calculate_percentage',
+		'name': 'boost_reward_for_reproduce',
 		'outputs': [
 			{
 				'internalType': 'uint256',
@@ -518,6 +514,32 @@ const	ABI = [
 				'internalType': 'address',
 				'name': '',
 				'type': 'address'
+			}
+		],
+		'stateMutability': 'view',
+		'type': 'function'
+	},
+	{
+		'inputs': [],
+		'name': 'extinction',
+		'outputs': [
+			{
+				'internalType': 'uint256',
+				'name': '',
+				'type': 'uint256'
+			}
+		],
+		'stateMutability': 'view',
+		'type': 'function'
+	},
+	{
+		'inputs': [],
+		'name': 'extinctionBy',
+		'outputs': [
+			{
+				'internalType': 'uint256',
+				'name': '',
+				'type': 'uint256'
 			}
 		],
 		'stateMutability': 'view',
@@ -678,6 +700,25 @@ const	ABI = [
 			}
 		],
 		'name': 'simulate_kill',
+		'outputs': [
+			{
+				'internalType': 'uint256',
+				'name': 'reward',
+				'type': 'uint256'
+			}
+		],
+		'stateMutability': 'view',
+		'type': 'function'
+	},
+	{
+		'inputs': [
+			{
+				'internalType': 'uint256',
+				'name': '_summoner',
+				'type': 'uint256'
+			}
+		],
+		'name': 'simulate_reproduce',
 		'outputs': [
 			{
 				'internalType': 'uint256',

@@ -8,17 +8,11 @@
 
 import	React, {useState, useEffect, useContext, createContext}	from	'react';
 import	useWeb3													from	'contexts/useWeb3';
-import	{ethers}												from	'ethers';
-import	{Provider, Contract}									from	'ethcall';
+import	{Contract}												from	'ethcall';
+import	{newEthCallProvider}									from	'utils';
 import	BOARS_ABI												from	'utils/abi/dungeonBoars.abi';
 
 const	DungeonContext = createContext();
-
-async function newEthCallProvider(provider) {
-	const	ethcallProvider = new Provider();
-	await	ethcallProvider.init(provider);
-	return	ethcallProvider;
-}
 
 export const DungeonContextApp = ({children, adventurer}) => {
 	const	{chainID, provider} = useWeb3();
@@ -47,16 +41,9 @@ export const DungeonContextApp = ({children, adventurer}) => {
 	**	Fetch the data from the prepared multicall to get most of the data
 	**************************************************************************/
 	async function	fetchDungeon(calls) {
-		if (Number(chainID) === 1337) {
-			const	ethcallProvider = await newEthCallProvider(new ethers.providers.JsonRpcProvider('http://localhost:8545'));
-			ethcallProvider.multicallAddress = '0xc04d660976c923ddba750341fe5923e47900cf24';
-			const	callResult = await ethcallProvider.all(calls);
-			return (callResult);
-		} else {
-			const	ethcallProvider = await newEthCallProvider(provider);
-			const	callResult = await ethcallProvider.all(calls);
-			return (callResult);
-		}
+		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
+		const	callResult = await ethcallProvider.all(calls);
+		return (callResult);
 	}
 
 	/**************************************************************************

@@ -9,12 +9,12 @@
 import	React, {useState, useEffect, useContext, createContext}	from	'react';
 import	useWeb3													from	'contexts/useWeb3';
 import	{ethers}												from	'ethers';
-import	{Provider, Contract}									from	'ethcall';
+import	{Contract}												from	'ethcall';
 import	useSWR													from	'swr';
 import	dayjs													from	'dayjs';
 import	relativeTime											from	'dayjs/plugin/relativeTime';
 import	ModalCurrentAdventurer									from	'components/ModalCurrentAdventurer';
-import	{chunk, fetcher, toAddress}								from	'utils';
+import	{chunk, fetcher, toAddress, newEthCallProvider}			from	'utils';
 import	ITEMS													from	'utils/codex/items';
 import	CLASSES													from	'utils/codex/classes';
 import	RARITY_ABI												from	'utils/abi/rarity.abi';
@@ -26,7 +26,6 @@ import	RARITY_CRAFTING_HELPER_ABI								from	'utils/abi/rarityCraftingHelper.ab
 import	THE_CELLAR_ABI											from	'utils/abi/dungeonTheCellar.abi';
 import	THE_FOREST_ABI											from	'utils/abi/dungeonTheForest.abi';
 import	BOARS_ABI												from	'utils/abi/dungeonBoars.abi';
-import	LOOT_ERC20_ABI											from	'utils/abi/lootERC20.abi.js';
 import	EXTENDED_NAME_ABI										from	'utils/abi/rarityExtendedName.abi';
 import	MANIFEST_GOODS											from	'utils/codex/items_manifest_goods.json';
 import	MANIFEST_ARMORS											from	'utils/codex/items_manifest_armors.json';
@@ -36,17 +35,6 @@ dayjs.extend(relativeTime);
 
 const	RarityContext = createContext();
 let		isUpdatingRarities = false;
-
-async function newEthCallProvider(provider, devMode) {
-	const	ethcallProvider = new Provider();
-	if (devMode) {
-		await	ethcallProvider.init(new ethers.providers.JsonRpcProvider('http://localhost:8545'));
-		ethcallProvider.multicallAddress = '0xc04d660976c923ddba750341fe5923e47900cf24';
-		return ethcallProvider;
-	}
-	await	ethcallProvider.init(provider);
-	return	ethcallProvider;
-}
 
 function	triggerNotification(title, options) {
 	if (typeof(window) === 'undefined') {
@@ -181,6 +169,7 @@ export const RarityContextApp = ({children}) => {
 			rarityExtendedName.get_name(tokenID),
 			rarityDungeonBoars.actions_log(tokenID),
 			rarityDungeonBoars.simulate_kill(tokenID),
+			rarityDungeonBoars.boar_population(),
 		];
 	}
 
@@ -204,18 +193,10 @@ export const RarityContextApp = ({children}) => {
 	**	Fetch all the items for the adventurer.
 	**************************************************************************/
 	async function	fetchAdventurerInventory(calls) {
-		if (Number(chainID) === 1337) {
-			const	ethcallProvider = await newEthCallProvider(new ethers.providers.JsonRpcProvider('http://localhost:8545'));
-			ethcallProvider.multicallAddress = '0xc04d660976c923ddba750341fe5923e47900cf24';
-			const	callResult = await ethcallProvider.all(calls);
-			return (callResult);
-		} else {
-			const	ethcallProvider = await newEthCallProvider(provider);
-			const	callResult = await ethcallProvider.all(calls);
-			return (callResult);
-		}
+		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
+		const	callResult = await ethcallProvider.all(calls);
+		return (callResult);
 	}
-
 	/**************************************************************************
 	**	Prepare some extra data that can not be fetched with a multicall
 	**	because of the msg.sender limitation
@@ -238,7 +219,7 @@ export const RarityContextApp = ({children}) => {
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
 	function		setRarity(tokenID, multicallResult, callResult, inventoryCallResult) {
-		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, skills, feats, cellarLog, cellarScout, forestResearch, name, boarsLog, boarsScout] = multicallResult;
+		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, skills, feats, cellarLog, cellarScout, forestResearch, name, boarsLog, boarsScout, boarsPopulation] = multicallResult;
 		const	[claimableGold] = callResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
@@ -253,6 +234,7 @@ export const RarityContextApp = ({children}) => {
 				class: Number(adventurer['_class']),
 				level: Number(adventurer['_level']),
 				log: Number(adventurer['_log']),
+				logCanAdventure: dayjs(new Date(Number(adventurer['_log']) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
 				gold: {
 					balance: ethers.utils.formatEther(balanceOfGold),
 					claimable: claimableGold ? ethers.utils.formatEther(claimableGold) : '0'
@@ -272,6 +254,11 @@ export const RarityContextApp = ({children}) => {
 					cellar: {
 						log: Number(cellarLog),
 						scout: Number(cellarScout),
+					},
+					boars: {
+						log: Number(boarsLog),
+						scout: Number(boarsScout),
+						canAdventure: dayjs(new Date(Number(boarsLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
 					},
 					forest: {
 						initBlockTs: forestResearch?.initBlockTs,
@@ -312,10 +299,12 @@ export const RarityContextApp = ({children}) => {
 				cellar: {
 					log: Number(cellarLog),
 					scout: Number(cellarScout),
+					canAdventure: dayjs(new Date(Number(cellarLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
 				},
 				boars: {
 					log: Number(boarsLog),
 					scout: Number(boarsScout),
+					canAdventure: dayjs(new Date(Number(boarsLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
 				},
 				forest: {
 					initBlockTs: forestResearch?.initBlockTs,

@@ -11,6 +11,7 @@ import	Link									from	'next/link';
 import	useDungeon, {DungeonContextApp}			from	'contexts/useDungeonsTheBoars';
 import	useWeb3									from	'contexts/useWeb3';
 import	useRarity								from	'contexts/useRarity';
+import	{sleep}									from	'utils';
 import	{killBoar}								from	'utils/actions/boar';
 import	DialogNoBox								from	'components/DialogNoBox';
 import	Box										from	'components/Box';
@@ -29,10 +30,6 @@ const	classMappingBackImg = [
 	'/back/sorcerer.png',
 	'/back/wizard.png',
 ];
-
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 function	DialogChoices({router, step, stepAuto, boarEscaped, adventurerWon, expectedLoot, loot}) {
 	if (boarEscaped) {
@@ -68,7 +65,6 @@ function	DialogChoices({router, step, stepAuto, boarEscaped, adventurerWon, expe
 			]} />
 	);
 }
-
 
 function	Index({dungeon, adventurer, router}) {
 	const	STEP_LIMIT = 100;
@@ -232,8 +228,8 @@ function	Index({dungeon, adventurer, router}) {
 										return console.error(error);
 									}
 									updateRarity(dungeon.tokenID);
-									if (router.pathname === '/dungeons/the-boars')	
-										router.push('/town/quest?tab=the-boars');
+									if (router.pathname === '/dungeons/the-boar-fight')	
+										router.push('/countryside/boars');
 								});
 							}}
 						/>
