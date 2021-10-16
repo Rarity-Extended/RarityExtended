@@ -187,7 +187,7 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 					<>
 						{'YES. THE BIG UGLY RAT. '}
 						<span className={'text-tag-info'}>{'FACU'}</span>
-						{' THE TAVERN KEEPER NEED SOME HELP WITH THIS. REPULSIVE STUFF. IF YOU CAN '}
+						{' THE TAVERN KEEPER NEEDS SOME HELP WITH THIS. REPULSIVE STUFF. IF YOU CAN '}
 						<span className={'text-tag-info'}>{'DODGE AND HIT HARD'}</span>
 						{', YOU SHOULD GO.'}&nbsp;
 					</>	
@@ -202,7 +202,7 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 						{'FACU'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
-						{' THE TAVERN KEEPER NEED SOME HELP WITH THIS. REPULSIVE STUFF. IF YOU CAN '}
+						{' THE TAVERN KEEPER NEEDS SOME HELP WITH THIS. REPULSIVE STUFF. IF YOU CAN '}
 					</Typer>
 					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 						{'DODGE AND HIT HARD'}
@@ -262,7 +262,7 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 					<span className={'text-tag-info'}>{'LARA'}</span>
 					{' FROM THE '}
 					<span className={'text-tag-info'}>{'QUEST OFFICE'}</span>
-					{'. WE HAVE A LOT OF WORK TO DO. SELECT YOUR TASK AND GO !'}
+					{'. I\'M THE KEEPER OF QUESTS. I KNOW WHAT NEEDS DOING. YOU LOOKING FOR SOME ADVERTURE? CHOSE A QUEST BELOW'}
 					&nbsp;
 				</>	
 			);
@@ -287,7 +287,7 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 						set_npcTextIndex(i => i + 1);
 						set_hadInitialMessage(true);
 					}}>
-					{'. WE HAVE A LOT OF WORK TO DO. SELECT YOUR TASK AND GO !'}
+					{'. I\'M THE KEEPER OF QUESTS. I KNOW WHAT NEEDS DOING. YOU LOOKING FOR SOME ADVERTURE? CHOSE A QUEST BELOW!'}
 				</Typer>&nbsp;
 			</>
 		);

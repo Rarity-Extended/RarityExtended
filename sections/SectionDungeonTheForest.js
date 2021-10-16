@@ -33,7 +33,7 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 				</i>
 				<div />
 				<i className={'text-sx md:text-xs text-black dark:text-white text-opacity-60 leading-6'}>
-					{'He speaks of a Dark Forest to the North about a week\'s travel, there and back, with danger but treasure. He is willing to guide you there, but was hurt too much to enter the forest with you. He doesn\'t want anything in return for helping you.'}
+					{'He speaks of a forest to the North about a week\'s travel, there and back, with danger but treasure. He isn\'t willing to guide you there, because he was hurt too much but he will tell you where to go. He doesn\'t want anything in return for helping you.'}
 				</i>
 				{adventurersCount !== 0 ? <div className={'mt-6'}>
 					<p className={'text-xs'}>

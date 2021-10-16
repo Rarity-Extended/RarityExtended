@@ -42,7 +42,7 @@ function	NPCHeadline() {
 					{'THE FOREST'}
 				</Typer></span>
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
-					{'. FOR HOW LONG DO YOU WANT TO TAKE PROVISIONS FOR ?'}
+					{'. HOW MANY DAYS OF PROVISIONS SHOULD I PREPARE FOR YOU?'}
 				</Typer>
 			</>
 		);
