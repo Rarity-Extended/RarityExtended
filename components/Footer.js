@@ -6,11 +6,11 @@
 ******************************************************************************/
 
 import	React, {Fragment, useEffect, useState}	from	'react';
-import	{Dialog, Transition} 			from	'@headlessui/react';
-import	Link							from	'next/link';
-import	useUI							from	'contexts/useUI';
-import	{useRouter}						from	'next/router';
-import TownNav from './TownNav';
+import	{Dialog, Transition} 					from	'@headlessui/react';
+import	Link									from	'next/link';
+import	{useRouter}								from	'next/router';
+import	useUI									from	'contexts/useUI';
+import	TownNav									from	'components/TownNav';
 
 function	Footer() {
 	const	{theme, switchTheme} = useUI();
