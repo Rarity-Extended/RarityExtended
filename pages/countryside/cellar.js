@@ -96,7 +96,7 @@ function	NCPHeadline({currentAdventurer, chainTime, loot}) {
 		);
 	};
 	return (
-		<h1 className={'text-base leading-normal md:leading-6 font-story normal-case'}>
+		<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case'}>
 			{renderNCPText()}
 		</h1>
 	);
@@ -171,7 +171,7 @@ function	Index({router}) {
 						chainTime={chainTime}
 						loot={loot}
 						currentAdventurer={currentAdventurer} />
-					<div className={'pt-2 mt-4 border-t-2 border-black dark:border-dark-100 font-story font-bold text-base uppercase'}>
+					<div className={'pt-2 mt-4 border-t-2 border-black dark:border-dark-100 font-story font-bold text-sm md:text-base uppercase'}>
 						<DialogChoices
 							router={router}
 							currentAdventurer={currentAdventurer}
