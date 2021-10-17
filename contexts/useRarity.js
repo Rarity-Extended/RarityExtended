@@ -235,10 +235,12 @@ export const RarityContextApp = ({children}) => {
 					charisma: initialAttributes ? abilityScores['charisma'] : 8,
 				},
 				skills: skills,
+				feats: (feats || []).map(f => Number(f)),
 				dungeons: {
 					cellar: {
 						log: Number(cellarLog),
 						scout: Number(cellarScout),
+						canAdventure: dayjs(new Date(Number(cellarLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
 					},
 					boars: {
 						log: Number(boarsLog),

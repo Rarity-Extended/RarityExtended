@@ -7,6 +7,7 @@
 
 import	React, {useState}				from	'react';
 import	router							from	'next/router';
+import	Image							from	'next/image';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	SectionNoAdventurer				from	'sections/SectionNoAdventurer';
@@ -19,9 +20,14 @@ import	ListBox							from	'components/ListBox';
 import	Box								from	'components/Box';
 import	TownNav							from	'components/TownNav';
 import	Chevron							from	'components/Chevron';
+import	ModalSkills						from	'components/ModalSkills';
+import	ModalFeats						from	'components/ModalFeats';
 import	useLocalStorage					from	'hook/useLocalStorage';
 import	CLASSES							from	'utils/codex/classes';
-import	{goAdventure}					from	'utils/actions';
+import	{availableSkillPoints, calculatePointsForSet}	from	'utils/libs/raritySkills';
+import	{featsPerClass, initialFeatsPerClass}			from	'utils/libs/rarityFeats';
+import	{xpRequired}									from	'utils/libs/rarity';
+import	{goAdventure, claimGold, levelUp, setName}	from	'utils/actions';
 
 dayjs.extend(relativeTime);
 
@@ -170,7 +176,74 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 	const	{provider, chainTime} = useWeb3();
 	const	{currentAdventurer, updateRarity} = useRarity();
 	const	[page, set_page] = useState(0);
+	const	[tab, set_tab] = useState(0);
+	const	[modalSkillsOpen, set_modalSkillsOpen] = useState(false);
+	const	[modalFeatsOpen, set_modalFeatsOpen] = useState(false);
 	const	isInTheForest = currentAdventurer?.level >= 2 && !currentAdventurer?.dungeons?.forest?.canAdventure;
+
+	const	taskList = [
+		{
+			label: 'Set attributes',
+			condition: () => currentAdventurer?.attributes?.remainingPoints > 0,
+			onClick: () => router.push(`/adventurer/${currentAdventurer.tokenID}`)
+		},
+		{
+			label: 'Set skills',
+			condition: () => {
+				const	_availableSkillPoints = availableSkillPoints(currentAdventurer.attributes.intelligence, currentAdventurer.class, currentAdventurer.level);
+				const	_pointSpentByAdventurer = calculatePointsForSet(currentAdventurer.class, currentAdventurer?.skills || []);
+				return _availableSkillPoints > _pointSpentByAdventurer;
+			},
+			onClick: () => set_modalSkillsOpen(true)
+		},
+		{
+			label: 'Set feats',
+			condition: () => {
+				const	_maxFeatsForAventurer = featsPerClass(currentAdventurer.class, currentAdventurer?.level);
+				const	_initialFeatsPerClass = initialFeatsPerClass(currentAdventurer.class);
+				const	_adventurerFeats = currentAdventurer.feats || [];
+				const	_unlockedFeats = [...new Set([..._initialFeatsPerClass, ..._adventurerFeats])];
+				const	_pointLefts = _maxFeatsForAventurer - _unlockedFeats.length;
+				return _pointLefts > 0;
+			},
+			onClick: () => set_modalFeatsOpen(true)
+		},
+		{
+			label: 'Claim XP',
+			condition: () => currentAdventurer.logCanAdventure,
+			onClick: () => onGoToAdventure()
+		},
+		{
+			label: 'Claim Gold',
+			condition: () => currentAdventurer?.gold?.claimable > 0,
+			onClick: () => onClaimGold()
+		},
+		{
+			label: 'Level up',
+			condition: () => currentAdventurer.xp >= (xpRequired(currentAdventurer.level)),
+			onClick: () => onLevelUp()
+		},
+		{
+			label: 'Set Name',
+			condition: () => currentAdventurer.name === '',
+		},
+		{
+			label: 'Handle the Big Ugly Rat in the Cellar',
+			condition: () => currentAdventurer?.dungeons?.cellar?.canAdventure,
+			onClick: () => router.push('/town/quest?tab=the-cellar')
+		},
+		{
+			label: 'Go in the Forest',
+			condition: () => currentAdventurer?.dungeons?.forest?.canAdventure,
+			onClick: () => router.push('/town/quest?tab=the-forest')
+		},
+		{
+			label: 'Handle the Boar situation',
+			condition: () => currentAdventurer?.dungeons?.boars?.canAdventure,
+			onClick: () => router.push('/countryside/boars')
+		},
+	];
+	const	availableTasks = taskList.filter(t => t.condition());
 
 	function	onGoToAdventure() {
 		goAdventure({
@@ -184,6 +257,169 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 			}
 			updateRarity(data);
 		});
+	}
+	function	onClaimGold() {
+		claimGold({
+			provider,
+			contractAddress: process.env.RARITY_GOLD_ADDR,
+			tokenID: currentAdventurer.tokenID,
+		}, ({error, data}) => {
+			if (error) {
+				return console.error(error);
+			}
+			updateRarity(data);
+		});
+	}
+	function	onLevelUp() {
+		levelUp({
+			provider,
+			tokenID: currentAdventurer.tokenID,
+		}, ({error, data}) => {
+			if (error) {
+				return console.error(error);
+			}
+			updateRarity(data);
+		});
+	}
+
+
+	function	renderDungeonsNav() {
+		return (
+			<div style={{height: 312}} className={'w-full px-4 flex flex-col relative mb-4 md:mb-1 h-full'}>
+				<div className={'flex flex-col items-center overflow-y-scroll scrollbar-none text-white'}>
+					<div className={'mt-2 mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
+						<div className={'opacity-40 overflow-hidden -mb-1'}>
+							<Image
+								src={'/illustrations/illuBoars.jpeg'}
+								loading={'eager'}
+								objectFit={'cover'}
+								objectPosition={'top'}
+								quality={70}
+								width={800}
+								height={150} />
+						</div>
+						<div className={'absolute inset-0 opacity-30'} style={{backgroundColor: '#554a40'}} />
+
+						<div className={'absolute inset-0 flex flex-row'}>
+							<div className={'w-1/2 h-full p-6'}>
+								<h1 className={'text-shadow-lg'}>{'The Boars'}</h1>
+								<p className={'text-shadow-lg text-regular pt-2'}>{'Kill or Protect the Boars. The destiny of the Forest is in your hands ...'}</p>
+							</div>
+							<div className={'w-1/2 h-full p-6 flex justify-end items-center'}>
+								<svg className={'group-hover:animate-bounce-r opacity-30 group-hover:opacity-100 transition-opacity'} width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M4 11v2h12v2h2v-2h2v-2h-2V9h-2v2H4zm10-4h2v2h-2V7zm0 0h-2V5h2v2zm0 10h2v-2h-2v2zm0 0h-2v2h2v-2z'} fill={'currentColor'}/> </svg>
+							</div>
+						</div>
+					</div>
+
+					<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
+						<div className={'opacity-40 overflow-hidden -mb-1'}>
+							<Image
+								src={'/illustrations/illuForest.jpeg'}
+								className={'filter'}
+								loading={'eager'}
+								objectFit={'cover'}
+								objectPosition={'top'}
+								quality={70}
+								width={800}
+								height={150} />
+						</div>
+						<div className={'absolute inset-0 opacity-30'} style={{backgroundColor: '#124712'}} />
+
+						<div className={'absolute inset-0 flex flex-row'}>
+							<div className={'w-1/2 h-full p-6'}>
+								<h1 className={'text-shadow-lg'}>{'The Forest'}</h1>
+								<p className={'text-shadow-lg text-regular pt-2'}>{'This drunk man in the Tavern talked about treasure ... What does this big Forest hide ?'}</p>
+							</div>
+							<div className={'w-1/2 h-full p-6 flex justify-end items-center'}>
+								<svg className={'group-hover:animate-bounce-r opacity-30 group-hover:opacity-100 transition-opacity'} width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M4 11v2h12v2h2v-2h2v-2h-2V9h-2v2H4zm10-4h2v2h-2V7zm0 0h-2V5h2v2zm0 10h2v-2h-2v2zm0 0h-2v2h2v-2z'} fill={'currentColor'}/> </svg>
+							</div>
+						</div>
+					</div>
+
+					<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
+						<div className={'opacity-40 overflow-hidden -mb-1'}>
+							<Image
+								src={'/illustrations/illuCellar.jpeg'}
+								className={'filter'}
+								loading={'eager'}
+								objectFit={'cover'}
+								objectPosition={'left'}
+								quality={70}
+								width={800}
+								height={150} />
+						</div>
+						<div className={'absolute inset-0 flex flex-row'}>
+							<div className={'w-1/2 h-full p-6'}>
+								<h1 className={'text-shadow-lg'}>{'The Cellar'}</h1>
+								<p className={'text-shadow-lg text-regular pt-2'}>{'A Big Ugly Rat in the Cellar? Sounds like the perfect adventurer for a beginner!'}</p>
+							</div>
+							<div className={'w-1/2 h-full p-6 flex justify-end items-center'}>
+								<svg className={'group-hover:animate-bounce-r opacity-30 group-hover:opacity-100 transition-opacity'} width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M4 11v2h12v2h2v-2h2v-2h-2V9h-2v2H4zm10-4h2v2h-2V7zm0 0h-2V5h2v2zm0 10h2v-2h-2v2zm0 0h-2v2h2v-2z'} fill={'currentColor'}/> </svg>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
+	function	renderTasks() {
+		return (
+			<div style={{height: 312}} className={'w-full px-4 flex flex-col relative mb-4 md:mb-1 h-full'}>
+				<div className={'flex flex-col items-center overflow-y-scroll scrollbar-none text-white'}>
+					{availableTasks.length > 0 ? availableTasks.map((task, index) => (
+						<div
+							key={task.label}
+							onClick={task.onClick}
+							className={`${index === 0 ? 'mt-2' : ''} flex w-full flex-row items-center p-2 text-regular hover:bg-gray-principal dark:hover:bg-dark-400 cursor-pointer`}>
+							<div className={'mr-6'}>
+								<svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M3 3h18v18H3V3zm16 16V5H5v14h14z'} fill={'currentColor'}/> </svg>
+							</div>
+							<div>
+								{task.label}
+							</div>
+						</div>
+					)) : (
+						<div className={'mt-16 text-black dark:text-dark-100 dark:text-opacity-60 text-opacity-60'}>
+							<svg width={120} height={120} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M5 3h14v2H5V3zm0 16H3V5h2v14zm14 0v2H5v-2h14zm0 0h2V5h-2v14zM10 8H8v2h2V8zm4 0h2v2h-2V8zm-5 6v-2H7v2h2zm6 0v2H9v-2h6zm0 0h2v-2h-2v2z'} fill={'currentColor'}/> </svg>
+						</div>
+					)}
+				</div>
+				{modalSkillsOpen && <ModalSkills
+					adventurer={currentAdventurer}
+					isOpen={modalSkillsOpen}
+					closeModal={() => set_modalSkillsOpen(false)} />}
+				{modalFeatsOpen && <ModalFeats
+					adventurer={currentAdventurer}
+					isOpen={modalFeatsOpen}
+					closeModal={() => set_modalFeatsOpen(false)} />}
+			</div>
+		);
+	}
+
+	function	renderTownNav() {
+		return (
+			<>
+				<div
+					style={{height: 312}}
+					className={'w-full p-4 flex flex-col relative mb-4 md:mb-1 h-full'}>
+					<TownNav start={page * 6} />
+				</div>
+				<div className={'absolute bottom-4 right-4 flex w-full text-xss justify-end items-center text-black dark:text-dark-100 mt-4'}>
+					<Chevron
+						width={12}
+						height={12}
+						onClick={() => page !== 0 && set_page(page - 1)}
+						className={`mr-2 select-none ${page === 0 ? 'opacity-0' : 'cursor-pointer text-black dark:text-dark-100 dark:hover:text-white'}`} />
+					{`${page + 1}/1`}
+					<Chevron
+						width={12}
+						height={12}
+						onClick={() => page !== 0 && set_page(page + 1)}
+						className={`ml-2 select-none transform rotate-180 ${page === 0 ? 'opacity-0' : 'cursor-pointer text-black dark:text-dark-100 dark:hover:text-white'}`} />
+				</div>
+			</>
+		);
 	}
 
 	return (
@@ -209,9 +445,6 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 							<polygon fill={'currentcolor'} points={'6,4 18,4 18,20 16,20 16,18 14,18 14,16 10,16 10,18 8,18 8,20 6,20 '}/>
 						</svg>
 					</div>
-
-
-
 				</Adventurer>
 				<div className={'mt-2'}>
 					<div>
@@ -239,26 +472,32 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 				</div>
 			</div>
 			<div className={'w-full col-span-4 md:col-span-3 mt-4 md:mt-0 hidden md:block'}>
-				<Box
-					style={{height: 328}}
-					className={'w-full flex flex-col relative'}>
-					<div className={'w-full p-4 flex flex-col relative mb-4 md:mb-0 h-full'}>
-						<TownNav start={page * 6}/>
-					</div>
-					<div className={'absolute bottom-4 right-4 flex w-full text-xss justify-end items-center text-black dark:text-dark-100 mt-4'}>
-						<Chevron
-							width={12}
-							height={12}
-							onClick={() => page !== 0 && set_page(page - 1)}
-							className={`mr-2 select-none ${page === 0 ? 'opacity-0' : 'cursor-pointer text-black dark:text-dark-100 dark:hover:text-white'}`} />
-						{`${page + 1}/1`}
-						<Chevron
-							width={12}
-							height={12}
-							onClick={() => page !== 0 && set_page(page + 1)}
-							className={`ml-2 select-none transform rotate-180 ${page === 0 ? 'opacity-0' : 'cursor-pointer text-black dark:text-dark-100 dark:hover:text-white'}`} />
+				<Box className={'w-full flex flex-col relative'}>
 
+					<div className={'flex flex-row w-full'}>
+						<div
+							onClick={() => set_tab(0)}
+							className={`flex flex-row items-center text-regular p-4 px-6 border-r-2 border-black dark:border-dark-100 text-black dark:text-white ${tab !== 0 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
+							<svg width={16} height={16} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M14 2h-4v2H8v2H6v2H4v2H2v2h2v10h7v-6h2v6h7V12h2v-2h-2V8h-2V6h-2V4h-2V2zm0 2v2h2v2h2v2h2v2h-2v8h-3v-6H9v6H6v-8H4v-2h2V8h2V6h2V4h4z'} fill={'currentColor'}/> </svg>
+							<p className={'mt-1 ml-2'}>{'TOWN'}</p>
+						</div>
+						<div
+							onClick={() => set_tab(1)}
+							className={`flex flex-row items-center text-regular p-4 px-6 border-l-2 border-r-2 border-black dark:border-dark-100 text-black dark:text-white ${tab !== 1 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
+							<svg width={16} height={16} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M6 3h14v2h2v6h-2v8h-2V5H6V3zm8 14v-2H6V5H4v10H2v4h2v2h14v-2h-2v-2h-2zm0 0v2H4v-2h10zM8 7h8v2H8V7zm8 4H8v2h8v-2z'} fill={'currentColor'}/> </svg>
+							<p className={'mt-1 ml-2'}>{'QUESTS'}</p>
+						</div>
+						<div
+							onClick={() => set_tab(2)}
+							className={`flex flex-row items-center text-regular p-4 px-6 w-full border-l-2 border-black dark:border-dark-100 text-black dark:text-white ${tab !== 2 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
+							<svg width={16} height={16} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M19 4h2v2h-2V4zm-2 4V6h2v2h-2zm-2 0h2v2h-2V8zm0 0h-2V6h2v2zM3 6h8v2H3V6zm8 10H3v2h8v-2zm7 2v-2h2v-2h-2v2h-2v-2h-2v2h2v2h-2v2h2v-2h2zm0 0v2h2v-2h-2z'} fill={'currentColor'}/> </svg>
+							<p className={'mt-1 ml-2'}>{`TASKS ${availableTasks.length > 0 ? `(${availableTasks.length})` : ''}`}</p>
+						</div>
 					</div>
+
+					{tab === 0 ? renderTownNav() : null}
+					{tab === 1 ? renderDungeonsNav() : null}
+					{tab === 2 ? renderTasks() : null}
 				</Box>
 			</div>
 		</div>

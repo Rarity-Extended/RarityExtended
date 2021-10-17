@@ -100,12 +100,12 @@ module.exports = {
 			keyframes: {
 				'bounce-r': {
 					'0%,to': {
-						transform: 'translateX(-25%)',
-						'animation-timing-function': 'cubic-bezier(.8,0,1,1)'
-					},
-					'50%': {
 						transform: 'none',
 						'animation-timing-function': 'cubic-bezier(0,0,.2,1)'
+					},
+					'50%': {
+						transform: 'translateX(-25%)',
+						'animation-timing-function': 'cubic-bezier(.8,0,1,1)'
 					}
 				}
 			}
