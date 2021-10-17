@@ -82,7 +82,7 @@ export const RarityContextApp = ({children}) => {
 					triggerNotification(
 						`${adventurer.tokenID} IS READY FOR A NEW ADVENTURE`,
 						{
-							body: `Your adventurer ${adventurer.tokenID}, a ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}, is ready for a new adventure!`,
+							body: `Your adventurer ${adventurer.name ? adventurer.name : adventurer.tokenID}, a ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}, is ready for a new adventure!`,
 							icon: CLASSES[currentAdventurer?.class].img,
 							onclick: () => console.log('HELLLOOO')
 						});

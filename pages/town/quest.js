@@ -46,7 +46,7 @@ function	DialogChoices({router, adventurersCount}) {
 							label: (
 								<>
 									{'FIGHT THE RAT WITH '}
-									<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+									<span className={'text-tag-info'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
 								</>
 							),
 							onClick: () => router.push(`/dungeons/the-cellar?adventurer=${currentAdventurer.tokenID}`)
@@ -69,18 +69,18 @@ function	DialogChoices({router, adventurersCount}) {
 								currentAdventurer.level < 2 ?
 									<>
 										{'YOU CANNOT EXPLORE THE FOREST WITH '}
-										<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+										<span className={'text-tag-info'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
 									</>
 									:
 									currentAdventurer.level >= 2 && currentAdventurer?.dungeons?.forest?.canAdventure ?
 										<>
 											{'EXPLORE THE FOREST WITH '}
-											<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+											<span className={'text-tag-info'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
 										</>
 										:
 										<>
 											{'YOU ARE ALREADY IN THE FOREST WITH '}
-											<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+											<span className={'text-tag-info'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
 										</>
 							),
 							onClick: () => {
