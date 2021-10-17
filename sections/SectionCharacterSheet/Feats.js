@@ -24,7 +24,6 @@ function	FeatsModals({adventurer, updateRarity, provider, isOpen, closeModal}) {
 	function	onLearnFeat(featID) {
 		learnFeat({
 			provider,
-			contractAddress: process.env.RARITY_FEATS_ADDR,
 			tokenID: adventurer.tokenID,
 			feat: featID,
 		}, ({error, data}) => {

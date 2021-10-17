@@ -18,10 +18,7 @@ import	useRarity							from	'contexts/useRarity';
 import	SectionArtifactsTheForest			from	'sections/SectionArtifactsTheForest';
 import	SectionRestoreArtifactsTheForest	from	'sections/SectionRestoreArtifactsTheForest';
 import	SectionCrafting						from	'sections/SectionCrafting';
-import	RARITY_ABI							from	'utils/abi/rarity.abi';
-import	RARITY_GOLD_ABI						from	'utils/abi/rarityGold.abi';
-import	THE_CELLAR_ABI						from	'utils/abi/dungeonTheCellar.abi';
-import	{approveERC20}						from	'utils/actions';
+import	{approveERC20}						from	'utils/actions/utils';
 
 
 async function newEthCallProvider(provider, devMode) {
@@ -515,9 +512,9 @@ function	Index({rarities, router}) {
 	const	adventurers = Object.values(rarities);
 
 	async function	checkCraftingStatus() {
-		const	rarity = new Contract(process.env.RARITY_ADDR, RARITY_ABI);
-		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI);
-		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, THE_CELLAR_ABI);
+		const	rarity = new Contract(process.env.RARITY_ADDR, process.env.RARITY_ABI);
+		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, process.env.RARITY_GOLD_ABI);
+		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, process.env.DUNGEON_THE_CELLAR_ABI);
 		const calls = [
 			rarity.getApproved(currentAdventurer?.tokenID),
 			rarityGold.allowance(currentAdventurer?.tokenID, process.env.RARITY_CRAFTING_ID),

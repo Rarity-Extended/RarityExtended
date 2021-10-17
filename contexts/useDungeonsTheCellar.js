@@ -10,7 +10,6 @@ import	React, {useState, useEffect, useContext, createContext}	from	'react';
 import	useWeb3													from	'contexts/useWeb3';
 import	{ethers}												from	'ethers';
 import	{Provider, Contract}									from	'ethcall';
-import	THE_CELLAR_ABI											from	'utils/abi/dungeonTheCellar.abi';
 
 const	DungeonContext = createContext();
 
@@ -28,7 +27,7 @@ export const DungeonContextApp = ({children, adventurer}) => {
 	**	Prepare the multicall to get most of the data
 	**************************************************************************/
 	function		prepareDungeonCalls() {
-		const	dungeon = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, THE_CELLAR_ABI);
+		const	dungeon = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, process.env.DUNGEON_THE_CELLAR_ABI);
 		return [
 			dungeon.adventurers_log(adventurer.tokenID),
 			dungeon.base_attack_bonus_by_class_and_level(adventurer.tokenID, adventurer.level),

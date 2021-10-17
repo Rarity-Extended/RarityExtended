@@ -114,6 +114,7 @@ module.exports = {
 			transform: ['hover', 'focus', 'group-hover'],
 			animation: ['hover', 'focus', 'group-hover'],
 			visibility: ['hover', 'focus', 'group-hover'],
+			backgroundColor: ['hover'],
 		}
 	},
 	plugins: [

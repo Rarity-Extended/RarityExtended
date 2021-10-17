@@ -239,11 +239,11 @@ function	DialogChoices({router, onWalletConnect, active}) {
 							canAdventure ?
 								<>
 									{'FIGHT THE RAT WITH '}
-									<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+									<span className={'text-tag-info'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
 								</>
 								:
 								<>
-									<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+									<span className={'text-tag-info'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
 									{' NEED SOME REST BEFORE FIGHTING THE RAT AGAIN'}
 								</>
 						),

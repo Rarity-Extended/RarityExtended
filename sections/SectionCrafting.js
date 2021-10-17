@@ -197,7 +197,6 @@ function	SectionCraft({item, currentAdventurer, children}) {
 		set_txStatus({none: false, isPending: true, isSuccess: false, isError: false, isFailed: false, isSimulationFailed: false});
 		craft({
 			provider,
-			contractAddress: process.env.RARITY_CRAFTING_ADDR,
 			tokenID: currentAdventurer.tokenID,
 			itemName: item.name,
 			baseType: item.type,

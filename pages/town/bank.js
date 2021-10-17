@@ -14,7 +14,7 @@ import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
 import	Box								from	'components/Box';
 import	{fetcher}						from	'utils';
-import	{apeInVault, apeOutVault, depositInVault, withdrawFromVault}					from	'utils/actions';
+import	{apeInVault, apeOutVault, depositInVault, withdrawFromVault}					from	'utils/actions/vaults';
 
 function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError, isDeposit}) {
 	const	[nonce, set_nonce] = useState(0);

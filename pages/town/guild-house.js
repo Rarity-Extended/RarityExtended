@@ -19,7 +19,6 @@ import	Adventurer						from	'components/Adventurer';
 import	CLASSES							from	'utils/codex/classes';
 import	{chunk}							from	'utils';
 import	{xpRequired}					from	'utils/libs/rarity';
-
 import	{careOfAll, careAdventure, careCellar, careLevelup, careGold}		from	'utils/actions/daycare';
 
 dayjs.extend(relativeTime);

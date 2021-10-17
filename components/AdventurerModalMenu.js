@@ -31,10 +31,10 @@ function AdventurerModalMenu() {
 							height={60} />
 						<div className={'text-sm cursor-pointer uppercase ml-2'}>
 							<div className={'text-sx cursor-pointer mb-1 group-hover:underline'}>
-								{currentAdventurer?.tokenID}
+								{currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}
 							</div>
 							<div className={'text-megaxs cursor-pointer group-hover:underline'}>
-								{currentAdventurer ? `${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}` : null}
+								{currentAdventurer ? `${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}` : null}
 							</div>
 						</div>
 					</div> : <div className={'flex items-center justify-center'}>
@@ -59,10 +59,10 @@ function AdventurerModalMenu() {
 					{currentAdventurer ? <div className={'flex items-center justify-center'}>
 						<div className={'cursor-pointer uppercase mr-2 mt-2 text-right'}>
 							<div className={'text-sm cursor-pointer group-hover:underline -mb-2'}>
-								{currentAdventurer?.tokenID}
+								{currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}
 							</div>
 							<div className={'text-megaxs cursor-pointer group-hover:underline'}>
-								{currentAdventurer ? `${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}` : null}
+								{currentAdventurer ? `${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}` : null}
 							</div>
 						</div>
 						<Image

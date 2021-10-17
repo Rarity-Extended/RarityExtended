@@ -13,10 +13,9 @@ import	{ethers}						from	'ethers';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	{toAddress, fetcher}			from	'utils';
-import	{restoreTreasureTheForest}		from	'utils/actions';
+import	{restoreTreasureTheForest}		from	'utils/actions/dungeon_theForest';
 import	CLASSES							from	'utils/codex/classes';
 import	THE_FOREST_LOOT					from	'utils/codex/items_dungeon_theForest.json';
-import	THE_FORESTV1_ABI				from	'utils/abi/dungeonTheForestV1.abi';
 
 async function newEthCallProvider(provider) {
 	const	ethcallProvider = new Provider();
@@ -59,7 +58,7 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, adventurersCount
 	**	Prepare the multicall to get most of the data
 	**************************************************************************/
 	function		prepareMultiCall(tokenID) {
-		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_V1_ADDR, THE_FORESTV1_ABI);
+		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_V1_ADDR, process.env.DUNGEON_THE_FOREST_V1_ABI);
 		return [
 			rarityDungeonForest.treasure(tokenID),
 		];
@@ -199,7 +198,6 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, adventurersCount
 								onClick={() => {
 									restoreTreasureTheForest({
 										provider,
-										contractAddress: process.env.DUNGEON_THE_FOREST_ADDR,
 										tokenID: item.tokenID,
 										adventurerID: forAdventurer,
 										treasureName: item.itemName

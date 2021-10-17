@@ -64,7 +64,6 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 		}
 		learnSkills({
 			provider,
-			contractAddress: process.env.RARITY_SKILLS_ADDR,
 			tokenID: adventurer.tokenID,
 			skills: _skills,
 		}, ({error, data}) => {

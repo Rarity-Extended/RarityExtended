@@ -8,8 +8,6 @@
 import	{ethers}			from	'ethers';
 import	toast				from	'react-hot-toast';
 import	CLASSES				from	'utils/codex/classes';
-import	RARITY_CRAFTING_ABI	from	'utils/abi/rarityCrafting.abi';
-import	EXTENDED_NAME_ABI	from	'utils/abi/rarityExtendedName.abi';
 
 function	onSuccessToast(_toast) {
 	toast.dismiss(_toast);
@@ -68,12 +66,12 @@ export async function	lootDungeonTheCellar({provider, contractAddress, tokenID},
 	_adventure('Looting the Big Ugly Rat...', {provider, contractAddress, tokenID}, callback);
 }
 
-export async function	levelUp({provider, contractAddress, tokenID}, callback) {
+export async function	levelUp({provider, tokenID}, callback) {
 	const	_toast = toast.loading(`Level-up ${tokenID}...`);
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
-		contractAddress,
-		['function level_up(uint256 _summoner) public'],
+		process.env.RARITY_ADDR,
+		process.env.RARITY_ABI,
 		signer
 	);
 
@@ -113,12 +111,12 @@ export async function	levelUp({provider, contractAddress, tokenID}, callback) {
 	}
 }
 
-export async function	learnSkills({provider, contractAddress, tokenID, skills}, callback) {
+export async function	learnSkills({provider, tokenID, skills}, callback) {
 	const	_toast = toast.loading('Learning new skills...');
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
-		contractAddress,
-		['function set_skills(uint256 _summoner, uint8[36] _skills) public'],
+		process.env.RARITY_SKILLS_ADDR,
+		process.env.RARITY_SKILLS_ABI,
 		signer
 	);
 
@@ -158,12 +156,12 @@ export async function	learnSkills({provider, contractAddress, tokenID, skills}, 
 	}
 }
 
-export async function	learnFeat({provider, contractAddress, tokenID, feat}, callback) {
+export async function	learnFeat({provider, tokenID, feat}, callback) {
 	const	_toast = toast.loading('Learning new feat...');
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
-		contractAddress,
-		['function select_feat(uint _summoner, uint _feat)'],
+		process.env.RARITY_FEATS_ADDR,
+		process.env.RARITY_FEATS_ABI,
 		signer
 	);
 
@@ -203,12 +201,12 @@ export async function	learnFeat({provider, contractAddress, tokenID, feat}, call
 	}
 }
 
-export async function	recruitAdventurer({provider, contractAddress, classID}, callback) {
+export async function	recruitAdventurer({provider, classID}, callback) {
 	const	_toast = toast.loading(`Recruiting a ${CLASSES[classID].name}...`);
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
-		contractAddress,
-		['function summon(uint256 _class) public'],
+		process.env.RARITY_ADDR,
+		process.env.RARITY_ABI,
 		signer
 	);
 
@@ -248,12 +246,12 @@ export async function	recruitAdventurer({provider, contractAddress, classID}, ca
 	}
 }
 
-export async function	setAttributes({provider, contractAddress, _summoner, _str, _dex, _const, _int, _wis, _cha}, callback) {
+export async function	setAttributes({provider, _summoner, _str, _dex, _const, _int, _wis, _cha}, callback) {
 	const	_toast = toast.loading(`Setting attributes for ${_summoner}...`);
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
-		contractAddress,
-		['function point_buy(uint _summoner, uint32 _str, uint32 _dex, uint32 _const, uint32 _int, uint32 _wis, uint32 _cha) public'],
+		process.env.RARITY_ATTR_ADDR,
+		process.env.RARITY_ATTR_ABI,
 		signer
 	);
 
@@ -293,12 +291,12 @@ export async function	setAttributes({provider, contractAddress, _summoner, _str,
 	}
 }
 
-export async function	claimGold({provider, contractAddress, tokenID}, callback) {
+export async function	claimGold({provider, tokenID}, callback) {
 	const	_toast = toast.loading(`Claiming gold for ${tokenID}...`);
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
-		contractAddress,
-		['function claim(uint256 _summoner) public'],
+		process.env.RARITY_GOLD_ADDR,
+		process.env.RARITY_GOLD_ABI,
 		signer
 	);
 
@@ -338,599 +336,8 @@ export async function	claimGold({provider, contractAddress, tokenID}, callback) 
 	}
 }
 
-export async function	apeInVault({provider, contractAddress, amount}, callback) {
-	const	_toast = toast.loading('Processing deposit...');
-	const	signer = provider.getSigner();
-	const	rarity = new ethers.Contract(
-		contractAddress,
-		['function deposit() public payable'],
-		signer
-	);
-
-	/**********************************************************************
-	**	If the call is successful, try to perform the actual TX
-	**********************************************************************/
-	try {
-		const	transaction = await rarity.deposit({value: amount});
-		const	transactionResult = await transaction.wait();
-		if (transactionResult.status === 1) {
-			callback({error: false, data: undefined});
-			toast.dismiss(_toast);
-			toast.success('Transaction successful');
-		} else {
-			toast.dismiss(_toast);
-			toast.error('Transaction reverted');
-			callback({error: true, data: undefined});
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-	}
-}
-export async function	apeOutVault({provider, address, zapAddress, contractAddress, amount, wantTokenName}, callback) {
-	let		_toast = toast.loading(`1/2 - Approving token yv${wantTokenName}...`);
-	const	signer = provider.getSigner();
-	const	vault = new ethers.Contract(
-		contractAddress, [
-			'function allowance(address, address) external view returns (uint256)',
-			'function approve(address to, uint256 amount) external'
-		],
-		signer
-	);
-	const	zap = new ethers.Contract(
-		zapAddress,
-		['function withdraw(uint256) public'],
-		signer
-	);
-
-	/**********************************************************************
-	**	First, we need to approve this TX
-	**********************************************************************/
-	try {
-		const	approvedAmount = await vault.allowance(address, zapAddress);
-		if (ethers.BigNumber.from(approvedAmount).gte(amount)) {
-			toast.dismiss(_toast);
-		} else {
-			const	transaction = await vault.approve(zapAddress, amount);
-			const	transactionResult = await transaction.wait();
-			if (transactionResult.status === 1) {
-				toast.dismiss(_toast);
-			} else {
-				toast.dismiss(_toast);
-				toast.error('Approve reverted');
-				callback({error: true, data: undefined});
-				return;
-			}
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-		return;
-	}
-
-	/**********************************************************************
-	**	If the call is successful, try to perform the actual TX
-	**********************************************************************/
-	try {
-		const	transaction = await zap.withdraw(amount);
-		const	transactionResult = await transaction.wait();
-		if (transactionResult.status === 1) {
-			callback({error: false, data: undefined});
-			toast.dismiss(_toast);
-			toast.success('Transaction successful');
-		} else {
-			toast.dismiss(_toast);
-			toast.error('Transaction reverted');
-			callback({error: true, data: undefined});
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-	}
-}
-export async function	depositInVault({provider, address, contractAddress, amount, wantTokenAddress, wantTokenName}, callback) {
-	let		_toast = toast.loading(`1/2 - Approving token ${wantTokenName}...`);
-	const	signer = provider.getSigner();
-	const	vault = new ethers.Contract(
-		contractAddress,
-		['function deposit(uint256) public'],
-		signer
-	);
-
-	/**********************************************************************
-	**	First, we need to approve this TX
-	**********************************************************************/
-	try {
-		const	wantContract = new ethers.Contract(
-			wantTokenAddress, [
-				'function allowance(address, address) external view returns (uint256)',
-				'function approve(address to, uint256 amount) external'
-			],
-			signer
-		);
-		const	approvedAmount = await wantContract.allowance(address, contractAddress);
-			
-		if (ethers.BigNumber.from(approvedAmount).gte(amount)) {
-			toast.dismiss(_toast);
-		} else {
-			const	transaction = await wantContract.approve(contractAddress, amount);
-			const	transactionResult = await transaction.wait();
-			if (transactionResult.status === 1) {
-				toast.dismiss(_toast);
-			} else {
-				toast.dismiss(_toast);
-				toast.error('Approve reverted');
-				callback({error: true, data: undefined});
-				return;
-			}
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-		return;
-	}
-
-	_toast = toast.loading(`2/2 - Deposit ${wantTokenName}...`);
-	/**********************************************************************
-	**	In order to avoid dumb error, let's first check if the TX would
-	**	be successful with a static call
-	**********************************************************************/
-	try {
-		await vault.callStatic.deposit(amount);
-	} catch (error) {
-		toast.dismiss(_toast);
-		toast.error('Impossible to deposit tokens');
-		callback({error, data: undefined});
-		return;
-	}
-	/**********************************************************************
-	**	If the call is successful, try to perform the actual TX
-	**********************************************************************/
-	try {
-		const	transaction = await vault.deposit(amount);
-		const	transactionResult = await transaction.wait();
-		if (transactionResult.status === 1) {
-			callback({error: false, data: undefined});
-			toast.dismiss(_toast);
-			toast.success('Transaction successful');
-		} else {
-			toast.dismiss(_toast);
-			toast.error('Transaction reverted');
-			callback({error: true, data: undefined});
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-	}
-}
-export async function	withdrawFromVault({provider, contractAddress, amount, wantTokenName}, callback) {
-	const	_toast = toast.loading(`Withdrawing yv${wantTokenName}...`);
-	const	signer = provider.getSigner();
-	const	vault = new ethers.Contract(
-		contractAddress, [
-			'function withdraw(uint256) public',
-			'function allowance(address, address) external view returns (uint256)',
-			'function approve(address to, uint256 amount) external'
-		],
-		signer
-	);
-
-	/**********************************************************************
-	**	In order to avoid dumb error, let's first check if the TX would
-	**	be successful with a static call
-	**********************************************************************/
-	try {
-		await vault.callStatic.withdraw(amount);
-	} catch (error) {
-		toast.dismiss(_toast);
-		toast.error('Impossible to withdraw tokens');
-		callback({error, data: undefined});
-		return;
-	}
-	/**********************************************************************
-	**	If the call is successful, try to perform the actual TX
-	**********************************************************************/
-	try {
-		const	transaction = await vault.withdraw(amount);
-		const	transactionResult = await transaction.wait();
-		if (transactionResult.status === 1) {
-			callback({error: false, data: undefined});
-			toast.dismiss(_toast);
-			toast.success('Transaction successful');
-		} else {
-			toast.dismiss(_toast);
-			toast.error('Transaction reverted');
-			callback({error: true, data: undefined});
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-	}
-}
-
-export async function	exploreTheForest({provider, contractAddress, tokenID, timeInDays}, callback) {
-	const	_toast = toast.loading('Heading to the Forest...');
-	const	signer = provider.getSigner();
-	const	rarity = new ethers.Contract(
-		contractAddress,
-		['function startResearch(uint256 _summoner, uint256 timeInDays) public'],
-		signer
-	);
-
-	/**********************************************************************
-	**	In order to avoid dumb error, let's first check if the TX would
-	**	be successful with a static call
-	**********************************************************************/
-	try {
-		await rarity.callStatic.startResearch(tokenID, timeInDays, {gasLimit: 200_000});
-	} catch (error) {
-		toast.dismiss(_toast);
-		toast.error('Impossible to explore The Forest');
-		callback({error, data: undefined});
-		return;
-	}
-
-	/**********************************************************************
-	**	If the call is successful, try to perform the actual TX
-	**********************************************************************/
-	try {
-		const	transaction = await rarity.startResearch(tokenID, timeInDays, {gasLimit: 200_000});
-		const	transactionResult = await transaction.wait();
-		if (transactionResult.status === 1) {
-			callback({error: false, data: tokenID});
-			toast.dismiss(_toast);
-			toast.success('Transaction successful');
-		} else {
-			toast.dismiss(_toast);
-			toast.error('Transaction reverted');
-			callback({error: true, data: undefined});
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-	}
-}
-
-export async function	discoverTreasureTheForest({provider, contractAddress, tokenID}, callback) {
-	const	_toast = toast.loading('Digging in the Forest...');
-	const	signer = provider.getSigner();
-	const	rarity = new ethers.Contract(
-		contractAddress,
-		['function discover(uint256 _summoner) public'],
-		signer
-	);
-
-	/**********************************************************************
-	**	In order to avoid dumb error, let's first check if the TX would
-	**	be successful with a static call
-	**********************************************************************/
-	try {
-		await rarity.callStatic.discover(tokenID, {gasLimit: 300_000});
-	} catch (error) {
-		toast.dismiss(_toast);
-		toast.error('Your shovel broke ... Try another one');
-		callback({error, data: undefined});
-		return;
-	}
-
-	/**********************************************************************
-	**	If the call is successful, try to perform the actual TX
-	**********************************************************************/
-	try {
-		const	transaction = await rarity.discover(tokenID, {gasLimit: 300_000});
-		const	transactionResult = await transaction.wait();
-		if (transactionResult.status === 1) {
-			callback({error: false, data: tokenID});
-			toast.dismiss(_toast);
-			toast.success('Transaction successful');
-		} else {
-			toast.dismiss(_toast);
-			toast.error('Transaction reverted');
-			callback({error: true, data: undefined});
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Your shovel broke ... Try another one');
-		callback({error, data: undefined});
-	}
-}
-
-export async function	levelUpTreasureTheForestOld({provider, contractAddress, tokenID, adventurerID, treasureName}, callback) {
-	let		_toast = toast.loading(`1/2 - Approving adventurer ${adventurerID}...`);
-	const	signer = provider.getSigner();
-	const	rarity = new ethers.Contract(
-		contractAddress,
-		['function levelUp(uint256 tokenId) public'],
-		signer
-	);
-
-	/**********************************************************************
-	**	First, we need to approve this TX
-	**********************************************************************/
-	try {
-		const	raritySource = new ethers.Contract(
-			process.env.RARITY_ADDR, [
-				'function getApproved(uint256 tokenId) external view returns (address operator)',
-				'function approve(address to, uint256 tokenId) external'
-			],
-			signer
-		);
-		const	approvedAddr = await raritySource.getApproved(adventurerID);
-		if (approvedAddr === process.env.RARITY_EXTENDED_XP) {
-			toast.dismiss(_toast);
-		} else {
-			const	transaction = await raritySource.approve(process.env.RARITY_EXTENDED_XP, adventurerID);
-			const	transactionResult = await transaction.wait();
-			if (transactionResult.status === 1) {
-				toast.dismiss(_toast);
-			} else {
-				toast.dismiss(_toast);
-				toast.error('Approve reverted');
-				callback({error: true, data: undefined});
-				return;
-			}
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-		return;
-	}
-
-	_toast = toast.loading(`2/2 - Level-up treasure ${treasureName}...`);
-	/**********************************************************************
-	**	In order to avoid dumb error, let's first check if the TX would
-	**	be successful with a static call
-	**********************************************************************/
-	try {
-		await rarity.callStatic.levelUp(tokenID, {gasLimit: 200_000});
-	} catch (error) {
-		toast.dismiss(_toast);
-		toast.error('Impossible to submit transaction');
-		callback({error, data: undefined});
-		return;
-	}
-
-	/**********************************************************************
-	**	If the call is successful, try to perform the actual TX
-	**********************************************************************/
-	try {
-		const	transaction = await rarity.levelUp(tokenID, {gasLimit: 200_000});
-		const	transactionResult = await transaction.wait();
-		if (transactionResult.status === 1) {
-			callback({error: false, data: tokenID});
-			toast.dismiss(_toast);
-			toast.success('Transaction successful');
-		} else {
-			toast.dismiss(_toast);
-			toast.error('Transaction reverted');
-			callback({error: true, data: undefined});
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-	}
-}
-
-export async function	levelUpTreasureTheForest({provider, contractAddress, tokenID, adventurerID, treasureName, xpRequired}, callback) {
-	let		_toast = toast.loading(`1/3 - Approving Proxy Spender ${adventurerID}...`);
-	const	signer = provider.getSigner();
-	const	address = await signer.getAddress();
-	const	rarity = new ethers.Contract(
-		contractAddress,
-		['function levelUp(uint256 tokenId) public'],
-		signer
-	);
-
-	/**********************************************************************
-	**	First, we need to approve this TX
-	**********************************************************************/
-	try {
-		const	raritySource = new ethers.Contract(
-			process.env.RARITY_ADDR, [
-				'function setApprovalForAll(address operator, bool approved) external',
-				'function isApprovedForAll(address owner, address operator) external view returns (bool)',
-			],
-			signer
-		);
-		const	isApprovedForAll = await raritySource.isApprovedForAll(address, process.env.RARITY_EXTENDED_XP);
-		if (isApprovedForAll) {
-			//
-		} else {
-			const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EXTENDED_XP, true);
-			const	transactionResult = await transaction.wait();
-			if (transactionResult.status === 1) {
-				toast.dismiss(_toast);
-			} else {
-				toast.dismiss(_toast);
-				toast.error('Approve reverted');
-				callback({error: true, data: undefined});
-				return;
-			}
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-		return;
-	}
-
-	/**********************************************************************
-	**	Then we need to allow the spender to spend amount XP
-	**********************************************************************/
-	try {
-		_toast = toast.loading(`2/3 - Approving ${ethers.utils.formatEther(xpRequired)} XP to be used...`);
-		const	rarityXpProxy = new ethers.Contract(
-			process.env.RARITY_EXTENDED_XP, [
-				'function allowance(address _owner, uint _adventurer, address _operator) external view returns (uint256)',
-				'function approve(uint _adventurer, address _operator, uint _amount) external returns (bool)',
-			],
-			signer
-		);
-		const	hasAllowance = await rarityXpProxy.allowance(address, adventurerID, contractAddress);
-		if (hasAllowance.gte(xpRequired)) {
-			toast.dismiss(_toast);
-		} else {
-			const	transaction = await rarityXpProxy.approve(adventurerID, contractAddress, xpRequired);
-			const	transactionResult = await transaction.wait();
-			if (transactionResult.status === 1) {
-				toast.dismiss(_toast);
-			} else {
-				toast.dismiss(_toast);
-				toast.error('Approve reverted');
-				callback({error: true, data: undefined});
-				return;
-			}
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-		return;
-	}
-
-
-	_toast = toast.loading(`3/3 - Level-up treasure ${treasureName}...`);
-	/**********************************************************************
-	**	In order to avoid dumb error, let's first check if the TX would
-	**	be successful with a static call
-	**********************************************************************/
-	try {
-		await rarity.callStatic.levelUp(tokenID, {gasLimit: 200_000});
-	} catch (error) {
-		toast.dismiss(_toast);
-		toast.error('Impossible to submit transaction');
-		callback({error, data: undefined});
-		return;
-	}
-
-	/**********************************************************************
-	**	If the call is successful, try to perform the actual TX
-	**********************************************************************/
-	try {
-		const	transaction = await rarity.levelUp(tokenID, {gasLimit: 200_000});
-		const	transactionResult = await transaction.wait();
-		if (transactionResult.status === 1) {
-			callback({error: false, data: tokenID});
-			toast.dismiss(_toast);
-			toast.success('Transaction successful');
-		} else {
-			toast.dismiss(_toast);
-			toast.error('Transaction reverted');
-			callback({error: true, data: undefined});
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-	}
-}
-
-
-export async function	restoreTreasureTheForest({provider, contractAddress, tokenID, treasureName, adventurerID}, callback) {
-	let		_toast = toast.loading(`1/2 - Approving treasure ${treasureName}...`);
-	const	signer = provider.getSigner();
-	const	rarity = new ethers.Contract(
-		contractAddress,
-		['function restoreTreasure(uint256 tokenId, uint256 receiver) public'],
-		signer
-	);
-
-	/**********************************************************************
-	**	First, we need to approve this TX
-	**********************************************************************/
-	try {
-		const	raritySource = new ethers.Contract(
-			process.env.DUNGEON_THE_FOREST_V1_ADDR, [
-				'function getApproved(uint256 tokenId) external view returns (address operator)',
-				'function approve(address to, uint256 tokenId) external'
-			],
-			signer
-		);
-		const	approvedAddr = await raritySource.getApproved(tokenID);
-		if (approvedAddr === contractAddress) {
-			toast.dismiss(_toast);
-		} else {
-			const	transaction = await raritySource.approve(contractAddress, tokenID);
-			const	transactionResult = await transaction.wait();
-			if (transactionResult.status === 1) {
-				toast.dismiss(_toast);
-			} else {
-				toast.dismiss(_toast);
-				toast.error('Approve reverted');
-				callback({error: true, data: undefined});
-				return;
-			}
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-		return;
-	}
-
-	_toast = toast.loading(`2/2 - Restoring treasure ${treasureName}...`);
-	/**********************************************************************
-	**	In order to avoid dumb error, let's first check if the TX would
-	**	be successful with a static call
-	**********************************************************************/
-	try {
-		await rarity.callStatic.restoreTreasure(tokenID, adventurerID, {gasLimit: 300_000});
-	} catch (error) {
-		toast.dismiss(_toast);
-		toast.error('Impossible to submit transaction');
-		callback({error, data: undefined});
-		return;
-	}
-
-	/**********************************************************************
-	**	If the call is successful, try to perform the actual TX
-	**********************************************************************/
-	try {
-		const	transaction = await rarity.restoreTreasure(tokenID, adventurerID, {gasLimit: 300_000});
-		const	transactionResult = await transaction.wait();
-		if (transactionResult.status === 1) {
-			callback({error: false, data: tokenID});
-			toast.dismiss(_toast);
-			toast.success('Transaction successful');
-		} else {
-			toast.dismiss(_toast);
-			toast.error('Transaction reverted');
-			callback({error: true, data: undefined});
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-	}
-}
-
 export async function	craft({
 	provider,
-	contractAddress,
 	tokenID,
 	itemName,
 	baseType,
@@ -942,8 +349,8 @@ export async function	craft({
 	let		_toast;
 	const	signer = provider.getSigner();
 	const	rarityCraft = new ethers.Contract(
-		contractAddress,
-		RARITY_CRAFTING_ABI,
+		process.env.RARITY_CRAFTING_ADDR,
+		process.env.RARITY_CRAFTING_ABI,
 		signer
 	);
 
@@ -959,10 +366,10 @@ export async function	craft({
 			signer
 		);
 		const	approvedAddr = await raritySource.getApproved(tokenID);
-		if (approvedAddr !== contractAddress) {
+		if (approvedAddr !== process.env.RARITY_CRAFTING_ADDR) {
 			hadApprove = true;
 			_toast = toast.loading('1/2 - Approving craft ...');
-			const	transaction = await raritySource.approve(contractAddress, tokenID);
+			const	transaction = await raritySource.approve(process.env.RARITY_CRAFTING_ADDR, tokenID);
 			const	transactionResult = await transaction.wait();
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
@@ -1056,81 +463,13 @@ export async function	craft({
 	}
 }
 
-export async function	approveERC721({provider, contractAddress, spender, tokenID, name}, callback) {
-	let		_toast = toast.loading(`Approving ${name}...`);
-	const	signer = provider.getSigner();
-
-	/**********************************************************************
-	**	First, we need to approve this TX
-	**********************************************************************/
-	try {
-		const	contract = new ethers.Contract(
-			contractAddress, [
-				'function approve(address spender, uint256 tokenID) external'
-			],
-			signer
-		);
-		const	transaction = await contract.approve(spender, tokenID);
-		const	transactionResult = await transaction.wait();
-		if (transactionResult.status === 1) {
-			toast.dismiss(_toast);
-			callback({error: false, data: undefined});
-			return;
-		} else {
-			toast.dismiss(_toast);
-			toast.error('Approve reverted');
-			callback({error: true, data: undefined});
-			return;
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-		return;
-	}
-}
-export async function	approveERC20({provider, contractAddress, adventurerID, spender, amount, name}, callback) {
-	let		_toast = toast.loading(`Approving ${name}...`);
-	const	signer = provider.getSigner();
-
-	/**********************************************************************
-	**	First, we need to approve this TX
-	**********************************************************************/
-	try {
-		const	contract = new ethers.Contract(
-			contractAddress, [
-				'function approve(uint256 from, uint256 spender, uint256 amount) external'
-			],
-			signer
-		);
-		const	transaction = await contract.approve(adventurerID, spender, amount);
-		const	transactionResult = await transaction.wait();
-		if (transactionResult.status === 1) {
-			toast.dismiss(_toast);
-			callback({error: false, data: undefined});
-			return;
-		} else {
-			toast.dismiss(_toast);
-			toast.error('Approve reverted');
-			callback({error: true, data: undefined});
-			return;
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-		return;
-	}
-}
 
 export async function	setName({provider, tokenID, name}, onError, onSuccess = onSuccessToast) {
 	const	_toast = toast.loading(`Name ${tokenID} to ${name}...`);
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
 		process.env.RARITY_EXTENDED_NAME,
-		EXTENDED_NAME_ABI,
+		process.env.RARITY_EXTENDED_NAME_ABI,
 		signer
 	);
 
