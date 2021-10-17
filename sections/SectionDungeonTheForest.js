@@ -13,7 +13,7 @@ import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	CLASSES							from	'utils/codex/classes';
 import	Adventurer						from	'components/Adventurer';
-import	{discoverTreasureTheForest}		from	'utils/actions';
+import	{discoverTreasureTheForest}		from	'utils/actions/dungeon_theForest';
 import	Box								from	'components/Box';
 
 dayjs.extend(relativeTime);
@@ -70,7 +70,7 @@ function	SectionDungeonTheForest({shouldDisplay, adventurers, router, adventurer
 							return (
 								<Box
 									onClick={() => {
-										discoverTreasureTheForest({provider, contractAddress: process.env.DUNGEON_THE_FOREST_ADDR, tokenID: adventurer.tokenID},
+										discoverTreasureTheForest({provider, tokenID: adventurer.tokenID},
 											({error}) => {
 												if (error) {
 													return console.error(error);

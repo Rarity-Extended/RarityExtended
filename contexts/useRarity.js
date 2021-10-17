@@ -17,15 +17,6 @@ import	ModalCurrentAdventurer									from	'components/ModalCurrentAdventurer';
 import	{chunk, fetcher, toAddress}								from	'utils';
 import	ITEMS													from	'utils/codex/items';
 import	CLASSES													from	'utils/codex/classes';
-import	RARITY_ABI												from	'utils/abi/rarity.abi';
-import	RARITY_ATTR_ABI											from	'utils/abi/rarityAttr.abi';
-import	RARITY_GOLD_ABI											from	'utils/abi/rarityGold.abi';
-import	RARITY_SKILLS_ABI										from	'utils/abi/raritySkills.abi';
-import	RARITY_FEATS_ABI										from	'utils/abi/rarityFeats.abi';
-import	RARITY_CRAFTING_HELPER_ABI								from	'utils/abi/rarityCraftingHelper.abi';
-import	THE_CELLAR_ABI											from	'utils/abi/dungeonTheCellar.abi';
-import	THE_FOREST_ABI											from	'utils/abi/dungeonTheForest.abi';
-import	EXTENDED_NAME_ABI										from	'utils/abi/rarityExtendedName.abi';
 import	MANIFEST_GOODS											from	'utils/codex/items_manifest_goods.json';
 import	MANIFEST_ARMORS											from	'utils/codex/items_manifest_armors.json';
 import	MANIFEST_WEAPONS										from	'utils/codex/items_manifest_weapons.json';
@@ -119,7 +110,7 @@ export const RarityContextApp = ({children}) => {
 	}, [active, address, chainID, provider]);
 
 	async function	sharedCalls() {
-		const	rarityCraftingHelper = new Contract(process.env.RARITY_CRAFTING_HELPER_ADDR, RARITY_CRAFTING_HELPER_ABI);
+		const	rarityCraftingHelper = new Contract(process.env.RARITY_CRAFTING_HELPER_ADDR, process.env.RARITY_CRAFTING_HELPER_ABI);
 		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
 		const	callResult = await ethcallProvider.all([
 			rarityCraftingHelper.getItemsByAddress(address)
@@ -155,14 +146,14 @@ export const RarityContextApp = ({children}) => {
 	**	Prepare the multicall to get most of the data
 	**************************************************************************/
 	function		prepareAdventurer(tokenID) {
-		const	rarity = new Contract(process.env.RARITY_ADDR, RARITY_ABI);
-		const	rarityAttr = new Contract(process.env.RARITY_ATTR_ADDR, RARITY_ATTR_ABI);
-		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI);
-		const	raritySkills = new Contract(process.env.RARITY_SKILLS_ADDR, RARITY_SKILLS_ABI);
-		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, THE_CELLAR_ABI);
-		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, THE_FOREST_ABI);
-		const	rarityExtendedName = new Contract(process.env.RARITY_EXTENDED_NAME, EXTENDED_NAME_ABI);
-		const	rarityFeats = new Contract(process.env.RARITY_FEATS_ADDR, RARITY_FEATS_ABI);
+		const	rarity = new Contract(process.env.RARITY_ADDR, process.env.RARITY_ABI);
+		const	rarityAttr = new Contract(process.env.RARITY_ATTR_ADDR, process.env.RARITY_ATTR_ABI);
+		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, process.env.RARITY_GOLD_ABI);
+		const	raritySkills = new Contract(process.env.RARITY_SKILLS_ADDR, process.env.RARITY_SKILLS_ABI);
+		const	rarityFeats = new Contract(process.env.RARITY_FEATS_ADDR, process.env.RARITY_FEATS_ABI);
+		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, process.env.DUNGEON_THE_CELLAR_ABI);
+		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI);
+		const	rarityExtendedName = new Contract(process.env.RARITY_EXTENDED_NAME, process.env.RARITY_EXTENDED_NAME_ABI);
 
 		return [
 			rarity.ownerOf(tokenID),
@@ -216,7 +207,11 @@ export const RarityContextApp = ({children}) => {
 	**	because of the msg.sender limitation
 	**************************************************************************/
 	function		prepareAdventurerExtra(tokenID) {
-		const	rarityGold = new ethers.Contract(process.env.RARITY_GOLD_ADDR, RARITY_GOLD_ABI, provider).connect(provider.getSigner());
+		const	rarityGold = new ethers.Contract(
+			process.env.RARITY_GOLD_ADDR,
+			process.env.RARITY_GOLD_ABI,
+			provider
+		).connect(provider.getSigner());
 		return [
 			rarityGold.claimable(tokenID)
 		];

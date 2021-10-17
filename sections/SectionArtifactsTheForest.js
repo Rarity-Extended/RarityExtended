@@ -10,7 +10,7 @@ import	Image							from	'next/image';
 import	{ethers}						from	'ethers';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
-import	{levelUpTreasureTheForest}		from	'utils/actions';
+import	{levelUpTreasureTheForest}		from	'utils/actions/dungeon_theForest';
 import	{xpRequired}					from	'utils/libs/rarity';
 import	THE_FOREST_LOOT					from	'utils/codex/items_dungeon_theForest.json';
 
@@ -47,7 +47,6 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, router, adventur
 						onClick={() => {
 							levelUpTreasureTheForest({
 								provider,
-								contractAddress: process.env.DUNGEON_THE_FOREST_ADDR,
 								tokenID: item.treasureId.toString(),
 								adventurerID: adventurer.tokenID,
 								treasureName: item.itemName,

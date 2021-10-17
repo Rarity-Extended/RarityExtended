@@ -12,7 +12,7 @@ import	useWeb3								from	'contexts/useWeb3';
 import	useRarity							from	'contexts/useRarity';
 import	DialogBox							from	'components/DialogBox';
 import	Typer								from	'components/Typer';
-import	{exploreTheForest}					from	'utils/actions';
+import	{exploreTheForest}					from	'utils/actions/dungeon_theForest';
 
 const	classMappingImg = [
 	'',
@@ -61,7 +61,6 @@ function	Index({dungeon, adventurer, router}) {
 	function	onExploreTheForest(time) {
 		exploreTheForest({
 			provider,
-			contractAddress: process.env.DUNGEON_THE_FOREST_ADDR,
 			tokenID: adventurer.tokenID,
 			timeInDays: time
 		}, ({error}) => {
