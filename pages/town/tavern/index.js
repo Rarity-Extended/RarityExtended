@@ -8,6 +8,7 @@
 import	React, {useState, useEffect}	from	'react';
 import	Image							from	'next/image';
 import	dayjs							from	'dayjs';
+import	duration					from	'dayjs/plugin/duration';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	useWeb3							from	'contexts/useWeb3';
 import	useUI							from	'contexts/useUI';
@@ -20,8 +21,9 @@ import	SectionRecruit					from	'sections/SectionRecruit';
 import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
 import	TAVERN_NEWS						from	'utils/codex/tavernNews.json';
 import	CLASSES							from	'utils/codex/classes';
-import	Adventurer						from	'components/Adventurer';
+import	{ getEligibility as getOpenMicEligibility, getOpenMicDialogOption, OpenMicSignUpList }			from 'components/dungeons/openmic';
 
+dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
 function	NewsTab({shouldDisplay}) {
@@ -278,56 +280,19 @@ function	DialogChoices({router, onWalletConnect, active}) {
 	}
 
 	if (router?.query?.tab === 'the-stage') {
-		const	canAdventure = currentAdventurer?.class === 2
-			&& currentAdventurer?.level > 1;
-		const bards = rarities ? Object.values(rarities)?.filter(a => CLASSES[a.class].id === 2) : [];
-		const firstOption = <>
-			{currentAdventurer && canAdventure && (<>
-					{'TAKE THE STAGE WITH '}
-					<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
-				</>)}
-			{currentAdventurer && !canAdventure && (<>
-					<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
-					{' CANNOT PERFORM, CHOOSE SOMEONE ELSE '}
-					</>)}
-			{!currentAdventurer && (<>
-					{'CHOOSE A BARD WITH LEVEL > 1 and PERFORM > 0 '}
-					</>)}
-		</>;
-
 		const options = [];
+		const bards = rarities ? Object.values(rarities)?.filter(a => CLASSES[a.class].id === 2) : [];
 		if(bards.length > 0) {
-			options.push({
-				label: firstOption,
-				onClick: () => {
-					if (canAdventure) {
-						router.push(`/dungeons/the-stage?adventurer=${currentAdventurer.tokenID}`);
-					} else if (currentAdventurer && !canAdventure) {
-						openCurrentAventurerModal();
-					}
-				}});
+			options.push(getOpenMicDialogOption(currentAdventurer, router, openCurrentAventurerModal));
 		} else {
 			options.push({label: 'RECRUIT A BARD FIRST !', onClick: () => router.push('/town/tavern?tab=recruit')});
 		}
 		options.push({label: 'GO BACK', onClick: () => router.push('/town/tavern')});
-
 		return (<>
 				<DialogBox options={options}
 					selectedOption={selectedOption}
 					nonce={dialogNonce} />
-
-				<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4'}>
-					{bards.map((adventurer) => {
-						return (
-							<div key={adventurer.tokenID} className={'w-full'}>
-								<Adventurer
-									onClick={() => router.push(`/dungeons/the-stage?adventurer=${adventurer.tokenID}`)}
-									adventurer={adventurer}
-									rarityClass={CLASSES[adventurer.class]} />
-							</div>
-						);
-					})}
-				</div>
+					<OpenMicSignUpList bards={bards} router={router}></OpenMicSignUpList>
 			</>);
 	}
 

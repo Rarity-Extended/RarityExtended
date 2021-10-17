@@ -17,6 +17,7 @@ import	SectionDungeonTheForest			from	'sections/SectionDungeonTheForest';
 import	SectionDungeonOpenMic			from	'sections/SectionDungeonOpenMic';
 import	Box								from	'components/Box';
 import	CLASSES							from	'utils/codex/classes';
+import	{ getOpenMicDialogOption }	from	'components/dungeons/openmic';
 
 function	DialogChoices({router, adventurersCount}) {
 	const	[selectedOption, set_selectedOption] = useState(0);
@@ -99,38 +100,13 @@ function	DialogChoices({router, adventurersCount}) {
 		);
 	}
 	if (router?.query?.tab === 'the-stage') {
-		const	canAdventure = currentAdventurer?.class === 2
-			&& currentAdventurer?.level > 1;
-		const firstOption = <>
-			{currentAdventurer && canAdventure && (<>
-					{'TAKE THE STAGE WITH '}
-					<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
-				</>)}
-			{currentAdventurer && !canAdventure && (<>
-					<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
-					{' CANNOT PERFORM, CHOOSE SOMEONE ELSE '}
-					</>)}
-			{!currentAdventurer && (<>
-					{'CHOOSE A BARD WITH LEVEL > 1 and PERFORM > 0 '}
-					</>)}
-		</>;
-
 		return (
 			<>
 				<DialogBox
 					selectedOption={selectedOption}
 					nonce={dialogNonce}
 					options={[
-						{
-							label: firstOption,
-							onClick: () => {
-								if (canAdventure) {
-									router.push(`/dungeons/the-stage?adventurer=${currentAdventurer.tokenID}`);
-								} else if (currentAdventurer && !canAdventure) {
-									openCurrentAventurerModal();
-								}
-							}
-						},
+						getOpenMicDialogOption(currentAdventurer, router, openCurrentAventurerModal),
 						{label: 'CANCEL', onClick: () => router.push('/town/quest')},
 					]} />
 			</>

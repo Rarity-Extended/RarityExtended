@@ -11,6 +11,9 @@ import	Link									from	'next/link';
 import	DialogBox								from	'components/DialogBox';
 import	Box								from	'components/Box';
 import	toast				from	'react-hot-toast';
+import	skills	from	'utils/codex/skills';
+import	useRarity						from	'contexts/useRarity';
+import Skills from 'components/ModalSkills';
 
 const	classMappingBackImg = [
 	'',
@@ -74,6 +77,8 @@ function AdventureResult() {
 }
 
 function Adventure({ router, adventurer }) {
+	const	{rarities} = useRarity();
+	const performer = rarities[router?.query?.adventurer];
 	const {set_performanceResult} = useContext(PerformanceContext);
 
 	function abilityModifier(ability) {
@@ -124,6 +129,10 @@ function Adventure({ router, adventurer }) {
 			]
 		});
 	}
+
+	const charisma = performer.attributes.charisma;
+	const performSkill = performer.skills[skills["Perform"].id - 1];
+	const forestTreasures = performer.inventory[1];
 
 	return <>
 	<div className={'max-w-screen-sm w-full mt-12 mr-auto ml-auto'}>
@@ -200,19 +209,19 @@ function Adventure({ router, adventurer }) {
 						</div>
 						<div className={'flex justify-between'}>
 							<div className={'text-sm opacity-80'}>Perform Skill</div>
-							<div className={''}>+5</div>
+							<div>+{performSkill}</div>
 						</div>
 						<div className={'flex justify-between'}>
 							<div className={'text-sm opacity-80'}>Charisma</div>
-							<div className={''}>{abilityModifierFormated(18)}</div>
+							<div>{abilityModifierFormated(charisma)}</div>
 						</div>
 						<div className={'flex justify-between'}>
-							<div className={'text-sm opacity-80'}>Forest Treasures</div>
-							<div className={''}>+1</div>
+							<div className={'text-sm opacity-80'}>Forest Treasure</div>
+							<div>{forestTreasures.length ? '+1' : '-'}</div>
 						</div>
 						<div className={'flex justify-between'}>
 							<div className={'text-sm opacity-80'}>Odds</div>
-							<div className={''}>{odds(5, 18, [1])}</div>
+							<div>{odds(performSkill, charisma, forestTreasures)}</div>
 						</div>
 						<br />
 					</Box>
@@ -232,12 +241,13 @@ function Adventure({ router, adventurer }) {
 	</>
 }
 
-export default TheStage = ({rarities, router}) => {
+const TheStage = ({rarities, router}) => {
 	const	[performanceResult, set_performanceResult] = useState(null);
 
 	if (!rarities || rarities === {}) {
 		return null;
 	}
+
 	if (!rarities[router?.query?.adventurer]) {
 		if (typeof(window) !== 'undefined')
 			router.push('/');
@@ -254,4 +264,6 @@ export default TheStage = ({rarities, router}) => {
 			</section>
 		</PerformanceContext.Provider>
 	);
-}
+};
+
+export default TheStage;

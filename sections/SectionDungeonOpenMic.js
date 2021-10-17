@@ -7,14 +7,15 @@
 
 import	React							from	'react';
 import	dayjs							from	'dayjs';
+import	duration					from	'dayjs/plugin/duration';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	CLASSES							from	'utils/codex/classes';
-import	Adventurer						from	'components/Adventurer';
-import	useWeb3							from	'contexts/useWeb3';
+import	{ OpenMicSignUpList }		from 'components/dungeons/openmic';
+
+dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
-function	SectionDungeonOpenMic({shouldDisplay, adventurers, router, adventurersCount}) {
-	const	{chainTime} = useWeb3();
+function	SectionDungeonOpenMic({shouldDisplay, adventurers, router}) {
   const bards = Object.values(adventurers)?.filter(a => CLASSES[a.class].id === 2);
   const bardCount = bards?.length;
 
@@ -43,18 +44,7 @@ function	SectionDungeonOpenMic({shouldDisplay, adventurers, router, adventurersC
 				}
 			</div>
 			<div>
-				<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4'}>
-					{bards.map((adventurer) => {
-						return (
-							<div key={adventurer.tokenID} className={'w-full'}>
-								<Adventurer
-									onClick={() => router.push(`/dungeons/the-stage?adventurer=${adventurer.tokenID}`)}
-									adventurer={adventurer}
-									rarityClass={CLASSES[adventurer.class]} />
-							</div>
-						);
-					})}
-				</div>
+				<OpenMicSignUpList bards={bards} router={router} />
 			</div>
 		</div>
 	);
