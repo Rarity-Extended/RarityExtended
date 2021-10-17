@@ -371,7 +371,7 @@ function	Index({router}) {
 
 	return (
 		<section>
-			<div className={'mt-8 max-w-prose w-full flex-col flex justify-center items-center mx-auto'}>
+			<div className={'mt-8 max-w-prose w-full flex-col flex justify-center items-center mx-auto px-3'}>
 				<Box className={'p-4 text-xs md:text-xs leading-normal md:leading-8 w-full relative'}>
 					<div className={'relative'}>
 						<div className={'filter grayscale -m-4 pb-8 opacity-70'}>

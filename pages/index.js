@@ -5,29 +5,30 @@
 **	@Filename:				index.js
 ******************************************************************************/
 
-import	React, {useState}				from	'react';
-import	router							from	'next/router';
-import	Image							from	'next/image';
-import	dayjs							from	'dayjs';
-import	relativeTime					from	'dayjs/plugin/relativeTime';
-import	SectionNoAdventurer				from	'sections/SectionNoAdventurer';
-import	SectionCharacterSheet			from	'sections/SectionCharacterSheet';
-import	useWeb3							from	'contexts/useWeb3';
-import	useRarity						from	'contexts/useRarity';
-import	useUI							from	'contexts/useUI';
-import	Adventurer						from	'components/Adventurer';
-import	ListBox							from	'components/ListBox';
-import	Box								from	'components/Box';
-import	TownNav							from	'components/TownNav';
-import	Chevron							from	'components/Chevron';
-import	ModalSkills						from	'components/ModalSkills';
-import	ModalFeats						from	'components/ModalFeats';
-import	useLocalStorage					from	'hook/useLocalStorage';
-import	CLASSES							from	'utils/codex/classes';
+import	React, {useState}								from	'react';
+import	router											from	'next/router';
+import	Image											from	'next/image';
+import	Link											from	'next/link';
+import	dayjs											from	'dayjs';
+import	relativeTime									from	'dayjs/plugin/relativeTime';
+import	SectionNoAdventurer								from	'sections/SectionNoAdventurer';
+import	SectionCharacterSheet							from	'sections/SectionCharacterSheet';
+import	useWeb3											from	'contexts/useWeb3';
+import	useRarity										from	'contexts/useRarity';
+import	useUI											from	'contexts/useUI';
+import	Adventurer										from	'components/Adventurer';
+import	ListBox											from	'components/ListBox';
+import	Box												from	'components/Box';
+import	TownNav											from	'components/TownNav';
+import	Chevron											from	'components/Chevron';
+import	ModalSkills										from	'components/ModalSkills';
+import	ModalFeats										from	'components/ModalFeats';
+import	useLocalStorage									from	'hook/useLocalStorage';
+import	CLASSES											from	'utils/codex/classes';
 import	{availableSkillPoints, calculatePointsForSet}	from	'utils/libs/raritySkills';
 import	{featsPerClass, initialFeatsPerClass}			from	'utils/libs/rarityFeats';
 import	{xpRequired}									from	'utils/libs/rarity';
-import	{goAdventure, claimGold, levelUp, setName}	from	'utils/actions';
+import	{goAdventure, claimGold, levelUp}				from	'utils/actions';
 
 dayjs.extend(relativeTime);
 
@@ -226,16 +227,17 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 		{
 			label: 'Set Name',
 			condition: () => currentAdventurer.name === '',
+			onClick: () => router.push(`/adventurer/${currentAdventurer.tokenID}`)
 		},
 		{
 			label: 'Handle the Big Ugly Rat in the Cellar',
 			condition: () => currentAdventurer?.dungeons?.cellar?.canAdventure,
-			onClick: () => router.push('/town/quest?tab=the-cellar')
+			onClick: () => router.push('/countryside/cellar')
 		},
 		{
 			label: 'Go in the Forest',
 			condition: () => currentAdventurer?.dungeons?.forest?.canAdventure,
-			onClick: () => router.push('/town/quest?tab=the-forest')
+			onClick: () => router.push('/countryside/forest')
 		},
 		{
 			label: 'Handle the Boar situation',
@@ -282,82 +284,87 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 		});
 	}
 
-
 	function	renderDungeonsNav() {
 		return (
 			<div style={{height: 312}} className={'w-full px-4 flex flex-col relative mb-4 md:mb-1 h-full'}>
 				<div className={'flex flex-col items-center overflow-y-scroll scrollbar-none text-white'}>
-					<div className={'mt-2 mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
-						<div className={'opacity-40 overflow-hidden -mb-1'}>
-							<Image
-								src={'/illustrations/illuBoars.jpeg'}
-								loading={'eager'}
-								objectFit={'cover'}
-								objectPosition={'top'}
-								quality={70}
-								width={800}
-								height={150} />
-						</div>
-						<div className={'absolute inset-0 opacity-30'} style={{backgroundColor: '#554a40'}} />
+					<Link href={'/countryside/boars'}>
+						<div className={'mt-2 mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
+							<div className={'opacity-40 overflow-hidden -mb-1'}>
+								<Image
+									src={'/illustrations/illuBoars.jpeg'}
+									loading={'eager'}
+									objectFit={'cover'}
+									objectPosition={'top'}
+									quality={70}
+									width={800}
+									height={150} />
+							</div>
+							<div className={'absolute inset-0 opacity-30'} style={{backgroundColor: '#554a40'}} />
 
-						<div className={'absolute inset-0 flex flex-row'}>
-							<div className={'w-1/2 h-full p-6'}>
-								<h1 className={'text-shadow-lg'}>{'The Boars'}</h1>
-								<p className={'text-shadow-lg text-regular pt-2'}>{'Kill or Protect the Boars. The destiny of the Forest is in your hands ...'}</p>
-							</div>
-							<div className={'w-1/2 h-full p-6 flex justify-end items-center'}>
-								<svg className={'group-hover:animate-bounce-r opacity-30 group-hover:opacity-100 transition-opacity'} width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M4 11v2h12v2h2v-2h2v-2h-2V9h-2v2H4zm10-4h2v2h-2V7zm0 0h-2V5h2v2zm0 10h2v-2h-2v2zm0 0h-2v2h2v-2z'} fill={'currentColor'}/> </svg>
+							<div className={'absolute inset-0 flex flex-row'}>
+								<div className={'w-1/2 h-full p-6'}>
+									<h1 className={'text-shadow-lg'}>{'The Boars'}</h1>
+									<p className={'text-shadow-lg text-regular pt-2'}>{'Kill or Protect the Boars. The destiny of the Forest is in your hands ...'}</p>
+								</div>
+								<div className={'w-1/2 h-full p-6 flex justify-end items-center'}>
+									<svg className={'group-hover:animate-bounce-r opacity-30 group-hover:opacity-100 transition-opacity'} width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M4 11v2h12v2h2v-2h2v-2h-2V9h-2v2H4zm10-4h2v2h-2V7zm0 0h-2V5h2v2zm0 10h2v-2h-2v2zm0 0h-2v2h2v-2z'} fill={'currentColor'}/> </svg>
+								</div>
 							</div>
 						</div>
-					</div>
+					</Link>
 
-					<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
-						<div className={'opacity-40 overflow-hidden -mb-1'}>
-							<Image
-								src={'/illustrations/illuForest.jpeg'}
-								className={'filter'}
-								loading={'eager'}
-								objectFit={'cover'}
-								objectPosition={'top'}
-								quality={70}
-								width={800}
-								height={150} />
-						</div>
-						<div className={'absolute inset-0 opacity-30'} style={{backgroundColor: '#124712'}} />
+					<Link href={'/countryside/forest'}>
+						<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
+							<div className={'opacity-40 overflow-hidden -mb-1'}>
+								<Image
+									src={'/illustrations/illuForest.jpeg'}
+									className={'filter'}
+									loading={'eager'}
+									objectFit={'cover'}
+									objectPosition={'top'}
+									quality={70}
+									width={800}
+									height={150} />
+							</div>
+							<div className={'absolute inset-0 opacity-30'} style={{backgroundColor: '#124712'}} />
 
-						<div className={'absolute inset-0 flex flex-row'}>
-							<div className={'w-1/2 h-full p-6'}>
-								<h1 className={'text-shadow-lg'}>{'The Forest'}</h1>
-								<p className={'text-shadow-lg text-regular pt-2'}>{'This drunk man in the Tavern talked about treasure ... What does this big Forest hide ?'}</p>
-							</div>
-							<div className={'w-1/2 h-full p-6 flex justify-end items-center'}>
-								<svg className={'group-hover:animate-bounce-r opacity-30 group-hover:opacity-100 transition-opacity'} width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M4 11v2h12v2h2v-2h2v-2h-2V9h-2v2H4zm10-4h2v2h-2V7zm0 0h-2V5h2v2zm0 10h2v-2h-2v2zm0 0h-2v2h2v-2z'} fill={'currentColor'}/> </svg>
+							<div className={'absolute inset-0 flex flex-row'}>
+								<div className={'w-1/2 h-full p-6'}>
+									<h1 className={'text-shadow-lg'}>{'The Forest'}</h1>
+									<p className={'text-shadow-lg text-regular pt-2'}>{'This drunk man in the Tavern talked about treasure ... What does this big Forest hide ?'}</p>
+								</div>
+								<div className={'w-1/2 h-full p-6 flex justify-end items-center'}>
+									<svg className={'group-hover:animate-bounce-r opacity-30 group-hover:opacity-100 transition-opacity'} width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M4 11v2h12v2h2v-2h2v-2h-2V9h-2v2H4zm10-4h2v2h-2V7zm0 0h-2V5h2v2zm0 10h2v-2h-2v2zm0 0h-2v2h2v-2z'} fill={'currentColor'}/> </svg>
+								</div>
 							</div>
 						</div>
-					</div>
+					</Link>
 
-					<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
-						<div className={'opacity-40 overflow-hidden -mb-1'}>
-							<Image
-								src={'/illustrations/illuCellar.jpeg'}
-								className={'filter'}
-								loading={'eager'}
-								objectFit={'cover'}
-								objectPosition={'left'}
-								quality={70}
-								width={800}
-								height={150} />
-						</div>
-						<div className={'absolute inset-0 flex flex-row'}>
-							<div className={'w-1/2 h-full p-6'}>
-								<h1 className={'text-shadow-lg'}>{'The Cellar'}</h1>
-								<p className={'text-shadow-lg text-regular pt-2'}>{'A Big Ugly Rat in the Cellar? Sounds like the perfect adventurer for a beginner!'}</p>
+					<Link href={'/countryside/cellar'}>
+						<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
+							<div className={'opacity-40 overflow-hidden -mb-1'}>
+								<Image
+									src={'/illustrations/illuCellar.jpeg'}
+									className={'filter'}
+									loading={'eager'}
+									objectFit={'cover'}
+									objectPosition={'left'}
+									quality={70}
+									width={800}
+									height={150} />
 							</div>
-							<div className={'w-1/2 h-full p-6 flex justify-end items-center'}>
-								<svg className={'group-hover:animate-bounce-r opacity-30 group-hover:opacity-100 transition-opacity'} width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M4 11v2h12v2h2v-2h2v-2h-2V9h-2v2H4zm10-4h2v2h-2V7zm0 0h-2V5h2v2zm0 10h2v-2h-2v2zm0 0h-2v2h2v-2z'} fill={'currentColor'}/> </svg>
+							<div className={'absolute inset-0 flex flex-row'}>
+								<div className={'w-1/2 h-full p-6'}>
+									<h1 className={'text-shadow-lg'}>{'The Cellar'}</h1>
+									<p className={'text-shadow-lg text-regular pt-2'}>{'A Big Ugly Rat in the Cellar? Sounds like the perfect adventurer for a beginner!'}</p>
+								</div>
+								<div className={'w-1/2 h-full p-6 flex justify-end items-center'}>
+									<svg className={'group-hover:animate-bounce-r opacity-30 group-hover:opacity-100 transition-opacity'} width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M4 11v2h12v2h2v-2h2v-2h-2V9h-2v2H4zm10-4h2v2h-2V7zm0 0h-2V5h2v2zm0 10h2v-2h-2v2zm0 0h-2v2h2v-2z'} fill={'currentColor'}/> </svg>
+								</div>
 							</div>
 						</div>
-					</div>
+					</Link>
 				</div>
 			</div>
 		);
@@ -518,7 +525,7 @@ function	Index({router}) {
 	}
 
 	return (
-		<section className={'mt-16 md:mt-12'}>
+		<section className={'mt-16 md:mt-8'}>
 			<div className={'flex flex-col max-w-screen-lg w-full mx-auto'}>
 				<Overview
 					router={router}

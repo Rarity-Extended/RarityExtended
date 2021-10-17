@@ -36,7 +36,7 @@ function	DialogChoices({router, step, stepAuto, boarEscaped, adventurerWon, expe
 		return (
 			<DialogNoBox
 				options={[
-					{label: 'THE WILD BOAR HAS ESCAPED', onClick: () => router.push('/town/quest?tab=the-boars')},
+					{label: 'THE WILD BOAR HAS ESCAPED', onClick: () => router.push('/countryside/boars')},
 				]} />
 		);
 	}
@@ -45,7 +45,7 @@ function	DialogChoices({router, step, stepAuto, boarEscaped, adventurerWon, expe
 			return (
 				<DialogNoBox
 					options={[
-						{label: 'YOU HAVE DEFEATED THE WILD BOAR ! UNFORTUNATELY, THERE IS NOTHING TO RECOVER', onClick: () => router.push('/town/quest?tab=the-boars')},
+						{label: 'YOU HAVE DEFEATED THE WILD BOAR ! UNFORTUNATELY, THERE IS NOTHING TO RECOVER', onClick: () => router.push('/countryside/boars')},
 					]} />
 			);
 		}
@@ -61,7 +61,7 @@ function	DialogChoices({router, step, stepAuto, boarEscaped, adventurerWon, expe
 			options={[
 				{label: 'FIGHT', onClick: step},
 				{label: 'FIGHT (AUTO)', onClick: stepAuto},
-				{label: 'ESCAPE', onClick: () => router.push('/town/quest?tab=the-boars')},
+				{label: 'ESCAPE', onClick: () => router.push('/countryside/boars')},
 			]} />
 	);
 }
@@ -139,7 +139,7 @@ function	Index({dungeon, adventurer, router}) {
 			<div className={`absolute bg-black inset-0 z-10 -top-32 -left-4 -right-4 flex flex-col items-center min-h-screen transition-opacity duration-1000 ${adventurerHealth <= 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
 				<p className={'text-2xl text-white pt-20 mx-4 md:mx-0 md:pt-64 max-w-screen-sm text-center'}>{'you passed out'}</p>
 				<p className={'text-base text-white pt-8 mx-4 md:mx-0 max-w-screen-sm text-center'}>{'After some time, the Farmer find you and bring you back in town...'}</p>
-				<Link href={'/town/quest?tab=the-boars'}>
+				<Link href={'/countryside/boars'}>
 					<div className={'text-base text-white mt-16 mx-4 md:mx-0 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 border-white hover:bg-white hover:text-black transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
 						{'Rest weak adventurer, Rest...'}
 					</div>
