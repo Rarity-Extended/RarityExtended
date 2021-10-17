@@ -373,7 +373,7 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 	function	renderTasks() {
 		return (
 			<div style={{height: 312}} className={'w-full px-4 flex flex-col relative mb-4 md:mb-1 h-full'}>
-				<div className={'flex flex-col items-center overflow-y-scroll scrollbar-none text-white'}>
+				<div className={'flex flex-col items-center overflow-y-scroll scrollbar-none'}>
 					{availableTasks.length > 0 ? availableTasks.map((task, index) => (
 						<div
 							key={task.label}
