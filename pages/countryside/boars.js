@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 /******************************************************************************
 **	@Author:				Rarity Extended
 **	@Twitter:				@RXtended
@@ -336,6 +337,8 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, pr
 }
 
 function	Index({router}) {
+	return <p>{'SOON'}</p>;
+	
 	const	[population, set_population] = useState({count: -1, extinction: 0, extinctionBy: 0});
 	const	[choice, set_choice] = useState('');
 	const	{currentAdventurer, openCurrentAventurerModal, updateRarity} = useRarity();

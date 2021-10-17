@@ -291,9 +291,9 @@ function	Index() {
 					<DialogBox
 						options={[
 							{label: 'Withdraw 100%', onClick: () => performApeOut((selectedVault?.shareRaw))},
-							{label: 'Withdraw 75%', onClick: () => performApeOut((selectedVault?.shareRaw).mul(75).div(100))},
-							{label: 'Withdraw 50%', onClick: () => performApeOut((selectedVault?.shareRaw).mul(50).div(100))},
-							{label: 'Withdraw 25%', onClick: () => performApeOut((selectedVault?.shareRaw).mul(25).div(100))},
+							{label: 'Withdraw 75%', onClick: () => performApeOut((selectedVault.shareRaw).mul(75).div(100))},
+							{label: 'Withdraw 50%', onClick: () => performApeOut((selectedVault.shareRaw).mul(50).div(100))},
+							{label: 'Withdraw 25%', onClick: () => performApeOut((selectedVault.shareRaw).mul(25).div(100))},
 							{label: 'Nevermind', onClick: () => {
 								if (!isDeposit) {
 									return set_isDeposit(true);
@@ -331,9 +331,9 @@ function	Index() {
 					<DialogBox
 						options={[
 							{label: 'Withdraw 100%', onClick: () => performWithdraw(selectedVault.shareRaw)},
-							{label: 'Withdraw 75%', onClick: () => performWithdraw((selectedVault?.shareRaw).mul(75).div(100))},
-							{label: 'Withdraw 50%', onClick: () => performWithdraw((selectedVault?.shareRaw).mul(50).div(100))},
-							{label: 'Withdraw 25%', onClick: () => performWithdraw((selectedVault?.shareRaw).mul(25).div(100))},
+							{label: 'Withdraw 75%', onClick: () => performWithdraw((selectedVault.shareRaw).mul(75).div(100))},
+							{label: 'Withdraw 50%', onClick: () => performWithdraw((selectedVault.shareRaw).mul(50).div(100))},
+							{label: 'Withdraw 25%', onClick: () => performWithdraw((selectedVault.shareRaw).mul(25).div(100))},
 							{label: 'Nevermind', onClick: () => {
 								if (!isDeposit) {
 									return set_isDeposit(true);
