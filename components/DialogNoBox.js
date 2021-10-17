@@ -29,7 +29,7 @@ function	Index({options}) {
 			{options.map((opt, index) => (
 				<div
 					key={index}
-					className={`py-1 px-2 group hover:bg-gray-principal dark:hover:bg-dark-300 cursor-pointer ${option === index ? 'bg-gray-principal dark:bg-dark-300' : 'bg-white dark:bg-dark-600'}`}
+					className={`py-2 px-2 group hover:bg-gray-principal dark:hover:bg-dark-300 cursor-pointer ${option === index ? 'bg-gray-principal dark:bg-dark-300' : 'bg-white dark:bg-dark-600'}`}
 					style={{cursor: 'pointer'}}
 					onClick={() => {
 						set_option(index);
@@ -37,7 +37,7 @@ function	Index({options}) {
 					}}>
 					<span className={'cursor-pointer'} style={{cursor: 'pointer'}}>
 						<span className={`inline mb-1 mr-2 group-hover:opacity-100 ${option === index ? 'opacity-100' : 'opacity-5'}`} style={{cursor: 'pointer'}}>{'>'}</span>
-						<span className={'cursor-pointer text-xs'} style={{cursor: 'pointer'}}>{opt.label}</span>
+						<span className={'cursor-pointer'} style={{cursor: 'pointer'}}>{opt.label}</span>
 					</span>
 				</div>	
 			))}

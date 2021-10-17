@@ -52,7 +52,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 							<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 								{'OH, YOU WOULD LIKE TO GET YOUR INVESTMENT BACK? HOW MANY '}
 							</Typer>
-							<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+							<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 								{selectedVault?.token}
 							</Typer></span>
 							<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -69,7 +69,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 							<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 								{'OH, YOU WOULD LIKE TO GET YOUR INVESTMENT BACK? HOW MANY '}
 							</Typer>
-							<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+							<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 								{selectedVault?.token}
 							</Typer></span>
 							<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -83,7 +83,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 							{'I WOULD LOVE TO, TRAVELER! BUT YOU DON\'T HAVE ANY '}
 						</Typer>
-						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 							{selectedVault?.token}
 						</Typer></span>
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -97,13 +97,13 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'GREAT CHOICE, TRAVELER! YOU HAVE '}
 					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{`${Number(selectedVault?.balance || 0).toFixed(4)} ${selectedVault?.token}`}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 						{', HOW MUCH WILL YOU DEPOSIT IN '}
 					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 						{selectedVault?.name}
 					</Typer></span>
 				</>
@@ -113,7 +113,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 			return (
 				<>
 					{'LOOK WHO IS HERE! WELCOME TO '}
-					<span className={'text-tag-info'}>{'IVAN’S BANK'}</span>
+					<span className={'text-tag-info dark:text-tag-warning'}>{'IVAN’S BANK'}</span>
 					{', MIGHTY HERO! SO YOU’VE EARNED SOME COINS IN YOUR LEGENDARY ADVENTURES, HAVEN’T YOU? I CAN EARN YOU EVEN MORE! JUST DEPOSIT IN ONE OF THESE VERY NICE VAULTS...'}
 				</>
 			);
@@ -123,7 +123,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 					{'LOOK WHO IS HERE! WELCOME TO '}
 				</Typer>
-				<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+				<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 					{'IVAN’S BANK'}
 				</Typer></span>
 				<Typer

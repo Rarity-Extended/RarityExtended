@@ -2683,10 +2683,10 @@ eth-sig-util@^1.4.2:
     ethereumjs-abi "git+https://github.com/ethereumjs/ethereumjs-abi.git"
     ethereumjs-util "^5.1.1"
 
-ethcall@4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/ethcall/-/ethcall-4.0.6.tgz#75a79acafbc6e49e70edccf9d96041e1c27da43a"
-  integrity sha512-u/ue9iVFhIHTMnNoCgxZ1BgZr9bFbD81VkhbboIOnruvu8TZ1GkcdzB5vqWEb3BtfRRIhZ5KVP29tRpGNh3epw==
+ethcall@^4.0.11:
+  version "4.0.11"
+  resolved "https://registry.yarnpkg.com/ethcall/-/ethcall-4.0.11.tgz#1f11643309cf31cfe0f9d81ce6c3035b5408e0e2"
+  integrity sha512-Ffc91TzJmHJag/5Y2OBkYSnyHPrX4HaF00YpFVYvMLwWHVuHgh3XjZn2Q1rsCXUqeCSlIzr3f+yVlcIXYhDEmw==
   dependencies:
     "@ethersproject/abi" "^5.0.0"
     "@ethersproject/contracts" "^5.0.0"

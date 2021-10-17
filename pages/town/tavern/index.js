@@ -66,7 +66,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'WELCOME, ADVENTURER! I AM'}
 					</Typer>&nbsp;
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'FACU THE TAVERN KEEPER'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -84,7 +84,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 				return (
 					<>
 						{'WELCOME, ADVENTURER! I AM '}
-						<span className={'text-tag-info'}>{'FACU THE TAVERN KEEPER'}</span>
+						<span className={'text-tag-info dark:text-tag-warning'}>{'FACU THE TAVERN KEEPER'}</span>
 						{'!'}
 						<div />
 						{'WHAT CAN I DO FOR YA? LOOKING FOR THE LASTED NEWS, CHECK BELOW!'}
@@ -96,7 +96,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'WELCOME, ADVENTURER! I AM'}
 					</Typer>&nbsp;
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'FACU THE TAVERN KEEPER'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -120,7 +120,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 					return (
 						<>
 							{'WELCOME, ADVENTURER! I AM '}
-							<span className={'text-tag-info'}>{'FACU THE TAVERN KEEPER'}</span>
+							<span className={'text-tag-info dark:text-tag-warning'}>{'FACU THE TAVERN KEEPER'}</span>
 							{'!'}
 							<div />
 							{'YOU ARE ABOUT TO START A JOURNEY BEYOND IMAGINATION. YOU WILL MEET NEW FRIENDS AND FIGHT GREAT DANGERS!'}
@@ -134,7 +134,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 							{'WELCOME, ADVENTURER! I AM'}
 						</Typer>&nbsp;
-						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 							{'FACU THE TAVERN KEEPER'}
 						</Typer></span>
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -170,7 +170,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'OH, THERE IS A '}
 					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'HERO'}
 					</Typer></span>
 					<Typer
@@ -239,11 +239,11 @@ function	DialogChoices({router, onWalletConnect, active}) {
 							canAdventure ?
 								<>
 									{'FIGHT THE RAT WITH '}
-									<span className={'text-tag-info'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+									<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
 								</>
 								:
 								<>
-									<span className={'text-tag-info'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
+									<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer.tokenID}, ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
 									{' NEED SOME REST BEFORE FIGHTING THE RAT AGAIN'}
 								</>
 						),

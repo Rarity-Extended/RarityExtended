@@ -1,4 +1,5 @@
 const colors = require('tailwindcss/colors');
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
 	purge: [
@@ -14,7 +15,9 @@ module.exports = {
 	theme: {
 		fontFamily: {
 			title: ['"Press Start 2P"', 'monospace'],
-			mono: ['IBM Plex Mono', 'monospace']
+			mono: ['IBM Plex Mono', 'monospace'],
+			story: ['Noto Sans Mono', 'monospace'],
+			sans: ['Roboto', ...defaultTheme.fontFamily.sans],
 		},
 		colors: {
 			black: '#000000',
@@ -29,6 +32,7 @@ module.exports = {
 				new: '#059669',
 				info: '#167df0',
 				warning: '#FBBF24',
+				warningDarker: '#F59E0B',
 				withdraw: '#EF4444'
 			},
 			white: colors.white,

@@ -32,13 +32,13 @@ function	NCPHeadline() {
 				<Typer onDone={() => set_NPCTextIndex(i => i + 1)} shouldStart={NPCTextIndex === 0}>
 					{'HELLO THERE. I AM '}
 				</Typer>
-				<span className={'text-tag-info'}><Typer onDone={() => set_NPCTextIndex(i => i + 1)} shouldStart={NPCTextIndex === 1}>
+				<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_NPCTextIndex(i => i + 1)} shouldStart={NPCTextIndex === 1}>
 					{'JANET'}
 				</Typer></span>
 				<Typer onDone={() => set_NPCTextIndex(i => i + 1)} shouldStart={NPCTextIndex === 2}>
 					{', I\'LL HELP YOU COORDINATE YOUR PARTY OF HEROES. FREE OF CHARGE! THE TOWN PAYS ME. PLEASE '}
 				</Typer>
-				<span className={'text-tag-info'}><Typer onDone={() => set_NPCTextIndex(i => i + 1)} shouldStart={NPCTextIndex === 3}>
+				<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_NPCTextIndex(i => i + 1)} shouldStart={NPCTextIndex === 3}>
 					{'SELECT THE ADVENTURERS'}
 				</Typer></span>
 				<Typer onDone={() => set_NPCTextIndex(i => i + 1)} shouldStart={NPCTextIndex === 4}>
@@ -257,7 +257,7 @@ function	Index({rarities}) {
 									:
 									<>
 										{'ONLY THE DAILY ADVENTURE '}
-										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canAdventure} ADVENTURERS)`}</span>
+										<span className={'text-tag-info dark:text-tag-warning'}>{`(${selectedAdventurersActions.canAdventure} ADVENTURERS)`}</span>
 									</>
 							),
 							onClick: () => onAdventure()
@@ -270,7 +270,7 @@ function	Index({rarities}) {
 									:
 									<>
 										{'ONLY THE CELLAR '}
-										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canAdventureCellar} ADVENTURERS)`}</span>
+										<span className={'text-tag-info dark:text-tag-warning'}>{`(${selectedAdventurersActions.canAdventureCellar} ADVENTURERS)`}</span>
 									</>
 							),
 							onClick: () => onAdventureCellar()
@@ -283,7 +283,7 @@ function	Index({rarities}) {
 									:
 									<>
 										{'ONLY LEVEL-UP '}
-										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canLevelUp} ADVENTURERS)`}</span>
+										<span className={'text-tag-info dark:text-tag-warning'}>{`(${selectedAdventurersActions.canLevelUp} ADVENTURERS)`}</span>
 									</>
 							),
 							onClick: () => onLevelUp()
@@ -296,7 +296,7 @@ function	Index({rarities}) {
 									:
 									<>
 										{'ONLY CLAIM GOLD '}
-										<span className={'text-tag-info'}>{`(${selectedAdventurersActions.canClaimGold} ADVENTURERS)`}</span>
+										<span className={'text-tag-info dark:text-tag-warning'}>{`(${selectedAdventurersActions.canClaimGold} ADVENTURERS)`}</span>
 									</>
 							),
 							onClick: () => onClaimGold()

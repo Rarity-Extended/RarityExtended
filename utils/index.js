@@ -6,6 +6,7 @@
 ******************************************************************************/
 
 import	{ethers}						from	'ethers';
+import	{Provider}						from	'ethcall';
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
 
@@ -106,3 +107,19 @@ export const TOWN = {
 		href: '/town/storage'
 	},
 };
+
+export function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export async function newEthCallProvider(provider, devMode) {
+	const	ethcallProvider = new Provider();
+	if (devMode) {
+		await	ethcallProvider.init(new ethers.providers.JsonRpcProvider('http://localhost:8545'));
+		ethcallProvider.multicallAddress = '0xc04d660976c923ddba750341fe5923e47900cf24';
+		return ethcallProvider;
+	}
+	ethcallProvider.multicall2Address = '0x470ADB45f5a9ac3550bcFFaD9D990Bf7e2e941c9';
+	await	ethcallProvider.init(provider);
+	return	ethcallProvider;
+}

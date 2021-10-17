@@ -21,9 +21,9 @@ export const DungeonContextApp = ({children, adventurer}) => {
 	**	Prepare the multicall to get most of the data
 	**************************************************************************/
 	function		prepareDungeonCalls() {
-		const	dungeon = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, process.env.DUNGEON_THE_CELLAR_ABI);
+		const	dungeon = new Contract(process.env.DUNGEON_BOARS_ADDR, process.env.DUNGEON_BOARS_ABI);
 		return [
-			dungeon.adventurers_log(adventurer.tokenID),
+			dungeon.actions_log(adventurer.tokenID),
 			dungeon.base_attack_bonus_by_class_and_level(adventurer.tokenID, adventurer.level),
 			dungeon.armor_class(adventurer.attributes.dexterity),
 			dungeon.attack_bonus(adventurer.class, adventurer.attributes.strength, adventurer.level),
@@ -33,7 +33,7 @@ export const DungeonContextApp = ({children, adventurer}) => {
 			dungeon.dungeon_damage(),
 			dungeon.dungeon_health(),
 			dungeon.dungeon_to_hit(),
-			dungeon.scout(adventurer.tokenID),
+			dungeon.simulate_kill(adventurer.tokenID),
 		];
 	}
 	/**************************************************************************
@@ -49,7 +49,7 @@ export const DungeonContextApp = ({children, adventurer}) => {
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
 	function	setDungeon(multicallResult) {
-		const	[log, adventurerBaseAttack, adventurerArmor, adventurerBonusAttack, adventurerHealth, adventurerDamage, dungeonArmor, dungeonDamage, dungeonHealth, dungeonToHit, scout] = multicallResult;
+		const	[log, adventurerBaseAttack, adventurerArmor, adventurerBonusAttack, adventurerHealth, adventurerDamage, dungeon_armor_class, dungeon_damage, dungeon_health, dungeon_to_hit, scout] = multicallResult;
 
 		set_dungeon({
 			tokenID: adventurer.tokenID,
@@ -59,10 +59,10 @@ export const DungeonContextApp = ({children, adventurer}) => {
 			adventurerBonusAttack: Number(adventurerBonusAttack),
 			adventurerHealth: Number(adventurerHealth),
 			adventurerDamage: Number(adventurerDamage),
-			dungeonArmor: Number(dungeonArmor),
-			dungeonDamage: Number(dungeonDamage),
-			dungeonHealth: Number(dungeonHealth),
-			dungeonToHit: Number(dungeonToHit),
+			dungeonArmor: Number(dungeon_armor_class),
+			dungeonDamage: Number(dungeon_damage),
+			dungeonHealth: Number(dungeon_health),
+			dungeonToHit: Number(dungeon_to_hit),
 			scout: Number(scout),
 		});
 	}
