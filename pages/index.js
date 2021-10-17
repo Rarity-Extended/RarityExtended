@@ -10,8 +10,10 @@ import	router							from	'next/router';
 import	dayjs							from	'dayjs';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	SectionNoAdventurer				from	'sections/SectionNoAdventurer';
+import	SectionCharacterSheet			from	'sections/SectionCharacterSheet';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
+import	useUI							from	'contexts/useUI';
 import	Adventurer						from	'components/Adventurer';
 import	ListBox							from	'components/ListBox';
 import	Box								from	'components/Box';
@@ -264,7 +266,9 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 }
 
 function	Index({router}) {
-	const	{rarities} = useRarity();
+	const	{provider, chainTime} = useWeb3();
+	const	{rarities, updateRarity} = useRarity();
+	const	{layout} = useUI();
 	const	adventurers = Object.values(rarities);
 	const	[favoritesAdventurers, set_favoritesAdventurers] = useLocalStorage('favorites', []);
 
@@ -282,9 +286,26 @@ function	Index({router}) {
 					favoritesAdventurers={favoritesAdventurers}
 					set_favoritesAdventurers={set_favoritesAdventurers} />
 
-				<AdventurerList
-					favoritesAdventurers={favoritesAdventurers}
-					set_favoritesAdventurers={set_favoritesAdventurers} />
+				{layout === 'legacy' ? (
+					<div className={'flex flex-col space-y-36 mt-12 md:mt-0 max-w-screen-lg w-full mx-auto'}>
+						{
+							adventurers?.map((adventurer) => (
+								<SectionCharacterSheet
+									key={adventurer.tokenID}
+									rarity={adventurer}
+									provider={provider}
+									updateRarity={updateRarity}
+									chainTime={chainTime}
+									router={router} />
+							))
+						}
+					</div>
+				) : (
+					<AdventurerList
+						favoritesAdventurers={favoritesAdventurers}
+						set_favoritesAdventurers={set_favoritesAdventurers} />
+				)
+				}
 			</div>
 		</section>
 	);
