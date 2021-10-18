@@ -17,9 +17,7 @@ import	ModalLogin						from	'components/ModalLogin';
 import	Typer							from	'components/Typer';
 import	Box								from	'components/Box';
 import	SectionRecruit					from	'sections/SectionRecruit';
-import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
 import	TAVERN_NEWS						from	'utils/codex/tavernNews.json';
-import	CLASSES							from	'utils/codex/classes';
 
 dayjs.extend(relativeTime);
 
@@ -52,7 +50,6 @@ function	NPCHeadline({router, active, adventurersCount}) {
 	
 	const	[hadInitialMessage, set_hadInitialMessage] = useState(false);
 	const	[hadRecruitMessage, set_hadRecruitMessage] = useState(false);
-	const	[hadTheCellarMessage, set_hadTheCellarMessage] = useState(false);
 
 	useEffect(() => {
 		set_npcTextIndex(0);
@@ -66,7 +63,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'WELCOME, ADVENTURER! I AM'}
 					</Typer>&nbsp;
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'FACU THE TAVERN KEEPER'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -84,7 +81,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 				return (
 					<>
 						{'WELCOME, ADVENTURER! I AM '}
-						<span className={'text-tag-info'}>{'FACU THE TAVERN KEEPER'}</span>
+						<span className={'text-tag-info dark:text-tag-warning'}>{'FACU THE TAVERN KEEPER'}</span>
 						{'!'}
 						<div />
 						{'WHAT CAN I DO FOR YA? LOOKING FOR THE LASTED NEWS, CHECK BELOW!'}
@@ -96,7 +93,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'WELCOME, ADVENTURER! I AM'}
 					</Typer>&nbsp;
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'FACU THE TAVERN KEEPER'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -120,7 +117,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 					return (
 						<>
 							{'WELCOME, ADVENTURER! I AM '}
-							<span className={'text-tag-info'}>{'FACU THE TAVERN KEEPER'}</span>
+							<span className={'text-tag-info dark:text-tag-warning'}>{'FACU THE TAVERN KEEPER'}</span>
 							{'!'}
 							<div />
 							{'YOU ARE ABOUT TO START A JOURNEY BEYOND IMAGINATION. YOU WILL MEET NEW FRIENDS AND FIGHT GREAT DANGERS!'}
@@ -134,7 +131,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 							{'WELCOME, ADVENTURER! I AM'}
 						</Typer>&nbsp;
-						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 							{'FACU THE TAVERN KEEPER'}
 						</Typer></span>
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -170,7 +167,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'OH, THERE IS A '}
 					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'HERO'}
 					</Typer></span>
 					<Typer
@@ -184,20 +181,6 @@ function	NPCHeadline({router, active, adventurersCount}) {
 				</>
 			);
 		}
-		if (router?.query?.tab === 'the-cellar') {
-			if (hadTheCellarMessage) {
-				return (
-					<>
-						{'THOSE RATS BE HUNGRY. THOSE RATS BE MANY. BEST IF YE CONSTITUTION BE PLENTY !'}
-					</>		
-				);
-			}
-			return (
-				<Typer onDone={() => set_hadTheCellarMessage(true)}>
-					{'Those rats be hungry. Those rats be many. Best if ye Constitution be plenty !'}
-				</Typer>
-			);
-		}
 		return null;
 	};
 	return (
@@ -208,8 +191,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 }
 
 function	DialogChoices({router, onWalletConnect, active}) {
-	const	{chainTime} = useWeb3();
-	const	{currentAdventurer, openCurrentAventurerModal} = useRarity();
+	const	{currentAdventurer} = useRarity();
 	const	[selectedOption, set_selectedOption] = useState(0);
 	const	[dialogNonce, set_dialogNonce] = useState(0);
 
@@ -226,39 +208,6 @@ function	DialogChoices({router, onWalletConnect, active}) {
 				]} />
 		);
 	}
-	if (router?.query?.tab === 'the-cellar') {
-		const	canAdventure = !dayjs(new Date(currentAdventurer?.dungeons?.cellar?.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
-
-		return (
-			<>
-				<DialogBox
-					selectedOption={selectedOption}
-					nonce={dialogNonce}
-					options={[
-						{label: (
-							canAdventure ?
-								<>
-									{'FIGHT THE RAT WITH '}
-									<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
-								</>
-								:
-								<>
-									<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
-									{' NEED SOME REST BEFORE FIGHTING THE RAT AGAIN'}
-								</>
-						),
-						onClick: () => {
-							if (canAdventure)
-								router.push(`/dungeons/the-cellar?adventurer=${currentAdventurer.tokenID}`);
-							else
-								openCurrentAventurerModal();
-						}},
-						{label: 'SELECT ANOTHER ADVENTURER', onClick: () => openCurrentAventurerModal()},
-						{label: 'CANCEL', onClick: () => router.push('/town/tavern')},
-					]} />
-			</>
-		);
-	}
 
 	return (
 		<DialogBox
@@ -267,7 +216,7 @@ function	DialogChoices({router, onWalletConnect, active}) {
 			options={[
 				{label: 'What\'s new ?', onClick: () => router.push('/town/tavern')},
 				{label: 'Recruit a new adventurer', onClick: () => router.push('/town/tavern?tab=recruit')},
-				{label: 'About the rats ...', onClick: () => router.push('/town/tavern?tab=the-cellar')}
+				{label: 'About the rats ...', onClick: () => router.push('/countryside/cellar')}
 			]} />
 	);
 }
@@ -306,11 +255,6 @@ function	Index({fetchRarity, rarities, router}) {
 				{active ? <section>
 					<NewsTab shouldDisplay={!router?.query?.tab} router={router} provider={provider} fetchRarity={fetchRarity} />
 					<SectionRecruit shouldDisplay={router?.query?.tab === 'recruit'} router={router} provider={provider} fetchRarity={fetchRarity} />
-					<SectionDungeonTheCellar
-						shouldDisplay={router?.query?.tab === 'the-cellar'}
-						router={router}
-						adventurers={rarities}
-						adventurersCount={adventurers.length} />
 				</section> : null}
 			</div>
 			<ModalLogin open={modalLoginOpen} set_open={set_modalLoginOpen} />

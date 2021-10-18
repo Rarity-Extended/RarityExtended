@@ -25,7 +25,6 @@ function	Class({provider, rarityClass, fetchRarity}) {
 				set_isLoading(true);
 				recruitAdventurer({
 					provider,
-					contractAddress: process.env.RARITY_ADDR,
 					classID: rarityClass.id,
 				}, async ({error}) => {
 					if (error) {

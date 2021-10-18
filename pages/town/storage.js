@@ -140,7 +140,7 @@ function	Index() {
 	return (
 		<section className={'mt-24 md:mt-12'}>
 			<div className={'flex flex-col max-w-screen-lg w-full mx-auto'}>
-				<h1 className={'text-black dark:text-white text-base mb-12'}>{'Inventory'}</h1>
+				<h1 className={'text-black dark:text-white text-base mb-12'}>{'Storage'}</h1>
 				<div className={'w-full grid grid-cols-1 gap-6'}>
 					{renderInventory()}
 				</div>
