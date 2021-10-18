@@ -236,7 +236,7 @@ export const RarityContextApp = ({children}) => {
 				inventory: inventoryCallResult,
 				skin: {
 					address: skin[0],
-					tokenId: Number(skin[1])
+					tokenID: Number(skin[1])
 				}
 			} : p);
 		}
@@ -285,7 +285,7 @@ export const RarityContextApp = ({children}) => {
 			inventory: inventoryCallResult,
 			skin: {
 				address: skin[0],
-				tokenId: Number(skin[1])
+				tokenID: Number(skin[1])
 			}
 		}}));
 		set_rNonce(prev => prev + 1);
