@@ -108,7 +108,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, on
 			<DialogNoBox
 				options={[
 					{label: 'SELECT ANOTHER ADVENTURER', onClick: openCurrentAventurerModal},
-					{label: 'JUST HEAD BACK TO TOWN', onClick: router.back},
+					{label: 'JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
 				]} />
 		);
 	}
@@ -127,7 +127,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, on
 					onClick: () => onFightRat(4),
 				},
 				{label: 'SELECT ANOTHER ADVENTURER', onClick: () => openCurrentAventurerModal()},
-				{label: 'NO, JUST HEAD BACK TO TOWN', onClick: () => router.back()},
+				{label: 'NO, JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
 			]} />
 	);
 }

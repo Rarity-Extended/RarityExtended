@@ -143,8 +143,6 @@ export const RarityContextApp = ({children}) => {
 		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, process.env.DUNGEON_THE_CELLAR_ABI);
 		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI);
 		const	rarityExtendedName = new Contract(process.env.RARITY_EXTENDED_NAME, process.env.RARITY_EXTENDED_NAME_ABI);
-
-		// eslint-disable-next-line no-unused-vars
 		const	rarityDungeonBoars = new Contract(process.env.DUNGEON_BOARS_ADDR, process.env.DUNGEON_BOARS_ABI);
 
 		return [
@@ -160,7 +158,7 @@ export const RarityContextApp = ({children}) => {
 			rarityDungeonCellar.scout(tokenID),
 			rarityDungeonForest.getResearchBySummoner(tokenID),
 			rarityExtendedName.get_name(tokenID),
-			// rarityDungeonBoars.actions_log(tokenID)
+			rarityDungeonBoars.actions_log(tokenID)
 		];
 	}
 

@@ -146,7 +146,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, ch
 						),
 						onClick: onDiscoverTreasure},
 						{label: 'SELECT ANOTHER ADVENTURER', onClick: openCurrentAventurerModal},
-						{label: 'JUST HEAD BACK TO TOWN', onClick: router.back},
+						{label: 'JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
 					]} />
 			);
 		}
@@ -154,7 +154,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, ch
 			<DialogNoBox
 				options={[
 					{label: 'SELECT ANOTHER ADVENTURER', onClick: openCurrentAventurerModal},
-					{label: 'JUST HEAD BACK TO TOWN', onClick: router.back},
+					{label: 'JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
 				]} />
 		);
 	}
@@ -203,7 +203,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, ch
 					onClick: () => onExploreTheForest(7),
 				},
 				{label: 'SELECT ANOTHER ADVENTURER', onClick: () => openCurrentAventurerModal()},
-				{label: 'NO, JUST HEAD BACK TO TOWN', onClick: () => router.back()},
+				{label: 'NO, JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
 			]} />
 	);
 }

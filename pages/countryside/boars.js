@@ -1,4 +1,3 @@
-/* eslint-disable no-unreachable */
 /******************************************************************************
 **	@Author:				Rarity Extended
 **	@Twitter:				@RXtended
@@ -34,7 +33,7 @@ function	Tooltip({children}) {
 	);
 }
 
-function	NCPHeadline({population, choice, chainTime, loot}) {
+function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 	const	renderNCPText = () => {
 		if (Number(population.count) === 0) {
 			return (
@@ -72,6 +71,33 @@ function	NCPHeadline({population, choice, chainTime, loot}) {
 			);
 		}
 
+		if (!currentAdventurer?.dungeons?.boars?.canAdventure) {
+			return (
+				<>
+					{'The air you breathe is fresh and silent. The leaves on the trees rustle as a breeze comes through them. The grass ripples as a butterfly alights on the end of a blade. You can feel the air through your skin. It is as if everything has been cleansed by the rain, as if there is no angry farmer, no boar grunts.'}
+					<div className={'my-4'} />
+		
+					{'The boar herd has abandoned the clearing once again. The acorns and beech nuts that they’d squiggled across the ground to pry loose from their burrs were not enough to sustain them today.'}
+					<div className={'my-4'} />
+		
+					{'That is enough for you, '}
+					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}
+						<Tooltip>
+							<p className={'text-sm leading-normal inline'}>{'This is you. But maybe another you can find the boars ?'}</p>
+						</Tooltip>
+					</span>
+					{'. You head back to the village. Maybe you could come back '}
+					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						{dayjs(new Date(currentAdventurer?.dungeons?.boars?.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}
+						<Tooltip>
+							<p className={'text-sm leading-normal inline'}>{'The forest is very big, but they really like this place. Be patient, they will come back.'}</p>
+						</Tooltip>
+					</span>
+					{'.'}
+				</>
+			);
+		}
 		if (choice === 'kill') {
 			return (
 				<>
@@ -128,7 +154,6 @@ function	NCPHeadline({population, choice, chainTime, loot}) {
 				</>
 			);
 		}
-
 
 		return (
 			<>
@@ -225,8 +250,8 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, pr
 		return (
 			<DialogNoBox
 				options={[
-					{label: 'LOOK AT THE FOREST WITH DESPAIR AND HEAD BACK TO TOWN', onClick: router.back},
-					{label: 'JUST HEAD BACK TO TOWN', onClick: router.back},
+					{label: 'LOOK AT THE FOREST WITH DESPAIR AND HEAD BACK TO TOWN', onClick: () => router.push('/')},
+					{label: 'JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
 				]} />
 		);
 	}
@@ -246,7 +271,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, pr
 					),
 					onClick: openCurrentAventurerModal},
 					{label: 'SELECT ANOTHER ADVENTURER', onClick: openCurrentAventurerModal},
-					{label: 'JUST HEAD BACK TO TOWN', onClick: router.back},
+					{label: 'JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
 				]} />
 		);
 	}
@@ -331,14 +356,12 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, pr
 					onClick: () => onChoice('protect'),
 				},
 				{label: 'SELECT ANOTHER ADVENTURER', onClick: () => openCurrentAventurerModal()},
-				{label: 'NO, JUST HEAD BACK TO TOWN', onClick: () => router.back()},
+				{label: 'NO, JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
 			]} />
 	);
 }
 
 function	Index({router}) {
-	return <p>{'SOON'}</p>;
-	
 	const	[population, set_population] = useState({count: -1, extinction: 0, extinctionBy: 0});
 	const	[choice, set_choice] = useState('');
 	const	{currentAdventurer, openCurrentAventurerModal, updateRarity} = useRarity();
@@ -392,6 +415,7 @@ function	Index({router}) {
 						population={population}
 						chainTime={chainTime}
 						choice={choice}
+						currentAdventurer={currentAdventurer}
 						loot={choice === 'kill' ? population.lootKill : population.lootReproduce}
 					/>
 					<div className={'pt-2 mt-4 border-t-2 border-black dark:border-dark-100 font-story font-bold text-sm md:text-base uppercase'}>
