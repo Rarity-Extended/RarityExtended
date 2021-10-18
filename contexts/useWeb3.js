@@ -182,10 +182,8 @@ export const Web3ContextApp = ({children}) => {
 	}, []);
 
 	useEffect(() => {
-		if (provider) {
-			provider.getBlock().then(e => set_chainTime(e.timestamp));
-		}
-	}, [chainTimeNonce, provider]);
+		getProvider().getBlock().then(e => set_chainTime(e.timestamp));
+	}, [chainTimeNonce]);
 
 	return (
 		<Web3Context.Provider
