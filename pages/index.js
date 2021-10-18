@@ -5,7 +5,7 @@
 **	@Filename:				index.js
 ******************************************************************************/
 
-import	React, {useState}								from	'react';
+import	React, {useEffect, useState, useCallback}		from	'react';
 import	router											from	'next/router';
 import	Image											from	'next/image';
 import	Link											from	'next/link';
@@ -29,6 +29,8 @@ import	{availableSkillPoints, calculatePointsForSet}	from	'utils/libs/raritySkil
 import	{featsPerClass, initialFeatsPerClass}			from	'utils/libs/rarityFeats';
 import	{xpRequired}									from	'utils/libs/rarity';
 import	{goAdventure, claimGold, levelUp}				from	'utils/actions';
+import	{getSkinNFT}									from	'utils/actions/skins';
+
 
 dayjs.extend(relativeTime);
 
@@ -181,6 +183,21 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 	const	[modalSkillsOpen, set_modalSkillsOpen] = useState(false);
 	const	[modalFeatsOpen, set_modalFeatsOpen] = useState(false);
 	const	isInTheForest = currentAdventurer?.level >= 2 && !currentAdventurer?.dungeons?.forest?.canAdventure;
+	const	[skinNft, set_skinNft] = useState();
+
+	const fetchSkinNft = useCallback(async () => {
+		if(currentAdventurer?.skin){
+			console.log(currentAdventurer.skin)
+			const nft = await getSkinNFT({contractAddress: currentAdventurer?.skin?.address, tokenID: currentAdventurer?.skin?.tokenID});
+			set_skinNft(nft);
+		}
+	  }, [currentAdventurer.skin]) 
+
+	useEffect(() => {
+		fetchSkinNft();
+	}, [fetchSkinNft])
+
+	console.log(skinNft)
 
 	const	taskList = [
 		{
