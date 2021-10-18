@@ -120,6 +120,10 @@ export const QUESTS = {
 	'cellar': {
 		label: 'Cellar',
 		href: '/countryside/cellar'
+	},
+	'openmic': {
+		label: 'Open Mic',
+		href: '/countryside/openmic'
 	}
 };
 

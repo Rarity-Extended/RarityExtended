@@ -314,6 +314,32 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 						</div>
 					</Link>
 
+					<Link href={'/countryside/openmic'}>
+						<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
+							<div className={'opacity-40 overflow-hidden -mb-1'}>
+								<Image
+									src={'/illustrations/illuOpenMic.jpeg'}
+									loading={'eager'}
+									objectFit={'cover'}
+									objectPosition={'top'}
+									quality={70}
+									width={800}
+									height={150} />
+							</div>
+							<div className={'absolute inset-0 opacity-30'} style={{backgroundColor: '#FDAC53'}} />
+
+							<div className={'absolute inset-0 flex flex-row'}>
+								<div className={'w-1/2 h-full p-6'}>
+									<h1 className={'text-shadow-lg'}>{'Open Mic'}</h1>
+									<p className={'text-shadow-lg text-regular pt-2'}>{'A lithe, robed figure takes the stage with a flourish. The bard sings out and a hush sweeps over the rowdy tavern...'}</p>
+								</div>
+								<div className={'w-1/2 h-full p-6 flex justify-end items-center'}>
+									<svg className={'group-hover:animate-bounce-r opacity-30 group-hover:opacity-100 transition-opacity'} width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M4 11v2h12v2h2v-2h2v-2h-2V9h-2v2H4zm10-4h2v2h-2V7zm0 0h-2V5h2v2zm0 10h2v-2h-2v2zm0 0h-2v2h2v-2z'} fill={'currentColor'}/> </svg>
+								</div>
+							</div>
+						</div>
+					</Link>
+
 					<Link href={'/countryside/forest'}>
 						<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
 							<div className={'opacity-40 overflow-hidden -mb-1'}>
