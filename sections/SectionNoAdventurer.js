@@ -22,7 +22,7 @@ function	FacuHeadline() {
 				<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 0}>
 					{'WELCOME, ADVENTURER! I AM'}
 				</Typer>&nbsp;
-				<span className={'text-tag-info'}><Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>
+				<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 1}>
 					{'FACU'}
 				</Typer></span>
 				<Typer onDone={() => set_facuTextIndex(i => i + 1)} shouldStart={facuTextIndex === 2}>

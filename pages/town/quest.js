@@ -12,22 +12,17 @@ import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
-import	SectionDungeonTheCellar			from	'sections/SectionDungeonTheCellar';
-import	SectionDungeonTheForest			from	'sections/SectionDungeonTheForest';
-import	SectionDungeonOpenMic			from	'sections/SectionDungeonOpenMic';
 import	Box								from	'components/Box';
-import	CLASSES							from	'utils/codex/classes';
-import	{ getOpenMicDialogOption }	from	'components/dungeons/openmic';
+import	{getOpenMicDialogOption}		from	'components/dungeons/openmic';
 
-function	DialogChoices({router, adventurersCount}) {
+function	DialogChoices({adventurersCount, router}) {
 	const	[selectedOption, set_selectedOption] = useState(0);
 	const	[dialogNonce, set_dialogNonce] = useState(0);
-	const	{currentAdventurer, openCurrentAventurerModal} = useRarity();
+	const	{currentAdventurer} = useRarity();
 
 	useEffect(() => {
 		set_selectedOption(0);
 		set_dialogNonce(n => n + 1);
-		console.log("router?.asPath", router?.asPath)
 	}, [currentAdventurer?.tokenID, router?.asPath]);
 
 	if (adventurersCount === 0) {
@@ -38,67 +33,7 @@ function	DialogChoices({router, adventurersCount}) {
 				]} />
 		);
 	}
-	if (router?.query?.tab === 'the-cellar') {
-		return (
-			<>
-				<DialogBox
-					selectedOption={selectedOption}
-					nonce={dialogNonce}
-					options={[
-						{
-							label: (
-								<>
-									{'FIGHT THE RAT WITH '}
-									<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
-								</>
-							),
-							onClick: () => router.push(`/dungeons/the-cellar?adventurer=${currentAdventurer.tokenID}`)
-						},
-						{label: 'SELECT ANOTHER ADVENTURER', onClick: () => openCurrentAventurerModal()},
-						{label: 'CANCEL', onClick: () => router.push('/town/quest')},
-					]} />
-			</>
-		);
-	}
-	if (router?.query?.tab === 'the-forest') {
-		return (
-			<>
-				<DialogBox
-					selectedOption={selectedOption}
-					nonce={dialogNonce}
-					options={[
-						{
-							label: (
-								currentAdventurer.level < 2 ?
-									<>
-										{'YOU CANNOT EXPLORE THE FOREST WITH '}
-										<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
-									</>
-									:
-									currentAdventurer.level >= 2 && currentAdventurer?.dungeons?.forest?.canAdventure ?
-										<>
-											{'EXPLORE THE FOREST WITH '}
-											<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
-										</>
-										:
-										<>
-											{'YOU ARE ALREADY IN THE FOREST WITH '}
-											<span className={'text-tag-info'}>{`${currentAdventurer.tokenID}, ${currentAdventurer?.name ? currentAdventurer?.name : CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}`}</span>
-										</>
-							),
-							onClick: () => {
-								if (currentAdventurer.level >= 2 && currentAdventurer?.dungeons?.forest?.canAdventure)
-									router.push(`/dungeons/the-forest?adventurer=${currentAdventurer.tokenID}`);
-								else
-									openCurrentAventurerModal();
-							}
-						},
-						{label: 'SELECT ANOTHER ADVENTURER', onClick: () => openCurrentAventurerModal()},
-						{label: 'CANCEL', onClick: () => router.push('/town/quest')},
-					]} />
-			</>
-		);
-	}
+
 	if (router?.query?.tab === 'the-stage') {
 		return (
 			<>
@@ -106,7 +41,7 @@ function	DialogChoices({router, adventurersCount}) {
 					selectedOption={selectedOption}
 					nonce={dialogNonce}
 					options={[
-						getOpenMicDialogOption(currentAdventurer, router, openCurrentAventurerModal),
+						getOpenMicDialogOption(currentAdventurer, router, () => null),
 						{label: 'CANCEL', onClick: () => router.push('/town/quest')},
 					]} />
 			</>
@@ -122,19 +57,28 @@ function	DialogChoices({router, adventurersCount}) {
 					label: (
 						<>
 							{'THE RAT IN '}
-							<span className={'text-tag-info'}>{'THE CELLAR'}</span>
+							<span className={'text-tag-info dark:text-tag-warning'}>{'THE CELLAR'}</span>
 						</>
 					),
-					onClick: () => router.push('/town/quest?tab=the-cellar')
+					onClick: () => router.push('/countryside/cellar')
 				},
 				{
 					label: (
 						<>
 							{'THE TREASURE IN '}
-							<span className={'text-tag-info'}>{'THE FOREST'}</span>
+							<span className={'text-tag-info dark:text-tag-warning'}>{'THE FOREST'}</span>
 						</>
 					),
-					onClick: () => router.push('/town/quest?tab=the-forest')
+					onClick: () => router.push('/countryside/forest')
+				},
+				{
+					label: (
+						<>
+							{'GET SOME INFO ABOUT'}
+							<span className={'text-tag-info dark:text-tag-warning'}>{' THE BOARS'}</span>
+						</>
+					),
+					onClick: () => router.push('/countryside/boars')
 				},
 				{
 					label: (
@@ -152,11 +96,6 @@ function	DialogChoices({router, adventurersCount}) {
 function	NPCHeadline({router, active, address, adventurersCount}) {
 	const	[nonce, set_nonce] = useState(0);
 	const	[npcTextIndex, set_npcTextIndex] = useState(0);
-
-	const	[hadInitialMessage, set_hadInitialMessage] = useState(false);
-	const	[hadTheCellarMessage, set_hadTheCellarMessage] = useState(false);
-	const	[hadTheForestMessage, set_hadTheForestMessage] = useState(false);
-	const	[hadOpenMicMessage, set_hadOpenMicMessage] = useState(false);
 	
 	useEffect(() => {
 		set_npcTextIndex(0);
@@ -170,13 +109,13 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'HELLO, I AM '}
 					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'LARA'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 						{' FROM THE '}
 					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 						{'QUEST OFFICE'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 4}>
@@ -192,13 +131,13 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'HELLO, I AM '}
 					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'LARA'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 						{' FROM THE '}
 					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 						{'QUEST OFFICE'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 4}>
@@ -207,151 +146,25 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 				</>
 			);
 		}
-		if (router?.query?.tab === 'the-cellar') {
-			if (hadTheCellarMessage) {
-				return (
-					<>
-						{'YES. THE BIG UGLY RAT. '}
-						<span className={'text-tag-info'}>{'FACU'}</span>
-						{' THE TAVERN KEEPER NEEDS SOME HELP WITH THIS. REPULSIVE STUFF. IF YOU CAN '}
-						<span className={'text-tag-info'}>{'DODGE AND HIT HARD'}</span>
-						{', YOU SHOULD GO.'}&nbsp;
-					</>	
-				);
-			}
-			return (
-				<>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
-						{'YES. THE BIG UGLY RAT. '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
-						{'FACU'}
-					</Typer></span>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
-						{' THE TAVERN KEEPER NEEDS SOME HELP WITH THIS. REPULSIVE STUFF. IF YOU CAN '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
-						{'DODGE AND HIT HARD'}
-					</Typer></span>
-					<Typer
-						shouldStart={npcTextIndex === 4}
-						onDone={() => {
-							set_npcTextIndex(i => i + 1);
-							set_hadTheCellarMessage(true);
-						}}>
-						{', YOU SHOULD GO.'}
-					</Typer>&nbsp;
-				</>
-			);
-		}
-		if (router?.query?.tab === 'the-forest') {
-			if (hadTheForestMessage) {
-				return (
-					<>
-						{'OH HAVE YOU HEARD ABOUT '}
-						<span className={'text-tag-info'}>{'THE FOREST'}</span>
-						{' ? THE AUSTRIAN STAYING IN FACU\'S TAVERN HAS SOME INFO ABOUT A '}
-						<span className={'text-tag-info'}>{'TREASURE'}</span>
-						{' OR SOMETHING LIKE THAT. YOU SHOULD TALK TO HIM.'}&nbsp;
-					</>	
-				);
-			}
-			return (
-				<>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
-						{'OH HAVE YOU HEARD ABOUT '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
-						{'THE FOREST'}
-					</Typer></span>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
-						{' ? THE AUSTRIAN STAYING IN FACU\'S TAVERN HAS SOME INFO ABOUT A '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
-						{'TREASURE'}
-					</Typer></span>
-					<Typer
-						shouldStart={npcTextIndex === 4}
-						onDone={() => {
-							set_npcTextIndex(i => i + 1);
-							set_hadTheForestMessage(true);
-						}}>
-						{' OR SOMETHING LIKE THAT. YOU SHOULD TALK TO HIM.'}
-					</Typer>&nbsp;
-				</>
-			);
-		}
-		if (router?.query?.tab === 'the-stage') {
-			if (hadOpenMicMessage) {
-				return (
-					<>
-						{'HOOLIGANS ARE TRASHING THE TAVERN ! '}
-						<span className={'text-tag-info'}>{'FACU'}</span>
-						{' THE TAVERN KEEPER WANTS BARDS WITH '}
-						<span className={'text-tag-info'}>{'PERFORM'}</span>
-						{' SKILLS AND LEVEL > 1 TO TRY CALMING THEM DOWN.'}&nbsp;
-					</>	
-				);
-			}
-			return (
-				<>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
-						{'HOOLIGANS ARE TRASHING THE TAVERN ! '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
-						{'FACU'}
-					</Typer></span>
-					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
-						{' THE TAVERN KEEPER WANTS BARDS WITH '}
-					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
-						{'PERFORM'}
-					</Typer></span>
-					<Typer
-						shouldStart={npcTextIndex === 4}
-						onDone={() => {
-							set_npcTextIndex(i => i + 1);
-							set_hadOpenMicMessage(true);
-						}}>
-						{' SKILLS TO TRY CALMING THEM DOWN.'}
-					</Typer>&nbsp;
-				</>
-			);
-		}
-		if (hadInitialMessage) {
-			return (
-				<>
-					{'HELLO, I AM '}
-					<span className={'text-tag-info'}>{'LARA'}</span>
-					{' FROM THE '}
-					<span className={'text-tag-info'}>{'QUEST OFFICE'}</span>
-					{'. I\'M THE KEEPER OF QUESTS. I KNOW WHAT NEEDS DOING. YOU LOOKING FOR SOME ADVERTURE? CHOSE A QUEST BELOW'}
-					&nbsp;
-				</>	
-			);
-		}
-
+	
 		return (
 			<>
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 					{'HELLO, I AM '}
 				</Typer>
-				<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+				<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 					{'LARA'}
 				</Typer></span>
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 					{' FROM THE '}
 				</Typer>
-				<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+				<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 					{'QUEST OFFICE'}
 				</Typer></span>
 				<Typer
 					shouldStart={npcTextIndex === 4}
-					onDone={() => {
-						set_npcTextIndex(i => i + 1);
-						set_hadInitialMessage(true);
-					}}>
-					{'. I\'M THE KEEPER OF QUESTS. I KNOW WHAT NEEDS DOING. YOU LOOKING FOR SOME ADVERTURE? CHOSE A QUEST BELOW!'}
+					onDone={() => set_npcTextIndex(i => i + 1)}>
+					{'. I\'M THE KEEPER OF QUESTS. I KNOW WHAT NEEDS DOING. YOU LOOKING FOR SOME ADVENTURE? CHOSE A QUEST BELOW!'}
 				</Typer>&nbsp;
 			</>
 		);
@@ -391,25 +204,7 @@ function	Index({rarities, router}) {
 			
 				<DialogChoices
 					adventurersCount={adventurers.length}
-					router={router}
-				/>
-				{active && adventurers.length > 0 ? <section>
-					<SectionDungeonTheCellar
-						shouldDisplay={router?.query?.tab === 'the-cellar'}
-						router={router}
-						adventurers={rarities}
-						adventurersCount={adventurers.length} />
-					<SectionDungeonTheForest
-						shouldDisplay={router?.query?.tab === 'the-forest'}
-						router={router}
-						adventurers={rarities}
-						adventurersCount={adventurers.length} />
-					<SectionDungeonOpenMic
-						shouldDisplay={router?.query?.tab === 'the-stage'}
-						router={router}
-						adventurers={rarities}
-						adventurersCount={adventurers.length} />
-				</section> : null}
+					router={router} />
 			</div>
 		</section>
 	);		

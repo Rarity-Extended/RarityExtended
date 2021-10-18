@@ -14,7 +14,7 @@ import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
 import	Box								from	'components/Box';
 import	{fetcher}						from	'utils';
-import	{apeInVault, apeOutVault, depositInVault, withdrawFromVault}					from	'utils/actions';
+import	{apeInVault, apeOutVault, depositInVault, withdrawFromVault}					from	'utils/actions/vaults';
 
 function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError, isDeposit}) {
 	const	[nonce, set_nonce] = useState(0);
@@ -52,7 +52,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 							<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 								{'OH, YOU WOULD LIKE TO GET YOUR INVESTMENT BACK? HOW MANY '}
 							</Typer>
-							<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+							<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 								{selectedVault?.token}
 							</Typer></span>
 							<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -69,7 +69,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 							<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 								{'OH, YOU WOULD LIKE TO GET YOUR INVESTMENT BACK? HOW MANY '}
 							</Typer>
-							<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+							<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 								{selectedVault?.token}
 							</Typer></span>
 							<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -83,7 +83,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 							{'I WOULD LOVE TO, TRAVELER! BUT YOU DON\'T HAVE ANY '}
 						</Typer>
-						<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 							{selectedVault?.token}
 						</Typer></span>
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -97,13 +97,13 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'GREAT CHOICE, TRAVELER! YOU HAVE '}
 					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{`${Number(selectedVault?.balance || 0).toFixed(4)} ${selectedVault?.token}`}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 						{', HOW MUCH WILL YOU DEPOSIT IN '}
 					</Typer>
-					<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 						{selectedVault?.name}
 					</Typer></span>
 				</>
@@ -113,7 +113,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 			return (
 				<>
 					{'LOOK WHO IS HERE! WELCOME TO '}
-					<span className={'text-tag-info'}>{'IVAN’S BANK'}</span>
+					<span className={'text-tag-info dark:text-tag-warning'}>{'IVAN’S BANK'}</span>
 					{', MIGHTY HERO! SO YOU’VE EARNED SOME COINS IN YOUR LEGENDARY ADVENTURES, HAVEN’T YOU? I CAN EARN YOU EVEN MORE! JUST DEPOSIT IN ONE OF THESE VERY NICE VAULTS...'}
 				</>
 			);
@@ -123,7 +123,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 					{'LOOK WHO IS HERE! WELCOME TO '}
 				</Typer>
-				<span className={'text-tag-info'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+				<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 					{'IVAN’S BANK'}
 				</Typer></span>
 				<Typer
@@ -291,9 +291,9 @@ function	Index() {
 					<DialogBox
 						options={[
 							{label: 'Withdraw 100%', onClick: () => performApeOut((selectedVault?.shareRaw))},
-							{label: 'Withdraw 75%', onClick: () => performApeOut((selectedVault?.shareRaw).mul(75).div(100))},
-							{label: 'Withdraw 50%', onClick: () => performApeOut((selectedVault?.shareRaw).mul(50).div(100))},
-							{label: 'Withdraw 25%', onClick: () => performApeOut((selectedVault?.shareRaw).mul(25).div(100))},
+							{label: 'Withdraw 75%', onClick: () => performApeOut((selectedVault.shareRaw).mul(75).div(100))},
+							{label: 'Withdraw 50%', onClick: () => performApeOut((selectedVault.shareRaw).mul(50).div(100))},
+							{label: 'Withdraw 25%', onClick: () => performApeOut((selectedVault.shareRaw).mul(25).div(100))},
 							{label: 'Nevermind', onClick: () => {
 								if (!isDeposit) {
 									return set_isDeposit(true);
@@ -331,9 +331,9 @@ function	Index() {
 					<DialogBox
 						options={[
 							{label: 'Withdraw 100%', onClick: () => performWithdraw(selectedVault.shareRaw)},
-							{label: 'Withdraw 75%', onClick: () => performWithdraw((selectedVault?.shareRaw).mul(75).div(100))},
-							{label: 'Withdraw 50%', onClick: () => performWithdraw((selectedVault?.shareRaw).mul(50).div(100))},
-							{label: 'Withdraw 25%', onClick: () => performWithdraw((selectedVault?.shareRaw).mul(25).div(100))},
+							{label: 'Withdraw 75%', onClick: () => performWithdraw((selectedVault.shareRaw).mul(75).div(100))},
+							{label: 'Withdraw 50%', onClick: () => performWithdraw((selectedVault.shareRaw).mul(50).div(100))},
+							{label: 'Withdraw 25%', onClick: () => performWithdraw((selectedVault.shareRaw).mul(25).div(100))},
 							{label: 'Nevermind', onClick: () => {
 								if (!isDeposit) {
 									return set_isDeposit(true);

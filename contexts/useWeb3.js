@@ -51,6 +51,13 @@ export const Web3ContextApp = ({children}) => {
 		dedupingInterval: 1.5 * 1000,
 	});
 
+	useEffect(() => {
+		if (provider)
+			provider.getBlock().then(e => set_chainTime(e.timestamp));
+		else
+			getProvider().getBlock().then(e => set_chainTime(e.timestamp));
+	}, [chainTimeNonce, provider]);
+
 	const onUpdate = useCallback(async (update) => {
 		if (update.provider) {
 			set_provider(library);
@@ -180,12 +187,6 @@ export const Web3ContextApp = ({children}) => {
 	useEffect(() => {
 		setTimeout(() => set_initialized(true), 1000);
 	}, []);
-
-	useEffect(() => {
-		if (provider) {
-			provider.getBlock().then(e => set_chainTime(e.timestamp));
-		}
-	}, [chainTimeNonce, provider]);
 
 	return (
 		<Web3Context.Provider
