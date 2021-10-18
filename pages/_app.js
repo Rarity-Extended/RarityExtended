@@ -15,6 +15,7 @@ import	{ethers}						from	'ethers';
 import	useWeb3, {Web3ContextApp}		from	'contexts/useWeb3';
 import	useRarity, {RarityContextApp}	from	'contexts/useRarity';
 import	{UIContextApp}					from	'contexts/useUI';
+import	{SkinsContextApp}					from	'contexts/useSkins';
 import	Navbar							from	'components/Navbar';
 import	Footer							from	'components/Footer';
 import	SectionNoWallet					from	'sections/SectionNoWallet';
@@ -143,11 +144,13 @@ function	MyApp(props) {
 			<Web3ReactProvider getLibrary={getLibrary}>
 				<Web3ContextApp>
 					<RarityContextApp>
-						<AppWrapper
-							Component={Component}
-							pageProps={pageProps}
-							element={props.element}
-							router={props.router} />
+						<SkinsContextApp>
+							<AppWrapper
+								Component={Component}
+								pageProps={pageProps}
+								element={props.element}
+								router={props.router} />
+						</SkinsContextApp>
 					</RarityContextApp>
 				</Web3ContextApp>
 			</Web3ReactProvider>
