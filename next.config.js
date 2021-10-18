@@ -67,7 +67,14 @@ module.exports = ({
 		FTM_VAULT_ADDR: '0x0dec85e74a92c52b7f708c4b10207d9560cefaf0',
 		DAI_VAULT_ADDR: '0x637eC617c86D24E421328e6CAEa1d92114892439',
 		DAI_TOKEN_ADDR: '0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E',
-		WFTM_TOKEN_ADDR: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83'
+		WFTM_TOKEN_ADDR: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
+
+
+		RARITY_SKINS_ADDR: '0x6fEd400dA17f2678C450aA1D35e909653B3b482A',
+		RARITY_SKINS_ABI: require('./utils/abi/raritySkins.abi.json'),
+
+		RARITY_SKIN_MANAGER_ADDR: '0xd1447FE5e70d58204946D61224643738bA54F5cc',
+		RARITY_SKIN_MANAGER_ABI: require('./utils/abi/raritySkinManager.abi.json')
 	},
 	optimization: {
 		minimize: true,
