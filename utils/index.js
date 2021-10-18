@@ -108,6 +108,21 @@ export const TOWN = {
 	},
 };
 
+export const QUESTS = {
+	'boars': {
+		label: 'Boars',
+		href: '/countryside/boars'
+	},
+	'forest': {
+		label: 'Forest',
+		href: '/countryside/forest'
+	},
+	'cellar': {
+		label: 'Cellar',
+		href: '/countryside/cellar'
+	}
+};
+
 export function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }

@@ -5,15 +5,39 @@
 **	@Filename:				TownWidget.js
 ******************************************************************************/
 
-import  React       from    'react';
-import  Link        from    'next/link';
-import	{useRouter}	from	'next/router';
-import {TOWN} from 'utils';
+import  React       		from    'react';
+import  Link        		from    'next/link';
+import	{useRouter}			from	'next/router';
+import	{TOWN, QUESTS}		from	'utils';
 
 function Townwidget() {
 	const	router = useRouter();
 	if (router.pathname === '/') {
 		return null;
+	}
+	if (router.pathname.startsWith('/countryside/')) {
+		if (Object.values(QUESTS).find(quest => quest.href === router.pathname)) {
+			return (
+				<div className={'flex items-center w-full justify-center mt-6 md:mt-0'}>
+					<div>
+						<div className={'mb-2 cursor-pointer text-center'}>
+							<Link href={'/'}>
+								<p className={'text-xxs opacity-60'}>
+									{'< back to town hall'}
+								</p>
+							</Link>
+						</div>
+						<div className={'text-xs md:text-base text-center leading-loose'}>
+							{'YOU ARE DOING THE '}
+							<span className={'text-tag-info'}>
+								{`“${Object.values(QUESTS).find(quest => quest.href === router.pathname)?.label}”`}
+							</span>
+							{' QUEST'}
+						</div>
+					</div>
+				</div>
+			);
+		}
 	}
 	if (Object.values(TOWN).find(town => town.href === router.pathname)) {
 		return (
