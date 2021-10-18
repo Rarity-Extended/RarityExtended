@@ -20,8 +20,6 @@ function	Footer() {
 	const	[options, set_options] = useState(false);
 	const	router = useRouter();
 
-	console.log(skins)
-
 	useEffect(() => {
 		if (typeof(window) !== 'undefined') {
 			let		prevScrollpos = window.pageYOffset;
