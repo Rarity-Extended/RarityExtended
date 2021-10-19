@@ -26,6 +26,7 @@ const	items = [
 		fetch: (adventurerID) => new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI).getTreasuresBySummoner(adventurerID),
 		dungeon: 'The Forest',
 		parse: (item) => item,
+		isSpecific: true,
 		id: 1,
 	},
 	{
