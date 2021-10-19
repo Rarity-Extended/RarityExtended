@@ -73,8 +73,10 @@ module.exports = ({
 		RARITY_SKINS_ADDR: '0x6fEd400dA17f2678C450aA1D35e909653B3b482A',
 		RARITY_SKINS_ABI: require('./utils/abi/raritySkins.abi.json'),
 
-		RARITY_SKIN_MANAGER_ADDR: '0xd1447FE5e70d58204946D61224643738bA54F5cc',
-		RARITY_SKIN_MANAGER_ABI: require('./utils/abi/raritySkinManager.abi.json')
+		RARITY_SKIN_MANAGER_ADDR: '0xfFDFc7286c2c8d0a94f99c5e00dA1851564f8C1d',
+		RARITY_SKIN_MANAGER_ABI: require('./utils/abi/raritySkinManager.abi.json'),
+
+		RARITY_SKINS_NFT_ABI: require('./utils/abi/raritySkinsERC721.abi.json')
 	},
 	optimization: {
 		minimize: true,

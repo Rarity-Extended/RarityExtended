@@ -5,17 +5,24 @@
 **	@Filename:				skins.js
 ******************************************************************************/
 
-export async function	getSkinNFT({contractAddress, tokenID}) {
-	try {
-		const	contract = new ethers.Contract(
-			contractAddress, [
-				'function tokenURI(uint256 tokenId) external view returns (string memory)'
-			]		
-		);
-		const skin = contract.tokenURI(tokenID)
-		return skin
-	} catch (error) {
-		console.error(error);
-		return;
-	}
+import { ethers } from 'ethers';
+
+export async function getSkinNFT({ provider, contractAddress, tokenID }, callback) {
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+        contractAddress,
+        process.env.RARITY_SKINS_NFT_ABI,
+        signer
+    );
+    try {
+        const skin = await contract.tokenURI(tokenID)
+        return fetch(skin)
+            .then(res => res.json().then(json => {
+                return json.image
+            }))
+        // return imgUri
+    } catch (error) {
+        callback({ error, data: undefined });
+        return;
+    }
 }
