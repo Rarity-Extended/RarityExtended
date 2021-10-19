@@ -181,7 +181,7 @@ function	Aventurer({rarity, provider, updateRarity, router, chainTime}) {
 		if(rarity?.skin){
 			const nft = await getSkinNFT({
 				provider, 
-				contractAddress: rarity?.skin?.address, tokenID: rarity?.skin?.tokenID}, 
+				tokenID: rarity?.skin?.tokenID}, 
 				({error}) => {
 					if (error) {
 						return console.error(error);

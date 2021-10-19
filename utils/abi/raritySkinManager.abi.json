@@ -62,6 +62,13 @@
   },
   {
     "inputs": [],
+    "name": "isStrictOnSummonerClass",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "owner",
     "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
@@ -96,23 +103,36 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "inputs": [
+      { "internalType": "uint256", "name": "summonerId", "type": "uint256" }
+    ],
     "name": "skinOf",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "implementation",
-        "type": "address"
-      },
-      { "internalType": "uint256", "name": "tokenId", "type": "uint256" }
+        "components": [
+          {
+            "internalType": "address",
+            "name": "implementation",
+            "type": "address"
+          },
+          { "internalType": "uint256", "name": "tokenId", "type": "uint256" }
+        ],
+        "internalType": "struct RaritySkinManager.Skin",
+        "name": "",
+        "type": "tuple"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "inputs": [
+      { "internalType": "bytes32", "name": "_skinKey", "type": "bytes32" }
+    ],
     "name": "summonerOf",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      { "internalType": "uint256", "name": "summonerId", "type": "uint256" }
+    ],
     "stateMutability": "view",
     "type": "function"
   },

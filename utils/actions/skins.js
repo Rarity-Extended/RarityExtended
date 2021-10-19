@@ -7,11 +7,11 @@
 
 import { ethers } from 'ethers';
 
-export async function getSkinNFT({ provider, contractAddress, tokenID }, callback) {
+export async function getSkinNFT({ provider, tokenID }, callback) {
     const signer = provider.getSigner();
     const contract = new ethers.Contract(
-        contractAddress,
-        process.env.RARITY_SKINS_NFT_ABI,
+        process.env.RARITY_SKINS_ADDR,
+        process.env.RARITY_SKINS_ABI,
         signer
     );
     try {

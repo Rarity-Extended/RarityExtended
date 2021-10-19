@@ -143,10 +143,8 @@ export const RarityContextApp = ({children}) => {
 		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, process.env.DUNGEON_THE_CELLAR_ABI);
 		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI);
 		const	rarityExtendedName = new Contract(process.env.RARITY_EXTENDED_NAME, process.env.RARITY_EXTENDED_NAME_ABI);
-		const	raritySkinManager = new Contract(process.env.RARITY_SKIN_MANAGER_ADDR, process.env.RARITY_SKIN_MANAGER_ABI);
-
-		// eslint-disable-next-line no-unused-vars
 		const	rarityDungeonBoars = new Contract(process.env.DUNGEON_BOARS_ADDR, process.env.DUNGEON_BOARS_ABI);
+		const	raritySkinManager = new Contract(process.env.RARITY_SKIN_MANAGER_ADDR, process.env.RARITY_SKIN_MANAGER_ABI);
 
 		return [
 			rarity.ownerOf(tokenID),
@@ -186,7 +184,7 @@ export const RarityContextApp = ({children}) => {
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
 	function		setRarity(tokenID, multicallResult, inventoryCallResult) {
-		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, claimableGold, skills, feats, cellarLog, cellarScout, forestResearch, name, skin, boarsLog] = multicallResult;
+		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, claimableGold, skills, feats, cellarLog, cellarScout, forestResearch, name, boarsLog, skin] = multicallResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
 			return;

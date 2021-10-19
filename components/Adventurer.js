@@ -19,9 +19,10 @@ function	Adventurer({rarityClass, adventurer, onClick, children, noHover}) {
 
 	const fetchSkinNft = useCallback(async () => {
 		if(adventurer?.skin){
+			console.log(adventurer.skin)
 			const nft = await getSkinNFT({
 				provider, 
-				contractAddress: adventurer?.skin?.address, tokenID: adventurer?.skin?.tokenID}, 
+				tokenID: adventurer?.skin?.tokenID}, 
 				({error}) => {
 					if (error) {
 						return console.error(error);
@@ -29,7 +30,7 @@ function	Adventurer({rarityClass, adventurer, onClick, children, noHover}) {
 			});
 			set_skinNft(nft);
 		}
-	  }, [adventurer]) 
+	  }, [adventurer, provider, set_skinNft]) 
 
 	useEffect(() => {
 		fetchSkinNft();

@@ -75,8 +75,6 @@ module.exports = ({
 
 		RARITY_SKIN_MANAGER_ADDR: '0xfFDFc7286c2c8d0a94f99c5e00dA1851564f8C1d',
 		RARITY_SKIN_MANAGER_ABI: require('./utils/abi/raritySkinManager.abi.json'),
-
-		RARITY_SKINS_NFT_ABI: require('./utils/abi/raritySkinsERC721.abi.json')
 	},
 	optimization: {
 		minimize: true,
