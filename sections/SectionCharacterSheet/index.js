@@ -5,7 +5,7 @@
 **	@Filename:				index.js
 ******************************************************************************/
 
-import	React, {useState}	from	'react';
+import	React, {useState, useEffect, useCallback}	from	'react';
 import	AutowidthInput		from	'react-autowidth-input';
 import	toast				from	'react-hot-toast';
 import	Box					from	'components/Box';
@@ -18,6 +18,9 @@ import	Skills				from	'sections/SectionCharacterSheet/Skills';
 import	{levelUp, setName}	from	'utils/actions';
 import	CLASSES				from	'utils/codex/classes';
 import	{xpRequired}		from	'utils/libs/rarity';
+import	useWeb3		from	'contexts/useWeb3';
+import	{getSkinNFT}									from	'utils/actions/skins';
+import useSkins from 'contexts/useSkins';
 
 const	classMappingImg = [
 	'',
@@ -171,13 +174,34 @@ function	Info({adventurer, updateRarity, provider}) {
 }
 
 function	Aventurer({rarity, provider, updateRarity, router, chainTime}) {
+	const	[skinNft, set_skinNft] = useState();
+	const	{skins} = useSkins();
+
+	const fetchSkinNft = useCallback(async () => {
+		if(rarity?.skin){
+			const nft = await getSkinNFT({
+				provider, 
+				contractAddress: rarity?.skin?.address, tokenID: rarity?.skin?.tokenID}, 
+				({error}) => {
+					if (error) {
+						return console.error(error);
+					}
+			});
+			set_skinNft(nft);
+		}
+	  }, [rarity]) 
+
+	useEffect(() => {
+		fetchSkinNft();
+	}, [fetchSkinNft]);
+
 	return (
 		<div className={'w-full'}>
 			<div className={'flex flex-row w-full mb-6'}>
 				<div className={'w-full flex flex-col-reverse md:flex-row justify-start'}>
 					<div className={'w-64'} style={{minWidth: 256}}>
 						<Image
-							src={classMappingImg[rarity.class]}
+							src={skins === 'on' && skinNft || classMappingImg[rarity.class]}
 							loading={'eager'}
 							quality={100}
 							width={256}

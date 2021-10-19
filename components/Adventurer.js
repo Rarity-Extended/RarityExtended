@@ -5,17 +5,42 @@
 **	@Filename:				Adventurer.js
 ******************************************************************************/
 
-import	React		from	'react';
+import	React, {useState, useEffect, useCallback}		from	'react';
 import	Image		from	'next/image';
 import	Box			from	'components/Box';
+import	useWeb3		from	'contexts/useWeb3';
+import	{getSkinNFT}									from	'utils/actions/skins';
+import useSkins from 'contexts/useSkins';
 
 function	Adventurer({rarityClass, adventurer, onClick, children, noHover}) {
+	const 	{provider} = useWeb3();
+	const	[skinNft, set_skinNft] = useState();
+	const	{skins} = useSkins();
+
+	const fetchSkinNft = useCallback(async () => {
+		if(adventurer?.skin){
+			const nft = await getSkinNFT({
+				provider, 
+				contractAddress: adventurer?.skin?.address, tokenID: adventurer?.skin?.tokenID}, 
+				({error}) => {
+					if (error) {
+						return console.error(error);
+					}
+			});
+			set_skinNft(nft);
+		}
+	  }, [adventurer]) 
+
+	useEffect(() => {
+		fetchSkinNft();
+	}, [fetchSkinNft]);
+
 	return (
 		<Box
 			className={`w-full p-4 flex justify-center items-center flex-col ${noHover ? '' : 'group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer'} transition-colors relative mb-4 md:mb-0`}
 			onClick={onClick}>
 			<Image
-				src={rarityClass.img}
+				src={skins === 'on' && skinNft || rarityClass.img}
 				loading={'eager'}
 				quality={90}
 				width={160}
