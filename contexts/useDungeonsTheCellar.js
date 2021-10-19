@@ -8,17 +8,10 @@
 
 import	React, {useState, useEffect, useContext, createContext}	from	'react';
 import	useWeb3													from	'contexts/useWeb3';
-import	{ethers}												from	'ethers';
-import	{Provider, Contract}									from	'ethcall';
-import	THE_CELLAR_ABI											from	'utils/abi/dungeonTheCellar.abi';
+import	{Contract}												from	'ethcall';
+import	{newEthCallProvider}									from	'utils';
 
 const	DungeonContext = createContext();
-
-async function newEthCallProvider(provider) {
-	const	ethcallProvider = new Provider();
-	await	ethcallProvider.init(provider);
-	return	ethcallProvider;
-}
 
 export const DungeonContextApp = ({children, adventurer}) => {
 	const	{chainID, provider} = useWeb3();
@@ -28,7 +21,7 @@ export const DungeonContextApp = ({children, adventurer}) => {
 	**	Prepare the multicall to get most of the data
 	**************************************************************************/
 	function		prepareDungeonCalls() {
-		const	dungeon = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, THE_CELLAR_ABI);
+		const	dungeon = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, process.env.DUNGEON_THE_CELLAR_ABI);
 		return [
 			dungeon.adventurers_log(adventurer.tokenID),
 			dungeon.base_attack_bonus_by_class_and_level(adventurer.tokenID, adventurer.level),
@@ -47,16 +40,9 @@ export const DungeonContextApp = ({children, adventurer}) => {
 	**	Fetch the data from the prepared multicall to get most of the data
 	**************************************************************************/
 	async function	fetchDungeon(calls) {
-		if (Number(chainID) === 1337) {
-			const	ethcallProvider = await newEthCallProvider(new ethers.providers.JsonRpcProvider('http://localhost:8545'));
-			ethcallProvider.multicallAddress = '0xc04d660976c923ddba750341fe5923e47900cf24';
-			const	callResult = await ethcallProvider.all(calls);
-			return (callResult);
-		} else {
-			const	ethcallProvider = await newEthCallProvider(provider);
-			const	callResult = await ethcallProvider.all(calls);
-			return (callResult);
-		}
+		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
+		const	callResult = await ethcallProvider.all(calls);
+		return (callResult);
 	}
 
 	/**************************************************************************

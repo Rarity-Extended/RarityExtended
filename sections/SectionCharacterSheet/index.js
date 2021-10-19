@@ -146,7 +146,6 @@ function	Info({adventurer, updateRarity, provider}) {
 							if (canLevelUp) {
 								levelUp({
 									provider,
-									contractAddress: process.env.RARITY_ADDR,
 									tokenID: adventurer.tokenID,
 								}, ({error, data}) => {
 									if (error) {

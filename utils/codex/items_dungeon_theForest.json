@@ -35,7 +35,7 @@
 			"type": "skill",
 			"name": "Knowledge",
 			"id": 19,
-			"change": 1
+			"change": -1
 		}, {
 			"type": "skill",
 			"name": "Use Magic Device",
@@ -479,7 +479,7 @@
 			"change": 1
 		}, {
 			"type": "skill",
-			"name": "Hiden",
+			"name": "Hide",
 			"id": 16,
 			"change": 1
 		}]
@@ -845,6 +845,24 @@
 			"type": "skill",
 			"name": "Climb",
 			"id": 4,
+			"change": 1
+		}, {
+			"type": "skill",
+			"name": "Move Silently",
+			"id": 21,
+			"change": 1
+		}]
+	},
+	"Foreign Armor": {
+		"name": "Foreign Armor",
+		"description": "Made of foreign metal, by foreign hands.",
+		"img": "",
+		"level": "Rare",
+		"levelClassName": "bg-items-rare",
+		"modifier": [{
+			"type": "skill",
+			"name": "Hide",
+			"id": 16,
 			"change": 1
 		}, {
 			"type": "skill",

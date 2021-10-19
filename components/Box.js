@@ -7,9 +7,11 @@
 
 import	React		from	'react';
 
-function	Box({children, className, onClick}) {
+function	Box({children, className, style, onClick}) {
 	return (
-		<div className={`from-left relative ${className}`} onClick={onClick}>
+		<div
+			style={style}
+			className={`relative ${className}`} onClick={onClick}>
 			{children}
 			<div className={'absolute h-1 bg-black dark:bg-dark-100 top-0 left-1 right-1'} />
 			<div className={'absolute h-1 w-1 bg-black dark:bg-dark-100 top-1 left-0'} />

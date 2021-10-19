@@ -90,7 +90,6 @@ function	Attributes({adventurer, updateRarity, provider}) {
 		if (updateAttribute.remainingPoints === 0) {
 			setAttributes({
 				provider,
-				contractAddress: process.env.RARITY_ATTR_ADDR,
 				_summoner: adventurer.tokenID,
 				_str: updateAttribute.strength,
 				_dex: updateAttribute.dexterity,
