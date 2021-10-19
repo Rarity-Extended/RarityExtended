@@ -233,7 +233,7 @@ export const RarityContextApp = ({children}) => {
 					},
 					openMic: {
 						prizes: openMicPrizes,
-						timeToNextPerformance: timeToNextOpenMic
+						timeToNextPerformance: 0
 					}
 				},
 				inventory: inventoryCallResult
@@ -282,7 +282,7 @@ export const RarityContextApp = ({children}) => {
 				},
 				openMic: {
 					prizes: openMicPrizes,
-					timeToNextPerformance: timeToNextOpenMic
+					timeToNextPerformance: 0
 				}
 			},
 			inventory: inventoryCallResult

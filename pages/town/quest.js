@@ -83,11 +83,10 @@ function	DialogChoices({adventurersCount, router}) {
 				{
 					label: (
 						<>
-							{'THE HOOLIGANS IN '}
-							<span className={'text-tag-info'}>{'THE TAVERN'}</span>
+							<span className={'text-tag-info dark:text-tag-warning'}>{'HOOLIGANS '}</span> {' IN THE TAVERN'}
 						</>
 					),
-					onClick: () => router.push('/town/quest?tab=the-stage')
+					onClick: () => router.push('/countryside/openmic')
 				},
 			]} />
 	);
