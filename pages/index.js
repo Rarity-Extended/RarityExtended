@@ -481,7 +481,7 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 			<div className={'w-full col-span-4 md:col-span-3 mt-4 md:mt-0 hidden md:block'}>
 				<Box className={'w-full flex flex-col relative'}>
 
-					<div className={'flex flex-row w-full'}>
+					<div className={'flex flex-row w-full relative'}>
 						<div
 							onClick={() => set_tab(0)}
 							className={`flex flex-row items-center text-regular p-4 px-6 border-r-2 border-black dark:border-dark-100 text-black dark:text-white ${tab !== 0 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
@@ -499,6 +499,12 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 							className={`flex flex-row items-center text-regular p-4 px-6 w-full border-l-2 border-black dark:border-dark-100 text-black dark:text-white ${tab !== 2 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
 							<svg width={16} height={16} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M19 4h2v2h-2V4zm-2 4V6h2v2h-2zm-2 0h2v2h-2V8zm0 0h-2V6h2v2zM3 6h8v2H3V6zm8 10H3v2h8v-2zm7 2v-2h2v-2h-2v2h-2v-2h-2v2h2v2h-2v2h2v-2h2zm0 0v2h2v-2h-2z'} fill={'currentColor'}/> </svg>
 							<p className={'mt-1 ml-2'}>{`TASKS ${availableTasks.length > 0 ? `(${availableTasks.length})` : ''}`}</p>
+						</div>
+
+						<div
+							onClick={() => router.push('/town/guild-house')}
+							className={'absolute right-0 top-1 flex flex-row items-center text-regular p-4 px-6 text-black cursor-pointer dark:text-dark-200 dark:hover:text-tag-warning'}>
+							<svg width={16} height={16} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M12 1h2v8h8v4h-2v-2h-8V5h-2V3h2V1zM8 7V5h2v2H8zM6 9V7h2v2H6zm-2 2V9h2v2H4zm10 8v2h-2v2h-2v-8H2v-4h2v2h8v6h2zm2-2v2h-2v-2h2zm2-2v2h-2v-2h2zm0 0h2v-2h-2v2z'} fill={'currentColor'}/> </svg>
 						</div>
 					</div>
 
