@@ -77,7 +77,7 @@ function	Index({router}) {
 					<div className={'relative'}>
 						<div className={'filter grayscale -m-4 pb-8 opacity-70'}>
 							<Image
-								src={'/illustrations/illuOpenMic.jpeg'}
+								src={'/illustrations/illuOpenMic.png'}
 								loading={'eager'}
 								objectFit={'cover'}
 								objectPosition={'center'}

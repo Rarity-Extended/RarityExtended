@@ -232,7 +232,7 @@ function Adventure({ router, adventurer }) {
 	</>
 }
 
-const TheStage = ({rarities, router}) => {
+const OpenMic = ({rarities, router}) => {
 	const	[performanceResult, set_performanceResult] = useState(null);
 
 	if (!rarities || rarities === {}) {
@@ -257,4 +257,4 @@ const TheStage = ({rarities, router}) => {
 	);
 };
 
-export default TheStage;
+export default OpenMic;

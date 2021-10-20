@@ -42,7 +42,7 @@ function getOpenMicDialogOption(bard, router, openCurrentAventurerModal) {
     label,
     onClick: () => {
       if (eligibility.eligible) {
-        router.push(`/dungeons/the-stage?adventurer=${bard.tokenID}`);
+        router.push(`/dungeons/openmic?adventurer=${bard.tokenID}`);
       } else {
         openCurrentAventurerModal();
       }
@@ -59,7 +59,7 @@ function OpenMicSignUpList({ bards, router }) {
         <Adventurer
           onClick={() => {
             if(eligibility.eligible) {
-              router.push(`/dungeons/the-stage?adventurer=${bard.tokenID}`)
+              router.push(`/dungeons/openmic?adventurer=${bard.tokenID}`)
             }
           }}
           adventurer={bard}
