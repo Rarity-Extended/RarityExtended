@@ -9,14 +9,6 @@
 import	{ethers}			from	'ethers';
 import	toast				from	'react-hot-toast';
 
-function getSkin(prize) {
-  if(prize.rare) {
-    return 'missionpass.png';
-  } else {
-    return 'ring.png';
-  }
-}
-
 export async function	perform({provider, tokenID}, callback) {
 	const	_toast = toast.loading('Performing on the tavern stage...');
 	const	signer = provider.getSigner();
@@ -54,11 +46,7 @@ export async function	perform({provider, tokenID}, callback) {
         if(crit) prizes.push(allPrizes[allPrizes.length - 2]);
       }
 
-      const skinnedPrizes = prizes.map(prize => {
-        return {...prize, skin: getSkin(prize)}
-      });
-
-      callback({error: false, data: { check, success, crit, prizes: skinnedPrizes }});
+      callback({error: false, data: { check, success, crit, prizes }});
 			toast.dismiss(_toast);
 			toast.success('You won over the crowd!');
 		} else {

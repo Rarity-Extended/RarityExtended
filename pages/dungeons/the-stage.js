@@ -14,6 +14,7 @@ import	skills	from	'utils/codex/skills';
 import	useWeb3									from	'contexts/useWeb3';
 import	useRarity							from	'contexts/useRarity';
 import	{perform}						from 'utils/actions/perform';
+import	OPENMIC_LOOT				from	'utils/codex/items_dungeon_openmic.json';
 
 const	classMappingBackImg = [
 	'',
@@ -56,14 +57,14 @@ function AdventureResult() {
 					<div key={prize.tokenId} className={'flow  justify-center w-56'}>
 						<div className={'text-center mb-4'}>
 							<Image
-								src={`/openmic-prizes/${prize.skin}`}
+								src={OPENMIC_LOOT[prize.name].img}
 								loading={'eager'}
 								quality={100}
 								width={100}
 								height={100}
 								/>
 						</div>
-						<div className={'text-xs text-center'}>{prize.name}</div>
+						<div className={'text-xs text-center'}>{OPENMIC_LOOT[prize.name].name}</div>
 					</div>
 				)
 			})}
