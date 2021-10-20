@@ -2,7 +2,7 @@
 	"Signet ring of the Hawk": {
 		"name": "Hawk signet ring",
 		"description": "A common signet ring",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/hawk.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -10,7 +10,7 @@
 	"Signet ring of the Badger": {
 		"name": "Badger signet ring",
 		"description": "A common signet ring",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/badger.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -18,7 +18,7 @@
 	"Signet ring of the Song Bird": {
 		"name": "Song Bird signet ring",
 		"description": "A common signet ring",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/bird.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -26,7 +26,7 @@
   "Signet ring of the Skunk": {
 		"name": "Skunk signet ring",
 		"description": "A common signet ring",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/skunk.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -34,7 +34,7 @@
   "Signet ring of the Cat": {
 		"name": "Cat signet ring",
 		"description": "A common signet ring",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/cat.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -42,7 +42,7 @@
   "Signet ring of the Dog": {
 		"name": "Dog signet ring",
 		"description": "A common signet ring",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/dog.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -50,7 +50,7 @@
   "Signet ring of the Fish": {
 		"name": "Fish signet ring",
 		"description": "A common signet ring",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/fish.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -58,7 +58,7 @@
   "Signet ring of the Shark": {
 		"name": "Shark signet ring",
 		"description": "A common signet ring",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/shark.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -66,7 +66,7 @@
   "Signet ring of the Lion": {
 		"name": "Lion signet ring",
 		"description": "A common signet ring",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/lion.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -74,7 +74,7 @@
   "Signet ring of the Tiger": {
 		"name": "Tiger signet ring",
 		"description": "A common signet ring",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/tiger.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -82,7 +82,7 @@
   "Signet ring of the Snake": {
 		"name": "Snake signet ring",
 		"description": "A common signet ring",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/snake.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -90,7 +90,7 @@
   "Crate of Goblin Wine": {
 		"name": "Crate of Goblin Wine",
 		"description": "A crate of the liquid foulness",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/ring.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -98,7 +98,7 @@
   "Expired rations": {
 		"name": "Expired rations",
 		"description": "This was a tidy meal once",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/ring.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -106,7 +106,7 @@
   "Mysterious black stone": {
 		"name": "Mysterious black stone",
 		"description": "This stone seems lost...",
-		"img": "/openmic-prizes/ring.png",
+		"img": "/items/openmic/ring.png",
 		"level": "Common",
 		"levelClassName": "bg-items-common",
 		"modifier": []
@@ -114,7 +114,7 @@
   "Secret mission pass from Prince Andre": {
 		"name": "Secret mission pass from Prince Andre",
 		"description": "This envelope feels hot",
-		"img": "/openmic-prizes/missionpass.png",
+		"img": "/items/openmic/missionpass.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": []
@@ -122,7 +122,7 @@
   "Secret mission pass from The Austrian": {
 		"name": "Secret mission pass from The Austrian",
 		"description": "This envelope feels cold",
-		"img": "/openmic-prizes/missionpass.png",
+		"img": "/items/openmic/missionpass.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": []
@@ -130,7 +130,7 @@
   "Secret mission pass from Murderteeth": {
 		"name": "Secret mission pass from Murderteeth",
 		"description": "This envelope feels just right",
-		"img": "/openmic-prizes/missionpass.png",
+		"img": "/items/openmic/missionpass.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": []
