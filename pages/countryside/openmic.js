@@ -14,7 +14,6 @@ import	DialogNoBox										from	'components/DialogNoBox';
 import	useRarity										from	'contexts/useRarity';
 import	useWeb3											from	'contexts/useWeb3';
 import	CLASSES											from	'utils/codex/classes';
-import	{exploreTheForest, discoverTreasureTheForest}	from	'utils/actions/dungeon_theForest';
 import	{getEligibility, getOpenMicDialogOption} from 'components/dungeons/openmic/index';
 
 dayjs.extend(relativeTime);
@@ -60,7 +59,7 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 }
 
 function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal}) {
-	const options = [ getOpenMicDialogOption(currentAdventurer, router, openCurrentAventurerModal) ];
+	const options = [getOpenMicDialogOption(currentAdventurer, router, openCurrentAventurerModal)];
 	const eligibility = getEligibility(currentAdventurer);
 	if(eligibility.eligible) options.push({label: 'SELECT ANOTHER ADVENTURER', onClick: openCurrentAventurerModal});
 	options.push({label: 'JUST HEAD BACK TO TOWN', onClick: () => router.push('/')});
@@ -70,31 +69,6 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal}) {
 function	Index({router}) {
 	const	{currentAdventurer, openCurrentAventurerModal, updateRarity} = useRarity();
 	const	{provider, chainTime} = useWeb3();
-
-	function	onExploreTheForest(time) {
-		exploreTheForest({
-			provider,
-			tokenID: currentAdventurer.tokenID,
-			timeInDays: time
-		}, ({error}) => {
-			if (error) {
-				return console.error(error);
-			}
-			updateRarity(currentAdventurer.tokenID);
-		});
-	}
-
-	function	onDiscoverTreasure() {
-		discoverTreasureTheForest({
-			provider,
-			tokenID: currentAdventurer.tokenID
-		}, ({error}) => {
-			if (error) {
-				return console.error(error);
-			}
-			updateRarity(currentAdventurer.tokenID);
-		});
-	}
 
 	return (
 		<section>
@@ -119,11 +93,7 @@ function	Index({router}) {
 						<DialogChoices
 							router={router}
 							currentAdventurer={currentAdventurer}
-							openCurrentAventurerModal={openCurrentAventurerModal}
-							chainTime={chainTime}
-							onExploreTheForest={onExploreTheForest}
-							onDiscoverTreasure={onDiscoverTreasure}
-						/>
+							openCurrentAventurerModal={openCurrentAventurerModal} />
 					</div>
 				</Box>
 			</div>

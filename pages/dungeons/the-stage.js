@@ -1,7 +1,7 @@
 /******************************************************************************
 **	@Author:				Rarity Extended
 **	@Twitter:				@RXtended
-**	@Date:					October 14th 2021
+**	@Date:					Tuesday October 19th 2021
 **	@Filename:				the-stage.js
 ******************************************************************************/
 
@@ -10,10 +10,10 @@ import	Image									from	'next/image';
 import	Link									from	'next/link';
 import	DialogBox								from	'components/DialogBox';
 import	Box								from	'components/Box';
-import	toast				from	'react-hot-toast';
 import	skills	from	'utils/codex/skills';
-import	useRarity						from	'contexts/useRarity';
-import Skills from 'components/ModalSkills';
+import	useWeb3									from	'contexts/useWeb3';
+import	useRarity							from	'contexts/useRarity';
+import	{perform}						from 'utils/actions/perform';
 
 const	classMappingBackImg = [
 	'',
@@ -56,7 +56,7 @@ function AdventureResult() {
 					<div key={prize.tokenId} className={'flow  justify-center w-56'}>
 						<div className={'text-center mb-4'}>
 							<Image
-								src={`/openmic-prizes/${prize.image}`}
+								src={`/openmic-prizes/${prize.skin}`}
 								loading={'eager'}
 								quality={100}
 								width={100}
@@ -77,7 +77,8 @@ function AdventureResult() {
 }
 
 function Adventure({ router, adventurer }) {
-	const	{rarities} = useRarity();
+	const	{provider} = useWeb3();
+	const	{rarities, updateRarity} = useRarity();
 	const performer = rarities[router?.query?.adventurer];
 	const {set_performanceResult} = useContext(PerformanceContext);
 
@@ -104,29 +105,18 @@ function Adventure({ router, adventurer }) {
 		return `${(result * 100).toFixed(0)} %`;
 	}
 
-	async function perform() {
-		const	_toast = toast.loading('Performing on the tavern stage...');
-		await new Promise(resolve => setTimeout(resolve, 5000));
-		toast.dismiss(_toast);
-		set_performanceResult({
-			success: true,
-			crit: true,
-			prizes: [
-				{ 
-					tokenId: 0,
-					rare: false,
-					index: 0,
-					name: 'Tiger Signet Ring',
-					image: 'ring.png'
-				},
-				{ 
-					tokenId: 1,
-					rare: true,
-					index: 0,
-					name: 'Secret Mission Pass from Murderteeth',
-					image: 'missionpass.png'
-				}
-			]
+	async function clickPerform() {
+		await perform({ provider, tokenID: performer.tokenID }, result => {
+			if(result.error) {
+				console.log(result.error);
+			} else {
+				set_performanceResult({
+					success: result.data.success,
+					crit: result.data.crit,
+					prizes: result.data.prizes
+				});
+			}
+			updateRarity(performer.tokenID);
 		});
 	}
 
@@ -234,7 +224,7 @@ function Adventure({ router, adventurer }) {
 	<div className={'max-w-screen-md w-full mx-auto'}>
 		<DialogBox
 				options={[
-					{label: 'SING YOUR HEART OUT', onClick: perform},
+					{label: 'SING YOUR HEART OUT', onClick: clickPerform},
 					{label: 'I CAN\'T HANDLE THE PRESSURE !', onClick: () => router.back()},
 				]} />
 	</div>
