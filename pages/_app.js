@@ -145,11 +145,11 @@ function	MyApp(props) {
 				<Web3ReactProvider getLibrary={getLibrary}>
 					<Web3ContextApp>
 						<RarityContextApp>
-								<AppWrapper
-									Component={Component}
-									pageProps={pageProps}
-									element={props.element}
-									router={props.router} />
+							<AppWrapper
+								Component={Component}
+								pageProps={pageProps}
+								element={props.element}
+								router={props.router} />
 						</RarityContextApp>
 					</Web3ContextApp>
 				</Web3ReactProvider>
