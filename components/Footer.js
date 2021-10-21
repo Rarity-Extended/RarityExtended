@@ -11,7 +11,7 @@ import	Link									from	'next/link';
 import	{useRouter}								from	'next/router';
 import	useUI									from	'contexts/useUI';
 import	TownNav									from	'components/TownNav';
-import useSkins from 'contexts/useSkins';
+import	useSkins								from 'contexts/useSkins';
 
 function	Footer() {
 	const	{theme, switchTheme, layout, switchLayout} = useUI();

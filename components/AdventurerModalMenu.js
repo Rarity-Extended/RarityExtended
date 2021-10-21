@@ -5,15 +5,37 @@
 **	@Filename:				FlyoutMenu.js
 ******************************************************************************/
 
-import	React							from	'react';
-import	Image							from	'next/image';
-import	useRarity						from	'contexts/useRarity';
-import	useWeb3							from	'contexts/useWeb3';
-import	CLASSES							from	'utils/codex/classes';
+import	React, {useState, useEffect, useCallback}	from	'react';
+import	Image										from	'next/image';
+import	useRarity									from	'contexts/useRarity';
+import	useWeb3										from	'contexts/useWeb3';
+import	CLASSES										from	'utils/codex/classes';
+import	{getSkinNFT}								from	'utils/actions/skins';
+import	useSkins 									from	'contexts/useSkins';
 
 function AdventurerModalMenu() {
 	const	{currentAdventurer, openCurrentAventurerModal} = useRarity();
-	const	{address} = useWeb3();
+	const	{address, provider} = useWeb3();
+	const	[skinNft, set_skinNft] = useState(null);
+	const	{skins} = useSkins();
+
+	const fetchSkinNft = useCallback(async () => {
+		if(currentAdventurer?.skin){
+			const nft = await getSkinNFT({
+				provider, 
+				contractAddress: currentAdventurer?.skin?.address, tokenID: currentAdventurer?.skin?.tokenID}, 
+			({error}) => {
+				if (error) {
+					return console.error(error);
+				}
+			});
+			set_skinNft(nft);
+		}
+	}, [currentAdventurer, provider]); 
+
+	useEffect(() => {
+		fetchSkinNft();
+	}, [fetchSkinNft]);
 
 	function openModal() {
 		openCurrentAventurerModal();
@@ -25,7 +47,7 @@ function AdventurerModalMenu() {
 				<div onClick={openModal} className={'group items-center justify-end flex-row mr-6 cursor-pointer outline-none focus:outline-none hidden md:flex'}>
 					{currentAdventurer ? <div className={'flex items-center justify-center'}>
 						<Image
-							src={CLASSES[currentAdventurer?.class]?.img}
+							src={skins === 'on' && skinNft || CLASSES[currentAdventurer?.class]?.img}
 							quality={100}
 							width={60}
 							height={60} />

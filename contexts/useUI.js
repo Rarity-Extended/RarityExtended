@@ -19,7 +19,7 @@ export const UIContextApp = ({children}) => {
 			if (lightModeMediaQuery.matches)
 				set_theme('light');
 		}
-	}, [theme, set_theme]);
+	}, []);
 
 	useEffect(() => {
 		if (theme === 'dark') {

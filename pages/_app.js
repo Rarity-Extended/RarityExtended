@@ -141,19 +141,19 @@ function	MyApp(props) {
 
 	return (
 		<UIContextApp>
-			<Web3ReactProvider getLibrary={getLibrary}>
-				<Web3ContextApp>
-					<RarityContextApp>
-						<SkinsContextApp>
-							<AppWrapper
-								Component={Component}
-								pageProps={pageProps}
-								element={props.element}
-								router={props.router} />
-						</SkinsContextApp>
-					</RarityContextApp>
-				</Web3ContextApp>
-			</Web3ReactProvider>
+			<SkinsContextApp>
+				<Web3ReactProvider getLibrary={getLibrary}>
+					<Web3ContextApp>
+						<RarityContextApp>
+								<AppWrapper
+									Component={Component}
+									pageProps={pageProps}
+									element={props.element}
+									router={props.router} />
+						</RarityContextApp>
+					</Web3ContextApp>
+				</Web3ReactProvider>
+			</SkinsContextApp>
 		</UIContextApp>
 	);
 }
