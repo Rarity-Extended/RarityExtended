@@ -19,6 +19,7 @@ function	Footer() {
 	const	[open, set_open] = useState(false);
 	const	[options, set_options] = useState(false);
 	const	router = useRouter();
+	const	hookDep = typeof(window) !== 'undefined';
 
 	useEffect(() => {
 		if (typeof(window) !== 'undefined') {
@@ -36,7 +37,7 @@ function	Footer() {
 				prevScrollpos = currentScrollPos;
 			};
 		}
-	}, [typeof(window) !== 'undefined']);
+	}, [hookDep]);
 
 	useEffect(() => {
 		set_open(false);

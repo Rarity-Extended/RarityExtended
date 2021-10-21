@@ -5,19 +5,19 @@
 **	@Filename:				mercenaries.js
 ******************************************************************************/
 
-import	React, {useEffect, useState}		from	'react';
-import	Image								from	'next/image';
-import	{Contract}							from	'ethcall';
-import	{ethers}							from	'ethers';
-import	dayjs								from	'dayjs';
-import	relativeTime						from	'dayjs/plugin/relativeTime';
-import	Box									from	'components/Box';
-import	useRarity							from	'contexts/useRarity';
-import	useWeb3								from	'contexts/useWeb3';
-import	DialogNoBox							from	'components/DialogNoBox';
-import	{newEthCallProvider}				from	'utils';
-import	CLASSES								from	'utils/codex/classes';
-import	{protectBoars}						from	'utils/actions/boar';
+import	React, {useEffect, useState, useCallback}		from	'react';
+import	Image											from	'next/image';
+import	{Contract}										from	'ethcall';
+import	{ethers}										from	'ethers';
+import	dayjs											from	'dayjs';
+import	relativeTime									from	'dayjs/plugin/relativeTime';
+import	Box												from	'components/Box';
+import	useRarity										from	'contexts/useRarity';
+import	useWeb3											from	'contexts/useWeb3';
+import	DialogNoBox										from	'components/DialogNoBox';
+import	{newEthCallProvider}							from	'utils';
+import	CLASSES											from	'utils/codex/classes';
+import	{protectBoars}									from	'utils/actions/boar';
 
 dayjs.extend(relativeTime);
 
@@ -367,7 +367,7 @@ function	Index({router}) {
 	const	{currentAdventurer, openCurrentAventurerModal, updateRarity} = useRarity();
 	const	{provider, chainID, chainTime} = useWeb3();
 
-	async function	fetchBoarsData(calls) {
+	const fetchBoarsData = useCallback(async (calls) => { 
 		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
 		const	multicallResult = await ethcallProvider.all(calls);
 		const	[boar_population, extinction, extinctionBy, simulate_reproduce, simulate_kill] = multicallResult;
@@ -382,7 +382,7 @@ function	Index({router}) {
 			extinctionByName = await nameContract.get_name(extinctionBy);
 		}
 		set_population({count: boar_population, extinction: extinction, extinctionBy: extinctionByName || extinctionBy, lootReproduce: Number(simulate_reproduce || 0), lootKill: Number(simulate_kill || 0)});
-	}
+	}, [chainID, provider]);
 
 	useEffect(() => {
 		const	contract = new Contract(process.env.DUNGEON_BOARS_ADDR, process.env.DUNGEON_BOARS_ABI);
@@ -393,7 +393,7 @@ function	Index({router}) {
 			currentAdventurer?.tokenID ? contract.simulate_reproduce(currentAdventurer?.tokenID) : null,
 			currentAdventurer?.tokenID ? contract.simulate_kill(currentAdventurer?.tokenID) : null,
 		]);
-	}, [chainTime, currentAdventurer.tokenID]);
+	}, [chainTime, currentAdventurer.tokenID, fetchBoarsData]);
 
 	return (
 		<section>

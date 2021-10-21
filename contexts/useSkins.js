@@ -5,7 +5,7 @@
 **	@Filename:				useSkins.js
 ******************************************************************************/
 
-import	React, {useEffect, useContext, createContext}	from	'react';
+import	React, {useContext, createContext}	from	'react';
 import	useLocalStorage									from	'hook/useLocalStorage';
 
 const	SkinsContext = createContext();

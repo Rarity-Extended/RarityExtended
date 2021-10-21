@@ -6,21 +6,20 @@
 ******************************************************************************/
 
 import	React, {useState, useEffect, useCallback}	from	'react';
-import	AutowidthInput		from	'react-autowidth-input';
-import	toast				from	'react-hot-toast';
-import	Box					from	'components/Box';
-import	Image				from	'next/image';
-import	Attributes			from	'sections/SectionCharacterSheet/Attributes';
-import	Balloon				from	'sections/SectionCharacterSheet/Balloon';
-import	Inventory			from	'sections/SectionCharacterSheet/Inventory';
-import	Feats				from	'sections/SectionCharacterSheet/Feats';	
-import	Skills				from	'sections/SectionCharacterSheet/Skills';
-import	{levelUp, setName}	from	'utils/actions';
-import	CLASSES				from	'utils/codex/classes';
-import	{xpRequired}		from	'utils/libs/rarity';
-import	useWeb3		from	'contexts/useWeb3';
-import	{getSkinNFT}									from	'utils/actions/skins';
-import useSkins from 'contexts/useSkins';
+import	AutowidthInput								from	'react-autowidth-input';
+import	toast										from	'react-hot-toast';
+import	Box											from	'components/Box';
+import	Image										from	'next/image';
+import	Attributes									from	'sections/SectionCharacterSheet/Attributes';
+import	Balloon										from	'sections/SectionCharacterSheet/Balloon';
+import	Inventory									from	'sections/SectionCharacterSheet/Inventory';
+import	Feats										from	'sections/SectionCharacterSheet/Feats';	
+import	Skills										from	'sections/SectionCharacterSheet/Skills';
+import	{levelUp, setName}							from	'utils/actions';
+import	CLASSES										from	'utils/codex/classes';
+import	{xpRequired}								from	'utils/libs/rarity';
+import	{getSkinNFT}								from	'utils/actions/skins';
+import	useSkins									from	'contexts/useSkins';
 
 const	classMappingImg = [
 	'',
@@ -182,14 +181,14 @@ function	Aventurer({rarity, provider, updateRarity, router, chainTime}) {
 			const nft = await getSkinNFT({
 				provider, 
 				tokenID: rarity?.skin?.tokenID}, 
-				({error}) => {
-					if (error) {
-						return console.error(error);
-					}
+			({error}) => {
+				if (error) {
+					return console.error(error);
+				}
 			});
 			set_skinNft(nft);
 		}
-	  }, [rarity]) 
+	}, [rarity, provider]); 
 
 	useEffect(() => {
 		fetchSkinNft();

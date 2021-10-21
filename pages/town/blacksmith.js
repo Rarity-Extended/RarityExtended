@@ -5,21 +5,21 @@
 **	@Filename:				blacksmith.js
 ******************************************************************************/
 
-import	React, {useState, useEffect}		from	'react';
-import	{ethers}							from	'ethers';
-import	{Contract}							from	'ethcall';
-import	Image								from	'next/image';
-import	Typer								from	'components/Typer';
-import	DialogBox							from	'components/DialogBox';
-import	Box									from	'components/Box';
-import	ModalSkills							from	'components/ModalSkills';
-import	useWeb3								from	'contexts/useWeb3';
-import	useRarity							from	'contexts/useRarity';
-import	SectionArtifactsTheForest			from	'sections/SectionArtifactsTheForest';
-import	SectionRestoreArtifactsTheForest	from	'sections/SectionRestoreArtifactsTheForest';
-import	SectionCrafting						from	'sections/SectionCrafting';
-import	{newEthCallProvider}				from	'utils';
-import	{approveERC20}						from	'utils/actions/utils';
+import	React, {useState, useEffect, useCallback}		from	'react';
+import	{ethers}										from	'ethers';
+import	{Contract}										from	'ethcall';
+import	Image											from	'next/image';
+import	Typer											from	'components/Typer';
+import	DialogBox										from	'components/DialogBox';
+import	Box												from	'components/Box';
+import	ModalSkills										from	'components/ModalSkills';
+import	useWeb3											from	'contexts/useWeb3';
+import	useRarity										from	'contexts/useRarity';
+import	SectionArtifactsTheForest						from	'sections/SectionArtifactsTheForest';
+import	SectionRestoreArtifactsTheForest				from	'sections/SectionRestoreArtifactsTheForest';
+import	SectionCrafting									from	'sections/SectionCrafting';
+import	{newEthCallProvider}							from	'utils';
+import	{approveERC20}									from	'utils/actions/utils';
 
 function	DialogChoices({router, adventurersCount, set_category, approveStatus, adventurerCanCraft, adventurerHasXp, approveGold, approveCraftingMaterials, openModalSkills}) {
 	const	[selectedOption, set_selectedOption] = useState(0);
@@ -500,7 +500,7 @@ function	Index({rarities, router}) {
 	const	[approveStatus, set_approveStatus] = useState({approvedGold: false, approvedCraftingMaterials: false});
 	const	adventurers = Object.values(rarities);
 
-	async function	checkCraftingStatus() {
+	const checkCraftingStatus = useCallback(async () => { 
 		const	rarity = new Contract(process.env.RARITY_ADDR, process.env.RARITY_ABI);
 		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, process.env.RARITY_GOLD_ABI);
 		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, process.env.DUNGEON_THE_CELLAR_ABI);
@@ -519,7 +519,8 @@ function	Index({rarities, router}) {
 			approvedCraftingMaterials: !ethers.BigNumber.from(craftingMaterialsAllowance).isZero(),
 		});
 		return (callResult);
-	}
+	}, [set_approveStatus, chainID, currentAdventurer?.tokenID, provider]);
+
 	async function	approveGold() {
 		approveERC20({
 			provider,
@@ -551,7 +552,7 @@ function	Index({rarities, router}) {
 
 	useEffect(() => {
 		checkCraftingStatus();
-	}, [currentAdventurer?.tokenID]);
+	}, [currentAdventurer?.tokenID, checkCraftingStatus]);
 
 	return (
 		<section className={'max-w-full'}>

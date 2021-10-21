@@ -6,11 +6,11 @@
 ******************************************************************************/
 
 import	React, {useState, useEffect, useCallback}		from	'react';
-import	Image		from	'next/image';
-import	Box			from	'components/Box';
-import	useWeb3		from	'contexts/useWeb3';
+import	Image											from	'next/image';
+import	Box												from	'components/Box';
+import	useWeb3											from	'contexts/useWeb3';
 import	{getSkinNFT}									from	'utils/actions/skins';
-import useSkins from 'contexts/useSkins';
+import	useSkins 										from	'contexts/useSkins';
 
 function	Adventurer({rarityClass, adventurer, onClick, children, noHover}) {
 	const 	{provider} = useWeb3();
@@ -22,14 +22,14 @@ function	Adventurer({rarityClass, adventurer, onClick, children, noHover}) {
 			const nft = await getSkinNFT({
 				provider, 
 				tokenID: adventurer?.skin?.tokenID}, 
-				({error}) => {
-					if (error) {
-						return console.error(error);
-					}
+			({error}) => {
+				if (error) {
+					return console.error(error);
+				}
 			});
 			set_skinNft(nft);
 		}
-	  }, [adventurer, provider, set_skinNft]) 
+	}, [adventurer, provider, set_skinNft]); 
 
 	useEffect(() => {
 		fetchSkinNft();

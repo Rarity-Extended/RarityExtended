@@ -53,7 +53,7 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 				return skills;
 			});
 		}
-	}, [adventurer?.tokenID]);
+	}, [adventurer?.tokenID, _availableSkillPoints, _pointSpentByAdventurer, adventurer.skills, set_updateSkills, updateSkills]);
 
 	function	onSetSkills() {
 		const	_skills = [];

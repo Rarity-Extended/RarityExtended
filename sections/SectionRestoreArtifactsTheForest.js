@@ -5,7 +5,7 @@
 **	@Filename:				SectionArtifactsTheForest.js
 ******************************************************************************/
 
-import	React, {useEffect, useState}				from	'react';
+import	React, {useEffect, useState, useCallback}	from	'react';
 import	Image										from	'next/image';
 import	useSWR										from	'swr';
 import	{Contract}									from	'ethcall';
@@ -60,13 +60,13 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, adventurersCount
 	/**************************************************************************
 	**	Fetch the data from the prepared multicall to get most of the data
 	**************************************************************************/
-	async function	fetchV1Artifacts(calls) {
+	const fetchV1Artifacts = useCallback(async (calls) => { 
 		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
 		const	callResult = await ethcallProvider.all(calls);
 		return (callResult);
-	}
+	}, [chainID, provider]);
 
-	async function	prepareArtifacts(artifacts) {
+	const prepareArtifacts = useCallback(async (artifacts) => { 
 		const	addr = address;
 		const	addressArtifacts = {};
 		artifacts.forEach((artifact) => {
@@ -90,7 +90,7 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, adventurersCount
 			set_isLoaded(true);
 		}
 		set_isLoaded(true);
-	}
+	}, [set_isLoaded, address, fetchV1Artifacts]);
 
 	function	setMigratableArtifacts(tokenID, multicallResult) {
 		const	artifact = multicallResult;
@@ -110,7 +110,7 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, adventurersCount
 	/**************************************************************************
 	**	Trigger a re-fetch of the artifacts
 	**************************************************************************/
-	async function	fetchArtifacts() {
+	const fetchArtifacts = useCallback(async () => { 
 		const {result} = await fetcher(`https://api.ftmscan.com/api
 			?module=account
 			&action=tokennfttx
@@ -118,7 +118,8 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, adventurersCount
 			&address=${address}
 			&apikey=${process.env.FMT_KEY}`);
 		prepareArtifacts(result || []);
-	}
+	}, [prepareArtifacts, address]);
+
 	/**************************************************************************
 	**	Once we got data from FTMScan, try detect old artifacts
 	**************************************************************************/
@@ -129,7 +130,7 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, adventurersCount
 			}
 			prepareArtifacts(data?.result || []);
 		}
-	}, [data]);
+	}, [data, fetchArtifacts, prepareArtifacts]);
 
 	if (!shouldDisplay) {
 		return null;

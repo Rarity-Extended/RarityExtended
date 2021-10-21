@@ -85,7 +85,7 @@ function	Index({rarities}) {
 			}
 		}
 		set_selectedAdventurersActions({canAdventure, canClaimGold, canAdventureCellar, canLevelUp});
-	}, [selectedAdventurers.length, rNonce]);
+	}, [selectedAdventurers.length, rNonce, adventurers, chainTime, selectedAdventurers]);
 
 	async function	onCareOf() {
 		if (selectedAdventurersActions.canAdventure === 0 && selectedAdventurersActions.canAdventureCellar === 0 && selectedAdventurersActions.canLevelUp === 0 && selectedAdventurersActions.canClaimGold === 0) {

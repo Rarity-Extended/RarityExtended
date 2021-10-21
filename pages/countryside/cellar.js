@@ -5,7 +5,7 @@
 **	@Filename:				mercenaries.js
 ******************************************************************************/
 
-import	React, {useEffect, useState}					from	'react';
+import	React, {useEffect, useState, useCallback}		from	'react';
 import	Image											from	'next/image';
 import	dayjs											from	'dayjs';
 import	relativeTime									from	'dayjs/plugin/relativeTime';
@@ -137,19 +137,19 @@ function	Index({router}) {
 	const	{provider, chainID, chainTime} = useWeb3();
 	const	[loot, set_loot] = useState(0);
 
-	async function	fetchData(calls) {
+	const fetchData = useCallback(async (calls) => { 
 		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
 		const	multicallResult = await ethcallProvider.all(calls);
 		const	[_loot] = multicallResult;
 		set_loot(_loot);
-	}
+	}, [set_loot, chainID, provider]);
 
 	useEffect(() => {
 		const	contract = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, process.env.DUNGEON_THE_CELLAR_ABI);
 		fetchData([
 			currentAdventurer?.tokenID ? contract.scout(currentAdventurer?.tokenID) : null,
 		]);
-	}, [chainTime, currentAdventurer.tokenID]);
+	}, [chainTime, currentAdventurer.tokenID, fetchData]);
 
 	return (
 		<section>

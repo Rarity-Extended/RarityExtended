@@ -5,7 +5,7 @@
 **	@Filename:				index.js
 ******************************************************************************/
 
-import	React, {useEffect, useState, useCallback}		from	'react';
+import	React, {useState}								from	'react';
 import	router											from	'next/router';
 import	Image											from	'next/image';
 import	Link											from	'next/link';
