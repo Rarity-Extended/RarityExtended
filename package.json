@@ -43,7 +43,7 @@
     "eslint": "^8.0.1",
     "eslint-config-next": "^11.1.2",
     "eslint-plugin-react": "^7.26.1",
-    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-react-hooks": "^4.2.1-alpha-5ca4b0433-20211020",
     "madge": "^5.0.1"
   }
 }
