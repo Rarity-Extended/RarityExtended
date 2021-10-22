@@ -42,7 +42,7 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 	
 						{'You dig with a shovel for hours, but you can\'t seem to go deep enough. It\'s getting dark. You know you have to escape the forest before it gets too dark, but you still have a goal, a quest to finish. So you start digging again.'}
 						<div className={'my-4'} />
-						{'Hours later, the sun has set and you have yet to find anything. You were about to give up digging when you finally see something shine in the distance. More hours pass and you finally reach the prize. You lift out a small wooden box. The treasure is yours.'}
+						{'Hours later, the sun has set and you have yet to find anything. You were about to give up digging when you finally see something shine under the dirt. More hours pass and you finally reach the prize. You lift out a small wooden box. The treasure is yours.'}
 					</>
 				);
 			}
@@ -56,7 +56,7 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 					{'It takes you several hours to make your way to the location the map shows and after a few more hours of searching, you find the two trees.'}
 
 					<div className={'my-4'} />
-					{'The trail is a narrow dirt path winding through the forest, the trees are old, some are grand trees reaching up to the sky while others are barely over the treetops. You can see green everywhere and the ground is muddy. Some patches are covered in fallen leaves while some are not, some parts are bare of trees, while some parts are slightly overgrown, slightly overgrown with green.'}
+					{'The trail is a narrow dirt path winding through the forest, the trees are old, some are grand trees reaching up to the sky while others are barely taller than bushes. You can see green everywhere and the ground is muddy. Some patches are covered in fallen leaves while some are not, some parts are bare of trees, while some parts are slightly overgrown, dense with green.'}
 					<div />
 					{'It\'s quiet. You can hear the sound of the wind rustling through the trees and leaves finding their way.'}
 					<div className={'my-4'} />
@@ -85,11 +85,11 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 
 		return (
 			<>
-				{'There is a dark looking man sitting at a table in the corner. His face is hidden under a full faced mask. He speaks of a forest to the north Where he has buried '}
+				{'There is a dark looking man sitting at a table in the corner. His face is hidden under a full faced mask. He speaks of a forest to the north where he has buried '}
 				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{'a treasure'}
 					<Tooltip>
-						<p className={'text-sm leading-normal inline'}>{'Many treasures are buried in the forest. Nobody knows what they will be used for, or even if you will be able to sell them... But are you a real treasure hunter?'}</p>
+						<p className={'text-sm leading-normal inline'}>{'Many treasures are buried in the forest. Nobody knows what they will be or what they may be used for, or even if you will be able to sell them... But are you a real treasure hunter?'}</p>
 					</Tooltip>
 				</span>
 				{'.'}
@@ -97,13 +97,13 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 				<div className={'my-4'} />
 				{'He leads you to a corner and starts looking through a pack with a sketchbook and a quill. You wait for him to find what he is looking for. He finally lifts a small piece of parchment and hands it to you. He has drawn a map of the area close to where he was found and circled a large oak tree with a pair of trees which look like they are kissing at the base.'}
 				<div className={'my-4'} />
-				{'You have to travel to that location and search for the two trees, then follow the game trail northeast. He doesn\'t know how long it will take, or how many days it will be, but says to give him '}
+				{'You have to travel to that location and search for the two trees, then follow the game trail northeast. He doesn\'t know how long it will take, or how many days you will need, but says perhaps '}
 				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{'around a week'}
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'You can spend between '}</p>
 						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'4 and 7 days '}</p>
-						<p className={'text-sm leading-normal inline'}>{' on this trail. Different time, different treasure.'}</p>
+						<p className={'text-sm leading-normal inline'}>{' on this trail. Different times my reap different treasures.'}</p>
 					</Tooltip>
 				</span>
 				{'. Once you get to the forest, if you\'re still alive, look for the glowing mushrooms. Then, you will have to '}
