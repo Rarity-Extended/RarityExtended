@@ -36,17 +36,17 @@ function	NCPHeadline({currentAdventurer, chainTime, loot}) {
 		if (!currentAdventurer?.dungeons?.cellar?.canAdventure) {
 			return (
 				<>
-					{'You killed all the nasty, dirty rats that had infested the walls and floors of the tavern, and now you were back to the Tavern. The same bartender that still remembered you was behind the counter, cleaning a mug with a rag. There was a broad smile on his broad face.'}
+					{'You killed all the nasty, dirty rats that had infested the walls and floors of the tavern, and now you were back in the Tavern. The same bartender that still remembers you is behind the counter, cleaning a mug with a rag. There is a broad smile on his broad face.'}
 					<div className={'my-4'} />
 
 					{'"Well, well, well, look at you," he said. "I was just thinking about you. I\'m glad to see you back. Sit down anywhere you want."'}
 					<div className={'my-4'} />
 
-					{'You went to a table in the corner, one that you knew was devoid of rats. They will be back. You know that. They will be back '}
+					{'You go to a table in the corner, one that you knew was devoid of rats. They will be back. You know that. They always come back '}
 					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{dayjs(new Date(currentAdventurer?.dungeons?.cellar?.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}
 						<Tooltip>
-							<p className={'text-sm leading-normal inline'}>{'They\'re not magic, but the rats really like this cave. Now that you\'ve killed the King of the Cellar, a new one will appear in a while...'}</p>
+							<p className={'text-sm leading-normal inline'}>{'They\'re not magic, but the rats really like this dwelling. Now that you\'ve killed the King of the Cellar, a new one will appear in a while...'}</p>
 						</Tooltip>
 					</span>
 					{'.'}
@@ -57,13 +57,13 @@ function	NCPHeadline({currentAdventurer, chainTime, loot}) {
 
 		return (
 			<>
-				{'Facu, the tavern’s owner, was sitting alone at a table. His old housecat lay on his lap and was purring away. Facu had heard some scurrying about in his cellar and had gone down to check it out. He found swarms of hungry rats. In his earlier days, he would have squashed those pests, but these days he’s weak and frail.'}
+				{'Facu, the tavern’s owner, was sitting alone at a table. His old housecat laying on his lap and purring away. Facu had heard some scurrying about in his cellar and had gone down to check it out. He found swarms of hungry rats. In his earlier days, he would have squashed those pests, but these days he’s weak and frail.'}
 				<div className={'my-4'} />
 				{'“Ha! I told that Felipe that he should stop keeping such a messy cellar! He’ll never tidy up!”'}
 				<div className={'my-4'} />
-				{'You look at the cat. It\'s a very lazy cat. Not the kind of hunter a house need when there is plenty of rat.'}
+				{'You look at the cat. It\'s a very lazy cat. It mirror its owner; old and frail. Not the kind of hunter a house needs when there are plenty of rats.'}
 				<div className={'my-4'} />
-				{'“Help me with this rat situation, adventurer. I have nothing much to offer, but you can keep everything you\'ll loot on theses rats.”'}
+				{'“Help me with this rat situation, adventurer. I have nothing much to offer, but you can keep everything you\'ll loot from these rats. And of course, a tankard of mead will be waiting for you.”'}
 				<div className={'my-4'} />
 
 				{'You could do that. What is a rat for you? If you cannot handle the '}
@@ -79,16 +79,16 @@ function	NCPHeadline({currentAdventurer, chainTime, loot}) {
 						<p className={'text-sm leading-normal inline'}>{' should start this fight.'}</p>
 					</Tooltip>
 				</span>
-				{' in this cellar, will you be able to fight the boars nearby? It could be you first of bravery.'}
+				{' in this cellar. If not, will you be able to fight the boars nearby? It could be you first act of bravery.'}
 				
 				<div className={'my-4'} />
-				{'You heard about this rat at the tavern. A big rat. Other adventurers have already killed it, but somehow it keeps coming back. Based on your strength, you can expect up to '}
+				{'You heard about this giant rat in the tavern. A big rat. Other adventurers have already killed it, but somehow it keeps coming back. Based on your strength, you can expect up to '}
 				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{`${loot} rat skin${loot === 0 ? '' : 's'}`}
 					<Tooltip>
-						<p className={'text-sm leading-normal inline'}>{'The Rat Skin is a basic crafting material what can be used by the '}</p>
+						<p className={'text-sm leading-normal inline'}>{'The Rat Skin is a basic crafting material that can be used by the '}</p>
 						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Blacksmith'}</p>
-						<p className={'text-sm leading-normal inline'}>{' to craft you some armors, weapons or other items.'}</p>
+						<p className={'text-sm leading-normal inline'}>{' to craft you some armor, weapons, or other items.'}</p>
 					</Tooltip>
 				</span>
 				{'.'}
