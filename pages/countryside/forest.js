@@ -103,7 +103,7 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'You can spend between '}</p>
 						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'4 and 7 days '}</p>
-						<p className={'text-sm leading-normal inline'}>{' on this trail. Different times my reap different treasures.'}</p>
+						<p className={'text-sm leading-normal inline'}>{' on this trail. Different times reap different treasures.'}</p>
 					</Tooltip>
 				</span>
 				{'. Once you get to the forest, if you\'re still alive, look for the glowing mushrooms. Then, you will have to '}
