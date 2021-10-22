@@ -318,7 +318,7 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 						<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
 							<div className={'opacity-40 overflow-hidden -mb-1'}>
 								<Image
-									src={'/illustrations/illuOpenMic.png'}
+									src={'/illustrations/illuOpenMic.jpeg'}
 									loading={'eager'}
 									objectFit={'cover'}
 									objectPosition={'top'}
