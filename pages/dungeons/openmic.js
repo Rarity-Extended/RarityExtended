@@ -54,7 +54,7 @@ function AdventureResult() {
 		<div className={'flex w-full items-start justify-center mt-8'}>
 			{performanceResult.prizes.map(prize => {
 				return (
-					<div key={prize.tokenId} className={'flow  justify-center w-56'}>
+					<div key={prize.tokenId} className={'flow justify-center w-56'}>
 						<div className={'text-center mb-4'}>
 							<Image
 								src={OPENMIC_LOOT[prize.name].img}
@@ -70,7 +70,7 @@ function AdventureResult() {
 			})}
 		</div>
 		<Link href={'/town/quest'}>
-			<div className={'text-base text-white mt-16 mx-4 md:mx-0 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 border-white hover:bg-white hover:text-black transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
+			<div className={'text-base mt-16 mx-4 md:mx-0 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 hover:bg-dark-600 dark:hover:bg-white hover:text-white dark:hover:text-dark-600 transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
 				{'Start a new adventure'}
 			</div>
 		</Link>
