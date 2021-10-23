@@ -68,7 +68,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal}) {
 
 function	Index({router}) {
 	const	{currentAdventurer, openCurrentAventurerModal, updateRarity} = useRarity();
-	const	{provider, chainTime} = useWeb3();
+	const	{chainTime} = useWeb3();
 
 	return (
 		<section>

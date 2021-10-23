@@ -92,11 +92,11 @@ function Adventure({ router, adventurer }) {
 		const modifier = abilityModifier(ability);
 		if(modifier === 0) return "0";
 		if(modifier > 0) return `+${modifier}`;
-		return `-${modifier}`;
+		return `${modifier}`;
 	}
 
 	function odds(perform, charisma, treasures) {
-		if(perform < 1) return 0;
+		if(perform < 1) return '0 %';
 		const d = 20;
 		const dc = 10;
 		const bonus = perform 
@@ -208,7 +208,7 @@ function Adventure({ router, adventurer }) {
 						</div>
 						<div className={'flex justify-between'}>
 							<div className={'text-sm opacity-80'}>Forest Treasure</div>
-							<div>{forestTreasures.length ? '+1' : '-'}</div>
+							<div>{forestTreasures.length ? '+1' : '+0'}</div>
 						</div>
 						<div className={'flex justify-between'}>
 							<div className={'text-sm opacity-80'}>Odds</div>
