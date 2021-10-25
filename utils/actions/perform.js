@@ -35,7 +35,7 @@ export async function	perform({provider, tokenID}, callback) {
 	**	If the call is successful, try to perform the actual TX
 	**********************************************************************/
 	try {
-		const	transaction = await openmic.perform(tokenID, {gasLimit: 500_000});
+		const	transaction = await openmic.perform(tokenID, {gasLimit: 325_000});
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
       const {check, success, crit} = transactionResult?.events[0]?.args;
