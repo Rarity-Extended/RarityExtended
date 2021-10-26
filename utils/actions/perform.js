@@ -13,8 +13,8 @@ export async function	perform({provider, tokenID}, callback) {
 	const	_toast = toast.loading('Performing on the tavern stage...');
 	const	signer = provider.getSigner();
 	const	openmic = new ethers.Contract(
-		process.env.DUNGEON_OPEN_MIC_V1_ADDR,
-		process.env.DUNGEON_OPEN_MIC_V1_ABI,
+		process.env.DUNGEON_OPEN_MIC_V2_ADDR,
+		process.env.DUNGEON_OPEN_MIC_V2_ABI,
 		signer
 	);
 

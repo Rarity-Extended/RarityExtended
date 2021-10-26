@@ -62,8 +62,8 @@ module.exports = ({
 		DUNGEON_BOARS_ADDR: '0xa79358CB5aefa3c550A8773848Dbb6E99e74300f',
 		DUNGEON_BOARS_ABI: require('./utils/abi/dungeonBoars.abi.json'),
 
-		DUNGEON_OPEN_MIC_V1_ADDR: '0x46Fe9AAd56f486950ed3732A91552e3919e5713F',
-		DUNGEON_OPEN_MIC_V1_ABI: require('./utils/abi/dungeonOpenMic.abi.json'),
+		DUNGEON_OPEN_MIC_V2_ADDR: '0x29d51E8736FCC8C2662aA1B2cf46753d5918606F',
+		DUNGEON_OPEN_MIC_V2_ABI: require('./utils/abi/dungeonOpenMic.abi.json'),
 
 		ZAP_VAULT_ADDR: '0xfCE6CbeF3867102da383465cc237B49fF4B9d48F',
 		FTM_VAULT_ADDR: '0x0dec85e74a92c52b7f708c4b10207d9560cefaf0',

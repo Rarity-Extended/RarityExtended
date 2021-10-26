@@ -1,5 +1,5 @@
 {
-	"Signet ring of the Hawk": {
+	"Hawk signet ring": {
 		"name": "Hawk signet ring",
 		"description": "A common signet ring",
 		"img": "/items/openmic/hawk.png",
@@ -7,7 +7,7 @@
 		"levelClassName": "bg-items-common",
 		"modifier": []
 	},
-	"Signet ring of the Badger": {
+	"Badger signet ring": {
 		"name": "Badger signet ring",
 		"description": "A common signet ring",
 		"img": "/items/openmic/badger.png",
@@ -15,7 +15,7 @@
 		"levelClassName": "bg-items-common",
 		"modifier": []
 	},
-	"Signet ring of the Song Bird": {
+	"Song Bird signet ring": {
 		"name": "Song Bird signet ring",
 		"description": "A common signet ring",
 		"img": "/items/openmic/bird.png",
@@ -23,7 +23,7 @@
 		"levelClassName": "bg-items-common",
 		"modifier": []
 	},
-  "Signet ring of the Skunk": {
+  "Skunk signet ring": {
 		"name": "Skunk signet ring",
 		"description": "A common signet ring",
 		"img": "/items/openmic/skunk.png",
@@ -31,7 +31,7 @@
 		"levelClassName": "bg-items-common",
 		"modifier": []
 	},
-  "Signet ring of the Cat": {
+  "Cat signet ring": {
 		"name": "Cat signet ring",
 		"description": "A common signet ring",
 		"img": "/items/openmic/cat.png",
@@ -39,7 +39,7 @@
 		"levelClassName": "bg-items-common",
 		"modifier": []
 	},
-  "Signet ring of the Dog": {
+  "Dog signet ring": {
 		"name": "Dog signet ring",
 		"description": "A common signet ring",
 		"img": "/items/openmic/dog.png",
@@ -47,7 +47,7 @@
 		"levelClassName": "bg-items-common",
 		"modifier": []
 	},
-  "Signet ring of the Fish": {
+  "Fish signet ring": {
 		"name": "Fish signet ring",
 		"description": "A common signet ring",
 		"img": "/items/openmic/fish.png",
@@ -55,7 +55,7 @@
 		"levelClassName": "bg-items-common",
 		"modifier": []
 	},
-  "Signet ring of the Shark": {
+  "Shark signet ring": {
 		"name": "Shark signet ring",
 		"description": "A common signet ring",
 		"img": "/items/openmic/shark.png",
@@ -63,7 +63,7 @@
 		"levelClassName": "bg-items-common",
 		"modifier": []
 	},
-  "Signet ring of the Lion": {
+  "Lion signet ring": {
 		"name": "Lion signet ring",
 		"description": "A common signet ring",
 		"img": "/items/openmic/lion.png",
@@ -71,7 +71,7 @@
 		"levelClassName": "bg-items-common",
 		"modifier": []
 	},
-  "Signet ring of the Tiger": {
+  "Tiger signet ring": {
 		"name": "Tiger signet ring",
 		"description": "A common signet ring",
 		"img": "/items/openmic/tiger.png",
@@ -79,7 +79,7 @@
 		"levelClassName": "bg-items-common",
 		"modifier": []
 	},
-  "Signet ring of the Snake": {
+  "Snake signet ring": {
 		"name": "Snake signet ring",
 		"description": "A common signet ring",
 		"img": "/items/openmic/snake.png",

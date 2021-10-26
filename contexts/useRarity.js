@@ -144,7 +144,7 @@ export const RarityContextApp = ({children}) => {
 		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI);
 		const	rarityExtendedName = new Contract(process.env.RARITY_EXTENDED_NAME, process.env.RARITY_EXTENDED_NAME_ABI);
 		const	rarityDungeonBoars = new Contract(process.env.DUNGEON_BOARS_ADDR, process.env.DUNGEON_BOARS_ABI);
-		const	rarityDungeonOpenMic = new Contract(process.env.DUNGEON_OPEN_MIC_V1_ADDR, process.env.DUNGEON_OPEN_MIC_V1_ABI);
+		const	rarityDungeonOpenMic = new Contract(process.env.DUNGEON_OPEN_MIC_V2_ADDR, process.env.DUNGEON_OPEN_MIC_V2_ABI);
 
 		return [
 			rarity.ownerOf(tokenID),
