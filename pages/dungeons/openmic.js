@@ -5,9 +5,10 @@
 **	@Filename:				the-stage.js
 ******************************************************************************/
 
-import	React, {useState, createContext, useContext}			from	'react';
+import	React, {useState, createContext, useContext, useEffect}	from	'react';
 import	Image									from	'next/image';
 import	Link									from	'next/link';
+import	{ethers, utils}				from	'ethers';
 import	DialogBox								from	'components/DialogBox';
 import	Box								from	'components/Box';
 import	skills	from	'utils/codex/skills';
@@ -79,9 +80,23 @@ function AdventureResult() {
 
 function Adventure({ router, adventurer }) {
 	const	{provider} = useWeb3();
+	const [ odds, setOdds ] = useState("--- %");
 	const	{rarities, updateRarity} = useRarity();
 	const performer = rarities[router?.query?.adventurer];
 	const {set_performanceResult} = useContext(PerformanceContext);
+
+	const	signer = provider.getSigner();
+	const	openmic = new ethers.Contract(
+		process.env.DUNGEON_OPEN_MIC_V2_ADDR,
+		process.env.DUNGEON_OPEN_MIC_V2_ABI,
+		signer
+	);
+
+	useEffect(async () => {
+		const odds = await openmic.odds(adventurer.tokenID);
+		const result = parseFloat(utils.formatEther(odds));
+		setOdds(`${(result * 100).toFixed(0)} %`);
+	}, []);
 
 	function abilityModifier(ability) {
     if (ability < 10) return -1;
@@ -93,17 +108,6 @@ function Adventure({ router, adventurer }) {
 		if(modifier === 0) return "0";
 		if(modifier > 0) return `+${modifier}`;
 		return `${modifier}`;
-	}
-
-	function odds(perform, charisma, treasures) {
-		if(perform < 1) return '0 %';
-		const d = 20;
-		const dc = 10;
-		const bonus = perform 
-			+ abilityModifier(charisma)
-			+ ((treasures.length > 0) ? 1 : 0);
-		const result = Math.min((d - 1)/d, (dc + bonus)/d);
-		return `${(result * 100).toFixed(0)} %`;
 	}
 
 	async function clickPerform() {
@@ -212,7 +216,7 @@ function Adventure({ router, adventurer }) {
 						</div>
 						<div className={'flex justify-between'}>
 							<div className={'text-sm opacity-80'}>Odds</div>
-							<div>{odds(performSkill, charisma, forestTreasures)}</div>
+							<div>{odds}</div>
 						</div>
 						<br />
 					</Box>
