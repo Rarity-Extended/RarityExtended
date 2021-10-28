@@ -9,10 +9,10 @@ dayjs.extend(relativeTime);
 
 function getEligibility(bard) {
   let result = { eligible: true, reason: null };
-  if(bard?.class !== 2) result = { eligible: false, reason: 'Not a bard' };
-  else if(bard?.level < 2) result = { eligible: false, reason: 'Not level 2 or higher' };
+  if(bard?.class !== 2) result = { eligible: false, reason: 'Is not a bard' };
+  else if(bard?.level < 2) result = { eligible: false, reason: 'Is not level 2 or higher' };
   else if(bard?.dungeons?.openMic?.timeToNextPerformance > 0) result = { eligible: false, 
-      reason: `READY IN ${dayjs.duration({ seconds: bard?.dungeons?.openMic?.timeToNextPerformance }).humanize()}` };
+    reason: ` Will be ready in ${dayjs.duration({ seconds: bard?.dungeons?.openMic?.timeToNextPerformance }).humanize()}` };
   if(!result.eligible) result.sheild = (
     <div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex justify-center items-center text-center p-6'}>
       <p className={'text-white'}>
@@ -28,10 +28,10 @@ function getOpenMicDialogOption(bard, router, openCurrentAventurerModal) {
   const label = <>
   {bard && eligibility.eligible && (<>
       {'TAKE THE STAGE WITH '}
-      <span className={'text-tag-info'}>{`${bard.tokenID}, ${bard.name ? bard.name : CLASSES[bard.class].name} LVL ${bard.level}`}</span>
+      <span className={'text-tag-info dark:text-tag-warning'}>{`${bard.tokenID}, ${bard.name ? bard.name : CLASSES[bard.class].name} LVL ${bard.level}`}</span>
     </>)}
   {bard && !eligibility.eligible && (<>
-      <span className={'text-tag-info'}>{`${bard.tokenID}, ${bard.name ? bard.name : CLASSES[bard.class].name} LVL ${bard.level}`}</span>
+      <span className={'text-tag-info dark:text-tag-warning'}>{`${bard.tokenID}, ${bard.name ? bard.name : CLASSES[bard.class].name} LVL ${bard.level}`}</span>
       {` ${eligibility.reason}, CHOOSE SOMEONE ELSE `}
       </>)}
   {!bard && (<>
@@ -42,7 +42,7 @@ function getOpenMicDialogOption(bard, router, openCurrentAventurerModal) {
     label,
     onClick: () => {
       if (eligibility.eligible) {
-        router.push(`/dungeons/the-stage?adventurer=${bard.tokenID}`);
+        router.push(`/dungeons/openmic?adventurer=${bard.tokenID}`);
       } else {
         openCurrentAventurerModal();
       }
@@ -59,7 +59,7 @@ function OpenMicSignUpList({ bards, router }) {
         <Adventurer
           onClick={() => {
             if(eligibility.eligible) {
-              router.push(`/dungeons/the-stage?adventurer=${bard.tokenID}`)
+              router.push(`/dungeons/openmic?adventurer=${bard.tokenID}`)
             }
           }}
           adventurer={bard}

@@ -122,7 +122,7 @@ export const QUESTS = {
 		href: '/countryside/cellar'
 	},
 	'openmic': {
-		label: 'Open Mic',
+		label: 'Tavern Hooligans',
 		href: '/countryside/openmic'
 	}
 };

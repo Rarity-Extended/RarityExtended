@@ -144,7 +144,7 @@ export const RarityContextApp = ({children}) => {
 		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI);
 		const	rarityExtendedName = new Contract(process.env.RARITY_EXTENDED_NAME, process.env.RARITY_EXTENDED_NAME_ABI);
 		const	rarityDungeonBoars = new Contract(process.env.DUNGEON_BOARS_ADDR, process.env.DUNGEON_BOARS_ABI);
-		const	rarityDungeonOpenMic = new Contract(process.env.DUNGEON_OPEN_MIC_V1_ADDR, process.env.DUNGEON_OPEN_MIC_V1_ABI);
+		const	rarityDungeonOpenMic = new Contract(process.env.DUNGEON_OPEN_MIC_V2_ADDR, process.env.DUNGEON_OPEN_MIC_V2_ABI);
 
 		return [
 			rarity.ownerOf(tokenID),
@@ -160,7 +160,6 @@ export const RarityContextApp = ({children}) => {
 			rarityDungeonForest.getResearchBySummoner(tokenID),
 			rarityExtendedName.get_name(tokenID),
 			rarityDungeonBoars.actions_log(tokenID),
-			rarityDungeonOpenMic.getPrizes(tokenID),
 			rarityDungeonOpenMic.timeToNextPerformance(tokenID),
 		];
 	}
@@ -185,7 +184,7 @@ export const RarityContextApp = ({children}) => {
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
 	function		setRarity(tokenID, multicallResult, inventoryCallResult) {
-		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, claimableGold, skills, feats, cellarLog, cellarScout, forestResearch, name, boarsLog, openMicPrizes, timeToNextOpenMic] = multicallResult;
+		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, claimableGold, skills, feats, cellarLog, cellarScout, forestResearch, name, boarsLog, timeToNextOpenMic] = multicallResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
 			return;
@@ -232,7 +231,6 @@ export const RarityContextApp = ({children}) => {
 						canAdventure: Number(forestResearch?.endBlockTs) <= chainTime && (forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0)
 					},
 					openMic: {
-						prizes: openMicPrizes,
 						timeToNextPerformance: timeToNextOpenMic
 					}
 				},
@@ -281,7 +279,6 @@ export const RarityContextApp = ({children}) => {
 					canAdventure: Number(forestResearch?.endBlockTs) <= chainTime && (forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0)
 				},
 				openMic: {
-					prizes: openMicPrizes,
 					timeToNextPerformance: timeToNextOpenMic
 				}
 			},

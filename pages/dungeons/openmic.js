@@ -1,19 +1,21 @@
 /******************************************************************************
 **	@Author:				Rarity Extended
 **	@Twitter:				@RXtended
-**	@Date:					October 14th 2021
+**	@Date:					Tuesday October 19th 2021
 **	@Filename:				the-stage.js
 ******************************************************************************/
 
-import	React, {useState, createContext, useContext}			from	'react';
+import	React, {useState, createContext, useContext, useEffect}	from	'react';
 import	Image									from	'next/image';
 import	Link									from	'next/link';
+import	{ethers, utils}				from	'ethers';
 import	DialogBox								from	'components/DialogBox';
 import	Box								from	'components/Box';
-import	toast				from	'react-hot-toast';
 import	skills	from	'utils/codex/skills';
-import	useRarity						from	'contexts/useRarity';
-import Skills from 'components/ModalSkills';
+import	useWeb3									from	'contexts/useWeb3';
+import	useRarity							from	'contexts/useRarity';
+import	{perform}						from 'utils/actions/perform';
+import	OPENMIC_LOOT				from	'utils/codex/items_dungeon_openmic.json';
 
 const	classMappingBackImg = [
 	'',
@@ -43,8 +45,8 @@ function AdventureResult() {
 
 	const message = performanceResult.success
 		? performanceResult.crit 
-			? 'The whole tavern is on its feet, a standing ovation. Even the hooligans are cheering you on. Facu is so impressed he hands you a mission pass along with your door prize !' 
-			: 'Well, you\'re no Orpheus or Keoghtom, but you got the job done. The hooligans have settled down and Facu has a door prize for you !'
+			? 'The whole tavern is on its feet, a standing ovation. Even the hooligans are cheering you on. Facu is so impressed he hands you a mission pass !' 
+			: 'Well, you\'re no Orpheus or Keoghtom, but you got the job done. The hooligans have settled down and Facu has a humble prize for you !'
 		: 'Your performance was so bad it actually made the hooligans worse. Facu only has one word for you. Cringe !';
 
 	return <div className={'max-w-screen-sm w-full mt-12 mr-auto ml-auto'}>
@@ -53,23 +55,23 @@ function AdventureResult() {
 		<div className={'flex w-full items-start justify-center mt-8'}>
 			{performanceResult.prizes.map(prize => {
 				return (
-					<div key={prize.tokenId} className={'flow  justify-center w-56'}>
+					<div key={prize.tokenId} className={'flow justify-center w-56'}>
 						<div className={'text-center mb-4'}>
 							<Image
-								src={`/openmic-prizes/${prize.image}`}
+								src={OPENMIC_LOOT[prize.name].img}
 								loading={'eager'}
 								quality={100}
 								width={100}
 								height={100}
 								/>
 						</div>
-						<div className={'text-xs text-center'}>{prize.name}</div>
+						<div className={'text-xs text-center'}>{OPENMIC_LOOT[prize.name].name}</div>
 					</div>
 				)
 			})}
 		</div>
 		<Link href={'/town/quest'}>
-			<div className={'text-base text-white mt-16 mx-4 md:mx-0 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 border-white hover:bg-white hover:text-black transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
+			<div className={'text-base mt-16 mx-4 md:mx-0 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 hover:bg-dark-600 dark:hover:bg-white hover:text-white dark:hover:text-dark-600 transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
 				{'Start a new adventure'}
 			</div>
 		</Link>
@@ -77,9 +79,24 @@ function AdventureResult() {
 }
 
 function Adventure({ router, adventurer }) {
-	const	{rarities} = useRarity();
+	const	{provider} = useWeb3();
+	const [ odds, setOdds ] = useState("--- %");
+	const	{rarities, updateRarity} = useRarity();
 	const performer = rarities[router?.query?.adventurer];
 	const {set_performanceResult} = useContext(PerformanceContext);
+
+	const	signer = provider.getSigner();
+	const	openmic = new ethers.Contract(
+		process.env.DUNGEON_OPEN_MIC_V2_ADDR,
+		process.env.DUNGEON_OPEN_MIC_V2_ABI,
+		signer
+	);
+
+	useEffect(async () => {
+		const odds = await openmic.odds(adventurer.tokenID);
+		const result = parseFloat(utils.formatEther(odds));
+		setOdds(`${(result * 100).toFixed(0)} %`);
+	}, []);
 
 	function abilityModifier(ability) {
     if (ability < 10) return -1;
@@ -90,43 +107,21 @@ function Adventure({ router, adventurer }) {
 		const modifier = abilityModifier(ability);
 		if(modifier === 0) return "0";
 		if(modifier > 0) return `+${modifier}`;
-		return `-${modifier}`;
+		return `${modifier}`;
 	}
 
-	function odds(perform, charisma, treasures) {
-		if(perform < 1) return 0;
-		const d = 20;
-		const dc = 10;
-		const bonus = perform 
-			+ abilityModifier(charisma)
-			+ ((treasures.length > 0) ? 1 : 0);
-		const result = Math.min((d - 1)/d, (dc + bonus)/d);
-		return `${(result * 100).toFixed(0)} %`;
-	}
-
-	async function perform() {
-		const	_toast = toast.loading('Performing on the tavern stage...');
-		await new Promise(resolve => setTimeout(resolve, 5000));
-		toast.dismiss(_toast);
-		set_performanceResult({
-			success: true,
-			crit: true,
-			prizes: [
-				{ 
-					tokenId: 0,
-					rare: false,
-					index: 0,
-					name: 'Tiger Signet Ring',
-					image: 'ring.png'
-				},
-				{ 
-					tokenId: 1,
-					rare: true,
-					index: 0,
-					name: 'Secret Mission Pass from Murderteeth',
-					image: 'missionpass.png'
-				}
-			]
+	async function clickPerform() {
+		await perform({ provider, tokenID: performer.tokenID }, result => {
+			if(result.error) {
+				console.log(result.error);
+			} else {
+				set_performanceResult({
+					success: result.data.success,
+					crit: result.data.crit,
+					prizes: result.data.prizes
+				});
+			}
+			updateRarity(performer.tokenID);
 		});
 	}
 
@@ -217,11 +212,11 @@ function Adventure({ router, adventurer }) {
 						</div>
 						<div className={'flex justify-between'}>
 							<div className={'text-sm opacity-80'}>Forest Treasure</div>
-							<div>{forestTreasures.length ? '+1' : '-'}</div>
+							<div>{forestTreasures.length ? '+1' : '+0'}</div>
 						</div>
 						<div className={'flex justify-between'}>
 							<div className={'text-sm opacity-80'}>Odds</div>
-							<div>{odds(performSkill, charisma, forestTreasures)}</div>
+							<div>{odds}</div>
 						</div>
 						<br />
 					</Box>
@@ -234,14 +229,14 @@ function Adventure({ router, adventurer }) {
 	<div className={'max-w-screen-md w-full mx-auto'}>
 		<DialogBox
 				options={[
-					{label: 'SING YOUR HEART OUT', onClick: perform},
+					{label: 'SING YOUR HEART OUT', onClick: clickPerform},
 					{label: 'I CAN\'T HANDLE THE PRESSURE !', onClick: () => router.back()},
 				]} />
 	</div>
 	</>
 }
 
-const TheStage = ({rarities, router}) => {
+const OpenMic = ({rarities, router}) => {
 	const	[performanceResult, set_performanceResult] = useState(null);
 
 	if (!rarities || rarities === {}) {
@@ -266,4 +261,4 @@ const TheStage = ({rarities, router}) => {
 	);
 };
 
-export default TheStage;
+export default OpenMic;

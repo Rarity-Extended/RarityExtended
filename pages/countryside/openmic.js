@@ -14,7 +14,7 @@ import	DialogNoBox										from	'components/DialogNoBox';
 import	useRarity										from	'contexts/useRarity';
 import	useWeb3											from	'contexts/useWeb3';
 import	CLASSES											from	'utils/codex/classes';
-import	{exploreTheForest, discoverTreasureTheForest}	from	'utils/actions/dungeon_theForest';
+import	{getEligibility, getOpenMicDialogOption} from 'components/dungeons/openmic/index';
 
 dayjs.extend(relativeTime);
 
@@ -34,19 +34,10 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 	const	renderNCPText = () => {
 		return (
 			<>
-				{'The stage at the front of the tavern was lit by a single brazier. A robed figure took the stage with a flourish. "What\'s this?" the figure said. "A tavern full of drunkards and not a single bard? How dare you show such disrespect?"'}
+				{'These hooligans show up at Facu\'s Tavern every weekend! They drink too much and scare away the other customers. Facu is fed up. Hopefully a bard can calm them down. Facu only has humble prizes to offer in return. But for the best performers, Facu will part with a secret mission pass!'}
 				<div className={'my-4'} />
 
-				{'The brazier’s flames dance wildly in the air. Giving off heat, filling the room with warmth. It is the only source of light. It is hard to breathe.'}
-				<div className={'my-4'} />
-
-				{'“Let’s have a song!”'}
-				<div className={'my-4'} />
-
-				{'The tavern owner stands, his weathered face red from the drink and the smoke. The crowd roars and whistles and shouts and chants. They call for a song. The owner, a large man, wide in the shoulder, with a bald head that shines like an apple in the light, waves his hands above his head and shouts for quiet.'}
-				<div className={'my-4'} />
-
-				{'The crowd hushes. They look around at one another in confusion. Some of them are drunk, but not all of them.'}
+				{'Oh and I almost forgot. If you have any forest treasures with you, The Austrian will help you win over the crowd.'}
 				<div className={'my-4'} />
 
 				{'Will '}
@@ -67,113 +58,17 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 	);
 }
 
-function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, chainTime, onExploreTheForest, onDiscoverTreasure}) {
-	if (!currentAdventurer?.dungeons?.forest?.canAdventure) {
-		const	hasToDig = dayjs(new Date(currentAdventurer?.dungeons?.forest?.endBlockTs * 1000)).isBefore(dayjs(new Date(chainTime * 1000)));
-		if (hasToDig) {
-			return (
-				<DialogNoBox
-					options={[
-						{label: (
-							<>
-								<span className={'text-tag-info dark:text-tag-warning'}>
-									{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}
-								</span>
-								{' FOUND A TREASURE!'}
-							</>
-						),
-						onClick: onDiscoverTreasure},
-						{label: 'SELECT ANOTHER ADVENTURER', onClick: openCurrentAventurerModal},
-						{label: 'JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
-					]} />
-			);
-		}
-		return (
-			<DialogNoBox
-				options={[
-					{label: 'SELECT ANOTHER ADVENTURER', onClick: openCurrentAventurerModal},
-					{label: 'JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
-				]} />
-		);
-	}
-
-	return (
-		<DialogNoBox
-			options={[
-				{
-					label: (
-						<>
-							{'TAKE PROVISIONS FOR 4 DAYS WITH '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
-							{'.'}
-						</>
-					),
-					onClick: () => onExploreTheForest(4),
-				},
-				{
-					label: (
-						<>
-							{'TAKE PROVISIONS FOR 5 DAYS WITH '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
-							{'.'}
-						</>
-					),
-					onClick: () => onExploreTheForest(5),
-				},
-				{
-					label: (
-						<>
-							{'TAKE PROVISIONS FOR 6 DAYS WITH '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
-							{'.'}
-						</>
-					),
-					onClick: () => onExploreTheForest(6),
-				},
-				{
-					label: (
-						<>
-							{'TAKE PROVISIONS FOR 7 DAYS WITH '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
-							{'.'}
-						</>
-					),
-					onClick: () => onExploreTheForest(7),
-				},
-				{label: 'SELECT ANOTHER ADVENTURER', onClick: () => openCurrentAventurerModal()},
-				{label: 'NO, JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
-			]} />
-	);
+function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal}) {
+	const options = [getOpenMicDialogOption(currentAdventurer, router, openCurrentAventurerModal)];
+	const eligibility = getEligibility(currentAdventurer);
+	if(eligibility.eligible) options.push({label: 'SELECT ANOTHER ADVENTURER', onClick: openCurrentAventurerModal});
+	options.push({label: 'JUST HEAD BACK TO TOWN', onClick: () => router.push('/')});
+	return <DialogNoBox options={options} />;
 }
 
 function	Index({router}) {
 	const	{currentAdventurer, openCurrentAventurerModal, updateRarity} = useRarity();
-	const	{provider, chainTime} = useWeb3();
-
-	function	onExploreTheForest(time) {
-		exploreTheForest({
-			provider,
-			tokenID: currentAdventurer.tokenID,
-			timeInDays: time
-		}, ({error}) => {
-			if (error) {
-				return console.error(error);
-			}
-			updateRarity(currentAdventurer.tokenID);
-		});
-	}
-
-	function	onDiscoverTreasure() {
-		discoverTreasureTheForest({
-			provider,
-			tokenID: currentAdventurer.tokenID
-		}, ({error}) => {
-			if (error) {
-				return console.error(error);
-			}
-			updateRarity(currentAdventurer.tokenID);
-		});
-	}
+	const	{chainTime} = useWeb3();
 
 	return (
 		<section>
@@ -198,11 +93,7 @@ function	Index({router}) {
 						<DialogChoices
 							router={router}
 							currentAdventurer={currentAdventurer}
-							openCurrentAventurerModal={openCurrentAventurerModal}
-							chainTime={chainTime}
-							onExploreTheForest={onExploreTheForest}
-							onDiscoverTreasure={onDiscoverTreasure}
-						/>
+							openCurrentAventurerModal={openCurrentAventurerModal} />
 					</div>
 				</Box>
 			</div>
