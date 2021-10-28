@@ -11,6 +11,7 @@ import	Link						from	'next/link';
 import	{ethers}					from	'ethers';
 import	ITEMS						from	'utils/codex/items';
 import	THE_FOREST_LOOT				from	'utils/codex/items_dungeon_theForest.json';
+import	OPENMIC_LOOT				from	'utils/codex/items_dungeon_openmic.json';
 
 function	ItemsTheCellar({item, adventurer}) {
 	return (
@@ -73,6 +74,34 @@ function	ItemsTheForest({subItem}) {
 	);
 }
 
+function	ItemsOpenMic({subItem}) {
+	return (
+		<div className={'flex flex-row space-x-4 w-full tooltip cursor-help group'}>
+			<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
+			<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} left-0 top-0 w-2 h-1`} />
+				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} left-0 top-0 w-1 h-2`} />
+				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} right-0 top-0 w-2 h-1`} />
+				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} right-0 top-0 w-1 h-2`} />
+				<Image src={OPENMIC_LOOT[subItem.name].img} width={64} height={64} />
+				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} left-0 bottom-0 w-2 h-1`} />
+				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} left-0 bottom-0 w-1 h-2`} />
+				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} right-0 bottom-0 w-2 h-1`} />
+				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} right-0 bottom-0 w-1 h-2`} />
+			</div>
+			<div className={'text-left flex flex-col py-0.5'}>
+				<p className={'text-xs'}>{OPENMIC_LOOT[subItem.name].name}</p>
+				<p className={'text-megaxs mt-auto'}></p>
+			</div>
+			<div className={'tooltiptext invisible group-hover:visible bg-white dark:bg-dark-600 border-4 border-black dark:border-dark-100'}>
+				<div className={'p-4'}>
+					<p className={'text-sx mb-2'}>{OPENMIC_LOOT[subItem.name].level}</p>
+					<p className={'text-megaxs mt-4 text-gray-darker dark:text-white dark:text-opacity-60'}>{OPENMIC_LOOT[subItem.name].description}</p>
+				</div>
+			</div>
+		</div>
+	);
+}
+
 function	Inventory({adventurer}) {
 	const	OFFSET_SIZE = 9;
 	const	[offset, set_offset] = useState(0);
@@ -94,6 +123,12 @@ function	Inventory({adventurer}) {
 					return adventurer?.inventory?.[item.id].map((subItem, subi) => {
 						hasItem = true;
 						return (<ItemsTheForest  key={`${item.id}_${i}_${subi}`} item={item} subItem={subItem} />);
+					});
+				}
+				if(Array.isArray(adventurer?.inventory?.[item.id]) && item?.dungeon === 'OpenMic') {
+					return adventurer?.inventory?.[item.id].map((subItem, subi) => {
+						hasItem = true;
+						return (<ItemsOpenMic key={`${item.id}_${i}_${subi}`} subItem={subItem} />);
 					});
 				}
 				return (null);

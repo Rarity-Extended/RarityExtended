@@ -104,6 +104,14 @@ const	items = [
 		dungeon: 'Boars',
 		id: 7,
 	},
+	{
+		name: 'OpenMic_prizes',
+		address: process.env.DUNGEON_OPEN_MIC_V2_ADDR,
+		fetch: (adventurerID) => new Contract(process.env.DUNGEON_OPEN_MIC_V2_ADDR, process.env.DUNGEON_OPEN_MIC_V2_ABI).getPrizes(adventurerID),
+		dungeon: 'OpenMic',
+		parse: (item) => item,
+		id: 8,
+	},
 ];
 
 export default items;
