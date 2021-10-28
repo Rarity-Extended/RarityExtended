@@ -45,8 +45,8 @@ function AdventureResult() {
 
 	const message = performanceResult.success
 		? performanceResult.crit 
-			? 'The whole tavern is on its feet, a standing ovation. Even the hooligans are cheering you on. Facu is so impressed he hands you a mission pass along with your door prize !' 
-			: 'Well, you\'re no Orpheus or Keoghtom, but you got the job done. The hooligans have settled down and Facu has a door prize for you !'
+			? 'The whole tavern is on its feet, a standing ovation. Even the hooligans are cheering you on. Facu is so impressed he hands you a mission pass !' 
+			: 'Well, you\'re no Orpheus or Keoghtom, but you got the job done. The hooligans have settled down and Facu has a humble prize for you !'
 		: 'Your performance was so bad it actually made the hooligans worse. Facu only has one word for you. Cringe !';
 
 	return <div className={'max-w-screen-sm w-full mt-12 mr-auto ml-auto'}>

@@ -34,7 +34,7 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 	const	renderNCPText = () => {
 		return (
 			<>
-				{'These hooligans show up at Facu\'s Tavern every weekend! They drink too much and scare away the other customers. Facu is fed up. Hopefully a bard can calm them down. Facu only has door prizes to offer in return. But for the best performers, Facu will part with a secret mission pass!'}
+				{'These hooligans show up at Facu\'s Tavern every weekend! They drink too much and scare away the other customers. Facu is fed up. Hopefully a bard can calm them down. Facu only has humble prizes to offer in return. But for the best performers, Facu will part with a secret mission pass!'}
 				<div className={'my-4'} />
 
 				{'Oh and I almost forgot. If you have any forest treasures with you, The Austrian will help you win over the crowd.'}

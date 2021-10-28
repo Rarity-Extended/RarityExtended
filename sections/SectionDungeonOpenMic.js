@@ -26,7 +26,7 @@ function	SectionDungeonOpenMic({shouldDisplay, adventurers, router}) {
 		<div className={'flex flex-col w-full'}>
 			<div className={'pb-10'}>
 				<i className={'block text-sx md:text-xs text-black dark:text-white text-opacity-60 leading-6'}>
-					{'These hooligans show up at Facu\'s Tavern every weekend. They drink too much and scare away the other customers. Facu is fed up. Hopefully a bard can calm them down. Facu said he only has door prizes to offer in return. But for the best performers, I bet Facu would part with a secret mission pass !'}
+					{'These hooligans show up at Facu\'s Tavern every weekend. They drink too much and scare away the other customers. Facu is fed up. Hopefully a bard can calm them down. Facu said he only has humble prizes to offer in return. But for the best performers, I bet Facu would part with a secret mission pass !'}
 				</i>
 				<i className={'block mt-4 text-sx md:text-xs text-black dark:text-white text-opacity-60 leading-6'}>
 					{'Oh and I almost forgot. If you have any forest treasures with you, The Austrian will help you win over the crowd.'}
