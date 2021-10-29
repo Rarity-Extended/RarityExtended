@@ -20,7 +20,7 @@ import	Box								from	'components/Box';
 import	SectionRecruit					from	'sections/SectionRecruit';
 import	TAVERN_NEWS						from	'utils/codex/tavernNews.json';
 import	CLASSES							from	'utils/codex/classes';
-import	{getEligibility as getOpenMicEligibility, getOpenMicDialogOption, OpenMicSignUpList}			from 'components/dungeons/openmic';
+import	{getOpenMicDialogOption, OpenMicSignUpList}			from 'components/dungeons/openmic';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -54,7 +54,6 @@ function	NPCHeadline({router, active, adventurersCount}) {
 	
 	const	[hadInitialMessage, set_hadInitialMessage] = useState(false);
 	const	[hadRecruitMessage, set_hadRecruitMessage] = useState(false);
-	const	[hadTheCellarMessage, set_hadTheCellarMessage] = useState(false);
 	const	[hadOpenMicMessage, set_hadOpenMicMessage] = useState(false);
 
 	useEffect(() => {
