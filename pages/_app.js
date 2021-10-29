@@ -8,6 +8,7 @@
 
 import	React							from	'react';
 import	Head							from	'next/head';
+import	Image							from	'next/image';
 import	{DefaultSeo}					from	'next-seo';
 import	{Toaster}						from	'react-hot-toast';
 import	{Web3ReactProvider}				from	'@web3-react-fork/core';
@@ -123,6 +124,34 @@ function	AppWrapper(props) {
 				}} />
 			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{minHeight: '100vh'}}>
 				<Toaster position={'bottom-right'} toastOptions={{className: 'text-sx border-4 border-black dark:border-dark-100 text-black dark:text-white bg-white dark:bg-dark-600 noBr shadow-xl'}} />
+
+				<div>
+					<div className={'absolute top-20 md:top-23 left-3 md:left-8'}>
+						<Image
+							src={'/decorations/ghost.png'}
+							loading={'eager'}
+							quality={90}
+							width={100}
+							height={100} />
+					</div>
+					<div className={'absolute top-23 -right-1 hidden md:block'}>
+						<Image
+							src={'/decorations/Web02.svg'}
+							loading={'eager'}
+							quality={90}
+							width={100}
+							height={100} />
+					</div>
+					<div className={'fixed -bottom-1 -left-3 transform -rotate-12 hidden md:block'}>
+						<Image
+							src={'/decorations/Web04.svg'}
+							loading={'eager'}
+							quality={90}
+							width={100}
+							height={100} />
+					</div>
+				</div>
+
 				<Navbar router={router} />
 				<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />
 				<Footer />
