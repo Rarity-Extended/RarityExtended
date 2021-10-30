@@ -65,20 +65,19 @@ export async function	trickOrTreat({provider, tokenID, amount, choice}, onError,
 		process.env.FESTIVAL_SPOOKY_ABI,
 		signer
 	);
-	const	SUMMMONER_ID = 4157129; //Number(await rarity.SUMMMONER_ID());
 
 	/**********************************************************************
 	**	First, we need to approve the candies
 	**********************************************************************/
 	try {
 		const	candies = new ethers.Contract(process.env.LOOT_CANDIES_ADDR, process.env.LOOT_ERC20_ABI, signer);
-		const	approveAmount = await candies.allowance(tokenID, SUMMMONER_ID);
+		const	approveAmount = await candies.allowance(tokenID, process.env.FESTIVAL_SPOOKY_ID);
 		if (approveAmount.gte(ethers.BigNumber.from(amount))) {
 			// already approved
 		} else {
 			hadApprove = true;
 			_toast = toast.loading('1/2 - Approving candies ...');
-			const	transaction = await candies.approve(tokenID, SUMMMONER_ID, ethers.constants.MaxUint256);
+			const	transaction = await candies.approve(tokenID, process.env.FESTIVAL_SPOOKY_ID, ethers.constants.MaxUint256);
 			const	transactionResult = await transaction.wait();
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
