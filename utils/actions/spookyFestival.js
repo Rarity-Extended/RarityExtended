@@ -40,7 +40,7 @@ export async function	claimCandies({provider, tokenID}, onError, onSuccess = onS
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.claim(tokenID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			onSuccess(_toast);
 		} else {
@@ -105,7 +105,7 @@ export async function	trickOrTreat({provider, tokenID, amount, choice}, onError,
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.trick_or_treat(tokenID, amount, choice, {gasLimit: 300_000});
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			if (transactionResult.logs.length === 2) {
 				onSuccess(_toast, false); //transfer + burn
@@ -159,7 +159,7 @@ export async function	spookyActivity({provider, tokenID, typeOfActivity}, onErro
 			_toast = toast.loading('Doing some babysitting');
 			transaction = await rarity.do_some_babysitting(tokenID);
 		}
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			onSuccess(_toast);
 		} else {
