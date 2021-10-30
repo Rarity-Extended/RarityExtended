@@ -14,7 +14,7 @@ import	THE_FOREST_LOOT				from	'utils/codex/items_dungeon_theForest.json';
 import	CLASSES						from	'utils/codex/classes';
 import	{ethers}					from	'ethers';
 
-function	ItemsTheCellar({item, amount}) {
+function	ItemsStandard({item, amount}) {
 	return (
 		<div className={'flex flex-row space-x-4 w-full tooltip cursor-help group'}>
 			<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
@@ -213,7 +213,7 @@ function	Index() {
 						if (ethers.BigNumber.isBigNumber(adventurer?.inventory?.[item.id])) {
 							if ((Number(adventurer?.inventory?.[item.id]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
 								hasItem = true;
-								return (<ItemsTheCellar key={`${item.id}_${i}`} item={item} amount={Number(adventurer?.inventory?.[item.id])} />);
+								return (<ItemsStandard key={`${item.id}_${i}`} item={item} amount={Number(adventurer?.inventory?.[item.id])} />);
 							}
 							return null;
 						}
@@ -262,7 +262,7 @@ function	Index() {
 			if (amount === 0) {
 				return null;
 			}
-			return (<ItemsTheCellar key={`${item.id}_${i}`} item={item} amount={amount} />);
+			return (<ItemsStandard key={`${item.id}_${i}`} item={item} amount={amount} />);
 		});
 
 		const	toRenderSpecifics = allItems.map((item, i) => {

@@ -11,7 +11,7 @@ function	Box({children, className, style, onClick}) {
 	return (
 		<div
 			style={style}
-			className={`relative ${className}`} onClick={onClick}>
+			className={`relative bg-white dark:bg-dark-600 ${className}`} onClick={onClick}>
 			{children}
 			<div className={'absolute h-1 bg-black dark:bg-dark-100 top-0 left-1 right-1'} />
 			<div className={'absolute h-1 w-1 bg-black dark:bg-dark-100 top-1 left-0'} />

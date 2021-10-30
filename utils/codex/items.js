@@ -112,6 +112,18 @@ const	items = [
 		parse: (item) => item,
 		id: 8,
 	},
+	{
+		name: 'Candies',
+		description: 'Some candies you can use to buy prices during the Spooky Festival',
+		img: '/items/candies.png',
+		address: process.env.LOOT_CANDIES_ADDR,
+		level: 'Uncommon',
+		levelClassName: 'bg-items-uncommon',
+		fetch: (adventurerID) => new Contract(process.env.LOOT_CANDIES_ADDR, process.env.LOOT_ERC20_ABI).balanceOf(adventurerID),
+		parse: (item) => Number(item),
+		dungeon: 'SpookyFestival',
+		id: 9,
+	},
 ];
 
 export default items;

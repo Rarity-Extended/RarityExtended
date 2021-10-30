@@ -6,6 +6,7 @@
 ******************************************************************************/
 
 import	React, {useState, useEffect}	from	'react';
+import	Image							from	'next/image';
 import	Link							from	'next/link';
 import	useWeb3							from	'contexts/useWeb3';
 import	ModalLogin						from	'components/ModalLogin';
@@ -63,6 +64,30 @@ function	Navbar() {
 			</div>
 			<div className={'items-center flex w-full md:w-6/12 mt-3 md:mt-0'}>
 				<Townwidget />
+				<div className={'hidden md:flex flex-row space-x-8 w-full items-center justify-center'}>
+					<Image
+						src={'/decorations/pumpkin3.png'}
+						loading={'eager'}
+						quality={90}
+						width={68}
+						height={68} />
+					<div className={'mr-6'}>
+						<Image
+							src={'/decorations/pumpkin2.png'}
+							loading={'eager'}
+							quality={90}
+							width={68}
+							height={68} />
+					</div>
+					<div className={'mr-6'}>
+					<Image
+						src={'/decorations/pumpkin5.png'}
+						loading={'eager'}
+						quality={90}
+						width={68}
+						height={68} />
+					</div>
+				</div>
 			</div>
 
 			<div className={'items-center justify-start md:justify-end flex flex-row w-3/12 mt-3 md:mt-0'}>

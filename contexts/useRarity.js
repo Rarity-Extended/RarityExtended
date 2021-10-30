@@ -145,6 +145,7 @@ export const RarityContextApp = ({children}) => {
 		const	rarityExtendedName = new Contract(process.env.RARITY_EXTENDED_NAME, process.env.RARITY_EXTENDED_NAME_ABI);
 		const	rarityDungeonBoars = new Contract(process.env.DUNGEON_BOARS_ADDR, process.env.DUNGEON_BOARS_ABI);
 		const	rarityDungeonOpenMic = new Contract(process.env.DUNGEON_OPEN_MIC_V2_ADDR, process.env.DUNGEON_OPEN_MIC_V2_ABI);
+		const	rarityFestivalSpooky = new Contract(process.env.FESTIVAL_SPOOKY_ADDR, process.env.FESTIVAL_SPOOKY_ABI);
 
 		return [
 			rarity.ownerOf(tokenID),
@@ -161,6 +162,12 @@ export const RarityContextApp = ({children}) => {
 			rarityExtendedName.get_name(tokenID),
 			rarityDungeonBoars.actions_log(tokenID),
 			rarityDungeonOpenMic.timeToNextPerformance(tokenID),
+
+			rarityFestivalSpooky.claimed(tokenID),
+			rarityFestivalSpooky.trick_or_treat_count(tokenID),
+			rarityFestivalSpooky.trick_or_treat_log(tokenID),
+			rarityFestivalSpooky.activities_count(tokenID),
+			rarityFestivalSpooky.activities_log(tokenID),
 		];
 	}
 
@@ -184,7 +191,14 @@ export const RarityContextApp = ({children}) => {
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
 	function		setRarity(tokenID, multicallResult, inventoryCallResult) {
-		const	[owner, adventurer, initialAttributes, abilityScores, balanceOfGold, claimableGold, skills, feats, cellarLog, cellarScout, forestResearch, name, boarsLog, timeToNextOpenMic] = multicallResult;
+		const	[
+			owner, adventurer,
+			initialAttributes, abilityScores,
+			balanceOfGold, claimableGold,
+			skills, feats,
+			cellarLog, cellarScout, forestResearch, name, boarsLog, timeToNextOpenMic,
+			spookyFestivalClaimed, spookyFestivalTrickCount, spookyFestivalTrickLog, spookyFestivalActivitiesCount, spookyFestivalActivitiesLog
+		] = multicallResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
 			return;
@@ -234,6 +248,17 @@ export const RarityContextApp = ({children}) => {
 						timeToNextPerformance: timeToNextOpenMic
 					}
 				},
+				festivals: {
+					spooky: {
+						claimed: spookyFestivalClaimed,
+						trickCount: spookyFestivalTrickCount,
+						trickLog: spookyFestivalTrickLog,
+						activitiesCount: spookyFestivalActivitiesCount,
+						activitiesLog: spookyFestivalActivitiesLog,
+						canTrick: dayjs(new Date(Number(spookyFestivalTrickLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
+						canActivity: dayjs(new Date(Number(spookyFestivalActivitiesLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
+					}
+				},
 				inventory: inventoryCallResult
 			} : p);
 		}
@@ -280,6 +305,17 @@ export const RarityContextApp = ({children}) => {
 				},
 				openMic: {
 					timeToNextPerformance: timeToNextOpenMic
+				}
+			},
+			festivals: {
+				spooky: {
+					claimed: spookyFestivalClaimed,
+					trickCount: spookyFestivalTrickCount,
+					trickLog: spookyFestivalTrickLog,
+					activitiesCount: spookyFestivalActivitiesCount,
+					activitiesLog: spookyFestivalActivitiesLog,
+					canTrick: dayjs(new Date(Number(spookyFestivalTrickLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
+					canActivity: dayjs(new Date(Number(spookyFestivalActivitiesLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
 				}
 			},
 			inventory: inventoryCallResult

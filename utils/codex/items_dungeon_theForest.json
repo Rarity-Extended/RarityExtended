@@ -856,7 +856,7 @@
 	"Foreign Armor": {
 		"name": "Foreign Armor",
 		"description": "Made of foreign metal, by foreign hands.",
-		"img": "",
+		"img": "/items/PIXEL_slain_warrior_armor.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
