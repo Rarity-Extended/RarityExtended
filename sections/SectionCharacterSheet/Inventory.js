@@ -78,7 +78,7 @@ function	ItemsOpenMic({subItem}) {
 	return (
 		<div className={'flex flex-row space-x-4 w-full tooltip cursor-help group'}>
 			<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
-			<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} left-0 top-0 w-2 h-1`} />
+				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} left-0 top-0 w-2 h-1`} />
 				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} left-0 top-0 w-1 h-2`} />
 				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} right-0 top-0 w-2 h-1`} />
 				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} right-0 top-0 w-1 h-2`} />
@@ -103,26 +103,23 @@ function	ItemsOpenMic({subItem}) {
 }
 
 function	Inventory({adventurer}) {
-	const	OFFSET_SIZE = 9;
-	const	[offset, set_offset] = useState(0);
 	const	allItems = [...ITEMS];
 
 	function	renderInventory() {
 		let		hasItem = false;
 		const	toRender = allItems
-			.filter((e, i) => i >= offset && i < (offset + OFFSET_SIZE))
 			.map((item, i) => {
 				if (ethers.BigNumber.isBigNumber(adventurer?.inventory?.[item.id])) {
 					if ((Number(adventurer?.inventory?.[item.id]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
 						hasItem = true;
-						return (<ItemsTheCellar  key={`${item.id}_${i}`} item={item} adventurer={adventurer} />);
+						return (<ItemsTheCellar key={`${item.id}_${i}`} item={item} adventurer={adventurer} />);
 					}
 					return null;
 				}
 				if(Array.isArray(adventurer?.inventory?.[item.id]) && item?.dungeon === 'The Forest') {
 					return adventurer?.inventory?.[item.id].map((subItem, subi) => {
 						hasItem = true;
-						return (<ItemsTheForest  key={`${item.id}_${i}_${subi}`} item={item} subItem={subItem} />);
+						return (<ItemsTheForest key={`${item.id}_${i}_${subi}`} item={item} subItem={subItem} />);
 					});
 				}
 				if(Array.isArray(adventurer?.inventory?.[item.id]) && item?.dungeon === 'OpenMic') {
@@ -157,12 +154,6 @@ function	Inventory({adventurer}) {
 			<div className={'w-full'}>
 				<div className={'w-full px-4 grid grid-cols-1 md:grid-cols-4 gap-6'}>
 					{toRender}
-				</div>
-				<div className={'-mt-8 h-8 px-4'}>
-					<div className={'w-full h-full flex justify-end items-center space-x-4'}>
-						<p className={`text-xs ${offset > OFFSET_SIZE ? 'opacity-40 hover:opacity-100 cursor-pointer' : 'opacity-0'}`} onClick={() => set_offset(o => o > OFFSET_SIZE ? o - OFFSET_SIZE : 0)}>{'<'}</p>
-						<p className={`text-xs ${offset + OFFSET_SIZE <= allItems.length ? 'opacity-40 hover:opacity-100 cursor-pointer' : 'opacity-0'}`} onClick={() => set_offset(o => o + OFFSET_SIZE <= allItems.length ? o + OFFSET_SIZE : o)}>{'>'}</p>
-					</div>
 				</div>
 			</div>
 		);

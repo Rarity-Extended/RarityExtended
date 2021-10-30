@@ -38,15 +38,15 @@ export async function	perform({provider, tokenID}, callback) {
 		const	transaction = await openmic.perform(tokenID, {gasLimit: 400_000});
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
-      const {check, success, crit} = transactionResult?.events[0]?.args;
-      const prizes = [];
-      if(success) {
-        const allPrizes = await openmic.getPrizes(tokenID);
-        prizes.push(allPrizes[allPrizes.length - 1]);
-        if(crit) prizes.push(allPrizes[allPrizes.length - 2]);
-      }
+			const {check, success, crit} = transactionResult?.events[0]?.args;
+			const prizes = [];
+			if(success) {
+				const allPrizes = await openmic.getPrizes(tokenID);
+				prizes.push(allPrizes[allPrizes.length - 1]);
+				if(crit) prizes.push(allPrizes[allPrizes.length - 2]);
+			}
 
-      callback({error: false, data: { check, success, crit, prizes }});
+			callback({error: false, data: {check, success, crit, prizes}});
 			toast.dismiss(_toast);
 			toast.success('You won over the crowd!');
 		} else {
@@ -54,7 +54,7 @@ export async function	perform({provider, tokenID}, callback) {
 			toast.error('Transaction reverted');
 			callback({error: true, data: undefined});
 		}
-  } catch (error) {
+	} catch (error) {
 		console.error(error);
 		toast.dismiss(_toast);
 		toast.error('Something went wrong, please try again later.');

@@ -7,13 +7,12 @@
 
 import	React, {useState, useEffect}	from	'react';
 import	Image							from	'next/image';
+import	toast							from	'react-hot-toast';
 import	dayjs							from	'dayjs';
-import	duration					from	'dayjs/plugin/duration';
 import	relativeTime					from	'dayjs/plugin/relativeTime';
 import	useWeb3							from	'contexts/useWeb3';
-import	useUI							from	'contexts/useUI';
+import	DialogNoBox						from	'components/DialogNoBox';
 import	useRarity						from	'contexts/useRarity';
-import	DialogBox						from	'components/DialogBox';
 import	Rock							from	'components/icons/Rock';
 import	Rob								from	'components/icons/Rob';
 import	Eat								from	'components/icons/Eat';
@@ -24,28 +23,19 @@ import	Spectre							from	'components/icons/Spectre';
 import	Boar							from	'components/icons/Boar';
 import	Egg								from	'components/icons/Egg';
 import	Box								from	'components/Box';
+import	{claimCandies, trickOrTreat, spookyActivity}	from	'utils/actions/spookyFestival';
 
+dayjs.extend(relativeTime);
 
-function	NPCHeadline({candiesCount = 100}) {
-	const	renderNPCText = () => {
-		return (
-			<>
-				{'WELCOME, TO '}
-				<span className={'text-tag-info dark:text-tag-warning'}>{'THE SPOOKY FESTIVAL'}</span>
-				{'! I AM '}
-				<span className={'text-tag-info dark:text-tag-warning'}>{'BAT THE BAT'}</span>
-				{'! WE HAVE PLENTY OF ACTIVITIES, PLENTY OF CANDIES AND SOME EXCLUSIVE PRIZES!'}
-				<div />
-				{'YOU HAVE '}
-				<span className={'text-tag-info dark:text-tag-warning'}>{`${candiesCount} candies`}</span>
-				{'.'}
-			</>
-		);
-	};
+function	Tooltip({children}) {
 	return (
-		<h1 className={'text-xs md:text-xs leading-normal md:leading-8'}>
-			{renderNPCText()}
-		</h1>
+		<div className={'invisible group-hover:visible absolute mt-6 w-80 shadow-2xl'} style={{zIndex: 10000}}>
+			<div className={'bg-white dark:bg-dark-600 border-2 border-black dark:border-dark-100 mx-auto text-black dark:text-white font-normal'}>
+				<div className={'p-2'}>
+					{children}
+				</div>
+			</div>
+		</div>
 	);
 }
 
@@ -57,50 +47,117 @@ function	CandyIcon() {
 	);
 }
 
-function	DialogChoices({router, onWalletConnect, active}) {
-	const	{rarities, currentAdventurer, openCurrentAventurerModal} = useRarity();
-	const	[selectedOption, set_selectedOption] = useState(0);
-	const	[dialogNonce, set_dialogNonce] = useState(0);
+function	Index({rarities, router}) {
+	const	{currentAdventurer, updateRarity, rNonce} = useRarity();
+	const	{provider, chainTime} = useWeb3();
+	const	[activity, set_activity] = useState(0);
+	const	[candiesClaimed, set_candiesClaimed] = useState(currentAdventurer?.festivals?.spooky?.claimed);
+	const	[numberOfCandies, set_numberOfCandies] = useState(Number(currentAdventurer?.inventory[9]) || 0);
+	const	[trickLog, set_trickLog] = useState(currentAdventurer?.festivals?.spooky?.trickLog || 0);
+	const	[trickCount, set_trickCount] = useState(currentAdventurer?.festivals?.spooky?.trickCount || 0);
+	const	[activitiesLog, set_activitiesLog] = useState(currentAdventurer?.festivals?.spooky?.activitiesLog || 0);
+	const	[activitiesCount, set_activitiesCount] = useState(currentAdventurer?.festivals?.spooky?.activitiesCount || 0);
 
 	useEffect(() => {
-		set_selectedOption(0);
-		set_dialogNonce(n => n + 1);
-	}, [currentAdventurer?.tokenID, router?.asPath]);
+		if (typeof window !== 'undefined') {
+			window.scrollTo(0, 0);
+		}
+	} , [activity]);
 
-	return (
-		<DialogBox
-			selectedOption={selectedOption}
-			nonce={dialogNonce}
-			options={[
-				{label: 'What\'s new ?', onClick: () => router.push('/town/tavern')},
-				{label: 'Recruit a new adventurer', onClick: () => router.push('/town/tavern?tab=recruit')},
-				{label: 'About the rats ...', onClick: () => router.push('/town/tavern?tab=the-cellar')},
-				{label: 'Tavern hooligans ...', onClick: () => router.push('/town/tavern?tab=the-stage')}
-			]} />
-	);
-}
+	useEffect(() => {
+		set_numberOfCandies(Number(currentAdventurer?.inventory[9]) || 0);
+		set_candiesClaimed(currentAdventurer?.festivals?.spooky?.claimed);
+		set_trickCount(Number(currentAdventurer?.festivals?.spooky?.trickCount));
+		set_trickLog(Number(currentAdventurer?.festivals?.spooky?.trickLog));
+		set_activitiesLog(Number(currentAdventurer?.festivals?.spooky?.activitiesLog || 0));
+		set_activitiesCount(Number(currentAdventurer?.festivals?.spooky?.activitiesCount || 0));
+	}, [rNonce, currentAdventurer]);
 
-function	Index({fetchRarity, rarities, router}) {
-	const	{provider, address, active} = useWeb3();
-	const	adventurers = Object.values(rarities);
+	function	playTrickOrTreat(amount, choice) {
+		if (numberOfCandies < amount)
+			return;
+		trickOrTreat({
+			provider,
+			tokenID: currentAdventurer?.tokenID,
+			amount,
+			choice
+		},
+		({error}) => {
+			return console.error(error);
+		},
+		(_toast, win) => {
+			updateRarity(currentAdventurer.tokenID).then(() => {
+				toast.dismiss(_toast);
+				if (win) {
+					toast.success(`You earned ${amount * 3} candies !`);
+				} else {
+					toast.error('Sorry, you didn\'t win this game');
+				}
+			});
+		});
+	}
 
-	return (
-		<section className={'max-w-full'}>
-			<div className={'max-w-screen-lg w-full mx-auto'}>
-				<div className={'flex flex-col md:flex-row items-center mb-8 md:mb-8'}>
-					<div className={'w-auto md:w-64 mr-0 md:mr-8 h-64'} style={{minWidth: 256}}>
-						<div className={'bat'} />
+	function	performActivity(typeOfActivity) {
+		spookyActivity({
+			provider,
+			tokenID: currentAdventurer?.tokenID,
+			typeOfActivity
+		},
+		({error}) => {
+			return console.error(error);
+		},
+		(_toast) => {
+			updateRarity(currentAdventurer.tokenID).then(() => {
+				toast.dismiss(_toast);
+				toast.success('You earned some candies !');
+			});
+		});
+	}
+
+
+	function	renderTrickOrTreat() {
+		if (!currentAdventurer?.festivals?.spooky?.canTrick) {
+			return (
+				<>
+					<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case'}>
+						{'The Halloween fair is packed with happy people. There is music and laughter and candy corn and cotton candy. The streets are filled with candy, flashy sweets in every color imaginable. There are towering piles of brightly colored boxes, each set for different tricks. There are countless bright orange pumpkins with black eyeshadow. The smell of orange spice is so thick you can taste it.'}
+						<div className={'my-4'} />
+						
+						{'The old woman is no longer under the large tree. She will probably be back '}
+						<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+							{dayjs(new Date(trickLog * 1000)).from(dayjs(new Date(chainTime * 1000)))}
+							<Tooltip>
+								<p className={'text-sm leading-normal inline'}>
+									{'You can only play 3 games per adventurer per day !'}</p>
+							</Tooltip>
+						</span>
+						{' for some more card games.'}
+					</h1>
+
+					<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case text-justify mt-8'}>
+						{'You still have '}
+						<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+							{`${numberOfCandies} candies`}
+							<Tooltip>
+								<p className={'text-sm leading-normal inline'}>{'You can earn more candies by playing the Trick or Treat game or by doing some of the daily activites!'}</p>
+							</Tooltip>
+						</span>
+						{' in your pocket.'}
+					</h1>
+
+					<div className={'pt-2 mt-4 border-t-2 border-black dark:border-dark-100 font-story font-bold text-sm md:text-base uppercase'}>
+						<DialogNoBox
+							options={[
+								{label: 'CHECK THE OTHER ACTIVITIES', onClick: () => set_activity(1)},
+								{label: 'JUST HEAD BACK TO YOUR HOME', onClick: () => router.push('/')},
+							]} />
 					</div>
-					<Box className={'p-4'}>
-						<NPCHeadline
-							adventurersCount={adventurers.length}
-							address={address}
-							active={active && address}
-							router={router} />
-					</Box>
-				</div>
-
-				<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case text-justify'}>
+				</>
+			);
+		}
+		return (
+			<>
+				<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case'}>
 					{'The Halloween fair is packed with happy people. There is music and laughter and candy corn and cotton candy. The streets are filled with candy, flashy sweets in every color imaginable. There are towering piles of brightly colored boxes, each set for different tricks. There are countless bright orange pumpkins with black eyeshadow. The smell of orange spice is so thick you can taste it.'}
 					<div className={'my-4'} />
 						
@@ -109,33 +166,59 @@ function	Index({fetchRarity, rarities, router}) {
 
 					{'If you choose the same card '}
 					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-						{'you win twice your stake'}
+						{'you win 3 times your stake'}
+						<Tooltip>
+							<p className={'text-sm leading-normal inline'}>{'If you play for 100 candies and you win, you will have 300 candies !'}</p>
+						</Tooltip>
 					</span>
 					{'. If not, you have to '}
 					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{'give your candies'}
+						<Tooltip>
+							<p className={'text-sm leading-normal inline'}>{'If you play for 100 candies and you lose, you will loose 100 candies!'}</p>
+						</Tooltip>
 					</span>
 					{' to the child.'}
 				</h1>
 
-				<h2 className={'text-sm md:text-xl leading-normal md:leading-6 font-story normal-case mt-8'}>
-					{'Would you like to draw a card ?'}
-				</h2>
+				<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case text-justify mt-8'}>
+					{'You have '}
+					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						{`${numberOfCandies} candies`}
+						<Tooltip>
+							<p className={'text-sm leading-normal inline'}>{'You can earn more candies by playing the Trick or Treat game of by doing some of the daily activites!'}</p>
+						</Tooltip>
+					</span>
+					{' in your pocket, and you can play '}
+					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						{`${3 - trickCount} more times`}
+						<Tooltip>
+							<p className={'text-sm leading-normal inline'}>{'You can earn more candies by playing the Trick or Treat game of by doing some of the daily activites!'}</p>
+						</Tooltip>
+					</span>
+					{' today. Would you like to draw a card ?'}
+				</h1>
 
-				<div className={'grid grid-cols-3 gap-6 gap-x-8 mt-8'}>
+				<div className={'grid grid-cols-1 md:grid-cols-3 gap-6 gap-x-8 mt-8'}>
 					<div className={'p-4 bgpattern3 border-4 border-dark-100 w-full h-96 flex flex-col justify-center items-center'}>
 						<Spectre width={100} height={100} />
 						<p className={'text-center font-bold pt-12'}>{'The Spectre'}</p>
 						<div className={'w-full flex flex-row justify-between space-x-4 mt-12 -mb-12'}>
-							<div className={'w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+							<div
+								onClick={() => playTrickOrTreat(25, 1)}
+								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 25 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'25'}</p>
 							</div>
-							<div className={'w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+							<div
+								onClick={() => playTrickOrTreat(50, 1)}
+								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 50 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'50'}</p>
 							</div>
-							<div className={'w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+							<div
+								onClick={() => playTrickOrTreat(100, 1)}
+								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 100 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'100'}</p>
 							</div>
@@ -146,15 +229,21 @@ function	Index({fetchRarity, rarities, router}) {
 						<Boar width={100} height={100} />
 						<p className={'text-center font-bold pt-12'}>{'The Boar'}</p>
 						<div className={'w-full flex flex-row justify-between space-x-4 mt-12 -mb-12'}>
-							<div className={'w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+							<div
+								onClick={() => playTrickOrTreat(25, 2)}
+								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 25 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'25'}</p>
 							</div>
-							<div className={'w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+							<div
+								onClick={() => playTrickOrTreat(50, 2)}
+								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 50 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'50'}</p>
 							</div>
-							<div className={'w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+							<div
+								onClick={() => playTrickOrTreat(100, 2)}
+								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 100 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'100'}</p>
 							</div>
@@ -165,15 +254,21 @@ function	Index({fetchRarity, rarities, router}) {
 						<Egg width={100} height={100} />
 						<p className={'text-center font-bold pt-12'}>{'The Egg'}</p>
 						<div className={'w-full flex flex-row justify-between space-x-4 mt-12 -mb-12'}>
-							<div className={'w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+							<div
+								onClick={() => playTrickOrTreat(25, 3)}
+								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 25 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'25'}</p>
 							</div>
-							<div className={'w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+							<div
+								onClick={() => playTrickOrTreat(50, 3)}
+								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 50 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'50'}</p>
 							</div>
-							<div className={'w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+							<div
+								onClick={() => playTrickOrTreat(100, 3)}
+								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 100 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'100'}</p>
 							</div>
@@ -181,20 +276,93 @@ function	Index({fetchRarity, rarities, router}) {
 					</div>
 				</div>
 
+				<div className={'pt-2 mt-4 border-t-2 border-black dark:border-dark-100 font-story font-bold text-sm md:text-base uppercase'}>
+					<DialogNoBox
+						options={[
+							{label: 'CHECK THE OTHER ACTIVITIES', onClick: () => set_activity(1)},
+							{label: 'JUST HEAD BACK TO YOUR HOME', onClick: () => router.push('/')},
+						]} />
+				</div>
+			</>
+		);
+	}
 
-				<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case text-justify mt-32'}>
-					{'The rest of the festival is filled with crazy fun. In front of the village hall, a gigantic bonfire is burning. The flames are small at first but keep growing, until they are enormous. Young people leap through the flames.  There are games, food stands, and contests.'}
+	function	renderActivities() {
+		if (!currentAdventurer?.festivals?.spooky?.canActivity) {
+			return (
+				<>
+					<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case'}>
+						{'The rest of the festival is filled with nonstop excitement. In front of the village hall, a gigantic bonfire swayed and crackled. The flames were small at first, but grew tremendously. Young people leaped through the burning logs. Everywhere they were surrounded by music and dancing and laughter. There were games and food stands and contests everywhere. There was no time to get bored of one thing before you found another to pull you away.'}
+						<div className={'my-4'} />
+						
+						{'You have many options available to you here. But not now. Everyone is taking a break, they will be back '}
+						<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+							{dayjs(new Date(activitiesLog * 1000)).from(dayjs(new Date(chainTime * 1000)))}
+							<Tooltip>
+								<p className={'text-sm leading-normal inline'}>
+									{'You can only do 2 activities per adventurer per day !'}</p>
+							</Tooltip>
+						</span>
+						{' for some more activities!'}
+					</h1>
+
+					<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case text-justify mt-8'}>
+						{'You still have '}
+						<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+							{`${numberOfCandies} candies`}
+							<Tooltip>
+								<p className={'text-sm leading-normal inline'}>{'You can earn more candies by playing the Trick or Treat game or by doing some of the daily activites!'}</p>
+							</Tooltip>
+						</span>
+						{' in your pocket.'}
+					</h1>
+
+					<div className={'pt-2 mt-4 border-t-2 border-black dark:border-dark-100 font-story font-bold text-sm md:text-base uppercase'}>
+						<DialogNoBox
+							options={[
+								{label: 'GO BACK TO THE CARD GAME', onClick: () => set_activity(0)},
+								{label: 'JUST HEAD BACK TO YOUR HOME', onClick: () => router.push('/')},
+							]} />
+					</div>
+				</>
+			);
+		}
+		return (
+			<>
+				<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case'}>
+					{'The rest of the festival is filled with nonstop excitement. In front of the village hall, a gigantic bonfire swayed and crackled. The flames were small at first, but grew tremendously. Young people leaped through the burning logs. Everywhere they were surrounded by music and dancing and laughter. There were games and food stands and contests everywhere. There was no time to get bored of one thing before you found another to pull you away.'}
 					<div className={'my-4'} />
 						
-					{'You can do '}
+					{'You have many options available to you here. Maybe you\'ll decide to impress everyone at this cake eating contest or even steal a pumpkin. Maybe you are great to tell spooky stories, or just wise enough to watch for the kids around. Maybe you\'ll go with the grown man and throw rocks in the lake, or just try not to burn everything with some magic tricks.'}
+					<div className={'my-4'} />
+					{'Tonight '}
 					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-						{'2 more activities'}
+						{'the only prize is a bunch of candies'}
+						<Tooltip>
+							<p className={'text-sm leading-normal inline'}>{'You can earn as much candies as the main Attribute used for a game !'}</p>
+						</Tooltip>
 					</span>
-					{' today, and get some candies. What would you like to do ?'}
+					{'. You can do '}
+					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						{`${2 -  activitiesCount} more activities today`}
+						<Tooltip>
+							<p className={'text-sm leading-normal inline'}>{'You are limited to 2 activities per day per adventurer ! Enjoy !'}</p>
+						</Tooltip>
+					</span>
+					{' and you have '}
+					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						{`${numberOfCandies} candies`}
+						<Tooltip>
+							<p className={'text-sm leading-normal inline'}>{'You can earn more candies by playing the Trick or Treat game or by doing some of the daily activites!'}</p>
+						</Tooltip>
+					</span>
+					{' in your pocket.'}
 				</h1>
 
-				<div className={'grid grid-cols-3 gap-6 gap-x-8 mt-8'}>
-					<Box className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+				<div className={'grid grid-cols-1 md:grid-cols-3 gap-6 gap-x-8 mt-8'}>
+					<Box
+						onClick={() => performActivity(0)}
+						className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
 						<p className={'text-center font-bold pb-12'}>{'Rock Throwing'}</p>
 						<Rock width={100} height={100} />
 						<div className={'text-center text-regular pt-12 inline'}>
@@ -203,7 +371,9 @@ function	Index({fetchRarity, rarities, router}) {
 							<p className={'inline'}>{' you are, the more candy you get!'}</p>
 						</div>
 					</Box>
-					<Box className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+					<Box
+						onClick={() => performActivity(1)}
+						className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
 						<p className={'text-center font-bold pb-12'}>{'Cake Eating'}</p>
 						<Eat width={100} height={100} />
 						<div className={'text-center text-regular pt-12'}>
@@ -212,7 +382,9 @@ function	Index({fetchRarity, rarities, router}) {
 							<p className={'inline'}>{' comes a resilient stomach!'}</p>
 						</div>
 					</Box>
-					<Box className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+					<Box
+						onClick={() => performActivity(2)}
+						className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
 						<p className={'text-center font-bold pb-12'}>{'Pumpkin Stealer'}</p>
 						<Rob width={100} height={100} />
 						<div className={'text-center text-regular pt-12'}>
@@ -221,7 +393,9 @@ function	Index({fetchRarity, rarities, router}) {
 							<p className={'inline'}>{' for this?'}</p>
 						</div>
 					</Box>
-					<Box className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+					<Box
+						onClick={() => performActivity(3)}
+						className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
 						<p className={'text-center font-bold pb-12'}>{'Spooky Story'}</p>
 						<Story width={100} height={100} />
 						<div className={'text-center text-regular pt-12'}>
@@ -230,7 +404,9 @@ function	Index({fetchRarity, rarities, router}) {
 							<p className={'inline'}>{' adventurer?'}</p>
 						</div>
 					</Box>
-					<Box className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+					<Box
+						onClick={() => performActivity(4)}
+						className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
 						<p className={'text-center font-bold pb-12'}>{'Magic Trick'}</p>
 						<Sparkle width={100} height={100} />
 						<div className={'text-center text-regular pt-12'}>
@@ -239,7 +415,9 @@ function	Index({fetchRarity, rarities, router}) {
 							<p className={'inline'}>{' is the magic here!'}</p>
 						</div>
 					</Box>
-					<Box className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+					<Box
+						onClick={() => performActivity(5)}
+						className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
 						<p className={'text-center font-bold pb-12'}>{'Wise babysitter'}</p>
 						<Balloon width={100} height={100} />
 						<div className={'text-center text-regular pt-12'}>
@@ -249,6 +427,97 @@ function	Index({fetchRarity, rarities, router}) {
 						</div>
 					</Box>
 				</div>
+
+				<div className={'pt-2 mt-4 border-t-2 border-black dark:border-dark-100 font-story font-bold text-sm md:text-base uppercase'}>
+					<DialogNoBox
+						options={[
+							{label: 'GO BACK TO THE CARD GAME', onClick: () => set_activity(0)},
+							{label: 'JUST HEAD BACK TO YOUR HOME', onClick: () => router.push('/')},
+						]} />
+				</div>
+			</>
+		);
+	}
+
+	function	renderClaim() {
+		return (
+			<>
+				<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case'}>
+					{'The Halloween fair is packed with happy people. There is music and laughter and candy corn and cotton candy. The streets are filled with candy, flashy sweets in every color imaginable. There are towering piles of brightly colored boxes, each set for different tricks. There are countless bright orange pumpkins with black eyeshadow. The smell of orange spice is so thick you can taste it.'}
+					<div className={'my-4'} />
+						
+					{'You see Facu among the other citizens. He calls you. He is handing out candies. You can tell that he plays a huge role in the community just from the way that the group gathers around him. There is a look of affection and admiration on his face. He has a big bag filled with '}
+					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						{'candies'}
+						<Tooltip>
+							<p className={'text-sm leading-normal inline'}>{'Candies are the currency for the Spooky Festival ! You can use them to buy some specific limited supply items and some mysterious eggs ...'}</p>
+						</Tooltip>
+					</span>
+					
+					{' and he is distributing some to the group. The children reach out their hands and grab whatever they can from his bag.'}
+					<div className={'my-4'} />
+
+					{'“First time at the Spooky Festival ? There is a lot of games and even more candies! '}
+					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						{'Take theses'}
+						<Tooltip>
+							<p className={'text-sm leading-normal inline'}>{'You can claim your first '}</p>
+							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>
+								{'100 candies'}
+							</p>
+							<p className={'text-sm leading-normal inline'}>{' for free! Enjoy the Spooky Festival!'}</p>
+						</Tooltip>
+					</span>
+					{' and enjoy the party!”'}
+				</h1>
+				<div className={'pt-2 mt-4 border-t-2 border-black dark:border-dark-100 font-story font-bold text-sm md:text-base uppercase'}>
+					<DialogNoBox
+						options={[
+							{
+								label: 'COLLECT 100 FREE CANDIES',
+								onClick: () => {
+									claimCandies(
+										{provider, tokenID: currentAdventurer?.tokenID},
+										({error}) => {
+											return console.error(error);
+										},
+										(_toast) => {
+											updateRarity(currentAdventurer.tokenID).then(() => {
+												toast.dismiss(_toast);
+												toast.success('You earned 100 candies !');
+											});
+										});
+								}
+							},
+							{label: 'JUST HEAD BACK TO YOUR HOME', onClick: () => router.push('/')},
+						]} />
+				</div>
+			</>
+		);
+	}
+
+	return (
+		<section className={'max-w-full'}>
+			<div className={'mt-8 max-w-prose w-full flex-col flex justify-center items-center mx-auto px-3'}>
+				<Box className={'p-4 text-xs md:text-xs leading-normal md:leading-8 w-full relative'}>
+					<div className={'relative'}>
+						<div className={'filter grayscale -m-4 pb-8 opacity-70'}>
+							<Image
+								src={'/illustrations/illuHalloween.jpeg'}
+								loading={'eager'}
+								objectFit={'cover'}
+								objectPosition={'center'}
+								quality={85}
+								width={1550}
+								height={400} />
+						</div>
+					</div>
+					{candiesClaimed ?
+						activity === 0 ? renderTrickOrTreat() : renderActivities()
+						:
+						renderClaim()
+					}
+				</Box>
 			</div>
 		</section>
 	);
