@@ -21,12 +21,12 @@ function	CandyIcon() {
 
 function	PetShop() {
 	const	pets = [
-		{img: '/pets/ghost.gif', name: 'Casper', price: 5_000, supply: 100, story: 'The Ghost is white. It has big eyes and a big mouth. It has a glowing heart on its chest. It flies high above the crowd. It looks like it has a lot of fun. It is extremely cute.'},
-		{img: '/pets/fox.gif', name: 'Little Fox', price: 3_000, supply: 200, story: 'The Fox is orange with white spots. It has green eyes. It has big brown ears. It wags its tail happily. It barks at you and reaches out its paw.'},
-		{img: '/pets/cat.gif', name: 'White Cat', price: 2_000, supply: 400, story: 'The Cat is small and tabby. It has a fluffy tail and green eyes. It meows at you. It is very impatient and wants to be petted.'},
-		{img: '/pets/raven.gif', name: 'Raven', price: 1_000, supply: 600, story: 'This Raven is dark black. It has black wings and a light face with dark beady eyes. The wings are huge and the beak is thick.'},
-		{img: '/pets/frog.gif', name: 'Froggy', price: 500, supply: 800, story: 'The Frog is green with black spots. It has big eyes. It bleeps happily. It looks friendly, but you think it is just trying to trick you.'},
-		{img: '/pets/spider.gif', name: 'Tiny Spider', price: 300, supply: 1_000, story: 'The Spider is small and black. It looks harmless. You can tell that it loves to dance, because it moves with the beat of the music.'},
+		{img: '/pets/ghost.gif', name: 'Casper', price: '-', supply: 100, story: 'The Ghost is white. It has big eyes and a big mouth. It has a glowing heart on its chest. It flies high above the crowd. It looks like it has a lot of fun. It is extremely cute.'},
+		{img: '/pets/fox.gif', name: 'Little Fox', price: '-', supply: 200, story: 'The Fox is orange with white spots. It has green eyes. It has big brown ears. It wags its tail happily. It barks at you and reaches out its paw.'},
+		{img: '/pets/cat.gif', name: 'White Cat', price: '-', supply: 400, story: 'The Cat is small and tabby. It has a fluffy tail and green eyes. It meows at you. It is very impatient and wants to be petted.'},
+		{img: '/pets/raven.gif', name: 'Raven', price: '-', supply: 600, story: 'This Raven is dark black. It has black wings and a light face with dark beady eyes. The wings are huge and the beak is thick.'},
+		{img: '/pets/frog.gif', name: 'Froggy', price: '-', supply: 800, story: 'The Frog is green with black spots. It has big eyes. It bleeps happily. It looks friendly, but you think it is just trying to trick you.'},
+		{img: '/pets/spider.gif', name: 'Tiny Spider', price: '-', supply: 1_000, story: 'The Spider is small and black. It looks harmless. You can tell that it loves to dance, because it moves with the beat of the music.'},
 	];
 
 	return (
@@ -72,11 +72,11 @@ function	PetShop() {
 
 function	GoodsShop() {
 	const	items = [
-		{img: '/items/festivalSpooky/cake.png', name: 'Yummy Cake', price: 100, supply: 2_000, story: 'A cake with a random taste, from chocolate, lemon, orange, and banana cream, to blueberry and raspberry swirls.'},
-		{img: '/items/festivalSpooky/muffin.png', name: 'Chocolate Muffin', price: 50, supply: 2_000, story: 'The muffin feels light, fluffy and soft. It doesn\'t feel the same as a normal muffin. It feels more like a pat of butter, but it is soft and warm.'},
-		{img: '/items/festivalSpooky/potion.png', name: 'Eye Potion', price: 75, supply: 2_000, story: 'The potion is thick and sticky and feels like it has been lying around for a while. There are some ... eyes in it'},
-		{img: '/items/festivalSpooky/pumpkin.png', name: 'Pumpkin', price: 100, supply: 2_000, story: 'It\'s a regular pumpkin. Maybe it is hollow ? The pumpkin’s surface is smooth , and smells like an orange spice cake.'},
-		{img: '/items/festivalSpooky/bubble.png', name: 'Golden Bubble', price: 200, supply: 2_000, story: 'This is a pearl the size of a large kiwi, solid and gleaming like gold. The surface of the pearl is marred by a skull the size of a little egg. It\'s very shiny.'},
+		{img: '/items/festivalSpooky/cake.png', name: 'Yummy Cake', price: '-', supply: 2_000, story: 'A cake with a random taste, from chocolate, lemon, orange, and banana cream, to blueberry and raspberry swirls.'},
+		{img: '/items/festivalSpooky/muffin.png', name: 'Chocolate Muffin', price: '-', supply: 2_000, story: 'The muffin feels light, fluffy and soft. It doesn\'t feel the same as a normal muffin. It feels more like a pat of butter, but it is soft and warm.'},
+		{img: '/items/festivalSpooky/potion.png', name: 'Eye Potion', price: '-', supply: 2_000, story: 'The potion is thick and sticky and feels like it has been lying around for a while. There are some ... eyes in it'},
+		{img: '/items/festivalSpooky/pumpkin.png', name: 'Pumpkin', price: '-', supply: 2_000, story: 'It\'s a regular pumpkin. Maybe it is hollow ? The pumpkin’s surface is smooth , and smells like an orange spice cake.'},
+		{img: '/items/festivalSpooky/bubble.png', name: 'Golden Bubble', price: '-', supply: 2_000, story: 'This is a pearl the size of a large kiwi, solid and gleaming like gold. The surface of the pearl is marred by a skull the size of a little egg. It\'s very shiny.'},
 	];
 
 	return (
@@ -122,11 +122,11 @@ function	GoodsShop() {
 
 function	EggShop() {
 	const	items = [
-		{img: '/eggs/regular.png', name: 'Mysterious Egg', price: 500, supply: 2_000, story: 'A simple mysterious egg. You will probably have to wait before finding what\'s in it.'},
-		{img: '/eggs/hairy.png', name: 'Mysterious Hairy Egg', price: 750, supply: 2_000, story: 'A very hairy mysterious egg. You will probably have to wait before finding what\'s in it.'},
-		{img: '/eggs/scales.png', name: 'Mysterious Scales Egg', price: 750, supply: 2_000, story: 'A mysterious egg with scales Strange. You will probably have to wait before finding what\'s in it.'},
-		{img: '/eggs/swirls.png', name: 'Mysterious Swirls Egg', price: 750, supply: 2_000, story: 'A mysterious egg that looks like the deep water and the tempest. You will probably have to wait before finding what\'s in it.'},
-		{img: '/eggs/fossil.png', name: 'Mysterious Fossil Egg', price: 1500, supply: 2_000, story: 'A very ancien mysterious egg. You will probably have to wait before finding what\'s in it.'},
+		{img: '/eggs/regular.png', name: 'Mysterious Egg', price: '-', supply: 2_000, story: 'A simple mysterious egg. You will probably have to wait before finding what\'s in it.'},
+		{img: '/eggs/hairy.png', name: 'Mysterious Hairy Egg', price: '-', supply: 2_000, story: 'A very hairy mysterious egg. You will probably have to wait before finding what\'s in it.'},
+		{img: '/eggs/scales.png', name: 'Mysterious Scales Egg', price: '-', supply: 2_000, story: 'A mysterious egg with scales Strange. You will probably have to wait before finding what\'s in it.'},
+		{img: '/eggs/swirls.png', name: 'Mysterious Swirls Egg', price: '-', supply: 2_000, story: 'A mysterious egg that looks like the deep water and the tempest. You will probably have to wait before finding what\'s in it.'},
+		{img: '/eggs/fossil.png', name: 'Mysterious Fossil Egg', price: '-', supply: 2_000, story: 'A very ancien mysterious egg. You will probably have to wait before finding what\'s in it.'},
 	];
 
 	return (
