@@ -89,7 +89,7 @@ function	Index({router}) {
 			updateRarity(currentAdventurer.tokenID).then(() => {
 				toast.dismiss(_toast);
 				if (win) {
-					toast.success(`You earned ${amount * 3} candies !`);
+					toast.success(`You earned ${amount * 3} candies!`);
 				} else {
 					toast.error('Sorry, you didn\'t win this game');
 				}
@@ -109,7 +109,7 @@ function	Index({router}) {
 		(_toast) => {
 			updateRarity(currentAdventurer.tokenID).then(() => {
 				toast.dismiss(_toast);
-				toast.success('You earned some candies !');
+				toast.success('You earned some candies!');
 			});
 		});
 	}
@@ -128,7 +128,7 @@ function	Index({router}) {
 							{dayjs(new Date(trickLog * 1000)).from(dayjs(new Date(chainTime * 1000)))}
 							<Tooltip>
 								<p className={'text-sm leading-normal inline'}>
-									{'You can only play 3 games per adventurer per day !'}</p>
+									{'You can only play 3 games per adventurer per day!'}</p>
 							</Tooltip>
 						</span>
 						{' for some more card games.'}
@@ -169,7 +169,7 @@ function	Index({router}) {
 					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{'you win 3 times your stake'}
 						<Tooltip>
-							<p className={'text-sm leading-normal inline'}>{'If you play for 100 candies and you win, you will have 300 candies !'}</p>
+							<p className={'text-sm leading-normal inline'}>{'If you play for 100 candies and you win, you will have 300 candies!'}</p>
 						</Tooltip>
 					</span>
 					{'. If not, you have to '}
@@ -302,7 +302,7 @@ function	Index({router}) {
 							{dayjs(new Date(activitiesLog * 1000)).from(dayjs(new Date(chainTime * 1000)))}
 							<Tooltip>
 								<p className={'text-sm leading-normal inline'}>
-									{'You can only do 2 activities per adventurer per day !'}</p>
+									{'You can only do 2 activities per adventurer per day!'}</p>
 							</Tooltip>
 						</span>
 						{' for some more activities!'}
@@ -342,14 +342,14 @@ function	Index({router}) {
 					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{'the only prize is a bunch of candies'}
 						<Tooltip>
-							<p className={'text-sm leading-normal inline'}>{'You can earn as much candies as the main Attribute used for a game !'}</p>
+							<p className={'text-sm leading-normal inline'}>{'You can earn as much candies as the main Attribute used for a game!'}</p>
 						</Tooltip>
 					</span>
 					{'. You can do '}
 					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{`${2 -  activitiesCount} more activities today`}
 						<Tooltip>
-							<p className={'text-sm leading-normal inline'}>{'You are limited to 2 activities per day per adventurer ! Enjoy !'}</p>
+							<p className={'text-sm leading-normal inline'}>{'You are limited to 2 activities per day per adventurer! Enjoy!'}</p>
 						</Tooltip>
 					</span>
 					{' and you have '}
@@ -457,7 +457,7 @@ function	Index({router}) {
 					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{'sweet treats'}
 						<Tooltip>
-							<p className={'text-sm leading-normal inline'}>{'Candies are the currency for the Spooky Festival ! You can use them to buy some specific limited supply items and some mysterious eggs ...'}</p>
+							<p className={'text-sm leading-normal inline'}>{'Candies are the currency for the Spooky Festival! You can use them to buy some specific limited supply items and some mysterious eggs ...'}</p>
 						</Tooltip>
 					</span>
 					
@@ -491,7 +491,7 @@ function	Index({router}) {
 										(_toast) => {
 											updateRarity(currentAdventurer.tokenID).then(() => {
 												toast.dismiss(_toast);
-												toast.success('You earned 100 candies !');
+												toast.success('You earned 100 candies!');
 											});
 										});
 								}
