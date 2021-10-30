@@ -47,7 +47,7 @@ function	CandyIcon() {
 	);
 }
 
-function	Index({rarities, router}) {
+function	Index({router}) {
 	const	{currentAdventurer, updateRarity, rNonce} = useRarity();
 	const	{provider, chainTime} = useWeb3();
 	const	[activity, set_activity] = useState(0);
@@ -149,6 +149,7 @@ function	Index({rarities, router}) {
 						<DialogNoBox
 							options={[
 								{label: 'CHECK THE OTHER ACTIVITIES', onClick: () => set_activity(1)},
+								{label: 'ACCESS THE SPOOKY SHOP', onClick: () => router.push('/festivals/spooky-shop')},
 								{label: 'JUST HEAD BACK TO YOUR HOME', onClick: () => router.push('/')},
 							]} />
 					</div>
@@ -280,6 +281,7 @@ function	Index({rarities, router}) {
 					<DialogNoBox
 						options={[
 							{label: 'CHECK THE OTHER ACTIVITIES', onClick: () => set_activity(1)},
+							{label: 'ACCESS THE SPOOKY SHOP', onClick: () => router.push('/festivals/spooky-shop')},
 							{label: 'JUST HEAD BACK TO YOUR HOME', onClick: () => router.push('/')},
 						]} />
 				</div>
@@ -321,6 +323,7 @@ function	Index({rarities, router}) {
 						<DialogNoBox
 							options={[
 								{label: 'GO BACK TO THE CARD GAME', onClick: () => set_activity(0)},
+								{label: 'ACCESS THE SPOOKY SHOP', onClick: () => router.push('/festivals/spooky-shop')},
 								{label: 'JUST HEAD BACK TO YOUR HOME', onClick: () => router.push('/')},
 							]} />
 					</div>
@@ -432,6 +435,7 @@ function	Index({rarities, router}) {
 					<DialogNoBox
 						options={[
 							{label: 'GO BACK TO THE CARD GAME', onClick: () => set_activity(0)},
+							{label: 'ACCESS THE SPOOKY SHOP', onClick: () => router.push('/festivals/spooky-shop')},
 							{label: 'JUST HEAD BACK TO YOUR HOME', onClick: () => router.push('/')},
 						]} />
 				</div>
