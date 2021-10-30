@@ -120,7 +120,7 @@ function	Index({router}) {
 			return (
 				<>
 					<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case'}>
-						{'The Halloween fair is packed with happy people. There is music and laughter and candy corn and cotton candy. The streets are filled with candy, flashy sweets in every color imaginable. There are towering piles of brightly colored boxes, each set for different tricks. There are countless bright orange pumpkins with black eyeshadow. The smell of orange spice is so thick you can taste it.'}
+						{'The Halloween fair is full of happy people. There is music and laughter, candy corn and cotton candy. The streets are filled with candy, flashy sweets in every imaginable color. There are towering piles of brightly colored boxes, each set for different tricks. There are countless bright orange pumpkins with black eyeshadows. The smell of orange spice is so thick that you can almost taste it.'}
 						<div className={'my-4'} />
 						
 						{'The old woman is no longer under the large tree. She will probably be back '}
@@ -159,7 +159,7 @@ function	Index({router}) {
 		return (
 			<>
 				<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case'}>
-					{'The Halloween fair is packed with happy people. There is music and laughter and candy corn and cotton candy. The streets are filled with candy, flashy sweets in every color imaginable. There are towering piles of brightly colored boxes, each set for different tricks. There are countless bright orange pumpkins with black eyeshadow. The smell of orange spice is so thick you can taste it.'}
+					{'The Halloween fair is full of happy people. There is music and laughter, candy corn and cotton candy. The streets are filled with candy, flashy sweets in every imaginable color. There are towering piles of brightly colored boxes, each set for different tricks. There are countless bright orange pumpkins with black eyeshadows. The smell of orange spice is so thick that you can almost taste it.'}
 					<div className={'my-4'} />
 						
 					{'Under a large tree, an old woman is drawing cards. She presents you with 3 cards and suggests a very simple game: choose a card, then a child from the village will do the same.'}
@@ -447,21 +447,24 @@ function	Index({router}) {
 		return (
 			<>
 				<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case'}>
-					{'The Halloween fair is packed with happy people. There is music and laughter and candy corn and cotton candy. The streets are filled with candy, flashy sweets in every color imaginable. There are towering piles of brightly colored boxes, each set for different tricks. There are countless bright orange pumpkins with black eyeshadow. The smell of orange spice is so thick you can taste it.'}
+					{'The Halloween fair is full of happy people. There is music and laughter, candy corn and cotton candy. The streets are filled with candy, flashy sweets in every imaginable color. There are towering piles of brightly colored boxes, each set for different tricks. There are countless bright orange pumpkins with black eyeshadows. The smell of orange spice is so thick that you can almost taste it.'}
 					<div className={'my-4'} />
-						
-					{'You see Facu among the other citizens. He calls you. He is handing out candies. You can tell that he plays a huge role in the community just from the way that the group gathers around him. There is a look of affection and admiration on his face. He has a big bag filled with '}
+
+					{'You see Facu surrounded by other citizens. He calls you. He is giving out candies to the crowd. You can tell that he plays a huge role in the community just from the way the group gathers around him. There is a look of affection and admiration on their faces.'}
+					<div className={'my-4'} />
+
+					{'He has a big bag full of '}
 					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-						{'candies'}
+						{'sweet treats'}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'Candies are the currency for the Spooky Festival ! You can use them to buy some specific limited supply items and some mysterious eggs ...'}</p>
 						</Tooltip>
 					</span>
 					
-					{' and he is distributing some to the group. The children reach out their hands and grab whatever they can from his bag.'}
+					{'. The children reach out their hands and grab whatever they can from his bag.'}
 					<div className={'my-4'} />
 
-					{'“First time at the Spooky Festival ? There is a lot of games and even more candies! '}
+					{'“First time at the Spooky Festival? There are a lot of games to play and a lot more candy! '}
 					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{'Take theses'}
 						<Tooltip>
@@ -472,7 +475,7 @@ function	Index({router}) {
 							<p className={'text-sm leading-normal inline'}>{' for free! Enjoy the Spooky Festival!'}</p>
 						</Tooltip>
 					</span>
-					{' and enjoy the party!”'}
+					{' and enjoy the party...”'}
 				</h1>
 				<div className={'pt-2 mt-4 border-t-2 border-black dark:border-dark-100 font-story font-bold text-sm md:text-base uppercase'}>
 					<DialogNoBox
