@@ -134,21 +134,21 @@ function	AppWrapper(props) {
 							width={100}
 							height={100} />
 					</div>
-					<div className={'absolute top-23 -right-1 hidden md:block'}>
+					<div className={'fixed -bottom-1 -left-1 hidden md:block transform -rotate-90 opacity-60'}>
 						<Image
-							src={'/decorations/Web02.svg'}
+							src={'/decorations/Web03.svg'}
 							loading={'eager'}
 							quality={90}
 							width={100}
 							height={100} />
 					</div>
-					<div className={'fixed -bottom-1 -left-3 transform -rotate-12 hidden md:block'}>
+					<div className={'absolute top-24 right-3 hidden md:block -mt-1'}>
 						<Image
-							src={'/decorations/Web04.svg'}
+							src={'/decorations/devil.png'}
 							loading={'eager'}
 							quality={90}
-							width={100}
-							height={100} />
+							width={49}
+							height={80} />
 					</div>
 				</div>
 
