@@ -26,6 +26,7 @@ const	items = [
 		fetch: (adventurerID) => new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI).getTreasuresBySummoner(adventurerID),
 		dungeon: 'The Forest',
 		parse: (item) => item,
+		isSpecific: true,
 		id: 1,
 	},
 	{
@@ -102,6 +103,26 @@ const	items = [
 		parse: (item) => Number(item),
 		dungeon: 'Boars',
 		id: 7,
+	},
+	{
+		name: 'OpenMic_prizes',
+		address: process.env.DUNGEON_OPEN_MIC_V2_ADDR,
+		fetch: (adventurerID) => new Contract(process.env.DUNGEON_OPEN_MIC_V2_ADDR, process.env.DUNGEON_OPEN_MIC_V2_ABI).getPrizes(adventurerID),
+		dungeon: 'OpenMic',
+		parse: (item) => item,
+		id: 8,
+	},
+	{
+		name: 'Candies',
+		description: 'Some candies you can use to buy prices during the Spooky Festival',
+		img: '/items/candies.png',
+		address: process.env.LOOT_CANDIES_ADDR,
+		level: 'Uncommon',
+		levelClassName: 'bg-items-uncommon',
+		fetch: (adventurerID) => new Contract(process.env.LOOT_CANDIES_ADDR, process.env.LOOT_ERC20_ABI).balanceOf(adventurerID),
+		parse: (item) => Number(item),
+		dungeon: 'SpookyFestival',
+		id: 9,
 	},
 ];
 

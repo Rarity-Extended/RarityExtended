@@ -13,6 +13,7 @@ import	useRarity						from	'contexts/useRarity';
 import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
 import	Box								from	'components/Box';
+import	{getOpenMicDialogOption}		from	'components/dungeons/openmic';
 
 function	DialogChoices({adventurersCount, router}) {
 	const	[selectedOption, set_selectedOption] = useState(0);
@@ -30,6 +31,20 @@ function	DialogChoices({adventurersCount, router}) {
 				options={[
 					{label: 'GO TO THE TAVERN', onClick: () => router.push('/town/tavern?tab=recruit')},
 				]} />
+		);
+	}
+
+	if (router?.query?.tab === 'the-stage') {
+		return (
+			<>
+				<DialogBox
+					selectedOption={selectedOption}
+					nonce={dialogNonce}
+					options={[
+						getOpenMicDialogOption(currentAdventurer, router, () => null),
+						{label: 'CANCEL', onClick: () => router.push('/town/quest')},
+					]} />
+			</>
 		);
 	}
 
@@ -64,6 +79,14 @@ function	DialogChoices({adventurersCount, router}) {
 						</>
 					),
 					onClick: () => router.push('/countryside/boars')
+				},
+				{
+					label: (
+						<>
+							<span className={'text-tag-info dark:text-tag-warning'}>{'HOOLIGANS '}</span> {' IN THE TAVERN'}
+						</>
+					),
+					onClick: () => router.push('/countryside/openmic')
 				},
 			]} />
 	);
@@ -100,6 +123,7 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 				</>
 			);
 		}
+
 		if (adventurersCount === 0) {
 			return (
 				<>

@@ -7,13 +7,13 @@ Our goal is to make the user experience very straightforward and easy while givi
 
 - [X] **The Forest V2**, send your adventurer in a multiday adventure in the Forest
 - [X] **The Bank**, deposit and earn tokens and yield thanks to ape.tax
-- [ ] **Tooltip and Info**, a nice UI (the best) is nice, but to be able to get info about the game, is better
+- [X] **Tooltip and Info**, a nice UI (the best) is nice, but to be able to get info about the game, is better
 - [X] **Crafting**, use your loot to craft weapon and armor
-- [ ] **The Boars**, coop/versus quest where you have to maintain, or kill, all the boar ecosystem
+- [X] **The Boars**, coop/versus quest where you have to maintain, or kill, all the boar ecosystem
 - [X] **Items from the officials codex**, check all your items directly in RE
-- [ ] **RarityName & RNS**, build you charactersheet for you year long adventure
+- [X] **RarityName & RNS**, build you charactersheet for you year long adventure
 - [ ] **Customizable Adventurers**, be unique
-- [ ] **UI/UX reflow**, let's build something smooth and better
+- [X] **UI/UX reflow**, let's build something smooth and better
 - [ ] **Multi-step adventure**, what if you could start an adventurer with multiple path, for days ?
 
 ## Project setup

@@ -38,7 +38,7 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 		if (Number(population.count) === 0) {
 			return (
 				<>
-					{'You are walking near a large forest. The air fills with the scent of sap, leaves, and decaying leaves. The sun dips below the mountains, revealing the speckled green of forest floor, the slender trunks of stunted trees, the bird nests in the tops of branches.A burst of voice reaches the ears of our adventurer. Two men are arguing about a boar problem. There is no more boars.'}
+					{'You are walking near a large forest. The air is filled with the scent of sap, leaves, and decaying leaves. The sun dips below the mountains, revealing the speckled green and brown of forest floor, the slender trunks of stunted trees, the bird nests in the tops of branches. A burst of voices reach the ears of our adventurer. Two men are arguing about a boar problem. "THERE ARE NO MORE BOAR!"'}
 					<div className={'my-4'} />
 
 					{'It\'s been '}
@@ -74,17 +74,17 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 		if (!currentAdventurer?.dungeons?.boars?.canAdventure) {
 			return (
 				<>
-					{'The air you breathe is fresh and silent. The leaves on the trees rustle as a breeze comes through them. The grass ripples as a butterfly alights on the end of a blade. You can feel the air through your skin. It is as if everything has been cleansed by the rain, as if there is no angry farmer, no boar grunts.'}
+					{'The air you breathe is fresh and silent. The leaves on the trees rustle as a breeze comes through them. The grass ripples as a butterfly alights on the end of a blade. You can feel the air caress your skin. It is as if everything has been cleansed by the rain, as if there is no angry farmer, no boar grunts.'}
 					<div className={'my-4'} />
 		
-					{'The boar herd has abandoned the clearing once again. The acorns and beech nuts that they’d squiggled across the ground to pry loose from their burrs were not enough to sustain them today.'}
+					{'The boar herd has abandoned the clearing once again. The acorns and beech nuts that they’d scrounged across the forest floor were not enough to sustain them today.'}
 					<div className={'my-4'} />
 		
 					{'That is enough for you, '}
 					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}
 						<Tooltip>
-							<p className={'text-sm leading-normal inline'}>{'This is you. But maybe another you can find the boars ?'}</p>
+							<p className={'text-sm leading-normal inline'}>{'This is you. But maybe another day you can find the boars ?'}</p>
 						</Tooltip>
 					</span>
 					{'. You head back to the village. Maybe you could come back '}
@@ -104,10 +104,10 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 					{'The farmer directed you to the place he saw the boar.'}
 					<div className={'my-4'} />
 
-					{'You are in a big glade, hemmed all around by tall trees, except for a narrow trail leading in, obviously the trail the farmer came in by. There are ruts in the trail, traces of wheels and cart tracks. A patch of dry brown grass, trampled flat in some places, is growing here. There are small bushes, some of which have been bent almost flat to the ground.'}
+					{'You are in a big glade, hemmed all around by tall trees, except for a narrow trail leading in, obviously the trail the farmer came in by. There are ruts in the trail, traces of the wheels of cart tracks. A patch of dry brown grass, trampled flat in some places, has growing here. There are small bushes, some of which have been bent almost flat to the ground.'}
 					<div className={'my-4'} />
 
-					{'In the center of it, the boar. The boar is angry. It is angry because the forest is angry. It is angry because it must prove its strength.'}
+					{'In the center of the opening, the boar snorts and grunts. The boar is angry. It is angry because the forest is angry. It is angry because it must prove its strength.'}
 					<div className={'my-4'} />
 
 					{'Judging by its size, you can expect to collect up to '}
@@ -134,10 +134,10 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 					{'You take the direction of the forest to find these wild animals.'}
 					<div className={'my-4'} />
 
-					{'You are in a big glade, hemmed all around by tall trees, except for a narrow trail leading in, obviously the trail the farmer came in by. There are ruts in the trail, traces of wheels and cart tracks. A patch of dry brown grass, trampled flat in some places, is growing here. There are small bushes, some of which have been bent almost flat to the ground. There are many piles of wood in the clearing and the air is filled with scents of animals and plants. Some you can identify easily, while some you can\'t.'}
+					{'You are in a big glade, hemmed all around by tall trees, except for a narrow trail leading in, obviously the trail the farmer came in by. There are ruts in the trail, traces of the wheels of cart tracks. A patch of dry brown grass, trampled flat in some places, is growing here. There are small bushes, some of which have been bent almost flat to the ground. There are many piles of wood in the clearing and the air is filled with scents of animals and plants. Some you can identify easily, while some you can\'t.'}
 					<div className={'my-4'} />
 
-					{'While searching for the boars, you could stop to gather some berries, mushroom or wood. You could get up to '}
+					{'While searching for the boars, you could stop to gather some berries, mushroom, or wood. You could get up to '}
 					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{`${loot} loots.`}
 						<Tooltip>
@@ -157,20 +157,20 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 
 		return (
 			<>
-				{'You are walking near a large forest. The air fills with the scent of sap, leaves, and decaying leaves. The sun dips below the mountains, revealing the speckled green of forest floor, the slender trunks of stunted trees, the bird nests in the tops of branches.'}
+				{'You are walking near a large forest. The air fills with the scent of sap, leaves, and decaying leaves. The sun dips below the mountains, revealing the speckled green and brown of the forest floor, the slender trunks of stunted trees, the bird nests in the tops of branches.'}
 					
 				<div className={'my-4'} />
-				{'A burst of voice reaches the ears of our adventurer. Two men are arguing about a '}
+				{'A burst of voices reach the ears of our adventurer. Two men are arguing about a '}
 				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{'boar'}
 					<Tooltip>
-						<p className={'text-sm leading-normal inline'}>{'The boars are big, black and bristly, their snouts curled like that of a ferret. They are like piglets, though much larger.'}</p>
+						<p className={'text-sm leading-normal inline'}>{'The boars are big, black and bristly, their snouts curled like those of a ferret. They are like piglets, though much larger.'}</p>
 					</Tooltip>
 				</span>
-				{' problem. The youngest, an angry farmer, yells at the other, a man in his late middle age. You can hear the conversation.'}
+				{' problem. The youngest, an angry farmer, yells at the other, a man in his late middle ages. You can hear the conversation.'}
 					
 				<div className={'my-4'} />
-				{'"I tell you I saw it! A huge black boar, filthy thing! It tore up my prize plants! I only saw the beast, but it\'s big enough to be a dwarven pig! It\'ll be back soon, you\'ll see! '}
+				{'"I tell you I saw it! A huge black boar... filthy thing! It tore up my prize plants! I only saw the beast, but it\'s big enough to be a dwarf a harvest price pig! It\'ll be back soon, you\'ll see! '}
 				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{'We need to kill them all'}
 					<Tooltip>
@@ -186,7 +186,7 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 				<div className={'my-4'} />
 				{'The older man ignores the farmer\'s rantings, though his face is hard. "Look, there is no boar big enough to do what you say. What you saw was an elk, or one of those manticores that plague the land sometimes. '}
 				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-					{'Boars are necessary for the balance'}
+					{'Boars are necessary to maintain balance'}
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'There is currently '}</p>
 						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{`${population.count} boars`}</p>
@@ -231,7 +231,7 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'The ecosystem will be balanced with '}</p>
 						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'10000'}</p>
-						<p className={'text-sm leading-normal inline'}>{' boars. You will earn less rewards by hunting but more by protecting them if the boar population is below this number, and more by hunting but less by protecting them if the boar population is above this number.'}</p>
+						<p className={'text-sm leading-normal inline'}>{' boars. You will earn less rewards by hunting. However, by protecting them when the boar population is below this number, you may earn more. The reverse is true and hunting is more profitable if the boar population is above this number.'}</p>
 					</Tooltip>
 				</span>
 				{' in the Forest.'}

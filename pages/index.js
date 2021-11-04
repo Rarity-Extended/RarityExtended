@@ -104,6 +104,28 @@ function	AdventurerList({favoritesAdventurers, set_favoritesAdventurers}) {
 			</div>
 				
 			<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4 px-1'}>
+
+				<div className={'w-full'}>
+					<Box
+						onClick={() => router.push('/festivals/spooky')}
+						className={'w-full p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer\'} transition-colors relative mb-4 md:mb-0 cursor-pointer'}>
+						<div className={'p-4'}>
+							<Image
+								src={`/decorations/pumpkin${(currentAdventurer.tokenID % 6)}.png`}
+								quality={80}
+								width={124}
+								height={124} />
+						</div>
+						
+						<p className={'text-sm text-black dark:text-white justify-center group-hover:underline'}>
+							{'The Spooky'}
+						</p>
+						<p className={'text-xss text-black dark:text-white justify-center text-center mt-1'}>
+							{'Festival Year 1'}
+						</p>
+					</Box>
+				</div>
+
 				{[...Object.values(rarities)]
 					.filter((adventurer) => {
 						if (classTab === 1)
@@ -314,6 +336,32 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 						</div>
 					</Link>
 
+					<Link href={'/countryside/openmic'}>
+						<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
+							<div className={'opacity-40 overflow-hidden -mb-1'}>
+								<Image
+									src={'/illustrations/illuOpenMic.jpeg'}
+									loading={'eager'}
+									objectFit={'cover'}
+									objectPosition={'top'}
+									quality={70}
+									width={800}
+									height={150} />
+							</div>
+							<div className={'absolute inset-0 opacity-30'} style={{backgroundColor: '#FDAC53'}} />
+
+							<div className={'absolute inset-0 flex flex-row'}>
+								<div className={'w-1/2 h-full p-6'}>
+									<h1 className={'text-shadow-lg'}>{'Tavern Hooligans'}</h1>
+									<p className={'text-shadow-lg text-regular pt-2'}>{'Hooligans are taking over the tavern. Get up there and give them a show, see if you can calm them down...'}</p>
+								</div>
+								<div className={'w-1/2 h-full p-6 flex justify-end items-center'}>
+									<svg className={'group-hover:animate-bounce-r opacity-30 group-hover:opacity-100 transition-opacity'} width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M4 11v2h12v2h2v-2h2v-2h-2V9h-2v2H4zm10-4h2v2h-2V7zm0 0h-2V5h2v2zm0 10h2v-2h-2v2zm0 0h-2v2h2v-2z'} fill={'currentColor'}/> </svg>
+								</div>
+							</div>
+						</div>
+					</Link>
+
 					<Link href={'/countryside/forest'}>
 						<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
 							<div className={'opacity-40 overflow-hidden -mb-1'}>
@@ -436,6 +484,14 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 					onClick={() => router.push(`/adventurer/${currentAdventurer.tokenID}`)}
 					adventurer={currentAdventurer}
 					rarityClass={CLASSES[currentAdventurer.class]}>
+					<div className={'absolute top-0 -left-1 opacity-20'}>
+						<Image
+							src={'/decorations/Web03.svg'}
+							loading={'eager'}
+							quality={90}
+							width={80}
+							height={80} />
+					</div>
 					<div
 						onClick={(e) => {
 							e.preventDefault();
@@ -476,12 +532,35 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 							</Box>
 						)}
 					</div>
+
+					<div className={'relative px-4 flex justify-between'}>
+						<Image
+							src={'/decorations/devil.png'}
+							loading={'eager'}
+							quality={90}
+							width={40}
+							height={58} />
+						<Image
+							src={'/decorations/mask.png'}
+							loading={'eager'}
+							quality={90}
+							width={37}
+							height={52} />
+						<Image
+							src={'/decorations/ghost.png'}
+							loading={'eager'}
+							quality={90}
+							width={55}
+							height={55} />
+					</div>
+
+
 				</div>
 			</div>
 			<div className={'w-full col-span-4 md:col-span-3 mt-4 md:mt-0 hidden md:block'}>
 				<Box className={'w-full flex flex-col relative'}>
 
-					<div className={'flex flex-row w-full'}>
+					<div className={'flex flex-row w-full relative'}>
 						<div
 							onClick={() => set_tab(0)}
 							className={`flex flex-row items-center text-regular p-4 px-6 border-r-2 border-black dark:border-dark-100 text-black dark:text-white ${tab !== 0 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
@@ -499,6 +578,12 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 							className={`flex flex-row items-center text-regular p-4 px-6 w-full border-l-2 border-black dark:border-dark-100 text-black dark:text-white ${tab !== 2 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
 							<svg width={16} height={16} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M19 4h2v2h-2V4zm-2 4V6h2v2h-2zm-2 0h2v2h-2V8zm0 0h-2V6h2v2zM3 6h8v2H3V6zm8 10H3v2h8v-2zm7 2v-2h2v-2h-2v2h-2v-2h-2v2h2v2h-2v2h2v-2h2zm0 0v2h2v-2h-2z'} fill={'currentColor'}/> </svg>
 							<p className={'mt-1 ml-2'}>{`TASKS ${availableTasks.length > 0 ? `(${availableTasks.length})` : ''}`}</p>
+						</div>
+
+						<div
+							onClick={() => router.push('/town/guild-house')}
+							className={'absolute right-0 top-1 flex flex-row items-center text-regular p-4 px-6 text-black cursor-pointer dark:text-dark-200 dark:hover:text-tag-warning'}>
+							<svg width={16} height={16} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M12 1h2v8h8v4h-2v-2h-8V5h-2V3h2V1zM8 7V5h2v2H8zM6 9V7h2v2H6zm-2 2V9h2v2H4zm10 8v2h-2v2h-2v-8H2v-4h2v2h8v6h2zm2-2v2h-2v-2h2zm2-2v2h-2v-2h2zm0 0h2v-2h-2v2z'} fill={'currentColor'}/> </svg>
 						</div>
 					</div>
 

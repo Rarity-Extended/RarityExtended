@@ -19,7 +19,7 @@ function	Index({options}) {
 						opt.onClick();
 					}}>
 					<span className={'cursor-pointer'} style={{cursor: 'pointer'}}>
-						<span className={'inline mb-1 mr-2 group-hover:opacity-100'} style={{cursor: 'pointer'}}>{'>'}</span>
+						<span className={'inline mb-1 mr-2 opacity-20 group-hover:opacity-100'} style={{cursor: 'pointer'}}>{'>'}</span>
 						<span className={'cursor-pointer'} style={{cursor: 'pointer'}}>{opt.label}</span>
 					</span>
 				</div>	
