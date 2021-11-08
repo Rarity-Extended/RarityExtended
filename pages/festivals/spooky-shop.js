@@ -218,6 +218,12 @@ function	Index({router}) {
 						<CandyIcon />
 					</div>
 				</div>
+
+				<div>
+					<h1 className={'text-black dark:text-white text-base text-center py-16 animate-pulse'}>
+						{'SOME DELAY TO PROVIDE YOU THE BEST EXPERIENCE IN YOUR ALL ADVENTURE!'}
+					</h1>
+				</div>
 				<div className={'w-full h-0 mt-4 '}/>
 
 				<div className={'w-full col-span-4 md:col-span-3 mt-4 md:mt-0 hidden md:block'}>
