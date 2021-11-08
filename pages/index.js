@@ -107,7 +107,7 @@ function	AdventurerList({favoritesAdventurers, set_favoritesAdventurers}) {
 
 				<div className={'w-full'}>
 					<Box
-						onClick={() => router.push('/festivals/spooky')}
+						onClick={() => router.push('/festivals/spooky-shop')}
 						className={'w-full p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer\'} transition-colors relative mb-4 md:mb-0 cursor-pointer'}>
 						<div className={'p-4'}>
 							<Image
@@ -118,7 +118,7 @@ function	AdventurerList({favoritesAdventurers, set_favoritesAdventurers}) {
 						</div>
 						
 						<p className={'text-sm text-black dark:text-white justify-center group-hover:underline'}>
-							{'The Spooky'}
+							{'The Spooky Shop'}
 						</p>
 						<p className={'text-xss text-black dark:text-white justify-center text-center mt-1'}>
 							{'Festival Year 1'}
@@ -484,14 +484,6 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 					onClick={() => router.push(`/adventurer/${currentAdventurer.tokenID}`)}
 					adventurer={currentAdventurer}
 					rarityClass={CLASSES[currentAdventurer.class]}>
-					<div className={'absolute top-0 -left-1 opacity-20'}>
-						<Image
-							src={'/decorations/Web03.svg'}
-							loading={'eager'}
-							quality={90}
-							width={80}
-							height={80} />
-					</div>
 					<div
 						onClick={(e) => {
 							e.preventDefault();
@@ -532,29 +524,6 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 							</Box>
 						)}
 					</div>
-
-					<div className={'relative px-4 flex justify-between'}>
-						<Image
-							src={'/decorations/devil.png'}
-							loading={'eager'}
-							quality={90}
-							width={40}
-							height={58} />
-						<Image
-							src={'/decorations/mask.png'}
-							loading={'eager'}
-							quality={90}
-							width={37}
-							height={52} />
-						<Image
-							src={'/decorations/ghost.png'}
-							loading={'eager'}
-							quality={90}
-							width={55}
-							height={55} />
-					</div>
-
-
 				</div>
 			</div>
 			<div className={'w-full col-span-4 md:col-span-3 mt-4 md:mt-0 hidden md:block'}>

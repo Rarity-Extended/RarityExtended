@@ -205,7 +205,7 @@ function	Index({router}) {
 			<div className={'mt-8 max-w-prose w-full flex-col flex justify-center items-center mx-auto px-3 relative'}>
 				<div>
 					<p
-						onClick={() => router.push('/festivals/spooky')}
+						onClick={() => router.push('/')}
 						className={'text-black dark:text-white text-megaxs absolute left-4 top-2 hover:underline cursor-pointer'}>
 						{'< Back'}
 					</p>
@@ -217,6 +217,12 @@ function	Index({router}) {
 						<p className={'mr-2'}>{`BALANCE: ${numberOfCandies}`}</p>
 						<CandyIcon />
 					</div>
+				</div>
+
+				<div>
+					<h1 className={'text-black dark:text-white text-base text-center py-16 animate-pulse'}>
+						{'SOME DELAY TO PROVIDE YOU THE BEST EXPERIENCE IN YOUR ALL ADVENTURE!'}
+					</h1>
 				</div>
 				<div className={'w-full h-0 mt-4 '}/>
 
