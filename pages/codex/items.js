@@ -39,6 +39,88 @@ function	Index() {
 			item2Level = 5;
 		return item1Level - item2Level;
 	}
+	function	renderTheCellarLoot() {
+		return (
+			<div className={'flex flex-row space-x-4 w-full tooltip cursor-help group'}>
+				<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
+					<div className={`absolute ${ITEMS[0].levelClassName} left-0 top-0 w-2 h-1`} />
+					<div className={`absolute ${ITEMS[0].levelClassName} left-0 top-0 w-1 h-2`} />
+					<div className={`absolute ${ITEMS[0].levelClassName} right-0 top-0 w-2 h-1`} />
+					<div className={`absolute ${ITEMS[0].levelClassName} right-0 top-0 w-1 h-2`} />
+					<Image src={ITEMS[0].img} width={64} height={64} />
+					<div className={`absolute ${ITEMS[0].levelClassName} left-0 bottom-0 w-2 h-1`} />
+					<div className={`absolute ${ITEMS[0].levelClassName} left-0 bottom-0 w-1 h-2`} />
+					<div className={`absolute ${ITEMS[0].levelClassName} right-0 bottom-0 w-2 h-1`} />
+					<div className={`absolute ${ITEMS[0].levelClassName} right-0 bottom-0 w-1 h-2`} />
+				</div>
+				<div className={'text-left flex flex-col py-0.5'}>
+					<p className={'text-xs'}>{ITEMS[0].name}</p>
+				</div>
+				<div className={'tooltiptext invisible group-hover:visible bg-white dark:bg-dark-600 border-4 border-black dark:border-dark-100'}>
+					<div className={'p-4'}>
+						<p className={'text-sx mb-2'}>{ITEMS[0].level}</p>
+						<p className={'text-megaxs mt-4 text-gray-darker dark:text-white dark:text-opacity-60'}>{ITEMS[0].description}</p>
+					</div>
+				</div>
+			</div>
+		);
+	}
+	function	renderBoarsLoot() {
+		return [2, 3, 4, 5, 6, 7].map((index) => {
+			return (
+				<div key={`boars_${index}`}className={'flex flex-row space-x-4 w-full tooltip cursor-help group'}>
+					<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
+						<div className={`absolute ${ITEMS[index].levelClassName} left-0 top-0 w-2 h-1`} />
+						<div className={`absolute ${ITEMS[index].levelClassName} left-0 top-0 w-1 h-2`} />
+						<div className={`absolute ${ITEMS[index].levelClassName} right-0 top-0 w-2 h-1`} />
+						<div className={`absolute ${ITEMS[index].levelClassName} right-0 top-0 w-1 h-2`} />
+						<Image src={ITEMS[index].img} width={64} height={64} />
+						<div className={`absolute ${ITEMS[index].levelClassName} left-0 bottom-0 w-2 h-1`} />
+						<div className={`absolute ${ITEMS[index].levelClassName} left-0 bottom-0 w-1 h-2`} />
+						<div className={`absolute ${ITEMS[index].levelClassName} right-0 bottom-0 w-2 h-1`} />
+						<div className={`absolute ${ITEMS[index].levelClassName} right-0 bottom-0 w-1 h-2`} />
+					</div>
+					<div className={'text-left flex flex-col py-0.5'}>
+						<p className={'text-xs'}>{ITEMS[index].name}</p>
+					</div>
+					<div className={'tooltiptext invisible group-hover:visible bg-white dark:bg-dark-600 border-4 border-black dark:border-dark-100'}>
+						<div className={'p-4'}>
+							<p className={'text-sx mb-2'}>{ITEMS[index].level}</p>
+							<p className={'text-megaxs mt-4 text-gray-darker dark:text-white dark:text-opacity-60'}>{ITEMS[index].description}</p>
+						</div>
+					</div>
+				</div>
+			);
+		});
+	}
+	function	renderSpookyFestivalLoot() {
+		return [9].map((index) => {
+			return (
+				<div key={`spooky_${index}`}className={'flex flex-row space-x-4 w-full tooltip cursor-help group'}>
+					<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
+						<div className={`absolute ${ITEMS[index].levelClassName} left-0 top-0 w-2 h-1`} />
+						<div className={`absolute ${ITEMS[index].levelClassName} left-0 top-0 w-1 h-2`} />
+						<div className={`absolute ${ITEMS[index].levelClassName} right-0 top-0 w-2 h-1`} />
+						<div className={`absolute ${ITEMS[index].levelClassName} right-0 top-0 w-1 h-2`} />
+						<Image src={ITEMS[index].img} width={64} height={64} />
+						<div className={`absolute ${ITEMS[index].levelClassName} left-0 bottom-0 w-2 h-1`} />
+						<div className={`absolute ${ITEMS[index].levelClassName} left-0 bottom-0 w-1 h-2`} />
+						<div className={`absolute ${ITEMS[index].levelClassName} right-0 bottom-0 w-2 h-1`} />
+						<div className={`absolute ${ITEMS[index].levelClassName} right-0 bottom-0 w-1 h-2`} />
+					</div>
+					<div className={'text-left flex flex-col py-0.5'}>
+						<p className={'text-xs'}>{ITEMS[index].name}</p>
+					</div>
+					<div className={'tooltiptext invisible group-hover:visible bg-white dark:bg-dark-600 border-4 border-black dark:border-dark-100'}>
+						<div className={'p-4'}>
+							<p className={'text-sx mb-2'}>{ITEMS[index].level}</p>
+							<p className={'text-megaxs mt-4 text-gray-darker dark:text-white dark:text-opacity-60'}>{ITEMS[index].description}</p>
+						</div>
+					</div>
+				</div>
+			);
+		});
+	}
 	function	renderTheForestLoot() {
 		return Object.values(THE_FOREST_LOOT).sort(sortByRarity).map((item) => (
 			<div className={'flex flex-row space-x-4 w-full tooltip cursor-help group'} key={`theForest_${item.name}`}>
@@ -69,32 +151,6 @@ function	Index() {
 				</div>
 			</div>
 		));
-	}
-	function	renderTheCellarLoot() {
-		return (
-			<div className={'flex flex-row space-x-4 w-full tooltip cursor-help group'}>
-				<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
-					<div className={`absolute ${ITEMS[0].levelClassName} left-0 top-0 w-2 h-1`} />
-					<div className={`absolute ${ITEMS[0].levelClassName} left-0 top-0 w-1 h-2`} />
-					<div className={`absolute ${ITEMS[0].levelClassName} right-0 top-0 w-2 h-1`} />
-					<div className={`absolute ${ITEMS[0].levelClassName} right-0 top-0 w-1 h-2`} />
-					<Image src={ITEMS[0].img} width={64} height={64} />
-					<div className={`absolute ${ITEMS[0].levelClassName} left-0 bottom-0 w-2 h-1`} />
-					<div className={`absolute ${ITEMS[0].levelClassName} left-0 bottom-0 w-1 h-2`} />
-					<div className={`absolute ${ITEMS[0].levelClassName} right-0 bottom-0 w-2 h-1`} />
-					<div className={`absolute ${ITEMS[0].levelClassName} right-0 bottom-0 w-1 h-2`} />
-				</div>
-				<div className={'text-left flex flex-col py-0.5'}>
-					<p className={'text-xs'}>{ITEMS[0].name}</p>
-				</div>
-				<div className={'tooltiptext invisible group-hover:visible bg-white dark:bg-dark-600 border-4 border-black dark:border-dark-100'}>
-					<div className={'p-4'}>
-						<p className={'text-sx mb-2'}>{ITEMS[0].level}</p>
-						<p className={'text-megaxs mt-4 text-gray-darker dark:text-white dark:text-opacity-60'}>{ITEMS[0].description}</p>
-					</div>
-				</div>
-			</div>
-		);
 	}
 	function	renderManifestGoods() {
 		return Object.values(MANIFEST_GOODS).map((item) => (
@@ -181,25 +237,35 @@ function	Index() {
 				<h1 className={'text-black dark:text-white text-base'}>{'CODEX - ITEMS'}</h1>
 				<div className={'w-full h-1 bg-black dark:bg-dark-100 mt-4 mb-10'}/>
 
-				<h2 className={'text-black dark:text-white text-xs mb-6'}>{'The Cellar'}</h2>
+				<h2 className={'text-black dark:text-white text-xs mb-6'}>{'The Spooky Festival'}</h2>
+				<div className={'w-full grid grid-cols-1 md:grid-cols-4 gap-6'}>
+					{renderSpookyFestivalLoot()}
+				</div>
+
+				<h2 className={'text-black dark:text-white text-xs mt-16 mb-6'}>{'The Cellar'}</h2>
 				<div className={'w-full grid grid-cols-1 md:grid-cols-4 gap-6'}>
 					{renderTheCellarLoot()}
 				</div>
 
-				<h2 className={'text-black dark:text-white text-xs mt-24 mb-6'}>{'The Forest'}</h2>
+				<h2 className={'text-black dark:text-white text-xs mt-16 mb-6'}>{'The Boars'}</h2>
+				<div className={'w-full grid grid-cols-1 md:grid-cols-4 gap-6'}>
+					{renderBoarsLoot()}
+				</div>
+
+				<h2 className={'text-black dark:text-white text-xs mt-16 mb-6'}>{'The Forest'}</h2>
 				<div className={'w-full grid grid-cols-1 md:grid-cols-4 gap-6'}>
 					{renderTheForestLoot()}
 				</div>
 
-				<h2 className={'text-black dark:text-white text-xs mt-24 mb-6'}>{'Generic Goods'}</h2>
+				<h2 className={'text-black dark:text-white text-xs mt-16 mb-6'}>{'Generic Goods'}</h2>
 				<div className={'w-full grid grid-cols-1 md:grid-cols-4 gap-6'}>
 					{renderManifestGoods()}
 				</div>
-				<h2 className={'text-black dark:text-white text-xs mt-24 mb-6'}>{'Generic Armors'}</h2>
+				<h2 className={'text-black dark:text-white text-xs mt-16 mb-6'}>{'Generic Armors'}</h2>
 				<div className={'w-full grid grid-cols-1 md:grid-cols-4 gap-6'}>
 					{renderManifestArmors()}
 				</div>
-				<h2 className={'text-black dark:text-white text-xs mt-24 mb-6'}>{'Generic Weapons'}</h2>
+				<h2 className={'text-black dark:text-white text-xs mt-16 mb-6'}>{'Generic Weapons'}</h2>
 				<div className={'w-full grid grid-cols-1 md:grid-cols-4 gap-6'}>
 					{renderManifestWeapons()}
 				</div>

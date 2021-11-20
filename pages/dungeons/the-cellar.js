@@ -16,17 +16,17 @@ import	DialogBox								from	'components/DialogBox';
 
 const	classMappingBackImg = [
 	'',
-	'/back/barbarian.svg',
-	'/back/bard.png',
-	'/back/cleric.png',
-	'/back/druid.png',
-	'/back/fighter.png',
-	'/back/monk.svg',
-	'/back/paladin.png',
-	'/back/ranger.png',
-	'/back/rogue.png',
-	'/back/sorcerer.png',
-	'/back/wizard.png',
+	'/classes/back/barbarian.svg',
+	'/classes/back/bard.png',
+	'/classes/back/cleric.png',
+	'/classes/back/druid.png',
+	'/classes/back/fighter.png',
+	'/classes/back/monk.svg',
+	'/classes/back/paladin.png',
+	'/classes/back/ranger.png',
+	'/classes/back/rogue.png',
+	'/classes/back/sorcerer.png',
+	'/classes/back/wizard.png',
 ];
 
 function sleep(ms) {
@@ -38,7 +38,7 @@ function	DialogChoices({router, step, stepAuto, ratEscaped, adventurerWon, expec
 		return (
 			<DialogBox
 				options={[
-					{label: 'THE BIG UGLY RAT HAS ESCAPED', onClick: () => router.push('/town/quest?tab=the-cellar')},
+					{label: 'THE BIG UGLY RAT HAS ESCAPED', onClick: () => router.push('/countryside/cellar')},
 				]} />
 		);
 	}
@@ -47,7 +47,7 @@ function	DialogChoices({router, step, stepAuto, ratEscaped, adventurerWon, expec
 			return (
 				<DialogBox
 					options={[
-						{label: 'YOU HAVE DEFEATED THE RAT ! UNFORTUNATELY, THERE IS NOTHING TO RECOVER', onClick: () => router.push('/town/quest?tab=the-cellar')},
+						{label: 'YOU HAVE DEFEATED THE RAT ! UNFORTUNATELY, THERE IS NOTHING TO RECOVER', onClick: () => router.push('/countryside/cellar')},
 					]} />
 			);
 		}
@@ -63,7 +63,7 @@ function	DialogChoices({router, step, stepAuto, ratEscaped, adventurerWon, expec
 			options={[
 				{label: 'FIGHT', onClick: step},
 				{label: 'FIGHT (AUTO)', onClick: stepAuto},
-				{label: 'ESCAPE', onClick: () => router.push('/town/quest?tab=the-cellar')},
+				{label: 'ESCAPE', onClick: () => router.push('/countryside/cellar')},
 			]} />
 	);
 }
@@ -98,13 +98,13 @@ function	Index({dungeon, adventurer, router}) {
 				set_adventurerWon(true);
 				return true;
 			}
-			set_logs(l => [...l, `Your adventurer attacks the Big Ugly Rat and deals ${dungeon.adventurerDamage} dmg.`]);
+			set_logs(l => [...l, `${adventurer?.name || 'Your adventurer'} attacks the Big Ugly Rat and deals ${dungeon.adventurerDamage} dmg.`]);
 			await sleep(0);
 			if (dungeon.adventurerArmor < dungeon.dungeonToHit) {
 				set_adventurerHealth(h => h -= dungeon.dungeonDamage);
 				_adventurerHealth -= dungeon.dungeonDamage;
 				if (_adventurerHealth <= 0) {
-					set_logs(l => [...l, 'Your adventurer fades out']);
+					set_logs(l => [...l, `${adventurer?.name || 'Your adventurer'} fades out`]);
 					return false;
 				}
 			}
@@ -133,13 +133,13 @@ function	Index({dungeon, adventurer, router}) {
 			set_adventurerWon(true);
 			return true;
 		}
-		set_logs(l => [...l, `Your adventurer attacks the Big Ugly Rat and deals ${dungeon.adventurerDamage} dmg.`]);
+		set_logs(l => [...l, `${adventurer?.name || 'Your adventurer'} attacks the Big Ugly Rat and deals ${dungeon.adventurerDamage} dmg.`]);
 		await sleep(450);
 		if (dungeon.adventurerArmor < dungeon.dungeonToHit) {
 			set_adventurerHealth(h => h -= dungeon.dungeonDamage);
 			_adventurerHealth -= dungeon.dungeonDamage;
 			if (_adventurerHealth <= 0) {
-				set_logs(l => [...l, 'Your adventurer fades out']);
+				set_logs(l => [...l, `${adventurer?.name || 'Your adventurer'} fades out`]);
 				return false;
 			}
 		}
@@ -153,7 +153,7 @@ function	Index({dungeon, adventurer, router}) {
 			<div className={`absolute bg-black inset-0 z-10 -top-24 -left-4 -right-4 flex flex-col items-center min-h-screen transition-opacity duration-1000 ${adventurerHealth <= 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
 				<p className={'text-2xl text-white pt-20 mx-4 md:mx-0 md:pt-64 max-w-screen-sm text-center'}>{'you passed out'}</p>
 				<p className={'text-base text-white pt-8 mx-4 md:mx-0 max-w-screen-sm text-center'}>{'After some time, the rat returns to his hole and Facu the tavernkeeper, worried, finds you lying on the floor'}</p>
-				<Link href={'/town/quest?tab=the-cellar'}>
+				<Link href={'/countryside/cellar'}>
 					<div className={'text-base text-white mt-16 mx-4 md:mx-0 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 border-white hover:bg-white hover:text-black transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
 						{'Rest weak adventurer, Rest...'}
 					</div>
@@ -240,7 +240,7 @@ function	Index({dungeon, adventurer, router}) {
 							}
 							updateRarity(dungeon.tokenID);
 							if (router.pathname === '/dungeons/the-cellar')						
-								router.push('/town/quest?tab=the-cellar');
+								router.push('/countryside/cellar');
 						});
 					}}
 				/>

@@ -11,6 +11,7 @@ import	useLocalStorage									from	'hook/useLocalStorage';
 const	UI = createContext();
 export const UIContextApp = ({children}) => {
 	const	[theme, set_theme] = useLocalStorage('theme', 'light-initial');
+	const	[layout, set_layout] = useLocalStorage('layout', 'default');
 
 	useEffect(() => {
 		if (theme !== 'light-initial') {
@@ -37,8 +38,10 @@ export const UIContextApp = ({children}) => {
 			value={{
 				theme,
 				customTheme: 'stone',
+				layout,
 				setTheme: set_theme,
-				switchTheme: () => set_theme(t => t === 'dark' ? 'light' : 'dark')
+				switchTheme: () => set_theme(t => t === 'dark' ? 'light' : 'dark'),
+				switchLayout: () => set_layout(t => t === 'default' ? 'legacy' : 'default')
 			}}>
 			{children}
 		</UI.Provider>

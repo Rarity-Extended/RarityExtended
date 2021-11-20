@@ -6,16 +6,18 @@
 ******************************************************************************/
 
 import	React, {useState}	from	'react';
-import	Image				from	'next/image';
-import	CLASSES				from	'utils/codex/classes';
-import	{levelUp}			from	'utils/actions';
-import	{xpRequired}		from	'utils/libs/rarity';
+import	AutowidthInput		from	'react-autowidth-input';
+import	toast				from	'react-hot-toast';
 import	Box					from	'components/Box';
-import	Attributes			from	'sections/SectionCharacterSheet/Attributes';	
-import	Balloon				from	'sections/SectionCharacterSheet/Balloon';	
-import	Skills				from	'sections/SectionCharacterSheet/Skills';	
-import	Inventory			from	'sections/SectionCharacterSheet/Inventory';	
-
+import	Image				from	'next/image';
+import	Attributes			from	'sections/SectionCharacterSheet/Attributes';
+import	Balloon				from	'sections/SectionCharacterSheet/Balloon';
+import	Inventory			from	'sections/SectionCharacterSheet/Inventory';
+import	Feats				from	'sections/SectionCharacterSheet/Feats';	
+import	Skills				from	'sections/SectionCharacterSheet/Skills';
+import	{levelUp, setName}	from	'utils/actions';
+import	CLASSES				from	'utils/codex/classes';
+import	{xpRequired}		from	'utils/libs/rarity';
 
 import	FragmentTop					from	'components/Chains/FragmentTop';
 import	FragmentBottom				from	'components/Chains/FragmentBottom';
@@ -98,17 +100,17 @@ function	ChainLong() {
 
 const	classMappingImg = [
 	'',
-	'/front/barbarian.svg',
-	'/bard.png',
-	'/cleric.png',
-	'/druid.png',
-	'/fighter.png',
-	'/front/monk.svg',
-	'/paladin.png',
-	'/ranger.png',
-	'/rogue.png',
-	'/sorcerer.png',
-	'/wizard.png',
+	'/classes/front/barbarian.svg',
+	'/classes/front/bard.png',
+	'/classes/front/cleric.png',
+	'/classes/front/druid.png',
+	'/classes/front/fighter.png',
+	'/classes/front/monk.svg',
+	'/classes/front/paladin.png',
+	'/classes/front/ranger.png',
+	'/classes/front/rogue.png',
+	'/classes/front/sorcerer.png',
+	'/classes/front/wizard.png',
 ];
 
 function	AdventurerTab({adventurer, updateRarity, provider}) {
@@ -124,47 +126,98 @@ function	AdventurerTab({adventurer, updateRarity, provider}) {
 				</div>
 				<div
 					onClick={() => set_selectedTab(1)}
-					className={`w-full cursor-pointer text-center border-solid border-l-0 md:border-l-4 ${selectedTab === 1 ? 'bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600 border-b-4 md:border-b-0' : 'border-b-4 md:border-b-4'} border-black dark:border-dark-100 text-center py-4`}>
+					className={`w-full cursor-pointer text-center border-solid border-l-0 md:border-l-4 ${selectedTab === 1 ? 'bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600 border-b-0' : 'border-b-0 md:border-b-4'} border-black dark:border-dark-100 text-center py-4`}>
+					<p>{'Feats'}</p>
+				</div>
+				<div
+					onClick={() => set_selectedTab(2)}
+					className={`w-full cursor-pointer text-center border-solid border-l-0 md:border-l-4 ${selectedTab === 2 ? 'bg-gray-principal md:bg-white dark:bg-dark-400 md:dark:bg-dark-600 border-b-4 md:border-b-0' : 'border-b-4 md:border-b-4'} border-black dark:border-dark-100 text-center py-4`}>
 					<p>{'Inventory'}</p>
 				</div>
 			</div>
 			<div className={'w-full border-black dark:border-dark-100 py-4 md:-mt-1'}>
-				{selectedTab === 0 ? <Skills adventurer={adventurer} updateRarity={updateRarity} provider={provider} /> : <Inventory adventurer={adventurer} />}
+				{selectedTab === 0 ? <Skills adventurer={adventurer} updateRarity={updateRarity} provider={provider} /> : null}
+				{selectedTab === 1 ? <Feats adventurer={adventurer} updateRarity={updateRarity} provider={provider} /> : null}
+				{selectedTab === 2 ? <Inventory adventurer={adventurer} /> : null}
 			</div>
 		</Box>
 	);
 }
 
 function	Info({adventurer, updateRarity, provider}) {
+	const	[name, set_name] = useState(adventurer.name || adventurer.tokenID);
 	const	canLevelUp = adventurer.xp >= (xpRequired(adventurer.level));
 	return (
 		<Box className={'nes-container pt-6 px-4 with-title w-full md:w-2/3'}>
-			<p className={'title bg-white dark:bg-dark-600 z-50 relative'} style={{paddingTop: 2}}>{adventurer.tokenID}</p>
-			<div className={'flex flex-row items-center w-full py-2'}>
+			<p className={'title bg-white dark:bg-dark-600 z-50 relative cursor-pointer group'} style={{paddingTop: 2}}>
+				<div className={'flex flex-row items-center'}>
+					<AutowidthInput
+						value={name}
+						onChange={(e) => set_name(e.target.value)}
+						extraWidth={0}
+						placeholder={adventurer.name || adventurer.tokenID}
+						className={'bg-opacity-0 bg-white focus:outline-none pl-1 relative uppercase'} />
+					<div
+						onClick={() => {
+							if (name && (name !== (adventurer.name || adventurer.tokenID))) {
+								setName({
+									provider,
+									name,
+									tokenID: adventurer.tokenID
+								}, ({error}) => {
+									console.error(error);
+								}, (_toast) => {
+									updateRarity(adventurer.tokenID);
+									toast.dismiss(_toast);
+									toast.success(`You can now call ${adventurer.tokenID}: ${name}!`);
+								});
+							}
+						}}
+						className={`ml-1 p-1 -m-1 transition-all opacity-0 ${name && (name !== (adventurer.name || adventurer.tokenID)) ? 'w-7 opacity-100 cursor-pointer' : 'w-0 group-hover:opacity-100 group-hover:w-7 cursor-default'}`}>
+						{name && (name !== (adventurer.name || adventurer.tokenID)) ?
+							<svg width={'20'} height={'20'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
+								<rect x={'6'} y={'16'} width={'4'} height={'4'} fill={'currentcolor'}/>
+								<rect x={'2'} y={'12'} width={'4'} height={'4'} fill={'currentcolor'}/>
+								<rect x={'14'} y={'8'} width={'4'} height={'4'} fill={'currentcolor'}/>
+								<rect x={'18'} y={'4'} width={'4'} height={'4'} fill={'currentcolor'}/>
+								<rect x={'10'} y={'12'} width={'4'} height={'4'} fill={'currentcolor'}/>
+							</svg>
+							:
+							<svg width={'20'} height={'20'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
+								<path d={'M6.82861 14.6066L9.65704 17.435L5.4144 18.8492L6.82861 14.6066Z'} fill={'currentcolor'}/>
+								<rect x={'13.1929'} y={'8.24255'} width={'4'} height={'7'} transform={'rotate(45 13.1929 8.24255)'} fill={'currentcolor'}/>
+								<rect x={'17.4351'} y={'4'} width={'4'} height={'4'} transform={'rotate(45 17.4351 4)'} fill={'currentcolor'}/>
+							</svg>
+						}
+					</div>
+				</div>
+			</p>
+			<div className={'flex flex-row items-center w-full py-2 pl-3.5'}>
 				<div className={'opacity-80 text-xs md:text-sm w-48'}>{'ID:'}</div>
 				<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 					<p>{adventurer.tokenID}</p>
 				</div>
 			</div>
-			<div className={'flex flex-row items-center w-full py-2'}>
+			
+			<div className={'flex flex-row items-center w-full py-2 pl-3.5'}>
 				<div className={'opacity-80 text-xs md:text-sm w-48'}>{'CLASS:'}</div>
 				<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 					<p>{CLASSES[adventurer.class].name}</p>
 				</div>
 			</div>
-			<div className={'flex flex-row items-center w-full py-2'}>
+			<div className={'flex flex-row items-center w-full py-2 pl-3.5'}>
 				<div className={'opacity-80 text-xs md:text-sm w-48'}>{'LEVEL:'}</div>
 				<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 					<p>{adventurer.level}</p>
 				</div>
 			</div>
-			<div className={'flex flex-row items-center w-full py-2'}>
+			<div className={'flex flex-row items-center w-full py-2 pl-3.5'}>
 				<div className={'opacity-80 text-xs md:text-sm w-48'}>{'GOLD:'}</div>
 				<div className={'w-full text-right md:text-left pr-4 md:pr-0'}>
 					<p>{`${Number(adventurer?.gold?.balance || 0) === 0 ? '0' : adventurer.gold.balance}`}</p>
 				</div>
 			</div>
-			<div className={'flex flex-row items-center w-full py-2 relative'}>
+			<div className={'flex flex-row items-center w-full py-2 pl-3.5 relative'}>
 				<div className={'opacity-80 text-sm w-48'}>{'XP:'}</div>
 				<div className={'w-full'}>
 					<div
@@ -172,7 +225,6 @@ function	Info({adventurer, updateRarity, provider}) {
 							if (canLevelUp) {
 								levelUp({
 									provider,
-									contractAddress: process.env.RARITY_ADDR,
 									tokenID: adventurer.tokenID,
 								}, ({error, data}) => {
 									if (error) {
@@ -264,6 +316,74 @@ function	Attribute({isInit, name, value, updateAttribute, set_updateAttribute, t
 	);
 }
 
+function	ClaimXPBox() {
+	return (
+		<div className={'w-69 min-w-69 flex relative bg-stone-primary'}>
+			{/* CORNER_DECORATIONS */}
+			<div className={'w-1 h-1 absolute top-1 left-1 bg-black'} />
+			<div className={'w-1 h-1 absolute top-2 left-2 bg-black'} />
+			<div className={'w-1 h-1 absolute top-1 right-1 bg-black'} />
+			<div className={'w-1 h-1 absolute top-2 right-2 bg-black'} />
+			<div className={'w-1 h-1 absolute bottom-1 left-1 bg-black'} />
+			<div className={'w-1 h-1 absolute bottom-2 left-2 bg-black'} />
+			<div className={'w-1 h-1 absolute bottom-1 right-1 bg-black'} />
+			<div className={'w-1 h-1 absolute bottom-2 right-2 bg-black'} />
+			{/* TOP_LEFT_TO_TOP_RIGHT */}
+			<div className={'h-1 absolute top-1 left-5 right-5 bg-black'} />
+			{/* TOP_BOTTOM_TO_BOTTOM_RIGHT */}
+			<div className={'h-1 absolute bottom-1 left-5 right-5 bg-black'} />
+			{/* TOP_LEFT */}
+			<div className={'w-1 h-1 absolute top-2 left-4 bg-black'} />
+			<div className={'w-1 h-1 absolute top-3 left-4 bg-black'} />
+			<div className={'w-1 h-1 absolute top-4 left-3 bg-black'} />
+			<div className={'w-1 h-1 absolute top-4 left-2 bg-black'} />
+			<div className={'w-1 h-1 absolute top-5 left-1 bg-black'} />
+			{/* TOP_TO_BOTTOM_LEFT */}
+			<div className={'w-1 h-10 absolute top-6 left-1 bg-black'} />
+			{/* BOTTOM_LEFT */}
+			<div className={'w-1 h-1 absolute bottom-2 left-4 bg-black'} />
+			<div className={'w-1 h-1 absolute bottom-3 left-4 bg-black'} />
+			<div className={'w-1 h-1 absolute bottom-4 left-3 bg-black'} />
+			<div className={'w-1 h-1 absolute bottom-4 left-2 bg-black'} />
+			<div className={'w-1 h-1 absolute bottom-5 left-1 bg-black'} />
+			{/* TOP_LEFT */}
+			<div className={'w-1 h-1 absolute top-2 right-4 bg-black'} />
+			<div className={'w-1 h-1 absolute top-3 right-4 bg-black'} />
+			<div className={'w-1 h-1 absolute top-4 right-3 bg-black'} />
+			<div className={'w-1 h-1 absolute top-4 right-2 bg-black'} />
+			<div className={'w-1 h-1 absolute top-5 right-1 bg-black'} />
+			{/* TOP_TO_BOTTOM_RIGHT */}
+			<div className={'w-1 h-10 absolute top-6 right-1 bg-black'} />
+			{/* BOTTOM_RIGHT */}
+			<div className={'w-1 h-1 absolute bottom-2 right-4 bg-black'} />
+			<div className={'w-1 h-1 absolute bottom-3 right-4 bg-black'} />
+			<div className={'w-1 h-1 absolute bottom-4 right-3 bg-black'} />
+			<div className={'w-1 h-1 absolute bottom-4 right-2 bg-black'} />
+			<div className={'w-1 h-1 absolute bottom-5 right-1 bg-black'} />
+
+			{/* TOP HIGHLIGHT */}
+			<div className={'h-1 absolute top-2 left-5 right-5 bg-stone-primary-highlight'} />
+			<div className={'h-2 w-1 absolute top-3 left-5 bg-stone-primary-highlight'} />
+			<div className={'h-2 w-1 absolute top-4 left-4 bg-stone-primary-highlight'} />
+			<div className={'h-1 w-2 absolute top-5 left-2 bg-stone-primary-highlight'} />
+			<div className={'h-10 w-1 absolute top-5 left-2 bg-stone-primary-highlight'} />
+
+			{/* BOTTOM SHADOW */}
+			<div className={'h-1 absolute bottom-2 left-5 right-5 bg-stone-primary-shadow'} />
+			<div className={'h-2 w-1 absolute bottom-3 right-5 bg-stone-primary-shadow'} />
+			<div className={'h-2 w-1 absolute bottom-4 right-4 bg-stone-primary-shadow'} />
+			<div className={'h-1 w-2 absolute bottom-5 right-2 bg-stone-primary-shadow'} />
+			<div className={'h-10 w-1 absolute bottom-5 right-2 bg-stone-primary-shadow'} />
+
+			<div className={'px-5 flex items-center w-full'}>
+				<FrameButton>
+					{'CLAIM XP'}
+				</FrameButton>
+			</div>
+		</div>
+	);
+}
+	
 function	LeftPanel({adventurerClass, adventurerLevel, adventurerGold, adventurerXp}) {
 	return (
 		<div className={'w-full'}>
@@ -445,7 +565,7 @@ function	CenterPanel({adventurer, updateRarity, provider}) {
 
 function	RightPanel() {
 	return (
-		<div className={'w-76 min-w-76'}>
+		<div className={'w-full h-full'}>
 			<div className={'flex flex-col w-full h-full'}>
 				<div className={'w-full flex flex-row border-b-4 border-black'}>
 					<div className={'relative h-17 w-full'}>
@@ -509,31 +629,60 @@ function	Aventurer({rarity, provider, updateRarity, router, chainTime}) {
 					<ChainDoubleSimple /> {/* 28px right */}
 				</div>
 				<div className={'relative w-2/3 flex flex-row justify-end pr-7 -mb-96'}>
-					<ChainLong /> {/* 28px left */}
+					<ChainDoubleSimple /> {/* 28px right */}
 				</div>
 			</div>
-			<div className={'flex flex-row max-w-screen-lg w-full mx-auto'}>
-				<div className={'relative w-1/3 flex flex-row border-4 border-black h-25'}>
-					<FrameType3 />
-					<div className={'flex items-center text-white flex-col justify-center w-full h-full z-10 relative'}>
-						<p className={'text-heading-bigger text-center w-full'}>{CLASSES[rarity.class].name}</p>
-						<p className={'text-regular text-center w-full'}>{rarity.tokenID}</p>
+			<div className={'grid grid-cols-12 max-w-screen-lg gap-x-4'}>
+				<div className={'flex flex-col w-full col-span-4'}>
+					<div className={'relative w-full flex flex-row border-4 border-black h-25'}>
+						<FrameType3 />
+						<div className={'flex items-center text-white flex-col justify-center w-full h-full z-10 relative'}>
+							<p className={'text-heading-bigger text-center w-full'}>{CLASSES[rarity.class].name}</p>
+							<p className={'text-regular text-center w-full'}>{rarity.tokenID}</p>
+						</div>
+					</div>
+					<div className={'relative w-auto flex flex-row border-4 border-r border-black -mt-1 bg-stone-primary'}>
+						<LeftPanel
+							adventurerClass={rarity.class}
+							adventurerLevel={rarity.level}
+							adventurerGold={rarity?.gold?.balance}
+							adventurerXp={rarity.xp} />
 					</div>
 				</div>
-			</div>
-			<div className={'flex flex-row max-w-screen-lg w-full mx-auto'}>
-				<div className={'relative w-full flex flex-row border-4 border-black -mt-1 bg-stone-primary'}>
-					<LeftPanel
-						adventurerClass={rarity.class}
-						adventurerLevel={rarity.level}
-						adventurerGold={rarity?.gold?.balance}
-						adventurerXp={rarity.xp} />
-					<CenterPanel
-						adventurer={rarity}
-						updateRarity={updateRarity}
-						provider={provider}
-					/>
-					<RightPanel />
+
+				<div className={'col-span-8 grid grid-cols-2 border-4 border-black bg-stone-primary'}>
+					<div className={'flex flex-col w-full h-full'}>
+						<div className={'relative w-full flex flex-col p-5 items-center border-r-4 border-black'}>
+							<FrameType3 />
+							<FrameButton>
+								{'CLAIM XP'}
+							</FrameButton>
+							<FrameButton className={'mt-2'}>
+								{'SELECTED AS MAIN'}
+							</FrameButton>
+						</div>
+						
+						<div className={'relative w-auto flex flex-row h-full'}>
+							<CenterPanel
+								adventurer={rarity}
+								updateRarity={updateRarity}
+								provider={provider} />
+						</div>
+					</div>
+					<div className={'flex flex-col w-full h-full'}>
+						<div className={'relative w-full flex flex-col p-5 items-center'}>
+							<FrameType3 />
+							<FrameButton>
+								{'SKILLS & FEATS'}
+							</FrameButton>
+							<FrameButton className={'mt-2'}>
+								{'INVENTORY'}
+							</FrameButton>
+						</div>
+						<div className={'relative w-auto flex flex-row h-full'}>
+							<RightPanel />
+						</div>
+					</div>
 				</div>
 			</div>
 		</>

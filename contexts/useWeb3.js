@@ -41,7 +41,22 @@ export const Web3ContextApp = ({children}) => {
 	const	[currentBlock, set_currentBlock] = useState(0);
 
 	const	{activate, active, library, connector, account, chainId, deactivate} = web3;
-	const	{data: chainTimeNonce} = useSWR('chainTime', fakeFetcher, {refreshInterval: 10 * 1000});
+	const	{data: chainTimeNonce} = useSWR('chainTime', fakeFetcher, {
+		refreshInterval: 2 * 1000,
+		revalidateIfStale: true,
+		revalidateOnMount: true,
+		revalidateOnFocus: true,
+		revalidateOnReconnect: true,
+		refreshWhenHidden: true,
+		dedupingInterval: 1.5 * 1000,
+	});
+
+	useEffect(() => {
+		if (provider)
+			provider.getBlock().then(e => set_chainTime(e.timestamp));
+		else
+			getProvider().getBlock().then(e => set_chainTime(e.timestamp));
+	}, [chainTimeNonce, provider]);
 
 	const onUpdate = useCallback(async (update) => {
 		if (update.provider) {
@@ -172,12 +187,6 @@ export const Web3ContextApp = ({children}) => {
 	useEffect(() => {
 		setTimeout(() => set_initialized(true), 1000);
 	}, []);
-
-	useEffect(() => {
-		if (provider) {
-			provider.getBlock().then(e => set_chainTime(e.timestamp));
-		}
-	}, [chainTimeNonce, provider]);
 
 	return (
 		<Web3Context.Provider

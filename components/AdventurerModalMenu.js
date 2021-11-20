@@ -31,7 +31,7 @@ function AdventurerModalMenu() {
 							height={60} />
 						<div className={'text-sm cursor-pointer uppercase ml-2'}>
 							<div className={'text-sx cursor-pointer mb-1 group-hover:underline'}>
-								{currentAdventurer?.tokenID}
+								{currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}
 							</div>
 							<div className={'text-megaxs cursor-pointer group-hover:underline'}>
 								{currentAdventurer ? `${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}` : null}
@@ -39,7 +39,7 @@ function AdventurerModalMenu() {
 						</div>
 					</div> : <div className={'flex items-center justify-center'}>
 						<Image
-							src={'/front/placeholder.svg'}
+							src={'/classes/front/placeholder.svg'}
 							quality={100}
 							width={60}
 							height={60} />
@@ -59,7 +59,7 @@ function AdventurerModalMenu() {
 					{currentAdventurer ? <div className={'flex items-center justify-center'}>
 						<div className={'cursor-pointer uppercase mr-2 mt-2 text-right'}>
 							<div className={'text-sm cursor-pointer group-hover:underline -mb-2'}>
-								{currentAdventurer?.tokenID}
+								{currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}
 							</div>
 							<div className={'text-megaxs cursor-pointer group-hover:underline'}>
 								{currentAdventurer ? `${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}` : null}
@@ -80,7 +80,7 @@ function AdventurerModalMenu() {
 							</div>
 						</div>
 						<Image
-							src={'/front/placeholder.svg'}
+							src={'/classes/front/placeholder.svg'}
 							quality={100}
 							width={60}
 							height={60} />

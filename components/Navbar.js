@@ -6,11 +6,10 @@
 ******************************************************************************/
 
 import	React, {useState, useEffect}	from	'react';
-import	Link							from	'next/link';
 import	Image							from	'next/image';
+import	Link							from	'next/link';
 import	useWeb3							from	'contexts/useWeb3';
 import	ModalLogin						from	'components/ModalLogin';
-import	FlyoutMenu						from	'components/FlyoutMenu';
 import	AdventurerModalMenu				from	'components/AdventurerModalMenu';
 import	BoxAlternate					from	'components/BoxAlternate';
 import	useUI							from	'contexts/useUI';
@@ -18,7 +17,7 @@ import	useRarity						from	'contexts/useRarity';
 import	CLASSES							from	'utils/codex/classes';
 import	FrameArrow						from	'components/Frame/Stone/Arrow';
 import	FrameButton						from	'components/Frame/Stone/Button';
-
+import 	Townwidget 						from 	'components/TownWidget';
 
 function	BoxExpandable({children}) {
 	return (
@@ -498,7 +497,6 @@ function	Navbar({router}) {
 						{address && active ? `${address.slice(0, 4)}...${address.slice(-4)}` : 'CONNECT WALLET'}
 					</FrameButton>
 				</div>
-
 			</div>
 		);
 	}
@@ -533,40 +531,28 @@ function	Navbar({router}) {
 
 	return (
 		<nav className={'relative w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black dark:border-dark-100 mb-4 md:mb-4 pb-0 md:pb-4'}>
-			<div className={'items-center justify-start flex flex-row whitespace-normal md:whitespace-nowrap text-lg'}>
+			<div className={'items-center justify-start flex flex-row w-full md:w-3/12 whitespace-normal md:whitespace-nowrap text-lg'}>
 				<div className={'w-full'}>
 					<Link href={'/'}>
 						<p className={'block md:hidden'}>{'RE'}</p>
 					</Link>
 					<Link href={'/'}>
-						<p className={'hidden md:block'}>{'Rarity Extended'}</p>
+						<div>
+							<p className={'hidden md:block cursor-pointer'}>{'Rarity'}</p>
+							<p className={'hidden md:block cursor-pointer'}>{'Extended'}</p>
+						</div>
 					</Link>
 				</div>
 				<div className={'items-center justify-end flex-row flex md:hidden w-full'}>
 					{renderWalletButton()}
 				</div>
 			</div>
-			<div className={'items-center justify-start md:justify-end flex flex-row w-full mt-3 md:mt-0'}>
-				<div className={'group items-center justify-end flex-row flex mr-6 cursor-pointer'} onClick={() => router.push('/')}>
-					<span>
-						<span className={`cursor-pointer inline mb-1 mr-2 group-hover:opacity-100 text-xs md:text-sm ${router.pathname === '/' ? 'opacity-100' : 'opacity-5'}`}>{'>'}</span>
-						<span className={'text-sm cursor-pointer'}>
-							<span className={'text-xs hidden md:inline cursor-pointer'}>{'Adventurers'}</span>
-							<span className={'text-xs inline md:hidden cursor-pointer'}>{'Adv'}</span>
-						</span>
-					</span>
-				</div>
-				<div className={'group items-center justify-end flex-row flex mr-6 cursor-pointer'} onClick={() => router.push('/inventory')}>
-					<span>
-						<span className={`cursor-pointer inline mb-1 mr-2 group-hover:opacity-100 text-xs md:text-sm ${router.pathname === '/inventory' ? 'opacity-100' : 'opacity-5'}`}>{'>'}</span>
-						<span className={'text-sm cursor-pointer'}>
-							<span className={'text-xs hidden md:inline cursor-pointer'}>{'Inventory'}</span>
-							<span className={'text-xs inline md:hidden cursor-pointer'}>{'Inv'}</span>
-						</span>
-					</span>
-				</div>
-				<FlyoutMenu />
-				<div className={'items-center justify-end flex-row border-black dark:border-dark-100 border-l-4 pl-6 ml-6 hidden md:flex'}>
+			<div className={'items-center flex w-full md:w-6/12 mt-3 md:mt-0'}>
+				<Townwidget />
+			</div>
+
+			<div className={'items-center justify-start md:justify-end flex flex-row w-3/12 mt-3 md:mt-0'}>
+				<div className={'items-center justify-end flex-row pl-6 ml-6 hidden md:flex'}>
 					{renderWalletButton()}
 				</div>
 			</div>

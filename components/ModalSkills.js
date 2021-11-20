@@ -64,7 +64,6 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 		}
 		learnSkills({
 			provider,
-			contractAddress: process.env.RARITY_SKILLS_ADDR,
 			tokenID: adventurer.tokenID,
 			skills: _skills,
 		}, ({error, data}) => {
@@ -105,7 +104,7 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 						leaveTo={'opacity-0 scale-95'}>
 						<div
 							key={adventurer?.tokenID}
-							className={'inline-block px-4 md:px-10 py-9 mt-16 md:mt-23 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative border-4 border-black'}>
+							className={'inline-block px-4 md:px-10 pt-9 pb-0 md:pb-9 mt-16 md:mt-23 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative border-4 border-black'}>
 							<Dialog.Title as={'h3'} className={'relative text-lg font-medium leading-6 text-black dark:text-white flex flex-col md:flex-row justify-between'}>
 								{'SKILLBOOK'}
 								<div className={'flex flex-row text-megaxs space-x-2 md:space-x-4 text-gray-darker dark:text-dark-100 mt-2 md:mt-0 ml-0 md:-ml-20 leading-3'}>
@@ -190,7 +189,7 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 								</div>
 							</div>
 								
-							<div className={'min-h-0 md:min-h-120 max-h-64 md:max-h-120 overflow-y-scroll'}>
+							<div className={'min-h-0 md:min-h-120 max-h-72 md:max-h-120 overflow-y-scroll'}>
 								{
 									Object.values(SKILLS)
 										.filter((skill) => {

@@ -7,11 +7,11 @@
 
 import	React	from	'react';
 
-function	Button({children, onClick}) {
+function	Button({children, onClick, className}) {
 	return (
 		<button
 			onClick={onClick}
-			className={'relative transition-colors group bg-stone-secondary active:bg-stone-secondary hover:bg-stone-hover flex justify-center pl-4 w-full h-10 items-center text-regular text-white'}>
+			className={`relative transition-colors group bg-stone-secondary active:bg-stone-secondary hover:bg-stone-hover flex justify-center pl-4 w-full h-10 items-center text-regular text-white ${className}`}>
 			{children}
 			<div className={'bg-black absolute h-1 top-0 left-1 right-1'} />
 			<div className={'bg-black absolute h-1 w-1 top-1 left-0'} />
