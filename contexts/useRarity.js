@@ -7,19 +7,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import	React, {useState, useEffect, useContext, createContext}	from	'react';
-import	useWeb3													from	'contexts/useWeb3';
+import	NProgress												from	'nprogress';
 import	{ethers}												from	'ethers';
 import	{Contract}												from	'ethcall';
 import	useSWR													from	'swr';
 import	dayjs													from	'dayjs';
 import	relativeTime											from	'dayjs/plugin/relativeTime';
+import	useWeb3													from	'contexts/useWeb3';
 import	ModalCurrentAdventurer									from	'components/ModalCurrentAdventurer';
+import	useIndexDB												from	'hook/useIDB';
 import	{chunk, fetcher, toAddress, newEthCallProvider}			from	'utils';
 import	ITEMS													from	'utils/codex/items';
 import	CLASSES													from	'utils/codex/classes';
 import	MANIFEST_GOODS											from	'utils/codex/items_manifest_goods.json';
 import	MANIFEST_ARMORS											from	'utils/codex/items_manifest_armors.json';
 import	MANIFEST_WEAPONS										from	'utils/codex/items_manifest_weapons.json';
+
+const	isEmptyObject = (obj) => Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
 
 dayjs.extend(relativeTime);
 
@@ -55,12 +59,19 @@ export const RarityContextApp = ({children}) => {
 		&address=${address}
 		&apikey=${process.env.FMT_KEY}`;
 	const	{data} = useSWR(active && address ? getRaritiesRequestURI : null, fetcher);
-	const	[currentAdventurer, set_currentAdventurer] = useState(null);
-	const	[rarities, set_rarities] = useState({});
+	const	[currentAdventurer, set_currentAdventurer] = useIndexDB('currentAdventurer', null);
+	const	[rarities, set_rarities] = useIndexDB('adventurers', {});
+	const	[skins, set_skins] = useIndexDB('adventurersSkins', {});
 	const	[inventory, set_inventory] = useState({});
 	const	[rNonce, set_rNonce] = useState(0);
 	const	[loaded, set_loaded] = useState(false);
 	const	[isModalOpen, set_isModalOpen] = useState(false);
+
+	useEffect(() => {
+		if (!isEmptyObject(rarities) && address && active) {
+			set_loaded(true);
+		}
+	}, [rarities, address, active]);
 
 	//NOTIFICATION SYSTEM
 	useEffect(() => {
@@ -72,8 +83,7 @@ export const RarityContextApp = ({children}) => {
 						`${adventurer.tokenID} IS READY FOR A NEW ADVENTURE`,
 						{
 							body: `Your adventurer ${adventurer.name ? adventurer.name : adventurer.tokenID}, a ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}, is ready for a new adventure!`,
-							icon: CLASSES[currentAdventurer?.class].img,
-							onclick: () => console.log('HELLLOOO')
+							icon: CLASSES[currentAdventurer?.class].img
 						});
 					set_rarities((prev) => ({...prev, [adventurer.tokenID]: {
 						...prev[adventurer.tokenID],
@@ -89,11 +99,8 @@ export const RarityContextApp = ({children}) => {
 	**	when the web3 become inactive.
 	**************************************************************************/
 	useEffect(() => {
-		set_rarities({});
-		set_currentAdventurer(null);
 		set_rNonce(n => n + 1);
 		if (active && provider && address) {
-			set_loaded(false);
 			fetchRarity();
 		}
 	}, [active, address, chainID, provider]);
@@ -105,6 +112,22 @@ export const RarityContextApp = ({children}) => {
 			rarityCraftingHelper.getItemsByAddress(address)
 		]);
 		return (callResult);
+	}
+
+	async function	fetchRaritySkins(tokensIDs) {
+		const	raritySkinHelper = new Contract(process.env.RARITY_EXTENDED_SKIN_HELPER_ADDR, process.env.RARITY_EXTENDED_SKIN_HELPER_ABI);
+		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
+		const	calls = [];
+		for (let index = 0; index < tokensIDs.length; index++) {
+			const tokenID = tokensIDs[index];
+			calls.push(raritySkinHelper.getAdventurerSkin(tokenID));
+		}
+		const	callResult = await ethcallProvider.all(calls);
+		for (let index = 0; index < tokensIDs.length; index++) {
+			const	tokenID = tokensIDs[index];
+			const	element = callResult[index];
+			set_skins((prev) => ({...prev, [tokenID]: element ? JSON.parse(element).image : ''}));
+		}
 	}
 
 	function	prepareSharedInventory(result) {
@@ -150,6 +173,7 @@ export const RarityContextApp = ({children}) => {
 		return [
 			rarity.ownerOf(tokenID),
 			rarity.summoner(tokenID),
+			rarityExtendedName.get_name(tokenID),
 			rarityAttr.character_created(tokenID),
 			rarityAttr.ability_scores(tokenID),
 			rarityGold.balanceOf(tokenID),
@@ -159,7 +183,6 @@ export const RarityContextApp = ({children}) => {
 			rarityDungeonCellar.adventurers_log(tokenID),
 			rarityDungeonCellar.scout(tokenID),
 			rarityDungeonForest.getResearchBySummoner(tokenID),
-			rarityExtendedName.get_name(tokenID),
 			rarityDungeonBoars.actions_log(tokenID),
 			rarityDungeonOpenMic.timeToNextPerformance(tokenID),
 
@@ -190,80 +213,21 @@ export const RarityContextApp = ({children}) => {
 	/**************************************************************************
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
-	function		setRarity(tokenID, multicallResult, inventoryCallResult) {
+	async function		setRarity(tokenID, multicallResult, inventoryCallResult) {
 		const	[
-			owner, adventurer,
+			owner, adventurer, name,
 			initialAttributes, abilityScores,
 			balanceOfGold, claimableGold,
 			skills, feats,
-			cellarLog, cellarScout, forestResearch, name, boarsLog, timeToNextOpenMic,
+			cellarLog, cellarScout, forestResearch, boarsLog, timeToNextOpenMic,
 			spookyFestivalClaimed, spookyFestivalTrickCount, spookyFestivalTrickLog, spookyFestivalActivitiesCount, spookyFestivalActivitiesLog
 		] = multicallResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
 			return;
 		}
-		if (!currentAdventurer || (currentAdventurer && tokenID === currentAdventurer.tokenID)) {
-			set_currentAdventurer(p => (!p || (p && tokenID === p.tokenID)) ? {
-				tokenID: tokenID,
-				owner: owner,
-				name: name,
-				xp: ethers.utils.formatEther(adventurer['_xp']),
-				class: Number(adventurer['_class']),
-				level: Number(adventurer['_level']),
-				log: Number(adventurer['_log']),
-				logCanAdventure: dayjs(new Date(Number(adventurer['_log']) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
-				gold: {
-					balance: ethers.utils.formatEther(balanceOfGold),
-					claimable: claimableGold ? ethers.utils.formatEther(claimableGold) : '0'
-				},
-				attributes: {
-					isInit: initialAttributes,
-					remainingPoints: initialAttributes ? -1 : 32,
-					strength: initialAttributes ? abilityScores['strength'] : 8,
-					dexterity: initialAttributes ? abilityScores['dexterity'] : 8,
-					constitution: initialAttributes ? abilityScores['constitution'] : 8,
-					intelligence: initialAttributes ? abilityScores['intelligence'] : 8,
-					wisdom: initialAttributes ? abilityScores['wisdom'] : 8,
-					charisma: initialAttributes ? abilityScores['charisma'] : 8,
-				},
-				skills: skills,
-				feats: (feats || []).map(f => Number(f)),
-				dungeons: {
-					cellar: {
-						log: Number(cellarLog),
-						scout: Number(cellarScout),
-						canAdventure: dayjs(new Date(Number(cellarLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
-					},
-					boars: {
-						log: Number(boarsLog),
-						canAdventure: dayjs(new Date(Number(boarsLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
-					},
-					forest: {
-						initBlockTs: forestResearch?.initBlockTs,
-						endBlockTs: forestResearch?.endBlockTs,
-						canAdventure: Number(forestResearch?.endBlockTs) <= chainTime && (forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0)
-					},
-					openMic: {
-						timeToNextPerformance: timeToNextOpenMic
-					}
-				},
-				festivals: {
-					spooky: {
-						claimed: spookyFestivalClaimed,
-						trickCount: spookyFestivalTrickCount,
-						trickLog: spookyFestivalTrickLog,
-						activitiesCount: spookyFestivalActivitiesCount,
-						activitiesLog: spookyFestivalActivitiesLog,
-						canTrick: dayjs(new Date(Number(spookyFestivalTrickLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
-						canActivity: dayjs(new Date(Number(spookyFestivalActivitiesLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
-					}
-				},
-				inventory: inventoryCallResult
-			} : p);
-		}
 
-		set_rarities((prev) => ({...prev, [tokenID]: {
+		const	_adventurer = {
 			tokenID: tokenID,
 			owner: owner,
 			name: name,
@@ -288,6 +252,7 @@ export const RarityContextApp = ({children}) => {
 			},
 			skills: skills,
 			feats: (feats || []).map(f => Number(f)),
+			skin: CLASSES[Number(adventurer['_class'])]?.img,
 			dungeons: {
 				cellar: {
 					log: Number(cellarLog),
@@ -319,7 +284,12 @@ export const RarityContextApp = ({children}) => {
 				}
 			},
 			inventory: inventoryCallResult
-		}}));
+		}
+		if (!currentAdventurer || (currentAdventurer && tokenID === currentAdventurer.tokenID)) {
+			set_currentAdventurer(p => (!p || (p && tokenID === p.tokenID)) ? _adventurer : p);
+		}
+
+		set_rarities((prev) => ({...prev, [tokenID]: _adventurer}));
 		set_rNonce(prev => prev + 1);
 	}
 
@@ -330,6 +300,7 @@ export const RarityContextApp = ({children}) => {
 		if (isUpdatingRarities) {
 			return;
 		}
+		NProgress.start();
 		isUpdatingRarities = true;
 		const	preparedCalls = [];
 		const	preparedInventoryCalls = [];
@@ -352,17 +323,19 @@ export const RarityContextApp = ({children}) => {
 			tokensIDs.push(token.tokenID);
 		});
 
-		const	callResults = await multicall(preparedCalls);
+		const	[callResults, inventoryCallResult] = await Promise.all([
+			multicall(preparedCalls),
+			multicall(preparedInventoryCalls),
+		]);
 		const	chunkedCallResult = chunk(callResults, chunkSize);
-		const	inventoryCallResult = await multicall(preparedInventoryCalls);
 		const	chunkedinventoryCallResult = chunk(inventoryCallResult, ITEMS.length);
+		fetchRaritySkins(tokensIDs);
 		tokensIDs?.forEach((tokenID, i) => {
 			setRarity(tokenID, chunkedCallResult[i], chunkedinventoryCallResult[i]);
 		});
 		sharedCalls().then(result => prepareSharedInventory(result[0]));
-
-		set_loaded(true);
 		isUpdatingRarities = false;
+		NProgress.done();
 	}
 
 	/**************************************************************************
@@ -442,6 +415,7 @@ export const RarityContextApp = ({children}) => {
 			value={{
 				isLoaded: loaded,
 				rarities,
+				skins,
 				inventory,
 				currentAdventurer,
 				set_currentAdventurer,

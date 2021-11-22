@@ -11,6 +11,7 @@ import	Link									from	'next/link';
 import	useDungeon, {DungeonContextApp}			from	'contexts/useDungeonsTheBoars';
 import	useWeb3									from	'contexts/useWeb3';
 import	useRarity								from	'contexts/useRarity';
+import	useUI									from	'contexts/useUI';
 import	{sleep}									from	'utils';
 import	{killBoar}								from	'utils/actions/boar';
 import	DialogNoBox								from	'components/DialogNoBox';
@@ -69,13 +70,17 @@ function	DialogChoices({router, step, stepAuto, boarEscaped, adventurerWon, expe
 function	Index({dungeon, adventurer, router}) {
 	const	STEP_LIMIT = 100;
 	const	{provider} = useWeb3();
-	const	{updateRarity} = useRarity();
+	const	{updateRarity, skins} = useRarity();
+	const	{raritySkins} = useUI();
 	const	[fightStep, set_fightStep] = useState(0);
 	const	[option, set_option] = useState(0);
 	const	[boarEscaped, set_boarEscaped] = useState(false);
 	const	[adventurerWon, set_adventurerWon] = useState(false);
 	const	[adventurerHealth, set_adventurerHealth] = useState(dungeon.adventurerHealth);
 	const	[dungeonHealth, set_dungeonHealth] = useState(dungeon.dungeonHealth);
+
+	const	defaultSkin = classMappingBackImg[adventurer?.class];
+	const	skin = raritySkins ? skins[adventurer?.tokenID] || defaultSkin : defaultSkin;
 
 	useEffect(() => {
 		set_adventurerHealth(dungeon.adventurerHealth);
@@ -183,7 +188,7 @@ function	Index({dungeon, adventurer, router}) {
 							<div className={'w-full flex flex-row mt-2 md:-mt-10 mr-0 md:mr-32'}>
 								<div className={'w-60 hidden md:block'} style={{minWidth: 240}}>
 									<Image
-										src={classMappingBackImg[adventurer.class]}
+										src={skin}
 										loading={'eager'}
 										quality={100}
 										width={240}
@@ -191,7 +196,7 @@ function	Index({dungeon, adventurer, router}) {
 								</div>
 								<div className={'w-32 block md:hidden'} style={{minWidth: 120}}>
 									<Image
-										src={classMappingBackImg[adventurer.class]}
+										src={skin}
 										loading={'eager'}
 										quality={100}
 										width={120}

@@ -41,7 +41,7 @@ async function	_adventure(loader, {provider, contractAddress, tokenID}, callback
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.adventure(tokenID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -93,7 +93,7 @@ export async function	levelUp({provider, tokenID}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.level_up(tokenID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -138,7 +138,7 @@ export async function	learnSkills({provider, tokenID, skills}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.set_skills(tokenID, skills);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -183,7 +183,7 @@ export async function	learnFeat({provider, tokenID, feat}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.select_feat(tokenID, feat);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -228,7 +228,7 @@ export async function	recruitAdventurer({provider, classID}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.summon(classID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: classID});
 			toast.dismiss(_toast);
@@ -273,7 +273,7 @@ export async function	setAttributes({provider, _summoner, _str, _dex, _const, _i
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.point_buy(_summoner, _str, _dex, _const, _int, _wis, _cha);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: {_summoner, _str, _dex, _const, _int, _wis, _cha}});
 			toast.dismiss(_toast);
@@ -318,7 +318,7 @@ export async function	claimGold({provider, tokenID}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.claim(tokenID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -370,7 +370,7 @@ export async function	craft({
 			hadApprove = true;
 			_toast = toast.loading('1/2 - Approving craft ...');
 			const	transaction = await raritySource.approve(process.env.RARITY_CRAFTING_ADDR, tokenID);
-			const	transactionResult = await transaction.wait();
+			const	transactionResult = await transaction.wait(2);
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
 			} else {
@@ -439,7 +439,7 @@ export async function	craft({
 			craftingMaterials,
 			{gasLimit: 400_000}
 		);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			if (transactionResult.logs.length === 0) {
 				callback({error: 'CRAFT_FAILED', data: tokenID});
@@ -491,7 +491,7 @@ export async function	setName({provider, tokenID, name}, onError, onSuccess = on
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.set_name(tokenID, name);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			onSuccess(_toast);
 		} else {

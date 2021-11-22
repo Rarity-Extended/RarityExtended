@@ -31,6 +31,7 @@
     "ethers": "^5.4.7",
     "next": "11.1.2",
     "next-seo": "^4.28.1",
+    "nprogress": "^0.2.0",
     "postcss": "^8.3.9",
     "react": "17.0.2",
     "react-autowidth-input": "^1.0.5",

@@ -10,25 +10,26 @@ import	useLocalStorage									from	'hook/useLocalStorage';
 
 const	UI = createContext();
 export const UIContextApp = ({children}) => {
-	const	[theme, set_theme] = useLocalStorage('theme', 'light-initial');
+	const	[theme, set_theme] = useLocalStorage('theme', 'dark-initial');
 	const	[layout, set_layout] = useLocalStorage('layout', 'default');
+	const	[raritySkins, set_raritySkins] = useLocalStorage('skins', true);
 
 	useEffect(() => {
-		if (theme !== 'light-initial') {
-			const lightModeMediaQuery = window.matchMedia('(prefers-color-scheme: light)');
-			if (lightModeMediaQuery.matches)
-				set_theme('light');
+		if (theme !== 'dark-initial') {
+			const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+			if (darkModeMediaQuery.matches)
+				set_theme('dark');
 		}
 	}, []);
 
 	useEffect(() => {
-		if (theme === 'dark') {
-			document.documentElement.classList.add('dark');
-			document.documentElement.classList.remove('light');
-			document.documentElement.classList.remove('light-initial');
-		} else if (theme === 'light' || theme === 'light-initial') {
+		if (theme === 'light') {
 			document.documentElement.classList.add('light');
 			document.documentElement.classList.remove('dark');
+			document.documentElement.classList.remove('dark-initial');
+		} else if (theme === 'dark' || theme === 'dark-initial') {
+			document.documentElement.classList.add('dark');
+			document.documentElement.classList.remove('light');
 		}
 	}, [theme]);
 
@@ -38,8 +39,10 @@ export const UIContextApp = ({children}) => {
 				theme,
 				layout,
 				setTheme: set_theme,
+				raritySkins: raritySkins,
 				switchTheme: () => set_theme(t => t === 'dark' ? 'light' : 'dark'),
-				switchLayout: () => set_layout(t => t === 'default' ? 'legacy' : 'default')
+				switchLayout: () => set_layout(t => t === 'default' ? 'legacy' : 'default'),
+				switchSkin: () => set_raritySkins(t => t === true ? false : true)
 			}}>
 			{children}
 		</UI.Provider>

@@ -10,6 +10,8 @@ import	AutowidthInput		from	'react-autowidth-input';
 import	toast				from	'react-hot-toast';
 import	Box					from	'components/Box';
 import	Image				from	'next/image';
+import	useRarity			from	'contexts/useRarity';
+import	useUI				from	'contexts/useUI';
 import	Attributes			from	'sections/SectionCharacterSheet/Attributes';
 import	Balloon				from	'sections/SectionCharacterSheet/Balloon';
 import	Inventory			from	'sections/SectionCharacterSheet/Inventory';
@@ -18,21 +20,6 @@ import	Skills				from	'sections/SectionCharacterSheet/Skills';
 import	{levelUp, setName}	from	'utils/actions';
 import	CLASSES				from	'utils/codex/classes';
 import	{xpRequired}		from	'utils/libs/rarity';
-
-const	classMappingImg = [
-	'',
-	'/classes/front/barbarian.svg',
-	'/classes/front/bard.png',
-	'/classes/front/cleric.png',
-	'/classes/front/druid.png',
-	'/classes/front/fighter.png',
-	'/classes/front/monk.svg',
-	'/classes/front/paladin.png',
-	'/classes/front/ranger.png',
-	'/classes/front/rogue.png',
-	'/classes/front/sorcerer.png',
-	'/classes/front/wizard.png',
-];
 
 function	AdventurerTab({adventurer, updateRarity, provider}) {
 	const	[selectedTab, set_selectedTab] = useState(0);
@@ -68,6 +55,7 @@ function	AdventurerTab({adventurer, updateRarity, provider}) {
 function	Info({adventurer, updateRarity, provider}) {
 	const	[name, set_name] = useState(adventurer.name || adventurer.tokenID);
 	const	canLevelUp = adventurer.xp >= (xpRequired(adventurer.level));
+
 	return (
 		<Box className={'nes-container pt-6 px-4 with-title w-full md:w-2/3'}>
 			<p className={'title bg-white dark:bg-dark-600 z-50 relative cursor-pointer group'} style={{paddingTop: 2}}>
@@ -171,13 +159,17 @@ function	Info({adventurer, updateRarity, provider}) {
 }
 
 function	Aventurer({rarity, provider, updateRarity, router, chainTime}) {
+	const	{raritySkins} = useUI();
+	const	{skins} = useRarity();
+	const	skin = raritySkins ? skins[rarity.tokenID] || rarity.skin : rarity.skin;
+
 	return (
 		<div className={'w-full'}>
 			<div className={'flex flex-row w-full mb-6'}>
 				<div className={'w-full flex flex-col-reverse md:flex-row justify-start'}>
 					<div className={'w-64'} style={{minWidth: 256}}>
 						<Image
-							src={classMappingImg[rarity.class]}
+							src={skin}
 							loading={'eager'}
 							quality={100}
 							width={256}

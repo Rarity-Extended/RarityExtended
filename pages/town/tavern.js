@@ -5,22 +5,22 @@
 **	@Filename:				tavern.js
 ******************************************************************************/
 
-import	React, {useState, useEffect}	from	'react';
-import	Image							from	'next/image';
-import	dayjs							from	'dayjs';
-import	duration					from	'dayjs/plugin/duration';
-import	relativeTime					from	'dayjs/plugin/relativeTime';
-import	useWeb3							from	'contexts/useWeb3';
-import	useUI							from	'contexts/useUI';
-import	useRarity						from	'contexts/useRarity';
-import	DialogBox						from	'components/DialogBox';
-import	ModalLogin						from	'components/ModalLogin';
-import	Typer							from	'components/Typer';
-import	Box								from	'components/Box';
-import	SectionRecruit					from	'sections/SectionRecruit';
-import	TAVERN_NEWS						from	'utils/codex/tavernNews.json';
-import	CLASSES							from	'utils/codex/classes';
-import	{getEligibility as getOpenMicEligibility, getOpenMicDialogOption, OpenMicSignUpList}			from 'components/dungeons/openmic';
+import	React, {useState, useEffect}					from	'react';
+import	Image											from	'next/image';
+import	dayjs											from	'dayjs';
+import	duration										from	'dayjs/plugin/duration';
+import	relativeTime									from	'dayjs/plugin/relativeTime';
+import	useWeb3											from	'contexts/useWeb3';
+import	useUI											from	'contexts/useUI';
+import	useRarity										from	'contexts/useRarity';
+import	DialogBox										from	'components/DialogBox';
+import	ModalLogin										from	'components/ModalLogin';
+import	Typer											from	'components/Typer';
+import	Box												from	'components/Box';
+import	SectionRecruit									from	'sections/SectionRecruit';
+import	TAVERN_NEWS										from	'utils/codex/tavernNews.json';
+import	CLASSES											from	'utils/codex/classes';
+import	{getOpenMicDialogOption, OpenMicSignUpList}		from	'components/dungeons/openmic';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -54,7 +54,6 @@ function	NPCHeadline({router, active, adventurersCount}) {
 	
 	const	[hadInitialMessage, set_hadInitialMessage] = useState(false);
 	const	[hadRecruitMessage, set_hadRecruitMessage] = useState(false);
-	const	[hadTheCellarMessage, set_hadTheCellarMessage] = useState(false);
 	const	[hadOpenMicMessage, set_hadOpenMicMessage] = useState(false);
 
 	useEffect(() => {
@@ -211,7 +210,6 @@ function	NPCHeadline({router, active, adventurersCount}) {
 }
 
 function	DialogChoices({router, onWalletConnect, active}) {
-	const	{chainTime} = useWeb3();
 	const	{rarities, currentAdventurer, openCurrentAventurerModal} = useRarity();
 	const	[selectedOption, set_selectedOption] = useState(0);
 	const	[dialogNonce, set_dialogNonce] = useState(0);
@@ -254,7 +252,6 @@ function	DialogChoices({router, onWalletConnect, active}) {
 			options={[
 				{label: 'What\'s new ?', onClick: () => router.push('/town/tavern')},
 				{label: 'Recruit a new adventurer', onClick: () => router.push('/town/tavern?tab=recruit')},
-				{label: 'About the rats ...', onClick: () => router.push('/town/tavern?tab=the-cellar')},
 				{label: 'Tavern hooligans ...', onClick: () => router.push('/town/tavern?tab=the-stage')}
 			]} />
 	);
