@@ -8,14 +8,15 @@
 import	React, {useState, createContext, useContext, useEffect}	from	'react';
 import	Image									from	'next/image';
 import	Link									from	'next/link';
-import	{ethers, utils}				from	'ethers';
+import	{ethers, utils}							from	'ethers';
 import	DialogBox								from	'components/DialogBox';
-import	Box								from	'components/Box';
-import	skills	from	'utils/codex/skills';
+import	Box										from	'components/Box';
+import	skills									from	'utils/codex/skills';
 import	useWeb3									from	'contexts/useWeb3';
-import	useRarity							from	'contexts/useRarity';
-import	{perform}						from 'utils/actions/perform';
-import	OPENMIC_LOOT				from	'utils/codex/items_dungeon_openmic.json';
+import	useRarity								from	'contexts/useRarity';
+import	useUI									from	'contexts/useUI';
+import	{perform}								from	'utils/actions/perform';
+import	OPENMIC_LOOT							from	'utils/codex/items_dungeon_openmic.json';
 
 const	classMappingBackImg = [
 	'',
@@ -78,12 +79,15 @@ function AdventureResult() {
 	</div>
 }
 
-function Adventure({ router, adventurer }) {
+function Adventure({router, adventurer}) {
+	const	{raritySkins} = useUI();
+	const	{rarities, updateRarity, skins} = useRarity();
 	const	{provider} = useWeb3();
-	const [ odds, setOdds ] = useState("--- %");
-	const	{rarities, updateRarity} = useRarity();
-	const performer = rarities[router?.query?.adventurer];
-	const {set_performanceResult} = useContext(PerformanceContext);
+	const	[odds, setOdds] = useState("--- %");
+	const	performer = rarities[router?.query?.adventurer];
+	const	{set_performanceResult} = useContext(PerformanceContext);
+	const	defaultSkin = classMappingBackImg[adventurer?.class];
+	const	skin = raritySkins ? skins[adventurer?.tokenID] || defaultSkin : defaultSkin;
 
 	const	signer = provider.getSigner();
 	const	openmic = new ethers.Contract(
@@ -99,8 +103,8 @@ function Adventure({ router, adventurer }) {
 	}, []);
 
 	function abilityModifier(ability) {
-    if (ability < 10) return -1;
-    return (ability - 10) / 2;
+		if (ability < 10) return -1;
+		return (ability - 10) / 2;
 	}
 
 	function abilityModifierFormated(ability) {
@@ -183,7 +187,7 @@ function Adventure({ router, adventurer }) {
 			<div className={'w-full flex mt-2 md:-mt-10'}>
 				<div className={'w-60 hidden md:block'} style={{minWidth: 240}}>
 					<Image
-						src={classMappingBackImg[adventurer.class]}
+						src={skin}
 						loading={'eager'}
 						quality={100}
 						width={240}
@@ -191,7 +195,7 @@ function Adventure({ router, adventurer }) {
 				</div>
 				<div className={'w-32 block md:hidden'} style={{minWidth: 120}}>
 					<Image
-						src={classMappingBackImg[adventurer.class]}
+						src={skin}
 						loading={'eager'}
 						quality={100}
 						width={120}
