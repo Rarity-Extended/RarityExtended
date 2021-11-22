@@ -8,14 +8,19 @@
 import	React		from	'react';
 import	Image		from	'next/image';
 import	Box			from	'components/Box';
+import	useUI		from	'contexts/useUI';
+import	useRarity	from	'contexts/useRarity';
 
 function	Adventurer({rarityClass, adventurer, onClick, children, noHover}) {
+	const	{raritySkins} = useUI();
+	const	{skins} = useRarity();
+
 	return (
 		<Box
 			className={`w-full p-4 flex justify-center items-center flex-col bg-white dark:bg-dark-600 ${noHover ? '' : 'group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer'} transition-colors relative mb-4 md:mb-0`}
 			onClick={onClick}>
 			<Image
-				src={rarityClass.img}
+				src={raritySkins ? skins[adventurer?.tokenID] || adventurer?.skin : adventurer?.skin}
 				loading={'eager'}
 				quality={90}
 				width={160}

@@ -9,23 +9,26 @@ import	React							from	'react';
 import	Image							from	'next/image';
 import	useRarity						from	'contexts/useRarity';
 import	useWeb3							from	'contexts/useWeb3';
+import	useUI							from	'contexts/useUI';
 import	CLASSES							from	'utils/codex/classes';
 
 function AdventurerModalMenu() {
-	const	{currentAdventurer, openCurrentAventurerModal} = useRarity();
+	const	{currentAdventurer, openCurrentAventurerModal, skins} = useRarity();
 	const	{address} = useWeb3();
+	const	{raritySkins} = useUI();
 
 	function openModal() {
 		openCurrentAventurerModal();
 	}
 
+	const	skin = raritySkins ? skins[currentAdventurer?.tokenID] || currentAdventurer?.skin : currentAdventurer?.skin;
 	return (
 		<>
 			<div className={'hidden md:flex flex-row h-8 justify-center items-center relative'}>
 				<div onClick={openModal} className={'group items-center justify-end flex-row mr-6 cursor-pointer outline-none focus:outline-none hidden md:flex'}>
 					{currentAdventurer ? <div className={'flex items-center justify-center'}>
 						<Image
-							src={CLASSES[currentAdventurer?.class]?.img}
+							src={skin}
 							quality={100}
 							width={60}
 							height={60} />
@@ -66,7 +69,7 @@ function AdventurerModalMenu() {
 							</div>
 						</div>
 						<Image
-							src={CLASSES[currentAdventurer?.class]?.img}
+							src={skin}
 							quality={100}
 							width={60}
 							height={60} />

@@ -1,0 +1,34 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_summoner",
+				"type": "uint256"
+			}
+		],
+		"name": "getAdventurerSkin",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
