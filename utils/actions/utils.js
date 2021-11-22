@@ -23,7 +23,7 @@ export async function	approveERC721({provider, contractAddress, spender, tokenID
 			signer
 		);
 		const	transaction = await contract.approve(spender, tokenID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			toast.dismiss(_toast);
 			callback({error: false, data: undefined});
@@ -58,7 +58,7 @@ export async function	approveERC20({provider, contractAddress, adventurerID, spe
 			signer
 		);
 		const	transaction = await contract.approve(adventurerID, spender, amount);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			toast.dismiss(_toast);
 			callback({error: false, data: undefined});
