@@ -70,12 +70,6 @@ module.exports = ({
 		FESTIVAL_SPOOKY_ABI: require('./utils/abi/festivalSpooky.abi.json'),
 		FESTIVAL_SPOOKY_ID: '4158642',
 
-		RARITY_SKINS_ADDR: '0x6fEd400dA17f2678C450aA1D35e909653B3b482A',
-		RARITY_SKINS_ABI: require('./utils/abi/raritySkin.abi.json'),
-
-		RARITY_SKIN_MANAGER_ADDR: '0xfFDFc7286c2c8d0a94f99c5e00dA1851564f8C1d',
-		RARITY_SKIN_MANAGER_ABI: require('./utils/abi/raritySkinManager.abi.json'),
-
 		RARITY_EXTENDED_SKIN_HELPER_ADDR: '0xbe570c81e8bc6a4ca2675fe619044b389df32566',
 		RARITY_EXTENDED_SKIN_HELPER_ABI: require('./utils/abi/rarityExtendedSkinHelper.abi.json'),
 
