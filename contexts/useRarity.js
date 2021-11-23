@@ -120,14 +120,16 @@ export const RarityContextApp = ({children}) => {
 		const	calls = [];
 		for (let index = 0; index < tokensIDs.length; index++) {
 			const tokenID = tokensIDs[index];
-			calls.push(raritySkinHelper.getAdventurerSkin(tokenID));
-		}
-		const	callResult = await ethcallProvider.all(calls);
-		for (let index = 0; index < tokensIDs.length; index++) {
-			const	tokenID = tokensIDs[index];
-			const	element = callResult[index];
+			const callResult = await ethcallProvider.tryAll([raritySkinHelper.getAdventurerSkin(tokenID)]);
+			const element = callResult[0];
 			set_skins((prev) => ({...prev, [tokenID]: element ? JSON.parse(element).image : ''}));
 		}
+		// const	callResult = await ethcallProvider.all(calls);
+		// for (let index = 0; index < tokensIDs.length; index++) {
+		// 	const	tokenID = tokensIDs[index];
+		// 	const	element = callResult[index];
+		// 	set_skins((prev) => ({...prev, [tokenID]: element ? JSON.parse(element).image : ''}));
+		// }
 	}
 
 	function	prepareSharedInventory(result) {
