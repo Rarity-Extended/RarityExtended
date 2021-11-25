@@ -577,7 +577,6 @@ function	Index({router}) {
 			<SectionNoAdventurer />
 		);
 	}
-
 	return (
 		<section className={'mt-16 md:mt-8'}>
 			<div className={'flex flex-col max-w-screen-lg w-full mx-auto'}>
