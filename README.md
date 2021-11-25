@@ -12,9 +12,9 @@ Our goal is to make the user experience very straightforward and easy while givi
 - [X] **The Boars**, coop/versus quest where you have to maintain, or kill, all the boar ecosystem
 - [X] **Items from the officials codex**, check all your items directly in RE
 - [X] **RarityName & RNS**, build you charactersheet for you year long adventure
-- [ ] **Customizable Adventurers**, be unique
 - [X] **UI/UX reflow**, let's build something smooth and better
 - [ ] **Multi-step adventure**, what if you could start an adventurer with multiple path, for days ?
+- [ ] **Customizable Adventurers**, be unique
 
 ## Project setup
 
