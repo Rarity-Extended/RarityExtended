@@ -9,4 +9,4 @@ jobs:
     steps:
       - uses: wow-actions/auto-close-fixed-issues@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_SECRET }}
+          GITHUB_TOKEN: ${{ github.token }}
