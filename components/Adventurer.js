@@ -10,8 +10,10 @@ import	Image		from	'next/image';
 import	Box			from	'components/Box';
 import	useUI		from	'contexts/useUI';
 import	useRarity	from	'contexts/useRarity';
+import	CLASSES		from	'utils/codex/classes';
 
-function	Adventurer({rarityClass, adventurer, onClick, children, noHover}) {
+function	Adventurer({rarityClass, adventurer, onClick, children, noHover, width, height}) {
+	const adventurerClass = rarityClass || CLASSES[adventurer.class];
 	const	{raritySkins} = useUI();
 	const	{skins} = useRarity();
 
@@ -23,12 +25,12 @@ function	Adventurer({rarityClass, adventurer, onClick, children, noHover}) {
 				src={raritySkins ? skins[adventurer?.tokenID] || adventurer?.skin : adventurer?.skin}
 				loading={'eager'}
 				quality={90}
-				width={160}
-				height={160} />
+				width={width || 160}
+				height={height || 160} />
 			<p className={'text-sm text-black dark:text-white justify-center group-hover:underline'}>
 				{adventurer.name || adventurer.tokenID}
 			</p>
-			<p className={'text-xss text-black dark:text-white justify-center text-center mt-1'}>{`${rarityClass.name} level ${adventurer.level}`}</p>
+			<p className={'text-xss text-black dark:text-white justify-center text-center mt-1'}>{`${adventurerClass.name} level ${adventurer.level}`}</p>
 			{children}
 		</Box>
 	);
