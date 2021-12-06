@@ -3,15 +3,110 @@ import	useRarity						from	'contexts/useRarity';
 import	CandyIcon					from 	'components/icons/Candy';
 import	Adventurer										from	'components/Adventurer';
 import	Button							from	'components/Button';
-import	ButtonCounter					from	'components/ButtonCounter';
+import	ButtonCounterBase					from	'components/ButtonCounterBase';
 
 function	Index({router}) {
 	const	{currentAdventurer, rNonce} = useRarity();
-	const	[numberOfCandies, set_numberOfCandies] = useState(Number(currentAdventurer?.inventory[9]) || 0);
+  const [summonerId, setSummonerId] = useState(currentAdventurer.tokenID);
+	const	[candies, setCandies] = useState(Number(currentAdventurer?.inventory[9]) || 0);
+  const [tickets, setTickets] = useState(0);
+  const [ticketPurchase, setTicketPurchase] = useState(0);
+  const [staked, setStaked] = useState(false);
+  const candiesPerTicket = 25;
 
 	useEffect(() => {
-		set_numberOfCandies(Number(currentAdventurer?.inventory[9]) || 0);
-	}, [rNonce, currentAdventurer]);
+    if(summonerId !== currentAdventurer.tokenID) {
+      setTicketPurchase(0);
+      setSummonerId(currentAdventurer.tokenID);
+    }
+    const ownedCandies = Number(currentAdventurer?.inventory[9]) || 0
+		setCandies(ownedCandies - (candiesPerTicket * ticketPurchase));
+	}, [rNonce, currentAdventurer, ticketPurchase, summonerId]);
+
+  function plusTicket() {
+    if(candies >= candiesPerTicket) {
+      setTicketPurchase(ticketPurchase + 1);
+    }
+  }
+
+  function minusTicket() {
+    if(ticketPurchase > 0) {
+      setTicketPurchase(ticketPurchase - 1);
+    }
+  }
+
+  function sellCandies() {
+    return <>
+      <div className={'w-96 flex flex-row items-center justify-between'}>
+        <div>{`Candies`}</div>
+        <div className={'flex flex-row items-center text-2xl'}>{candies} <CandyIcon className={'ml-4'} width={48} height={48} /></div>
+      </div>
+      <div className={'my-4 w-96 flex flex-row items-center justify-between'}>
+        <div>{`Odds`}</div>
+        <div className={'flex flex-row items-center'}>1/10,000</div>
+      </div>
+      <div className={'my-2 w-96 flex flex-row items-center justify-between'}>
+        <div>{`Tickets`}</div>
+        <div>
+          <ButtonCounterBase
+            className={'bg-gray-principal hover:bg-white focus:bg-white dark:bg-dark-400 dark:hover:bg-dark-600 dark:focus:bg-dark-600'}
+            backgroundColor={'bg-gray-principal dark:bg-dark-400'}
+            value={tickets + ticketPurchase}
+            onIncrement={plusTicket}
+            onDecrement={minusTicket} />
+        </div>
+      </div>
+      <Button onClick={() => {}}
+        className={'mt-8 cursor-pointer hover:bg-white focus:bg-white dark:hover:bg-dark-600 dark:focus:bg-dark-600 bg-gray-principal dark:bg-dark-400 text-center'}
+        backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
+        <span className={'text-lg'}>Buy Tickets</span>
+      </Button>
+    </>
+  }
+
+  function unstakeSummoner() {
+    return <>
+      <div className={'w-96 flex flex-row items-center justify-between'}>
+        <div>{`Summoner has been staked`}</div>
+      </div>
+      <div className={'my-4 w-96 flex flex-row items-center justify-between'}>
+        <div>{`Odds`}</div>
+        <div className={'flex flex-row items-center'}>1/10,000</div>
+      </div>
+      <div className={'my-2 w-96 flex flex-row items-center justify-between'}>
+        <div>{`Tickets`}</div>
+        <div className={'flex flex-row items-center text-2xl'}>{tickets} <span className={'ml-4'}>🏷</span></div>
+      </div>
+      <Button onClick={() => {}}
+        className={'mt-8 cursor-pointer hover:bg-white focus:bg-white dark:hover:bg-dark-600 dark:focus:bg-dark-600 bg-gray-principal dark:bg-dark-400 text-center'}
+        backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
+        <span className={'text-lg'}>
+          {`Unstake ${currentAdventurer.name || currentAdventurer.tokenID}`}
+        </span>
+      </Button>
+    </>
+  }
+
+  function stakeSummoner() {
+    return <div className={'mt-24 flex flex-col items-center text-center'}>
+      <h2 className={'mb-6 text-xl'}>Get more tickets</h2>
+      <p className={'mb-4 text-sm'}>
+        The raffle committee has a special offer for you: <span className={'text-red-600'}>Blood Sacrifice!</span>&nbsp;
+      </p>
+      <p className={'text-sm'}>
+        You can stake your summoner during the raffle for even more tickets.&nbsp;
+        If you win, another summoner in your party may claim the prize.&nbsp;
+        But in exchange this summoner will pay a visit to the City of Judgement.. forever!
+      </p>
+      <Button onClick={() => {}}
+        className={'mt-16 cursor-pointer hover:bg-white focus:bg-white dark:hover:bg-dark-600 dark:focus:bg-dark-600 bg-gray-principal dark:bg-dark-400 text-center'}
+        backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
+        <div className={'text-lg'}>
+          {`💀 Stake ${currentAdventurer.name || currentAdventurer.tokenID} for N tickets 💀`}
+        </div>
+      </Button>
+    </div>
+  }
 
 	return (
 		<section className={'max-w-full'}>
@@ -33,7 +128,7 @@ function	Index({router}) {
 					{'What\'s the one thing every summoner wants this holiday season?'}
 				</p>
         <p className={'mb-6 text-black dark:text-white text-base text-center'}>
-					{'Tickets are only 25 candies each. Buy some quick to find out!'}
+					{`Tickets are only ${candiesPerTicket} candies each. Buy some quick to find out!`}
 				</p>
         <p className={'text-black dark:text-white text-base text-center'}>
 					{'10 winning tickets will be drawn in'}
@@ -44,58 +139,14 @@ function	Index({router}) {
           <Adventurer adventurer={currentAdventurer} width={240} height={240} noHover={true}></Adventurer>
 
           <div className={'ml-12 flex flex-col justify-evenly'}>
-            <div className={'w-96 flex flex-row items-center justify-between'}>
-              <div>{`Candies`}</div>
-              <div className={'flex flex-row items-center text-2xl'}>{numberOfCandies} <CandyIcon className={'ml-4'} width={48} height={48} /></div>
-            </div>
-
-            <div className={'my-4 w-96 flex flex-row items-center justify-between'}>
-              <div>{`Odds`}</div>
-              <div className={'flex flex-row items-center'}>1/10,000</div>
-            </div>
-
-            <div className={'my-2 w-96 flex flex-row items-center justify-between'}>
-              <div>{`Tickets`}</div>
-              <div>
-                <ButtonCounter
-                  className={'bg-gray-principal hover:bg-white focus:bg-white dark:bg-dark-400 dark:hover:bg-dark-600 dark:focus:bg-dark-600'}
-                  backgroundColor={'bg-gray-principal dark:bg-dark-400'}
-                  value={0}
-                  threshold={10}
-                  inc={() => {}}
-                  dec={() => {}}
-                  setMin={() => {}}
-                  max={20}
-                  isMax={false} />
-              </div>
-            </div>
-
-            <Button onClick={() => {}}
-              className={'mt-8 cursor-pointer hover:bg-white focus:bg-white dark:hover:bg-dark-600 dark:focus:bg-dark-600 bg-gray-principal dark:bg-dark-400 text-center'}
-              backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
-              <span className={'text-lg'}>Buy Tickets</span>
-            </Button>
+            {!staked && sellCandies()}
+            {staked && unstakeSummoner()}
           </div>
 				</div>
 
-        <div className={'mt-24 flex flex-col items-center'}>
-          <h2 className={'mb-8 text-xl'}>No more candies?!</h2>
-          <p className={'text-sm'}>
-            The raffle committee has a special offer for you: <span className={'text-red-600'}>Blood Sacrifice!</span>&nbsp;
-            Stake your summoner during the raffle for tickets.&nbsp;
-            If you win, one of your summoner friends gets a rare prize.&nbsp;
-            Unfortunately, you'll be visiting the City of Judgement.. forever!
-          </p>
+        {!staked && stakeSummoner()}
 
-          <Button onClick={() => {}}
-            className={'mt-8 cursor-pointer hover:bg-white focus:bg-white dark:hover:bg-dark-600 dark:focus:bg-dark-600 bg-gray-principal dark:bg-dark-400 text-center'}
-            backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
-            <div className={'text-lg'}>
-              {'💀 Stake your soul for N tickets 💀'}
-            </div>
-          </Button>
-        </div>
-			</div>
+      </div>        
 		</section>
 	);
 }
