@@ -51,6 +51,18 @@ module.exports = {
 				epic: 'rgb(138,47,146)',
 				legendary: 'rgb(192,109,44)',
 				relic: 'rgb(133,33,24)',
+			},
+			blood: {
+				50: '#ff9696',
+				100: '#ff7878',
+				200: '#ff5a5a',
+				300: '#f13c3c',
+				400: '#d31e1e',
+				500: '#b50000',
+				600: '#970000',
+				700: '#790000',
+				800: '#5b0000',
+				900: '#3d0000'
 			}
 		},
 		extend: {
@@ -77,10 +89,12 @@ module.exports = {
 				57: '14.25rem',
 				75: '18.75rem',
 				77: '19.25rem',
-				screen: '100vw'
+				screen: '100vw',
+				'adventure-card': '272px'
 			},
 			height: {
-				15: '60px'
+				15: '60px',
+				'adventure-card': '307px'
 			},
 			minHeight: {
 				120: '480px',

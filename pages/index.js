@@ -108,7 +108,7 @@ function	AdventurerList({favoritesAdventurers, set_favoritesAdventurers}) {
 
 				<div className={'w-full'}>
 					<Box
-						onClick={() => router.push('/festivals/spooky-raffle')}
+						onClick={() => router.push('/festivals/raffle/')}
 						className={'w-full h-full p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer\'} transition-colors relative mb-4 md:mb-0 cursor-pointer'}>
 						<div className={'w-full h-full p-4 flex justify-center items-center'}><Candy width={124} height={124}></Candy></div>
 

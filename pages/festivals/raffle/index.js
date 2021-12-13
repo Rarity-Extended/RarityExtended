@@ -1,37 +1,36 @@
-import	React, {useState, useEffect}	from	'react';
-import	useRarity						from	'contexts/useRarity';
-import	CandyIcon					from 	'components/icons/Candy';
-import	Adventurer										from	'components/Adventurer';
-import	Button							from	'components/Button';
-import	ButtonCounterBase					from	'components/ButtonCounterBase';
+import React, {useState, useEffect} from 'react'
+import useRarity from 'contexts/useRarity'
+import CandyIcon from 'components/icons/Candy'
+import Adventurer from 'components/Adventurer'
+import Button from 'components/Button'
+import ButtonCounterBase from 'components/ButtonCounterBase'
 
-function	Index({router}) {
-	const	{currentAdventurer, rNonce} = useRarity();
-  const [summonerId, setSummonerId] = useState(currentAdventurer.tokenID);
-	const	[candies, setCandies] = useState(Number(currentAdventurer?.inventory[9]) || 0);
-  const [tickets, setTickets] = useState(0);
-  const [ticketPurchase, setTicketPurchase] = useState(0);
-  const [staked, setStaked] = useState(false);
-  const candiesPerTicket = 25;
+function	Index({ router }) {
+	const	{currentAdventurer, rNonce} = useRarity()
+  const [summonerId, setSummonerId] = useState(currentAdventurer.tokenID)
+	const	[candies, setCandies] = useState(Number(currentAdventurer?.inventory[9]) || 0)
+  const [tickets, setTickets] = useState(0)
+  const [ticketPurchase, setTicketPurchase] = useState(0)
+  const candiesPerTicket = 25
 
 	useEffect(() => {
     if(summonerId !== currentAdventurer.tokenID) {
-      setTicketPurchase(0);
-      setSummonerId(currentAdventurer.tokenID);
+      setTicketPurchase(0)
+      setSummonerId(currentAdventurer.tokenID)
     }
     const ownedCandies = Number(currentAdventurer?.inventory[9]) || 0
-		setCandies(ownedCandies - (candiesPerTicket * ticketPurchase));
-	}, [rNonce, currentAdventurer, ticketPurchase, summonerId]);
+		setCandies(ownedCandies - (candiesPerTicket * ticketPurchase))
+	}, [rNonce, currentAdventurer, ticketPurchase, summonerId])
 
   function plusTicket() {
     if(candies >= candiesPerTicket) {
-      setTicketPurchase(ticketPurchase + 1);
+      setTicketPurchase(ticketPurchase + 1)
     }
   }
 
   function minusTicket() {
     if(ticketPurchase > 0) {
-      setTicketPurchase(ticketPurchase - 1);
+      setTicketPurchase(ticketPurchase - 1)
     }
   }
 
@@ -64,45 +63,21 @@ function	Index({router}) {
     </>
   }
 
-  function unstakeSummoner() {
-    return <>
-      <div className={'w-96 flex flex-row items-center justify-between'}>
-        <div>{`Summoner has been staked`}</div>
-      </div>
-      <div className={'my-4 w-96 flex flex-row items-center justify-between'}>
-        <div>{`Odds`}</div>
-        <div className={'flex flex-row items-center'}>1/10,000</div>
-      </div>
-      <div className={'my-2 w-96 flex flex-row items-center justify-between'}>
-        <div>{`Tickets`}</div>
-        <div className={'flex flex-row items-center text-2xl'}>{tickets} <span className={'ml-4'}>🏷</span></div>
-      </div>
-      <Button onClick={() => {}}
-        className={'mt-8 cursor-pointer hover:bg-white focus:bg-white dark:hover:bg-dark-600 dark:focus:bg-dark-600 bg-gray-principal dark:bg-dark-400 text-center'}
-        backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
-        <span className={'text-lg'}>
-          {`Unstake ${currentAdventurer.name || currentAdventurer.tokenID}`}
-        </span>
-      </Button>
-    </>
-  }
-
-  function stakeSummoner() {
+  function sacrificeSummoner() {
     return <div className={'mt-24 flex flex-col items-center text-center'}>
-      <h2 className={'mb-6 text-xl'}>Get more tickets</h2>
+      <h2 className={'mb-6 text-xl'}>Want even more tickets?</h2>
       <p className={'mb-4 text-sm'}>
-        The raffle committee has a special offer for you: <span className={'text-red-600'}>Blood Sacrifice!</span>&nbsp;
+        The raffle committee has a special offer for you: <span className={'text-blood-400'}>Blood Sacrifice!</span>&nbsp;
       </p>
       <p className={'text-sm'}>
-        You can stake your summoner during the raffle for even more tickets.&nbsp;
-        If you win, another summoner in your party may claim the prize.&nbsp;
-        But in exchange this summoner will pay a visit to the City of Judgement.. forever!
+        Burn your summoner for <span className='text-blood-400'>N tickets</span> and give them to another member of the party.
       </p>
-      <Button onClick={() => {}}
-        className={'mt-16 cursor-pointer hover:bg-white focus:bg-white dark:hover:bg-dark-600 dark:focus:bg-dark-600 bg-gray-principal dark:bg-dark-400 text-center'}
+      <Button onClick={() => router.push('/festivals/raffle/sacrifice')}
+        className={'mt-24 cursor-pointer text-center text-blood-200 bg-blood-900 hover:bg-blood-400 focus:bg-blood-400'}
+        borderStyle={'bg-blood-600'}
         backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
         <div className={'text-lg'}>
-          {`💀 Stake ${currentAdventurer.name || currentAdventurer.tokenID} for N tickets 💀`}
+          {`Sacrifice ${currentAdventurer.name || currentAdventurer.tokenID}`}
         </div>
       </Button>
     </div>
@@ -137,18 +112,16 @@ function	Index({router}) {
 
 				<div className={'mt-24 flex flex-row'}>
           <Adventurer adventurer={currentAdventurer} width={240} height={240} noHover={true}></Adventurer>
-
           <div className={'ml-12 flex flex-col justify-evenly'}>
-            {!staked && sellCandies()}
-            {staked && unstakeSummoner()}
+            {sellCandies()}
           </div>
 				</div>
 
-        {!staked && stakeSummoner()}
+        {sacrificeSummoner()}
 
       </div>        
 		</section>
-	);
+	)
 }
 
-export default Index;
+export default Index

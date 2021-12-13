@@ -12,14 +12,15 @@ import	useUI		from	'contexts/useUI';
 import	useRarity	from	'contexts/useRarity';
 import	CLASSES		from	'utils/codex/classes';
 
-function	Adventurer({rarityClass, adventurer, onClick, children, noHover, width, height}) {
+function	Adventurer({rarityClass, adventurer, onClick, children, noHover, width, height, borderStyle = 'bg-black dark:bg-dark-100', bgStyle = 'bg-white dark:bg-dark-600'}) {
 	const adventurerClass = rarityClass || CLASSES[adventurer.class];
 	const	{raritySkins} = useUI();
 	const	{skins} = useRarity();
 
 	return (
 		<Box
-			className={`w-full p-4 flex justify-center items-center flex-col bg-white dark:bg-dark-600 ${noHover ? '' : 'group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer'} transition-colors relative mb-4 md:mb-0`}
+			className={`w-full p-4 flex justify-center items-center flex-col ${noHover ? '' : 'group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer'} transition-colors relative mb-4 md:mb-0 ${bgStyle}`}
+			borderStyle={borderStyle}
 			onClick={onClick}>
 			<Image
 				src={raritySkins ? skins[adventurer?.tokenID] || adventurer?.skin : adventurer?.skin}
