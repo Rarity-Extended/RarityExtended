@@ -1,10 +1,3 @@
-/******************************************************************************
-**	@Author:				Rarity Extended
-**	@Twitter:				@RXtended
-**	@Date:					Thursday September 23rd 2021
-**	@Filename:				ModalCurrentAdventurer.js
-******************************************************************************/
-
 import	React, {Fragment, useState}		from	'react';
 import	{Dialog, Transition}			from	'@headlessui/react';
 import	Adventurer						from	'components/Adventurer';
@@ -13,6 +6,7 @@ import	useRarity						from	'contexts/useRarity';
 import	useWeb3							from	'contexts/useWeb3';
 import	useLocalStorage					from	'hook/useLocalStorage';
 import	CLASSES							from	'utils/codex/classes';
+import { useEffect } from 'react/cjs/react.development';
 
 const	levelOptions = [
 	{name: 'All Levels', value: 0},
@@ -36,8 +30,8 @@ const	classOptions = [
 	{name: 'Wizard', value: 11},
 ];
 
-function ModalCurrentAdventurer({isOpen, closeModal}) {
-	const	{rarities, currentAdventurer, set_currentAdventurer} = useRarity();
+function ModalSelectAdventurer({ isOpen, onClose, onSelect, exclusions = [] }) {
+  const	{rarities} = useRarity();
 	const	{address, deactivate, onDesactivate} = useWeb3();
 	const	[search, set_search] = useState('');
 	const	[classTab, set_classTab] = useState(0);
@@ -45,13 +39,18 @@ function ModalCurrentAdventurer({isOpen, closeModal}) {
 	const	[classSelected, set_classSelected] = useState(classOptions[0]);
 	const	[favoritesAdventurers, set_favoritesAdventurers] = useLocalStorage('favorites', []);
 
+  function clickAdventurer(adventurer) {
+    onSelect(adventurer);
+    onClose();
+  }
+
 	return (
 		<Transition appear show={isOpen} as={Fragment}>
 			<Dialog
 				as={'div'}
 				className={'fixed inset-0 z-10 overflow-none'}
 				style={{zIndex: 1000}}
-				onClose={closeModal}>
+				onClose={onClose}>
 				<div className={'min-h-screen px-4 text-center'}>
 					<Transition.Child
 						as={Fragment}
@@ -75,7 +74,7 @@ function ModalCurrentAdventurer({isOpen, closeModal}) {
 						<div className={'inline-block px-4 md:px-10 pt-9 mt-16 md:mt-23 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative border-4 border-black text-black dark:text-white'}>
 							<Dialog.Title as={'h3'} className={'relative text-lg font-medium leading-6 text-black dark:text-white flex flex-col md:flex-row justify-between'}>
 								{'ADVENTURER'}
-								<svg onClick={closeModal} className={'absolute md:relative top-0 right-0 cursor-pointer'} width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
+								<svg onClick={onClose} className={'absolute md:relative top-0 right-0 cursor-pointer'} width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
 									<path d={'M6.70711 5.29289C6.31658 4.90237 5.68342 4.90237 5.29289 5.29289C4.90237 5.68342 4.90237 6.31658 5.29289 6.70711L10.5858 12L5.29289 17.2929C4.90237 17.6834 4.90237 18.3166 5.29289 18.7071C5.68342 19.0976 6.31658 19.0976 6.70711 18.7071L12 13.4142L17.2929 18.7071C17.6834 19.0976 18.3166 19.0976 18.7071 18.7071C19.0976 18.3166 19.0976 17.6834 18.7071 17.2929L13.4142 12L18.7071 6.70711C19.0976 6.31658 19.0976 5.68342 18.7071 5.29289C18.3166 4.90237 17.6834 4.90237 17.2929 5.29289L12 10.5858L6.70711 5.29289Z'} fill={'currentcolor'}/>
 								</svg>
 							</Dialog.Title>
@@ -125,6 +124,9 @@ function ModalCurrentAdventurer({isOpen, closeModal}) {
 								
 							<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4 min-h-0 md:min-h-133 max-h-72 md:max-h-133 overflow-y-scroll px-1'}>
 								{[...Object.values(rarities)]
+                  .filter((adventurer) => {
+                    return !exclusions.includes(adventurer.tokenID);
+                  })
 									.filter((adventurer) => {
 										if (classTab === 1)
 											return favoritesAdventurers.includes(adventurer.tokenID);
@@ -156,10 +158,7 @@ function ModalCurrentAdventurer({isOpen, closeModal}) {
 										return (
 											<div key={`${adventurer.tokenID}_${i}`} className={'w-full pb-0 md:pb-2'}>
 												<Adventurer
-													onClick={() => {
-														set_currentAdventurer(adventurer);
-														closeModal();
-													}}
+													onClick={() => clickAdventurer(adventurer)}
 													adventurer={adventurer}
 													rarityClass={CLASSES[adventurer.class]}>
 													<div
@@ -172,7 +171,7 @@ function ModalCurrentAdventurer({isOpen, closeModal}) {
 														<svg width={20} height={20} aria-hidden={'true'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 576 512'}><path fill={'currentColor'} d={'M316.7 17.8l65.43 132.4l146.4 21.29c26.27 3.796 36.79 36.09 17.75 54.59l-105.9 102.1l25.05 145.5c4.508 26.31-23.23 45.9-46.49 33.7L288 439.6l-130.9 68.7C133.8 520.5 106.1 500.9 110.6 474.6l25.05-145.5L29.72 226.1c-19.03-18.5-8.516-50.79 17.75-54.59l146.4-21.29l65.43-132.4C271.1-6.083 305-5.786 316.7 17.8z'}></path></svg>
 													</div>
 													<div
-														className={`absolute transition-colors right-4 top-0 ${adventurer.tokenID === currentAdventurer?.tokenID ? 'text-tag-info dark:text-dark-100' : 'text-gray-secondary hover:text-tag-info dark:text-dark-400 dark:hover:text-dark-100'}`}>
+														className={`absolute transition-colors right-4 top-0 text-gray-secondary hover:text-tag-info dark:text-dark-400 dark:hover:text-dark-100`}>
 														<svg width={24} height={24} xmlns={'http://www.w3.org/2000/svg'} x={'0px'} y={'0px'} viewBox={'0 0 24 24'}>
 															<path d={'M18,2H6v2h12v16h-2v-2h-2v-2h-4v2H8v2H6V2H4v20h4v-2h2v-2h4v2h2v2h4V2H18z'} fill={'currentcolor'}/>
 															<polygon fill={'currentcolor'} points={'6,4 18,4 18,20 16,20 16,18 14,18 14,16 10,16 10,18 8,18 8,20 6,20 '}/>
@@ -191,4 +190,4 @@ function ModalCurrentAdventurer({isOpen, closeModal}) {
 	);
 }
 
-export default ModalCurrentAdventurer;
+export default ModalSelectAdventurer;
