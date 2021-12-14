@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.button-bloody-base {
+  @apply text-center bg-blood-200 dark:bg-blood-900;
+}
+
+.button-bloody {
+  @apply button-bloody-base text-fire-900 hover:text-fire-200 hover:bg-blood-400 dark:text-fire-400 dark:hover:text-fire-200 dark:hover:bg-blood-400 focus:bg-blood-400;
+}
+
+.button-bloody-disabled {
+  @apply button-bloody-base text-blood-600;
+}

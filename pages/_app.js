@@ -22,6 +22,7 @@ import	useWindowInFocus				from	'hook/useWindowInFocus';
 
 import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
+import	'style/TailwindCustomStyles.css';
 
 function	GameWrapper({Component, pageProps, element, router}) {
 	const	{switchChain, active, chainID} = useWeb3();

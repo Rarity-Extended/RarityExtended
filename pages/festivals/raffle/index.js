@@ -63,26 +63,6 @@ function	Index({ router }) {
     </>
   }
 
-  function sacrificeSummoner() {
-    return <div className={'mt-24 flex flex-col items-center text-center'}>
-      <h2 className={'mb-6 text-xl'}>Want even more tickets?</h2>
-      <p className={'mb-4 text-sm'}>
-        The raffle committee has a special offer for you: <span className={'text-blood-400'}>Blood Sacrifice!</span>&nbsp;
-      </p>
-      <p className={'text-sm'}>
-        Burn your summoner for <span className='text-blood-400'>N tickets</span> and give them to another member of the party.
-      </p>
-      <Button onClick={() => router.push('/festivals/raffle/sacrifice')}
-        className={'mt-24 cursor-pointer text-center text-blood-200 bg-blood-900 hover:bg-blood-400 focus:bg-blood-400'}
-        borderStyle={'bg-blood-600'}
-        backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
-        <div className={'text-lg'}>
-          {`Sacrifice ${currentAdventurer.name || currentAdventurer.tokenID}`}
-        </div>
-      </Button>
-    </div>
-  }
-
 	return (
 		<section className={'max-w-full'}>
 			<div className={'max-w-prose w-full relative mt-8 mx-auto px-3 flex flex-col items-center'}>
@@ -117,9 +97,23 @@ function	Index({ router }) {
           </div>
 				</div>
 
-        {sacrificeSummoner()}
-
-      </div>        
+        <div className={'mt-24 flex flex-col items-center text-center'}>
+          <h2 className={'text-xl'}>Want even more tickets?</h2>
+          <Button 
+            onClick={() => router.push('/festivals/raffle/sacrifice')}
+            className={'my-8 button-bloody'}
+            borderStyle={'bg-blood-600'}
+            backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
+            <div className={'text-lg'}>
+              {`Sacrifice ${currentAdventurer.name || currentAdventurer.tokenID}`}
+            </div>
+          </Button>
+          <p className={'mb-4 text-sm'}>
+            The raffle committee has a special offer for you: <span className={'text-lg text-blood-400'}>Blood Sacrifice!</span>&nbsp;
+            Sacrifice your summoner for <span className='text-lg text-blood-400'>N tickets</span> and give them to another member of your party.
+          </p>
+        </div>
+      </div>
 		</section>
 	)
 }
