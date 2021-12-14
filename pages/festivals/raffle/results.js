@@ -14,6 +14,9 @@ function	Index({ router }) {
   useEffect(() => {
     setWon(true)
     setShowConfetti(true)
+    return () => {
+      setShowConfetti(false)
+    }
   }, [currentAdventurer, rNonce])
 
   return <section className={'max-w-full'}>
