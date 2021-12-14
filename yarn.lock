@@ -5412,6 +5412,13 @@ react-autowidth-input@^1.0.5:
   resolved "https://registry.yarnpkg.com/react-autowidth-input/-/react-autowidth-input-1.0.5.tgz#a0d3c96f5a7f3ba74ad489ec6fe437bb056356a6"
   integrity sha512-yspazqWt8nJfw40+sYUs76cyoBIvjZMTNWt/JZ2KCAhugD7gqifUv1FwY/1M+tTuqvlF1EUg4eTf6LveVJduvw==
 
+react-confetti@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/react-confetti/-/react-confetti-6.0.1.tgz#d4f57b5a021dd908a6243b8f63b6009b00818d10"
+  integrity sha512-ZpOTBrqSNhWE4rRXCZ6E6U+wGd7iYHF5MGrqwikoiBpgBq9Akdu0DcLW+FdFnLjyZYC+VfAiV2KeFgYRMyMrkA==
+  dependencies:
+    tween-functions "^1.2.0"
+
 react-dom@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
@@ -6314,6 +6321,11 @@ tunnel-agent@^0.6.0:
   integrity sha1-J6XeoGs2sEoKmWZ3SykIaPD8QP0=
   dependencies:
     safe-buffer "^5.0.1"
+
+tween-functions@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/tween-functions/-/tween-functions-1.2.0.tgz#1ae3a50e7c60bb3def774eac707acbca73bbc3ff"
+  integrity sha1-GuOlDnxguz3vd06scHrLynO7w/8=
 
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"

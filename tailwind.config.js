@@ -121,7 +121,7 @@ module.exports = {
 				'width': 'width',
 			},
 			animation: {
-				'bounce-r': 'bounce-r 1s infinite'
+				'bounce-r': 'bounce-r 1s infinite',
 			},
 			keyframes: {
 				'bounce-r': {
@@ -133,7 +133,7 @@ module.exports = {
 						transform: 'translateX(-25%)',
 						'animation-timing-function': 'cubic-bezier(.8,0,1,1)'
 					}
-				}
+				},
 			}
 		},
 	},

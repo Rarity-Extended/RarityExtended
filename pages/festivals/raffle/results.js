@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import useRarity from 'contexts/useRarity'
 import useUI from 'contexts/useUI'
+import { useConfetti } from 'components/ConfettiContext'
 
 function	Index({ router }) {
 	const	{ currentAdventurer, rNonce } = useRarity()
   const [ won, setWon ] = useState(false)
   const	{ raritySkins } = useUI()
 	const	{ skins } = useRarity()
+  const { setShowConfetti } = useConfetti()
 
   useEffect(() => {
     setWon(true)
+    setShowConfetti(true)
   }, [currentAdventurer, rNonce])
 
   return <section className={'max-w-full'}>
@@ -33,7 +36,7 @@ function	Index({ router }) {
       </div>
 
       {won && <>
-        <div className="my-16">
+        <div className="my-16 animate-bounce">
           <Image
             src={raritySkins ? skins[currentAdventurer?.tokenID] || currentAdventurer?.skin : currentAdventurer?.skin}
             loading={'eager'}
