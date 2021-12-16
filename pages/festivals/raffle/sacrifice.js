@@ -7,8 +7,9 @@ import ModalSelectAdventurer from 'components/ModalSelectAdventurer'
 import toast from 'react-hot-toast'
 
 function Index({ router }) {
-  const [ selectAdventurerIsOpen, setSelectAdventurerIsOpen ] = useState(false)
-  const [ beneficiary, setBeneficiary ] = useState(null)
+  const [selectAdventurerIsOpen, setSelectAdventurerIsOpen] = useState(false)
+  const [candiesPerSum, setCandiesPerSum] = useState(150)
+  const [beneficiary, setBeneficiary] = useState(null)
   const	{currentAdventurer} = useRarity()
 
   function onSelectAdventurer(adventurer) {
@@ -37,7 +38,7 @@ function Index({ router }) {
     return <div className={'w-adventure-card h-adventure-card'}>
       <Adventurer adventurer={beneficiary} onClick={() => setSelectAdventurerIsOpen(true)} width={240} height={240}></Adventurer>
       <p className={'mt-8 text-black dark:text-white text-center'}>
-      This beneficiary will receive <br /><span className="text-blood-500">N tickets</span>
+      This adventurer will receive <br /><span className="text-blood-500">{candiesPerSum} candies</span>
       </p>
     </div>
   }

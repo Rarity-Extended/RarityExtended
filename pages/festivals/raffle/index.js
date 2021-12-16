@@ -8,11 +8,14 @@ import ButtonCounterBase from 'components/ButtonCounterBase'
 function	Index({ router }) {
 	const	{currentAdventurer, rNonce} = useRarity()
   const [summonerId, setSummonerId] = useState(currentAdventurer.tokenID)
+  const [prizeCount, setPrizeCount] = useState(11)
   const [candiesApproved, setCandiesApproved] = useState(false)
-	const	[candies, setCandies] = useState(Number(currentAdventurer?.inventory[9]) || 0)
+  const [candiesPerTicket, setCandiesPerTicket] = useState(25)
+  const [candiesPerSum, setCandiesPerSum] = useState(150)
+  const	[candies, setCandies] = useState(Number(currentAdventurer?.inventory[9]) || 0)
+  const [hasCandies, setHasCandies] = useState(Number(currentAdventurer?.inventory[9]) > 0 || false)
   const [tickets, setTickets] = useState(0)
   const [ticketPurchase, setTicketPurchase] = useState(0)
-  const candiesPerTicket = 25
 
 	useEffect(() => {
     if(summonerId !== currentAdventurer.tokenID) {
@@ -21,6 +24,7 @@ function	Index({ router }) {
     }
     const ownedCandies = Number(currentAdventurer?.inventory[9]) || 0
 		setCandies(ownedCandies - (candiesPerTicket * ticketPurchase))
+    setHasCandies(Number(currentAdventurer?.inventory[9]) > 0)
 	}, [rNonce, currentAdventurer, ticketPurchase, summonerId])
 
   function plusTicket() {
@@ -93,20 +97,20 @@ function	Index({ router }) {
 					{`Tickets are only ${candiesPerTicket} candies each. Buy some quick to find out!`}
 				</p>
         <p className={'text-black dark:text-white text-base text-center'}>
-					{'10 winning tickets will be drawn in'}
+					{prizeCount} winning tickets will be drawn in
 				</p>
-        <p className={'text-2xl animate-pulse'}>00d 00h 00m</p>
+        <p className={'mt-8 text-2xl animate-pulse'}>00d 00h 00m</p>
 
-				<div className={'mt-24 flex flex-row'}>
+				<div className={'mt-16 flex flex-row'}>
           <Adventurer adventurer={currentAdventurer} width={240} height={240} noHover={true}></Adventurer>
-          <div className={'ml-12 flex flex-col justify-evenly'}>
+          {hasCandies && <div className={'ml-12 flex flex-col justify-evenly'}>
             {sellCandies()}
-          </div>
+          </div>}
 				</div>
 
         {currentAdventurer.level > 3 && <>
           <div className={'mt-24 flex flex-col items-center text-center'}>
-            <h2 className={'text-xl'}>Want even more tickets?</h2>
+            <h2 className={'text-xl'}>More ways to get tickets</h2>
             <Button 
               onClick={() => router.push('/festivals/raffle/sacrifice')}
               className={'my-8 button-bloody'}
@@ -118,7 +122,8 @@ function	Index({ router }) {
             </Button>
             <p className={'mb-4 text-sm'}>
               The raffle committee has a special offer for you: <span className={'text-lg text-blood-400'}>Blood Sacrifice!</span>&nbsp;
-              Sacrifice your summoner for <span className='text-lg text-blood-400'>N tickets</span> and give them to another member of your party.
+              Sacrifice your summoner for <span className='text-lg text-blood-400'>{candiesPerSum} candies</span> and give them to another member of your party.
+              Then trade those for <span className='text-lg text-blood-400'>{candiesPerSum / candiesPerTicket} tickets</span> !
             </p>
           </div>
         </>}
