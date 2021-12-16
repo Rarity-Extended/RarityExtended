@@ -8,6 +8,7 @@ import ButtonCounterBase from 'components/ButtonCounterBase'
 function	Index({ router }) {
 	const	{currentAdventurer, rNonce} = useRarity()
   const [summonerId, setSummonerId] = useState(currentAdventurer.tokenID)
+  const [candiesApproved, setCandiesApproved] = useState(false)
 	const	[candies, setCandies] = useState(Number(currentAdventurer?.inventory[9]) || 0)
   const [tickets, setTickets] = useState(0)
   const [ticketPurchase, setTicketPurchase] = useState(0)
@@ -55,11 +56,17 @@ function	Index({ router }) {
             onDecrement={minusTicket} />
         </div>
       </div>
-      <Button onClick={() => {}}
+      {!candiesApproved && <Button onClick={() => {}}
+        className={'mt-8 cursor-pointer hover:bg-white focus:bg-white dark:hover:bg-dark-600 dark:focus:bg-dark-600 bg-gray-principal dark:bg-dark-400 text-center'}
+        backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
+        <span className={'text-lg'}>Approve Candies</span>
+      </Button>}
+
+      {candiesApproved && <Button onClick={() => {}}
         className={'mt-8 cursor-pointer hover:bg-white focus:bg-white dark:hover:bg-dark-600 dark:focus:bg-dark-600 bg-gray-principal dark:bg-dark-400 text-center'}
         backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
         <span className={'text-lg'}>Buy Tickets</span>
-      </Button>
+      </Button>}
     </>
   }
 
