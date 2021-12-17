@@ -1,21 +1,30 @@
 import React, {useState, useEffect} from 'react'
+import useWeb3 from 'contexts/useWeb3'
 import useRarity from 'contexts/useRarity'
 import CandyIcon from 'components/icons/Candy'
 import Adventurer from 'components/Adventurer'
 import Button from 'components/Button'
 import ButtonCounterBase from 'components/ButtonCounterBase'
+import { endTime, enterRaffle } from 'utils/actions/candyRaffle'
 
 function	Index({ router }) {
+  const	{provider} = useWeb3()
 	const	{currentAdventurer, rNonce} = useRarity()
   const [summonerId, setSummonerId] = useState(currentAdventurer.tokenID)
   const [prizeCount, setPrizeCount] = useState(11)
-  const [candiesApproved, setCandiesApproved] = useState(false)
   const [candiesPerTicket, setCandiesPerTicket] = useState(25)
   const [candiesPerSum, setCandiesPerSum] = useState(150)
   const	[candies, setCandies] = useState(Number(currentAdventurer?.inventory[9]) || 0)
   const [hasCandies, setHasCandies] = useState(Number(currentAdventurer?.inventory[9]) > 0 || false)
   const [tickets, setTickets] = useState(0)
   const [ticketPurchase, setTicketPurchase] = useState(0)
+  const [endDate, setEndDate] = useState()
+
+  useEffect(() => {
+    (async () => {
+      setEndDate(await endTime({ provider }))
+    })()
+  }, [])
 
 	useEffect(() => {
     if(summonerId !== currentAdventurer.tokenID) {
@@ -36,6 +45,12 @@ function	Index({ router }) {
   function minusTicket() {
     if(ticketPurchase > 0) {
       setTicketPurchase(ticketPurchase - 1)
+    }
+  }
+
+  async function buyTickets() {
+    if(ticketPurchase > 0) {
+      await enterRaffle({ provider, summoner: currentAdventurer?.tokenID, amount: ticketPurchase })
     }
   }
 
@@ -60,17 +75,11 @@ function	Index({ router }) {
             onDecrement={minusTicket} />
         </div>
       </div>
-      {!candiesApproved && <Button onClick={() => {}}
-        className={'mt-8 cursor-pointer hover:bg-white focus:bg-white dark:hover:bg-dark-600 dark:focus:bg-dark-600 bg-gray-principal dark:bg-dark-400 text-center'}
-        backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
-        <span className={'text-lg'}>Approve Candies</span>
-      </Button>}
-
-      {candiesApproved && <Button onClick={() => {}}
+      <Button onClick={buyTickets}
         className={'mt-8 cursor-pointer hover:bg-white focus:bg-white dark:hover:bg-dark-600 dark:focus:bg-dark-600 bg-gray-principal dark:bg-dark-400 text-center'}
         backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
         <span className={'text-lg'}>Buy Tickets</span>
-      </Button>}
+      </Button>
     </>
   }
 
