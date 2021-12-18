@@ -1,24 +1,38 @@
 import React, {useState, useEffect} from 'react'
+import useWeb3 from 'contexts/useWeb3'
 import useRarity from 'contexts/useRarity'
 import Adventurer from 'components/Adventurer'
 import Button from 'components/Button'
 import Box from 'components/Box'
 import ModalSelectAdventurer from 'components/ModalSelectAdventurer'
-import toast from 'react-hot-toast'
+
+import { 
+  CANDIES_PER_SUMMONER, 
+  sacrifice
+} from 'utils/actions/candyRaffle'
 
 function Index({ router }) {
-  const [selectAdventurerIsOpen, setSelectAdventurerIsOpen] = useState(false)
-  const [candiesPerSum, setCandiesPerSum] = useState(150)
-  const [beneficiary, setBeneficiary] = useState(null)
-  const	{currentAdventurer} = useRarity()
+  const	{ provider } = useWeb3()
+  const [ selectAdventurerIsOpen, setSelectAdventurerIsOpen ] = useState(false)
+  const [ beneficiary, setBeneficiary ] = useState(null)
+  const	{ currentAdventurer, set_currentAdventurer } = useRarity()
 
   function onSelectAdventurer(adventurer) {
-    setBeneficiary(adventurer);
+    setBeneficiary(adventurer)
   }
 
-  function onSacrifice() {
-    const name = currentAdventurer.name || currentAdventurer.tokenID
-    const	_toast = toast.loading(`The sacrifice of ${name} has begun...`);
+  async function onSacrifice() {
+    await sacrifice({
+      provider,
+      summonerToSacrifice: currentAdventurer.tokenID,
+      summonerToSacrificeName: currentAdventurer.name || currentAdventurer.tokenID,
+      summonerToReceive: beneficiary.tokenID,
+      summonerToReceiveName: beneficiary.name || beneficiary.tokenID
+    }, () => {
+      beneficiary.inventory[9] = String(Number(beneficiary.inventory[9]) + CANDIES_PER_SUMMONER)
+      set_currentAdventurer(beneficiary)
+      router.push('/festivals/raffle')
+    })
   }
 
   function selectBeneficiary() {
@@ -38,7 +52,7 @@ function Index({ router }) {
     return <div className={'w-adventure-card h-adventure-card'}>
       <Adventurer adventurer={beneficiary} onClick={() => setSelectAdventurerIsOpen(true)} width={240} height={240}></Adventurer>
       <p className={'mt-8 text-black dark:text-white text-center'}>
-      This adventurer will receive <br /><span className="text-blood-500">{candiesPerSum} candies</span>
+      This adventurer will receive <br /><span className="text-blood-500">{CANDIES_PER_SUMMONER} candies</span>
       </p>
     </div>
   }
