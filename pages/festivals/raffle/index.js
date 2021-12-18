@@ -5,20 +5,33 @@ import CandyIcon from 'components/icons/Candy'
 import Adventurer from 'components/Adventurer'
 import Button from 'components/Button'
 import ButtonCounterBase from 'components/ButtonCounterBase'
-import { endTime, enterRaffle } from 'utils/actions/candyRaffle'
+
+import { 
+  CANDIES_PER_TICKET, 
+  CANDIES_PER_SUMMONER, 
+  PRIZE_COUNT,
+  endTime,
+  getTicketsPerSummoner,
+  getWinningOdds,
+  enterRaffle
+} from 'utils/actions/candyRaffle'
+
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(duration)
+dayjs.extend(relativeTime)
 
 function	Index({ router }) {
-  const	{provider} = useWeb3()
-	const	{currentAdventurer, rNonce} = useRarity()
-  const [summonerId, setSummonerId] = useState(currentAdventurer.tokenID)
-  const [prizeCount, setPrizeCount] = useState(11)
-  const [candiesPerTicket, setCandiesPerTicket] = useState(25)
-  const [candiesPerSum, setCandiesPerSum] = useState(150)
-  const	[candies, setCandies] = useState(Number(currentAdventurer?.inventory[9]) || 0)
-  const [hasCandies, setHasCandies] = useState(Number(currentAdventurer?.inventory[9]) > 0 || false)
-  const [tickets, setTickets] = useState(0)
-  const [ticketPurchase, setTicketPurchase] = useState(0)
-  const [endDate, setEndDate] = useState()
+  const	{ provider } = useWeb3()
+	const	{ currentAdventurer, set_currentAdventurer, rNonce } = useRarity()
+  const [ summonerId, setSummonerId ] = useState(currentAdventurer.tokenID)
+  const	[ candies, setCandies ] = useState(Number(currentAdventurer?.inventory[9]) || 0)
+  const [ tickets, setTickets ] = useState(0)
+  const [ ticketPurchase, setTicketPurchase ] = useState(0)
+  const [ endDate, setEndDate ] = useState()
+  const [ odds, setOdds ] = useState([100, 100])
 
   useEffect(() => {
     (async () => {
@@ -27,17 +40,24 @@ function	Index({ router }) {
   }, [])
 
 	useEffect(() => {
-    if(summonerId !== currentAdventurer.tokenID) {
-      setTicketPurchase(0)
-      setSummonerId(currentAdventurer.tokenID)
-    }
-    const ownedCandies = Number(currentAdventurer?.inventory[9]) || 0
-		setCandies(ownedCandies - (candiesPerTicket * ticketPurchase))
-    setHasCandies(Number(currentAdventurer?.inventory[9]) > 0)
-	}, [rNonce, currentAdventurer, ticketPurchase, summonerId])
+    (async () => {
+      if(summonerId !== currentAdventurer.tokenID) {
+        setTicketPurchase(0)
+        setSummonerId(currentAdventurer.tokenID)
+      }
+
+      const ownedCandies = Number(currentAdventurer?.inventory[9]) || 0
+      setCandies(ownedCandies - (CANDIES_PER_TICKET * ticketPurchase))
+      setTickets((await getTicketsPerSummoner({ provider, summoner: currentAdventurer.tokenID })).toNumber())
+
+      // Error: Transaction reverted without a reason string
+      // setOdds(await getWinningOdds({ provider, summoner: currentAdventurer.tokenID, plusTickets: 0 }))
+
+    })()
+  }, [rNonce, currentAdventurer, ticketPurchase, summonerId])
 
   function plusTicket() {
-    if(candies >= candiesPerTicket) {
+    if(candies >= CANDIES_PER_TICKET) {
       setTicketPurchase(ticketPurchase + 1)
     }
   }
@@ -49,8 +69,17 @@ function	Index({ router }) {
   }
 
   async function buyTickets() {
+    const candieAmount = ticketPurchase * CANDIES_PER_TICKET
     if(ticketPurchase > 0) {
-      await enterRaffle({ provider, summoner: currentAdventurer?.tokenID, amount: ticketPurchase })
+      await enterRaffle({ 
+        provider, 
+        summoner: currentAdventurer?.tokenID, 
+        amount: candieAmount
+      })
+      currentAdventurer.inventory[9] = String(candies)
+      set_currentAdventurer(currentAdventurer)
+      setTickets(tickets + ticketPurchase)
+      setTicketPurchase(0)
     }
   }
 
@@ -62,7 +91,9 @@ function	Index({ router }) {
       </div>
       <div className={'my-4 w-96 flex flex-row items-center justify-between'}>
         <div>{`Odds`}</div>
-        <div className={'flex flex-row items-center'}>1/10,000</div>
+        <div className={'flex flex-row items-center'}>
+          {1}/{Math.round(odds[1] / odds[0])}
+        </div>
       </div>
       <div className={'my-2 w-96 flex flex-row items-center justify-between'}>
         <div>{`Tickets`}</div>
@@ -76,7 +107,9 @@ function	Index({ router }) {
         </div>
       </div>
       <Button onClick={buyTickets}
-        className={'mt-8 cursor-pointer hover:bg-white focus:bg-white dark:hover:bg-dark-600 dark:focus:bg-dark-600 bg-gray-principal dark:bg-dark-400 text-center'}
+        disabled={ticketPurchase < 1}
+        className={'mt-8 button-regular'}
+        disabledClassName={'mt-8 button-regular-disabled'}
         backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
         <span className={'text-lg'}>Buy Tickets</span>
       </Button>
@@ -103,18 +136,20 @@ function	Index({ router }) {
 					{'What\'s the one thing every summoner wants this holiday season?'}
 				</p>
         <p className={'mb-6 text-black dark:text-white text-base text-center'}>
-					{`Tickets are only ${candiesPerTicket} candies each. Buy some quick to find out!`}
+          <span className="text-items-common">Tickets are only {CANDIES_PER_TICKET} candies each.</span> Buy some quick to find out!
 				</p>
         <p className={'text-black dark:text-white text-base text-center'}>
-					{prizeCount} winning tickets will be drawn in
+					{PRIZE_COUNT} winning tickets will be drawn in
 				</p>
-        <p className={'mt-8 text-2xl animate-pulse'}>00d 00h 00m</p>
+        <p className={'mt-8 text-2xl'}>
+          ~ {dayjs.duration(dayjs.unix(endDate?.toNumber()).diff(dayjs())).format('DD[d] HH[h] mm[m]')} ~
+        </p>
 
 				<div className={'mt-16 flex flex-row'}>
           <Adventurer adventurer={currentAdventurer} width={240} height={240} noHover={true}></Adventurer>
-          {hasCandies && <div className={'ml-12 flex flex-col justify-evenly'}>
+          <div className={'ml-12 flex flex-col justify-evenly'}>
             {sellCandies()}
-          </div>}
+          </div>
 				</div>
 
         {currentAdventurer.level > 3 && <>
@@ -131,8 +166,8 @@ function	Index({ router }) {
             </Button>
             <p className={'mb-4 text-sm'}>
               The raffle committee has a special offer for you: <span className={'text-lg text-blood-400'}>Blood Sacrifice!</span>&nbsp;
-              Sacrifice your summoner for <span className='text-lg text-blood-400'>{candiesPerSum} candies</span> and give them to another member of your party.
-              Then trade those for <span className='text-lg text-blood-400'>{candiesPerSum / candiesPerTicket} tickets</span> !
+              Sacrifice your summoner for <span className='text-lg text-blood-400'>{CANDIES_PER_SUMMONER} candies</span> and give them to another member of your party.
+              Then trade those for <span className='text-lg text-blood-400'>{CANDIES_PER_SUMMONER / CANDIES_PER_TICKET} tickets</span> !
             </p>
           </div>
         </>}

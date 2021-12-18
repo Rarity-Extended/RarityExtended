@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.button-regular {
+  @apply text-center cursor-pointer bg-gray-principal hover:bg-white dark:bg-dark-400 dark:hover:bg-dark-600 dark:focus:bg-dark-600
+}
+
+.button-regular-disabled {
+  @apply button-regular text-dark-100 dark:text-dark-600 pointer-events-none;
+}
+
 .button-bloody-base {
   @apply text-center bg-blood-200 dark:bg-blood-900;
 }

@@ -12,7 +12,7 @@ function	Button({
 	className,
 	disabledClassName,
 	borderStyle = 'bg-black dark:bg-dark-100',
-	disabledBorderStyle = 'bg-gray-principal dark:bg-dark-400',
+	disabledBorderStyle = 'bg-dark-100 dark:bg-dark-600',
 	backgroundColor = 'bg-white dark:bg-dark-600 hover:bg-gray-primary dark:hover:bg-dark-400'}) {
 	return (
 		<div className={`relative ${disabled ? disabledClassName : className} py-3 px-14 text-regular ${disabled ? '' : 'cursor-pointer'}`} onClick={() => {if(!disabled) onClick()}}>
