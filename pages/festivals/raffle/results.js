@@ -4,11 +4,13 @@ import Image from 'next/image'
 import useRarity from 'contexts/useRarity'
 import useUI from 'contexts/useUI'
 import { useConfetti } from 'components/ConfettiContext'
-import { getWinners, getSkinId } from 'utils/actions/candyRaffle'
+import { getWinners, getSkinId, getSkin } from 'utils/actions/candyRaffle'
 
 function	Index({ router }) {
   const	{ provider } = useWeb3()
-  const [ won, setWon ] = useState(false)
+  const [ prizeId, setPrizeId ] = useState(0)
+  const [ prizeImage, setPrizeImage ] = useState()
+
   const { setShowConfetti } = useConfetti()
 
   useEffect(() => {
@@ -19,7 +21,10 @@ function	Index({ router }) {
         const index = winners.indexOf(signerAddress)
         if(index > -1) {
           const skinId = await getSkinId({ provider, index })
-          setWon(true)
+          setPrizeId(skinId)
+          const skin = await getSkin({ provider, skinId })
+          const img = JSON.parse(skin).image
+          setPrizeImage(img)
           setShowConfetti(true)
         }
       }
@@ -38,7 +43,7 @@ function	Index({ router }) {
         </p>
 
         <h1 className={'text-base text-2xl'}>
-          {won 
+          {prizeId 
             ? <>You Won a <span className="text-items-rare">rare skin</span> !!</> 
             : 'You didn\'t win =('}
         </h1>
@@ -48,26 +53,27 @@ function	Index({ router }) {
         </div>
       </div>
 
-      {won && <>
+      {prizeId !== 0 && prizeImage && <>
         <div className="my-16 animate-bounce">
-          {/* <Image
-            src={raritySkins ? skins[currentAdventurer?.tokenID] || currentAdventurer?.skin : currentAdventurer?.skin}
+          <Image
+            src={prizeImage}
             loading={'eager'}
             quality={90}
             width={340}
-            height={340} /> */}
+            height={340} />
         </div>
         <p className="mb-4">.~ Adventure in style ~.</p>
+        <p>Head over to <a className="text-items-rare" href="https://rarity-skins.com" target="_blank" rel="noreferrer">rarity-skins.com</a> and suit up!</p>
       </>}
 
-      {!won && <>
+      {!prizeId && <>
         <p className="my-16">
           And you bought all those tickets! Alas, the lottery gods had other plans...
         </p>
         <p className="mb-4">.~ You can still adventure in style ~.</p>
+        <p>Check out <a className="text-items-rare" href="https://rarity-skins.com" target="_blank" rel="noreferrer">rarity-skins.com</a> for more skins</p>
       </>}
 
-      <p>Check out <a className="text-items-rare" href="https://rarity-skins.com" target="_blank" rel="noreferrer">rarity-skins.com</a> for more skins</p>
     </div>
   </section>
 }

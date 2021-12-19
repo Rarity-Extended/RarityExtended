@@ -38,6 +38,17 @@ export async function getSkinId({ provider, index }) {
   return await raffle.skinsIds(index)
 }
 
+export async function getSkin({ provider, skinId }) {
+  const signer = provider.getSigner()
+  const skins = new ethers.Contract(
+    process.env.RARE_SKINS_ADDR, [
+      'function tokenURI(uint256 tokenId) external view returns (string memory)',
+    ], signer
+  )
+  const uri = await skins.tokenURI(skinId)
+  return Buffer.from(uri.slice(29), 'base64')
+}
+
 export async function getTicketsPerSummoner({ provider, summoner }) {
   const signer = provider.getSigner()
   const raffle = new ethers.Contract(
