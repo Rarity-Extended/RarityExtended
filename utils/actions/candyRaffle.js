@@ -17,6 +17,27 @@ export async function endTime({ provider }) {
   return await raffle.endTime()
 }
 
+export async function getWinners({ provider }) {
+  const signer = provider.getSigner()
+  const raffle = new ethers.Contract(
+    process.env.CANDY_RAFFLE_ADDR, [
+      'function getWinners() external view returns (address[] memory)',
+      'function skinsIds() external view returns (uint[] memory)',
+    ], signer
+  )
+  return await raffle.getWinners()
+}
+
+export async function getSkinId({ provider, index }) {
+  const signer = provider.getSigner()
+  const raffle = new ethers.Contract(
+    process.env.CANDY_RAFFLE_ADDR, [
+      'function skinsIds(uint index) external view returns (uint)',
+    ], signer
+  )
+  return await raffle.skinsIds(index)
+}
+
 export async function getTicketsPerSummoner({ provider, summoner }) {
   const signer = provider.getSigner()
   const raffle = new ethers.Contract(
@@ -37,7 +58,7 @@ export async function getWinningOdds({ provider, summoner, plusTickets }) {
   return await raffle.getWinningOdds(summoner, plusTickets)
 }
 
-async function requireApproval({ provider, address, summoner }) {
+async function requireApproval({ provider, address, summoner, toastMessage }) {
   const signer = provider.getSigner()
   const rarityCore = new ethers.Contract(
     process.env.RARITY_ADDR, [
@@ -50,7 +71,7 @@ async function requireApproval({ provider, address, summoner }) {
   const approved = approvedAddress === address
 
   if(!approved) {
-    let toastHandle = toast.loading(`(1/2) Approve raffle..`)
+    let toastHandle = toast.loading(toastMessage)
     try {
       await rarityCore.callStatic.approve(address, summoner)
     } catch (error) {
@@ -95,7 +116,8 @@ export async function enterRaffle({ provider, summoner, amount }) {
   const { requiredApproval, approved } = await requireApproval({ 
     provider, 
     address: process.env.CANDY_RAFFLE_ADDR, 
-    summoner
+    summoner,
+    toastMessage: `(1/2) Approve raffle..`
   })
 
   if(requiredApproval && !approved) return
@@ -140,7 +162,8 @@ export async function sacrifice({ provider, summonerToSacrifice, summonerToSacri
   const { requiredApproval, approved } = await requireApproval({ 
     provider, 
     address: process.env.CANDY_RAFFLE_ADDR, 
-    summoner: summonerToSacrifice
+    summoner: summonerToSacrifice,
+    toastMessage: `(1/2) Approve sacrifice..`
   })
 
   if(requiredApproval && !approved) return

@@ -33,6 +33,7 @@ function Index({ router }) {
     }, async () => {
       beneficiary.inventory[9] = String(Number(beneficiary.inventory[9]) + CANDIES_PER_SUMMONER)
       set_currentAdventurer(beneficiary)
+      console.log('rarities', Object.keys(rarities))
       delete rarities[currentAdventurer.tokenID]
       set_rarities({...rarities})
       router.push('/festivals/raffle')

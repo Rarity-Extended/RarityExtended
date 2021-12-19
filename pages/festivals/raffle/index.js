@@ -10,7 +10,7 @@ import {
   CANDIES_PER_TICKET, 
   CANDIES_PER_SUMMONER, 
   PRIZE_COUNT,
-  endTime,
+  endTime as _endTime,
   getTicketsPerSummoner,
   getWinningOdds,
   enterRaffle
@@ -30,12 +30,18 @@ function	Index({ router }) {
   const	[ candies, setCandies ] = useState(Number(currentAdventurer?.inventory[9]) || 0)
   const [ tickets, setTickets ] = useState(0)
   const [ ticketPurchase, setTicketPurchase ] = useState(0)
-  const [ endDate, setEndDate ] = useState()
+  const [ endTime, setEndTime ] = useState()
   const [ odds, setOdds ] = useState([100, 100])
 
   useEffect(() => {
     (async () => {
-      setEndDate(await endTime({ provider }))
+      const _endTimeResult = await _endTime({ provider })
+      const timeToEnd = dayjs.duration(dayjs.unix(_endTimeResult?.toNumber()).diff(dayjs()))
+      if(timeToEnd.milliseconds() < 1) {
+        router.replace('/festivals/raffle/results')
+      } else {
+        setEndTime(_endTimeResult)
+      }
     })()
   }, [])
 
@@ -143,7 +149,7 @@ function	Index({ router }) {
 				</p>
 
         <p className={'mt-8 text-2xl'}>
-          ~ {dayjs.duration(dayjs.unix(endDate?.toNumber()).diff(dayjs())).format('DD[d] HH[h] mm[m]')} ~
+          ~ {dayjs.duration(dayjs.unix(endTime?.toNumber()).diff(dayjs())).format('DD[d] HH[h] mm[m]')} ~
         </p>
 
 				<div className={'mt-16 flex flex-row'}>

@@ -1,23 +1,33 @@
 import React, { useState, useEffect } from 'react'
+import useWeb3 from 'contexts/useWeb3'
 import Image from 'next/image'
 import useRarity from 'contexts/useRarity'
 import useUI from 'contexts/useUI'
 import { useConfetti } from 'components/ConfettiContext'
+import { getWinners, getSkinId } from 'utils/actions/candyRaffle'
 
 function	Index({ router }) {
-	const	{ currentAdventurer, rNonce } = useRarity()
+  const	{ provider } = useWeb3()
   const [ won, setWon ] = useState(false)
-  const	{ raritySkins } = useUI()
-	const	{ skins } = useRarity()
   const { setShowConfetti } = useConfetti()
 
   useEffect(() => {
-    setWon(true)
-    setShowConfetti(true)
+    (async () => {
+      if(provider) {
+        const signerAddress = await provider.getSigner().getAddress()
+        const winners = await getWinners({ provider })
+        const index = winners.indexOf(signerAddress)
+        if(index > -1) {
+          const skinId = await getSkinId({ provider, index })
+          setWon(true)
+          setShowConfetti(true)
+        }
+      }
+    })()
     return () => {
       setShowConfetti(false)
     }
-  }, [currentAdventurer, rNonce])
+  }, [provider])
 
   return <section className={'max-w-full'}>
     <div className={'max-w-prose w-full relative mt-8 mx-auto px-3 flex flex-col items-center'}>
@@ -40,12 +50,12 @@ function	Index({ router }) {
 
       {won && <>
         <div className="my-16 animate-bounce">
-          <Image
+          {/* <Image
             src={raritySkins ? skins[currentAdventurer?.tokenID] || currentAdventurer?.skin : currentAdventurer?.skin}
             loading={'eager'}
             quality={90}
             width={340}
-            height={340} />
+            height={340} /> */}
         </div>
         <p className="mb-4">.~ Adventure in style ~.</p>
       </>}
