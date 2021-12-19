@@ -68,6 +68,11 @@ function	Index({ router }) {
     }
   }
 
+  function maxTickets() {
+    const max = Math.round(candies / CANDIES_PER_TICKET)
+    setTicketPurchase(ticketPurchase + max)
+  }
+
   async function buyTickets() {
     const candieAmount = ticketPurchase * CANDIES_PER_TICKET
     if(ticketPurchase > 0) {
@@ -97,13 +102,14 @@ function	Index({ router }) {
       </div>
       <div className={'my-2 w-96 flex flex-row items-center justify-between'}>
         <div>{`Tickets`}</div>
-        <div>
+        <div className={'relative'}>
           <ButtonCounterBase
             className={'bg-gray-principal hover:bg-white focus:bg-white dark:bg-dark-400 dark:hover:bg-dark-600 dark:focus:bg-dark-600'}
             backgroundColor={'bg-gray-principal dark:bg-dark-400'}
             value={tickets + ticketPurchase}
             onIncrement={plusTicket}
             onDecrement={minusTicket} />
+          <div onClick={maxTickets} className="absolute right-0 -bottom-6 text-xs cursor-pointer underline">max</div>
         </div>
       </div>
       <Button onClick={buyTickets}

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import useWeb3 from 'contexts/useWeb3'
 import useRarity from 'contexts/useRarity'
+import useIndexDB from 'hook/useIDB'
 import Adventurer from 'components/Adventurer'
 import Button from 'components/Button'
 import Box from 'components/Box'
@@ -15,7 +16,8 @@ function Index({ router }) {
   const	{ provider } = useWeb3()
   const [ selectAdventurerIsOpen, setSelectAdventurerIsOpen ] = useState(false)
   const [ beneficiary, setBeneficiary ] = useState(null)
-  const	{ currentAdventurer, set_currentAdventurer } = useRarity()
+  const	{ currentAdventurer, set_currentAdventurer, fetchRarity } = useRarity()
+  const	[ rarities, set_rarities ] = useIndexDB('adventurers', {})
 
   function onSelectAdventurer(adventurer) {
     setBeneficiary(adventurer)
@@ -28,10 +30,13 @@ function Index({ router }) {
       summonerToSacrificeName: currentAdventurer.name || currentAdventurer.tokenID,
       summonerToReceive: beneficiary.tokenID,
       summonerToReceiveName: beneficiary.name || beneficiary.tokenID
-    }, () => {
+    }, async () => {
       beneficiary.inventory[9] = String(Number(beneficiary.inventory[9]) + CANDIES_PER_SUMMONER)
       set_currentAdventurer(beneficiary)
+      delete rarities[currentAdventurer.tokenID]
+      set_rarities({...rarities})
       router.push('/festivals/raffle')
+      await fetchRarity()
     })
   }
 
