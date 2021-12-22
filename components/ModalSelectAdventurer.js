@@ -46,8 +46,10 @@ function ModalSelectAdventurer({ isOpen, onClose, onSelect, options = defaultOpt
 	const	[favoritesAdventurers, set_favoritesAdventurers] = useLocalStorage('favorites', []);
 
   function clickAdventurer(adventurer) {
-    onSelect(adventurer);
-		onClose();
+    onClose();
+		setTimeout(() => {
+			onSelect(adventurer);
+		}, 250);
   }
 
 	return (
