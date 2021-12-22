@@ -33,7 +33,7 @@ function	Index({ router }) {
   const [ tickets, setTickets ] = useState(0)
   const [ ticketPurchase, setTicketPurchase ] = useState(0)
   const [ endTime, setEndTime ] = useState()
-  const [ odds, setOdds ] = useState([100, 100])
+  const [ odds, setOdds ] = useState('1/?')
 
   useEffect(() => {
     (async () => {
@@ -58,8 +58,19 @@ function	Index({ router }) {
       setCandies(ownedCandies - (CANDIES_PER_TICKET * ticketPurchase))
       setTickets((await getTicketsPerSummoner({ provider, summoner: currentAdventurer.tokenID })).toNumber())
 
-      // Error: Transaction reverted without a reason string
-      // setOdds(await getWinningOdds({ provider, summoner: currentAdventurer.tokenID, plusTickets: 0 }))
+      try {
+        const [n, d] = await getWinningOdds({ 
+          provider, 
+          summoner: currentAdventurer.tokenID, 
+          plusTickets: ticketPurchase })
+        if(n.eq(0)) {
+          setOdds('1/?')
+        } else {
+          setOdds(`1/${Math.round(d.div(n).toNumber())}`)
+        }
+      }catch(error) {
+        console.log('error', error)
+      }
 
     })()
   }, [rNonce, currentAdventurer, ticketPurchase, summonerId])
@@ -104,9 +115,7 @@ function	Index({ router }) {
       </div>
       <div className={'my-4 w-96 flex flex-row items-center justify-between'}>
         <div>{`Odds`}</div>
-        <div className={'flex flex-row items-center'}>
-          {1}/{odds[0] === 0 ? 1 : Math.round(odds[1] / odds[0])}
-        </div>
+        <div className={'flex flex-row items-center'}>{odds}</div>
       </div>
       <div className={'my-2 w-96 flex flex-row items-center justify-between'}>
         <div>{`Tickets`}</div>
