@@ -31,10 +31,10 @@ function Index({ router }) {
       beneficiary.inventory[9] = String(Number(beneficiary.inventory[9]) + CANDIES_PER_SUMMONER)
       set_currentAdventurer(beneficiary)
 
-      // what's the best way to _remove_ a summoner from the rarities list?
-      // this doesn't seem to work..
-      delete rarities[currentAdventurer.tokenID]
-      set_rarities({...rarities})
+      set_rarities(prev => {
+        delete prev[currentAdventurer.tokenID]
+        return ({...prev})
+      })
 
       router.push('/festivals/raffle')
       await fetchRarity()

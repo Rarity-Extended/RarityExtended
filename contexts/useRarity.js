@@ -220,6 +220,10 @@ export const RarityContextApp = ({children}) => {
 		] = multicallResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
+			set_rarities((prev) => {
+        delete prev[tokenID];
+        return ({...prev});
+			});
 			return;
 		}
 
