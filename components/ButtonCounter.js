@@ -41,7 +41,7 @@ function	ButtonCounter({
 		onIncrement={onIncrease}
 		onDecrement={onDecrease}
 		backgroundColor={backgroundColor}
-		></ButtonCounterBase>;
+		/>;
 }
 
 export default ButtonCounter;

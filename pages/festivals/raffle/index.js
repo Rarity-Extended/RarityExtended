@@ -105,7 +105,7 @@ function	Index({ router }) {
       <div className={'my-4 w-96 flex flex-row items-center justify-between'}>
         <div>{`Odds`}</div>
         <div className={'flex flex-row items-center'}>
-          {1}/{Math.round(odds[1] / odds[0])}
+          {1}/{odds[0] === 0 ? 1 : Math.round(odds[1] / odds[0])}
         </div>
       </div>
       <div className={'my-2 w-96 flex flex-row items-center justify-between'}>

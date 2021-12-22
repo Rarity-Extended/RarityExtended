@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 import toast from 'react-hot-toast'
 
-const CONFIRMATIONS = 1
+const CONFIRMATIONS = 2
 
 export const CANDIES_PER_TICKET = 25
 export const CANDIES_PER_SUMMONER = 150
