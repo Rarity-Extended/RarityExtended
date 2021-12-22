@@ -6,7 +6,7 @@
 ******************************************************************************/
 
 import	React		from	'react';
-import ButtonCounterBase	 from	 './ButtonCounterBase';
+import ButtonCounterBase	 from	 'components/ButtonCounterBase';
 
 function	ButtonCounter({
 	className,
