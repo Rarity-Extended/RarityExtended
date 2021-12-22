@@ -6,16 +6,16 @@ import	useRarity						from	'contexts/useRarity';
 import	useWeb3							from	'contexts/useWeb3';
 import	useLocalStorage					from	'hook/useLocalStorage';
 import	CLASSES							from	'utils/codex/classes';
-import { useEffect } from 'react/cjs/react.development';
 
-const	levelOptions = [
+export const	levelOptions = [
 	{name: 'All Levels', value: 0},
 	{name: 'Level 1', value: 1},
 	{name: 'Level 2', value: 2},
 	{name: 'Level 3', value: 3},
 	{name: 'Level 4', value: 4},
 ];
-const	classOptions = [
+
+export const	classOptions = [
 	{name: 'All Classes', value: 0},
 	{name: 'Barbarian', value: 1},
 	{name: 'Bard', value: 2},
@@ -30,18 +30,24 @@ const	classOptions = [
 	{name: 'Wizard', value: 11},
 ];
 
-function ModalSelectAdventurer({ isOpen, onClose, onSelect, exclusions = [] }) {
+const defaultOptions = {
+	exclusions: [],
+	level: levelOptions[0],
+	classSelected: classOptions[0]
+}
+
+function ModalSelectAdventurer({ isOpen, onClose, onSelect, options = defaultOptions }) {
   const	{rarities} = useRarity();
 	const	{address, deactivate, onDesactivate} = useWeb3();
 	const	[search, set_search] = useState('');
 	const	[classTab, set_classTab] = useState(0);
-	const	[level, set_level] = useState(levelOptions[0]);
-	const	[classSelected, set_classSelected] = useState(classOptions[0]);
+	const	[level, set_level] = useState(options.level || defaultOptions.level);
+	const	[classSelected, set_classSelected] = useState(options.classSelected || defaultOptions.classSelected);
 	const	[favoritesAdventurers, set_favoritesAdventurers] = useLocalStorage('favorites', []);
 
   function clickAdventurer(adventurer) {
     onSelect(adventurer);
-    onClose();
+		onClose();
   }
 
 	return (
@@ -125,7 +131,7 @@ function ModalSelectAdventurer({ isOpen, onClose, onSelect, exclusions = [] }) {
 							<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4 min-h-0 md:min-h-133 max-h-72 md:max-h-133 overflow-y-scroll px-1'}>
 								{[...Object.values(rarities)]
                   .filter((adventurer) => {
-                    return !exclusions.includes(adventurer.tokenID);
+                    return !options.exclusions.includes(adventurer.tokenID);
                   })
 									.filter((adventurer) => {
 										if (classTab === 1)

@@ -5,7 +5,7 @@ import useIndexDB from 'hook/useIDB'
 import Adventurer from 'components/Adventurer'
 import Button from 'components/Button'
 import Box from 'components/Box'
-import ModalSelectAdventurer from 'components/ModalSelectAdventurer'
+import ModalSelectAdventurer, { levelOptions } from 'components/ModalSelectAdventurer'
 
 import { 
   CANDIES_PER_SUMMONER, 
@@ -14,14 +14,11 @@ import {
 
 function Index({ router }) {
   const	{ provider } = useWeb3()
-  const [ selectAdventurerIsOpen, setSelectAdventurerIsOpen ] = useState(false)
+  const [ selectSacrificialLambIsOpen, setSelectSacrificialLambIsOpen ] = useState(false)
+  const [ selectBeneficiaryIsOpen, setSelectBeneficiaryIsOpen ] = useState(false)
   const [ beneficiary, setBeneficiary ] = useState(null)
   const	{ currentAdventurer, set_currentAdventurer, fetchRarity } = useRarity()
   const	[ rarities, set_rarities ] = useIndexDB('adventurers', {})
-
-  function onSelectAdventurer(adventurer) {
-    setBeneficiary(adventurer)
-  }
 
   async function onSacrifice() {
     await sacrifice({
@@ -47,7 +44,7 @@ function Index({ router }) {
   function selectBeneficiary() {
     return <div className={'w-adventure-card h-adventure-card'}>
       <Box
-        onClick={() => setSelectAdventurerIsOpen(true)}
+        onClick={() => setSelectBeneficiaryIsOpen(true)}
         className={'w-full h-full p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer\'} transition-colors relative mb-4 md:mb-0 cursor-pointer'}>
         <p className={'w-full h-full text-6xl flex items-center justify-center'}>?</p>
       </Box>
@@ -59,7 +56,7 @@ function Index({ router }) {
 
   function beneficiaryCard() {
     return <div className={'w-adventure-card h-adventure-card'}>
-      <Adventurer adventurer={beneficiary} onClick={() => setSelectAdventurerIsOpen(true)} width={240} height={240}></Adventurer>
+      <Adventurer adventurer={beneficiary} onClick={() => setSelectBeneficiaryIsOpen(true)} width={240} height={240}></Adventurer>
       <p className={'mt-8 text-black dark:text-white text-center'}>
       This adventurer will receive <br /><span className="text-blood-500">{CANDIES_PER_SUMMONER} candies</span>
       </p>
@@ -83,11 +80,22 @@ function Index({ router }) {
 
       <div className={'mt-24 flex flex-row'}>
         <div>
-          <Adventurer adventurer={currentAdventurer} 
+          <Adventurer adventurer={currentAdventurer}
+            onClick={() => setSelectSacrificialLambIsOpen(true)}
             width={240} height={240} 
             borderStyle={'bg-blood-600'} 
-            bgStyle={'bg-blood-200 dark:bg-blood-900'} 
-            noHover={true}></Adventurer>
+            bgStyle={'bg-blood-200 dark:bg-blood-900'}
+            hoverStyle={'hover:text-fire-200 hover:bg-blood-400 dark:hover:text-fire-200 dark:hover:bg-blood-400'}>
+          </Adventurer>
+          <ModalSelectAdventurer 
+            isOpen={selectSacrificialLambIsOpen} 
+            onClose={() => setSelectSacrificialLambIsOpen(false)} 
+            onSelect={adventurer => set_currentAdventurer(adventurer)} 
+            options={{ 
+              exclusions: [currentAdventurer.tokenID, beneficiary?.tokenID],
+              level: levelOptions[4]
+            }}>
+          </ModalSelectAdventurer>
           <Button onClick={onSacrifice}
             disabled={!beneficiary}
             className={'mt-8 button-bloody'}
@@ -106,10 +114,10 @@ function Index({ router }) {
           {!beneficiary && selectBeneficiary()}
           {beneficiary && beneficiaryCard()}
           <ModalSelectAdventurer 
-            isOpen={selectAdventurerIsOpen} 
-            onClose={() => setSelectAdventurerIsOpen(false)} 
-            onSelect={onSelectAdventurer} 
-            exclusions={[currentAdventurer.tokenID]}>
+            isOpen={selectBeneficiaryIsOpen} 
+            onClose={() => setSelectBeneficiaryIsOpen(false)} 
+            onSelect={adventurer => setBeneficiary(adventurer)} 
+            options={{ exclusions: [currentAdventurer.tokenID] }}>
           </ModalSelectAdventurer>
         </div>
 

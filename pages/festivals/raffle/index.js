@@ -5,6 +5,7 @@ import CandyIcon from 'components/icons/Candy'
 import Adventurer from 'components/Adventurer'
 import Button from 'components/Button'
 import ButtonCounterBase from 'components/ButtonCounterBase'
+import ModalSelectAdventurer from 'components/ModalSelectAdventurer'
 
 import { 
   CANDIES_PER_TICKET, 
@@ -25,7 +26,8 @@ dayjs.extend(relativeTime)
 
 function	Index({ router }) {
   const	{ provider } = useWeb3()
-	const	{ currentAdventurer, set_currentAdventurer, rNonce } = useRarity()
+  const [ selectAdventurerIsOpen, setSelectAdventurerIsOpen ] = useState(false)
+  const	{ currentAdventurer, set_currentAdventurer, rNonce } = useRarity()
   const [ summonerId, setSummonerId ] = useState(currentAdventurer.tokenID)
   const	[ candies, setCandies ] = useState(Number(currentAdventurer?.inventory[9]) || 0)
   const [ tickets, setTickets ] = useState(0)
@@ -153,7 +155,16 @@ function	Index({ router }) {
         </p>
 
 				<div className={'mt-16 flex flex-row'}>
-          <Adventurer adventurer={currentAdventurer} width={240} height={240} noHover={true}></Adventurer>
+          <Adventurer 
+            width={240} height={240}
+            onClick={() => setSelectAdventurerIsOpen(true)}
+            adventurer={currentAdventurer} />
+          <ModalSelectAdventurer 
+            isOpen={selectAdventurerIsOpen} 
+            onClose={() => setSelectAdventurerIsOpen(false)} 
+            onSelect={adventurer => set_currentAdventurer(adventurer)} 
+            options={{ exclusions: [currentAdventurer.tokenID] }}>
+          </ModalSelectAdventurer>
           <div className={'ml-12 flex flex-col justify-evenly'}>
             {sellCandies()}
           </div>
