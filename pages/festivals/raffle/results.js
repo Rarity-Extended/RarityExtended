@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import useWeb3 from 'contexts/useWeb3'
 import Image from 'next/image'
-import useRarity from 'contexts/useRarity'
-import useUI from 'contexts/useUI'
+import { TwitterShareButton } from 'react-share'
+import useWeb3 from 'contexts/useWeb3'
+import Button from 'components/Button'
 import { useConfetti } from 'components/ConfettiContext'
 import { getWinners, getSkinId, getSkin } from 'utils/actions/candyRaffle'
+
 
 function	Index({ router }) {
   const	{ provider } = useWeb3()
@@ -54,7 +55,7 @@ function	Index({ router }) {
       </div>
 
       {prizeId !== 0 && prizeImage && <>
-        <div className="my-16 animate-bounce">
+        <div className="mt-16 mb-2 animate-bounce">
           <Image
             src={prizeImage}
             loading={'eager'}
@@ -62,6 +63,22 @@ function	Index({ router }) {
             width={340}
             height={340} />
         </div>
+
+        <TwitterShareButton
+          url={'https://rarityextended.com/'}
+          title={'Whoa.. I just won a rare skin on Rarity Extended!!'}
+          hashtags={['rarity', 'gamefi', 'ftm']}
+          related={['RXtended', 'RaritySkins']}
+          resetButtonStyle={true}
+          className={'mb-8'}
+          style={{ font: null }}>
+          <Button onClick={() => {}}
+            className={'button-regular'}
+            backgroundColor={'bg-gray-principal dark:bg-dark-400'}>
+            <span className={'text-lg'}>Tweet!</span>
+          </Button>
+        </TwitterShareButton>
+
         <p className="mb-4">.~ Adventure in style ~.</p>
         <p>Head over to <a className="text-items-rare" href="https://rarity-skins.com" target="_blank" rel="noreferrer">rarity-skins.com</a> and suit up!</p>
       </>}
