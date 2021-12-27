@@ -88,7 +88,7 @@ function	Index({ router }) {
   }
 
   function maxTickets() {
-    const max = Math.round(candies / CANDIES_PER_TICKET)
+    const max = Math.floor(candies / CANDIES_PER_TICKET)
     setTicketPurchase(ticketPurchase + max)
   }
 
