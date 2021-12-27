@@ -14,7 +14,7 @@ import	useSWR													from	'swr';
 import	dayjs													from	'dayjs';
 import	relativeTime											from	'dayjs/plugin/relativeTime';
 import	useWeb3													from	'contexts/useWeb3';
-import	ModalCurrentAdventurer									from	'components/ModalCurrentAdventurer';
+import 	ModalSelectAdventurer 					from	'components/ModalSelectAdventurer';
 import	useIndexDB												from	'hook/useIDB';
 import	{chunk, fetcher, toAddress, newEthCallProvider}			from	'utils';
 import	ITEMS													from	'utils/codex/items';
@@ -220,6 +220,10 @@ export const RarityContextApp = ({children}) => {
 		] = multicallResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
+			set_rarities((prev) => {
+        delete prev[tokenID];
+        return ({...prev});
+			});
 			return;
 		}
 
@@ -422,7 +426,11 @@ export const RarityContextApp = ({children}) => {
 				openCurrentAventurerModal: () => set_isModalOpen(true)
 			}}>
 			{children}
-			<ModalCurrentAdventurer isOpen={isModalOpen} closeModal={() => set_isModalOpen(false)} />
+			<ModalSelectAdventurer 
+				isOpen={isModalOpen} 
+				onClose={() => set_isModalOpen(false)} 
+				onSelect={(adventurer) => set_currentAdventurer(adventurer)}>
+			</ModalSelectAdventurer>
 		</RarityContext.Provider>
 	);
 };

@@ -29,6 +29,7 @@ import	{availableSkillPoints, calculatePointsForSet}	from	'utils/libs/raritySkil
 import	{featsPerClass, initialFeatsPerClass}			from	'utils/libs/rarityFeats';
 import	{xpRequired}									from	'utils/libs/rarity';
 import	{goAdventure, claimGold, levelUp}				from	'utils/actions';
+import	Candy												from 	'components/icons/Candy';
 
 dayjs.extend(relativeTime);
 
@@ -107,18 +108,12 @@ function	AdventurerList({favoritesAdventurers, set_favoritesAdventurers}) {
 
 				<div className={'w-full'}>
 					<Box
-						onClick={() => router.push('/festivals/spooky-shop')}
-						className={'w-full p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer\'} transition-colors relative mb-4 md:mb-0 cursor-pointer'}>
-						<div className={'p-4'}>
-							<Image
-								src={`/decorations/pumpkin${(currentAdventurer.tokenID % 6)}.png`}
-								quality={80}
-								width={124}
-								height={124} />
-						</div>
-						
+						onClick={() => router.push('/festivals/raffle/')}
+						className={'w-full h-full p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer\'} transition-colors relative mb-4 md:mb-0 cursor-pointer'}>
+						<div className={'w-full h-full p-4 flex justify-center items-center'}><Candy width={124} height={124}></Candy></div>
+
 						<p className={'text-sm text-black dark:text-white justify-center group-hover:underline'}>
-							{'The Spooky Shop'}
+							{'Candy Raffle'}
 						</p>
 						<p className={'text-xss text-black dark:text-white justify-center text-center mt-1'}>
 							{'Festival Year 1'}

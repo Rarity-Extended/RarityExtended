@@ -70,6 +70,9 @@ module.exports = ({
 		FESTIVAL_SPOOKY_ABI: require('./utils/abi/festivalSpooky.abi.json'),
 		FESTIVAL_SPOOKY_ID: '4158642',
 
+		CANDY_RAFFLE_ADDR: '0xaE60Cc1a1Df258Ad28413f11e13C687ec14Aaac5',
+		RARE_SKINS_ADDR: '0x6fEd400dA17f2678C450aA1D35e909653B3b482A',
+
 		RARITY_EXTENDED_SKIN_HELPER_ADDR: '0xbe570c81e8bc6a4ca2675fe619044b389df32566',
 		RARITY_EXTENDED_SKIN_HELPER_ABI: require('./utils/abi/rarityExtendedSkinHelper.abi.json'),
 

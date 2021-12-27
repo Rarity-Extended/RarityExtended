@@ -51,6 +51,30 @@ module.exports = {
 				epic: 'rgb(138,47,146)',
 				legendary: 'rgb(192,109,44)',
 				relic: 'rgb(133,33,24)',
+			},
+			blood: {
+				50: '#ff9696',
+				100: '#ff7878',
+				200: '#ff5a5a',
+				300: '#f13c3c',
+				400: '#d31e1e',
+				500: '#b50000',
+				600: '#970000',
+				700: '#790000',
+				800: '#5b0000',
+				900: '#3d0000'
+			},
+			fire: {
+				50: '#ffffff',
+				100: '#ffffdb',
+				200: '#ffec7f',
+				300: '#ffb043',
+				400: '#df7407',
+				500: '#c15600',
+				600: '#851a00',
+				700: '#670000',
+				800: '#490000',
+				900: '#2b0000'
 			}
 		},
 		extend: {
@@ -77,10 +101,12 @@ module.exports = {
 				57: '14.25rem',
 				75: '18.75rem',
 				77: '19.25rem',
-				screen: '100vw'
+				screen: '100vw',
+				'adventure-card': '272px'
 			},
 			height: {
-				15: '60px'
+				15: '60px',
+				'adventure-card': '307px'
 			},
 			minHeight: {
 				120: '480px',
@@ -95,7 +121,7 @@ module.exports = {
 				'width': 'width',
 			},
 			animation: {
-				'bounce-r': 'bounce-r 1s infinite'
+				'bounce-r': 'bounce-r 1s infinite',
 			},
 			keyframes: {
 				'bounce-r': {
@@ -107,7 +133,7 @@ module.exports = {
 						transform: 'translateX(-25%)',
 						'animation-timing-function': 'cubic-bezier(.8,0,1,1)'
 					}
-				}
+				},
 			}
 		},
 	},

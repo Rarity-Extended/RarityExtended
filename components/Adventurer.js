@@ -10,25 +10,35 @@ import	Image		from	'next/image';
 import	Box			from	'components/Box';
 import	useUI		from	'contexts/useUI';
 import	useRarity	from	'contexts/useRarity';
+import	CLASSES		from	'utils/codex/classes';
 
-function	Adventurer({rarityClass, adventurer, onClick, children, noHover}) {
+function	Adventurer({
+	rarityClass, adventurer, 
+	onClick, children, noHover, 
+	width, height, 
+	borderStyle = 'bg-black dark:bg-dark-100', 
+	bgStyle = 'bg-white dark:bg-dark-600', 
+	hoverStyle = 'hover:bg-gray-principal dark:hover:bg-dark-900'}) {
+
+	const adventurerClass = rarityClass || CLASSES[adventurer.class];
 	const	{raritySkins} = useUI();
 	const	{skins} = useRarity();
 
 	return (
 		<Box
-			className={`w-full p-4 flex justify-center items-center flex-col bg-white dark:bg-dark-600 ${noHover ? '' : 'group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer'} transition-colors relative mb-4 md:mb-0`}
+			className={`w-full p-4 flex justify-center items-center flex-col ${noHover ? '' : `group cursor-pointer ${hoverStyle}`} transition-colors relative mb-4 md:mb-0 ${bgStyle}`}
+			borderStyle={borderStyle}
 			onClick={onClick}>
 			<Image
 				src={raritySkins ? skins[adventurer?.tokenID] || adventurer?.skin : adventurer?.skin}
 				loading={'eager'}
 				quality={90}
-				width={160}
-				height={160} />
+				width={width || 160}
+				height={height || 160} />
 			<p className={'text-sm text-black dark:text-white justify-center group-hover:underline'}>
 				{adventurer.name || adventurer.tokenID}
 			</p>
-			<p className={'text-xss text-black dark:text-white justify-center text-center mt-1'}>{`${rarityClass.name} level ${adventurer.level}`}</p>
+			<p className={'text-xss text-black dark:text-white justify-center text-center mt-1'}>{`${adventurerClass.name} level ${adventurer.level}`}</p>
 			{children}
 		</Box>
 	);
