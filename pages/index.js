@@ -29,7 +29,6 @@ import	{availableSkillPoints, calculatePointsForSet}	from	'utils/libs/raritySkil
 import	{featsPerClass, initialFeatsPerClass}			from	'utils/libs/rarityFeats';
 import	{xpRequired}									from	'utils/libs/rarity';
 import	{goAdventure, claimGold, levelUp}				from	'utils/actions';
-import	Candy												from 	'components/icons/Candy';
 
 dayjs.extend(relativeTime);
 
