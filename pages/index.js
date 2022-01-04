@@ -105,22 +105,6 @@ function	AdventurerList({favoritesAdventurers, set_favoritesAdventurers}) {
 			</div>
 				
 			<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4 px-1'}>
-
-				<div className={'w-full'}>
-					<Box
-						onClick={() => router.push('/festivals/raffle/')}
-						className={'w-full h-full p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer\'} transition-colors relative mb-4 md:mb-0 cursor-pointer'}>
-						<div className={'w-full h-full p-4 flex justify-center items-center'}><Candy width={124} height={124}></Candy></div>
-
-						<p className={'text-sm text-black dark:text-white justify-center group-hover:underline'}>
-							{'Candy Raffle'}
-						</p>
-						<p className={'text-xss text-black dark:text-white justify-center text-center mt-1'}>
-							{'Festival Year 1'}
-						</p>
-					</Box>
-				</div>
-
 				{[...Object.values(rarities)]
 					.filter((adventurer) => {
 						if (classTab === 1)
