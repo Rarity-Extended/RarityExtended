@@ -108,22 +108,26 @@ export const TOWN = {
 	},
 };
 
-export const QUESTS = {
+export const ADVENTURES = {
 	'boars': {
 		label: 'Boars',
-		href: '/countryside/boars'
+		href: '/adventures/the-boars'
 	},
 	'forest': {
 		label: 'Forest',
-		href: '/countryside/forest'
+		href: '/adventures/the-forest'
 	},
 	'cellar': {
 		label: 'Cellar',
-		href: '/countryside/cellar'
+		href: '/adventures/the-cellar'
 	},
 	'openmic': {
 		label: 'Tavern Hooligans',
-		href: '/countryside/openmic'
+		href: '/adventures/openmic'
+	},
+	'spooky-festival': {
+		label: 'Spooky Festival',
+		href: '/adventures/spooky-festival'
 	}
 };
 
@@ -135,8 +139,8 @@ export async function newEthCallProvider(provider, devMode) {
 	const	ethcallProvider = new Provider();
 	if (devMode) {
 		await	ethcallProvider.init(new ethers.providers.JsonRpcProvider('http://localhost:8545'));
-		ethcallProvider.multicall = { address: '0xc04d660976c923ddba750341fe5923e47900cf24' };
-		ethcallProvider.multicall2 = { address: '0x470ADB45f5a9ac3550bcFFaD9D990Bf7e2e941c9' };
+		ethcallProvider.multicall = {address: '0xc04d660976c923ddba750341fe5923e47900cf24'};
+		ethcallProvider.multicall2 = {address: '0x470ADB45f5a9ac3550bcFFaD9D990Bf7e2e941c9'};
 		return ethcallProvider;
 	}
 	await	ethcallProvider.init(provider);

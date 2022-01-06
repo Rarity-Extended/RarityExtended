@@ -5,7 +5,7 @@
 **	@Filename:				Inventory.js
 ******************************************************************************/
 
-import	React, {useState}			from	'react';
+import	React						from	'react';
 import	Image						from	'next/image';
 import	Link						from	'next/link';
 import	{ethers}					from	'ethers';
@@ -29,7 +29,7 @@ function	ItemsTheCellar({item, adventurer}) {
 			</div>
 			<div className={'text-left flex flex-col py-0.5'}>
 				<p className={'text-xs'}>{item.name}</p>
-				<p className={'text-megaxs mt-auto'}>{`QTY: ${Number(adventurer?.inventory?.[item.id])}`}</p>
+				<p className={'text-megaxs mt-auto'}>{`QTY: ${Number(adventurer?.inventory?.[item.address])}`}</p>
 			</div>
 			<div className={'tooltiptext invisible group-hover:visible bg-white dark:bg-dark-600 border-4 border-black dark:border-dark-100'}>
 				<div className={'p-4'}>
@@ -109,23 +109,23 @@ function	Inventory({adventurer}) {
 		let		hasItem = false;
 		const	toRender = allItems
 			.map((item, i) => {
-				if (ethers.BigNumber.isBigNumber(adventurer?.inventory?.[item.id])) {
-					if ((Number(adventurer?.inventory?.[item.id]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
+				if (ethers.BigNumber.isBigNumber(adventurer?.inventory?.[item.address])) {
+					if ((Number(adventurer?.inventory?.[item.address]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
 						hasItem = true;
-						return (<ItemsTheCellar key={`${item.id}_${i}`} item={item} adventurer={adventurer} />);
+						return (<ItemsTheCellar key={`${item.address}_${i}`} item={item} adventurer={adventurer} />);
 					}
 					return null;
 				}
-				if(Array.isArray(adventurer?.inventory?.[item.id]) && item?.dungeon === 'The Forest') {
-					return adventurer?.inventory?.[item.id].map((subItem, subi) => {
+				if(Array.isArray(adventurer?.inventory?.[item.address]) && item?.dungeon === 'The Forest') {
+					return adventurer?.inventory?.[item.address].map((subItem, subi) => {
 						hasItem = true;
-						return (<ItemsTheForest key={`${item.id}_${i}_${subi}`} item={item} subItem={subItem} />);
+						return (<ItemsTheForest key={`${item.address}_${i}_${subi}`} item={item} subItem={subItem} />);
 					});
 				}
-				if(Array.isArray(adventurer?.inventory?.[item.id]) && item?.dungeon === 'OpenMic') {
-					return adventurer?.inventory?.[item.id].map((subItem, subi) => {
+				if(Array.isArray(adventurer?.inventory?.[item.address]) && item?.dungeon === 'OpenMic') {
+					return adventurer?.inventory?.[item.address].map((subItem, subi) => {
 						hasItem = true;
-						return (<ItemsOpenMic key={`${item.id}_${i}_${subi}`} subItem={subItem} />);
+						return (<ItemsOpenMic key={`${item.address}_${i}_${subi}`} subItem={subItem} />);
 					});
 				}
 				return (null);

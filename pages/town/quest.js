@@ -13,7 +13,7 @@ import	useRarity						from	'contexts/useRarity';
 import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
 import	Box								from	'components/Box';
-import	{getOpenMicDialogOption}		from	'components/dungeons/openmic';
+import	{getOpenMicDialogOption} 		from	'components/openmic';
 
 function	DialogChoices({adventurersCount, router}) {
 	const	[selectedOption, set_selectedOption] = useState(0);
@@ -60,7 +60,7 @@ function	DialogChoices({adventurersCount, router}) {
 							<span className={'text-tag-info dark:text-tag-warning'}>{'THE CELLAR'}</span>
 						</>
 					),
-					onClick: () => router.push('/countryside/cellar')
+					onClick: () => router.push('/adventures/the-cellar')
 				},
 				{
 					label: (
@@ -69,7 +69,7 @@ function	DialogChoices({adventurersCount, router}) {
 							<span className={'text-tag-info dark:text-tag-warning'}>{'THE FOREST'}</span>
 						</>
 					),
-					onClick: () => router.push('/countryside/forest')
+					onClick: () => router.push('/adventures/the-forest')
 				},
 				{
 					label: (
@@ -78,7 +78,7 @@ function	DialogChoices({adventurersCount, router}) {
 							<span className={'text-tag-info dark:text-tag-warning'}>{' THE BOARS'}</span>
 						</>
 					),
-					onClick: () => router.push('/countryside/boars')
+					onClick: () => router.push('/adventures/the-boars')
 				},
 				{
 					label: (
@@ -86,7 +86,7 @@ function	DialogChoices({adventurersCount, router}) {
 							<span className={'text-tag-info dark:text-tag-warning'}>{'HOOLIGANS '}</span> {' IN THE TAVERN'}
 						</>
 					),
-					onClick: () => router.push('/countryside/openmic')
+					onClick: () => router.push('/adventures/openmic')
 				},
 			]} />
 	);

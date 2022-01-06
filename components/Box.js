@@ -22,10 +22,10 @@ function	Box({children, className, style, onClick, borderStyle = 'bg-black dark:
 			<div className={`absolute h-1 w-1 ${borderStyle} bottom-1 right-0`} />
 			<div className={`absolute h-1 ${borderStyle} bottom-0 left-1 right-1`} />
 
-			<div className={`absolute h-1 w-1 bg-white dark:bg-dark-600 top-0 right-0`} />
-			<div className={`absolute h-1 w-1 bg-white dark:bg-dark-600 top-0 left-0`} />
-			<div className={`absolute h-1 w-1 bg-white dark:bg-dark-600 bottom-0 right-0`} />
-			<div className={`absolute h-1 w-1 bg-white dark:bg-dark-600 bottom-0 left-0`} />
+			<div className={'absolute h-1 w-1 bg-white dark:bg-dark-600 top-0 right-0'} />
+			<div className={'absolute h-1 w-1 bg-white dark:bg-dark-600 top-0 left-0'} />
+			<div className={'absolute h-1 w-1 bg-white dark:bg-dark-600 bottom-0 right-0'} />
+			<div className={'absolute h-1 w-1 bg-white dark:bg-dark-600 bottom-0 left-0'} />
 		</div>
 	);
 }

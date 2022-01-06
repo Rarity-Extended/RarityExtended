@@ -27,12 +27,13 @@ module.exports = {
 				principal: '#F2F2F2',
 				secondary: '#E0E0E0',
 				darker: '#828282',
+				lighter: '#fafafa'
 			},
 			tag: {
 				new: '#059669',
 				info: '#167df0',
 				warning: '#FBBF24',
-				warningDarker: '#F59E0B',
+				warningDarker: '#FAB80F',
 				withdraw: '#EF4444'
 			},
 			white: colors.white,

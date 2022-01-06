@@ -38,7 +38,7 @@ export async function	perform({provider, tokenID}, callback) {
 		const	transaction = await openmic.perform(tokenID, {gasLimit: 400_000});
 		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
-			const {check, success, crit} = transactionResult?.events[0]?.args;
+			const {check, success, crit} = (transactionResult?.events[0]?.args || {});
 			const prizes = [];
 			if(success) {
 				const allPrizes = await openmic.getPrizes(tokenID);

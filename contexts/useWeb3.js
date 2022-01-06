@@ -27,8 +27,8 @@ function getProvider() {
 	return new ethers.providers.JsonRpcProvider('https://rpc.ftm.tools');
 }
 
+const	isClient = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 export const Web3ContextApp = ({children}) => {
-	const	isClient = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 	const	web3 = useWeb3React();
 	const	[initialized, set_initialized] = useState(false);
 	const	[provider, set_provider] = useState(undefined);
@@ -42,13 +42,13 @@ export const Web3ContextApp = ({children}) => {
 
 	const	{activate, active, library, connector, account, chainId, deactivate} = web3;
 	const	{data: chainTimeNonce} = useSWR('chainTime', fakeFetcher, {
-		refreshInterval: 2 * 1000,
+		refreshInterval: 10 * 1000,
 		revalidateIfStale: true,
 		revalidateOnMount: true,
 		revalidateOnFocus: true,
 		revalidateOnReconnect: true,
 		refreshWhenHidden: true,
-		dedupingInterval: 1.5 * 1000,
+		dedupingInterval: 8 * 1000,
 	});
 
 	useEffect(() => {

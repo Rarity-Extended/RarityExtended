@@ -40,7 +40,7 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, router, adventur
 	}
 	const artifactList = Object.values(adventurers).map((adventurer) => {
 		return (
-			adventurer?.inventory[1].map((item, i) => {
+			adventurer?.inventory[process.env.DUNGEON_THE_FOREST_ADDR].map((item, i) => {
 				return (
 					<Artifact
 						key={`${item.id}_${i}`}

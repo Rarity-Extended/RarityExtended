@@ -2,7 +2,7 @@
 **	@Author:				Rarity Extended
 **	@Twitter:				@RXtended
 **	@Date:					Sunday September 26th 2021
-**	@Filename:				ModalSkills.js
+**	@Filename:				ModalFeats.js
 ******************************************************************************/
 
 import	React, {Fragment, useState}						from	'react';
@@ -152,7 +152,6 @@ function	Feats({adventurer, isOpen, closeModal}) {
 											} else if (typeTab === 1) {
 												return feat.type === 'General';
 											} else if (typeTab === 2) {
-												console.log(feat.type);
 												return feat.type === 'Item Creation';
 											} else if (typeTab === 3) {
 												return feat.type === 'Metamagic';

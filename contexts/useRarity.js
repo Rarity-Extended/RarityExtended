@@ -13,7 +13,7 @@ import	useSWR													from	'swr';
 import	dayjs													from	'dayjs';
 import	relativeTime											from	'dayjs/plugin/relativeTime';
 import	useWeb3													from	'contexts/useWeb3';
-import 	ModalSelectAdventurer 					from	'components/ModalSelectAdventurer';
+import 	ModalSelectAdventurer 									from	'components/ModalSelectAdventurer';
 import	useIndexDB												from	'hook/useIDB';
 import	{chunk, fetcher, toAddress, newEthCallProvider}			from	'utils';
 import	ITEMS													from	'utils/codex/items';
@@ -28,25 +28,6 @@ dayjs.extend(relativeTime);
 
 const	RarityContext = createContext();
 let		isUpdatingRarities = false;
-
-function	triggerNotification(title, options) {
-	if (typeof(window) === 'undefined') {
-		return;
-	}
-	if (!('Notification' in window)) {
-		return;
-	}
-
-	if (Notification.permission !== 'granted') {
-		Notification.requestPermission().then(permission => {
-			if (permission === 'granted') {
-				new Notification(title, options);
-			}
-		});
-	} else {
-		new Notification(title, options);
-	}
-}
 
 export const RarityContextApp = ({children}) => {
 	const	{active, address, chainID, chainTime, provider} = useWeb3();
@@ -72,27 +53,6 @@ export const RarityContextApp = ({children}) => {
 		}
 	}, [rarities, address, active]);
 
-	//NOTIFICATION SYSTEM
-	useEffect(() => {
-		Object.values(rarities).forEach((adventurer) => {
-			if (!adventurer.logCanAdventure) {
-				const	nowCanAdventure = dayjs(new Date(adventurer.log * 1000)).isBefore(dayjs(new Date(chainTime * 1000)));
-				if (nowCanAdventure) {
-					triggerNotification(
-						`${adventurer.tokenID} IS READY FOR A NEW ADVENTURE`,
-						{
-							body: `Your adventurer ${adventurer.name ? adventurer.name : adventurer.tokenID}, a ${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}, is ready for a new adventure!`,
-							icon: CLASSES[currentAdventurer?.class].img
-						});
-					set_rarities((prev) => ({...prev, [adventurer.tokenID]: {
-						...prev[adventurer.tokenID],
-						logCanAdventure: true,
-					}}));
-				}
-			}
-		});
-	}, [chainTime]);
-
 	/**************************************************************************
 	**	Reset the rarities when the chain changes, when the address changes or
 	**	when the web3 become inactive.
@@ -116,7 +76,6 @@ export const RarityContextApp = ({children}) => {
 	async function	fetchRaritySkins(tokensIDs) {
 		const	raritySkinHelper = new Contract(process.env.RARITY_EXTENDED_SKIN_HELPER_ADDR, process.env.RARITY_EXTENDED_SKIN_HELPER_ABI);
 		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
-		const	calls = [];
 		for (let index = 0; index < tokensIDs.length; index++) {
 			const tokenID = tokensIDs[index];
 			const callResult = await ethcallProvider.tryAll([raritySkinHelper.getAdventurerSkin(tokenID)]);
@@ -164,9 +123,6 @@ export const RarityContextApp = ({children}) => {
 		const	rarityDungeonBoars = new Contract(process.env.DUNGEON_BOARS_ADDR, process.env.DUNGEON_BOARS_ABI);
 		const	rarityDungeonOpenMic = new Contract(process.env.DUNGEON_OPEN_MIC_V2_ADDR, process.env.DUNGEON_OPEN_MIC_V2_ABI);
 
-		// Was enabled during Spooky Festival year 1
-		// const	rarityFestivalSpooky = new Contract(process.env.FESTIVAL_SPOOKY_ADDR, process.env.FESTIVAL_SPOOKY_ABI);
-
 		return [
 			rarity.ownerOf(tokenID),
 			rarity.summoner(tokenID),
@@ -182,13 +138,6 @@ export const RarityContextApp = ({children}) => {
 			rarityDungeonForest.getResearchBySummoner(tokenID),
 			rarityDungeonBoars.actions_log(tokenID),
 			rarityDungeonOpenMic.timeToNextPerformance(tokenID),
-
-			// Was enabled during Spooky Festival year 1
-			// rarityFestivalSpooky.claimed(tokenID),
-			// rarityFestivalSpooky.trick_or_treat_count(tokenID),
-			// rarityFestivalSpooky.trick_or_treat_log(tokenID),
-			// rarityFestivalSpooky.activities_count(tokenID),
-			// rarityFestivalSpooky.activities_log(tokenID),
 		];
 	}
 
@@ -218,17 +167,21 @@ export const RarityContextApp = ({children}) => {
 			balanceOfGold, claimableGold,
 			skills, feats,
 			cellarLog, cellarScout, forestResearch, boarsLog, timeToNextOpenMic,
-			// spookyFestivalClaimed, spookyFestivalTrickCount, spookyFestivalTrickLog, spookyFestivalActivitiesCount, spookyFestivalActivitiesLog // Was enabled during Spooky Festival year 1
 		] = multicallResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
 			set_rarities((prev) => {
-        delete prev[tokenID];
-        return ({...prev});
+				delete prev[tokenID];
+				return ({...prev});
 			});
 			return;
 		}
 
+		const	_inventory = [];
+		for (let index = 0; index < ITEMS.length; index++) {
+			const item = ITEMS[index];
+			_inventory[item.address] = inventoryCallResult[index];
+		}
 		const	_adventurer = {
 			tokenID: tokenID,
 			owner: owner,
@@ -254,7 +207,7 @@ export const RarityContextApp = ({children}) => {
 			},
 			skills: skills,
 			feats: (feats || []).map(f => Number(f)),
-			skin: CLASSES[Number(adventurer['_class'])]?.img,
+			skin: CLASSES[Number(adventurer['_class'])]?.images?.front,
 			dungeons: {
 				cellar: {
 					log: Number(cellarLog),
@@ -274,26 +227,13 @@ export const RarityContextApp = ({children}) => {
 					timeToNextPerformance: timeToNextOpenMic
 				}
 			},
-			festivals: {
-				// Was enabled during Spooky Festival year 1
-				// spooky: {
-				// 	claimed: spookyFestivalClaimed,
-				// 	trickCount: spookyFestivalTrickCount,
-				// 	trickLog: spookyFestivalTrickLog,
-				// 	activitiesCount: spookyFestivalActivitiesCount,
-				// 	activitiesLog: spookyFestivalActivitiesLog,
-				// 	canTrick: dayjs(new Date(Number(spookyFestivalTrickLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
-				// 	canActivity: dayjs(new Date(Number(spookyFestivalActivitiesLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
-				// }
-			},
-			inventory: inventoryCallResult
-		}
+			inventory: _inventory
+		};
 		if (!currentAdventurer || (currentAdventurer && tokenID === currentAdventurer.tokenID)) {
 			set_currentAdventurer(p => (!p || (p && tokenID === p.tokenID)) ? _adventurer : p);
 		}
 
 		set_rarities((prev) => ({...prev, [tokenID]: _adventurer}));
-		set_rNonce(prev => prev + 1);
 	}
 
 	/**************************************************************************

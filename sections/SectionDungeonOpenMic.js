@@ -5,19 +5,19 @@
 **	@Filename:				SectionDungeonOpenMic.js
 ******************************************************************************/
 
-import	React							from	'react';
-import	dayjs							from	'dayjs';
+import	React						from	'react';
+import	dayjs						from	'dayjs';
 import	duration					from	'dayjs/plugin/duration';
-import	relativeTime					from	'dayjs/plugin/relativeTime';
-import	CLASSES							from	'utils/codex/classes';
-import	{ OpenMicSignUpList }		from 'components/dungeons/openmic';
+import	relativeTime				from	'dayjs/plugin/relativeTime';
+import	CLASSES						from	'utils/codex/classes';
+import	{OpenMicSignUpList}			from	'components/openmic';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
 function	SectionDungeonOpenMic({shouldDisplay, adventurers, router}) {
-  const bards = Object.values(adventurers)?.filter(a => CLASSES[a.class].id === 2);
-  const bardCount = bards?.length;
+	const bards = Object.values(adventurers)?.filter(a => CLASSES[a.class].id === 2);
+	const bardCount = bards?.length;
 
 	if (!shouldDisplay) {
 		return null;

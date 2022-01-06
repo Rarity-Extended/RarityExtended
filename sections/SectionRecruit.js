@@ -37,7 +37,7 @@ function	Class({provider, rarityClass, fetchRarity}) {
 				});
 			}}>
 			<Image
-				src={rarityClass.img}
+				src={rarityClass?.images?.front}
 				quality={100}
 				width={240}
 				height={240} />

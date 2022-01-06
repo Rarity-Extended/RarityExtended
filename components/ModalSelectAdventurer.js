@@ -34,10 +34,10 @@ const defaultOptions = {
 	exclusions: [],
 	level: levelOptions[0],
 	classSelected: classOptions[0]
-}
+};
 
-function ModalSelectAdventurer({ isOpen, onClose, onSelect, options = defaultOptions }) {
-  const	{rarities} = useRarity();
+function ModalSelectAdventurer({isOpen, onClose, onSelect, options = defaultOptions}) {
+	const	{rarities} = useRarity();
 	const	{address, deactivate, onDesactivate} = useWeb3();
 	const	[search, set_search] = useState('');
 	const	[classTab, set_classTab] = useState(0);
@@ -45,12 +45,12 @@ function ModalSelectAdventurer({ isOpen, onClose, onSelect, options = defaultOpt
 	const	[classSelected, set_classSelected] = useState(options.classSelected || defaultOptions.classSelected);
 	const	[favoritesAdventurers, set_favoritesAdventurers] = useLocalStorage('favorites', []);
 
-  function clickAdventurer(adventurer) {
-    onClose();
+	function clickAdventurer(adventurer) {
+		onClose();
 		setTimeout(() => {
 			onSelect(adventurer);
 		}, 250);
-  }
+	}
 
 	return (
 		<Transition appear show={isOpen} as={Fragment}>
@@ -132,9 +132,9 @@ function ModalSelectAdventurer({ isOpen, onClose, onSelect, options = defaultOpt
 								
 							<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4 min-h-0 md:min-h-133 max-h-72 md:max-h-133 overflow-y-scroll px-1'}>
 								{[...Object.values(rarities)]
-                  .filter((adventurer) => {
-                    return !options.exclusions.includes(adventurer?.tokenID);
-                  })
+									.filter((adventurer) => {
+										return !options.exclusions.includes(adventurer?.tokenID);
+									})
 									.filter((adventurer) => {
 										if (classTab === 1)
 											return favoritesAdventurers.includes(adventurer?.tokenID);
@@ -179,7 +179,7 @@ function ModalSelectAdventurer({ isOpen, onClose, onSelect, options = defaultOpt
 														<svg width={20} height={20} aria-hidden={'true'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 576 512'}><path fill={'currentColor'} d={'M316.7 17.8l65.43 132.4l146.4 21.29c26.27 3.796 36.79 36.09 17.75 54.59l-105.9 102.1l25.05 145.5c4.508 26.31-23.23 45.9-46.49 33.7L288 439.6l-130.9 68.7C133.8 520.5 106.1 500.9 110.6 474.6l25.05-145.5L29.72 226.1c-19.03-18.5-8.516-50.79 17.75-54.59l146.4-21.29l65.43-132.4C271.1-6.083 305-5.786 316.7 17.8z'}></path></svg>
 													</div>
 													<div
-														className={`absolute transition-colors right-4 top-0 text-gray-secondary hover:text-tag-info dark:text-dark-400 dark:hover:text-dark-100`}>
+														className={'absolute transition-colors right-4 top-0 text-gray-secondary hover:text-tag-info dark:text-dark-400 dark:hover:text-dark-100'}>
 														<svg width={24} height={24} xmlns={'http://www.w3.org/2000/svg'} x={'0px'} y={'0px'} viewBox={'0 0 24 24'}>
 															<path d={'M18,2H6v2h12v16h-2v-2h-2v-2h-4v2H8v2H6V2H4v20h4v-2h2v-2h4v2h2v2h4V2H18z'} fill={'currentcolor'}/>
 															<polygon fill={'currentcolor'} points={'6,4 18,4 18,20 16,20 16,18 14,18 14,16 10,16 10,18 8,18 8,20 6,20 '}/>

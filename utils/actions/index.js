@@ -345,7 +345,6 @@ export async function	craft({
 	craftingMaterials,
 	forced = false
 }, callback) {
-	let		hadApprove = false;
 	let		_toast;
 	const	signer = provider.getSigner();
 	const	rarityCraft = new ethers.Contract(
@@ -354,40 +353,6 @@ export async function	craft({
 		signer
 	);
 
-	/**********************************************************************
-	**	First, we need to approve this TX
-	**********************************************************************/
-	try {
-		const	raritySource = new ethers.Contract(
-			process.env.RARITY_ADDR, [
-				'function getApproved(uint256 tokenId) external view returns (address operator)',
-				'function approve(address to, uint256 tokenId) external'
-			],
-			signer
-		);
-		const	approvedAddr = await raritySource.getApproved(tokenID);
-		if (approvedAddr !== process.env.RARITY_CRAFTING_ADDR) {
-			hadApprove = true;
-			_toast = toast.loading('1/2 - Approving craft ...');
-			const	transaction = await raritySource.approve(process.env.RARITY_CRAFTING_ADDR, tokenID);
-			const	transactionResult = await transaction.wait(2);
-			if (transactionResult.status === 1) {
-				toast.dismiss(_toast);
-			} else {
-				toast.dismiss(_toast);
-				toast.error('Approve reverted');
-				callback({error: true, data: undefined});
-				return;
-			}
-		}
-	} catch (error) {
-		console.error(error);
-		toast.dismiss(_toast);
-		toast.error('Something went wrong, please try again later.');
-		callback({error, data: undefined});
-		return;
-	}
-	
 	/**********************************************************************
 	**	Then, we need to simulate the crafting to avoid absolute errors
 	**********************************************************************/
@@ -399,17 +364,13 @@ export async function	craft({
 			craftingMaterials
 		);
 		if (!simulation.crafted) {
-			callback({error: 'SIMULATION_FAILED', data: tokenID});
+			// callback({error: 'SIMULATION_FAILED', data: tokenID});
 			toast.error('IT\'S A BAD IDEA TO CRAFT THAT RIGHT NOW. TRY AGAIN LATER');
-			return;
+			// return;
 		}
 	}
 
-	if (hadApprove) {
-		_toast = toast.loading(`2/2 Trying to craft ${itemName}...`);
-	} else {
-		_toast = toast.loading(`Trying to craft ${itemName}...`);
-	}
+	_toast = toast.loading(`Trying to craft ${itemName}...`);
 	/**********************************************************************
 	**	In order to avoid dumb error, let's first check if the TX would
 	**	be successful with a static call
@@ -444,7 +405,7 @@ export async function	craft({
 			if (transactionResult.logs.length === 0) {
 				callback({error: 'CRAFT_FAILED', data: tokenID});
 				toast.dismiss(_toast);
-				toast.error('YOU FAILED YOUR CRAFT ATTEMPT');	
+				toast.error('Craft attempt failed');	
 				return;
 			}
 			callback({error: false, data: tokenID});

@@ -210,17 +210,17 @@ function	Index() {
 				let		hasItem = false;
 				const	toRender = allItems
 					.map((item, i) => {
-						if (ethers.BigNumber.isBigNumber(adventurer?.inventory?.[item.id])) {
-							if ((Number(adventurer?.inventory?.[item.id]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
+						if (ethers.BigNumber.isBigNumber(adventurer?.inventory?.[item.address])) {
+							if ((Number(adventurer?.inventory?.[item.address]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
 								hasItem = true;
-								return (<ItemsStandard key={`${item.id}_${i}`} item={item} amount={Number(adventurer?.inventory?.[item.id])} />);
+								return (<ItemsStandard key={`${item.address}_${i}`} item={item} amount={Number(adventurer?.inventory?.[item.address])} />);
 							}
 							return null;
 						}
-						if(Array.isArray(adventurer?.inventory?.[item.id]) && item?.dungeon === 'The Forest') {
-							return adventurer?.inventory?.[item.id].map((subItem, subi) => {
+						if(Array.isArray(adventurer?.inventory?.[item.address]) && item?.dungeon === 'The Forest') {
+							return adventurer?.inventory?.[item.address].map((subItem, subi) => {
 								hasItem = true;
-								return (<ItemsTheForest key={`${item.id}_${i}_${subi}`} item={item} subItem={subItem} />);
+								return (<ItemsTheForest key={`${item.address}_${i}_${subi}`} item={item} subItem={subItem} />);
 							});
 						}
 						return (null);
@@ -250,9 +250,9 @@ function	Index() {
 				return null;
 			}
 			const reducer = (reducer, adventurer) => {
-				if (ethers.BigNumber.isBigNumber(adventurer?.inventory?.[item.id])) {
-					if ((Number(adventurer?.inventory?.[item.id]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
-						return Number(Number(reducer) + (Number(adventurer?.inventory?.[item.id] || 0)));
+				if (ethers.BigNumber.isBigNumber(adventurer?.inventory?.[item.address])) {
+					if ((Number(adventurer?.inventory?.[item.address]) > 0 || item.shouldAlwaysDisplay) && !item.shouldNeverDisplay) {
+						return Number(Number(reducer) + (Number(adventurer?.inventory?.[item.address] || 0)));
 					}
 				}
 				return (Number(reducer) + 0);
@@ -262,16 +262,16 @@ function	Index() {
 			if (amount === 0) {
 				return null;
 			}
-			return (<ItemsStandard key={`${item.id}_${i}`} item={item} amount={amount} />);
+			return (<ItemsStandard key={`${item.address}_${i}`} item={item} amount={amount} />);
 		});
 
 		const	toRenderSpecifics = allItems.map((item, i) => {
 			if (item.isSpecific) {
 				return (
 					Object.values(rarities).map((adventurer) => {
-						if(Array.isArray(adventurer?.inventory?.[item.id]) && item?.dungeon === 'The Forest') {
-							return adventurer?.inventory?.[item.id].map((subItem, subi) => {
-								return (<ItemsTheForest key={`${item.id}_${i}_${subi}`} item={item} subItem={subItem} />);
+						if(Array.isArray(adventurer?.inventory?.[item.address]) && item?.dungeon === 'The Forest') {
+							return adventurer?.inventory?.[item.address].map((subItem, subi) => {
+								return (<ItemsTheForest key={`${item.address}_${i}_${subi}`} item={item} subItem={subItem} />);
 							});
 						}
 					})

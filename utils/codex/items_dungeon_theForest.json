@@ -2,7 +2,7 @@
 	"Dead King crown": {
 		"name": "Dead King crown",
 		"description": "Once was a king, his name was lost but not his crown.",
-		"img": "/items/dead_king_crown.png",
+		"img": "/items/the-forest/dead_king_crown.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -15,7 +15,7 @@
 	"Black gauntlet": {
 		"name": "Black gauntlet",
 		"description": "A mysterious gauntlet, with mysterious power.",
-		"img": "/items/black_gauntlet.png",
+		"img": "/items/the-forest/black_gauntlet.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -28,7 +28,7 @@
 	"Haunted ring": {
 		"name": "Haunted ring",
 		"description": "Tells the story, that belonged to a witch...",
-		"img": "/items/haunted_ring.png",
+		"img": "/items/the-forest/haunted_ring.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -46,7 +46,7 @@
 	"Ancient book": {
 		"name": "Ancient book",
 		"description": "The forest has a lot of stories, not as many as this book.",
-		"img": "/items/ancient_book.png",
+		"img": "/items/the-forest/ancient_book.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -60,7 +60,7 @@
 	"Enchanted book": {
 		"name": "Enchanted book",
 		"description": "I wouldn't take it if I was you ...",
-		"img": "/items/enchanted_book.png",
+		"img": "/items/the-forest/enchanted_book.png",
 		"isCursed": true,
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
@@ -79,7 +79,7 @@
 	"Gold ring": {
 		"name": "Gold ring",
 		"description": "Crafted by nobody, 'belongs to whoever finds it' is engraved on the ring...",
-		"img": "/items/gold_ring.png",
+		"img": "/items/the-forest/gold_ring.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -92,7 +92,7 @@
 	"Treasure map": {
 		"name": "Treasure map",
 		"description": "Where does it lead? to the rarest destiny.",
-		"img": "/items/treasure_map.png",
+		"img": "/items/the-forest/treasure_map.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -106,7 +106,7 @@
 	"Spell book": {
 		"name": "Spell book",
 		"description": "Beware! can cast a spell on you.",
-		"img": "/items/spell_book.png",
+		"img": "/items/the-forest/spell_book.png",
 		"isCursed": true,
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
@@ -125,7 +125,7 @@
 	"Magic necklace": {
 		"name": "Magic necklace",
 		"description": "An unprecedented magic, anyway it looks cool.",
-		"img": "/items/magic_necklace.png",
+		"img": "/items/the-forest/magic_necklace.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -138,7 +138,7 @@
 	"Mechanical hand": {
 		"name": "Mechanical hand",
 		"description": "Solid and rigid, but precise and delicate.",
-		"img": "/items/mechanical_hand.png",
+		"img": "/items/the-forest/mechanical_hand.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -156,7 +156,7 @@
 	"War helmet": {
 		"name": "War helmet",
 		"description": "Survived the battle, not as its former carrier.",
-		"img": "/items/war_helmet.png",
+		"img": "/items/the-forest/war_helmet.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -174,7 +174,7 @@
 	"Fire boots": {
 		"name": "Fire boots",
 		"description": "The God of Fire created these. Only a cold soul could carry them.",
-		"img": "/items/PIXEL_fire_boots.png",
+		"img": "/items/the-forest/fire_boots.png",
 		"level": "Epic",
 		"levelClassName": "bg-items-epic",
 		"modifier": [{
@@ -187,7 +187,7 @@
 	"War trophy": {
 		"name": "War trophy",
 		"description": "A war where too much was lost.",
-		"img": "/items/war_trophy.png",
+		"img": "/items/the-forest/war_trophy.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -201,7 +201,7 @@
 	"Elf skull": {
 		"name": "Elf skull",
 		"description": "The anatomy of an elf, the trophy of his assassin.",
-		"img": "/items/elf_skull.png",
+		"img": "/items/the-forest/elf_skull.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -220,7 +220,7 @@
 	"Unknown ring": {
 		"name": "Unknown ring",
 		"description": "A mystery created in the hardest metal.",
-		"img": "/items/unknown_ring.png",
+		"img": "/items/the-forest/unknown_ring.png",
 		"level": "Epic",
 		"levelClassName": "bg-items-epic",
 		"modifier": [{
@@ -233,7 +233,7 @@
 	"Silver ring": {
 		"name": "Silver ring",
 		"description": "Bright at first, dark in oblivion.",
-		"img": "/items/silver_ring.png",
+		"img": "/items/the-forest/silver_ring.png",
 		"isCursed": true,
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
@@ -252,7 +252,7 @@
 	"War book": {
 		"name": "War book",
 		"description": "How to start a war, how to bury your soldier friends...",
-		"img": "/items/war_book.png",
+		"img": "/items/the-forest/war_book.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -266,7 +266,7 @@
 	"Gold pot": {
 		"name": "Gold pot",
 		"description": "The temptation to put coin inside is hard to resist",
-		"img": "/items/gold_pot.png",
+		"img": "/items/the-forest/gold_pot.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -279,7 +279,7 @@
 	"Demon head": {
 		"name": "Demon head",
 		"description": "Shadowy figure, now headless.",
-		"img": "/items/demon_head.png",
+		"img": "/items/the-forest/demon_head.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -293,7 +293,7 @@
 	"Unknown key": {
 		"name": "Unknown key",
 		"description": "Whatever this may open, it's a complete mystery.",
-		"img": "/items/unknown_key.png",
+		"img": "/items/the-forest/unknown_key.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -306,7 +306,7 @@
 	"Cursed book": {
 		"name": "Cursed book",
 		"description": "An ancient enchantment. Whoever reads this will be forgotten forever.",
-		"img": "/items/cursed_book.png",
+		"img": "/items/the-forest/cursed_book.png",
 		"isCursed": true,
 		"level": "Legendary",
 		"levelClassName": "bg-items-legendary",
@@ -325,7 +325,7 @@
 	"Giant plant seed": {
 		"name": "Giant plant seed",
 		"description": "Little like a bug, tall like the sky.",
-		"img": "/items/giant_plant_seed.png",
+		"img": "/items/the-forest/giant_plant_seed.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -338,7 +338,7 @@
 	"Old farmer sickle": {
 		"name": "Old farmer sickle",
 		"description": "Only the old ones remember this sickle.",
-		"img": "/items/old_farmer_sickle.png",
+		"img": "/items/the-forest/old_farmer_sickle.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -351,7 +351,7 @@
 	"Enchanted useless tool": {
 		"name": "Enchanted useless tool",
 		"description": "Very promising, but useless.",
-		"img": "/items/enchanted_useless_tool.png",
+		"img": "/items/the-forest/enchanted_useless_tool.png",
 		"isCursed": true,
 		"level": "Epic",
 		"levelClassName": "bg-items-epic",
@@ -370,7 +370,7 @@
 	"Dragon egg": {
 		"name": "Dragon egg",
 		"description": "The perfect pet.",
-		"img": "/items/dragon_egg.png",
+		"img": "/items/the-forest/dragon_egg.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -388,7 +388,7 @@
 	"Bear claw": {
 		"name": "Bear claw",
 		"description": "Now, you can claim you survived a Bear.",
-		"img": "/items/bear_claw.png",
+		"img": "/items/the-forest/bear_claw.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -401,7 +401,7 @@
 	"Silver sword": {
 		"name": "Silver sword",
 		"description": "Even the bravest enemy is afraid to reflect on this sword.",
-		"img": "/items/silver_sword.png",
+		"img": "/items/the-forest/silver_sword.png",
 		"isCursed": true,
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
@@ -420,7 +420,7 @@
 	"Rare ring": {
 		"name": "Rare ring",
 		"description": "Very rare, hope it has a good price in the market.",
-		"img": "/items/rare_ring.png",
+		"img": "/items/the-forest/rare_ring.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -433,7 +433,7 @@
 	"Glove with diamonds": {
 		"name": "Glove with diamonds",
 		"description": "Glamor is just one of its characteristics.",
-		"img": "/items/PIXEL_glove_with_diamonds.png",
+		"img": "/items/the-forest/glove_with_diamonds.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -451,7 +451,7 @@
 	"Haunted cloak": {
 		"name": "Haunted cloak",
 		"description": "It has a life of its own, it protects those who use it.",
-		"img": "/items/PIXEL_haunted_cloak.png",
+		"img": "/items/the-forest/haunted_cloak.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -469,7 +469,7 @@
 	"Dead hero cape": {
 		"name": "Dead hero cape",
 		"description": "We honor his former owner, a hero with no name.",
-		"img": "/items/PIXEL_dead_hero_cape.png",
+		"img": "/items/the-forest/dead_hero_cape.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -487,7 +487,7 @@
 	"Enchanted talisman": {
 		"name": "Enchanted talisman",
 		"description": "When it was not enchanted it gave luck, now it only gives death.",
-		"img": "/items/enchanted_talisman.png",
+		"img": "/items/the-forest/enchanted_talisman.png",
 		"isCursed": true,
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
@@ -506,7 +506,7 @@
 	"Warrior watch": {
 		"name": "Warrior watch",
 		"description": "A warrior never has enough time.",
-		"img": "/items/warrior_watch.png",
+		"img": "/items/the-forest/warrior_watch.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -519,7 +519,7 @@
 	"Metal horse saddle": {
 		"name": "Metal horse saddle",
 		"description": "Now you only need a horse.",
-		"img": "/items/metal_horse_saddle.png",
+		"img": "/items/the-forest/metal_horse_saddle.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -532,7 +532,7 @@
 	"Witch book": {
 		"name": "Witch book",
 		"description": "Shady secrets, nobody should see it.",
-		"img": "/items/witch_book.png",
+		"img": "/items/the-forest/witch_book.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -546,7 +546,7 @@
 	"Unknown animal eye": {
 		"name": "Unknown animal eye",
 		"description": "From a beast, or a pet, a monster or a bunny.",
-		"img": "/items/unknown_animal_eye.png",
+		"img": "/items/the-forest/unknown_animal_eye.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -559,7 +559,7 @@
 	"Slain warrior armor": {
 		"name": "Slain warrior armor",
 		"description": "I hope you find it useful.",
-		"img": "/items/PIXEL_slain_warrior_armor.png",
+		"img": "/items/the-forest/slain_warrior_armor.png",
 		"isCursed": true,
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
@@ -578,7 +578,7 @@
 	"Witcher book": {
 		"name": "Witcher book",
 		"description": "Magic, spells, enchantments. Everything in your hand.",
-		"img": "/items/witcher_book.png",
+		"img": "/items/the-forest/witcher_book.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -597,7 +597,7 @@
 	"Cursed talisman": {
 		"name": "Cursed talisman",
 		"description": "When it was not enchanted it gave lucky, now it only gives death.",
-		"img": "/items/cursed_talisman.png",
+		"img": "/items/the-forest/cursed_talisman.png",
 		"isCursed": true,
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
@@ -616,7 +616,7 @@
 	"Antique ring": {
 		"name": "Antique ring",
 		"description": "An ancient power, a present from the gods, the future of its bearer.",
-		"img": "/items/antique_ring.png",
+		"img": "/items/the-forest/antique_ring.png",
 		"level": "Legendary",
 		"levelClassName": "bg-items-legendary",
 		"modifier": [{
@@ -635,7 +635,7 @@
 	"Ancient Prince Andre's Sword": {
 		"name": "Ancient Prince Sword",
 		"description": "Hope the prince doesn't claim his sword.",
-		"img": "/items/ancient_prince_andre_s_sword.png",
+		"img": "/items/the-forest/ancient_prince_andre_s_sword.png",
 		"level": "Legendary",
 		"levelClassName": "bg-items-legendary",
 		"modifier": [{
@@ -653,7 +653,7 @@
 	"King's son sword": {
 		"name": "King's son sword",
 		"description": "It will be yours when you grow",
-		"img": "/items/king_s_son_sword.png",
+		"img": "/items/the-forest/king_s_son_sword.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -672,7 +672,7 @@
 	"Old damaged coin": {
 		"name": "Old damaged coin",
 		"description": "An old coin, nobody uses it... right?",
-		"img": "/items/old_damaged_coin.png",
+		"img": "/items/the-forest/old_damaged_coin.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -685,7 +685,7 @@
 	"Thunder hammer": {
 		"name": "Thunder hammer",
 		"description": "Forged in the storm, lightning in your hand.",
-		"img": "/items/thunder_hammer.png",
+		"img": "/items/the-forest/thunder_hammer.png",
 		"level": "Epic",
 		"levelClassName": "bg-items-epic",
 		"modifier": [{
@@ -698,7 +698,7 @@
 	"Time crystal": {
 		"name": "Time crystal",
 		"description": "If the former owner of this crystal could go back in time, he would surely avoid losing it.",
-		"img": "/items/time_crystal.png",
+		"img": "/items/the-forest/time_crystal.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -716,7 +716,7 @@
 	"Skull fragment": {
 		"name": "Skull fragment",
 		"description": "A puzzle to solve. What did the former owner of this head think?",
-		"img": "/items/skull_fragment.png",
+		"img": "/items/the-forest/skull_fragment.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -734,7 +734,7 @@
 	"Hawk eye": {
 		"name": "Hawk eye",
 		"description": "It gives you precision. In your decisions and in your shots.",
-		"img": "/items/hawk_eye.png",
+		"img": "/items/the-forest/hawk_eye.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -747,7 +747,7 @@
 	"Meteorite fragment": {
 		"name": "Meteorite fragment",
 		"description": "Unknown alien power.",
-		"img": "/items/meteorite_fragment.png",
+		"img": "/items/the-forest/meteorite_fragment.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -760,7 +760,7 @@
 	"Mutant fisheye": {
 		"name": "Mutant fisheye",
 		"description": "The sea is very strange...",
-		"img": "/items/mutant_fisheye.png",
+		"img": "/items/the-forest/mutant_fisheye.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -773,7 +773,7 @@
 	"Wolf necklace": {
 		"name": "Wolf necklace",
 		"description": "For a wolf or a human, or both at the same time.",
-		"img": "/items/wolf_necklace.png",
+		"img": "/items/the-forest/wolf_necklace.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -786,7 +786,7 @@
 	"Shadowy rabbit paw": {
 		"name": "Shadowy rabbit paw",
 		"description": "A one-legged rabbit is still a rabbit.",
-		"img": "/items/shadowy_rabbit_paw.png",
+		"img": "/items/the-forest/shadowy_rabbit_paw.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -799,7 +799,7 @@
 	"Paladin eye": {
 		"name": "Paladin eye",
 		"description": "Do not lose sight of it, it could be useful for its owner.",
-		"img": "/items/paladin_eye.png",
+		"img": "/items/the-forest/paladin_eye.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -812,7 +812,7 @@
 	"Paladin heart": {
 		"name": "Paladin heart",
 		"description": "Filled with Valor, glory, but most important, Alturisum",
-		"img": "/items/paladin_heart.png",
+		"img": "/items/the-forest/paladin_heart.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -825,7 +825,7 @@
 	"Red Tanned Gloves": {
 		"name": "Red Tanned Gloves",
 		"description": "Were these tanned with blood? No one can know.",
-		"img": "/items/PIXEL_red_tanned_gloves.png",
+		"img": "/items/the-forest/red_tanned_gloves.png",
 		"level": "Uncommon",
 		"levelClassName": "bg-items-uncommon",
 		"modifier": [{
@@ -838,7 +838,7 @@
 	"Cat Claw glove": {
 		"name": "Cat Claw glove",
 		"description": "Which feline was the owner of such claws? Matters not. You may wear don them now.",
-		"img": "/items/PIXEL_cat_clow_glove.png",
+		"img": "/items/the-forest/cat_clow_glove.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{
@@ -856,7 +856,7 @@
 	"Foreign Armor": {
 		"name": "Foreign Armor",
 		"description": "Made of foreign metal, by foreign hands.",
-		"img": "/items/PIXEL_slain_warrior_armor.png",
+		"img": "/items/the-forest/foreign_armor.png",
 		"level": "Rare",
 		"levelClassName": "bg-items-rare",
 		"modifier": [{

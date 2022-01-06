@@ -232,17 +232,17 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 		{
 			label: 'Handle the Big Ugly Rat in the Cellar',
 			condition: () => currentAdventurer?.dungeons?.cellar?.canAdventure,
-			onClick: () => router.push('/countryside/cellar')
+			onClick: () => router.push('/adventures/the-cellar')
 		},
 		{
 			label: 'Go in the Forest',
 			condition: () => currentAdventurer?.dungeons?.forest?.canAdventure,
-			onClick: () => router.push('/countryside/forest')
+			onClick: () => router.push('/adventures/the-forest')
 		},
 		{
 			label: 'Handle the Boar situation',
 			condition: () => currentAdventurer?.dungeons?.boars?.canAdventure,
-			onClick: () => router.push('/countryside/boars')
+			onClick: () => router.push('/adventures/the-boars')
 		},
 	];
 	const	availableTasks = taskList.filter(t => t.condition());
@@ -288,11 +288,11 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 		return (
 			<div style={{height: 312}} className={'w-full px-4 flex flex-col relative mb-4 md:mb-1 h-full'}>
 				<div className={'flex flex-col items-center overflow-y-scroll scrollbar-none text-white'}>
-					<Link href={'/countryside/boars'}>
+					<Link href={'/adventures/the-boars'}>
 						<div className={'mt-2 mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
 							<div className={'opacity-40 overflow-hidden -mb-1'}>
 								<Image
-									src={'/illustrations/illuBoars.jpeg'}
+									src={'/adventures/the-boars/header.jpeg'}
 									loading={'eager'}
 									objectFit={'cover'}
 									objectPosition={'top'}
@@ -314,11 +314,11 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 						</div>
 					</Link>
 
-					<Link href={'/countryside/openmic'}>
+					<Link href={'/adventures/openmic'}>
 						<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
 							<div className={'opacity-40 overflow-hidden -mb-1'}>
 								<Image
-									src={'/illustrations/illuOpenMic.jpeg'}
+									src={'/adventures/openmic/header.jpeg'}
 									loading={'eager'}
 									objectFit={'cover'}
 									objectPosition={'top'}
@@ -340,11 +340,11 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 						</div>
 					</Link>
 
-					<Link href={'/countryside/forest'}>
+					<Link href={'/adventures/the-forest'}>
 						<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
 							<div className={'opacity-40 overflow-hidden -mb-1'}>
 								<Image
-									src={'/illustrations/illuForest.jpeg'}
+									src={'/adventures/the-forest/header.jpeg'}
 									className={'filter'}
 									loading={'eager'}
 									objectFit={'cover'}
@@ -367,11 +367,11 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 						</div>
 					</Link>
 
-					<Link href={'/countryside/cellar'}>
+					<Link href={'/adventures/the-cellar'}>
 						<div className={'mb-4 w-full relative bg-dark-400 border-2 border-black dark:border-dark-100 group cursor-pointer'}>
 							<div className={'opacity-40 overflow-hidden -mb-1'}>
 								<Image
-									src={'/illustrations/illuCellar.jpeg'}
+									src={'/adventures/the-cellar/header.jpeg'}
 									className={'filter'}
 									loading={'eager'}
 									objectFit={'cover'}
@@ -518,7 +518,7 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 							onClick={() => set_tab(1)}
 							className={`flex flex-row items-center text-regular p-4 px-6 border-l-2 border-r-2 border-black dark:border-dark-100 text-black dark:text-white ${tab !== 1 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
 							<svg width={16} height={16} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M6 3h14v2h2v6h-2v8h-2V5H6V3zm8 14v-2H6V5H4v10H2v4h2v2h14v-2h-2v-2h-2zm0 0v2H4v-2h10zM8 7h8v2H8V7zm8 4H8v2h8v-2z'} fill={'currentColor'}/> </svg>
-							<p className={'mt-1 ml-2'}>{'QUESTS'}</p>
+							<p className={'mt-1 ml-2'}>{'ADVENTURES'}</p>
 						</div>
 						<div
 							onClick={() => set_tab(2)}

@@ -72,7 +72,7 @@ function	SectionCraftAction({currentAdventurer, item, isSimulationError, selecte
 							inc={() => set_selectedCraftingMaterials(s => s + 10)}
 							dec={() => set_selectedCraftingMaterials(s => s - 10)}
 							setMin={() => set_selectedCraftingMaterials(0)}
-							max={Number(currentAdventurer?.inventory?.[0] || 0)}
+							max={Number(currentAdventurer?.inventory?.[process.env.DUNGEON_THE_CELLAR_ADDR] || 0)}
 							isMax={craftSkillCheck(currentAdventurer.skills[5], currentAdventurer.attributes.intelligence, (getDifficulty(item) - selectedCraftingMaterials / 10)) === 100}
 						/>
 					</div>
@@ -97,7 +97,7 @@ function	SectionCraftAction({currentAdventurer, item, isSimulationError, selecte
 						inc={() => set_selectedCraftingMaterials(s => s + 10)}
 						dec={() => set_selectedCraftingMaterials(s => s - 10)}
 						setMin={() => set_selectedCraftingMaterials(0)}
-						max={Number(currentAdventurer?.inventory?.[0] || 0)}
+						max={Number(currentAdventurer?.inventory?.[process.env.DUNGEON_THE_CELLAR_ADDR] || 0)}
 						isMax={craftSkillCheck(currentAdventurer.skills[5], currentAdventurer.attributes.intelligence, (getDifficulty(item) - selectedCraftingMaterials / 10)) === 100}
 					/>
 				</div>

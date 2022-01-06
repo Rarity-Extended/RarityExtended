@@ -11,7 +11,7 @@ const	items = [
 	{
 		name: 'Rat Skin',
 		description: 'This skin looks like the best possible material for an armor. No?',
-		img: '/items/rat_skin.png',
+		img: `/items/${process.env.DUNGEON_THE_CELLAR_ADDR}.png`,
 		address: process.env.DUNGEON_THE_CELLAR_ADDR,
 		level: 'Common',
 		levelClassName: 'bg-items-common',
@@ -32,7 +32,7 @@ const	items = [
 	{
 		name: 'Mushroom',
 		description: 'A standard mushroom',
-		img: '/items/loot_mushroom.png',
+		img: `/items/${process.env.LOOT_MUSHROOM_ADDR}.png`,
 		address: process.env.LOOT_MUSHROOM_ADDR,
 		level: 'Common',
 		levelClassName: 'bg-items-common',
@@ -44,7 +44,7 @@ const	items = [
 	{
 		name: 'Wood',
 		description: 'A standard piece of wood',
-		img: '/items/loot_wood.png',
+		img: `/items/${process.env.LOOT_WOOD_ADDR}.png`,
 		address: process.env.LOOT_WOOD_ADDR,
 		level: 'Common',
 		levelClassName: 'bg-items-common',
@@ -56,7 +56,7 @@ const	items = [
 	{
 		name: 'Berries',
 		description: 'Some berries',
-		img: '/items/loot_berries.png',
+		img: `/items/${process.env.LOOT_BERRIES_ADDR}.png`,
 		address: process.env.LOOT_BERRIES_ADDR,
 		level: 'Common',
 		levelClassName: 'bg-items-common',
@@ -68,7 +68,7 @@ const	items = [
 	{
 		name: 'Leather',
 		description: 'Some boar leather',
-		img: '/items/loot_leather.png',
+		img: `/items/${process.env.LOOT_LEATHER_ADDR}.png`,
 		address: process.env.LOOT_LEATHER_ADDR,
 		level: 'Common',
 		levelClassName: 'bg-items-common',
@@ -80,22 +80,19 @@ const	items = [
 	{
 		name: 'Meat',
 		description: 'A fresh piece of meat',
-		img: '/items/loot_meat.png',
+		img: `/items/${process.env.LOOT_MEAT_ADDR}.png`,
 		address: process.env.LOOT_MEAT_ADDR,
 		level: 'Common',
 		levelClassName: 'bg-items-common',
 		fetch: (adventurerID) => new Contract(process.env.LOOT_MEAT_ADDR, process.env.LOOT_ERC20_ABI).balanceOf(adventurerID),
-		parse: (item) => {
-			console.warn(item);
-			return Number(item);
-		},
+		parse: (item) => Number(item),
 		dungeon: 'Boars',
 		id: 6,
 	},
 	{
 		name: 'Tusks',
 		description: 'A tusk',
-		img: '/items/loot_tusks.png',
+		img: `/items/${process.env.LOOT_TUSKS_ADDR}.png`,
 		address: process.env.LOOT_TUSKS_ADDR,
 		level: 'Common',
 		levelClassName: 'bg-items-common',
@@ -115,7 +112,7 @@ const	items = [
 	{
 		name: 'Candies',
 		description: 'Some candies you can use to buy prices during the Spooky Festival',
-		img: '/items/candies.png',
+		img: `/items/${process.env.LOOT_CANDIES_ADDR}.png`,
 		address: process.env.LOOT_CANDIES_ADDR,
 		level: 'Uncommon',
 		levelClassName: 'bg-items-uncommon',

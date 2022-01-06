@@ -1,12 +1,4 @@
-/******************************************************************************
-**	@Author:				Rarity Extended
-**	@Twitter:				@RXtended
-**	@Date:					Monday September 6th 2021
-**	@Filename:				Navbar.js
-******************************************************************************/
-
 import	React, {useState, useEffect}	from	'react';
-import	Image							from	'next/image';
 import	Link							from	'next/link';
 import	useWeb3							from	'contexts/useWeb3';
 import	ModalLogin						from	'components/ModalLogin';

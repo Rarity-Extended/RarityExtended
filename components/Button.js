@@ -15,7 +15,7 @@ function	Button({
 	disabledBorderStyle = 'bg-dark-100 dark:bg-dark-600',
 	backgroundColor = 'bg-white dark:bg-dark-600 hover:bg-gray-primary dark:hover:bg-dark-400'}) {
 	return (
-		<div className={`relative ${disabled ? disabledClassName : className} py-3 px-14 text-regular ${disabled ? '' : 'cursor-pointer'}`} onClick={() => {if(!disabled) onClick()}}>
+		<div className={`relative ${disabled ? disabledClassName : className} py-3 px-14 text-regular ${disabled ? '' : 'cursor-pointer'}`} onClick={() => {if(!disabled) onClick();}}>
 			<div className={`${disabled ? disabledBorderStyle : borderStyle} absolute h-1 top-0 left-1 right-1`} />
 			<div className={`${disabled ? disabledBorderStyle : borderStyle} absolute h-1 w-1 top-1 left-0`} />
 			<div className={`${disabled ? disabledBorderStyle : borderStyle} absolute h-1 w-1 top-1 right-0`} />

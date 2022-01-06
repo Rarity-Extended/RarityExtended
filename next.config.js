@@ -81,22 +81,5 @@ module.exports = ({
 		DAI_VAULT_ADDR: '0x637eC617c86D24E421328e6CAEa1d92114892439',
 		DAI_TOKEN_ADDR: '0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E',
 		WFTM_TOKEN_ADDR: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83'
-	},
-	optimization: {
-		minimize: true,
-		splitChunks: {
-			chunks: 'all',
-			maxInitialRequests: 25,
-			minSize: 20000
-		}
-	},
-	webpack: (config, {webpack}) => {
-		config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
-		return config;
-	},
-	webpackDevMiddleware: (config) => {
-		// Perform customizations to webpack dev middleware config
-		// Important: return the modified config
-		return config;
-	},
+	}
 });
