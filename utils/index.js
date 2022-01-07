@@ -8,19 +8,17 @@
 import	{ethers}						from	'ethers';
 import	{Provider}						from	'ethcall';
 
-export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
-
 export const toAddress = (address) => {
 	if (!address) {
-		return ADDRESS_ZERO;
+		return ethers.constants.AddressZero;
 	}
 	if (address === 'GENESIS') {
-		return ADDRESS_ZERO;
+		return ethers.constants.AddressZero;
 	}
 	try {
 		return ethers.utils.getAddress(address);	
 	} catch (error) {
-		return ADDRESS_ZERO;
+		return ethers.constants.AddressZero;
 	}
 };
 

@@ -1,0 +1,352 @@
+import	React, {useState, useEffect}					from	'react';
+import	Image											from	'next/image';
+import	useRarity										from	'contexts/useRarity';
+import	useWeb3											from	'contexts/useWeb3';
+import	{learnSkills}									from	'utils/actions';
+import	{availableSkillPoints, calculatePointsForSet}	from	'utils/libs/raritySkills';
+import	CLASSES											from	'utils/codex/classes';
+import	SKILLS											from	'utils/codex/skills.json';
+
+function	IconChevron({className}) {
+	return (
+		<svg className={`w-6 h-6 text-black dark:text-white ${className}`} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M16 5v2h-2V5h2zm-4 4V7h2v2h-2zm-2 2V9h2v2h-2zm0 2H8v-2h2v2zm2 2v-2h-2v2h2zm0 0h2v2h-2v-2zm4 4v-2h-2v2h2z'} fill={'currentColor'}/> </svg>
+	);
+}
+
+function	ElementSkill({currentAdventurer, skill, isClassSpecific, updateSkills, onIncreaseLevel, onReduceLevel}) {
+	const canReduce = currentAdventurer.skills[skill?.id - 1] === updateSkills[skill?.id] || updateSkills[skill?.id] === 0;
+	const canIncrease = (updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= currentAdventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((currentAdventurer.level + 3) / 2));
+	const canSave = currentAdventurer.skills[skill?.id - 1] !== updateSkills[skill?.id];
+
+	return (
+		<div className={'rounded-md bg-gray-lighter dark:bg-dark-400 p-4 flex flex-col'}>
+			<p className={'font-story text-black dark:text-white font-bold text-base mb-4'}>
+				{skill.name}
+			</p>
+			<div className={'flex flex-row pb-2 mb-4'}>
+				<div className={'flex flex-col h-full pr-6'}>
+					<div className={'flex h-23 w-23'}>
+						<Image src={skill.img} width={96} height={96} />
+					</div>
+				</div>
+
+				<div className={'flex flex-col px-4 w-full'}>
+					<div className={'flex flex-row justify-between'}>
+						<p className={'font-story text-black dark:text-dark-200 text-opacity-60 text-sm mb-2'}>
+							{'Attribute'}
+						</p>
+						<div className={'font-story text-black dark:text-white opacity-60 text-sm normal-case'}>
+							{skill?.attributeLabel || '-'}
+						</div>
+					</div>
+
+					<div className={'flex flex-row justify-between'}>
+						<p className={'font-story text-black dark:text-dark-200 text-opacity-60 text-sm mb-2'}>
+							{'Cost'}
+						</p>
+						<div className={'font-story text-black dark:text-white opacity-60 text-sm normal-case'}>
+							{isClassSpecific ? '1' : '2'}
+						</div>
+					</div>
+
+					<div className={'flex flex-row justify-between'}>
+						<p className={'font-story text-black dark:text-dark-200 text-opacity-60 text-sm mb-2'}>
+							{'Armor Check'}
+						</p>
+						<div className={'font-story text-black dark:text-white opacity-60 text-sm normal-case'}>
+							{skill?.armorCheckPenalty ? 'YES' : 'NO'}
+						</div>
+					</div>
+
+					<div className={'flex flex-row justify-between'}>
+						<p className={'font-story text-black dark:text-dark-200 text-opacity-60 text-sm mb-2'}>
+							{'Synergy'}
+						</p>
+						<div className={'font-story text-black dark:text-white opacity-60 text-sm normal-case'}>
+							{skill?.synergy > 0 ? Object.values(SKILLS).find(s => s.id === skill?.synergy)?.name || '-' : '-'}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className={'font-story text-black dark:text-white opacity-60 text-sm normal-case'}>
+				{skill.check}
+			</div>
+			<div className={'mt-auto flex flex-row space-x-2'}>
+				<div className={`bg-gray-principal dark:bg-dark-600 flex justify-between text-center items-center px-1 py-2 w-2/3 mt-4 ${updateSkills.canBuyPoint ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'}`}>
+					<div onClick={() => onReduceLevel()}>
+						<IconChevron
+							className={`${canReduce ? 'opacity-0' : updateSkills.canBuyPoint ? 'opacity-5 hover:opacity-100 cursor-pointer' : 'opacity-5'}`} />
+					</div>
+					<p className={'text-black dark:text-white font-story text-sm select-none'}>
+						{`Level ${updateSkills[skill?.id]}`}
+					</p>
+					<div onClick={() => onIncreaseLevel()}>
+						<IconChevron
+							className={`${canIncrease ? 'opacity-0' : updateSkills.canBuyPoint ? 'opacity-5 hover:opacity-100 cursor-pointer' : 'opacity-5'} transform rotate-180`} />
+					</div>
+				</div>
+
+				<div
+					onClick={() => canSave ? onCraft(materialsToUse) : null}
+					className={`bg-gray-principal dark:bg-dark-600 flex justify-center text-center items-center px-4 py-2 mt-4 w-1/3 ${canSave ? 'cursor-pointer dark:hover:bg-dark-900 hover:bg-gray-secondary' : 'cursor-not-allowed opacity-60'}`}>
+					<p className={'text-black dark:text-white font-story text-sm select-none'}>{'Learn'}</p>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+function	Skills() {
+	const	{provider} = useWeb3();
+	const	{currentAdventurer, updateRarity} = useRarity();
+	const	_availableSkillPoints = availableSkillPoints(currentAdventurer.attributes.intelligence, currentAdventurer.class, currentAdventurer.level);
+	const	_pointSpentByAdventurer = calculatePointsForSet(currentAdventurer.class, currentAdventurer?.skills || []);
+	const	[updateSkills, set_updateSkills] = useState(() => {
+		const	skills = {
+			initialPointsToSend: _availableSkillPoints - _pointSpentByAdventurer < 0 ? 0 : _availableSkillPoints - _pointSpentByAdventurer,
+			remainingPoints: _availableSkillPoints - _pointSpentByAdventurer < 0 ? 0 : _availableSkillPoints - _pointSpentByAdventurer,
+			canBuyPoint: _availableSkillPoints - _pointSpentByAdventurer > 0,
+		};
+		currentAdventurer.skills.forEach((e, i) => skills[i + 1] = e);
+		return skills;
+	});
+
+	const	_adventurerClass = Object.values(CLASSES).find((e) => e.id === currentAdventurer.class);
+	const	[classTab, set_classTab] = useState(0);
+	const	[attributeTab, set_attributeTab] = useState(0);
+	const	[search, set_search] = useState('');
+
+
+	useEffect(() => {
+		if (!updateSkills) {
+			set_updateSkills(() => {
+				const	skills = {
+					initialPointsToSend: _availableSkillPoints - _pointSpentByAdventurer < 0 ? 0 : _availableSkillPoints - _pointSpentByAdventurer,
+					remainingPoints: _availableSkillPoints - _pointSpentByAdventurer < 0 ? 0 : _availableSkillPoints - _pointSpentByAdventurer,
+					canBuyPoint: _availableSkillPoints - _pointSpentByAdventurer > 0,
+				};
+				currentAdventurer.skills.forEach((e, i) => skills[i + 1] = e);
+				return skills;
+			});
+		}
+	}, [currentAdventurer?.tokenID]);
+
+	function	onReduceLevel(skill, isClassSpecific) {
+		if (currentAdventurer.skills[skill?.id - 1] === updateSkills[skill?.id])
+			return;
+		if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) > _availableSkillPoints || updateSkills[skill?.id] === 0)
+			return;
+		set_updateSkills(s => ({
+			...s,
+			[skill?.id]: s[skill?.id] - 1,
+			remainingPoints: s.remainingPoints + (isClassSpecific ? 1 : 2)
+		}));
+	}
+
+	function	onIncreaseLevel(skill, isClassSpecific) {
+		if ((updateSkills.remainingPoints - (isClassSpecific ? 1 : 2)) < 0)
+			return;
+		if (isClassSpecific && updateSkills[skill?.id] >= currentAdventurer.level + 3)
+			return;
+		if (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((currentAdventurer.level + 3) / 2))
+			return;
+		if (updateSkills.remainingPoints === 0)
+			return;
+		set_updateSkills(s => ({
+			...s,
+			[skill?.id]: s[skill?.id] + 1,
+			remainingPoints: s.remainingPoints - (isClassSpecific ? 1 : 2)
+		}));
+	}
+
+	function	onSetSkills() {
+		const	_skills = [];
+		for (const key in updateSkills) {
+			if (key !== 'remainingPoints' && key !== 'canBuyPoint') {
+				_skills[key - 1] = updateSkills[key];
+			}
+		}
+		learnSkills({
+			provider,
+			tokenID: currentAdventurer.tokenID,
+			skills: _skills,
+		}, ({error, data}) => {
+			if (error) {
+				return console.error(error);
+			}
+			updateRarity(data);
+		});
+	}
+
+	function	renderFilters() {
+		return (
+			<div className={'w-full flex flex-row justify-between font-story text-black dark:text-white text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
+				<div className={'flex flex-row space-x-4'}>
+					<p
+						onClick={() => set_classTab(0)}
+						className={`transition-opacity hover:opacity-100 ${classTab === 0 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+						{_adventurerClass.name}
+					</p>
+					<p
+						onClick={() => set_classTab(1)}
+						className={`transition-opacity hover:opacity-100 ${classTab === 1 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+						{'Cross-class'}
+					</p>
+				</div>
+
+				<div className={'flex flex-row space-x-4'}>
+					<p
+						onClick={() => set_attributeTab(0)}
+						className={`transition-opacity hover:opacity-100 ${attributeTab === 0 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+						{'All'}
+					</p>
+					<p
+						onClick={() => set_attributeTab(1)}
+						className={`transition-opacity hover:opacity-100 ${attributeTab === 1 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+						{`Strength (${currentAdventurer?.attributes?.strength || 8})`}
+					</p>
+					<p
+						onClick={() => set_attributeTab(2)}
+						className={`transition-opacity hover:opacity-100 ${attributeTab === 2 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+						{`Dexterity (${currentAdventurer?.attributes?.dexterity || 8})`}
+					</p>
+					<p
+						onClick={() => set_attributeTab(3)}
+						className={`transition-opacity hover:opacity-100 ${attributeTab === 3 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+						{`Intelligence (${currentAdventurer?.attributes?.intelligence || 8})`}
+					</p>
+					<p
+						onClick={() => set_attributeTab(4)}
+						className={`transition-opacity hover:opacity-100 ${attributeTab === 4 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+						{`Wisdom (${currentAdventurer?.attributes?.wisdom || 8})`}
+					</p>
+					<p
+						onClick={() => set_attributeTab(5)}
+						className={`transition-opacity hover:opacity-100 ${attributeTab === 5 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+						{`Charisma (${currentAdventurer?.attributes?.charisma || 8})`}
+					</p>
+				</div>
+			</div>
+		);
+	}	
+
+	return (
+		<div>
+			<div className={'mt-6 flex flex-col md:flex-row mb-4 items-center justify-between'}>
+				<div>
+					<input
+						onChange={e => set_search(e?.target?.value || '')}
+						className={'border-2 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-black dark:text-white'}
+						placeholder={'SEARCH'} />
+				</div>
+				<div className={'flex flex-row items-center justify-center space-x-4'}>
+					<div className={'font-story text-xs text-black dark:text-white flex'}>
+						{`Point left: ${updateSkills.remainingPoints}`}
+					</div>
+
+					<div className={'flex'}>
+						<button
+							onClick={() => {
+								if (updateSkills.canBuyPoint && updateSkills.remainingPoints !== updateSkills.initialPointsToSend)
+									onSetSkills();
+							}}
+							disabled={!updateSkills.canBuyPoint || updateSkills.remainingPoints === updateSkills.initialPointsToSend}
+							className={`bg-gray-principal dark:bg-dark-900 flex justify-center text-center items-center px-4 py-2 w-full ${updateSkills.canBuyPoint && updateSkills.remainingPoints !== updateSkills.initialPointsToSend ? 'cursor-pointer dark:bg-tag-warning hover:dark:bg-tag-warningDarker text-black font-bold' : 'cursor-not-allowed opacity-60 text-black dark:text-white'}`}>
+							<p className={'font-story text-xs select-none'}>{'LEARN SELECTED'}</p>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			{renderFilters()}
+				
+			<div className={'grid grid-cols-1 md:grid-cols-3 gap-4'}>
+				{
+					Object.values(SKILLS)
+						.filter((skill) => {
+							if (classTab === 0) {
+								if (attributeTab === 0) {
+									return _adventurerClass.skills.includes(skill?.name);
+								} else if (attributeTab === 1) {
+									return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'strength';
+								} else if (attributeTab === 2) {
+									return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'dexterity';
+								} else if (attributeTab === 3) {
+									return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'constitution';
+								} else if (attributeTab === 4) {
+									return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'intelligence';
+								} else if (attributeTab === 5) {
+									return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'wisdom';
+								} else if (attributeTab === 6) {
+									return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'charisma';
+								}
+							} else {
+								if (attributeTab === 0) {
+									return !_adventurerClass.skills.includes(skill?.name);
+								} else if (attributeTab === 1) {
+									return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'strength';
+								} else if (attributeTab === 2) {
+									return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'dexterity';
+								} else if (attributeTab === 3) {
+									return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'constitution';
+								} else if (attributeTab === 4) {
+									return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'intelligence';
+								} else if (attributeTab === 5) {
+									return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'wisdom';
+								} else if (attributeTab === 6) {
+									return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'charisma';
+								}
+							}
+							return skill;
+						})
+						.filter((skill) => {
+							if (search === '')
+								return true;
+							return skill?.name.toLowerCase().includes(search.toLowerCase());
+						})
+						.map((skill) => {
+							const	isClassSpecific = classTab === 0;
+							return (
+								<ElementSkill
+									key={skill?.id}
+									skill={skill}
+									currentAdventurer={currentAdventurer}
+									isClassSpecific={isClassSpecific}
+									onReduceLevel={() => onReduceLevel(skill, isClassSpecific)}
+									onIncreaseLevel={() => onIncreaseLevel(skill, isClassSpecific)}
+									updateSkills={updateSkills}
+								/>
+							);
+						})
+				}
+			</div>
+		</div>
+	);
+}
+
+function	Wrapper() {
+	return (
+		<>
+			<div className={'mb-10'}>
+				<h1 className={'text-black dark:text-white font-story text-4xl mb-4'}>
+					{'Skills'}
+				</h1>
+				<div className={'flex flex-col'}>
+					<p className={'text-black dark:text-white font-story text-base max-w-full md:max-w-4xl'}>
+						{'What do you know, stranger ? What can you do ? What\'s your talent ? I am sure your are skillful, so I will give you a few tips to help you to be more efficient and to be more effective. But first, let\'s start with the basics. Select your skills.'}
+					</p>
+					<p className={'text-black dark:text-white font-story text-base max-w-full md:max-w-4xl mt-2'}>
+						{'You have '}
+						<span className={'text-tag-warning font-bold'}>{'49 points left'}</span>
+						{'.'}
+					</p>
+				</div>
+			</div>
+	
+			<Skills />
+
+		</>
+	);
+}
+	
+export default Wrapper;

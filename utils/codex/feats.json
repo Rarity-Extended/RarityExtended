@@ -2,6 +2,7 @@
 	"Acrobat": {
 		"id": 1,
 		"name": "Acrobat",
+		"img": "/feats/acrobat.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -12,6 +13,7 @@
 	"Agile": {
 		"id": 2,
 		"name": "Agile",
+		"img": "/feats/agile.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -22,6 +24,7 @@
 	"Alertness": {
 		"id": 3,
 		"name": "Alertness",
+		"img": "/feats/alertness.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -32,6 +35,7 @@
 	"Animal Affinity": {
 		"id": 4,
 		"name": "Animal Affinity",
+		"img": "/feats/animal-affinity.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -42,6 +46,7 @@
 	"Armor Proficiency (Light)": {
 		"id": 5,
 		"name": "Armor Proficiency (Light)",
+		"img": "/feats/armor-proficiency.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -52,6 +57,7 @@
 	"Armor Proficiency (Medium)": {
 		"id": 6,
 		"name": "Armor Proficiency (Medium)",
+		"img": "/feats/armor-proficiency.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 5,
@@ -62,6 +68,7 @@
 	"Armor Proficiency (Heavy)": {
 		"id": 7,
 		"name": "Armor Proficiency (Heavy)",
+		"img": "/feats/armor-proficiency.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 6,
@@ -72,6 +79,7 @@
 	"Athletic": {
 		"id": 8,
 		"name": "Athletic",
+		"img": "/feats/athletic.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -82,6 +90,7 @@
 	"Spell Focus": {
 		"id": 9,
 		"name": "Spell Focus",
+		"img": "/feats/spell-focus.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -92,6 +101,7 @@
 	"Augment Summoning": {
 		"id": 10,
 		"name": "Augment Summoning",
+		"img": "/feats/augment-summoning.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 9,
@@ -99,9 +109,10 @@
 		"prerequisites_level": 0,
 		"benefit": "Each creature you conjure with any summon spell gains a +4 enhancement bonus to Strength and Constitution for the duration of the spell that summoned it."
 	},
-	"Blind-Fight": {
+	"Blind Fight": {
 		"id": 11,
-		"name": "Blind-Fight",
+		"name": "Blind Fight",
+		"img": "/feats/blind-fight.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -112,6 +123,7 @@
 	"Brew Potion": {
 		"id": 12,
 		"name": "Brew Potion",
+		"img": "/feats/brew-potion.png",
 		"type": "Item Creation",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -122,6 +134,7 @@
 	"Power Attack": {
 		"id": 13,
 		"name": "Power Attack",
+		"img": "/feats/power-attack.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -132,6 +145,7 @@
 	"Cleave": {
 		"id": 14,
 		"name": "Cleave",
+		"img": "/feats/cleave.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 13,
@@ -142,6 +156,7 @@
 	"Combat Casting": {
 		"id": 15,
 		"name": "Combat Casting",
+		"img": "/feats/combat-casting.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -152,6 +167,7 @@
 	"Combat Expertise": {
 		"id": 16,
 		"name": "Combat Expertise",
+		"img": "/feats/combat-expertise.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -162,6 +178,7 @@
 	"Combat Reflexes": {
 		"id": 17,
 		"name": "Combat Reflexes",
+		"img": "/feats/combat-reflexes.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -172,6 +189,7 @@
 	"Craft Magic Arms And Armor": {
 		"id": 18,
 		"name": "Craft Magic Arms And Armor",
+		"img": "/feats/craft-magic-arms-armor.png",
 		"type": "Item Creation",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -182,6 +200,7 @@
 	"Craft Rod": {
 		"id": 19,
 		"name": "Craft Rod",
+		"img": "/feats/craft-rod.png",
 		"type": "Item Creation",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -192,6 +211,7 @@
 	"Craft Staff": {
 		"id": 20,
 		"name": "Craft Staff",
+		"img": "/feats/craft-staff.png",
 		"type": "Item Creation",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -202,6 +222,7 @@
 	"Craft Wand": {
 		"id": 21,
 		"name": "Craft Wand",
+		"img": "/feats/craft-wand.png",
 		"type": "Item Creation",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -212,6 +233,7 @@
 	"Craft Wondrous Item": {
 		"id": 22,
 		"name": "Craft Wondrous Item",
+		"img": "/feats/craft-wondrous-item.png",
 		"type": "Item Creation",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -222,6 +244,7 @@
 	"Deceitful": {
 		"id": 23,
 		"name": "Deceitful",
+		"img": "/feats/deceitful.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -232,6 +255,7 @@
 	"Improved Unarmed Strike": {
 		"id": 24,
 		"name": "Improved Unarmed Strike",
+		"img": "/feats/unarmed-strike.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -242,6 +266,7 @@
 	"Deflect Arrows": {
 		"id": 25,
 		"name": "Deflect Arrows",
+		"img": "/feats/deflect-arrows.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 24,
@@ -252,6 +277,7 @@
 	"Deft Hands": {
 		"id": 26,
 		"name": "Deft Hands",
+		"img": "/feats/deft-hands.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -262,6 +288,7 @@
 	"Endurance": {
 		"id": 27,
 		"name": "Endurance",
+		"img": "/feats/endurance.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -272,6 +299,7 @@
 	"Diehard": {
 		"id": 28,
 		"name": "Diehard",
+		"img": "/feats/diehard.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 27,
@@ -282,6 +310,7 @@
 	"Diligent": {
 		"id": 29,
 		"name": "Diligent",
+		"img": "/feats/diligent.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -292,6 +321,7 @@
 	"Dodge": {
 		"id": 30,
 		"name": "Dodge",
+		"img": "/feats/doge.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -302,6 +332,7 @@
 	"Empower Spell": {
 		"id": 31,
 		"name": "Empower Spell",
+		"img": "/feats/empower-spell.png",
 		"type": "Metamagic",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -312,6 +343,7 @@
 	"Enlarge Spell": {
 		"id": 32,
 		"name": "Enlarge Spell",
+		"img": "/feats/enlarge-spell.png",
 		"type": "Metamagic",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -322,6 +354,7 @@
 	"Eschew Materials": {
 		"id": 33,
 		"name": "Eschew Materials",
+		"img": "/feats/eschew-materials.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -332,6 +365,7 @@
 	"Exotic Weapon Proficiency": {
 		"id": 34,
 		"name": "Exotic Weapon Proficiency",
+		"img": "/feats/exotic-weapon-proficiency.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -342,6 +376,7 @@
 	"Extend Spell": {
 		"id": 35,
 		"name": "Extend Spell",
+		"img": "/feats/extend-spell.png",
 		"type": "Metamagic",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -352,6 +387,7 @@
 	"Extra Turning": {
 		"id": 36,
 		"name": "Extra Turning",
+		"img": "/feats/extra-turning.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -362,6 +398,7 @@
 	"Point Blank Shot": {
 		"id": 37,
 		"name": "Point Blank Shot",
+		"img": "/feats/point-blank-shot.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -372,6 +409,7 @@
 	"Far Shot": {
 		"id": 38,
 		"name": "Far Shot",
+		"img": "/feats/far-shot.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 37,
@@ -382,6 +420,7 @@
 	"Forge Ring": {
 		"id": 39,
 		"name": "Forge Ring",
+		"img": "/feats/forge-ring.png",
 		"type": "Item Creation",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -392,6 +431,7 @@
 	"Great Cleave": {
 		"id": 40,
 		"name": "Great Cleave",
+		"img": "/feats/cleave.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 14,
@@ -402,6 +442,7 @@
 	"Great Fortitude": {
 		"id": 41,
 		"name": "Great Fortitude",
+		"img": "/feats/great-fortitude.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -412,6 +453,7 @@
 	"Greater Spell Focus": {
 		"id": 42,
 		"name": "Greater Spell Focus",
+		"img": "/feats/spell-focus.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 9,
@@ -422,6 +464,7 @@
 	"Spell Penetration": {
 		"id": 43,
 		"name": "Spell Penetration",
+		"img": "/feats/spell-penetration.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -432,6 +475,7 @@
 	"Greater Spell Penetration": {
 		"id": 44,
 		"name": "Greater Spell Penetration",
+		"img": "/feats/spell-penetration.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 43,
@@ -442,6 +486,7 @@
 	"Two-Weapon Fighting": {
 		"id": 45,
 		"name": "Two-Weapon Fighting",
+		"img": "/feats/two-weapon-fighting.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -452,6 +497,7 @@
 	"Improved Two-Weapon Fighting": {
 		"id": 46,
 		"name": "Improved Two-Weapon Fighting",
+		"img": "/feats/two-weapon-fighting.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 45,
@@ -462,6 +508,7 @@
 	"Greater Two-Weapon Fighting": {
 		"id": 47,
 		"name": "Greater Two-Weapon Fighting",
+		"img": "/feats/two-weapon-fighting.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 46,
@@ -472,6 +519,7 @@
 	"Weapon Focus": {
 		"id": 48,
 		"name": "Weapon Focus",
+		"img": "/feats/weapon-focus.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -482,6 +530,7 @@
 	"Greater Weapon Focus": {
 		"id": 49,
 		"name": "Greater Weapon Focus",
+		"img": "/feats/weapon-focus.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 48,
@@ -492,6 +541,7 @@
 	"Weapon Specialization": {
 		"id": 50,
 		"name": "Weapon Specialization",
+		"img": "/feats/weapon-specialization.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 48,
@@ -502,6 +552,7 @@
 	"Greater Weapon Specialization": {
 		"id": 51,
 		"name": "Greater Weapon Specialization",
+		"img": "/feats/weapon-specialization.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 49,
@@ -512,6 +563,7 @@
 	"Heighten Spell": {
 		"id": 52,
 		"name": "Heighten Spell",
+		"img": "/feats/heighten-spell.png",
 		"type": "Metamagic",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -522,6 +574,7 @@
 	"Improved Bull Rush": {
 		"id": 53,
 		"name": "Improved Bull Rush",
+		"img": "/feats/bull-rush.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 13,
@@ -532,6 +585,7 @@
 	"Improved Counterspell": {
 		"id": 54,
 		"name": "Improved Counterspell",
+		"img": "/feats/counterspell.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -542,6 +596,7 @@
 	"Improved Critical": {
 		"id": 55,
 		"name": "Improved Critical",
+		"img": "/feats/improved-critical.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -552,6 +607,7 @@
 	"Improved Disarm": {
 		"id": 56,
 		"name": "Improved Disarm",
+		"img": "/feats/disarm.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 16,
@@ -562,6 +618,7 @@
 	"Improved Feint": {
 		"id": 57,
 		"name": "Improved Feint",
+		"img": "/feats/feint.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 16,
@@ -572,6 +629,7 @@
 	"Improved Grapple": {
 		"id": 58,
 		"name": "Improved Grapple",
+		"img": "/feats/improved-grapple.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 24,
@@ -582,6 +640,7 @@
 	"Improved Initiative": {
 		"id": 59,
 		"name": "Improved Initiative",
+		"img": "/feats/initiative.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -592,6 +651,7 @@
 	"Improved Overrun": {
 		"id": 60,
 		"name": "Improved Overrun",
+		"img": "/feats/overrun.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 13,
@@ -602,6 +662,7 @@
 	"Precise Shot": {
 		"id": 61,
 		"name": "Precise Shot",
+		"img": "/feats/precise-shot.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 37,
@@ -612,6 +673,7 @@
 	"Improved Precise Shot": {
 		"id": 62,
 		"name": "Improved Precise Shot",
+		"img": "/feats/precise-shot.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 61,
@@ -622,6 +684,7 @@
 	"Shield Proficiency": {
 		"id": 63,
 		"name": "Shield Proficiency",
+		"img": "/feats/shield-proficiency.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -632,6 +695,7 @@
 	"Improved Shield Bash": {
 		"id": 64,
 		"name": "Improved Shield Bash",
+		"img": "/feats/shield-proficiency.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 64,
@@ -639,10 +703,10 @@
 		"prerequisites_level": 0,
 		"benefit": "When you perform a shield bash, you may still apply the shields shield bonus to your AC."
 	},
-
 	"Improved Sunder": {
 		"id": 66,
 		"name": "Improved Sunder",
+		"img": "/feats/sunder.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 13,
@@ -653,6 +717,7 @@
 	"Improved Trip": {
 		"id": 67,
 		"name": "Improved Trip",
+		"img": "/feats/trip.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 16,
@@ -663,6 +728,7 @@
 	"Improved Turning": {
 		"id": 68,
 		"name": "Improved Turning",
+		"img": "/feats/improved-turning.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -673,6 +739,7 @@
 	"Investigator": {
 		"id": 69,
 		"name": "Investigator",
+		"img": "/feats/investigator.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -683,6 +750,7 @@
 	"Iron Will": {
 		"id": 70,
 		"name": "Iron Will",
+		"img": "/feats/iron-will.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -693,6 +761,7 @@
 	"Lightning Reflexes": {
 		"id": 71,
 		"name": "Lightning Reflexes",
+		"img": "/feats/lightning-reflexes.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -703,6 +772,7 @@
 	"Magical Aptitude": {
 		"id": 72,
 		"name": "Magical Aptitude",
+		"img": "/feats/magical-aptitude.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -713,6 +783,7 @@
 	"Rapid Shot": {
 		"id": 73,
 		"name": "Rapid Shot",
+		"img": "/feats/rapid-shot.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 37,
@@ -723,6 +794,7 @@
 	"Manyshot": {
 		"id": 74,
 		"name": "Manyshot",
+		"img": "/feats/manyshot.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 73,
@@ -733,6 +805,7 @@
 	"Martial Weapon Proficiency": {
 		"id": 75,
 		"name": "Martial Weapon Proficiency",
+		"img": "/feats/martial-weapon-proficiency.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -743,6 +816,7 @@
 	"Maximize Spell": {
 		"id": 76,
 		"name": "Maximize Spell",
+		"img": "/feats/maximize-spell.png",
 		"type": "Metamagic",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -753,6 +827,7 @@
 	"Mobility": {
 		"id": 77,
 		"name": "Mobility",
+		"img": "/feats/mobility.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 30,
@@ -763,6 +838,7 @@
 	"Mounted Combat": {
 		"id": 78,
 		"name": "Mounted Combat",
+		"img": "/feats/mounted-combat.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -773,6 +849,7 @@
 	"Mounted Archery": {
 		"id": 79,
 		"name": "Mounted Archery",
+		"img": "/feats/mounted-archery.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 78,
@@ -783,6 +860,7 @@
 	"Negotiator": {
 		"id": 80,
 		"name": "Negotiator",
+		"img": "/feats/negociator.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -793,6 +871,7 @@
 	"Nimble Fingers": {
 		"id": 81,
 		"name": "Nimble Fingers",
+		"img": "/feats/nimble-fingers.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -803,6 +882,7 @@
 	"Persuasive": {
 		"id": 82,
 		"name": "Persuasive",
+		"img": "/feats/persuasive.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -813,6 +893,7 @@
 	"Quick Draw": {
 		"id": 83,
 		"name": "Quick Draw",
+		"img": "/feats/quick-draw.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -823,6 +904,7 @@
 	"Quicken Spell": {
 		"id": 84,
 		"name": "Quicken Spell",
+		"img": "/feats/quicken-spell.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -833,6 +915,7 @@
 	"Rapid Reload": {
 		"id": 85,
 		"name": "Rapid Reload",
+		"img": "/feats/rapid-reload.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -843,6 +926,7 @@
 	"Ride-By Attack": {
 		"id": 86,
 		"name": "Ride-By Attack",
+		"img": "/feats/ride-by-attack.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 78,
@@ -853,6 +937,7 @@
 	"Run": {
 		"id": 87,
 		"name": "Run",
+		"img": "/feats/run.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -863,6 +948,7 @@
 	"Scribe Scroll": {
 		"id": 88,
 		"name": "Scribe Scroll",
+		"img": "/feats/scribe-scroll.png",
 		"type": "Item Creation",
 		"prerequisites": true,
 		"prerequisites_feat": 0,
@@ -873,6 +959,7 @@
 	"Self-Sufficient": {
 		"id": 89,
 		"name": "Self-Sufficient",
+		"img": "/feats/self-sufficient.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -883,6 +970,7 @@
 	"Silent Spell": {
 		"id": 90,
 		"name": "Silent Spell",
+		"img": "/feats/silent-spell.png",
 		"type": "Metamagic",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -893,6 +981,7 @@
 	"Simple Weapon Proficiency": {
 		"id": 91,
 		"name": "Simple Weapon Proficiency",
+		"img": "/feats/simple-weapon-proficiency.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -903,6 +992,7 @@
 	"Stealthy": {
 		"id": 93,
 		"name": "Stealthy",
+		"img": "/feats/stealthy.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -913,6 +1003,7 @@
 	"Still Spell": {
 		"id": 94,
 		"name": "Still Spell",
+		"img": "/feats/still-spell.png",
 		"type": "Metamagic",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -923,6 +1014,7 @@
 	"Toughness": {
 		"id": 95,
 		"name": "Toughness",
+		"img": "/feats/toughness.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -933,6 +1025,7 @@
 	"Tower Shield Proficiency": {
 		"id": 96,
 		"name": "Tower Shield Proficiency",
+		"img": "/feats/tower-shield-proficiency.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 63,
@@ -943,6 +1036,7 @@
 	"Two-Weapon Defense": {
 		"id": 97,
 		"name": "Two-Weapon Defense",
+		"img": "/feats/two-weapon-defense.png",
 		"type": "General",
 		"prerequisites": true,
 		"prerequisites_feat": 45,
@@ -953,6 +1047,7 @@
 	"Weapon Finesse": {
 		"id": 98,
 		"name": "Weapon Finesse",
+		"img": "/feats/weapon-finesse.png",
 		"type": "General",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
@@ -963,6 +1058,7 @@
 	"Widen Spell": {
 		"id": 99,
 		"name": "Widen Spell",
+		"img": "/feats/widen-spell.png",
 		"type": "Metamagic",
 		"prerequisites": false,
 		"prerequisites_feat": 0,
