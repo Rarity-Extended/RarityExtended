@@ -18,7 +18,7 @@ function	OverviewSkills({adventurer}) {
 					<span className={'text-50'}>{' to spend.'}</span>
 				</p>
 			</div>
-			<div className={'grid grid-cols-3 gap-x-8 gap-y-4 w-full'}>
+			<div className={'grid grid-cols-3 gap-x-8 gap-y-4 w-full overflow-auto scrollbar-none'}>
 				{Object.values(SKILLS).filter((skill) => availableSkills[skill?.id - 1] > 0).map((skill) => (
 					<div key={skill.id} className={'flex flex-row items-center justify-between'}>
 						<div className={'flex flex-row items-center'}>
