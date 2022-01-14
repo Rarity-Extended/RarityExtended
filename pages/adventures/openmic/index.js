@@ -12,7 +12,7 @@ import	relativeTime									from	'dayjs/plugin/relativeTime';
 import	Box												from	'components/Box';
 import	DialogNoBox										from	'components/DialogNoBox';
 import	Tooltip											from	'components/Tooltip';
-import	{getEligibility, getOpenMicDialogOption} 		from	'components/openmic';
+import	{getEligibility, getOpenMicDialogOption} 		from	'components/Openmic';
 import	useRarity										from	'contexts/useRarity';
 import	useWeb3											from	'contexts/useWeb3';
 import	CLASSES											from	'utils/codex/classes';

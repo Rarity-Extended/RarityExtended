@@ -20,7 +20,7 @@ import	Box												from	'components/Box';
 import	SectionRecruit									from	'sections/SectionRecruit';
 import	TAVERN_NEWS										from	'utils/codex/tavernNews.json';
 import	CLASSES											from	'utils/codex/classes';
-import	{getOpenMicDialogOption, OpenMicSignUpList}		from	'components/openmic';
+import	{getOpenMicDialogOption, OpenMicSignUpList}		from	'components/Openmic';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);

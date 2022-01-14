@@ -10,7 +10,7 @@ import	dayjs						from	'dayjs';
 import	duration					from	'dayjs/plugin/duration';
 import	relativeTime				from	'dayjs/plugin/relativeTime';
 import	CLASSES						from	'utils/codex/classes';
-import	{OpenMicSignUpList}			from	'components/openmic';
+import	{OpenMicSignUpList}			from	'components/Openmic';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);

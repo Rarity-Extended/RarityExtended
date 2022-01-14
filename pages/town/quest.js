@@ -13,7 +13,7 @@ import	useRarity						from	'contexts/useRarity';
 import	Typer							from	'components/Typer';
 import	DialogBox						from	'components/DialogBox';
 import	Box								from	'components/Box';
-import	{getOpenMicDialogOption} 		from	'components/openmic';
+import	{getOpenMicDialogOption} 		from	'components/Openmic';
 
 function	DialogChoices({adventurersCount, router}) {
 	const	[selectedOption, set_selectedOption] = useState(0);
