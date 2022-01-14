@@ -1,6 +1,5 @@
-import	React, {useState, useEffect}					from	'react';
+import	React, {useState}								from	'react';
 import	Image											from	'next/image';
-import	Link											from	'next/link';
 import	dayjs											from	'dayjs';
 import	duration										from 'dayjs/plugin/duration';
 import	relativeTime									from 'dayjs/plugin/relativeTime';

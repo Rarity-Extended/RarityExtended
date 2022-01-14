@@ -1,5 +1,4 @@
 import	React						from	'react';
-import	Image						from	'next/image';
 import	{xpRequired}				from	'utils/libs/rarity';
 import	IconAttributeArmor			from	'components/Icons/IconAttributeArmor';
 import	IconAttributeAttack			from	'components/Icons/IconAttributeAttack';
