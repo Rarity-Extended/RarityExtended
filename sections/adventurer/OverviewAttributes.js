@@ -1,13 +1,13 @@
 import	React						from	'react';
 import	{xpRequired}				from	'utils/libs/rarity';
-import	IconAttributeArmor			from	'components/Icons/IconAttributeArmor';
-import	IconAttributeAttack			from	'components/Icons/IconAttributeAttack';
-import	IconAttributeCharisma		from	'components/Icons/IconAttributeCharisma';
-import	IconAttributeConstitution	from	'components/Icons/IconAttributeConstitution';
-import	IconAttributeDamage			from	'components/Icons/IconAttributeDamage';
-import	IconAttributeDexterity		from	'components/Icons/IconAttributeDexterity';
-import	IconAttributeStrength		from	'components/Icons/IconAttributeStrength';
-import	IconAttributeWisdom			from	'components/Icons/IconAttributeWisdom';
+import	IconAttributeArmor			from	'components/icons/IconAttributeArmor';
+import	IconAttributeAttack			from	'components/icons/IconAttributeAttack';
+import	IconAttributeCharisma		from	'components/icons/IconAttributeCharisma';
+import	IconAttributeConstitution	from	'components/icons/IconAttributeConstitution';
+import	IconAttributeDamage			from	'components/icons/IconAttributeDamage';
+import	IconAttributeDexterity		from	'components/icons/IconAttributeDexterity';
+import	IconAttributeStrength		from	'components/icons/IconAttributeStrength';
+import	IconAttributeWisdom			from	'components/icons/IconAttributeWisdom';
 
 function modifier_for_attribute(_attribute) {
 	if (_attribute == 9) {
