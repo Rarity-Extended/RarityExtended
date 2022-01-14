@@ -16,7 +16,7 @@ import	OPENMIC_LOOT				from	'utils/codex/items_dungeon_openmic.json';
 function	ItemsTheCellar({item, adventurer}) {
 	return (
 		<div className={'flex flex-row space-x-4 w-full tooltip cursor-help group'}>
-			<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
+			<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex flex-center item relative'}>
 				<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
 				<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
 				<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
@@ -44,7 +44,7 @@ function	ItemsTheCellar({item, adventurer}) {
 function	ItemsTheForest({subItem}) {
 	return (
 		<div className={'flex flex-row space-x-4 w-full tooltip cursor-help group'}>
-			<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
+			<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex flex-center item relative'}>
 				<div className={`absolute ${THE_FOREST_LOOT[subItem.itemName].levelClassName} left-0 top-0 w-2 h-1`} />
 				<div className={`absolute ${THE_FOREST_LOOT[subItem.itemName].levelClassName} left-0 top-0 w-1 h-2`} />
 				<div className={`absolute ${THE_FOREST_LOOT[subItem.itemName].levelClassName} right-0 top-0 w-2 h-1`} />
@@ -77,7 +77,7 @@ function	ItemsTheForest({subItem}) {
 function	ItemsOpenMic({subItem}) {
 	return (
 		<div className={'flex flex-row space-x-4 w-full tooltip cursor-help group'}>
-			<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative'}>
+			<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex flex-center item relative'}>
 				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} left-0 top-0 w-2 h-1`} />
 				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} left-0 top-0 w-1 h-2`} />
 				<div className={`absolute ${OPENMIC_LOOT[subItem.name].levelClassName} right-0 top-0 w-2 h-1`} />
@@ -134,14 +134,14 @@ function	Inventory({adventurer}) {
 		if (!hasItem) {
 			return (
 				<div className={'w-full'}>
-					<div className={'p-4 flex text-black dark:text-white text-sx normal-case w-full md:w-1/2 pr-0 md:pr-32'}>
+					<div className={'p-4 flex text-plain text-sx normal-case w-full md:w-1/2 pr-0 md:pr-32'}>
 						{'You have no items yet, traveler, find them in Dungeons!'}
 					</div>
 					<div className={'flex flex-col md:flex-row'}>
 						<div className={'flex w-full md:w-1/2 px-4 pb-4 md:pb-0'}>
 							<Link href={'/town/quest'}>
 								<div
-									className={'border-4 border-black dark:border-dark-100 px-10 py-2 text-black dark:text-white hover:bg-gray-secondary dark:hover:bg-dark-400 cursor-pointer transition-colors flex items-center text-center justify-center text-xs w-full'}>
+									className={'border-4 border-black dark:border-dark-100 px-10 py-2 text-plain hover:bg-gray-secondary dark:hover:bg-dark-400 cursor-pointer transition-colors flex flex-center text-center text-xs w-full'}>
 									<p>{'GO TO THE QUEST OFFICE'}</p>
 								</div>
 							</Link>

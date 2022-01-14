@@ -19,7 +19,7 @@ function	ButtonCounterBase({
 		<div className={'flex flex-row items-center'}>
 			<button>
 				<div
-					className={`relative ${className} w-10 h-10 flex justify-center items-center text-regular text-black dark:text-dark-100`}
+					className={`relative ${className} w-10 h-10 flex flex-center text-regular text-black dark:text-dark-100`}
 					onClick={onDecrement}>
 					{/* CHEVRON */}
 					<svg className={'mr-0.5 transform rotate-180'} width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
@@ -63,12 +63,12 @@ function	ButtonCounterBase({
 					<div className={`${backgroundColor} absolute h-1 w-1 bottom-1 left-1`} />
 				</div>
 			</button>
-			<div className={'px-5 w-20 h-10 border-t-4 border-b-4 border-black dark:border-dark-100 text-regular flex justify-center items-center'}>
+			<div className={'px-5 w-20 h-10 border-t-4 border-b-4 border-black dark:border-dark-100 text-regular flex flex-center'}>
 				{value}
 			</div>
 			<button>
 				<div
-					className={`relative ${className} w-10 h-10 flex justify-center items-center text-regular text-black dark:text-dark-100`}
+					className={`relative ${className} w-10 h-10 flex flex-center text-regular text-black dark:text-dark-100`}
 					onClick={onIncrement}>
 					{/* CHEVRON */}
 					<svg className={'ml-0.5'} width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>

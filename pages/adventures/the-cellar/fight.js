@@ -119,7 +119,7 @@ function	Index({dungeon, adventurer, router}) {
 						<div className={'w-full mr-14'}>
 							<p className={'whitespace-nowrap'}>{'Big Ugly Rat'}</p>
 							<div className={'flex flex-row items-center w-full py-2'}>
-								<div className={'text-opacity-80 text-black dark:text-white text-sm w-32'}>{'HP:'}</div>
+								<div className={'text-opacity-80 text-plain text-sm w-32'}>{'HP:'}</div>
 								<progress
 									className={'border-solid border-2 border-black dark:border-dark-400 p-1.5 nes-progress is-error w-full transition-all'}
 									value={dungeonHealth}
@@ -165,7 +165,7 @@ function	Index({dungeon, adventurer, router}) {
 						<div className={'w-full mt-auto mb-2'}>
 							<p>{dungeon.tokenID}</p>
 							<div className={'flex flex-row items-center w-full py-2'}>
-								<div className={'text-opacity-80 text-black dark:text-white text-sm w-32'}>{'HP:'}</div>
+								<div className={'text-opacity-80 text-plain text-sm w-32'}>{'HP:'}</div>
 								<progress
 									className={'nes-progress border-solid border-2 border-black dark:border-dark-400 p-1.5 is-success w-full transition-all'}
 									value={adventurerHealth}

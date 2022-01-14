@@ -11,7 +11,7 @@ function	Box({children, className, onClick, backgroundColor = 'bg-white dark:bg-
 	const	borderStyle = 'absolute bg-black dark:bg-dark-100';
 
 	return (
-		<div className={`relative ${className} w-full h-10 flex justify-center items-center text-regular text-black dark:text-white`} onClick={onClick}>
+		<div className={`relative ${className} w-full h-10 flex flex-center text-regular text-plain`} onClick={onClick}>
 			{children}
 			{/* PIXEL CUSTOM BORDER */}
 			<div className={`${borderStyle} h-1 top-0 left-1 right-1`} />

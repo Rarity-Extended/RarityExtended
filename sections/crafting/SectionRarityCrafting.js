@@ -53,16 +53,16 @@ function	SectionRarityCrafting() {
 	return (
 		<>
 			<div className={'mb-10'}>
-				<h1 className={'text-black dark:text-white font-story text-4xl mb-4'}>
+				<h1 className={'text-plain font-story text-4xl mb-4'}>
 					{'Workshop'}
 				</h1>
 				<div className={'flex flex-row'}>
-					<p className={'text-black dark:text-white font-story text-base max-w-4xl'}>{'This is a small room where the heat is almost unsustainable. There is no much light and the old craftmaster in the corner is watching you. He can help you with some basic crafts, but wants you to know the basics firsts.'}</p>
+					<p className={'text-plain font-story text-base max-w-4xl'}>{'This is a small room where the heat is almost unsustainable. There is no much light and the old craftmaster in the corner is watching you. He can help you with some basic crafts, but wants you to know the basics firsts.'}</p>
 				</div>
 			</div>
 
 			{/* Hidden on mobile */}
-			<div className={'hidden md:grid grid-cols-12 gap-x-12 font-story text-black dark:text-white text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
+			<div className={'hidden md:grid grid-cols-12 gap-x-12 font-story text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
 				<div className={'col-span-3 grid grid-cols-1 pl-1'}>
 					{'Inventory'}
 				</div>
@@ -98,12 +98,12 @@ function	SectionRarityCrafting() {
 						{Number(currentAdventurer?.skills?.[5] || 0) <= 0 ? 
 							<div
 								onClick={() => set_isModalSkillsOpen(true)}
-								className={'rounded-md bg-gray-lighter dark:bg-tag-warning hover:dark:bg-tag-warningDarker flex justify-center items-center p-4 cursor-pointer'}>
+								className={'rounded-md bg-gray-lighter dark:bg-tag-warning hover:dark:bg-tag-warningDarker flex flex-center p-4 cursor-pointer'}>
 								<p className={'text-black font-story text-sm font-bold'}>{'Learn crafting'}</p>
 							</div>
 							: 
-							<div className={'rounded-md bg-gray-lighter dark:bg-dark-400 flex justify-center items-center p-4'}>
-								<p className={'text-black dark:text-white font-story text-sm font-bold'}>{`Crafting level ${currentAdventurer?.skills?.[5]}`}</p>
+							<div className={'rounded-md bg-gray-lighter dark:bg-dark-400 flex flex-center p-4'}>
+								<p className={'text-plain font-story text-sm font-bold'}>{`Crafting level ${currentAdventurer?.skills?.[5]}`}</p>
 							</div>
 						}
 						<ElementInventoryList

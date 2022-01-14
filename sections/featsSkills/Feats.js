@@ -6,38 +6,38 @@ import	{learnFeat}										from	'utils/actions';
 import	{featsPerClass, initialFeatsPerClass}			from	'utils/libs/rarityFeats';
 import	FEATS											from	'utils/codex/feats.json';
 
-function	ElementSkill({feat, canLearn, learn}) {
+function	ElementFeat({feat, canLearn, learn}) {
 	return (
-		<div className={'rounded-md bg-gray-lighter dark:bg-dark-400 p-4 flex flex-col'}>
-			<p className={'font-story text-black dark:text-white font-bold text-base mb-4'}>
+		<div className={'box p-4 flex flex-col'}>
+			<p className={'font-story text-plain font-bold text-base mb-4'}>
 				{feat.name}
 			</p>
 			<div className={'flex flex-row pb-2 mb-4'}>
 				<div className={'flex flex-col h-full pr-6'}>
 					<div className={'flex h-23 w-23'}>
-						<Image src={feat?.img || '/skills/appraise.png'} width={96} height={96} />
+						<Image src={feat.img} width={96} height={96} />
 					</div>
 				</div>
 
 				<div className={'flex flex-col px-4 w-full'}>
 					<div className={'flex flex-col justify-between'}>
-						<p className={'font-story text-black dark:text-dark-200 text-opacity-60 text-sm mb-2'}>
+						<p className={'font-story text-200 text-opacity-60 text-sm mb-2'}>
 							{'Prerequisites'}
 						</p>
-						<div className={'font-story text-black dark:text-white opacity-60 text-sm normal-case'}>
+						<div className={'font-story text-50 text-sm normal-case'}>
 							{feat?.prerequisites ? Object.values(FEATS).find(s => s.id === feat?.prerequisites_feat)?.name || '-' : '-'}
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className={'font-story text-black dark:text-white opacity-60 text-sm normal-case'}>
+			<div className={'font-story text-50 text-sm normal-case'}>
 				{feat.benefit}
 			</div>
 			<div className={'mt-auto flex flex-row space-x-2'}>
 				<div
 					onClick={() => canLearn ? learn() : null}
-					className={`bg-gray-principal dark:bg-dark-600 flex justify-center text-center items-center px-4 py-2 mt-4 w-full ${canLearn ? 'cursor-pointer dark:hover:bg-dark-900 hover:bg-gray-secondary' : 'cursor-not-allowed opacity-60'}`}>
-					<p className={'text-black dark:text-white font-story text-sm select-none'}>{'Learn'}</p>
+					className={`bg-600 flex flex-center text-center px-4 py-2 mt-4 w-full ${canLearn ? 'cursor-pointer hover-bg-900' : 'cursor-not-allowed opacity-60'}`}>
+					<p className={'text-plain font-story text-sm select-none'}>{'Learn'}</p>
 				</div>
 			</div>
 		</div>
@@ -52,7 +52,7 @@ function	Feats() {
 	const	_adventurerFeats = currentAdventurer.feats || [];
 	const	_unlockedFeats = [...new Set([..._initialFeatsPerClass, ..._adventurerFeats])];
 	const	_pointLefts = _maxFeatsForAventurer - _unlockedFeats.length;
-	const	[learnTab, set_learnTab] = useState(0);
+	const	[learnTab, set_learnTab] = useState(1);
 	const	[typeTab, set_typeTab] = useState(0);
 	const	[search, set_search] = useState('');
 
@@ -71,17 +71,17 @@ function	Feats() {
 
 	function	renderFilters() {
 		return (
-			<div className={'w-full flex flex-row justify-between font-story text-black dark:text-white text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
+			<div className={'w-full flex flex-row justify-between font-story text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
 				<div className={'flex flex-row space-x-4'}>
-					<p
-						onClick={() => set_learnTab(0)}
-						className={`transition-opacity hover:opacity-100 ${learnTab === 0 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{'Learnable'}
-					</p>
 					<p
 						onClick={() => set_learnTab(1)}
 						className={`transition-opacity hover:opacity-100 ${learnTab === 1 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 						{'Learned'}
+					</p>
+					<p
+						onClick={() => set_learnTab(0)}
+						className={`transition-opacity hover:opacity-100 ${learnTab === 0 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+						{'Learnable'}
 					</p>
 				</div>
 
@@ -113,30 +113,30 @@ function	Feats() {
 
 	return (
 		<div>
-			<div className={'mb-10'}>
-				<h1 className={'text-black dark:text-white font-story text-4xl mb-4'}>
+			{/* <div className={'mb-10'}>
+				<h1 className={'text-plain font-story text-4xl mb-4'}>
 					{'Feats'}
 				</h1>
 				<div className={'flex flex-col'}>
-					<p className={'text-black dark:text-white font-story text-base max-w-full md:max-w-4xl'}>
-						{'What do you know, stranger ? What can you do ? What\'s your talent ? I am sure your are skillful, so I will give you a few tips to help you to be more efficient and to be more effective. But first, let\'s start with the basics. Select your skills.'}
+					<p className={'text-plain font-story text-base max-w-full md:max-w-4xl'}>
+						{'A feat represents a talent or an area of expertise that gives a character special capabilities. It embodies training, experience, and abilities beyond what a class provides. Some are inherent to the class, while others can be learned.'}
 					</p>
-					<p className={'text-black dark:text-white font-story text-base max-w-full md:max-w-4xl mt-2'}>
+					<p className={'text-plain font-story text-base max-w-full md:max-w-4xl mt-2'}>
 						{'You have '}
-						<span className={'text-tag-warning font-bold'}>{`${_pointLefts <= 1 ? `${_pointLefts} point` : `${_pointLefts} points`} left`}</span>
+						<span className={'text-highlight font-bold'}>{`${_pointLefts <= 1 ? `${_pointLefts} point` : `${_pointLefts} points`} left`}</span>
 						{'.'}
 					</p>
 				</div>
-			</div>
+			</div> */}
 			<div className={'mt-6 flex flex-col md:flex-row mb-4 items-center justify-between'}>
 				<div>
 					<input
 						onChange={e => set_search(e?.target?.value || '')}
-						className={'border-2 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-black dark:text-white'}
+						className={'border-2 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-plain'}
 						placeholder={'SEARCH'} />
 				</div>
-				<div className={'flex flex-row items-center justify-center space-x-4'}>
-					<div className={'font-story text-xs text-black dark:text-white flex'}>
+				<div className={'flex flex-row flex-center space-x-4'}>
+					<div className={'font-story text-xs text-plain flex'}>
 						{`${_pointLefts <= 1 ? `Point left: ${_pointLefts}` : `Points left: ${_pointLefts}`}`}
 					</div>
 				</div>
@@ -191,7 +191,7 @@ function	Feats() {
 								canLearn = hasPrerequisitesLevel && hasPrerequisitesClass && hasPrerequisitesFeat && !isLearned;
 							}
 							return (
-								<ElementSkill
+								<ElementFeat
 									key={feat?.id}
 									feat={feat}
 									canLearn={canLearn}

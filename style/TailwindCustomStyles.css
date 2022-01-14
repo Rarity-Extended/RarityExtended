@@ -21,3 +21,44 @@
 .button-bloody-disabled {
   @apply button-bloody-base text-blood-600;
 }
+
+.flex-center {
+  @apply justify-center items-center;
+}
+.box {
+  @apply rounded-md bg-light-400 dark:bg-dark-400 border dark:border-dark-400 border-light-600;
+}
+.box-darker {
+  @apply rounded-md bg-light-600 dark:bg-dark-600 border dark:border-0 border-light-600;
+}
+
+.text-plain {
+  @apply text-black dark:text-white;
+}
+.text-400 {
+  @apply text-light-400 dark:text-dark-400;
+}
+.text-200 {
+  @apply text-light-200 dark:text-dark-200;
+}
+.text-50 {
+  @apply text-black dark:text-white text-opacity-60 dark:text-opacity-60;
+}
+.bg-600 {
+  @apply bg-light-600 dark:bg-dark-600;
+}
+.hover-bg-900 {
+  @apply hover:bg-light-300 dark:hover:bg-dark-900;
+}
+.border-highlight {
+  @apply border-tag-info dark:border-tag-warning;
+}
+.bg-highlight {
+  @apply bg-tag-info dark:bg-tag-warning;
+}
+.button-highlight {
+  @apply bg-tag-info hover:bg-tag-infoDarker dark:bg-tag-warning dark:hover:bg-tag-warningDarker text-white dark:text-black;
+}
+.text-highlight {
+  @apply text-tag-info dark:text-tag-warning;
+}

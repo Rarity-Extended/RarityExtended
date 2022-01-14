@@ -113,7 +113,7 @@ function	Index({router}) {
 						<div className={'my-4'} />
 						
 						{'The old woman is no longer under the large tree. She will probably be back '}
-						<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 							{dayjs(new Date(trickLog * 1000)).from(dayjs(new Date(chainTime * 1000)))}
 							<Tooltip>
 								<p className={'text-sm leading-normal inline'}>
@@ -125,7 +125,7 @@ function	Index({router}) {
 
 					<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case text-justify mt-8'}>
 						{'You still have '}
-						<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 							{`${numberOfCandies} candies`}
 							<Tooltip>
 								<p className={'text-sm leading-normal inline'}>{'You can earn more candies by playing the Trick or Treat game or by doing some of the daily activites!'}</p>
@@ -154,14 +154,14 @@ function	Index({router}) {
 					<div className={'my-4'} />
 
 					{'If you choose the same card '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{'you win 3 times your stake'}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'If you play for 100 candies and you win, you will have 300 candies!'}</p>
 						</Tooltip>
 					</span>
 					{'. If not, you have to '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{'give your candies'}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'If you play for 100 candies and you lose, you will loose 100 candies!'}</p>
@@ -172,14 +172,14 @@ function	Index({router}) {
 
 				<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case text-justify mt-8'}>
 					{'You have '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{`${numberOfCandies} candies`}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'You can earn more candies by playing the Trick or Treat game of by doing some of the daily activites!'}</p>
 						</Tooltip>
 					</span>
 					{' in your pocket, and you can play '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{`${3 - trickCount} more times`}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'You can earn more candies by playing the Trick or Treat game of by doing some of the daily activites!'}</p>
@@ -189,75 +189,75 @@ function	Index({router}) {
 				</h1>
 
 				<div className={'grid grid-cols-1 md:grid-cols-3 gap-6 gap-x-8 mt-8'}>
-					<div className={'p-4 bgpattern3 border-4 border-dark-100 w-full h-96 flex flex-col justify-center items-center'}>
+					<div className={'p-4 bgpattern3 border-4 border-dark-100 w-full h-96 flex flex-col flex-center'}>
 						<Spectre width={100} height={100} />
 						<p className={'text-center font-bold pt-12'}>{'The Spectre'}</p>
 						<div className={'w-full flex flex-row justify-between space-x-4 mt-12 -mb-12'}>
 							<div
 								onClick={() => playTrickOrTreat(25, 1)}
-								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 25 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
+								className={`w-1/3 flex flex-row flex-center border-2 border-dark-100 p-2 ${numberOfCandies >= 25 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'25'}</p>
 							</div>
 							<div
 								onClick={() => playTrickOrTreat(50, 1)}
-								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 50 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
+								className={`w-1/3 flex flex-row flex-center border-2 border-dark-100 p-2 ${numberOfCandies >= 50 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'50'}</p>
 							</div>
 							<div
 								onClick={() => playTrickOrTreat(100, 1)}
-								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 100 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
+								className={`w-1/3 flex flex-row flex-center border-2 border-dark-100 p-2 ${numberOfCandies >= 100 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'100'}</p>
 							</div>
 						</div>
 					</div>
 
-					<div className={'p-4 bgpattern3 border-4 border-dark-100 w-full h-96 flex flex-col justify-center items-center'}>
+					<div className={'p-4 bgpattern3 border-4 border-dark-100 w-full h-96 flex flex-col flex-center'}>
 						<Boar width={100} height={100} />
 						<p className={'text-center font-bold pt-12'}>{'The Boar'}</p>
 						<div className={'w-full flex flex-row justify-between space-x-4 mt-12 -mb-12'}>
 							<div
 								onClick={() => playTrickOrTreat(25, 2)}
-								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 25 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
+								className={`w-1/3 flex flex-row flex-center border-2 border-dark-100 p-2 ${numberOfCandies >= 25 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'25'}</p>
 							</div>
 							<div
 								onClick={() => playTrickOrTreat(50, 2)}
-								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 50 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
+								className={`w-1/3 flex flex-row flex-center border-2 border-dark-100 p-2 ${numberOfCandies >= 50 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'50'}</p>
 							</div>
 							<div
 								onClick={() => playTrickOrTreat(100, 2)}
-								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 100 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
+								className={`w-1/3 flex flex-row flex-center border-2 border-dark-100 p-2 ${numberOfCandies >= 100 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'100'}</p>
 							</div>
 						</div>
 					</div>
 
-					<div className={'p-4 bgpattern3 border-4 border-dark-100 w-full h-96 flex flex-col justify-center items-center'}>
+					<div className={'p-4 bgpattern3 border-4 border-dark-100 w-full h-96 flex flex-col flex-center'}>
 						<Egg width={100} height={100} />
 						<p className={'text-center font-bold pt-12'}>{'The Egg'}</p>
 						<div className={'w-full flex flex-row justify-between space-x-4 mt-12 -mb-12'}>
 							<div
 								onClick={() => playTrickOrTreat(25, 3)}
-								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 25 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
+								className={`w-1/3 flex flex-row flex-center border-2 border-dark-100 p-2 ${numberOfCandies >= 25 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'25'}</p>
 							</div>
 							<div
 								onClick={() => playTrickOrTreat(50, 3)}
-								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 50 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
+								className={`w-1/3 flex flex-row flex-center border-2 border-dark-100 p-2 ${numberOfCandies >= 50 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'50'}</p>
 							</div>
 							<div
 								onClick={() => playTrickOrTreat(100, 3)}
-								className={`w-1/3 flex flex-row justify-center items-center border-2 border-dark-100 p-2 ${numberOfCandies >= 100 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
+								className={`w-1/3 flex flex-row flex-center border-2 border-dark-100 p-2 ${numberOfCandies >= 100 ? 'cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal' : 'cursor-not-allowed dark:bg-dark-600 bg-white'}`}>
 								<CandyIcon />
 								<p className={'text-center text-megaxs pl-2'}>{'100'}</p>
 							</div>
@@ -285,7 +285,7 @@ function	Index({router}) {
 						<div className={'my-4'} />
 						
 						{'You have many options available to you here. But not now. Everyone is taking a break, they will be back '}
-						<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 							{dayjs(new Date(activitiesLog * 1000)).from(dayjs(new Date(chainTime * 1000)))}
 							<Tooltip>
 								<p className={'text-sm leading-normal inline'}>
@@ -297,7 +297,7 @@ function	Index({router}) {
 
 					<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case text-justify mt-8'}>
 						{'You still have '}
-						<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 							{`${numberOfCandies} candies`}
 							<Tooltip>
 								<p className={'text-sm leading-normal inline'}>{'You can earn more candies by playing the Trick or Treat game or by doing some of the daily activites!'}</p>
@@ -325,21 +325,21 @@ function	Index({router}) {
 					{'You have many options available to you here. Maybe you\'ll decide to impress everyone at this cake eating contest or even steal a pumpkin. Maybe you are great to tell spooky stories, or just wise enough to watch for the kids around. Maybe you\'ll go with the grown man and throw rocks in the lake, or just try not to burn everything with some magic tricks.'}
 					<div className={'my-4'} />
 					{'Tonight '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{'the only prize is a bunch of candies'}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'You can earn as much candies as the main Attribute used for a game!'}</p>
 						</Tooltip>
 					</span>
 					{'. You can do '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{`${2 -  activitiesCount} more activities today`}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'You are limited to 2 activities per day per adventurer! Enjoy!'}</p>
 						</Tooltip>
 					</span>
 					{' and you have '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{`${numberOfCandies} candies`}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'You can earn more candies by playing the Trick or Treat game or by doing some of the daily activites!'}</p>
@@ -351,67 +351,67 @@ function	Index({router}) {
 				<div className={'grid grid-cols-1 md:grid-cols-3 gap-6 gap-x-8 mt-8'}>
 					<Box
 						onClick={() => performActivity(0)}
-						className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+						className={'p-4 bgpattern3 w-full h-full flex flex-col flex-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
 						<p className={'text-center font-bold pb-12'}>{'Rock Throwing'}</p>
 						<Rock width={100} height={100} />
 						<div className={'text-center text-regular pt-12 inline'}>
 							<p className={'inline'}>{'The '}</p>
-							<p className={'inline text-tag-info dark:text-tag-warning'}>{'Stronger'}</p>
+							<p className={'inline text-highlight'}>{'Stronger'}</p>
 							<p className={'inline'}>{' you are, the more candy you get!'}</p>
 						</div>
 					</Box>
 					<Box
 						onClick={() => performActivity(1)}
-						className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+						className={'p-4 bgpattern3 w-full h-full flex flex-col flex-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
 						<p className={'text-center font-bold pb-12'}>{'Cake Eating'}</p>
 						<Eat width={100} height={100} />
 						<div className={'text-center text-regular pt-12'}>
 							<p className={'inline'}>{'With a great '}</p>
-							<p className={'inline text-tag-info dark:text-tag-warning'}>{'constitution'}</p>
+							<p className={'inline text-highlight'}>{'constitution'}</p>
 							<p className={'inline'}>{' comes a resilient stomach!'}</p>
 						</div>
 					</Box>
 					<Box
 						onClick={() => performActivity(2)}
-						className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+						className={'p-4 bgpattern3 w-full h-full flex flex-col flex-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
 						<p className={'text-center font-bold pb-12'}>{'Pumpkin Stealer'}</p>
 						<Rob width={100} height={100} />
 						<div className={'text-center text-regular pt-12'}>
 							<p className={'inline'}>{'Do you have enough '}</p>
-							<p className={'inline text-tag-info dark:text-tag-warning'}>{'Dexterity'}</p>
+							<p className={'inline text-highlight'}>{'Dexterity'}</p>
 							<p className={'inline'}>{' for this?'}</p>
 						</div>
 					</Box>
 					<Box
 						onClick={() => performActivity(3)}
-						className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+						className={'p-4 bgpattern3 w-full h-full flex flex-col flex-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
 						<p className={'text-center font-bold pb-12'}>{'Spooky Story'}</p>
 						<Story width={100} height={100} />
 						<div className={'text-center text-regular pt-12'}>
 							<p className={'inline'}>{'Are you a '}</p>
-							<p className={'inline text-tag-info dark:text-tag-warning'}>{'Charismatic'}</p>
+							<p className={'inline text-highlight'}>{'Charismatic'}</p>
 							<p className={'inline'}>{' adventurer?'}</p>
 						</div>
 					</Box>
 					<Box
 						onClick={() => performActivity(4)}
-						className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+						className={'p-4 bgpattern3 w-full h-full flex flex-col flex-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
 						<p className={'text-center font-bold pb-12'}>{'Magic Trick'}</p>
 						<Sparkle width={100} height={100} />
 						<div className={'text-center text-regular pt-12'}>
 							<p className={'inline'}>{'The '}</p>
-							<p className={'inline text-tag-info dark:text-tag-warning'}>{'Intelligence'}</p>
+							<p className={'inline text-highlight'}>{'Intelligence'}</p>
 							<p className={'inline'}>{' is the magic here!'}</p>
 						</div>
 					</Box>
 					<Box
 						onClick={() => performActivity(5)}
-						className={'p-4 bgpattern3 w-full h-full flex flex-col justify-center items-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
+						className={'p-4 bgpattern3 w-full h-full flex flex-col flex-center cursor-pointer dark:bg-dark-600 dark:hover:bg-dark-400 bg-white hover:bg-gray-principal'}>
 						<p className={'text-center font-bold pb-12'}>{'Wise babysitter'}</p>
 						<Balloon width={100} height={100} />
 						<div className={'text-center text-regular pt-12'}>
 							<p className={'inline'}>{'Will you stay '}</p>
-							<p className={'inline text-tag-info dark:text-tag-warning'}>{'wise'}</p>
+							<p className={'inline text-highlight'}>{'wise'}</p>
 							<p className={'inline'}>{' and keep the children safe?'}</p>
 						</div>
 					</Box>
@@ -439,7 +439,7 @@ function	Index({router}) {
 					<div className={'my-4'} />
 
 					{'He has a big bag full of '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{'sweet treats'}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'Candies are the currency for the Spooky Festival! You can use them to buy some specific limited supply items and some mysterious eggs ...'}</p>
@@ -450,11 +450,11 @@ function	Index({router}) {
 					<div className={'my-4'} />
 
 					{'“First time at the Spooky Festival? There are a lot of games to play and a lot more candy! '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{'Take theses'}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'You can claim your first '}</p>
-							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>
+							<p className={'text-sm leading-normal inline text-highlight font-bold'}>
 								{'100 candies'}
 							</p>
 							<p className={'text-sm leading-normal inline'}>{' for free! Enjoy the Spooky Festival!'}</p>
@@ -490,7 +490,7 @@ function	Index({router}) {
 
 	return (
 		<section className={'max-w-full'}>
-			<div className={'mt-8 max-w-prose w-full flex-col flex justify-center items-center mx-auto px-3'}>
+			<div className={'mt-8 max-w-prose w-full flex-col flex flex-center mx-auto px-3'}>
 				<Box className={'p-4 text-xs md:text-xs leading-normal md:leading-8 w-full relative'}>
 					<div className={'relative'}>
 						<div className={'filter grayscale -m-4 pb-8 opacity-70'}>

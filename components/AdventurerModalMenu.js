@@ -24,9 +24,9 @@ function AdventurerModalMenu() {
 	const	skin = raritySkins ? skins[currentAdventurer?.tokenID] || currentAdventurer?.skin : currentAdventurer?.skin;
 	return (
 		<>
-			<div className={'hidden md:flex flex-row h-8 justify-center items-center relative'}>
+			<div className={'hidden md:flex flex-row h-8 flex-center relative'}>
 				<div onClick={openModal} className={'group items-center justify-end flex-row mr-6 cursor-pointer outline-none focus:outline-none hidden md:flex'}>
-					{currentAdventurer ? <div className={'flex items-center justify-center'}>
+					{currentAdventurer ? <div className={'flex flex-center'}>
 						<Image
 							src={skin}
 							quality={100}
@@ -40,7 +40,7 @@ function AdventurerModalMenu() {
 								{currentAdventurer ? `${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}` : null}
 							</div>
 						</div>
-					</div> : <div className={'flex items-center justify-center'}>
+					</div> : <div className={'flex flex-center'}>
 						<Image
 							src={'/classes/front/placeholder.svg'}
 							quality={100}
@@ -57,9 +57,9 @@ function AdventurerModalMenu() {
 					</div>}
 				</div>
 			</div>
-			<div className={'flex flex-row h-8 justify-center items-center relative md:hidden w-full'}>
+			<div className={'flex flex-row h-8 flex-center relative md:hidden w-full'}>
 				<div onClick={openModal} className={'group items-center justify-end flex-row -mr-6 cursor-pointer outline-none focus:outline-none flex'}>
-					{currentAdventurer ? <div className={'flex items-center justify-center'}>
+					{currentAdventurer ? <div className={'flex flex-center'}>
 						<div className={'cursor-pointer uppercase mr-2 mt-2 text-right'}>
 							<div className={'text-sm cursor-pointer group-hover:underline -mb-2'}>
 								{currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}
@@ -73,7 +73,7 @@ function AdventurerModalMenu() {
 							quality={100}
 							width={60}
 							height={60} />
-					</div> : <div className={'flex items-center justify-center'}>
+					</div> : <div className={'flex flex-center'}>
 						<div className={'cursor-pointer uppercase mr-2 mt-2 text-right'}>
 							<div className={'text-sm cursor-pointer group-hover:underline -mb-2'}>
 								{'Nobody'}

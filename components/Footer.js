@@ -60,13 +60,13 @@ function	Footer() {
 									<div className={'h-full flex flex-col py-6 bg-white dark:bg-dark-600 border-t-4 border-black dark:border-dark-100 shadow-xl overflow-y-scroll'}>
 										<div>
 											<div className={'flex items-start justify-between'}>
-												<Dialog.Title className={'text-lg font-medium text-black dark:text-white'}>
+												<Dialog.Title className={'text-lg font-medium text-plain'}>
 													{''}
 												</Dialog.Title>
 												<div className={'flex items-center'}>
 													<button
 														type={'button'}
-														className={'rounded-md focus:outline-none text-black dark:text-white'}
+														className={'rounded-md focus:outline-none text-plain'}
 														onClick={() => set_open(false)}>
 														<span className={'sr-only'}>{'Close panel'}</span>
 													</button>
@@ -116,7 +116,7 @@ function	Footer() {
 								leave={'ease-in duration-200'}
 								leaveFrom={'opacity-100 scale-100'}
 								leaveTo={'opacity-0 scale-95'}>
-								<div className={'inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600 shadow-xl'}>
+								<div className={'inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform font-title uppercase text-plain bg-white dark:bg-dark-600 shadow-xl'}>
 									<Dialog.Title className={'text-lg font-medium leading-6 text-gray-900 relative'}>
 										{'Options'}
 										<div className={'absolute right-0 top-0 cursor-pointer'} onClick={() => set_options(false)}>
@@ -170,7 +170,7 @@ function	Footer() {
 
 	return (
 		<>
-			<div className={'absolute bottom-3 text-center text-xxs left-0 right-0 flex flex-col justify-center items-center'}>
+			<div className={'absolute bottom-3 text-center text-xxs left-0 right-0 flex flex-col flex-center'}>
 				<div onClick={() => set_options(true)} className={'py-2 hover:underline cursor-pointer'}>
 					{'Options'}
 				</div>

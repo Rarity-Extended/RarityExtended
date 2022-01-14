@@ -14,11 +14,11 @@ function getEligibility(bard) {
 		result = {eligible: false, reason: 'Is not a bard'};
 	else if(bard?.level < 2)
 		result = {eligible: false, reason: 'Is not level 2 or higher'};
-	else if(bard?.dungeons?.openMic?.timeToNextPerformance > 0)
-		result = {eligible: false, reason: ` Will be ready in ${dayjs.duration({seconds: bard?.dungeons?.openMic?.timeToNextPerformance}).humanize()}`};
+	else if(bard?.adventures?.openMic?.timeToNextPerformance > 0)
+		result = {eligible: false, reason: ` Will be ready in ${dayjs.duration({seconds: bard?.adventures?.openMic?.timeToNextPerformance}).humanize()}`};
 	if(!result.eligible)
 		result.sheild = (
-			<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex justify-center items-center text-center p-6'}>
+			<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex flex-center text-center p-6'}>
 				<p className={'text-white'}>
 					{result.reason}
 				</p>
@@ -32,10 +32,10 @@ function getOpenMicDialogOption(bard, router, openCurrentAventurerModal) {
 	const label = <>
 		{bard && eligibility.eligible && (<>
 			{'TAKE THE STAGE WITH '}
-			<span className={'text-tag-info dark:text-tag-warning'}>{`${bard.tokenID}, ${bard.name ? bard.name : CLASSES[bard.class].name} LVL ${bard.level}`}</span>
+			<span className={'text-highlight'}>{`${bard.tokenID}, ${bard.name ? bard.name : CLASSES[bard.class].name} LVL ${bard.level}`}</span>
 		</>)}
 		{bard && !eligibility.eligible && (<>
-			<span className={'text-tag-info dark:text-tag-warning'}>{`${bard.tokenID}, ${bard.name ? bard.name : CLASSES[bard.class].name} LVL ${bard.level}`}</span>
+			<span className={'text-highlight'}>{`${bard.tokenID}, ${bard.name ? bard.name : CLASSES[bard.class].name} LVL ${bard.level}`}</span>
 			{` ${eligibility.reason}, CHOOSE SOMEONE ELSE `}
 		</>)}
 		{!bard && (<>
@@ -63,7 +63,7 @@ function OpenMicSignUpList({bards, router}) {
 					<Adventurer
 						onClick={() => {
 							if(eligibility.eligible) {
-								router.push(`//adventures/openmic/perform?adventurer=${bard.tokenID}`);
+								router.push(`/adventures/openmic/perform?adventurer=${bard.tokenID}`);
 							}
 						}}
 						adventurer={bard}

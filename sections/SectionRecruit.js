@@ -17,7 +17,7 @@ function	Class({provider, rarityClass, fetchRarity}) {
 	const	[isLoading, set_isLoading] = useState(false);
 	return (
 		<Box
-			className={'w-full p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-100 transition-colors cursor-pointer relative'}
+			className={'w-full p-4 flex flex-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-100 transition-colors cursor-pointer relative'}
 			onClick={() => {
 				if (isLoading) {
 					return;
@@ -56,7 +56,7 @@ function	SectionRecruit({shouldDisplay, router, provider, fetchRarity}) {
 	}
 
 	return (
-		<section className={'flex flex-row w-full flex-wrap items-center justify-center'}>
+		<section className={'flex flex-row w-full flex-wrap flex-center'}>
 			<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4'}>
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Barbarian']} />
 				<Class router={router} provider={provider} fetchRarity={fetchRarity} rarityClass={CLASSES['Bard']} />

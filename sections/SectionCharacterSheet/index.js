@@ -148,7 +148,7 @@ function	Info({adventurer, updateRarity, provider}) {
 							className={`progressbar h-full ${canLevelUp ? 'is-warning animate-pulse' : 'is-primary'} w-full absolute p-1 inset-0`}
 							value={adventurer.xp}
 							max={xpRequired(adventurer.level)} />
-						<p className={`text-sx absolute inset-0 h-full w-full text-center flex justify-center items-center ${canLevelUp ? 'text-black' : 'text-white text-shadow'}`}>
+						<p className={`text-sx absolute inset-0 h-full w-full text-center flex flex-center ${canLevelUp ? 'text-black' : 'text-white text-shadow'}`}>
 							{canLevelUp ? 'LEVEL-UP!' : `${Number(adventurer.xp)} / ${xpRequired(adventurer.level)}`}
 						</p>
 					</div>

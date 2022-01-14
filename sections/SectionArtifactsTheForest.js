@@ -17,7 +17,7 @@ import	THE_FOREST_LOOT					from	'utils/codex/items_dungeon_theForest.json';
 function	Artifact({img, name, cost, onClick, children, noHover}) {
 	return (
 		<div
-			className={`w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col ${noHover ? '' : 'group hover:bg-gray-principal dark:hover:bg-dark-100'} transition-colors cursor-pointer relative mb-4 md:mb-0`}
+			className={`w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex flex-center flex-col ${noHover ? '' : 'group hover:bg-gray-principal dark:hover:bg-dark-100'} transition-colors cursor-pointer relative mb-4 md:mb-0`}
 			onClick={onClick}>
 			<Image
 				src={img}
@@ -64,7 +64,7 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, router, adventur
 						name={item.itemName}
 						cost={xpRequired(item.level)}>
 						{Number(adventurer.xp) < xpRequired(item.level) ?
-							<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex justify-center items-center text-center p-6'}>
+							<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex flex-center text-center p-6'}>
 								<p className={'text-white'}>
 									{'YOU NEED MORE XP'}
 								</p>

@@ -48,7 +48,7 @@ function	Feats({adventurer, updateRarity, provider}) {
 					<div className={'flex w-full md:w-1/2 pr-4'}>
 						<div
 							onClick={openModal}
-							className={'border-4 border-black dark:border-dark-100 px-10 py-2 text-black dark:text-white hover:bg-gray-secondary dark:hover:bg-dark-400 cursor-pointer transition-colors flex items-center text-center justify-center text-xs w-full'}>
+							className={'border-4 border-black dark:border-dark-100 px-10 py-2 text-plain hover:bg-gray-secondary dark:hover:bg-dark-400 cursor-pointer transition-colors flex flex-center text-center text-xs w-full'}>
 							<p className={'whitespace-nowrap'}>{'FEAT LIST'}</p>
 							{_pointLefts > 0 ? <p className={'inline text-megaxs ml-2'}>
 								{`(POINTS LEFT: ${_pointLefts})`}

@@ -67,7 +67,7 @@ function	Feats({adventurer, isOpen, closeModal}) {
 						leaveFrom={'opacity-100 scale-100'}
 						leaveTo={'opacity-0 scale-95'}>
 						<div className={'inline-block px-4 md:px-10 pt-9 pb-0 md:pb-9 mt-16 md:mt-23 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative'}>
-							<Dialog.Title as={'h3'} className={'relative text-lg font-medium leading-6 text-black dark:text-white flex flex-col md:flex-row justify-between'}>
+							<Dialog.Title as={'h3'} className={'relative text-lg font-medium leading-6 text-plain flex flex-col md:flex-row justify-between'}>
 								{'FEAT LIST'}
 								<svg onClick={closeModal} className={'absolute md:relative top-0 right-0'} width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
 									<path d={'M6.70711 5.29289C6.31658 4.90237 5.68342 4.90237 5.29289 5.29289C4.90237 5.68342 4.90237 6.31658 5.29289 6.70711L10.5858 12L5.29289 17.2929C4.90237 17.6834 4.90237 18.3166 5.29289 18.7071C5.68342 19.0976 6.31658 19.0976 6.70711 18.7071L12 13.4142L17.2929 18.7071C17.6834 19.0976 18.3166 19.0976 18.7071 18.7071C19.0976 18.3166 19.0976 17.6834 18.7071 17.2929L13.4142 12L18.7071 6.70711C19.0976 6.31658 19.0976 5.68342 18.7071 5.29289C18.3166 4.90237 17.6834 4.90237 17.2929 5.29289L12 10.5858L6.70711 5.29289Z'} fill={'currentcolor'}/>
@@ -76,51 +76,51 @@ function	Feats({adventurer, isOpen, closeModal}) {
 							<div className={'mt-6 flex flex-col md:flex-row mb-4 items-center'}>
 								<input
 									onChange={e => set_search(e?.target?.value || '')}
-									className={'border-4 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-black dark:text-white'}
+									className={'border-4 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-plain'}
 									placeholder={'SEARCH'} />
-								<div className={'ml-auto text-xs mr-6 text-black dark:text-white hidden md:block'}>
+								<div className={'ml-auto text-xs mr-6 text-plain hidden md:block'}>
 									{`POINTS LEFT: ${_pointLefts}`}
 								</div>
-								<div className={'text-xs mt-4 text-black dark:text-white block md:hidden text-center'}>
+								<div className={'text-xs mt-4 text-plain block md:hidden text-center'}>
 									{`POINTS LEFT: ${_pointLefts}`}
 								</div>
 							</div>
 							<div className={'w-full flex flex-row text-megaxs mb-4'}>
 								<div
 									onClick={() => set_learnTab(0)}
-									className={`p-2 cursor-pointer text-black dark:text-white mr-4 ${learnTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`p-2 cursor-pointer text-plain mr-4 ${learnTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{'LEARNABLE'}
 								</div>
 								<div
 									onClick={() => set_learnTab(1)}
-									className={`p-2 cursor-pointer text-black dark:text-white mr-4 ${learnTab === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`p-2 cursor-pointer text-plain mr-4 ${learnTab === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{'LEARNED'}
 								</div>
 								<div
 									onClick={() => set_learnTab(2)}
-									className={`p-2 cursor-pointer text-black dark:text-white ${learnTab === 2 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`p-2 cursor-pointer text-plain ${learnTab === 2 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{'ALL'}
 								</div>
 
 
 								<div
 									onClick={() => set_typeTab(0)}
-									className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${typeTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary ml-auto`}>
+									className={`hidden md:block p-2 cursor-pointer text-plain mr-4 ${typeTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary ml-auto`}>
 									{'ALL'}
 								</div>
 								<div
 									onClick={() => set_typeTab(1)}
-									className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${typeTab === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`hidden md:block p-2 cursor-pointer text-plain mr-4 ${typeTab === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{'GENERAL'}
 								</div>
 								<div
 									onClick={() => set_typeTab(2)}
-									className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${typeTab === 2 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`hidden md:block p-2 cursor-pointer text-plain mr-4 ${typeTab === 2 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{'ITEM CREATION'}
 								</div>
 								<div
 									onClick={() => set_typeTab(3)}
-									className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${typeTab === 3 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`hidden md:block p-2 cursor-pointer text-plain mr-4 ${typeTab === 3 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{'METAMAGIC'}
 								</div>
 
@@ -177,7 +177,7 @@ function	Feats({adventurer, isOpen, closeModal}) {
 												<details key={feat?.id} className={'flex flex-row w-full mb-2 transition-colors'}>
 													<summary className={'transition-colors'}>
 														<div className={'flex flex-row space-x-4 w-full h-auto md:h-16 cursor-pointer'}>
-															<div className={'flex flex-col md:flex-row w-full relative text-black dark:text-white px-4'}>
+															<div className={'flex flex-col md:flex-row w-full relative text-plain px-4'}>
 																<div className={'mt-3.5 pr-6 w-75'}>
 																	<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'FEAT:'}</p>
 																	<p className={'text-sx'}>{feat?.name}</p>
@@ -195,7 +195,7 @@ function	Feats({adventurer, isOpen, closeModal}) {
 																				onLearnFeat(feat.id);
 																		}}
 																		disabled={!(_pointLefts > 0)}
-																		className={`border-4 border-black dark:border-dark-100 border-solid my-4 md:my-0 w-full md:w-auto py-2 px-12 text-xs text-black dark:text-white ${_pointLefts > 0 && canLearn ? 'hover:bg-gray-secondary dark:hover:bg-dark-900 cursor-pointer' : 'cursor-not-allowed'}`}>
+																		className={`border-4 border-black dark:border-dark-100 border-solid my-4 md:my-0 w-full md:w-auto py-2 px-12 text-xs text-plain ${_pointLefts > 0 && canLearn ? 'hover:bg-gray-secondary dark:hover:bg-dark-900 cursor-pointer' : 'cursor-not-allowed'}`}>
 																		{'LEARN'}
 																	</button> : null}
 																</div>
@@ -205,8 +205,8 @@ function	Feats({adventurer, isOpen, closeModal}) {
 
 													<div className={'flex flex-row space-x-4 w-full py-4 px-4'}>
 														<div className={'flex flex-col space-between w-full'}>
-															<p className={'text-megaxs mb-2 text-black dark:text-white'}>{'BENEFIT'}</p>
-															<p className={'text-megaxs leading-4 mb-4 text-black dark:text-white text-left md:text-justify'}>{feat?.benefit}</p>
+															<p className={'text-megaxs mb-2 text-plain'}>{'BENEFIT'}</p>
+															<p className={'text-megaxs leading-4 mb-4 text-plain text-left md:text-justify'}>{feat?.benefit}</p>
 														</div>
 													</div>
 

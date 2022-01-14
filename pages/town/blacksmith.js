@@ -59,7 +59,7 @@ function	DialogChoices({router, adventurersCount, set_category, approveStatus, a
 					nonce={dialogNonce}
 					options={[
 						{
-							label: (<>{'LEARN HOW TO '}<span className={'text-tag-info dark:text-tag-warning'}>{'CRAFT'}</span></>),
+							label: (<>{'LEARN HOW TO '}<span className={'text-highlight'}>{'CRAFT'}</span></>),
 							onClick: () => openModalSkills()
 						},
 						{label: 'Nevermind', onClick: () => router.push('/town/blacksmith')},
@@ -104,15 +104,15 @@ function	DialogChoices({router, adventurersCount, set_category, approveStatus, a
 				nonce={dialogNonce}
 				options={[
 					{
-						label: (<>{'CRAFT SOME '}<span className={'text-tag-info dark:text-tag-warning'}>{'GOODS'}</span></>),
+						label: (<>{'CRAFT SOME '}<span className={'text-highlight'}>{'GOODS'}</span></>),
 						onClick: () => set_category(0)
 					},
 					{
-						label: (<>{'CRAFT SOME '}<span className={'text-tag-info dark:text-tag-warning'}>{'ARMORS'}</span></>),
+						label: (<>{'CRAFT SOME '}<span className={'text-highlight'}>{'ARMORS'}</span></>),
 						onClick: () => set_category(1)
 					},
 					{
-						label: (<>{'CRAFT SOME '}<span className={'text-tag-info dark:text-tag-warning'}>{'WEAPONS'}</span></>),
+						label: (<>{'CRAFT SOME '}<span className={'text-highlight'}>{'WEAPONS'}</span></>),
 						onClick: () => set_category(2)
 					},
 					{label: 'Nevermind', onClick: () => router.push('/town/blacksmith')},
@@ -152,9 +152,9 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 				return (
 					<>
 						{'YOU WENT IN '}
-						<span className={'text-tag-info dark:text-tag-warning'}>{'THE FOREST'}</span>
+						<span className={'text-highlight'}>{'THE FOREST'}</span>
 						{' AND FOUND SOMETHING ? I HAVE SOME STUFF I COULD USE TO '}
-						<span className={'text-tag-info dark:text-tag-warning'}>{'UPGRADE'}</span>
+						<span className={'text-highlight'}>{'UPGRADE'}</span>
 						{' THEM. WHICH ONE DO YOU WANT TO UPGRADE?'}
 					</>		
 				);
@@ -164,13 +164,13 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'YOU WENT IN '}
 					</Typer>&nbsp;
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'THE FOREST'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 						{' AND FOUND SOMETHING ? I HAVE SOME STUFF I COULD USE TO '}
 					</Typer>
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 						{'UPGRADE'}
 					</Typer></span>
 					<Typer
@@ -189,7 +189,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 				return (
 					<>
 						{'IF YOU HAVE SOME RUSTY ARTIFACTS FROM '}
-						<span className={'text-tag-info dark:text-tag-warning'}>{'THE OLD FOREST'}</span>
+						<span className={'text-highlight'}>{'THE OLD FOREST'}</span>
 						{', I CAN RESTORE THEM FOR FREE!'}
 					</>		
 				);
@@ -199,7 +199,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'IF YOU HAVE SOME RUSTY ARTIFACTS FROM '}
 					</Typer>&nbsp;
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'THE OLD FOREST'}
 					</Typer></span>
 					<Typer
@@ -219,7 +219,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 					return (
 						<>
 							{'ONLY SOMEONE WHO KNOWS THE '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{'CRAFT SKILL'}</span>
+							<span className={'text-highlight'}>{'CRAFT SKILL'}</span>
 							{' CAN ACCESS THIS WORKSHOP! LEARN IT FIRST THEN COME BACK!'}
 						</>		
 					);
@@ -229,7 +229,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 							{'ONLY SOMEONE WHO KNOWS THE '}
 						</Typer>
-						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 							{'CRAFT SKILL'}
 						</Typer></span>
 						<Typer
@@ -248,7 +248,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 					return (
 						<>
 							{'YOU LOOK TIRED TODAY. YOU NEED AT LEAST '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{'250 XP'}</span>
+							<span className={'text-highlight'}>{'250 XP'}</span>
 							{' TO CRAFT SOMETHING. GO ON AN ADVENTURE AND COME BACK WHEN YOU ARE READY!'}
 						</>		
 					);
@@ -258,7 +258,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 							{'YOU LOOK TIRED TODAY. YOU NEED AT LEAST '}
 						</Typer>
-						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 							{'250 XP'}
 						</Typer></span>
 						<Typer
@@ -277,11 +277,11 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 					return (
 						<>
 							{'YOU ARE HERE TO '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{'CRAFT'}</span>
+							<span className={'text-highlight'}>{'CRAFT'}</span>
 							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{'GOLD'}</span>
+							<span className={'text-highlight'}>{'GOLD'}</span>
 							{' AS WELL AS SOME OF YOUR '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{'RAT SKINS'}</span>
+							<span className={'text-highlight'}>{'RAT SKINS'}</span>
 							{'! WE WILL BEGIN IMMEDIATELY!'}
 						</>		
 					);
@@ -291,19 +291,19 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 							{'YOU ARE HERE TO '}
 						</Typer>
-						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 							{'CRAFT'}
 						</Typer></span>
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
 						</Typer>
-						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+						<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 							{'GOLD'}
 						</Typer></span>
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 4}>
 							{' AS WELL AS SOME OF YOUR '}
 						</Typer>
-						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 5}>
+						<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 5}>
 							{'RAT SKINS'}
 						</Typer></span>
 						<Typer
@@ -322,9 +322,9 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 					return (
 						<>
 							{'YOU ARE HERE TO '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{'CRAFT'}</span>
+							<span className={'text-highlight'}>{'CRAFT'}</span>
 							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{'GOLD'}</span>
+							<span className={'text-highlight'}>{'GOLD'}</span>
 							{'! WE WILL BEGIN IMMEDIATELY!'}
 						</>		
 					);
@@ -334,13 +334,13 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 							{'YOU ARE HERE TO '}
 						</Typer>
-						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 							{'CRAFT'}
 						</Typer></span>
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
 						</Typer>
-						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+						<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 							{'GOLD'}
 						</Typer></span>
 						<Typer
@@ -359,9 +359,9 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 					return (
 						<>
 							{'YOU ARE HERE TO '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{'CRAFT'}</span>
+							<span className={'text-highlight'}>{'CRAFT'}</span>
 							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{'RAT SKINS'}</span>
+							<span className={'text-highlight'}>{'RAT SKINS'}</span>
 							{'! WE WILL BEGIN IMMEDIATELY!'}
 						</>		
 					);
@@ -371,13 +371,13 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 							{'YOU ARE HERE TO '}
 						</Typer>
-						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 							{'CRAFT'}
 						</Typer></span>
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 							{' SOMETHING? PERFECT! PLEASE ALLOW ME TO USE SOME OF YOUR '}
 						</Typer>
-						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+						<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 							{'RAT SKINS'}
 						</Typer></span>
 						<Typer
@@ -395,15 +395,15 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 				return (
 					<>
 						{'LET\'S '}
-						<span className={'text-tag-info dark:text-tag-warning'}>{'CRAFT'}</span>
+						<span className={'text-highlight'}>{'CRAFT'}</span>
 						{'! REMEMBER, WHEN YOU TRY TO CRAFT SOMETHING, YOU MAY '}
-						<span className={'text-tag-info dark:text-tag-warning'}>{'FAIL'}</span>
+						<span className={'text-highlight'}>{'FAIL'}</span>
 						{', IT\'S A DIFFICULT TASK. '}
-						<span className={'text-tag-info dark:text-tag-warning'}>{'YOUR INTELLIGENCE AND CRAFT SKILL'}</span>
+						<span className={'text-highlight'}>{'YOUR INTELLIGENCE AND CRAFT SKILL'}</span>
 						{' CAN HELP YOU.'}
 						<div />
 						{'EACH ATTEMPT WILL COST YOU '}
-						<span className={'text-tag-info dark:text-tag-warning'}>{'250XP'}</span>
+						<span className={'text-highlight'}>{'250XP'}</span>
 						{'.'}
 					</>		
 				);
@@ -413,19 +413,19 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'LET\'S '}
 					</Typer>
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'CRAFT'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 						{'! REMEMBER, WHEN YOU TRY TO CRAFT SOMETHING, YOU MAY '}
 					</Typer>
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 						{'FAIL'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 4}>
 						{', IT\'S A DIFFICULT TASK. '}
 					</Typer>
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 5}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 5}>
 						{'YOUR INTELLIGENCE AND CRAFT SKILL'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 6}>
@@ -435,7 +435,7 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 7}>
 						{'EACH ATTEMPT WILL COST YOU '}
 					</Typer>
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 8}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 8}>
 						{'250XP'}
 					</Typer></span>
 					<Typer
@@ -453,9 +453,9 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 			return (
 				<>
 					{'WELCOME! I AM '}
-					<span className={'text-tag-info dark:text-tag-warning'}>{'CEAZOR THE BLACKSMITH'}</span>
+					<span className={'text-highlight'}>{'CEAZOR THE BLACKSMITH'}</span>
 					{'. MY WORKSHOP IS OPEN FOR BUSINESS. YOU CAN NOW '}
-					<span className={'text-tag-info dark:text-tag-warning'}>{'CRAFT AN ITEM'}</span>
+					<span className={'text-highlight'}>{'CRAFT AN ITEM'}</span>
 					{' IF YOU HAVE THE SKILL AND MATERIALS TO PULL IT OFF. DON\'T WORRY I WILL HELP YOU OUT.  ALSO, IF YOU FOUND SOME ITEMS IN THE FOREST,  I CAN STILL UPGRADE THEM FOR XP. OR RESTORE THE ONES FROM THE OLD FOREST.'}
 				</>		
 			);
@@ -465,13 +465,13 @@ function	NCPHeadline({router, approveStatus, adventurerCanCraft, adventurerHasXp
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 					{'WELCOME! I AM '}
 				</Typer>
-				<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+				<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 					{'CEAZOR THE BLACKSMITH'}
 				</Typer></span>
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 					{'. MY WORKSHOP IS OPEN FOR BUSINESS. YOU CAN NOW '}
 				</Typer>
-				<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+				<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 					{'CRAFT AN ITEM'}
 				</Typer></span>
 				<Typer

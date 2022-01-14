@@ -32,7 +32,7 @@ function	NewsTab({shouldDisplay}) {
 	return (
 		<div className={'flex flex-col w-full'}>
 			<div className={'pb-10'}>
-				<i className={'text-black dark:text-white text-opacity-60 text-sx md:text-xs leading-4 md:leading-4'}>
+				<i className={'text-plain text-opacity-60 text-sx md:text-xs leading-4 md:leading-4'}>
 					{'OYE OYE ! FIND THE LATEST NEWS IN OUR AMAZING WORLD IN THE DAILY EXTENDED ! GET READY FOR A BIG ADVENTURE, FROM OUR HUMBLE TOWN TO THE DARK FOREST OF SMUGLEWIND ! NEWS, ANNOUNCES, AND PUBLIC WORKS, EVERYTHING IS IN THE DAILY EXTENDED !'}
 				</i>
 				<div className={'divide-y-2 divide-black dark:divide-white dark:divide-opacity-60'}>
@@ -68,7 +68,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'WELCOME, ADVENTURER! I AM'}
 					</Typer>&nbsp;
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'FACU THE TAVERN KEEPER'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -86,7 +86,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 				return (
 					<>
 						{'WELCOME, ADVENTURER! I AM '}
-						<span className={'text-tag-info dark:text-tag-warning'}>{'FACU THE TAVERN KEEPER'}</span>
+						<span className={'text-highlight'}>{'FACU THE TAVERN KEEPER'}</span>
 						{'!'}
 						<div />
 						{'WHAT CAN I DO FOR YA? LOOKING FOR THE LASTED NEWS, CHECK BELOW!'}
@@ -98,7 +98,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'WELCOME, ADVENTURER! I AM'}
 					</Typer>&nbsp;
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'FACU THE TAVERN KEEPER'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -122,7 +122,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 					return (
 						<>
 							{'WELCOME, ADVENTURER! I AM '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{'FACU THE TAVERN KEEPER'}</span>
+							<span className={'text-highlight'}>{'FACU THE TAVERN KEEPER'}</span>
 							{'!'}
 							<div />
 							{'YOU ARE ABOUT TO START A JOURNEY BEYOND IMAGINATION. YOU WILL MEET NEW FRIENDS AND FIGHT GREAT DANGERS!'}
@@ -136,7 +136,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 							{'WELCOME, ADVENTURER! I AM'}
 						</Typer>&nbsp;
-						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 							{'FACU THE TAVERN KEEPER'}
 						</Typer></span>
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -172,7 +172,7 @@ function	NPCHeadline({router, active, adventurersCount}) {
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'OH, THERE IS A '}
 					</Typer>
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'HERO'}
 					</Typer></span>
 					<Typer

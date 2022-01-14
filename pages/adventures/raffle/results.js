@@ -39,7 +39,7 @@ function	Index({router}) {
 		<div className={'max-w-prose w-full relative mt-8 mx-auto px-3 flex flex-col items-center'}>
 			<div>
 				<p onClick={() => router.back()}
-					className={'text-black dark:text-white text-megaxs absolute left-4 top-2 hover:underline cursor-pointer'}>
+					className={'text-plain text-megaxs absolute left-4 top-2 hover:underline cursor-pointer'}>
 					{'< Back'}
 				</p>
 
@@ -49,7 +49,7 @@ function	Index({router}) {
 						: 'You didn\'t win =('}
 				</h1>
 
-				<div className={'text-black dark:text-white text-xxs absolute right-4 top-2 flex flex-row items-center'}>
+				<div className={'text-plain text-xxs absolute right-4 top-2 flex flex-row items-center'}>
 					{}
 				</div>
 			</div>

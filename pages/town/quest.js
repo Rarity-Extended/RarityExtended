@@ -57,7 +57,7 @@ function	DialogChoices({adventurersCount, router}) {
 					label: (
 						<>
 							{'THE RAT IN '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{'THE CELLAR'}</span>
+							<span className={'text-highlight'}>{'THE CELLAR'}</span>
 						</>
 					),
 					onClick: () => router.push('/adventures/the-cellar')
@@ -66,7 +66,7 @@ function	DialogChoices({adventurersCount, router}) {
 					label: (
 						<>
 							{'THE TREASURE IN '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{'THE FOREST'}</span>
+							<span className={'text-highlight'}>{'THE FOREST'}</span>
 						</>
 					),
 					onClick: () => router.push('/adventures/the-forest')
@@ -75,7 +75,7 @@ function	DialogChoices({adventurersCount, router}) {
 					label: (
 						<>
 							{'GET SOME INFO ABOUT'}
-							<span className={'text-tag-info dark:text-tag-warning'}>{' THE BOARS'}</span>
+							<span className={'text-highlight'}>{' THE BOARS'}</span>
 						</>
 					),
 					onClick: () => router.push('/adventures/the-boars')
@@ -83,7 +83,7 @@ function	DialogChoices({adventurersCount, router}) {
 				{
 					label: (
 						<>
-							<span className={'text-tag-info dark:text-tag-warning'}>{'HOOLIGANS '}</span> {' IN THE TAVERN'}
+							<span className={'text-highlight'}>{'HOOLIGANS '}</span> {' IN THE TAVERN'}
 						</>
 					),
 					onClick: () => router.push('/adventures/openmic')
@@ -108,13 +108,13 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'HELLO, I AM '}
 					</Typer>
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'LARA'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 						{' FROM THE '}
 					</Typer>
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 						{'QUEST OFFICE'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 4}>
@@ -130,13 +130,13 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'HELLO, I AM '}
 					</Typer>
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{'LARA'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 						{' FROM THE '}
 					</Typer>
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 						{'QUEST OFFICE'}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 4}>
@@ -151,13 +151,13 @@ function	NPCHeadline({router, active, address, adventurersCount}) {
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 					{'HELLO, I AM '}
 				</Typer>
-				<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+				<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 					{'LARA'}
 				</Typer></span>
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 					{' FROM THE '}
 				</Typer>
-				<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+				<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 					{'QUEST OFFICE'}
 				</Typer></span>
 				<Typer

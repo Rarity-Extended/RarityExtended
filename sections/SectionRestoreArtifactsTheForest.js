@@ -20,7 +20,7 @@ import	THE_FOREST_LOOT								from	'utils/codex/items_dungeon_theForest.json';
 function	Artifact({img, name, level, magic, onClick}) {
 	return (
 		<div
-			className={'w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}
+			className={'w-full md:w-60 border-black dark:border-dark-100 border-4 p-4 flex flex-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-100 transition-colors cursor-pointer relative mb-4 md:mb-0'}
 			onClick={onClick}>
 			<Image
 				src={img}
@@ -148,7 +148,7 @@ function	SectionArtifactsTheForest({shouldDisplay, adventurers, adventurersCount
 			<div className={'flex flex-col w-full relative h-36'}>
 				<div className={'absolute mt-10 inset-0 backdrop-blur-3xl bg-opacity-40 cursor-not-allowed'}>
 					<div className={'loader'} />
-					<div className={'absolute inset-0 mt-32 flex justify-center items-center'}>
+					<div className={'absolute inset-0 mt-32 flex flex-center'}>
 						<p className={'center-text text-white z-40'}>{'Retrieving your adventurers...'}</p>
 					</div>
 				</div>

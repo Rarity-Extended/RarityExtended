@@ -26,7 +26,7 @@ function	Adventurer({
 
 	return (
 		<Box
-			className={`w-full p-4 flex justify-center items-center flex-col ${noHover ? '' : `group cursor-pointer ${hoverStyle}`} transition-colors relative mb-4 md:mb-0 ${bgStyle}`}
+			className={`w-full p-4 flex flex-center flex-col ${noHover ? '' : `group cursor-pointer ${hoverStyle}`} transition-colors relative mb-4 md:mb-0 ${bgStyle}`}
 			borderStyle={borderStyle}
 			onClick={onClick}>
 			<Image
@@ -35,10 +35,12 @@ function	Adventurer({
 				quality={90}
 				width={width || 160}
 				height={height || 160} />
-			<p className={'text-sm text-black dark:text-white justify-center group-hover:underline'}>
+			<p className={'text-sm text-plain justify-center group-hover:underline'}>
 				{adventurer.name || adventurer.tokenID}
 			</p>
-			<p className={'text-xss text-black dark:text-white justify-center text-center mt-1'}>{`${adventurerClass.name} level ${adventurer.level}`}</p>
+			<p className={'text-xss text-plain justify-center text-center mt-1'}>
+				{`${adventurerClass.name} level ${adventurer.level}`}
+			</p>
 			{children}
 		</Box>
 	);

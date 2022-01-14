@@ -52,7 +52,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 							<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 								{'OH, YOU WOULD LIKE TO GET YOUR INVESTMENT BACK? HOW MANY '}
 							</Typer>
-							<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+							<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 								{selectedVault?.token}
 							</Typer></span>
 							<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -69,7 +69,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 							<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 								{'OH, YOU WOULD LIKE TO GET YOUR INVESTMENT BACK? HOW MANY '}
 							</Typer>
-							<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+							<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 								{selectedVault?.token}
 							</Typer></span>
 							<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -83,7 +83,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 							{'I WOULD LOVE TO, TRAVELER! BUT YOU DON\'T HAVE ANY '}
 						</Typer>
-						<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+						<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 							{selectedVault?.token}
 						</Typer></span>
 						<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
@@ -97,13 +97,13 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 						{'GREAT CHOICE, TRAVELER! YOU HAVE '}
 					</Typer>
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 						{`${Number(selectedVault?.balance || 0).toFixed(4)} ${selectedVault?.token}`}
 					</Typer></span>
 					<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 2}>
 						{', HOW MUCH WILL YOU DEPOSIT IN '}
 					</Typer>
-					<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
+					<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 3}>
 						{selectedVault?.name}
 					</Typer></span>
 				</>
@@ -113,7 +113,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 			return (
 				<>
 					{'LOOK WHO IS HERE! WELCOME TO '}
-					<span className={'text-tag-info dark:text-tag-warning'}>{'IVAN’S BANK'}</span>
+					<span className={'text-highlight'}>{'IVAN’S BANK'}</span>
 					{', MIGHTY HERO! SO YOU’VE EARNED SOME COINS IN YOUR LEGENDARY ADVENTURES, HAVEN’T YOU? I CAN EARN YOU EVEN MORE! JUST DEPOSIT IN ONE OF THESE VERY NICE VAULTS...'}
 				</>
 			);
@@ -123,7 +123,7 @@ function	NPCHeadline({selectedVault, isTxPending, hasDeposited, hasDepositError,
 				<Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 0}>
 					{'LOOK WHO IS HERE! WELCOME TO '}
 				</Typer>
-				<span className={'text-tag-info dark:text-tag-warning'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
+				<span className={'text-highlight'}><Typer onDone={() => set_npcTextIndex(i => i + 1)} shouldStart={npcTextIndex === 1}>
 					{'IVAN’S BANK'}
 				</Typer></span>
 				<Typer
@@ -369,7 +369,7 @@ function	Index() {
 		}
 		return (
 			<Box className={'py-6 px-8 mt-0 text-sm mb-8'}>
-				<div className={'hidden md:flex flex-row items-center text-megaxs text-black dark:text-white text-opacity-60 mb-4'}>
+				<div className={'hidden md:flex flex-row items-center text-megaxs text-plain text-opacity-60 mb-4'}>
 					<div className={'w-4/12'}><p>{'Vault:'}</p></div>
 					<div className={'w-2/12'}><p>{'Token:'}</p></div>
 					<div className={'w-2/12'}><p>{'APY:'}</p></div>
@@ -388,27 +388,27 @@ function	Index() {
 						share: ftmShare,
 						shareRaw: ftmShareRaw
 					})}
-					className={`py-4 flex flex-col md:flex-row items-start md:items-center text-xs text-black dark:text-white group ${selectedVault?.id === 1 ? 'bg-gray-principal dark:bg-dark-100' : ''} hover:bg-gray-principal dark:hover:bg-dark-100 cursor-pointer -ml-4 px-2`}>
+					className={`py-4 flex flex-col md:flex-row items-start md:items-center text-xs text-plain group ${selectedVault?.id === 1 ? 'bg-gray-principal dark:bg-dark-100' : ''} hover:bg-gray-principal dark:hover:bg-dark-100 cursor-pointer -ml-4 px-2`}>
 					<span className={`hidden md:inline mb-1 mr-2 group-hover:opacity-100 opacity-5 ${selectedVault?.id === 1 ? 'opacity-100' : ''}`} style={{cursor: 'pointer'}}>{'>'}</span>
 
 					<div className={'w-full md:w-4/12 flex flex-row'}>
-						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'Vault:'}</p>
+						<p className={'mr-auto text-megaxs text-plain text-opacity-60 inline md:hidden'}>{'Vault:'}</p>
 						<p>{'The Fantom'}</p>
 					</div>
 					<div className={'w-full md:w-2/12 flex flex-row'}>
-						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'Token:'}</p>
+						<p className={'mr-auto text-megaxs text-plain text-opacity-60 inline md:hidden'}>{'Token:'}</p>
 						<p>{'wFTM'}</p>
 					</div>
 					<div className={'w-full md:w-2/12 flex flex-row'}>
-						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'APY:'}</p>
+						<p className={'mr-auto text-megaxs text-plain text-opacity-60 inline md:hidden'}>{'APY:'}</p>
 						<p>{vaultTheFantom?.data?.week}</p>
 					</div>
 					<div className={'w-full md:w-2/12 flex flex-row'}>
-						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'Available:'}</p>
+						<p className={'mr-auto text-megaxs text-plain text-opacity-60 inline md:hidden'}>{'Available:'}</p>
 						<p>{Number(ftmBalance || 0)?.toFixed(2)}</p>
 					</div>
 					<div className={'w-full md:w-2/12 flex flex-row'}>
-						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'In Vault:'}</p>
+						<p className={'mr-auto text-megaxs text-plain text-opacity-60 inline md:hidden'}>{'In Vault:'}</p>
 						<p>{Number(ftmShare || 0)?.toFixed(2)}</p>
 					</div>
 				</div>
@@ -423,27 +423,27 @@ function	Index() {
 						share: daiShare,
 						shareRaw: daiShareRaw
 					})}
-					className={`pt-6 md:pt-4 py-4 flex flex-col md:flex-row items-center text-xs text-black dark:text-white group ${selectedVault?.id === 2 ? 'bg-gray-principal dark:bg-dark-100' : ''} hover:bg-gray-principal dark:hover:bg-dark-100 cursor-pointer -ml-4 px-2`}>
+					className={`pt-6 md:pt-4 py-4 flex flex-col md:flex-row items-center text-xs text-plain group ${selectedVault?.id === 2 ? 'bg-gray-principal dark:bg-dark-100' : ''} hover:bg-gray-principal dark:hover:bg-dark-100 cursor-pointer -ml-4 px-2`}>
 					<span className={`hidden md:inline mb-1 mr-2 group-hover:opacity-100 opacity-5 ${selectedVault?.id === 2 ? 'opacity-100' : ''}`} style={{cursor: 'pointer'}}>{'>'}</span>
 
 					<div className={'w-full md:w-4/12 flex flex-row'}>
-						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'Vault:'}</p>
+						<p className={'mr-auto text-megaxs text-plain text-opacity-60 inline md:hidden'}>{'Vault:'}</p>
 						<p>{'Fantom\'s Dai Hard'}</p>
 					</div>
 					<div className={'w-full md:w-2/12 flex flex-row'}>
-						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'Token:'}</p>
+						<p className={'mr-auto text-megaxs text-plain text-opacity-60 inline md:hidden'}>{'Token:'}</p>
 						<p>{'DAI'}</p>
 					</div>
 					<div className={'w-full md:w-2/12 flex flex-row'}>
-						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'APY:'}</p>
+						<p className={'mr-auto text-megaxs text-plain text-opacity-60 inline md:hidden'}>{'APY:'}</p>
 						<p>{vaultDaiHard?.data?.week}</p>
 					</div>
 					<div className={'w-full md:w-2/12 flex flex-row'}>
-						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'Available:'}</p>
+						<p className={'mr-auto text-megaxs text-plain text-opacity-60 inline md:hidden'}>{'Available:'}</p>
 						<p>{Number(daiBalance || 0)?.toFixed(2)}</p>
 					</div>
 					<div className={'w-full md:w-2/12 flex flex-row'}>
-						<p className={'mr-auto text-megaxs text-black dark:text-white text-opacity-60 inline md:hidden'}>{'In Vault:'}</p>
+						<p className={'mr-auto text-megaxs text-plain text-opacity-60 inline md:hidden'}>{'In Vault:'}</p>
 						<p>{Number(daiShare || 0)?.toFixed(2)}</p>
 					</div>
 				</div>

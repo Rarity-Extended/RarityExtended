@@ -23,11 +23,11 @@ function	Crafting({options, selected, set_selected, className}) {
 		<Listbox value={selected} onChange={set_selected} onClick={() => set_isOpen(!isOpen)}>
 			<div className={'relative'} ref={ref}>
 				<Listbox.Button
-					className={`flex flex-row items-center p-2 cursor-pointer text-black dark:text-white mr-4 dark:hover:bg-dark-400 hover:bg-gray-secondary text-megaxs border-none uppercase relative ${isOpen ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white focus:bg-gray-secondary dark:bg-dark-600 dark:focus:bg-dark-400'} ${className}`}>
+					className={`flex flex-row items-center p-2 cursor-pointer text-plain mr-4 dark:hover:bg-dark-400 hover:bg-gray-secondary text-megaxs border-none uppercase relative ${isOpen ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white focus:bg-gray-secondary dark:bg-dark-600 dark:focus:bg-dark-400'} ${className}`}>
 					<span className={'block truncate'}>{selected.name}</span>
 					<div className={'ml-auto pl-2'}>
-						<Chevron width={6} height={6} className={'select-none transform rotate-90 text-black dark:text-white'} />
-						<Chevron width={6} height={6} className={'select-none transform -rotate-90 text-black dark:text-white'} />
+						<Chevron width={6} height={6} className={'select-none transform rotate-90 text-plain'} />
+						<Chevron width={6} height={6} className={'select-none transform -rotate-90 text-plain'} />
 					</div>
 				</Listbox.Button>
 				<Transition

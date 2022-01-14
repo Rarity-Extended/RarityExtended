@@ -45,10 +45,10 @@ function Index({router}) {
 		return <div className={'w-adventure-card h-adventure-card'}>
 			<Box
 				onClick={() => setSelectBeneficiaryIsOpen(true)}
-				className={'w-full h-full p-4 flex justify-center items-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer\'} transition-colors relative mb-4 md:mb-0 cursor-pointer'}>
-				<p className={'w-full h-full text-6xl flex items-center justify-center'}>{'?'}</p>
+				className={'w-full h-full p-4 flex flex-center flex-col group hover:bg-gray-principal dark:hover:bg-dark-900 cursor-pointer\'} transition-colors relative mb-4 md:mb-0 cursor-pointer'}>
+				<p className={'w-full h-full text-6xl flex flex-center'}>{'?'}</p>
 			</Box>
-			<p className={'mt-10 text-black dark:text-white text-center'}>
+			<p className={'mt-10 text-plain text-center'}>
 				{'Select a beneficiary'}
 			</p>
 		</div>;
@@ -57,7 +57,7 @@ function Index({router}) {
 	function beneficiaryCard() {
 		return <div className={'w-adventure-card h-adventure-card'}>
 			<Adventurer adventurer={beneficiary} onClick={() => setSelectBeneficiaryIsOpen(true)} width={240} height={240}></Adventurer>
-			<p className={'mt-8 text-black dark:text-white text-center'}>
+			<p className={'mt-8 text-plain text-center'}>
 				{'This adventurer will receive '}<br /><span className={'text-blood-500'}>{CANDIES_PER_SUMMONER}{' candies'}</span>
 			</p>
 		</div>;
@@ -67,13 +67,13 @@ function Index({router}) {
 		<div className={'max-w-prose w-full relative mt-8 mx-auto px-3 flex flex-col items-center'}>
 			<div>
 				<p onClick={() => router.back()}
-					className={'text-black dark:text-white text-megaxs absolute left-4 top-2 hover:underline cursor-pointer'}>
+					className={'text-plain text-megaxs absolute left-4 top-2 hover:underline cursor-pointer'}>
 					{'< Back'}
 				</p>
 				<h1 className={'text-blood-500 text-2xl'}>
 					{'BLOOD SACRIFICE!'}
 				</h1>
-				<div className={'text-black dark:text-white text-xxs absolute right-4 top-2 flex flex-row items-center'} />
+				<div className={'text-plain text-xxs absolute right-4 top-2 flex flex-row items-center'} />
 			</div>
 
 			<div className={'mt-24 flex flex-row'}>
@@ -105,7 +105,7 @@ function Index({router}) {
 						</div>
 					</Button>
 				</div>
-				<div className={'mx-16 h-adventure-card text-2xl flex items-center justify-center text-black dark:text-dark-100'}>
+				<div className={'mx-16 h-adventure-card text-2xl flex flex-center text-black dark:text-dark-100'}>
 					{'-'}&gt;
 				</div>
 				<div>

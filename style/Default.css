@@ -9,6 +9,9 @@
 	scroll-behavior: smooth;
 }
 
+html {
+	background-color: #f7f9fb;
+}
 html.dark {
 	background: rgb(19,38,75);
 }

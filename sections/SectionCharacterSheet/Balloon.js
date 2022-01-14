@@ -17,7 +17,7 @@ function	Balloon({adventurer, chainTime, provider, updateRarity}) {
 	const	[ask, set_ask] = useState(0);
 	const	canAdventure = !dayjs(new Date(adventurer.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
 	const	canGold = Number(adventurer?.gold?.claimable || 0) > 0;
-	const	isInTheForest = adventurer.level >= 2 && !adventurer?.dungeons?.forest?.canAdventure;
+	const	isInTheForest = adventurer.level >= 2 && !adventurer?.adventures?.forest?.canAdventure;
 
 	function	onGoToAdventure() {
 		goAdventure({

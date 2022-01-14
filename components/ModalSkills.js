@@ -105,7 +105,7 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 						<div
 							key={adventurer?.tokenID}
 							className={'inline-block px-4 md:px-10 pt-9 pb-0 md:pb-9 mt-16 md:mt-23 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative border-4 border-black'}>
-							<Dialog.Title as={'h3'} className={'relative text-lg font-medium leading-6 text-black dark:text-white flex flex-col md:flex-row justify-between'}>
+							<Dialog.Title as={'h3'} className={'relative text-lg font-medium leading-6 text-plain flex flex-col md:flex-row justify-between'}>
 								{'SKILLBOOK'}
 								<div className={'flex flex-row text-megaxs space-x-2 md:space-x-4 text-gray-darker dark:text-dark-100 mt-2 md:mt-0 ml-0 md:-ml-20 leading-3'}>
 									<p>{`STR: ${adventurer?.attributes?.strength || 8}`}</p>
@@ -122,9 +122,9 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 							<div className={'mt-6 flex flex-col md:flex-row mb-4 items-center'}>
 								<input
 									onChange={e => set_search(e?.target?.value || '')}
-									className={'border-4 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-black dark:text-white'}
+									className={'border-4 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-plain'}
 									placeholder={'SEARCH'} />
-								<div className={'ml-auto text-xs mr-6 text-black dark:text-white hidden md:block'}>
+								<div className={'ml-auto text-xs mr-6 text-plain hidden md:block'}>
 									{`POINTS LEFT: ${updateSkills.remainingPoints}`}
 								</div>
 								<button
@@ -133,58 +133,58 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 											onSetSkills();
 									}}
 									disabled={!updateSkills.canBuyPoint || updateSkills.remainingPoints === updateSkills.initialPointsToSend}
-									className={`border-4 border-black dark:border-dark-100 border-solid my-4 md:my-0 w-full md:w-auto h-10 px-12 text-xs text-black dark:text-white ${updateSkills.canBuyPoint && updateSkills.remainingPoints !== updateSkills.initialPointsToSend ? 'hover:bg-gray-secondary dark:hover:bg-dark-900 cursor-pointer' : 'cursor-not-allowed'}`}>
+									className={`border-4 border-black dark:border-dark-100 border-solid my-4 md:my-0 w-full md:w-auto h-10 px-12 text-xs text-plain ${updateSkills.canBuyPoint && updateSkills.remainingPoints !== updateSkills.initialPointsToSend ? 'hover:bg-gray-secondary dark:hover:bg-dark-900 cursor-pointer' : 'cursor-not-allowed'}`}>
 									{'LEARN'}
 								</button>
-								<div className={'text-xs text-black dark:text-white block md:hidden text-center'}>
+								<div className={'text-xs text-plain block md:hidden text-center'}>
 									{`POINTS LEFT: ${updateSkills.remainingPoints}`}
 								</div>
 							</div>
 							<div className={'w-full flex flex-row text-megaxs mb-4'}>
 								<div
 									onClick={() => set_classTab(0)}
-									className={`p-2 cursor-pointer text-black dark:text-white mr-4 ${classTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`p-2 cursor-pointer text-plain mr-4 ${classTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{_adventurerClass.name}
 								</div>
 								<div
 									onClick={() => set_classTab(1)}
-									className={`p-2 cursor-pointer text-black dark:text-white ${classTab === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`p-2 cursor-pointer text-plain ${classTab === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{'CROSS-CLASS'}
 								</div>
 
 								<div
 									onClick={() => set_attributeTab(0)}
-									className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${attributeTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary ml-auto`}>
+									className={`hidden md:block p-2 cursor-pointer text-plain mr-4 ${attributeTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary ml-auto`}>
 									{'ALL'}
 								</div>
 								<div
 									onClick={() => set_attributeTab(1)}
-									className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${attributeTab === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`hidden md:block p-2 cursor-pointer text-plain mr-4 ${attributeTab === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{'STRENGTH'}
 								</div>
 								<div
 									onClick={() => set_attributeTab(2)}
-									className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${attributeTab === 2 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`hidden md:block p-2 cursor-pointer text-plain mr-4 ${attributeTab === 2 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{'DEXTERITY'}
 								</div>
 								<div
 									onClick={() => set_attributeTab(3)}
-									className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${attributeTab === 3 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`hidden md:block p-2 cursor-pointer text-plain mr-4 ${attributeTab === 3 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{'CONSTITUTION'}
 								</div>
 								<div
 									onClick={() => set_attributeTab(4)}
-									className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${attributeTab === 4 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`hidden md:block p-2 cursor-pointer text-plain mr-4 ${attributeTab === 4 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{'INTELLIGENCE'}
 								</div>
 								<div
 									onClick={() => set_attributeTab(5)}
-									className={`hidden md:block p-2 cursor-pointer text-black dark:text-white mr-4 ${attributeTab === 5 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`hidden md:block p-2 cursor-pointer text-plain mr-4 ${attributeTab === 5 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{'WISDOM'}
 								</div>
 								<div
 									onClick={() => set_attributeTab(6)}
-									className={`hidden md:block p-2 cursor-pointer text-black dark:text-white ${attributeTab === 6 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+									className={`hidden md:block p-2 cursor-pointer text-plain ${attributeTab === 6 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 									{'CHARISMA'}
 								</div>
 							</div>
@@ -239,10 +239,10 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 												<details key={skill?.id} className={'flex flex-row w-full mb-2 transition-colors'}>
 													<summary className={'transition-colors'}>
 														<div className={'flex flex-row space-x-4 w-full h-auto md:h-16 cursor-pointer'}>
-															<div className={'w-16 h-16 flex justify-center items-center relative item'}>
+															<div className={'w-16 h-16 flex flex-center relative item'}>
 																<Image src={skill.img} width={64} height={64} />
 															</div>
-															<div className={'hidden md:flex flex-row space-between w-full relative text-black dark:text-white'}>
+															<div className={'hidden md:flex flex-row space-between w-full relative text-plain'}>
 																<div className={'mt-3.5 w-57'}>
 																	<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'SKILL:'}</p>
 																	<p className={'text-sx'}>{skill?.name}</p>
@@ -283,7 +283,7 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 																					remainingPoints: s.remainingPoints + (isClassSpecific ? 1 : 2)
 																				}));
 																			}}>
-																			<Chevron className={'mr-2 select-none cursor-pointer text-black dark:text-white'} />
+																			<Chevron className={'mr-2 select-none cursor-pointer text-plain'} />
 																		</div>
 																		<p className={'text-xs w-5 text-center'}>{updateSkills[skill?.id]}</p>
 																		<div
@@ -303,13 +303,13 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 																					remainingPoints: s.remainingPoints - (isClassSpecific ? 1 : 2)
 																				}));
 																			}}>
-																			<Chevron className={'ml-2 select-none transform rotate-180 text-black dark:text-white'} />
+																			<Chevron className={'ml-2 select-none transform rotate-180 text-plain'} />
 																		</div>
 																	</div>
 																</div>
 															</div>
 
-															<div className={'md:hidden grid grid-cols-2 space-between w-full relative text-black dark:text-white pb-4'}>
+															<div className={'md:hidden grid grid-cols-2 space-between w-full relative text-plain pb-4'}>
 																<div className={'mt-3.5'}>
 																	<p className={'text-megaxs mb-1 text-gray-darker dark:text-dark-100'}>{'SKILL:'}</p>
 																	<p className={'text-sx'}>{skill?.name}</p>
@@ -351,7 +351,7 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 																					remainingPoints: s.remainingPoints + (isClassSpecific ? 1 : 2)
 																				}));
 																			}}>
-																			<Chevron className={'mr-2 select-none cursor-pointer text-black dark:text-white'} />
+																			<Chevron className={'mr-2 select-none cursor-pointer text-plain'} />
 																		</div>
 																		<p className={'text-xs w-5 text-center'}>{updateSkills[skill?.id]}</p>
 																		<div
@@ -371,7 +371,7 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 																					remainingPoints: s.remainingPoints - (isClassSpecific ? 1 : 2)
 																				}));
 																			}}>
-																			<Chevron className={'ml-2 select-none transform rotate-180 text-black dark:text-white'} />
+																			<Chevron className={'ml-2 select-none transform rotate-180 text-plain'} />
 																		</div>
 																	</div>
 																</div>
@@ -380,11 +380,11 @@ function	Skills({adventurer, isOpen, closeModal = () => null, updateSkills,
 													</summary>
 
 													<div className={'flex flex-row space-x-4 w-full py-4'}>
-														<div className={'w-16 h-16 hidden justify-center items-center relative item md:flex'} />
+														<div className={'w-16 h-16 hidden flex-center relative item md:flex'} />
 														<div className={'flex flex-col space-between w-full pr-4'}>
-															<p className={'text-megaxs mb-2 text-black dark:text-white'}>{'CHECK'}</p>
+															<p className={'text-megaxs mb-2 text-plain'}>{'CHECK'}</p>
 															<p className={'text-megaxs leading-4 mb-4 text-gray-darker dark:text-white dark:text-opacity-60 normal-case text-left md:text-justify'}>{skill?.check}</p>
-															<p className={'text-megaxs mb-2 text-black dark:text-white'}>{'ACTION'}</p>
+															<p className={'text-megaxs mb-2 text-plain'}>{'ACTION'}</p>
 															<p className={'text-megaxs leading-4 text-gray-darker dark:text-white dark:text-opacity-60 normal-case text-left md:text-justify'}>{skill?.action}</p>
 														</div>
 													</div>

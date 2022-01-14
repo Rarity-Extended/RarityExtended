@@ -144,18 +144,18 @@ function	Index({router}) {
 			<div className={'max-w-prose w-full relative mt-8 mx-auto px-3 flex flex-col items-center'}>
 				<div>
 					<p onClick={() => router.back()}
-						className={'text-black dark:text-white text-megaxs absolute left-4 top-2 hover:underline cursor-pointer'}>
+						className={'text-plain text-megaxs absolute left-4 top-2 hover:underline cursor-pointer'}>
 						{'< Back'}
 					</p>
-					<h1 className={'text-black dark:text-white text-2xl'}>
+					<h1 className={'text-plain text-2xl'}>
 						{'CANDY RAFFLE'}
 					</h1>
-					<div className={'text-black dark:text-white text-xxs absolute right-4 top-2 flex flex-row items-center'}>
+					<div className={'text-plain text-xxs absolute right-4 top-2 flex flex-row items-center'}>
 						{}
 					</div>
 				</div>
 
-				<p className={'mt-12 text-black dark:text-white text-base text-center'}>
+				<p className={'mt-12 text-plain text-base text-center'}>
 					{"What's the one thing every adventurer wants this holiday season? Buy some tickets and find out. "}<span className={'text-lg text-items-common'}>{'Tickets are '}{CANDIES_PER_TICKET}{' candies each!'}</span> {PRIZE_COUNT} {'winning tickets will be drawn in'}
 				</p>
 

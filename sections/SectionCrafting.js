@@ -128,7 +128,7 @@ function	ItemRow({isExpanded, set_isExpanded, item, craftingSuccessPercent, chil
 		<div className={'relative'}>
 			<Box className={'bg-gray-principal dark:bg-dark-400 w-full z-10 cursor-pointer'}>
 				<div className={'w-full flex flex-row px-4'} onClick={() => set_isExpanded(!isExpanded)}>
-					<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center item relative my-4'}>
+					<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex flex-center item relative my-4'}>
 						<div className={`absolute ${item.levelClassName} left-0 top-0 w-2 h-1`} />
 						<div className={`absolute ${item.levelClassName} left-0 top-0 w-1 h-2`} />
 						<div className={`absolute ${item.levelClassName} right-0 top-0 w-2 h-1`} />
@@ -142,15 +142,15 @@ function	ItemRow({isExpanded, set_isExpanded, item, craftingSuccessPercent, chil
 					<div className={'grid grid-cols-1 md:grid-cols-5 gap-x-0 md:gap-x-4 gap-y-4 md:gap-y-0 pt-4 ml-16 w-full pb-4 md:pb-0'}>
 						<div className={'w-full'}>
 							<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'Name'}</p>
-							<p className={'text-xs text-black dark:text-white'}>{item?.name}</p>
+							<p className={'text-xs text-plain'}>{item?.name}</p>
 						</div>
 						<div className={'w-full'}>
 							<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'Cost (gold)'}</p>
-							<p className={'text-xs text-black dark:text-white'}>{`${item?.cost} gold`}</p>
+							<p className={'text-xs text-plain'}>{`${item?.cost} gold`}</p>
 						</div>
 						<div className={'w-full'}>
 							<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'Cost (xp)'}</p>
-							<p className={'text-xs text-black dark:text-white'}>{'250 XP'}</p>
+							<p className={'text-xs text-plain'}>{'250 XP'}</p>
 						</div>
 						<div className={'w-full'}>
 							<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'Crafting success'}</p>
@@ -160,8 +160,8 @@ function	ItemRow({isExpanded, set_isExpanded, item, craftingSuccessPercent, chil
 						</div>
 						<div className={'hidden md:flex w-full'}>
 							<p className={'text-sx text-black dark:text-dark-100 text-opacity-50 pb-2'}>&nbsp;</p>
-							<div className={'text-xs text-black dark:text-white flex flex-row justify-end items-center'}>
-								<Chevron className={`ml-2 select-none cursor-pointer text-black dark:text-white transform transition-transform ${isExpanded ? '-rotate-90' : '-rotate-180'}`} />
+							<div className={'text-xs text-plain flex flex-row justify-end items-center'}>
+								<Chevron className={`ml-2 select-none cursor-pointer text-plain transform transition-transform ${isExpanded ? '-rotate-90' : '-rotate-180'}`} />
 							</div>
 						</div>
 					</div>
@@ -234,14 +234,14 @@ function	SectionCraft({item, currentAdventurer, children}) {
 	function	renderTxStatusOverlay() {
 		if (txStatus.isPending) {
 			return (
-				<div className={'absolute inset-0 backdrop-blur-3xl bg-white dark:bg-black bg-opacity-70 dark:bg-opacity-70 cursor-not-allowed flex flex-col justify-center items-center text-center p-6'}>
+				<div className={'absolute inset-0 backdrop-blur-3xl bg-white dark:bg-black bg-opacity-70 dark:bg-opacity-70 cursor-not-allowed flex flex-col flex-center text-center p-6'}>
 					<div className={'loader'} />
 				</div>
 			);
 		}
 		if (txStatus.isSuccess) {
 			return (
-				<div className={'absolute inset-0 backdrop-blur-3xl bg-white dark:bg-black bg-opacity-70 dark:bg-opacity-70 cursor-not-allowed flex flex-col justify-center items-center text-center p-6'}>
+				<div className={'absolute inset-0 backdrop-blur-3xl bg-white dark:bg-black bg-opacity-70 dark:bg-opacity-70 cursor-not-allowed flex flex-col flex-center text-center p-6'}>
 					<p>{`YOU HAVE SUCCESSFULLY CRAFTED 1 ${item?.name}!`}</p>
 					<Button
 						onClick={() => set_txStatus({none: true, isPending: false, isSuccess: false, isError: false, isFailed: false, isSimulationFailed: false})}
@@ -254,7 +254,7 @@ function	SectionCraft({item, currentAdventurer, children}) {
 		}
 		if (txStatus.isFailed) {
 			return (
-				<div className={'absolute inset-0 backdrop-blur-3xl bg-white dark:bg-black bg-opacity-70 dark:bg-opacity-70 cursor-not-allowed flex flex-col justify-center items-center text-center p-6'}>
+				<div className={'absolute inset-0 backdrop-blur-3xl bg-white dark:bg-black bg-opacity-70 dark:bg-opacity-70 cursor-not-allowed flex flex-col flex-center text-center p-6'}>
 					<p>{`YOU FAILED TO BUILD THE ${item?.name}.`}</p>
 					<Button
 						onClick={() => set_txStatus({none: true, isPending: false, isSuccess: false, isError: false, isFailed: false, isSimulationFailed: false})}
@@ -267,7 +267,7 @@ function	SectionCraft({item, currentAdventurer, children}) {
 		}
 		if (txStatus.isSimulationFailed) {
 			return (
-				<div className={'absolute inset-0 backdrop-blur-3xl bg-white dark:bg-black bg-opacity-70 dark:bg-opacity-70 cursor-not-allowed flex flex-col justify-center items-center text-center p-6'}>
+				<div className={'absolute inset-0 backdrop-blur-3xl bg-white dark:bg-black bg-opacity-70 dark:bg-opacity-70 cursor-not-allowed flex flex-col flex-center text-center p-6'}>
 					<p>{'CEAZOR HAS STOPPED YOU.'}</p>
 					<p>{'YOU WILL FAIL IF YOU TRY IT NOW.'}</p>
 					<div className={'flex flex-row space-x-4'}>
@@ -289,7 +289,7 @@ function	SectionCraft({item, currentAdventurer, children}) {
 		}
 		if (txStatus.isError) {
 			return (
-				<div className={'absolute inset-0 backdrop-blur-3xl bg-white dark:bg-black bg-opacity-70 dark:bg-opacity-70 cursor-not-allowed flex flex-col justify-center items-center text-center p-6'}>
+				<div className={'absolute inset-0 backdrop-blur-3xl bg-white dark:bg-black bg-opacity-70 dark:bg-opacity-70 cursor-not-allowed flex flex-col flex-center text-center p-6'}>
 					<p>{'THERE WAS AN ERROR PROCESSING THE TRANSACTION'}</p>
 					<Button
 						onClick={() => set_txStatus({none: true, isPending: false, isSuccess: false, isError: false, isFailed: false, isSimulationFailed: false})}
@@ -311,7 +311,7 @@ function	SectionCraft({item, currentAdventurer, children}) {
 				</div>
 				<div>
 					<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'Description'}</p>
-					<p className={'text-megaxs text-black dark:text-white'}>{item.description}</p>
+					<p className={'text-megaxs text-plain'}>{item.description}</p>
 				</div>
 				<SectionCraftAction
 					currentAdventurer={currentAdventurer}
@@ -340,7 +340,7 @@ function	Crafting({shouldDisplay, category}) {
 			return (
 				<div
 					onClick={() => set_armorType('All')}
-					className={`hidden md:block h-min p-2 cursor-pointer text-black dark:text-white mr-4 ${armorType === 'All' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary ml-auto`}>
+					className={`hidden md:block h-min p-2 cursor-pointer text-plain mr-4 ${armorType === 'All' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary ml-auto`}>
 					{'All'}
 				</div>
 			);
@@ -350,27 +350,27 @@ function	Crafting({shouldDisplay, category}) {
 				<>
 					<div
 						onClick={() => set_armorType('All')}
-						className={`hidden md:block h-min p-2 cursor-pointer text-black dark:text-white mr-4 ${armorType === 'All' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary ml-auto`}>
+						className={`hidden md:block h-min p-2 cursor-pointer text-plain mr-4 ${armorType === 'All' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary ml-auto`}>
 						{'All'}
 					</div>
 					<div
 						onClick={() => set_armorType('Light')}
-						className={`hidden md:block h-min p-2 cursor-pointer text-black dark:text-white mr-4 ${armorType === 'Light' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+						className={`hidden md:block h-min p-2 cursor-pointer text-plain mr-4 ${armorType === 'Light' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 						{'Light'}
 					</div>
 					<div
 						onClick={() => set_armorType('Medium')}
-						className={`hidden md:block h-min p-2 cursor-pointer text-black dark:text-white mr-4 ${armorType === 'Medium' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+						className={`hidden md:block h-min p-2 cursor-pointer text-plain mr-4 ${armorType === 'Medium' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 						{'Medium'}
 					</div>
 					<div
 						onClick={() => set_armorType('Heavy')}
-						className={`hidden md:block h-min p-2 cursor-pointer text-black dark:text-white mr-4 ${armorType === 'Heavy' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+						className={`hidden md:block h-min p-2 cursor-pointer text-plain mr-4 ${armorType === 'Heavy' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 						{'Heavy'}
 					</div>
 					<div
 						onClick={() => set_armorType('Shields')}
-						className={`hidden md:block h-min p-2 cursor-pointer text-black dark:text-white ${armorType === 'Shields' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+						className={`hidden md:block h-min p-2 cursor-pointer text-plain ${armorType === 'Shields' ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 						{'Shields'}
 					</div>
 				</>
@@ -413,7 +413,7 @@ function	Crafting({shouldDisplay, category}) {
 									<>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'WEIGHT'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.weight || 0}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.weight || 0}</p>
 										</div>
 									</>
 								</SectionCraft>
@@ -445,28 +445,28 @@ function	Crafting({shouldDisplay, category}) {
 									<>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'ARMOR TYPE'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.proficiency}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.proficiency}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'ARMOR'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.armor_bonus}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.armor_bonus}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'MAX DEX BONUS'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.max_dex_bonus}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.max_dex_bonus}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'PENALTY'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.penalty}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.penalty}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'SPELL FAILURE'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.spell_failure}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.spell_failure}</p>
 										</div>
 
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'WEIGHT'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.weight || 0}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.weight || 0}</p>
 										</div>
 									</>
 								</SectionCraft>
@@ -513,33 +513,33 @@ function	Crafting({shouldDisplay, category}) {
 									<>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'DMG TYPE'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.damageType}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.damageType}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'ENCUMBRANCE'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.encumbrance}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.encumbrance}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'PROFICIENCY'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.proficiency}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.proficiency}</p>
 										</div>
 
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'DAMAGE'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.damage || 0}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.damage || 0}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'CRITICAL'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.critical_modifier ? `${`${(20+item?.critical_modifier)}-20`}/x${item?.critical || 0}` : `x${item?.critical || 0}`}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.critical_modifier ? `${`${(20+item?.critical_modifier)}-20`}/x${item?.critical || 0}` : `x${item?.critical || 0}`}</p>
 										</div>
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'RANGE'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.range_increment || 0}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.range_increment || 0}</p>
 										</div>
 
 										<div>
 											<p className={'text-megaxs text-black dark:text-dark-100 text-opacity-50 pb-2'}>{'WEIGHT'}</p>
-											<p className={'text-sx text-black dark:text-white break-words'}>{item?.weight || 0}</p>
+											<p className={'text-sx text-plain break-words'}>{item?.weight || 0}</p>
 										</div>
 									</>
 								</SectionCraft>
@@ -560,7 +560,7 @@ function	Crafting({shouldDisplay, category}) {
 					<Box>
 						<input
 							onChange={e => set_search(e?.target?.value || '')}
-							className={'bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-black dark:text-white'}
+							className={'bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-plain'}
 							placeholder={'SEARCH'} />
 					</Box>
 					{renderSubCategories()}

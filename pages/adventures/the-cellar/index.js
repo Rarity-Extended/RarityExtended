@@ -22,7 +22,7 @@ dayjs.extend(relativeTime);
 
 function	NCPHeadline({currentAdventurer, chainTime, loot}) {
 	const	renderNCPText = () => {
-		if (!currentAdventurer?.dungeons?.cellar?.canAdventure) {
+		if (!currentAdventurer?.adventures?.cellar?.canAdventure) {
 			return (
 				<>
 					{'You killed all the nasty, dirty rats that had infested the walls and floors of the tavern, and now you were back in the Tavern. The same bartender that still remembers you is behind the counter, cleaning a mug with a rag. There is a broad smile on his broad face.'}
@@ -32,8 +32,8 @@ function	NCPHeadline({currentAdventurer, chainTime, loot}) {
 					<div className={'my-4'} />
 
 					{'You go to a table in the corner, one that you knew was devoid of rats. They will be back. You know that. They always come back '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-						{dayjs(new Date(currentAdventurer?.dungeons?.cellar?.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						{dayjs(new Date(currentAdventurer?.adventures?.cellar?.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'They\'re not magic, but the rats really like this dwelling. Now that you\'ve killed the King of the Cellar, a new one will appear in a while...'}</p>
 						</Tooltip>
@@ -56,15 +56,15 @@ function	NCPHeadline({currentAdventurer, chainTime, loot}) {
 				<div className={'my-4'} />
 
 				{'You could do that. What is a rat for you? If you cannot handle the '}
-				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{'Big Ugly Rat'}
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'The rat is not so weak. Only adventurer with a good amout of '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'CONST'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'CONST'}</p>
 						<p className={'text-sm leading-normal inline'}>{', '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'STR'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'STR'}</p>
 						<p className={'text-sm leading-normal inline'}>{' and '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'DEXT'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'DEXT'}</p>
 						<p className={'text-sm leading-normal inline'}>{' should start this fight.'}</p>
 					</Tooltip>
 				</span>
@@ -72,11 +72,11 @@ function	NCPHeadline({currentAdventurer, chainTime, loot}) {
 				
 				<div className={'my-4'} />
 				{'You heard about this giant rat in the tavern. A big rat. Other adventurers have already killed it, but somehow it keeps coming back. Based on your strength, you can expect up to '}
-				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{`${loot} rat skin${loot === 0 ? '' : 's'}`}
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'The Rat Skin is a basic crafting material that can be used by the '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Blacksmith'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Blacksmith'}</p>
 						<p className={'text-sm leading-normal inline'}>{' to craft you some armor, weapons, or other items.'}</p>
 					</Tooltip>
 				</span>
@@ -92,7 +92,7 @@ function	NCPHeadline({currentAdventurer, chainTime, loot}) {
 }
 
 function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, onFightRat}) {
-	if (!currentAdventurer?.dungeons?.cellar?.canAdventure) {
+	if (!currentAdventurer?.adventures?.cellar?.canAdventure) {
 		return (
 			<DialogNoBox
 				options={[
@@ -109,7 +109,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, on
 					label: (
 						<>
 							{'FIGHT THE RAT WITH '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
+							<span className={'text-highlight'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
 							{'.'}
 						</>
 					),
@@ -142,7 +142,7 @@ function	Index({router}) {
 
 	return (
 		<section>
-			<div className={'mt-8 max-w-prose w-full flex-col flex justify-center items-center mx-auto px-3'}>
+			<div className={'mt-8 max-w-prose w-full flex-col flex flex-center mx-auto px-3'}>
 				<Box className={'p-4 text-xs md:text-xs leading-normal md:leading-8 w-full relative'}>
 					<div className={'relative'}>
 						<div className={'filter grayscale -m-4 pb-8 opacity-70'}>

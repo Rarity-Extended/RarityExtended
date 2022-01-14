@@ -21,8 +21,8 @@ dayjs.extend(relativeTime);
 
 function	NCPHeadline({currentAdventurer, chainTime}) {
 	const	renderNCPText = () => {
-		if (!currentAdventurer?.dungeons?.forest?.canAdventure) {
-			const	hasToDig = dayjs(new Date(currentAdventurer?.dungeons?.forest?.endBlockTs * 1000)).isBefore(dayjs(new Date(chainTime * 1000)));
+		if (!currentAdventurer?.adventures?.forest?.canAdventure) {
+			const	hasToDig = dayjs(new Date(currentAdventurer?.adventures?.forest?.endBlockTs * 1000)).isBefore(dayjs(new Date(chainTime * 1000)));
 			if (hasToDig) {
 				return (
 					<>
@@ -51,7 +51,7 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 					<div className={'my-4'} />
 
 					{'Now, you just have to enjoy this walk ... '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'This is you.'}</p>
@@ -59,8 +59,8 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 					</span>
 					{' will be near the glowing mushrooms '}
 
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-						{dayjs(new Date(currentAdventurer?.dungeons?.forest?.endBlockTs * 1000)).from(dayjs(new Date(chainTime * 1000)))}
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						{dayjs(new Date(currentAdventurer?.adventures?.forest?.endBlockTs * 1000)).from(dayjs(new Date(chainTime * 1000)))}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'You will find the glowing mushrooms after this long journey. Use this time to think about the state of our ecosystem.'}</p>
 						</Tooltip>
@@ -75,7 +75,7 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 		return (
 			<>
 				{'There is a dark looking man sitting at a table in the corner. His face is hidden under a full faced mask. He speaks of a forest to the north where he has buried '}
-				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{'a treasure'}
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'Many treasures are buried in the forest. Nobody knows what they will be or what they may be used for, or even if you will be able to sell them... But are you a real treasure hunter?'}</p>
@@ -87,20 +87,20 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 				{'He leads you to a corner and starts looking through a pack with a sketchbook and a quill. You wait for him to find what he is looking for. He finally lifts a small piece of parchment and hands it to you. He has drawn a map of the area close to where he was found and circled a large oak tree with a pair of trees which look like they are kissing at the base.'}
 				<div className={'my-4'} />
 				{'You have to travel to that location and search for the two trees, then follow the game trail northeast. He doesn\'t know how long it will take, or how many days you will need, but says perhaps '}
-				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{'around a week'}
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'You can spend between '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'4 and 7 days '}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'4 and 7 days '}</p>
 						<p className={'text-sm leading-normal inline'}>{' on this trail. Different times reap different treasures.'}</p>
 					</Tooltip>
 				</span>
 				{'. Once you get to the forest, if you\'re still alive, look for the glowing mushrooms. Then, you will have to '}
-				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{'dig for the treasure'}
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'After the time on the trail has ended, you will have to come back here to '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'dig for a random treasure'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'dig for a random treasure'}</p>
 						<p className={'text-sm leading-normal inline'}>{'.'}</p>
 					</Tooltip>
 				</span>
@@ -119,15 +119,15 @@ function	NCPHeadline({currentAdventurer, chainTime}) {
 }
 
 function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, chainTime, onExploreTheForest, onDiscoverTreasure}) {
-	if (!currentAdventurer?.dungeons?.forest?.canAdventure) {
-		const	hasToDig = dayjs(new Date(currentAdventurer?.dungeons?.forest?.endBlockTs * 1000)).isBefore(dayjs(new Date(chainTime * 1000)));
+	if (!currentAdventurer?.adventures?.forest?.canAdventure) {
+		const	hasToDig = dayjs(new Date(currentAdventurer?.adventures?.forest?.endBlockTs * 1000)).isBefore(dayjs(new Date(chainTime * 1000)));
 		if (hasToDig) {
 			return (
 				<DialogNoBox
 					options={[
 						{label: (
 							<>
-								<span className={'text-tag-info dark:text-tag-warning'}>
+								<span className={'text-highlight'}>
 									{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}
 								</span>
 								{' FOUND A TREASURE!'}
@@ -155,7 +155,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, ch
 					label: (
 						<>
 							{'TAKE PROVISIONS FOR 4 DAYS WITH '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
+							<span className={'text-highlight'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
 							{'.'}
 						</>
 					),
@@ -165,7 +165,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, ch
 					label: (
 						<>
 							{'TAKE PROVISIONS FOR 5 DAYS WITH '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
+							<span className={'text-highlight'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
 							{'.'}
 						</>
 					),
@@ -175,7 +175,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, ch
 					label: (
 						<>
 							{'TAKE PROVISIONS FOR 6 DAYS WITH '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
+							<span className={'text-highlight'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
 							{'.'}
 						</>
 					),
@@ -185,7 +185,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, ch
 					label: (
 						<>
 							{'TAKE PROVISIONS FOR 7 DAYS WITH '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
+							<span className={'text-highlight'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
 							{'.'}
 						</>
 					),
@@ -228,7 +228,7 @@ function	Index({router}) {
 
 	return (
 		<section>
-			<div className={'mt-8 max-w-prose w-full flex-col flex justify-center items-center mx-auto px-3'}>
+			<div className={'mt-8 max-w-prose w-full flex-col flex flex-center mx-auto px-3'}>
 				<Box className={'p-4 text-xs md:text-xs leading-normal md:leading-8 w-full relative'}>
 					<div className={'relative'}>
 						<div className={'filter grayscale -m-4 pb-8 opacity-70'}>

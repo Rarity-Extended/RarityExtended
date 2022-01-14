@@ -97,16 +97,16 @@ function	SectionRarityCrafting() {
 	return (
 		<>
 			<div className={'mb-10'}>
-				<h1 className={'text-black dark:text-white font-story text-4xl mb-4'}>
+				<h1 className={'text-plain font-story text-4xl mb-4'}>
 					{'Kitchen'}
 				</h1>
 				<div className={'flex flex-row'}>
-					<p className={'text-black dark:text-white font-story text-base max-w-full md:max-w-4xl'}>{'The kitchen is large, warn and full of pleasant smells. The Cook is a big guy with big knives and a big moustache. If you bring him enough materials he can give you a fair meal in exchange.'}</p>
+					<p className={'text-plain font-story text-base max-w-full md:max-w-4xl'}>{'The kitchen is large, warn and full of pleasant smells. The Cook is a big guy with big knives and a big moustache. If you bring him enough materials he can give you a fair meal in exchange.'}</p>
 				</div>
 			</div>
 
 			{/* Hidden on mobile */}
-			<div className={'hidden md:grid grid-cols-12 gap-x-12 font-story text-black dark:text-white text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
+			<div className={'hidden md:grid grid-cols-12 gap-x-12 font-story text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
 				<div className={'col-span-3 grid grid-cols-1 pl-1'}>
 					{'Inventory'}
 				</div>

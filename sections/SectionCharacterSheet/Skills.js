@@ -43,7 +43,7 @@ function	Skills({adventurer}) {
 			const	skill = Object.values(SKILLS).find(e => e.id === index + 1);
 			return (
 				<div className={'flex flex-row space-x-4 w-full mb-6'} key={`${adventurer.tokenID}-${skill.name}`}>
-					<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex justify-center items-center relative item'}>
+					<div className={'w-16 h-16 bg-gray-principal dark:bg-dark-400 flex flex-center relative item'}>
 						<Image src={skill.img} width={64} height={64} />
 					</div>
 					<div className={'h-16 flex flex-col justify-between'}>
@@ -58,7 +58,7 @@ function	Skills({adventurer}) {
 		if (!adventurer?.attributes?.isInit) {
 			return (
 				<div className={'w-full'}>
-					<div className={'p-4 pb-0 flex text-black dark:text-white text-sx normal-case w-full md:w-1/2 pr-0 md:pr-20'} onClick={openModal}>
+					<div className={'p-4 pb-0 flex text-plain text-sx normal-case w-full md:w-1/2 pr-0 md:pr-20'} onClick={openModal}>
 						{'You first need to set your attributes adventurer! Spend your points!'}
 					</div>
 				</div>
@@ -68,13 +68,13 @@ function	Skills({adventurer}) {
 		if (!hasSkills) {
 			return (
 				<div className={'w-full'}>
-					<div className={'p-4 flex text-black dark:text-white text-sx normal-case w-full md:w-1/2 pr-0 md:pr-32'} onClick={openModal}>
+					<div className={'p-4 flex text-plain text-sx normal-case w-full md:w-1/2 pr-0 md:pr-32'} onClick={openModal}>
 						{'You have no skills yet, traveler, spend your points!'}
 					</div>
 					<div className={'flex w-full md:w-1/2 px-4'}>
 						<div
 							onClick={openModal}
-							className={'border-4 border-black dark:border-dark-100 px-10 py-2 text-black dark:text-white hover:bg-gray-secondary dark:hover:bg-dark-400 cursor-pointer transition-colors flex items-center text-center justify-center text-xs w-full'}>
+							className={'border-4 border-black dark:border-dark-100 px-10 py-2 text-plain hover:bg-gray-secondary dark:hover:bg-dark-400 cursor-pointer transition-colors flex flex-center text-center text-xs w-full'}>
 							<p>{'SKILLBOOK'}</p>
 							{updateSkills.remainingPoints > 0 ? <p className={'inline text-megaxs ml-2'}>
 								{`(POINTS LEFT: ${updateSkills.remainingPoints})`}
@@ -91,7 +91,7 @@ function	Skills({adventurer}) {
 					<div className={'flex w-full md:w-1/2 pr-4'}>
 						<div
 							onClick={openModal}
-							className={'border-4 border-black dark:border-dark-100 px-10 py-2 text-black dark:text-white hover:bg-gray-secondary dark:hover:bg-dark-400 cursor-pointer transition-colors flex items-center text-center justify-center text-xs w-full'}>
+							className={'border-4 border-black dark:border-dark-100 px-10 py-2 text-plain hover:bg-gray-secondary dark:hover:bg-dark-400 cursor-pointer transition-colors flex flex-center text-center text-xs w-full'}>
 							<p>{'SKILLBOOK'}</p>
 							{updateSkills.remainingPoints > 0 ? <p className={'inline text-megaxs ml-2'}>
 								{`(POINTS LEFT: ${updateSkills.remainingPoints})`}

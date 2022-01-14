@@ -64,7 +64,7 @@ function	AdventurerList({favoritesAdventurers, set_favoritesAdventurers}) {
 
 	return (
 		<>
-			<h1 className={'text-black dark:text-white text-base mb-2 text-center md:text-left'}>
+			<h1 className={'text-plain text-base mb-2 text-center md:text-left'}>
 				{'CHOOSE ANOTHER ADVENTURER'}
 			</h1>
 
@@ -72,19 +72,19 @@ function	AdventurerList({favoritesAdventurers, set_favoritesAdventurers}) {
 				<div>
 					<input
 						onChange={e => set_search(e?.target?.value || '')}
-						className={'border-4 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-black dark:text-white'}
+						className={'border-4 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-plain'}
 						placeholder={'SEARCH'} />
 				</div>
 				<div className={'w-full'}>
 					<div className={'w-full hidden md:flex flex-row'}>
 						<div
 							onClick={() => set_classTab(0)}
-							className={`p-2 cursor-pointer text-black dark:text-white mr-4 ${classTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+							className={`p-2 cursor-pointer text-plain mr-4 ${classTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 							{'ALL'}
 						</div>
 						<div
 							onClick={() => set_classTab(1)}
-							className={`p-2 cursor-pointer text-black dark:text-white ${classTab === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+							className={`p-2 cursor-pointer text-plain ${classTab === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 							{'FAVORITES'}
 						</div>
 					</div>
@@ -149,7 +149,7 @@ function	AdventurerList({favoritesAdventurers, set_favoritesAdventurers}) {
 											e.stopPropagation();
 											set_favoritesAdventurers(favoritesAdventurers.includes(adventurer.tokenID) ? favoritesAdventurers.filter(id => id !== adventurer.tokenID) : [...favoritesAdventurers, adventurer.tokenID]);
 										}}
-										className={`absolute transition-colors left-4 top-4 ${favoritesAdventurers.includes(adventurer.tokenID) ? 'text-tag-info dark:text-tag-warning' : 'text-gray-secondary hover:text-tag-info dark:text-dark-400 dark:hover:text-tag-warning'}`}>
+										className={`absolute transition-colors left-4 top-4 ${favoritesAdventurers.includes(adventurer.tokenID) ? 'text-highlight' : 'text-gray-secondary hover:text-tag-info dark:text-dark-400 dark:hover:text-tag-warning'}`}>
 										<svg width={20} height={20} aria-hidden={'true'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 576 512'}><path fill={'currentColor'} d={'M316.7 17.8l65.43 132.4l146.4 21.29c26.27 3.796 36.79 36.09 17.75 54.59l-105.9 102.1l25.05 145.5c4.508 26.31-23.23 45.9-46.49 33.7L288 439.6l-130.9 68.7C133.8 520.5 106.1 500.9 110.6 474.6l25.05-145.5L29.72 226.1c-19.03-18.5-8.516-50.79 17.75-54.59l146.4-21.29l65.43-132.4C271.1-6.083 305-5.786 316.7 17.8z'}></path></svg>
 									</div>
 									<div
@@ -180,7 +180,7 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 	const	[tab, set_tab] = useState(0);
 	const	[modalSkillsOpen, set_modalSkillsOpen] = useState(false);
 	const	[modalFeatsOpen, set_modalFeatsOpen] = useState(false);
-	const	isInTheForest = currentAdventurer?.level >= 2 && !currentAdventurer?.dungeons?.forest?.canAdventure;
+	const	isInTheForest = currentAdventurer?.level >= 2 && !currentAdventurer?.adventures?.forest?.canAdventure;
 
 	const	taskList = [
 		{
@@ -231,17 +231,17 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 		},
 		{
 			label: 'Handle the Big Ugly Rat in the Cellar',
-			condition: () => currentAdventurer?.dungeons?.cellar?.canAdventure,
+			condition: () => currentAdventurer?.adventures?.cellar?.canAdventure,
 			onClick: () => router.push('/adventures/the-cellar')
 		},
 		{
 			label: 'Go in the Forest',
-			condition: () => currentAdventurer?.dungeons?.forest?.canAdventure,
+			condition: () => currentAdventurer?.adventures?.forest?.canAdventure,
 			onClick: () => router.push('/adventures/the-forest')
 		},
 		{
 			label: 'Handle the Boar situation',
-			condition: () => currentAdventurer?.dungeons?.boars?.canAdventure,
+			condition: () => currentAdventurer?.adventures?.boars?.canAdventure,
 			onClick: () => router.push('/adventures/the-boars')
 		},
 	];
@@ -468,7 +468,7 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 							e.stopPropagation();
 							set_favoritesAdventurers(favoritesAdventurers.includes(currentAdventurer.tokenID) ? favoritesAdventurers.filter(id => id !== currentAdventurer.tokenID) : [...favoritesAdventurers, currentAdventurer.tokenID]);
 						}}
-						className={`absolute transition-colors left-4 top-4 ${favoritesAdventurers.includes(currentAdventurer.tokenID) ? 'text-tag-info dark:text-tag-warning' : 'text-gray-secondary hover:text-tag-info dark:text-dark-400 dark:hover:text-tag-warning'}`}>
+						className={`absolute transition-colors left-4 top-4 ${favoritesAdventurers.includes(currentAdventurer.tokenID) ? 'text-highlight' : 'text-gray-secondary hover:text-tag-info dark:text-dark-400 dark:hover:text-tag-warning'}`}>
 						<svg width={20} height={20} aria-hidden={'true'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 576 512'}><path fill={'currentColor'} d={'M316.7 17.8l65.43 132.4l146.4 21.29c26.27 3.796 36.79 36.09 17.75 54.59l-105.9 102.1l25.05 145.5c4.508 26.31-23.23 45.9-46.49 33.7L288 439.6l-130.9 68.7C133.8 520.5 106.1 500.9 110.6 474.6l25.05-145.5L29.72 226.1c-19.03-18.5-8.516-50.79 17.75-54.59l146.4-21.29l65.43-132.4C271.1-6.083 305-5.786 316.7 17.8z'}></path></svg>
 					</div>
 
@@ -484,7 +484,7 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 						{currentAdventurer.logCanAdventure ? (
 							<Box
 								onClick={onGoToAdventure}
-								className={'px-4 py-3 w-full relative text-sx flex items-center justify-center cursor-pointer group'}>
+								className={'px-4 py-3 w-full relative text-sx flex flex-center cursor-pointer group'}>
 								<div className={'absolute inset-0 bg-blackLight dark:bg-dark-200 animate-pulse bg-opacity-20 dark:bg-opacity-40 group-hover:animate-none'} />
 								<>
 									<svg className={'relative'} width={24} height={24} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M6 2h2v2H6V2zm2 3H6v3H2v9h6v-2h2v2h4v-2h2v2h6V8h-4V5h-2v3h-3V5h-2v3H8V5zm12 10h-4v-3h-2v3h-4v-3H8v3H4v-5h16v5zM2 20h20v2H2v-2zM13 2h-2v2h2V2zm3 0h2v2h-2V2zM2 17h2v3H2zm18 0h2v3h-2z'} fill={'currentcolor'}/> </svg>
@@ -494,7 +494,7 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 								</>
 							</Box>
 						) : (
-							<Box className={'px-4 py-3 w-full relative text-sx flex items-center justify-center'}>
+							<Box className={'px-4 py-3 w-full relative text-sx flex flex-center'}>
 								<svg className={'relative'} width={24} height={24} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M0 4h2v12h10V8h10v2h-8v6h8v-6h2v10h-2v-2H2v2H0V4zm3 5h2v4H3V9zm6 4v2H5v-2h4zm0-4h2v4H9V9zm0 0H5V7h4v2z'} fill={'currentColor'}/> </svg>
 								<p className={'pl-4 pt-1 relative'}>
 									{`${dayjs(new Date(currentAdventurer.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}
@@ -510,19 +510,19 @@ function	Overview({router, favoritesAdventurers, set_favoritesAdventurers}) {
 					<div className={'flex flex-row w-full relative'}>
 						<div
 							onClick={() => set_tab(0)}
-							className={`flex flex-row items-center text-regular p-4 px-6 border-r-2 border-black dark:border-dark-100 text-black dark:text-white ${tab !== 0 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
+							className={`flex flex-row items-center text-regular p-4 px-6 border-r-2 border-black dark:border-dark-100 text-plain ${tab !== 0 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
 							<svg width={16} height={16} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M14 2h-4v2H8v2H6v2H4v2H2v2h2v10h7v-6h2v6h7V12h2v-2h-2V8h-2V6h-2V4h-2V2zm0 2v2h2v2h2v2h2v2h-2v8h-3v-6H9v6H6v-8H4v-2h2V8h2V6h2V4h4z'} fill={'currentColor'}/> </svg>
 							<p className={'mt-1 ml-2'}>{'TOWN'}</p>
 						</div>
 						<div
 							onClick={() => set_tab(1)}
-							className={`flex flex-row items-center text-regular p-4 px-6 border-l-2 border-r-2 border-black dark:border-dark-100 text-black dark:text-white ${tab !== 1 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
+							className={`flex flex-row items-center text-regular p-4 px-6 border-l-2 border-r-2 border-black dark:border-dark-100 text-plain ${tab !== 1 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
 							<svg width={16} height={16} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M6 3h14v2h2v6h-2v8h-2V5H6V3zm8 14v-2H6V5H4v10H2v4h2v2h14v-2h-2v-2h-2zm0 0v2H4v-2h10zM8 7h8v2H8V7zm8 4H8v2h8v-2z'} fill={'currentColor'}/> </svg>
 							<p className={'mt-1 ml-2'}>{'ADVENTURES'}</p>
 						</div>
 						<div
 							onClick={() => set_tab(2)}
-							className={`flex flex-row items-center text-regular p-4 px-6 w-full border-l-2 border-black dark:border-dark-100 text-black dark:text-white ${tab !== 2 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
+							className={`flex flex-row items-center text-regular p-4 px-6 w-full border-l-2 border-black dark:border-dark-100 text-plain ${tab !== 2 ? 'border-b-4 dark:text-dark-200 dark:hover:text-dark-100 cursor-pointer' : ''}`}>
 							<svg width={16} height={16} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M19 4h2v2h-2V4zm-2 4V6h2v2h-2zm-2 0h2v2h-2V8zm0 0h-2V6h2v2zM3 6h8v2H3V6zm8 10H3v2h8v-2zm7 2v-2h2v-2h-2v2h-2v-2h-2v2h2v2h-2v2h2v-2h2zm0 0v2h2v-2h-2z'} fill={'currentColor'}/> </svg>
 							<p className={'mt-1 ml-2'}>{`TASKS ${availableTasks.length > 0 ? `(${availableTasks.length})` : ''}`}</p>
 						</div>

@@ -18,7 +18,7 @@ function Townwidget() {
 	if (router.pathname.startsWith('/adventures/')) {
 		if (Object.values(ADVENTURES).find(quest => quest.href === router.pathname)) {
 			return (
-				<div className={'flex items-center w-full justify-center mt-6 md:mt-0'}>
+				<div className={'flex flex-center w-full mt-6 md:mt-0'}>
 					<div>
 						<div className={'mb-2 cursor-pointer text-center'}>
 							<Link href={'/'}>
@@ -41,7 +41,7 @@ function Townwidget() {
 	}
 	if (Object.values(TOWN).find(town => town.href === router.pathname)) {
 		return (
-			<div className={'flex items-center w-full justify-center mt-6 md:mt-0'}>
+			<div className={'flex flex-center w-full mt-6 md:mt-0'}>
 				<div>
 					<div className={'mb-2 cursor-pointer text-center'}>
 						<Link href={'/'}>

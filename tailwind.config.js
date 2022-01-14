@@ -29,21 +29,38 @@ module.exports = {
 				darker: '#828282',
 				lighter: '#fafafa'
 			},
+			difficulty: {
+				easy: '#a3e635',
+				medium: '#f3d942',
+				hard: '#f44336',
+				extreme: '#f44336'
+			},
 			tag: {
 				new: '#059669',
 				info: '#167df0',
+				infoDarker: '#0e71de',
 				warning: '#FBBF24',
-				warningDarker: '#FAB80F',
+				warningDarker: '#FACC15',
 				withdraw: '#EF4444'
 			},
 			white: colors.white,
 			dark: {
-				900: '#09162E',
+				900: '#09162E', //VERY DARK
 				600: 'rgb(19,38,75)',
 				400: 'rgb(24,48,95)',
 				300: '#2f446f',
 				200: '#46597e',
-				100: '#5d6e8f',
+				100: '#5d6e8f', //VERY LIGHT
+				50: '#c9c9d4'
+			},
+			light: {
+				900: '#FFFFFF', //VERY LIGHT
+				600: '#e7e7ec',
+				400: '#f5f5f7',
+				300: '#dcdcde',
+				200: '#b4b4c3',
+				50: '#696984',
+				0: '#000000' //VERY DARK
 			},
 			items: {
 				common: '#5d6e8f',
@@ -99,6 +116,7 @@ module.exports = {
 				'23': '5.75rem',
 			},
 			width: {
+				18: '4.5rem',
 				57: '14.25rem',
 				75: '18.75rem',
 				77: '19.25rem',
@@ -107,6 +125,7 @@ module.exports = {
 			},
 			height: {
 				15: '60px',
+				18: '4.5rem',
 				'adventure-card': '307px'
 			},
 			minHeight: {

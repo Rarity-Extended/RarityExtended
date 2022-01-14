@@ -79,8 +79,8 @@ function ModalSelectAdventurer({isOpen, onClose, onSelect, options = defaultOpti
 						leave={'ease-in duration-200'}
 						leaveFrom={'opacity-100 scale-100'}
 						leaveTo={'opacity-0 scale-95'}>
-						<div className={'inline-block px-4 md:px-10 pt-9 mt-16 md:mt-23 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative border-4 border-black text-black dark:text-white'}>
-							<Dialog.Title as={'h3'} className={'relative text-lg font-medium leading-6 text-black dark:text-white flex flex-col md:flex-row justify-between'}>
+						<div className={'inline-block px-4 md:px-10 pt-9 mt-16 md:mt-23 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative border-4 border-black text-plain'}>
+							<Dialog.Title as={'h3'} className={'relative text-lg font-medium leading-6 text-plain flex flex-col md:flex-row justify-between'}>
 								{'ADVENTURER'}
 								<svg onClick={onClose} className={'absolute md:relative top-0 right-0 cursor-pointer'} width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
 									<path d={'M6.70711 5.29289C6.31658 4.90237 5.68342 4.90237 5.29289 5.29289C4.90237 5.68342 4.90237 6.31658 5.29289 6.70711L10.5858 12L5.29289 17.2929C4.90237 17.6834 4.90237 18.3166 5.29289 18.7071C5.68342 19.0976 6.31658 19.0976 6.70711 18.7071L12 13.4142L17.2929 18.7071C17.6834 19.0976 18.3166 19.0976 18.7071 18.7071C19.0976 18.3166 19.0976 17.6834 18.7071 17.2929L13.4142 12L18.7071 6.70711C19.0976 6.31658 19.0976 5.68342 18.7071 5.29289C18.3166 4.90237 17.6834 4.90237 17.2929 5.29289L12 10.5858L6.70711 5.29289Z'} fill={'currentcolor'}/>
@@ -89,13 +89,13 @@ function ModalSelectAdventurer({isOpen, onClose, onSelect, options = defaultOpti
 							<div className={'mt-6 flex flex-col md:flex-row mb-4 items-center'}>
 								<input
 									onChange={e => set_search(e?.target?.value || '')}
-									className={'border-4 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-black dark:text-white'}
+									className={'border-4 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-plain'}
 									placeholder={'SEARCH'} />
 								<button
 									onClick={() => {deactivate(); onDesactivate();}}
-									className={'ml-auto border-4 border-black dark:border-dark-100 border-solid my-4 md:my-0 w-full md:w-auto h-10 px-12 text-xs text-black dark:text-white hover:bg-gray-secondary dark:hover:bg-dark-900 cursor-pointer relative'}>
+									className={'ml-auto border-4 border-black dark:border-dark-100 border-solid my-4 md:my-0 w-full md:w-auto h-10 px-12 text-xs text-plain hover:bg-gray-secondary dark:hover:bg-dark-900 cursor-pointer relative'}>
 									{`${address.slice(0, 4)}...${address.slice(-4)}`}
-									<div className={'absolute right-2 cursor-pointer h-10 -top-1 flex justify-center items-center'}>
+									<div className={'absolute right-2 cursor-pointer h-10 -top-1 flex flex-center'}>
 										<svg width={'12'} height={'12'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
 											<path d={'M6.70711 5.29289C6.31658 4.90237 5.68342 4.90237 5.29289 5.29289C4.90237 5.68342 4.90237 6.31658 5.29289 6.70711L10.5858 12L5.29289 17.2929C4.90237 17.6834 4.90237 18.3166 5.29289 18.7071C5.68342 19.0976 6.31658 19.0976 6.70711 18.7071L12 13.4142L17.2929 18.7071C17.6834 19.0976 18.3166 19.0976 18.7071 18.7071C19.0976 18.3166 19.0976 17.6834 18.7071 17.2929L13.4142 12L18.7071 6.70711C19.0976 6.31658 19.0976 5.68342 18.7071 5.29289C18.3166 4.90237 17.6834 4.90237 17.2929 5.29289L12 10.5858L6.70711 5.29289Z'} fill={'currentcolor'}/>
 										</svg>
@@ -106,12 +106,12 @@ function ModalSelectAdventurer({isOpen, onClose, onSelect, options = defaultOpti
 								<div className={'w-full flex flex-row'}>
 									<div
 										onClick={() => set_classTab(0)}
-										className={`p-2 cursor-pointer text-black dark:text-white mr-4 ${classTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+										className={`p-2 cursor-pointer text-plain mr-4 ${classTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 										{'ALL'}
 									</div>
 									<div
 										onClick={() => set_classTab(1)}
-										className={`p-2 cursor-pointer text-black dark:text-white ${classTab === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
+										className={`p-2 cursor-pointer text-plain ${classTab === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
 										{'FAVORITES'}
 									</div>
 								</div>
@@ -175,7 +175,7 @@ function ModalSelectAdventurer({isOpen, onClose, onSelect, options = defaultOpti
 															e.stopPropagation();
 															set_favoritesAdventurers(favoritesAdventurers.includes(adventurer.tokenID) ? favoritesAdventurers.filter(id => id !== adventurer.tokenID) : [...favoritesAdventurers, adventurer.tokenID]);
 														}}
-														className={`absolute transition-colors left-4 top-4 ${favoritesAdventurers.includes(adventurer.tokenID) ? 'text-tag-info dark:text-tag-warning' : 'text-gray-secondary hover:text-tag-info dark:text-dark-400 dark:hover:text-tag-warning'}`}>
+														className={`absolute transition-colors left-4 top-4 ${favoritesAdventurers.includes(adventurer.tokenID) ? 'text-highlight' : 'text-gray-secondary hover:text-tag-info dark:text-dark-400 dark:hover:text-tag-warning'}`}>
 														<svg width={20} height={20} aria-hidden={'true'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 576 512'}><path fill={'currentColor'} d={'M316.7 17.8l65.43 132.4l146.4 21.29c26.27 3.796 36.79 36.09 17.75 54.59l-105.9 102.1l25.05 145.5c4.508 26.31-23.23 45.9-46.49 33.7L288 439.6l-130.9 68.7C133.8 520.5 106.1 500.9 110.6 474.6l25.05-145.5L29.72 226.1c-19.03-18.5-8.516-50.79 17.75-54.59l146.4-21.29l65.43-132.4C271.1-6.083 305-5.786 316.7 17.8z'}></path></svg>
 													</div>
 													<div

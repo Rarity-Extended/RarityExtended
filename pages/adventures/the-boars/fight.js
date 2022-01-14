@@ -106,7 +106,7 @@ function	Index({dungeon, adventurer, router}) {
 			</div>
 
 
-			<div className={'mt-8 max-w-prose w-full flex-col flex justify-center items-center mx-auto'}>
+			<div className={'mt-8 max-w-prose w-full flex-col flex flex-center mx-auto'}>
 				<Box className={'p-4 text-xs md:text-xs leading-normal md:leading-8 w-full relative'}>
 					<div className={'max-w-screen-sm w-full mx-auto mt-12'}>
 						<div className={'flex flex-col items-center'}>
@@ -114,7 +114,7 @@ function	Index({dungeon, adventurer, router}) {
 								<div className={'w-full mr-14'}>
 									<p className={'whitespace-nowrap'}>{'Angry Boar'}</p>
 									<div className={'flex flex-row items-center w-full py-2'}>
-										<div className={'text-opacity-80 text-black dark:text-white text-sm w-32'}>{'HP:'}</div>
+										<div className={'text-opacity-80 text-plain text-sm w-32'}>{'HP:'}</div>
 										<progress
 											className={'border-solid border-2 border-black dark:border-dark-400 p-1.5 nes-progress is-error w-full transition-all'}
 											value={dungeonHealth}
@@ -160,7 +160,7 @@ function	Index({dungeon, adventurer, router}) {
 								<div className={'w-full mt-auto mb-2'}>
 									<p>{dungeon.tokenID}</p>
 									<div className={'flex flex-row items-center w-full py-2'}>
-										<div className={'text-opacity-80 text-black dark:text-white text-sm w-32'}>{'HP:'}</div>
+										<div className={'text-opacity-80 text-plain text-sm w-32'}>{'HP:'}</div>
 										<progress
 											className={'nes-progress border-solid border-2 border-black dark:border-dark-400 p-1.5 is-success w-full transition-all'}
 											value={adventurerHealth}

@@ -31,22 +31,22 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 					<div className={'my-4'} />
 
 					{'It\'s been '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{`${dayjs(new Date(population.extinction * 1000)).from(dayjs(new Date(chainTime * 1000)), false)} since the last boar`}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'The last boar was killed the '}</p>
-							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>
+							<p className={'text-sm leading-normal inline text-highlight font-bold'}>
 								{`${dayjs(new Date(population.extinction * 1000)).format('DD/MM/YYYY [at] HH:mm:ss')}`}
 							</p>
 							<p className={'text-sm leading-normal inline'}>{'.'}</p>
 						</Tooltip>
 					</span>
 					{' was killed by '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{`${population.extinctionBy}`}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'After this event, people started to call him '}</p>
-							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>
+							<p className={'text-sm leading-normal inline text-highlight font-bold'}>
 								{'“The Boarless”'}
 							</p>
 							<p className={'text-sm leading-normal inline'}>{'.'}</p>
@@ -60,7 +60,7 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 			);
 		}
 
-		if (!currentAdventurer?.dungeons?.boars?.canAdventure) {
+		if (!currentAdventurer?.adventures?.boars?.canAdventure) {
 			return (
 				<>
 					{'The air you breathe is fresh and silent. The leaves on the trees rustle as a breeze comes through them. The grass ripples as a butterfly alights on the end of a blade. You can feel the air caress your skin. It is as if everything has been cleansed by the rain, as if there is no angry farmer, no boar grunts.'}
@@ -70,15 +70,15 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 					<div className={'my-4'} />
 		
 					{'That is enough for you, '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'This is you. But maybe another day you can find the boars ?'}</p>
 						</Tooltip>
 					</span>
 					{'. You head back to the village. Maybe you could come back '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-						{dayjs(new Date(currentAdventurer?.dungeons?.boars?.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+						{dayjs(new Date(currentAdventurer?.adventures?.boars?.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'The forest is very big, but they really like this place. Be patient, they will come back.'}</p>
 						</Tooltip>
@@ -100,15 +100,15 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 					<div className={'my-4'} />
 
 					{'Judging by its size, you can expect to collect up to '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{`${loot} loots.`}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'Loot can be '}</p>
-							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Meat'}</p>
+							<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Meat'}</p>
 							<p className={'text-sm leading-normal inline'}>{', '}</p>
-							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Tusks'}</p>
+							<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Tusks'}</p>
 							<p className={'text-sm leading-normal inline'}>{' or '}</p>
-							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Leather'}</p>
+							<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Leather'}</p>
 							<p className={'text-sm leading-normal inline'}>{'. Distribution between these 3 is random.'}</p>
 						</Tooltip>
 					</span>
@@ -127,15 +127,15 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 					<div className={'my-4'} />
 
 					{'While searching for the boars, you could stop to gather some berries, mushroom, or wood. You could get up to '}
-					<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 						{`${loot} loots.`}
 						<Tooltip>
 							<p className={'text-sm leading-normal inline'}>{'Loot can be '}</p>
-							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Berries'}</p>
+							<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Berries'}</p>
 							<p className={'text-sm leading-normal inline'}>{', '}</p>
-							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Mushrooms'}</p>
+							<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Mushrooms'}</p>
 							<p className={'text-sm leading-normal inline'}>{' or '}</p>
-							<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Woods'}</p>
+							<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Woods'}</p>
 							<p className={'text-sm leading-normal inline'}>{'. Distribution between these 3 is random.'}</p>
 						</Tooltip>
 					</span>
@@ -150,7 +150,7 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 					
 				<div className={'my-4'} />
 				{'A burst of voices reach the ears of our adventurer. Two men are arguing about a '}
-				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{'boar'}
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'The boars are big, black and bristly, their snouts curled like those of a ferret. They are like piglets, though much larger.'}</p>
@@ -160,13 +160,13 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 					
 				<div className={'my-4'} />
 				{'"I tell you I saw it! A huge black boar... filthy thing! It tore up my prize plants! I only saw the beast, but it\'s big enough to be a dwarf a harvest price pig! It\'ll be back soon, you\'ll see! '}
-				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{'We need to kill them all'}
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'The boars are strong. Stronger than Facu\'s Rat. Only adventurer with a good amout of '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'CONST'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'CONST'}</p>
 						<p className={'text-sm leading-normal inline'}>{' and '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'STR'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'STR'}</p>
 						<p className={'text-sm leading-normal inline'}>{' should start this fight.'}</p>
 					</Tooltip>
 				</span>
@@ -174,38 +174,38 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 
 				<div className={'my-4'} />
 				{'The older man ignores the farmer\'s rantings, though his face is hard. "Look, there is no boar big enough to do what you say. What you saw was an elk, or one of those manticores that plague the land sometimes. '}
-				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{'Boars are necessary to maintain balance'}
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'There is currently '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{`${population.count} boars`}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{`${population.count} boars`}</p>
 						<p className={'text-sm leading-normal inline'}>{' in the Forest. Less boars means more '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Mushroom'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Mushroom'}</p>
 						<p className={'text-sm leading-normal inline'}>{', '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Berries'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Berries'}</p>
 						<p className={'text-sm leading-normal inline'}>{' and '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Wood'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Wood'}</p>
 						<p className={'text-sm leading-normal inline'}>{', but much less '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Meat'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Meat'}</p>
 						<p className={'text-sm leading-normal inline'}>{', '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Tusks'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Tusks'}</p>
 						<p className={'text-sm leading-normal inline'}>{' and '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Leather'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Leather'}</p>
 						<p className={'text-sm leading-normal inline'}>{'. And the other way around.'}</p>
 					</Tooltip>
 				</span>
 				{' of this forest. They must be '}
-				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{'preserved, protected'}
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'An adventurer knowing how to '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'Handle Animal'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Handle Animal'}</p>
 						<p className={'text-sm leading-normal inline'}>{' and having a good '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'INT'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'INT'}</p>
 						<p className={'text-sm leading-normal inline'}>{', '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'CHA'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'CHA'}</p>
 						<p className={'text-sm leading-normal inline'}>{' and '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'WIS'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'WIS'}</p>
 						<p className={'text-sm leading-normal inline'}>{' will be perfect for this task.'}</p>
 					</Tooltip>
 				</span>
@@ -215,11 +215,11 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 				{'It is getting dark, but our adventurer can still see the farmer\'s face clearly. He is angry, and quickly becoming hysterical. His jaw is trembling, and his eyes are red and watery. Seeing you, he calls you to ask for help.'}
 				<div className={'my-4'} />
 				{'There is '}
-				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{`${population.count == -1 ? 'some' : population.count} boar${population.count === 1 ? '' : 's'}`}
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'The ecosystem will be balanced with '}</p>
-						<p className={'text-sm leading-normal inline text-tag-info dark:text-tag-warning font-bold'}>{'10000'}</p>
+						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'10000'}</p>
 						<p className={'text-sm leading-normal inline'}>{' boars. You will earn less rewards by hunting. However, by protecting them when the boar population is below this number, you may earn more. The reverse is true and hunting is more profitable if the boar population is above this number.'}</p>
 					</Tooltip>
 				</span>
@@ -244,17 +244,17 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, pr
 				]} />
 		);
 	}
-	if (!currentAdventurer?.dungeons?.boars?.canAdventure) {
+	if (!currentAdventurer?.adventures?.boars?.canAdventure) {
 		return (
 			<DialogNoBox
 				options={[
 					{label: (
 						<>
-							<span className={'text-tag-info dark:text-tag-warning'}>
+							<span className={'text-highlight'}>
 								{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}
 							</span>
 							{' WILL BE READY FOR MORE BOAR ADVENTURE '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{`${dayjs(new Date(currentAdventurer?.dungeons?.boars?.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}</span>
+							<span className={'text-highlight'}>{`${dayjs(new Date(currentAdventurer?.adventures?.boars?.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}</span>
 							{'.'}
 						</>
 					),
@@ -272,7 +272,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, pr
 						label: (
 							<>
 								{'FIGHT THE BOAR WITH '}
-								<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
+								<span className={'text-highlight'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
 								{'.'}
 							</>
 						),
@@ -294,7 +294,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, pr
 						label: (
 							<>
 								{'SPEND SOME TIME GATHERING RESOURCES WITH '}
-								<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
+								<span className={'text-highlight'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
 								{'.'}
 							</>
 						),
@@ -328,7 +328,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, pr
 					label: (
 						<>
 							{'HUNT THE BOAR TO HELP THE HUMBLE FARMER WITH '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
+							<span className={'text-highlight'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
 							{'.'}
 						</>
 					),
@@ -338,7 +338,7 @@ function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, pr
 					label: (
 						<>
 							{'DECIDE TO PROTECT AND PRESERVE THE BOARS WITH '}
-							<span className={'text-tag-info dark:text-tag-warning'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
+							<span className={'text-highlight'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
 							{'.'}
 						</>
 					),
@@ -386,7 +386,7 @@ function	Index({router}) {
 
 	return (
 		<section>
-			<div className={'mt-8 max-w-prose w-full flex-col flex justify-center items-center mx-auto px-3'}>
+			<div className={'mt-8 max-w-prose w-full flex-col flex flex-center mx-auto px-3'}>
 				<Box className={'p-4 text-xs md:text-xs leading-normal md:leading-8 w-full relative'}>
 					<div className={'relative'}>
 						<div className={'filter grayscale -m-4 pb-8 opacity-70'}>

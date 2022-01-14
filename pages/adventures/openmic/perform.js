@@ -126,7 +126,7 @@ function Adventure({router, adventurer}) {
 				{/* antagonist */}
 				<div className={'w-full'}>
 					<p className={'whitespace-nowrap'}>{'Rowdy Tavern Hooligans !'}</p>
-					<div className={'flex w-full items-center justify-center'}>
+					<div className={'flex w-full flex-center'}>
 						<div className={'-mr-12'}>
 							<Image
 								src={'/avatar/ceazor.gif'}

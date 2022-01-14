@@ -114,7 +114,7 @@ function	Attributes({adventurer, updateRarity, provider}) {
 		<Box className={'nes-container pt-6 pb-0 px-4 with-title w-full md:w-1/3 -mt-1 md:mt-0'}>
 			<div className={'title bg-white dark:bg-dark-600 z-50 relative'} style={{paddingTop: 2}}>{'Attributes'}</div>
 			{updateAttribute.remainingPoints >= 0 ? (
-				<p onClick={buyPoints} className={`text-xss border-t-2 border-b-2 border-black dark:border-dark-100 flex justify-center items-center py-1 my-2 ${updateAttribute.remainingPoints === 0 ? 'animate-pulse text-center cursor-pointer hover:bg-black hover:animate-none hover:text-white' : ''}`}>
+				<p onClick={buyPoints} className={`text-xss border-t-2 border-b-2 border-black dark:border-dark-100 flex flex-center py-1 my-2 ${updateAttribute.remainingPoints === 0 ? 'animate-pulse text-center cursor-pointer hover:bg-black hover:animate-none hover:text-white' : ''}`}>
 					{updateAttribute.remainingPoints === 0 ?
 						'▶ Save you stats ! ◀'
 						:

@@ -34,7 +34,7 @@ function	GameWrapper({Component, pageProps, element, router}) {
 		return (
 			<div className={'absolute inset-0 backdrop-blur-3xl bg-opacity-40 pointer-events-none'}>
 				<div className={'loader'} />
-				<div className={'absolute inset-0 mt-32 flex justify-center items-center'}>
+				<div className={'absolute inset-0 mt-32 flex flex-center'}>
 					<p className={'center-text text-white z-40'}>{'Retrieving your adventurers...'}</p>
 				</div>
 			</div>
@@ -50,7 +50,7 @@ function	GameWrapper({Component, pageProps, element, router}) {
 	return (
 		<div className={'pb-24 mb-24 relative z-10'}>
 			{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
-				<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
+				<div aria-label={'switchchain'} className={'flex w-full text-lg text-center justify-center'} onClick={switchChain}>
 					{'PLEASE SWITCH TO FANTOM NETWORK'}
 				</div>
 			) : null}
@@ -125,8 +125,8 @@ function	AppWrapper(props) {
 					site: '@RXtended',
 					cardType: 'summary_large_image',
 				}} />
-			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{minHeight: '100vh'}}>
-				<Toaster position={'bottom-right'} toastOptions={{className: 'text-sx border-4 border-black dark:border-dark-100 text-black dark:text-white bg-white dark:bg-dark-600 noBr shadow-xl'}} />
+			<main id={'app'} className={'p-4 relative font-title uppercase text-plain bg-light-900 dark:bg-dark-600'} style={{minHeight: '100vh'}}>
+				<Toaster position={'bottom-right'} toastOptions={{className: 'text-sx border-4 border-black dark:border-dark-100 text-plain bg-white dark:bg-dark-600 noBr shadow-xl'}} />
 				{showConfetti && <Confetti 
 					colors={['#ffffff', 'rgb(42,94,161)']} 
 					drawShape={ctx => {

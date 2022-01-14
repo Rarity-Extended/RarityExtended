@@ -30,7 +30,7 @@ function	NCPHeadline({currentAdventurer}) {
 				<div className={'my-4'} />
 
 				{'Will '}
-				<span className={'text-tag-info dark:text-tag-warning font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
 					{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}
 					<Tooltip>
 						<p className={'text-sm leading-normal inline'}>{'This is you. But maybe another you can sing ?'}</p>
@@ -61,7 +61,7 @@ function	Index({router}) {
 
 	return (
 		<section>
-			<div className={'mt-8 max-w-prose w-full flex-col flex justify-center items-center mx-auto px-3'}>
+			<div className={'mt-8 max-w-prose w-full flex-col flex flex-center mx-auto px-3'}>
 				<Box className={'p-4 text-xs md:text-xs leading-normal md:leading-8 w-full relative'}>
 					<div className={'relative'}>
 						<div className={'filter grayscale -m-4 pb-8 opacity-70'}>

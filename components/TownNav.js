@@ -15,7 +15,7 @@ function TownItem({location}) {
 		<Link href={location.href}>
 			<div className={'p-2 cursor-pointer hover:bg-gray-principal dark:hover:bg-dark-400'}>
 				<span className={'flex items-center'}>
-					<div className={'w-16 h-16 rounded-lg flex justify-center items-center mr-4'}>
+					<div className={'w-16 h-16 rounded-lg flex flex-center mr-4'}>
 						<Image
 							src={location.icon}
 							loading={'eager'}
@@ -38,7 +38,7 @@ function TownItem({location}) {
 
 function TownNav({start = 0, step = 6}) {
 	return (
-		<div className={'grid gap-0 md:gap-4 grid-cols-1 md:grid-cols-2 font-title uppercase text-black dark:text-white'}>
+		<div className={'grid gap-0 md:gap-4 grid-cols-1 md:grid-cols-2 font-title uppercase text-plain'}>
 			{
 				Object.keys(TOWN)
 					.slice(start, start + step)
