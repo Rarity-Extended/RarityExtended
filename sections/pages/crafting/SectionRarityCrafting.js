@@ -10,7 +10,7 @@ import	MANIFEST_GOODS								from	'utils/codex/items_manifest_goods.json';
 import	MANIFEST_WEAPONS 							from	'utils/codex/items_manifest_weapons.json';
 import	MANIFEST_SHIELDS							from	'utils/codex/items_manifest_shields.json';
 import	{approveERC20, approveAllAdventurers}		from	'utils/actions/utils';
-import	{isApprovedForAll, approveForAll, craft}	from	'utils/actions/rarity_extended_crafting_helper'
+import	{craft}										from	'utils/actions/rarity_extended_crafting_helper';
 import 	{getGoodsDifficulty, getArmorDifficulty, getWeaponDifficulty}	from	'utils/libs/rarityCrafting';
 
 function	SectionRarityCrafting() {

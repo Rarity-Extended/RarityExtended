@@ -2,7 +2,6 @@ import	React, {useState}			from	'react';
 import	Image						from	'next/image';
 import	{useRouter}					from	'next/router';
 import	Template					from	'sections/adventurer/_template';
-import	useLocalStorage				from	'hook/useLocalStorage';
 import	useWeb3						from	'contexts/useWeb3';
 import	useRarity					from	'contexts/useRarity';
 import	{recruitAdventurer}			from	'utils/actions';
@@ -58,10 +57,6 @@ function	NewAdventurer({rarityClass}) {
 }
 
 function	Index() {
-	const	{provider, chainTime} = useWeb3();
-	const	{fetchRarity} = useRarity();
-	const	[favoritesAdventurers, set_favoritesAdventurers] = useLocalStorage('favorites', []);
-	
 	return (
 		<Template>
 			<div className={'col-span-12 mt-8'}>
