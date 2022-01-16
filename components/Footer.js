@@ -13,7 +13,7 @@ import	useUI									from	'contexts/useUI';
 import	TownNav									from	'components/TownNav';
 
 function	Footer() {
-	const	{theme, switchTheme, layout, switchLayout, raritySkins, switchSkin} = useUI();
+	const	{theme, switchTheme, raritySkins, switchSkin} = useUI();
 	const	[open, set_open] = useState(false);
 	const	[options, set_options] = useState(false);
 	const	router = useRouter();
