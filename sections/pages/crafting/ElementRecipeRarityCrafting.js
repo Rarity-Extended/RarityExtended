@@ -52,7 +52,7 @@ function	ElementRecipe({recipe, currentAdventurer, difficultyCheckFunc, onCraft}
 	}, [currentAdventurer, materialsToUse]);
 
 	return (
-		<div className={'rounded-md bg-gray-lighter dark:bg-dark-400 p-4 flex flex-col'}>
+		<div className={'box p-4 flex flex-col'}>
 			<div className={'grid grid-cols-2 h-full'}>
 				<div className={'flex flex-col border-r border-dark-600 px-4 h-full'}>
 					<p className={'text-plain font-story text-sm w-4/5'}>{recipe.name}</p>
@@ -89,18 +89,18 @@ function	ElementRecipe({recipe, currentAdventurer, difficultyCheckFunc, onCraft}
 			<div className={'mt-auto flex flex-row space-x-2'}>
 				<div
 					onClick={() => canCraft ? onCraft(materialsToUse) : null}
-					className={`bg-gray-principal dark:bg-dark-600 flex flex-center text-center px-4 py-2 mt-4 w-2/3 ${canCraft ? 'cursor-pointer dark:hover:bg-dark-900 hover:bg-gray-secondary' : 'cursor-not-allowed opacity-60'}`}>
+					className={`bg-600 flex flex-center text-center px-4 py-2 mt-4 w-2/3 ${canCraft ? 'cursor-pointer hover-bg-900' : 'cursor-not-allowed opacity-60'}`}>
 					<p className={'text-plain font-story text-sm'}>{'Craft'}</p>
 				</div>
-				<div className={`bg-gray-principal dark:bg-dark-600 flex justify-between text-center items-center px-1 py-2 w-1/3 mt-4 ${canCraft ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'}`}>
+				<div className={`bg-600 flex justify-between text-center items-center px-1 py-2 w-1/3 mt-4 ${canCraft ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'}`}>
 					<div onClick={() => set_materialsToUse(materialsToUse >= 10 ? materialsToUse - 10 : 0)}>
-						<IconChevron className={`${materialsToUse === 0 ? 'opacity-0' : canCraft ? 'opacity-5 hover:opacity-100 cursor-pointer' : 'opacity-5'}`} />
+						<IconChevron className={`${materialsToUse === 0 ? 'opacity-0' : canCraft ? 'opacity-10 hover:opacity-100 cursor-pointer' : 'opacity-10'}`} />
 					</div>
 					<p className={'text-plain font-story text-sm select-none'}>
 						{`${difficulty}%`}
 					</p>
 					<div onClick={() => set_materialsToUse(materialsToUse + 10 <= ratSkinAvailable ? materialsToUse + 10 : ratSkinAvailable)}>
-						<IconChevron className={`${materialsToUse + 10 > ratSkinAvailable ? 'opacity-0' : canCraft ? 'opacity-5 hover:opacity-100 cursor-pointer' : 'opacity-5'} transform rotate-180`} />
+						<IconChevron className={`${materialsToUse + 10 > ratSkinAvailable ? 'opacity-0' : canCraft ? 'opacity-10 hover:opacity-100 cursor-pointer' : 'opacity-10'} transform rotate-180`} />
 					</div>
 				</div>
 			</div>

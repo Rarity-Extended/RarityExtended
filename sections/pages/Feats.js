@@ -52,7 +52,7 @@ function	Feats() {
 	const	_adventurerFeats = currentAdventurer.feats || [];
 	const	_unlockedFeats = [...new Set([..._initialFeatsPerClass, ..._adventurerFeats])];
 	const	_pointLefts = _maxFeatsForAventurer - _unlockedFeats.length;
-	const	[learnTab, set_learnTab] = useState(1);
+	const	[learnTab, set_learnTab] = useState(0);
 	const	[typeTab, set_typeTab] = useState(0);
 	const	[search, set_search] = useState('');
 
@@ -73,11 +73,6 @@ function	Feats() {
 		return (
 			<div className={'w-full flex flex-row justify-between font-story text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
 				<div className={'flex flex-row space-x-4'}>
-					<p
-						onClick={() => set_learnTab(1)}
-						className={`transition-opacity hover:opacity-100 ${learnTab === 1 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{'Learned'}
-					</p>
 					<p
 						onClick={() => set_learnTab(0)}
 						className={`transition-opacity hover:opacity-100 ${learnTab === 0 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
@@ -113,21 +108,6 @@ function	Feats() {
 
 	return (
 		<div>
-			{/* <div className={'mb-10'}>
-				<h1 className={'text-plain font-story text-4xl mb-4'}>
-					{'Feats'}
-				</h1>
-				<div className={'flex flex-col'}>
-					<p className={'text-plain font-story text-base max-w-full md:max-w-4xl'}>
-						{'A feat represents a talent or an area of expertise that gives a character special capabilities. It embodies training, experience, and abilities beyond what a class provides. Some are inherent to the class, while others can be learned.'}
-					</p>
-					<p className={'text-plain font-story text-base max-w-full md:max-w-4xl mt-2'}>
-						{'You have '}
-						<span className={'text-highlight font-bold'}>{`${_pointLefts <= 1 ? `${_pointLefts} point` : `${_pointLefts} points`} left`}</span>
-						{'.'}
-					</p>
-				</div>
-			</div> */}
 			<div className={'mt-6 flex flex-col md:flex-row mb-4 items-center justify-between'}>
 				<div>
 					<input
@@ -137,7 +117,8 @@ function	Feats() {
 				</div>
 				<div className={'flex flex-row flex-center space-x-4'}>
 					<div className={'font-story text-xs text-plain flex'}>
-						{`${_pointLefts <= 1 ? `Point left: ${_pointLefts}` : `Points left: ${_pointLefts}`}`}
+						{`${_pointLefts <= 1 ? 'Point left:' : 'Points left:'}`}&nbsp;
+						<span className={'text-highlight font-bold'}>{_pointLefts}</span>
 					</div>
 				</div>
 			</div>

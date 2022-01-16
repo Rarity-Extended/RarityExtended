@@ -16,6 +16,14 @@ html.dark {
 	background: rgb(19,38,75);
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+body {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
 #crafting {
 	scroll-margin-top: 91px;
 }

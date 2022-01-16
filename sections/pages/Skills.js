@@ -1,5 +1,6 @@
 import	React, {useState, useEffect}					from	'react';
 import	Image											from	'next/image';
+import	{useRouter}										from	'next/router';
 import	useRarity										from	'contexts/useRarity';
 import	useWeb3											from	'contexts/useWeb3';
 import	{learnSkills}									from	'utils/actions';
@@ -98,6 +99,7 @@ function	ElementSkill({currentAdventurer, skill, isClassSpecific, updateSkills, 
 
 function	Skills() {
 	const	{provider} = useWeb3();
+	const	router = useRouter();
 	const	{currentAdventurer, updateRarity} = useRarity();
 	const	_availableSkillPoints = availableSkillPoints(currentAdventurer.attributes.intelligence, currentAdventurer.class, currentAdventurer.level);
 	const	_pointSpentByAdventurer = calculatePointsForSet(currentAdventurer.class, currentAdventurer?.skills || []);
@@ -114,7 +116,7 @@ function	Skills() {
 	const	_adventurerClass = Object.values(CLASSES).find((e) => e.id === currentAdventurer.class);
 	const	[classTab, set_classTab] = useState(0);
 	const	[attributeTab, set_attributeTab] = useState(0);
-	const	[search, set_search] = useState('');
+	const	[search, set_search] = useState(router?.query?.search || '');
 
 	useEffect(() => {
 		if (!updateSkills) {
@@ -129,6 +131,11 @@ function	Skills() {
 			});
 		}
 	}, [currentAdventurer?.tokenID]);
+
+	useEffect(() => {
+		if (router?.query?.search) set_search(router.query.search);
+		if (router?.query?.tab) set_classTab(Number(router.query.tab));
+	}, [router]);
 
 	function	onReduceLevel(skill, isClassSpecific) {
 		if (currentAdventurer.skills[skill?.id - 1] === updateSkills[skill?.id])
@@ -197,18 +204,18 @@ function	Skills() {
 			<div className={'w-full flex flex-row justify-between font-story text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
 				<div className={'flex flex-row space-x-4'}>
 					<p
+						onClick={() => set_classTab(2)}
+						className={`transition-opacity hover:opacity-100 ${classTab === 2 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+						{'All'}
+					</p>
+					<p
 						onClick={() => set_classTab(0)}
 						className={`transition-opacity hover:opacity-100 ${classTab === 0 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{'Learned'}
+						{_adventurerClass.name}
 					</p>
 					<p
 						onClick={() => set_classTab(1)}
 						className={`transition-opacity hover:opacity-100 ${classTab === 1 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{_adventurerClass.name}
-					</p>
-					<p
-						onClick={() => set_classTab(2)}
-						className={`transition-opacity hover:opacity-100 ${classTab === 2 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 						{'Cross-class'}
 					</p>
 				</div>
@@ -222,27 +229,27 @@ function	Skills() {
 					<p
 						onClick={() => set_attributeTab(1)}
 						className={`transition-opacity hover:opacity-100 ${attributeTab === 1 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{`Strength (${currentAdventurer?.attributes?.strength || 8})`}
+						{'Strength'}
 					</p>
 					<p
 						onClick={() => set_attributeTab(2)}
 						className={`transition-opacity hover:opacity-100 ${attributeTab === 2 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{`Dexterity (${currentAdventurer?.attributes?.dexterity || 8})`}
+						{'Dexterity'}
 					</p>
 					<p
 						onClick={() => set_attributeTab(3)}
 						className={`transition-opacity hover:opacity-100 ${attributeTab === 3 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{`Intelligence (${currentAdventurer?.attributes?.intelligence || 8})`}
+						{'Intelligence'}
 					</p>
 					<p
 						onClick={() => set_attributeTab(4)}
 						className={`transition-opacity hover:opacity-100 ${attributeTab === 4 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{`Wisdom (${currentAdventurer?.attributes?.wisdom || 8})`}
+						{'Wisdom'}
 					</p>
 					<p
 						onClick={() => set_attributeTab(5)}
 						className={`transition-opacity hover:opacity-100 ${attributeTab === 5 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{`Charisma (${currentAdventurer?.attributes?.charisma || 8})`}
+						{'Charisma'}
 					</p>
 				</div>
 			</div>
@@ -251,33 +258,18 @@ function	Skills() {
 
 	return (
 		<div>
-
-			{/* <div className={'mb-10'}>
-				<h1 className={'text-plain font-story text-4xl mb-4'}>
-					{'Skills'}
-				</h1>
-				<div className={'flex flex-col'}>
-					<p className={'text-plain font-story text-base max-w-full md:max-w-4xl'}>
-						{'What do you know, stranger ? What can you do ? I am sure your are skillful, so I will give you a few tips to help you to be more efficient and to be more effective. But first, let\'s start with the basics. Select your skills.'}
-					</p>
-					<p className={'text-plain font-story text-base max-w-full md:max-w-4xl mt-2'}>
-						{'You have '}
-						<span className={'text-highlight font-bold'}>{`${updateSkills.remainingPoints <= 1 ? `${updateSkills.remainingPoints} point` : `${updateSkills.remainingPoints} points`} left`}</span>
-						{'.'}
-					</p>
-				</div>
-			</div> */}
-
 			<div className={'mt-6 flex flex-col md:flex-row mb-4 items-center justify-between'}>
 				<div>
 					<input
+						value={search}
 						onChange={e => set_search(e?.target?.value || '')}
 						className={'border-2 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-plain'}
 						placeholder={'SEARCH'} />
 				</div>
 				<div className={'flex flex-row flex-center space-x-4'}>
 					<div className={'font-story text-xs text-plain flex'}>
-						{`${updateSkills.remainingPoints <= 1 ? `Point left: ${updateSkills.remainingPoints}` : `Points left: ${updateSkills.remainingPoints}`}`}
+						{`${updateSkills.remainingPoints <= 1 ? 'Point left:' : 'Points left:'}`}&nbsp;
+						<span className={'text-highlight font-bold'}>{updateSkills.remainingPoints}</span>
 					</div>
 
 					<div className={'flex'}>
@@ -301,12 +293,6 @@ function	Skills() {
 					Object.values(SKILLS)
 						.filter((skill) => {
 							if (classTab === 0) {
-								return currentAdventurer.skills[skill?.id - 1] > 0;
-							}
-							return true;
-						})
-						.filter((skill) => {
-							if (classTab === 1) {
 								if (attributeTab === 0) {
 									return _adventurerClass.skills.includes(skill?.name);
 								} else if (attributeTab === 1) {
@@ -322,7 +308,7 @@ function	Skills() {
 								} else if (attributeTab === 6) {
 									return _adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'charisma';
 								}
-							} else if (classTab === 2) {
+							} else if (classTab === 1) {
 								if (attributeTab === 0) {
 									return !_adventurerClass.skills.includes(skill?.name);
 								} else if (attributeTab === 1) {
@@ -337,6 +323,22 @@ function	Skills() {
 									return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'wisdom';
 								} else if (attributeTab === 6) {
 									return !_adventurerClass.skills.includes(skill?.name) && skill?.attributeName === 'charisma';
+								}
+							} else if (classTab === 2){
+								if (attributeTab === 0) {
+									return true;
+								} else if (attributeTab === 1) {
+									return skill?.attributeName === 'strength';
+								} else if (attributeTab === 2) {
+									return skill?.attributeName === 'dexterity';
+								} else if (attributeTab === 3) {
+									return skill?.attributeName === 'constitution';
+								} else if (attributeTab === 4) {
+									return skill?.attributeName === 'intelligence';
+								} else if (attributeTab === 5) {
+									return skill?.attributeName === 'wisdom';
+								} else if (attributeTab === 6) {
+									return skill?.attributeName === 'charisma';
 								}
 							}
 							return skill;

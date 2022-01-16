@@ -1,4 +1,5 @@
 import	React											from	'react';
+import	Link											from	'next/link';
 import	Image											from	'next/image';
 import	{availableSkillPoints, calculatePointsForSet}	from	'utils/libs/raritySkills';
 import	SKILLS											from	'utils/codex/skills.json';
@@ -14,7 +15,9 @@ function	OverviewSkills({adventurer}) {
 			<div className={'mb-6'}>
 				<p className={'font-story text-sm normal-case'}>
 					<span className={'text-50'}>{'Skills represent the other, non-weapon, non-magical, non-standard checks. They help with combat and magic, as well as movement and general conversation. You have '}</span>
-					<span className={'text-highlight font-bold'}>{`${remainingPoints <= 1 ? `${remainingPoints} point` : `${remainingPoints} points`} left`}</span>
+					<Link href={'/adventurer/skills'}>
+						<span className={'text-highlight font-bold  cursor-pointer hover:underline'}>{`${remainingPoints <= 1 ? `${remainingPoints} point` : `${remainingPoints} points`} left`}</span>
+					</Link>
 					<span className={'text-50'}>{' to spend.'}</span>
 				</p>
 			</div>

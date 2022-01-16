@@ -1,6 +1,6 @@
 import	React					from	'react';
-import	SectionRarityCrafting	from	'sections/crafting/SectionRarityCrafting';
-import	SectionCrafting			from	'sections/crafting/SectionCrafting';
+import	SectionRarityCrafting	from	'sections/pages/crafting/SectionRarityCrafting';
+import	SectionCrafting			from	'sections/pages/crafting/SectionCrafting';
 
 function	IconCook() {
 	return (

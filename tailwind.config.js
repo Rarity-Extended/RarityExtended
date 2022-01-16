@@ -139,6 +139,9 @@ module.exports = {
 			transitionProperty: {
 				'visibility': 'visibility',
 				'width': 'width',
+				'min-height': 'min-height',
+				'max-height': 'max-height',
+				'height': 'height',
 			},
 			animation: {
 				'bounce-r': 'bounce-r 1s infinite',

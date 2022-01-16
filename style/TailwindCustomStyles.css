@@ -44,6 +44,9 @@
 .text-50 {
   @apply text-black dark:text-white text-opacity-60 dark:text-opacity-60;
 }
+.bg-400 {
+  @apply bg-light-400 dark:bg-dark-400;
+}
 .bg-600 {
   @apply bg-light-600 dark:bg-dark-600;
 }
@@ -61,4 +64,7 @@
 }
 .text-highlight {
   @apply text-tag-info dark:text-tag-warning;
+}
+.hover-text-highlight {
+  @apply text-tag-info hover:bg-tag-infoDarker dark:text-tag-warning dark:hover:bg-tag-warningDarker;
 }

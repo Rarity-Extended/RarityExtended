@@ -29,7 +29,6 @@ import {ConfettiContext} from 'components/ConfettiContext';
 function	GameWrapper({Component, pageProps, element, router}) {
 	const	{switchChain, active, chainID} = useWeb3();
 	const	{isLoaded, rarities, fetchRarity, updateRarity, rNonce} = useRarity();
-
 	if (!isLoaded) {
 		return (
 			<div className={'absolute inset-0 backdrop-blur-3xl bg-opacity-40 pointer-events-none'}>
@@ -47,6 +46,7 @@ function	GameWrapper({Component, pageProps, element, router}) {
 		);
 	}
 
+	const getLayout = Component.getLayout || ((page) => page);
 	return (
 		<div className={'pb-24 mb-24 relative z-10'}>
 			{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
@@ -54,15 +54,16 @@ function	GameWrapper({Component, pageProps, element, router}) {
 					{'PLEASE SWITCH TO FANTOM NETWORK'}
 				</div>
 			) : null}
-			<Component
-				key={router.route}
-				element={element}
-				router={router}
-				rarities={rarities}
-				updateRarity={updateRarity}
-				fetchRarity={fetchRarity}
-				rNonce={rNonce}
-				{...pageProps} />
+			{getLayout(
+				<Component
+					element={element}
+					router={router}
+					rarities={rarities}
+					updateRarity={updateRarity}
+					fetchRarity={fetchRarity}
+					rNonce={rNonce}
+					{...pageProps} />
+			)}
 		</div>
 	);
 }
@@ -125,7 +126,7 @@ function	AppWrapper(props) {
 					site: '@RXtended',
 					cardType: 'summary_large_image',
 				}} />
-			<main id={'app'} className={'p-4 relative font-title uppercase text-plain bg-light-900 dark:bg-dark-600'} style={{minHeight: '100vh'}}>
+			<main id={'app'} className={'p-4 relative font-title uppercase text-plain bg-light-900 dark:bg-dark-600 scrollbar-none'} style={{minHeight: '100vh'}}>
 				<Toaster position={'bottom-right'} toastOptions={{className: 'text-sx border-4 border-black dark:border-dark-100 text-plain bg-white dark:bg-dark-600 noBr shadow-xl'}} />
 				{showConfetti && <Confetti 
 					colors={['#ffffff', 'rgb(42,94,161)']} 

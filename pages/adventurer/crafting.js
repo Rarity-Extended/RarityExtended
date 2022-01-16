@@ -1,9 +1,9 @@
 import	React			from	'react';
 import	Template		from	'sections/adventurer/_template';
-import	Adventures		from	'sections/pages/Adventures';
+import	Crafting		from	'sections/pages/crafting';
 
 function	Index() {
-	return (<Adventures />);
+	return (<Crafting />);
 }
 
 Index.getLayout = function getLayout(page) {

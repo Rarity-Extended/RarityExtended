@@ -11,7 +11,6 @@ import	useLocalStorage									from	'hook/useLocalStorage';
 const	UI = createContext();
 export const UIContextApp = ({children}) => {
 	const	[theme, set_theme] = useLocalStorage('theme', 'dark-initial');
-	const	[layout, set_layout] = useLocalStorage('layout', 'default');
 	const	[raritySkins, set_raritySkins] = useLocalStorage('skins', true);
 
 	useEffect(() => {
@@ -37,11 +36,9 @@ export const UIContextApp = ({children}) => {
 		<UI.Provider
 			value={{
 				theme,
-				layout,
 				setTheme: set_theme,
 				raritySkins: raritySkins,
 				switchTheme: () => set_theme(t => t === 'dark' ? 'light' : 'dark'),
-				switchLayout: () => set_layout(t => t === 'default' ? 'legacy' : 'default'),
 				switchSkin: () => set_raritySkins(t => t === true ? false : true)
 			}}>
 			{children}

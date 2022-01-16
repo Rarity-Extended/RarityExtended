@@ -22,6 +22,7 @@ import	CLASSES													from	'utils/codex/classes';
 import	MANIFEST_GOODS											from	'utils/codex/items_manifest_goods.json';
 import	MANIFEST_ARMORS											from	'utils/codex/items_manifest_armors.json';
 import	MANIFEST_WEAPONS										from	'utils/codex/items_manifest_weapons.json';
+import	MANIFEST_SHIELDS										from	'utils/codex/items_manifest_shields.json';
 
 const	isEmptyObject = (obj) => Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
 
@@ -90,18 +91,21 @@ export const RarityContextApp = ({children}) => {
 		result.forEach((item) => {
 			if (item.base_type === 3) {
 				set_inventory((prev) => ({...prev, [item.item_id]: {
+					tokenID: item.item_id,
 					crafter: item.crafter.toString(),
 					...Object.values(MANIFEST_WEAPONS).find(e => e.id === item.item_type),
 				}}));
 			}
 			if (item.base_type === 2) {
 				set_inventory((prev) => ({...prev, [item.item_id]: {
+					tokenID: item.item_id,
 					crafter: item.crafter.toString(),
-					...Object.values(MANIFEST_ARMORS).find(e => e.id === item.item_type),
+					...[...Object.values(MANIFEST_ARMORS), ...Object.values(MANIFEST_SHIELDS)].find(e => e.id === item.item_type),
 				}}));
 			}
 			if (item.base_type === 1) {
 				set_inventory((prev) => ({...prev, [item.item_id]: {
+					tokenID: item.item_id,
 					crafter: item.crafter.toString(),
 					...Object.values(MANIFEST_GOODS).find(e => e.id === item.item_type),
 				}}));
@@ -131,6 +135,7 @@ export const RarityContextApp = ({children}) => {
 			rarityExtendedName.get_name(tokenID),
 			rarityAttr.character_created(tokenID),
 			rarityAttr.ability_scores(tokenID),
+			rarityAttr.level_points_spent(tokenID),
 			rarityGold.balanceOf(tokenID),
 			rarityGold.claimable(tokenID),
 			raritySkills.get_skills(tokenID),
@@ -165,17 +170,20 @@ export const RarityContextApp = ({children}) => {
 	async function		setRarity(tokenID, multicallResult, inventoryCallResult) {
 		const	[
 			owner, adventurer, name,
-			initialAttributes, abilityScores,
+			initialAttributes, abilityScores, extraPointsSpents,
 			balanceOfGold, claimableGold,
 			skills, feats,
 			cellarLog, cellarScout, forestResearch, boarsLog, timeToNextOpenMic,
 		] = multicallResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
-			set_rarities((prev) => {
-				delete prev[tokenID];
-				return ({...prev});
-			});
+			setTimeout(() => {
+				set_rarities((prev) => {
+					delete prev[tokenID];
+					return ({...prev});
+				});
+				set_rNonce(n => n + 1);
+			}, 1);
 			return;
 		}
 
@@ -200,6 +208,8 @@ export const RarityContextApp = ({children}) => {
 			attributes: {
 				isInit: initialAttributes,
 				remainingPoints: initialAttributes ? -1 : 32,
+				extraPointsSpents: Number(extraPointsSpents),
+				extraPoints: Math.floor(Number(adventurer['_level']) / 4),
 				strength: initialAttributes ? abilityScores['strength'] : 8,
 				dexterity: initialAttributes ? abilityScores['dexterity'] : 8,
 				constitution: initialAttributes ? abilityScores['constitution'] : 8,
@@ -240,11 +250,15 @@ export const RarityContextApp = ({children}) => {
 			},
 			inventory: _inventory
 		};
-		if (!currentAdventurer || (currentAdventurer && tokenID === currentAdventurer.tokenID)) {
-			set_currentAdventurer(p => (!p || (p && tokenID === p.tokenID)) ? _adventurer : p);
-		}
 
-		set_rarities((prev) => ({...prev, [tokenID]: _adventurer}));
+		//Hack to bactch all of this in only 1 render
+		setTimeout(() => {
+			if (!currentAdventurer || (currentAdventurer && tokenID === currentAdventurer.tokenID)) {
+				set_currentAdventurer(p => (!p || (p && tokenID === p.tokenID)) ? _adventurer : p);
+			}
+			set_rarities((prev) => ({...prev, [tokenID]: _adventurer}));
+			set_rNonce(n => n + 1);
+		}, 1);
 	}
 
 	/**************************************************************************

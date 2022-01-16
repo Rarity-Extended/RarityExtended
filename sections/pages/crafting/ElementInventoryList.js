@@ -1,6 +1,6 @@
 import	React					from	'react';
 import	{ethers}				from	'ethers';
-import	ElementInventoryItem	from	'sections/crafting/ElementInventoryItem';
+import	ElementInventoryItem	from	'sections/pages/crafting/ElementInventoryItem';
 import	ITEMS					from	'utils/codex/items';
 
 const	PER_PAGE = 4;

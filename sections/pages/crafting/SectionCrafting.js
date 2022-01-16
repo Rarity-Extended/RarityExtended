@@ -2,8 +2,8 @@ import	React									from	'react';
 import	{ethers}								from	'ethers';
 import	useWeb3									from	'contexts/useWeb3';
 import	useRarity								from	'contexts/useRarity';
-import	ElementInventoryList					from	'sections/crafting/ElementInventoryList';
-import	ElementRecipeCrafting					from	'sections/crafting/ElementRecipeCrafting';
+import	ElementInventoryList					from	'sections/pages/crafting/ElementInventoryList';
+import	ElementRecipeCrafting					from	'sections/pages/crafting/ElementRecipeCrafting';
 import	{approveERC20, approveAllAdventurers}	from	'utils/actions/utils';
 import	{craft}									from	'utils/actions';
 
@@ -96,30 +96,7 @@ function	SectionRarityCrafting() {
 
 	return (
 		<>
-			<div className={'mb-10'}>
-				<h1 className={'text-plain font-story text-4xl mb-4'}>
-					{'Kitchen'}
-				</h1>
-				<div className={'flex flex-row'}>
-					<p className={'text-plain font-story text-base max-w-full md:max-w-4xl'}>{'The kitchen is large, warn and full of pleasant smells. The Cook is a big guy with big knives and a big moustache. If you bring him enough materials he can give you a fair meal in exchange.'}</p>
-				</div>
-			</div>
-
-			{/* Hidden on mobile */}
-			<div className={'hidden md:grid grid-cols-12 gap-x-12 font-story text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
-				<div className={'col-span-3 grid grid-cols-1 pl-1'}>
-					{'Inventory'}
-				</div>
-				<div className={'col-span-9 pl-1'}>
-					<div className={'flex flex-row space-x-4'}>
-						<p className={'transition-opacity hover:opacity-100 opacity-100'}>
-							{`Recipes (${Object.values(MANIFEST_COOK).length})`}
-						</p>
-					</div>
-				</div>
-			</div>
-
-			<div className={'flex flex-col md:grid grid-cols-12 gap-x-16 max-w-full'}>
+			<div className={'flex flex-col md:grid grid-cols-12 gap-x-10 max-w-full'}>
 				<div className={'col-span-3 relative'}>
 					<div className={'grid grid-cols-2 md:grid-cols-1 gap-4 sticky top-4 max-h-screen'}>
 						<ElementInventoryList

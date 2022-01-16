@@ -19,7 +19,7 @@ function	ElementRecipe({recipe, currentAdventurer, onCraft}) {
 	const	canCraft = ensureCanCraft(currentAdventurer, recipe.cost);
 
 	return (
-		<div className={'rounded-md bg-gray-lighter dark:bg-dark-400 p-4 flex flex-col'}>
+		<div className={'box p-4 flex flex-col'}>
 			<div className={'grid grid-cols-2 h-full'}>
 				<div className={'flex flex-col border-r border-dark-600 px-4 h-full'}>
 					<p className={'text-plain font-story text-sm w-4/5'}>{recipe.name}</p>
@@ -56,7 +56,7 @@ function	ElementRecipe({recipe, currentAdventurer, onCraft}) {
 			<div className={'mt-auto flex flex-row space-x-2'}>
 				<div
 					onClick={() => canCraft ? onCraft() : null}
-					className={`bg-gray-principal dark:bg-dark-600 flex flex-center text-center px-4 py-2 mt-4 w-full ${canCraft ? 'cursor-pointer dark:hover:bg-dark-900 hover:bg-gray-secondary' : 'cursor-not-allowed opacity-60'}`}>
+					className={`bg-600 flex flex-center text-center px-4 py-2 mt-4 w-full ${canCraft ? 'cursor-pointer hover-bg-900' : 'cursor-not-allowed opacity-60'}`}>
 					<p className={'text-plain font-story text-sm'}>{'Craft'}</p>
 				</div>
 			</div>

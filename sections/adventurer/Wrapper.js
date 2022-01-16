@@ -1,15 +1,25 @@
 import	React				from	'react';
-import	IconBag				from	'components/icons/IconBag';
+import	useWeb3				from	'contexts/useWeb3';
+import	useRarity			from	'contexts/useRarity';
 import	OverviewAttributes	from	'sections/adventurer/OverviewAttributes';
 import	OverviewSkills		from	'sections/adventurer/OverviewSkills';
 import	OverviewFeats		from	'sections/adventurer/OverviewFeats';
+import	OverviewInventory	from	'sections/adventurer/OverviewInventory';
 import	OverviewEquipement	from	'sections/adventurer/OverviewEquipement';
 
-function	Wrapper({adventurer, provider, chainTime, updateRarity}) {
+function	Wrapper() {
+	const	{provider, chainTime} = useWeb3();
+	const	{currentAdventurer, updateRarity, inventory, skins} = useRarity();
 	const	[tab, set_tab] = React.useState(0);
+
 	return (
 		<div className={'box p-4 flex flex-row space-x-16'}>
-			<OverviewEquipement adventurer={adventurer} provider={provider} chainTime={chainTime} updateRarity={updateRarity} />
+			<OverviewEquipement
+				adventurer={currentAdventurer}
+				provider={provider}
+				chainTime={chainTime}
+				updateRarity={updateRarity}
+				raritySkin={skins[currentAdventurer?.tokenID] || currentAdventurer?.skin} />
 			<div className={'w-full'}>
 				<div className={'flex flex-row items-center font-story mb-4 normal-case border-b-2 dark:border-b-dark-300 -mt-4'}>
 					<p
@@ -27,16 +37,16 @@ function	Wrapper({adventurer, provider, chainTime, updateRarity}) {
 						className={`p-4 text-plain text-sm transition-opacity hover:opacity-100 ${tab === 2 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 						{'Feat'}
 					</p>
-
 					<p
-						onClick={() => set_tab(3)}
-						className={`ml-auto p-2 pr-0 text-plain text-sm transition-opacity hover:opacity-100 ${tab === 3 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						<IconBag className={'w-5 h-5'}/>
+						onClick={() => set_tab(3)} 
+						className={`p-4 text-plain text-sm transition-opacity hover:opacity-100 ${tab === 3 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+						{'Inventory'}
 					</p>
 				</div>
-				{tab === 0 ? <OverviewAttributes adventurer={adventurer} /> : null}
-				{tab === 1 ? <OverviewSkills adventurer={adventurer} /> : null}
-				{tab === 2 ? <OverviewFeats adventurer={adventurer} /> : null}
+				{tab === 0 ? <OverviewAttributes adventurer={currentAdventurer} /> : null}
+				{tab === 1 ? <OverviewSkills adventurer={currentAdventurer} /> : null}
+				{tab === 2 ? <OverviewFeats adventurer={currentAdventurer} /> : null}
+				{tab === 3 ? <OverviewInventory adventurer={currentAdventurer} sharedInventory={inventory} /> : null}
 			</div>
 			
 		</div>

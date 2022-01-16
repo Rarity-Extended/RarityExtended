@@ -1,16 +1,16 @@
-import	React									from	'react';
-import	{ethers}								from	'ethers';
-import	useWeb3									from	'contexts/useWeb3';
-import	useRarity								from	'contexts/useRarity';
-import	ModalSkills								from	'components/ModalSkills';
-import	ElementInventoryList					from	'sections/crafting/ElementInventoryList';
-import	ElementRecipeRarityCrafting				from	'sections/crafting/ElementRecipeRarityCrafting';
-import	MANIFEST_ARMORS							from	'utils/codex/items_manifest_armors.json';
-import	MANIFEST_GOODS							from	'utils/codex/items_manifest_goods.json';
-import	MANIFEST_WEAPONS 						from	'utils/codex/items_manifest_weapons.json';
-import	MANIFEST_SHIELDS						from	'utils/codex/items_manifest_shields.json';
-import	{approveERC20, approveAllAdventurers}	from	'utils/actions/utils';
-import	{craft}									from	'utils/actions';
+import	React										from	'react';
+import	{ethers}									from	'ethers';
+import	useWeb3										from	'contexts/useWeb3';
+import	useRarity									from	'contexts/useRarity';
+import	ModalSkills									from	'components/ModalSkills';
+import	ElementInventoryList						from	'sections/pages/crafting/ElementInventoryList';
+import	ElementRecipeRarityCrafting					from	'sections/pages/crafting/ElementRecipeRarityCrafting';
+import	MANIFEST_ARMORS								from	'utils/codex/items_manifest_armors.json';
+import	MANIFEST_GOODS								from	'utils/codex/items_manifest_goods.json';
+import	MANIFEST_WEAPONS 							from	'utils/codex/items_manifest_weapons.json';
+import	MANIFEST_SHIELDS							from	'utils/codex/items_manifest_shields.json';
+import	{approveERC20, approveAllAdventurers}		from	'utils/actions/utils';
+import	{isApprovedForAll, approveForAll, craft}	from	'utils/actions/rarity_extended_crafting_helper'
 import 	{getGoodsDifficulty, getArmorDifficulty, getWeaponDifficulty}	from	'utils/libs/rarityCrafting';
 
 function	SectionRarityCrafting() {
@@ -52,16 +52,6 @@ function	SectionRarityCrafting() {
 
 	return (
 		<>
-			<div className={'mb-10'}>
-				<h1 className={'text-plain font-story text-4xl mb-4'}>
-					{'Workshop'}
-				</h1>
-				<div className={'flex flex-row'}>
-					<p className={'text-plain font-story text-base max-w-4xl'}>{'This is a small room where the heat is almost unsustainable. There is no much light and the old craftmaster in the corner is watching you. He can help you with some basic crafts, but wants you to know the basics firsts.'}</p>
-				</div>
-			</div>
-
-			{/* Hidden on mobile */}
 			<div className={'hidden md:grid grid-cols-12 gap-x-12 font-story text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
 				<div className={'col-span-3 grid grid-cols-1 pl-1'}>
 					{'Inventory'}

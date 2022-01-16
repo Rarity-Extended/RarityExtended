@@ -1,4 +1,5 @@
 import	React									from	'react';
+import	Link									from	'next/link';
 import	Image									from	'next/image';
 import	{featsPerClass, initialFeatsPerClass}	from	'utils/libs/rarityFeats';
 import	FEATS									from	'utils/codex/feats.json';
@@ -27,11 +28,13 @@ function	OverviewFeats({adventurer}) {
 			<div className={'mb-6'}>
 				<p className={'font-story text-sm normal-case'}>
 					<span className={'text-50'}>{'A feat represents a talent or an area of expertise that gives a character special capabilities. It embodies training, experience, and abilities beyond what a class provides. Some are inherent to the class, while others can be learned. You have '}</span>
-					<span className={'text-highlight font-bold'}>{`${_pointLefts <= 1 ? `${_pointLefts} point` : `${_pointLefts} points`} left`}</span>
+					<Link href={'/adventurer/feats'}>
+						<span className={'text-highlight font-bold cursor-pointer hover:underline'}>{`${_pointLefts <= 1 ? `${_pointLefts} point` : `${_pointLefts} points`} left`}</span>
+					</Link>
 					<span className={'text-50'}>{' to spend.'}</span>
 				</p>
 			</div>
-			<div className={'grid grid-cols-3 gap-x-8 gap-y-4 w-full overflow-auto scrollbar-none'}>
+			<div className={'grid grid-cols-3 gap-x-4 gap-y-5 w-full overflow-auto scrollbar-none'}>
 				{Object.values(FEATS).filter(isLearned).map((feat) => (
 					<div key={feat.id} className={'flex flex-row items-center justify-between'}>
 						<div className={'flex flex-row items-center'}>

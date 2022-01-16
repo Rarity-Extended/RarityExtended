@@ -90,18 +90,6 @@ function	Inventory() {
 
 	return (
 		<div>
-
-			{/* <div className={'mb-10'}>
-				<h1 className={'text-plain font-story text-4xl mb-4'}>
-					{'Inventory'}
-				</h1>
-				<div className={'flex flex-col'}>
-					<p className={'text-plain font-story text-base max-w-full md:max-w-4xl'}>
-						{'This is your stuffs. Good. You have a big bag.'}
-					</p>
-				</div>
-			</div> */}
-
 			<div className={'grid grid-cols-2 md:grid-cols-5 gap-4 sticky top-4 max-h-screen'}>
 				<ElementInventoryList currentAdventurer={currentAdventurer} />
 			</div>

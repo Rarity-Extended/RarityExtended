@@ -113,7 +113,7 @@ function	Adventures() {
 						onClick={() => set_selectedAdventure(index)}
 						className={'w-full relative box group overflow-hidden cursor-pointer font-story'}>
 						<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-4 border-highlight' : 'pl-1'}`}>
-							<div className={'w-full h-full p-6 pt-4'}>
+							<div className={'w-full h-full p-4'}>
 								<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
 				
 								<div className={'flex flex-row items-center justify-between mt-2 normal-case'}>
@@ -138,7 +138,7 @@ function	Adventures() {
 						onClick={() => set_selectedAdventure(index)}
 						className={'w-full relative box group overflow-hidden font-story opacity-40'}>
 						<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-4 border-highlight' : 'pl-1'}`}>
-							<div className={'w-full h-full p-6 pt-4'}>
+							<div className={'w-full h-full p-4'}>
 								<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
 								<div className={'flex flex-row items-center justify-between mt-2 normal-case'}>
 									<div className={'flex flex-row items-center'}>
