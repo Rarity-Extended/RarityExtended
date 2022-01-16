@@ -106,6 +106,7 @@ module.exports = {
 				'xxs': '0.6rem',
 				'xss': '8px',
 				'sx': '10px',
+				'base': ['0.9rem', '24px'],
 				'3xl': '2rem',
 				'7xl': '5rem',
 				'sm': '0.8rem',

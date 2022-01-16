@@ -2,6 +2,7 @@
 	{
 		"name": "The Boars",
 		"key": "boars",
+		"path": "the-boars",
 		"img": "/adventures/the-boars/header.jpeg",
 		"address": "0xa79358CB5aefa3c550A8773848Dbb6E99e74300f",
 		"overlayColor": "#554a40",

@@ -235,7 +235,7 @@ function	Adventures() {
 				if (isApproved.rarityCrafting) {
 					return (
 						<>
-							<Link href={'/adventurer/skills?tab=2&search=crafting'}>
+							<Link href={'/skills?tab=2&search=crafting'}>
 								<div className={'uppercase rounded-md button-highlight flex flex-center px-4 py-2 cursor-pointer'}>
 									<p className={'font-story text-sm font-bold'}>{'Learn Crafting'}</p>
 								</div>
@@ -250,7 +250,7 @@ function	Adventures() {
 							className={'uppercase rounded-md button-highlight flex flex-center px-4 py-2 cursor-pointer'}>
 							<p className={'font-story text-sm font-bold'}>{'Approve Crafting'}</p>
 						</button>
-						<Link href={'/adventurer/skills?tab=2&search=crafting'}>
+						<Link href={'/skills?tab=2&search=crafting'}>
 							<div className={'uppercase rounded-md button-highlight flex flex-center px-4 py-2 cursor-pointer'}>
 								<p className={'font-story text-sm font-bold'}>{'Learn Crafting'}</p>
 							</div>

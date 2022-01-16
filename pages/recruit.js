@@ -28,7 +28,7 @@ function	NewAdventurer({rarityClass}) {
 			}
 			await fetchRarity();
 			set_isLoading(false);
-			router.push('/adventurer/party');
+			router.push('/');
 		});
 	}
 

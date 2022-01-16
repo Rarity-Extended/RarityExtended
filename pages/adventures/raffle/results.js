@@ -3,16 +3,13 @@ import Image from 'next/image';
 import {TwitterShareButton} from 'react-share';
 import useWeb3 from 'contexts/useWeb3';
 import Button from 'components/Button';
-import {useConfetti} from 'components/ConfettiContext';
 import {getWinners, getSkinId, getSkin} from 'utils/actions/candyRaffle';
 
 
 function	Index({router}) {
 	const	{provider} = useWeb3();
-	const [prizeId, setPrizeId] = useState(0);
-	const [prizeImage, setPrizeImage] = useState();
-
-	const {setShowConfetti} = useConfetti();
+	const	[prizeId, setPrizeId] = useState(0);
+	const	[prizeImage, setPrizeImage] = useState();
 
 	useEffect(() => {
 		(async () => {
@@ -26,13 +23,9 @@ function	Index({router}) {
 					const skin = await getSkin({provider, skinId});
 					const img = JSON.parse(skin).image;
 					setPrizeImage(img);
-					setShowConfetti(true);
 				}
 			}
 		})();
-		return () => {
-			setShowConfetti(false);
-		};
 	}, [provider]);
 
 	return <section className={'max-w-full'}>
@@ -43,7 +36,7 @@ function	Index({router}) {
 					{'< Back'}
 				</p>
 
-				<h1 className={'text-base text-2xl'}>
+				<h1 className={'text-base'}>
 					{prizeId 
 						? <>{'You Won a '}<span className={'text-items-rare'}>{'rare skin'}</span>{' !!'}</> 
 						: 'You didn\'t win =('}

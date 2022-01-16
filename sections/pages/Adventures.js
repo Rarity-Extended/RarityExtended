@@ -1,11 +1,12 @@
-import	React, {useState}								from	'react';
-import	Image											from	'next/image';
-import	dayjs											from	'dayjs';
-import	duration										from 'dayjs/plugin/duration';
-import	relativeTime									from 'dayjs/plugin/relativeTime';
-import	useRarity										from	'contexts/useRarity';
-import	Tooltip											from	'components/Tooltip';
-import	ADVENTURES										from	'utils/codex/adventures';
+import	React, {useState}			from	'react';
+import	Image						from	'next/image';
+import	Link						from	'next/link';
+import	dayjs						from	'dayjs';
+import	duration					from	'dayjs/plugin/duration';
+import	relativeTime				from	'dayjs/plugin/relativeTime';
+import	useRarity					from	'contexts/useRarity';
+import	Tooltip						from	'components/Tooltip';
+import	ADVENTURES					from	'utils/codex/adventures';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -72,9 +73,11 @@ function	Adventures() {
 							<div className={'flex flex-row justify-between items-center mb-4'}>
 								<h1 className={'text-xl font-bold'}>{adventure.name}</h1>
 								<div>
-									<button className={`flex flex-center text-center px-4 py-2 w-full tracking-wide text-sm ${canAdventure ? 'cursor-pointer button-highlight font-bold' : 'cursor-not-allowed bg-600 opacity-60 text-plain'} ${nextAdventure ? '' : 'pointer-events-none'}`} style={!nextAdventure ? {opacity: 0} : {}}>
-										{canAdventure ? 'Accept Adventure' : `Ready ${currentAdventurer?.adventures?.[adventure.key]?.nextAdventure}`}
-									</button>
+									<Link href={`/adventures/${adventure.path}#action`}>
+										<div className={`flex flex-center text-center px-4 py-2 w-full tracking-wide text-sm ${canAdventure ? 'cursor-pointer button-highlight font-bold' : 'cursor-not-allowed bg-600 opacity-60 text-plain'} ${nextAdventure ? '' : 'pointer-events-none'}`} style={!nextAdventure ? {opacity: 0} : {}}>
+											{canAdventure ? 'Accept Adventure' : `Ready ${currentAdventurer?.adventures?.[adventure.key]?.nextAdventure}`}
+										</div>
+									</Link>
 								</div>
 							</div>
 							<div className={'normal-case font-story text-sm leading-normal inline'}>

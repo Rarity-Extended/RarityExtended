@@ -423,7 +423,7 @@ function	OverviewAttributes({adventurer}) {
 			</div>
 
 
-			<div className={'w-full mt-10'}>
+			<div className={'w-full mt-9'}>
 				<div className={'w-full flex flex-row justify-between items-center font-bold text-xs opacity-60 normal-case mb-1'}>
 					<div>{'Health'}</div>
 					<div>{`${health} / ${health}`}</div>

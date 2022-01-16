@@ -3,7 +3,6 @@ import	Link							from	'next/link';
 import	useWeb3							from	'contexts/useWeb3';
 import	ModalLogin						from	'components/ModalLogin';
 import	AdventurerModalMenu				from	'components/AdventurerModalMenu';
-import 	Townwidget 						from 	'components/TownWidget';
 
 function	Navbar() {
 	const	{active, address} = useWeb3();
@@ -37,7 +36,7 @@ function	Navbar() {
 		);
 	}
 	return (
-		<nav className={'relative w-full flex flex-col md:flex-row justify-start md:h-20 border-b-4 border-black dark:border-dark-100 mb-4 md:mb-4 pb-0 md:pb-4'}>
+		<nav className={'relative w-full flex flex-col md:flex-row justify-between md:h-20 border-b-4 border-black dark:border-dark-100 mb-4 md:mb-4 pb-0 md:pb-4'}>
 			<div className={'items-center justify-start flex flex-row w-full md:w-3/12 whitespace-normal md:whitespace-nowrap text-lg'}>
 				<div className={'w-full'}>
 					<Link href={'/'}>
@@ -53,9 +52,6 @@ function	Navbar() {
 				<div className={'items-center justify-end flex-row flex md:hidden w-full'}>
 					{renderWalletButton()}
 				</div>
-			</div>
-			<div className={'items-center flex w-full md:w-6/12 mt-3 md:mt-0'}>
-				<Townwidget />
 			</div>
 
 			<div className={'items-center justify-start md:justify-end flex flex-row w-3/12 mt-3 md:mt-0'}>

@@ -11,7 +11,6 @@ import	{Contract}							from	'ethcall';
 import	{ethers}							from	'ethers';
 import	dayjs								from	'dayjs';
 import	relativeTime						from	'dayjs/plugin/relativeTime';
-import	Box									from	'components/Box';
 import	useRarity							from	'contexts/useRarity';
 import	useWeb3								from	'contexts/useWeb3';
 import	DialogNoBox							from	'components/DialogNoBox';
@@ -21,6 +20,10 @@ import	CLASSES								from	'utils/codex/classes';
 import	{protectBoars}						from	'utils/actions/boar';
 
 dayjs.extend(relativeTime);
+
+
+import	Template		from	'sections/adventurer/_template';
+
 
 function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 	const	renderNCPText = () => {
@@ -228,7 +231,7 @@ function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
 		);
 	};
 	return (
-		<h1 className={'text-sm md:text-base leading-normal md:leading-6 font-story normal-case'}>
+		<h1 className={'normal-case font-story text-base leading-normal inline text-plain'}>
 			{renderNCPText()}
 		</h1>
 	);
@@ -385,45 +388,51 @@ function	Index({router}) {
 	}, [chainTime, currentAdventurer.tokenID]);
 
 	return (
-		<section>
-			<div className={'mt-8 max-w-prose w-full flex-col flex flex-center mx-auto px-3'}>
-				<Box className={'p-4 text-xs md:text-xs leading-normal md:leading-8 w-full relative'}>
-					<div className={'relative'}>
-						<div className={'filter grayscale -m-4 pb-8 opacity-70'}>
-							<Image
-								src={'/adventures/the-boars/header.jpeg'}
-								loading={'eager'}
-								objectFit={'cover'}
-								objectPosition={'top'}
-								quality={85}
-								width={1550}
-								height={400} />
-						</div>
+		<section id={'action'} className={'flex flex-col w-full max-w-full'}>
+			<div className={'box p-4 text-xs w-full relative overflow-hidden'}>
+				<div className={'relative'}>
+					<div className={'filter grayscale -m-4 pb-8 opacity-70'}>
+						<Image
+							src={'/adventures/the-boars/header.jpeg'}
+							loading={'eager'}
+							objectFit={'cover'}
+							objectPosition={'top'}
+							quality={85}
+							width={1550}
+							height={400} />
 					</div>
-					<NCPHeadline
-						population={population}
+				</div>
+				<NCPHeadline
+					population={population}
+					chainTime={chainTime}
+					choice={choice}
+					currentAdventurer={currentAdventurer}
+					loot={choice === 'kill' ? population.lootKill : population.lootReproduce}
+				/>
+				<div className={'pt-2 mt-4 border-t-2 border-black dark:border-dark-100 font-story font-bold text-sm md:text-base uppercase'}>
+					<DialogChoices
+						router={router}
+						remainingBoars={population.count}
+						currentAdventurer={currentAdventurer}
+						openCurrentAventurerModal={openCurrentAventurerModal}
+						provider={provider}
+						updateRarity={updateRarity}
 						chainTime={chainTime}
 						choice={choice}
-						currentAdventurer={currentAdventurer}
-						loot={choice === 'kill' ? population.lootKill : population.lootReproduce}
+						onChoice={set_choice}
 					/>
-					<div className={'pt-2 mt-4 border-t-2 border-black dark:border-dark-100 font-story font-bold text-sm md:text-base uppercase'}>
-						<DialogChoices
-							router={router}
-							remainingBoars={population.count}
-							currentAdventurer={currentAdventurer}
-							openCurrentAventurerModal={openCurrentAventurerModal}
-							provider={provider}
-							updateRarity={updateRarity}
-							chainTime={chainTime}
-							choice={choice}
-							onChoice={set_choice}
-						/>
-					</div>
-				</Box>
+				</div>
 			</div>
 		</section>
 	);
 }
+
+Index.getLayout = function getLayout(page) {
+	return (
+		<Template>
+			{page}
+		</Template>
+	);
+};
 
 export default Index;

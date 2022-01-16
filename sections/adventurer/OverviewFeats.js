@@ -28,7 +28,7 @@ function	OverviewFeats({adventurer}) {
 			<div className={'mb-6'}>
 				<p className={'font-story text-sm normal-case'}>
 					<span className={'text-50'}>{'A feat represents a talent or an area of expertise that gives a character special capabilities. It embodies training, experience, and abilities beyond what a class provides. Some are inherent to the class, while others can be learned. You have '}</span>
-					<Link href={'/adventurer/feats'}>
+					<Link href={'/feats'}>
 						<span className={'text-highlight font-bold cursor-pointer hover:underline'}>{`${_pointLefts <= 1 ? `${_pointLefts} point` : `${_pointLefts} points`} left`}</span>
 					</Link>
 					<span className={'text-50'}>{' to spend.'}</span>

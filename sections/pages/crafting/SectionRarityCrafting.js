@@ -2,7 +2,6 @@ import	React										from	'react';
 import	{ethers}									from	'ethers';
 import	useWeb3										from	'contexts/useWeb3';
 import	useRarity									from	'contexts/useRarity';
-import	ModalSkills									from	'components/ModalSkills';
 import	ElementInventoryList						from	'sections/pages/crafting/ElementInventoryList';
 import	ElementRecipeRarityCrafting					from	'sections/pages/crafting/ElementRecipeRarityCrafting';
 import	MANIFEST_ARMORS								from	'utils/codex/items_manifest_armors.json';
@@ -18,7 +17,6 @@ function	SectionRarityCrafting() {
 	const	{currentAdventurer} = useRarity();
 	const	[tab, set_tab] = React.useState(0);
 	const	[nonce, set_nonce] = React.useState(0);
-	const	[isModalSkillsOpen, set_isModalSkillsOpen] = React.useState(false);
 
 	function	onApprove(ingredient, ingredientName = '') {
 		if (ingredient === process.env.RARITY_EXTENDED_XP) {
@@ -87,7 +85,6 @@ function	SectionRarityCrafting() {
 					<div className={'grid grid-cols-2 md:grid-cols-1 gap-4 sticky top-4 max-h-screen'}>
 						{Number(currentAdventurer?.skills?.[5] || 0) <= 0 ? 
 							<div
-								onClick={() => set_isModalSkillsOpen(true)}
 								className={'rounded-md bg-gray-lighter dark:bg-tag-warning hover:dark:bg-tag-warningDarker flex flex-center p-4 cursor-pointer'}>
 								<p className={'text-black font-story text-sm font-bold'}>{'Learn crafting'}</p>
 							</div>
@@ -178,10 +175,6 @@ function	SectionRarityCrafting() {
 					</div>
 				</div>
 			</div>
-			{isModalSkillsOpen && <ModalSkills
-				adventurer={currentAdventurer}
-				isOpen={isModalSkillsOpen}
-				closeModal={() => set_isModalSkillsOpen(false)} />}
 		</>
 	);
 }

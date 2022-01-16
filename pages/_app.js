@@ -24,7 +24,6 @@ import	Confetti								from	'react-confetti';
 import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
 import	'style/TailwindCustomStyles.css';
-import {ConfettiContext} from 'components/ConfettiContext';
 
 function	GameWrapper({Component, pageProps, element, router}) {
 	const	{switchChain, active, chainID} = useWeb3();
@@ -134,11 +133,9 @@ function	AppWrapper(props) {
 						const size = 5 + (Math.random() * (20 - 5));
 						ctx.fillRect(-size/2, -size/2, size, size);
 					}} />}
-				<ConfettiContext.Provider value={{showConfetti, setShowConfetti}}>
-					<Navbar router={router} />
-					<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />
-					<Footer />
-				</ConfettiContext.Provider>
+				<Navbar router={router} />
+				<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />
+				<Footer />
 			</main>
 		</>
 	);
