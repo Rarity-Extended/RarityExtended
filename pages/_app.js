@@ -6,7 +6,7 @@
 ******************************************************************************/
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import	React, {useState}							from	'react';
+import	React							from	'react';
 import	Head							from	'next/head';
 import	{DefaultSeo}					from	'next-seo';
 import	{Toaster}						from	'react-hot-toast';
@@ -19,7 +19,6 @@ import	Navbar							from	'components/Navbar';
 import	Footer							from	'components/Footer';
 import	SectionNoWallet					from	'sections/SectionNoWallet';
 import	useWindowInFocus				from	'hook/useWindowInFocus';
-import	Confetti								from	'react-confetti';
 
 import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
@@ -71,7 +70,6 @@ function	AppWrapper(props) {
 	const	{Component, pageProps, router} = props;
 	const	{switchChain, chainID} = useWeb3();
 	const	windowInFocus = useWindowInFocus();
-	const [showConfetti, setShowConfetti] = useState(false);
 
 	React.useEffect(() => {
 		if (windowInFocus && Number(chainID) > 0 && (Number(chainID) !== 250 && Number(chainID) !== 1337)) {
@@ -127,12 +125,6 @@ function	AppWrapper(props) {
 				}} />
 			<main id={'app'} className={'p-4 relative font-title uppercase text-plain bg-light-900 dark:bg-dark-600 scrollbar-none'} style={{minHeight: '100vh'}}>
 				<Toaster position={'bottom-right'} toastOptions={{className: 'text-sx border-4 border-black dark:border-dark-100 text-plain bg-white dark:bg-dark-600 noBr shadow-xl'}} />
-				{showConfetti && <Confetti 
-					colors={['#ffffff', 'rgb(42,94,161)']} 
-					drawShape={ctx => {
-						const size = 5 + (Math.random() * (20 - 5));
-						ctx.fillRect(-size/2, -size/2, size, size);
-					}} />}
 				<Navbar router={router} />
 				<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />
 				<Footer />
