@@ -10,7 +10,7 @@ import	Image							from	'next/image';
 import	useRarity						from	'contexts/useRarity';
 import	useWeb3							from	'contexts/useWeb3';
 import	useUI							from	'contexts/useUI';
-import	CLASSES							from	'utils/codex/classes';
+import	CLASSES							from	'utils/codex/core/classes';
 
 function AdventurerModalMenu() {
 	const	{currentAdventurer, openCurrentAventurerModal, skins} = useRarity();

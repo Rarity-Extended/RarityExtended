@@ -1,11 +1,11 @@
 import	React, {useState}			from	'react';
 import	Image						from	'next/image';
 import	{useRouter}					from	'next/router';
-import	Template					from	'sections/adventurer/_template';
+import	Template					from	'components/templates/Adventurer';
 import	useWeb3						from	'contexts/useWeb3';
 import	useRarity					from	'contexts/useRarity';
 import	{recruitAdventurer}			from	'utils/actions';
-import	CLASSES						from	'utils/codex/classes';
+import	CLASSES						from	'utils/codex/core/classes';
 
 function	NewAdventurer({rarityClass}) {
 	const	{provider} = useWeb3();
@@ -59,7 +59,7 @@ function	NewAdventurer({rarityClass}) {
 function	Index() {
 	return (
 		<Template>
-			<div className={'col-span-12 mt-8'}>
+			<div id={'content'} className={'col-span-12 mt-8'}>
 				<div className={'grid grid-cols-1 md:grid-cols-4 gap-4'}>
 					<NewAdventurer rarityClass={CLASSES['Barbarian']} />
 					<NewAdventurer rarityClass={CLASSES['Bard']} />

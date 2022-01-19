@@ -10,7 +10,7 @@ import	Image		from	'next/image';
 import	Box			from	'components/Box';
 import	useUI		from	'contexts/useUI';
 import	useRarity	from	'contexts/useRarity';
-import	CLASSES		from	'utils/codex/classes';
+import	CLASSES		from	'utils/codex/core/classes';
 
 function	Adventurer({
 	rarityClass, adventurer, 

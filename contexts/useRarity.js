@@ -17,12 +17,12 @@ import	useWeb3													from	'contexts/useWeb3';
 import 	ModalSelectAdventurer 									from	'components/ModalSelectAdventurer';
 import	useIndexDB												from	'hook/useIDB';
 import	{chunk, fetcher, toAddress, newEthCallProvider}			from	'utils';
-import	ITEMS													from	'utils/codex/items';
-import	CLASSES													from	'utils/codex/classes';
-import	MANIFEST_GOODS											from	'utils/codex/items_manifest_goods.json';
-import	MANIFEST_ARMORS											from	'utils/codex/items_manifest_armors.json';
-import	MANIFEST_WEAPONS										from	'utils/codex/items_manifest_weapons.json';
-import	MANIFEST_SHIELDS										from	'utils/codex/items_manifest_shields.json';
+import	CLASSES													from	'utils/codex/core/classes';
+import	ITEMS													from	'utils/codex/items/items';
+import	MANIFEST_GOODS											from	'utils/codex/items/items_manifest_goods.json';
+import	MANIFEST_ARMORS											from	'utils/codex/items/items_manifest_armors.json';
+import	MANIFEST_WEAPONS										from	'utils/codex/items/items_manifest_weapons.json';
+import	MANIFEST_SHIELDS										from	'utils/codex/items/items_manifest_shields.json';
 
 const	isEmptyObject = (obj) => Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
 
@@ -192,10 +192,12 @@ export const RarityContextApp = ({children}) => {
 			const item = ITEMS[index];
 			_inventory[item.address] = inventoryCallResult[index];
 		}
+
 		const	_adventurer = {
 			tokenID: tokenID,
 			owner: owner,
 			name: name,
+			displayName: `${name ? name : tokenID}, ${CLASSES[Number(adventurer['_class'])]?.name} LVL ${Number(adventurer['_level'])}`,
 			xp: ethers.utils.formatEther(adventurer['_xp']),
 			class: Number(adventurer['_class']),
 			level: Number(adventurer['_level']),
@@ -224,26 +226,26 @@ export const RarityContextApp = ({children}) => {
 				cellar: {
 					log: Number(cellarLog),
 					scout: Number(cellarScout),
-					nextAdventure: dayjs(new Date(Number(cellarLog) * 1000)).from(dayjs(new Date(chainTime * 1000))),
+					nextAdventure: Number(cellarLog) === 0 ? 'Now' : dayjs(new Date(Number(cellarLog) * 1000)).from(dayjs(new Date(chainTime * 1000))),
 					canAdventure: dayjs(new Date(Number(cellarLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
 				},
 				boars: {
 					log: Number(boarsLog),
-					nextAdventure: dayjs(new Date(Number(boarsLog) * 1000)).from(dayjs(new Date(chainTime * 1000))),
+					nextAdventure: Number(boarsLog) === 0 ? 'Now' : dayjs(new Date(Number(boarsLog) * 1000)).from(dayjs(new Date(chainTime * 1000))),
 					canAdventure: dayjs(new Date(Number(boarsLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
 				},
 				forest: {
 					initBlockTs: forestResearch?.initBlockTs,
 					endBlockTs: forestResearch?.endBlockTs,
-					nextAdventure: dayjs(new Date(Number(forestResearch?.endBlockTs) * 1000)).from(dayjs(new Date(chainTime * 1000))),
+					nextAdventure: Number(forestResearch?.endBlockTs) === 0 ? 'Now' : dayjs(new Date(Number(forestResearch?.endBlockTs) * 1000)).from(dayjs(new Date(chainTime * 1000))),
 					canAdventure: Number(forestResearch?.endBlockTs) <= chainTime && (forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0)
 				},
 				openMic: {
-					nextAdventure: Number(adventurer['_class']) === 2 && Number(adventurer['_level']) >= 2 ? dayjs.duration({seconds: timeToNextOpenMic}).humanize(true) : null,
+					nextAdventure: Number(adventurer['_class']) === 2 && Number(adventurer['_level']) >= 2 ? dayjs.duration({seconds: ethers.BigNumber.from(timeToNextOpenMic).toNumber()}).humanize(true) : null,
 					canAdventure: (
 						Number(adventurer['_class']) === 2 &&
 						Number(adventurer['_level']) >= 2 &&
-						timeToNextOpenMic > 0
+						ethers.BigNumber.from(timeToNextOpenMic).toNumber() <= 0
 					),
 					timeToNextPerformance: timeToNextOpenMic
 				}

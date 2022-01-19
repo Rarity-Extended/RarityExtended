@@ -11,13 +11,13 @@ import	Link									from	'next/link';
 import	{ethers, utils}							from	'ethers';
 import	DialogBox								from	'components/DialogBox';
 import	Box										from	'components/Box';
-import	skills									from	'utils/codex/skills';
 import	useWeb3									from	'contexts/useWeb3';
 import	useRarity								from	'contexts/useRarity';
 import	useUI									from	'contexts/useUI';
 import	{perform}								from	'utils/actions/perform';
-import	OPENMIC_LOOT							from	'utils/codex/items_dungeon_openmic.json';
-import	CLASSES									from	'utils/codex/classes';
+import	SKILLS									from	'utils/codex/core/skills';
+import	OPENMIC_LOOT							from	'utils/codex/items/items_dungeon_openmic.json';
+import	CLASSES									from	'utils/codex/core/classes';
 
 const PerformanceContext = createContext(null);
 
@@ -57,7 +57,7 @@ function AdventureResult() {
 				);
 			})}
 		</div>
-		<Link href={'/town/quest'}>
+		<Link href={'/adventures/openmic#action'}>
 			<div className={'text-base mt-16 mx-4 md:mx-0 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 hover:bg-dark-600 dark:hover:bg-white hover:text-white dark:hover:text-dark-600 transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
 				{'Start a new adventure'}
 			</div>
@@ -82,10 +82,11 @@ function Adventure({router, adventurer}) {
 		signer
 	);
 
-	useEffect(async () => {
-		const odds = await openmic.odds(adventurer.tokenID);
-		const result = parseFloat(utils.formatEther(odds));
-		setOdds(`${(result * 100).toFixed(0)} %`);
+	useEffect(() => {
+		openmic.odds(adventurer.tokenID).then((odds) => {
+			const result = parseFloat(utils.formatEther(odds));
+			setOdds(`${(result * 100).toFixed(0)} %`);
+		});
 	}, []);
 
 	function abilityModifier(ability) {
@@ -116,7 +117,7 @@ function Adventure({router, adventurer}) {
 	}
 
 	const charisma = performer.attributes.charisma;
-	const performSkill = performer.skills[skills['Perform'].id - 1];
+	const performSkill = performer.skills[SKILLS['Perform'].id - 1];
 	const forestTreasures = performer.inventory[process.env.DUNGEON_THE_FOREST_ADDR];
 
 	return <>

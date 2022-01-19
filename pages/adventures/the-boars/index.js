@@ -1,365 +1,46 @@
-/******************************************************************************
-**	@Author:				Rarity Extended
-**	@Twitter:				@RXtended
-**	@Date:					Saturday October 2nd 2021
-**	@Filename:				mercenaries.js
-******************************************************************************/
-
+/* eslint-disable react-hooks/exhaustive-deps */
 import	React, {useEffect, useState}		from	'react';
-import	Image								from	'next/image';
 import	{Contract}							from	'ethcall';
 import	{ethers}							from	'ethers';
 import	dayjs								from	'dayjs';
 import	relativeTime						from	'dayjs/plugin/relativeTime';
 import	useRarity							from	'contexts/useRarity';
 import	useWeb3								from	'contexts/useWeb3';
-import	DialogNoBox							from	'components/DialogNoBox';
-import	Tooltip								from	'components/Tooltip';
+import	Template							from	'components/templates/Adventurer';
+import	AdventureTemplate					from	'components/templates/Adventures';
+import	DescriptionFormater					from	'components/jsonParser/adventures/DescriptionFormater';
+import	OptionsFormater						from	'components/jsonParser/adventures/OptionsFormater';
 import	{newEthCallProvider}				from	'utils';
-import	CLASSES								from	'utils/codex/classes';
+import	ADVENTURE							from	'utils/codex/adventures/the-boars';
 import	{protectBoars}						from	'utils/actions/boar';
 
 dayjs.extend(relativeTime);
-
-
-import	Template		from	'sections/adventurer/_template';
-
-
-function	NCPHeadline({population, choice, chainTime, loot, currentAdventurer}) {
-	const	renderNCPText = () => {
-		if (Number(population.count) === 0) {
-			return (
-				<>
-					{'You are walking near a large forest. The air is filled with the scent of sap, leaves, and decaying leaves. The sun dips below the mountains, revealing the speckled green and brown of forest floor, the slender trunks of stunted trees, the bird nests in the tops of branches. A burst of voices reach the ears of our adventurer. Two men are arguing about a boar problem. "THERE ARE NO MORE BOAR!"'}
-					<div className={'my-4'} />
-
-					{'It\'s been '}
-					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-						{`${dayjs(new Date(population.extinction * 1000)).from(dayjs(new Date(chainTime * 1000)), false)} since the last boar`}
-						<Tooltip>
-							<p className={'text-sm leading-normal inline'}>{'The last boar was killed the '}</p>
-							<p className={'text-sm leading-normal inline text-highlight font-bold'}>
-								{`${dayjs(new Date(population.extinction * 1000)).format('DD/MM/YYYY [at] HH:mm:ss')}`}
-							</p>
-							<p className={'text-sm leading-normal inline'}>{'.'}</p>
-						</Tooltip>
-					</span>
-					{' was killed by '}
-					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-						{`${population.extinctionBy}`}
-						<Tooltip>
-							<p className={'text-sm leading-normal inline'}>{'After this event, people started to call him '}</p>
-							<p className={'text-sm leading-normal inline text-highlight font-bold'}>
-								{'“The Boarless”'}
-							</p>
-							<p className={'text-sm leading-normal inline'}>{'.'}</p>
-						</Tooltip>
-					</span>
-					{'. This is not good for the village, particularly considering the heavy taxes on meat the king has recently set upon his citizens. The men are obviously upset. They are both pulling their blades out. The other man, obviously the leader, is trying to pacify the situation. He is talking about how they are not paying enough.'}
-					<div className={'my-4'} />
-				
-					{'It looks like this whole boar situation leaded to unpleasant things...'}
-				</>
-			);
-		}
-
-		if (!currentAdventurer?.adventures?.boars?.canAdventure) {
-			return (
-				<>
-					{'The air you breathe is fresh and silent. The leaves on the trees rustle as a breeze comes through them. The grass ripples as a butterfly alights on the end of a blade. You can feel the air caress your skin. It is as if everything has been cleansed by the rain, as if there is no angry farmer, no boar grunts.'}
-					<div className={'my-4'} />
-		
-					{'The boar herd has abandoned the clearing once again. The acorns and beech nuts that they’d scrounged across the forest floor were not enough to sustain them today.'}
-					<div className={'my-4'} />
-		
-					{'That is enough for you, '}
-					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-						{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}
-						<Tooltip>
-							<p className={'text-sm leading-normal inline'}>{'This is you. But maybe another day you can find the boars ?'}</p>
-						</Tooltip>
-					</span>
-					{'. You head back to the village. Maybe you could come back '}
-					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-						{dayjs(new Date(currentAdventurer?.adventures?.boars?.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}
-						<Tooltip>
-							<p className={'text-sm leading-normal inline'}>{'The forest is very big, but they really like this place. Be patient, they will come back.'}</p>
-						</Tooltip>
-					</span>
-					{'.'}
-				</>
-			);
-		}
-		if (choice === 'kill') {
-			return (
-				<>
-					{'The farmer directed you to the place he saw the boar.'}
-					<div className={'my-4'} />
-
-					{'You are in a big glade, hemmed all around by tall trees, except for a narrow trail leading in, obviously the trail the farmer came in by. There are ruts in the trail, traces of the wheels of cart tracks. A patch of dry brown grass, trampled flat in some places, has growing here. There are small bushes, some of which have been bent almost flat to the ground.'}
-					<div className={'my-4'} />
-
-					{'In the center of the opening, the boar snorts and grunts. The boar is angry. It is angry because the forest is angry. It is angry because it must prove its strength.'}
-					<div className={'my-4'} />
-
-					{'Judging by its size, you can expect to collect up to '}
-					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-						{`${loot} loots.`}
-						<Tooltip>
-							<p className={'text-sm leading-normal inline'}>{'Loot can be '}</p>
-							<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Meat'}</p>
-							<p className={'text-sm leading-normal inline'}>{', '}</p>
-							<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Tusks'}</p>
-							<p className={'text-sm leading-normal inline'}>{' or '}</p>
-							<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Leather'}</p>
-							<p className={'text-sm leading-normal inline'}>{'. Distribution between these 3 is random.'}</p>
-						</Tooltip>
-					</span>
-
-				</>
-			);
-		}
-
-		if (choice === 'protect') {
-			return (
-				<>
-					{'You take the direction of the forest to find these wild animals.'}
-					<div className={'my-4'} />
-
-					{'You are in a big glade, hemmed all around by tall trees, except for a narrow trail leading in, obviously the trail the farmer came in by. There are ruts in the trail, traces of the wheels of cart tracks. A patch of dry brown grass, trampled flat in some places, is growing here. There are small bushes, some of which have been bent almost flat to the ground. There are many piles of wood in the clearing and the air is filled with scents of animals and plants. Some you can identify easily, while some you can\'t.'}
-					<div className={'my-4'} />
-
-					{'While searching for the boars, you could stop to gather some berries, mushroom, or wood. You could get up to '}
-					<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-						{`${loot} loots.`}
-						<Tooltip>
-							<p className={'text-sm leading-normal inline'}>{'Loot can be '}</p>
-							<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Berries'}</p>
-							<p className={'text-sm leading-normal inline'}>{', '}</p>
-							<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Mushrooms'}</p>
-							<p className={'text-sm leading-normal inline'}>{' or '}</p>
-							<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Woods'}</p>
-							<p className={'text-sm leading-normal inline'}>{'. Distribution between these 3 is random.'}</p>
-						</Tooltip>
-					</span>
-
-				</>
-			);
-		}
-
-		return (
-			<>
-				{'You are walking near a large forest. The air fills with the scent of sap, leaves, and decaying leaves. The sun dips below the mountains, revealing the speckled green and brown of the forest floor, the slender trunks of stunted trees, the bird nests in the tops of branches.'}
-					
-				<div className={'my-4'} />
-				{'A burst of voices reach the ears of our adventurer. Two men are arguing about a '}
-				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-					{'boar'}
-					<Tooltip>
-						<p className={'text-sm leading-normal inline'}>{'The boars are big, black and bristly, their snouts curled like those of a ferret. They are like piglets, though much larger.'}</p>
-					</Tooltip>
-				</span>
-				{' problem. The youngest, an angry farmer, yells at the other, a man in his late middle ages. You can hear the conversation.'}
-					
-				<div className={'my-4'} />
-				{'"I tell you I saw it! A huge black boar... filthy thing! It tore up my prize plants! I only saw the beast, but it\'s big enough to be a dwarf a harvest price pig! It\'ll be back soon, you\'ll see! '}
-				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-					{'We need to kill them all'}
-					<Tooltip>
-						<p className={'text-sm leading-normal inline'}>{'The boars are strong. Stronger than Facu\'s Rat. Only adventurer with a good amout of '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'CONST'}</p>
-						<p className={'text-sm leading-normal inline'}>{' and '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'STR'}</p>
-						<p className={'text-sm leading-normal inline'}>{' should start this fight.'}</p>
-					</Tooltip>
-				</span>
-				{'!"'}
-
-				<div className={'my-4'} />
-				{'The older man ignores the farmer\'s rantings, though his face is hard. "Look, there is no boar big enough to do what you say. What you saw was an elk, or one of those manticores that plague the land sometimes. '}
-				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-					{'Boars are necessary to maintain balance'}
-					<Tooltip>
-						<p className={'text-sm leading-normal inline'}>{'There is currently '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{`${population.count} boars`}</p>
-						<p className={'text-sm leading-normal inline'}>{' in the Forest. Less boars means more '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Mushroom'}</p>
-						<p className={'text-sm leading-normal inline'}>{', '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Berries'}</p>
-						<p className={'text-sm leading-normal inline'}>{' and '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Wood'}</p>
-						<p className={'text-sm leading-normal inline'}>{', but much less '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Meat'}</p>
-						<p className={'text-sm leading-normal inline'}>{', '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Tusks'}</p>
-						<p className={'text-sm leading-normal inline'}>{' and '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Leather'}</p>
-						<p className={'text-sm leading-normal inline'}>{'. And the other way around.'}</p>
-					</Tooltip>
-				</span>
-				{' of this forest. They must be '}
-				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-					{'preserved, protected'}
-					<Tooltip>
-						<p className={'text-sm leading-normal inline'}>{'An adventurer knowing how to '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'Handle Animal'}</p>
-						<p className={'text-sm leading-normal inline'}>{' and having a good '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'INT'}</p>
-						<p className={'text-sm leading-normal inline'}>{', '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'CHA'}</p>
-						<p className={'text-sm leading-normal inline'}>{' and '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'WIS'}</p>
-						<p className={'text-sm leading-normal inline'}>{' will be perfect for this task.'}</p>
-					</Tooltip>
-				</span>
-				{'. And with your hunting, it is about to be broken!"'}
-
-				<div className={'my-4'} />
-				{'It is getting dark, but our adventurer can still see the farmer\'s face clearly. He is angry, and quickly becoming hysterical. His jaw is trembling, and his eyes are red and watery. Seeing you, he calls you to ask for help.'}
-				<div className={'my-4'} />
-				{'There is '}
-				<span className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
-					{`${population.count == -1 ? 'some' : population.count} boar${population.count === 1 ? '' : 's'}`}
-					<Tooltip>
-						<p className={'text-sm leading-normal inline'}>{'The ecosystem will be balanced with '}</p>
-						<p className={'text-sm leading-normal inline text-highlight font-bold'}>{'10000'}</p>
-						<p className={'text-sm leading-normal inline'}>{' boars. You will earn less rewards by hunting. However, by protecting them when the boar population is below this number, you may earn more. The reverse is true and hunting is more profitable if the boar population is above this number.'}</p>
-					</Tooltip>
-				</span>
-				{' in the Forest.'}
-			</>
-		);
-	};
-	return (
-		<h1 className={'normal-case font-story text-base leading-normal inline text-plain'}>
-			{renderNCPText()}
-		</h1>
-	);
-}
-
-function	DialogChoices({router, currentAdventurer, openCurrentAventurerModal, provider, updateRarity, remainingBoars, chainTime, choice, onChoice}) {
-	if (Number(remainingBoars) === 0) {
-		return (
-			<DialogNoBox
-				options={[
-					{label: 'LOOK AT THE FOREST WITH DESPAIR AND HEAD BACK TO TOWN', onClick: () => router.push('/')},
-					{label: 'JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
-				]} />
-		);
-	}
-	if (!currentAdventurer?.adventures?.boars?.canAdventure) {
-		return (
-			<DialogNoBox
-				options={[
-					{label: (
-						<>
-							<span className={'text-highlight'}>
-								{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}
-							</span>
-							{' WILL BE READY FOR MORE BOAR ADVENTURE '}
-							<span className={'text-highlight'}>{`${dayjs(new Date(currentAdventurer?.adventures?.boars?.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}</span>
-							{'.'}
-						</>
-					),
-					onClick: openCurrentAventurerModal},
-					{label: 'SELECT ANOTHER ADVENTURER', onClick: openCurrentAventurerModal},
-					{label: 'JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
-				]} />
-		);
-	}
-	if (choice === 'kill') {
-		return (
-			<DialogNoBox
-				options={[
-					{
-						label: (
-							<>
-								{'FIGHT THE BOAR WITH '}
-								<span className={'text-highlight'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
-								{'.'}
-							</>
-						),
-						onClick: () => router.push(`/adventures/the-boars/fight?adventurer=${currentAdventurer.tokenID}`)
-					},
-					{
-						label: 'NEVERMIND, GO BACK TO THE EDGE OF THE FOREST.',
-						onClick: () => onChoice(''),
-					}
-				]} />
-		);
-	}
-
-	if (choice === 'protect') {
-		return (
-			<DialogNoBox
-				options={[
-					{
-						label: (
-							<>
-								{'SPEND SOME TIME GATHERING RESOURCES WITH '}
-								<span className={'text-highlight'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
-								{'.'}
-							</>
-						),
-						onClick: () => {
-							protectBoars({
-								provider,
-								tokenID: currentAdventurer?.tokenID,
-							}, ({error, wait}) => {
-								if (wait) {
-									return;	
-								}
-								if (error) {
-									return console.error(error);
-								}
-								updateRarity(currentAdventurer.tokenID);
-							});
-						}
-					},
-					{
-						label: 'NEVERMIND, GO BACK TO THE EDGE OF THE FOREST.',
-						onClick: () => onChoice(''),
-					}
-				]} />
-		);
-	}
-
-	return (
-		<DialogNoBox
-			options={[
-				{
-					label: (
-						<>
-							{'HUNT THE BOAR TO HELP THE HUMBLE FARMER WITH '}
-							<span className={'text-highlight'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
-							{'.'}
-						</>
-					),
-					onClick: () => onChoice('kill'),
-				},
-				{
-					label: (
-						<>
-							{'DECIDE TO PROTECT AND PRESERVE THE BOARS WITH '}
-							<span className={'text-highlight'}>{`${currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}, ${CLASSES[currentAdventurer?.class]?.name} LVL ${currentAdventurer?.level}`}</span>
-							{'.'}
-						</>
-					),
-					onClick: () => onChoice('protect'),
-				},
-				{label: 'SELECT ANOTHER ADVENTURER', onClick: () => openCurrentAventurerModal()},
-				{label: 'NO, JUST HEAD BACK TO TOWN', onClick: () => router.push('/')},
-			]} />
-	);
-}
-
 function	Index({router}) {
-	const	[population, set_population] = useState({count: -1, extinction: 0, extinctionBy: 0});
-	const	[choice, set_choice] = useState('');
-	const	{currentAdventurer, openCurrentAventurerModal, updateRarity} = useRarity();
 	const	{provider, chainID, chainTime} = useWeb3();
+	const	{currentAdventurer, updateRarity} = useRarity();
+	const	[step, set_step] = useState('intro');
+	const	[variables, set_variables] = useState({
+		'${boar_count}': '0 boar',
+		'${loot_fight}': '0 loot',
+		'${loot_protect}': '0 loot',
+		'${extinction_time}': 'some time since the last boar',
+		'${extinction_extact_time}': '-',
+		'${extinction_by}': '',
+	});
 
-	async function	fetchBoarsData(calls) {
+	/* 🏹🛡 - Rarity Extended ***********************************************************************
+	**	Fetch the relevant data to bring some context to the story, like the number of boars,
+	**	the number of loot you can expect, etc.
+	**********************************************************************************************/
+	const fetchBoarsData = React.useCallback(async () => {
+		const	contract = new Contract(process.env.DUNGEON_BOARS_ADDR, process.env.DUNGEON_BOARS_ABI);
+		const	calls = [
+			contract.boar_population(),
+			contract.extinction(),
+			contract.extinctionBy(),
+			currentAdventurer?.tokenID ? contract.simulate_reproduce(currentAdventurer?.tokenID) : null,
+			currentAdventurer?.tokenID ? contract.simulate_kill(currentAdventurer?.tokenID) : null,
+		];
 		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
 		const	multicallResult = await ethcallProvider.all(calls);
 		const	[boar_population, extinction, extinctionBy, simulate_reproduce, simulate_kill] = multicallResult;
@@ -372,58 +53,76 @@ function	Index({router}) {
 				provider
 			);
 			extinctionByName = await nameContract.get_name(extinctionBy);
+			set_step('end');
 		}
-		set_population({count: boar_population, extinction: extinction, extinctionBy: extinctionByName || extinctionBy, lootReproduce: Number(simulate_reproduce || 0), lootKill: Number(simulate_kill || 0)});
+		set_variables({
+			'${boar_count}': `${Number(boar_population) == -1 ? 'some' : Number(boar_population)} boar${Number(boar_population) === 1 ? '' : 's'}`,
+			'${loot_protect}': `${Number(simulate_reproduce || 0)} loot${Number(simulate_reproduce || 0) <= 1 ? '' : 's'}`,
+			'${loot_fight}': `${Number(simulate_kill || 0)} loot${Number(simulate_kill || 0) <= 1 ? '' : 's'}`,
+			'${extinction_time}': `${dayjs(new Date(extinction * 1000)).from(dayjs(new Date(chainTime * 1000)), false)} since the last boar`,
+			'${extinction_exact_time}': `${dayjs(new Date(extinction * 1000)).format('DD/MM/YYYY [at] HH:mm:ss')}`,
+			'${extinction_by}': extinctionByName || extinctionBy,
+		});
+	}, [chainTime, provider, currentAdventurer.tokenID]);
+	useEffect(() => fetchBoarsData(), [fetchBoarsData]);
+
+	function	onFightBoars() {
+		router.push(`/adventures/the-boars/fight?adventurer=${currentAdventurer.tokenID}`);
+	}
+	function	onProtectBoars() {
+		protectBoars({
+			provider,
+			tokenID: currentAdventurer?.tokenID,
+		}, ({error, wait}) => {
+			if (wait) {
+				return;	
+			}
+			if (error) {
+				return console.error(error);
+			}
+			updateRarity(currentAdventurer.tokenID);
+		});
+	}
+	function	onBack() {
+		router.push('/adventures');
 	}
 
-	useEffect(() => {
-		const	contract = new Contract(process.env.DUNGEON_BOARS_ADDR, process.env.DUNGEON_BOARS_ABI);
-		fetchBoarsData([
-			contract.boar_population(),
-			contract.extinction(),
-			contract.extinctionBy(),
-			currentAdventurer?.tokenID ? contract.simulate_reproduce(currentAdventurer?.tokenID) : null,
-			currentAdventurer?.tokenID ? contract.simulate_kill(currentAdventurer?.tokenID) : null,
-		]);
-	}, [chainTime, currentAdventurer.tokenID]);
-
 	return (
-		<section id={'action'} className={'flex flex-col w-full max-w-full'}>
-			<div className={'box p-4 text-xs w-full relative overflow-hidden'}>
-				<div className={'relative'}>
-					<div className={'filter grayscale -m-4 pb-8 opacity-70'}>
-						<Image
-							src={'/adventures/the-boars/header.jpeg'}
-							loading={'eager'}
-							objectFit={'cover'}
-							objectPosition={'top'}
-							quality={85}
-							width={1550}
-							height={400} />
-					</div>
-				</div>
-				<NCPHeadline
-					population={population}
-					chainTime={chainTime}
-					choice={choice}
-					currentAdventurer={currentAdventurer}
-					loot={choice === 'kill' ? population.lootKill : population.lootReproduce}
-				/>
-				<div className={'pt-2 mt-4 border-t-2 border-black dark:border-dark-100 font-story font-bold text-sm md:text-base uppercase'}>
-					<DialogChoices
-						router={router}
-						remainingBoars={population.count}
-						currentAdventurer={currentAdventurer}
-						openCurrentAventurerModal={openCurrentAventurerModal}
-						provider={provider}
-						updateRarity={updateRarity}
-						chainTime={chainTime}
-						choice={choice}
-						onChoice={set_choice}
-					/>
-				</div>
+		<AdventureTemplate
+			cover={'/adventures/the-boars/header.jpeg'}
+			overlayColor={'#554a40'}
+			rightText={'THE BOARS WILL HUNT YOU DOWN UNLESS YOU DO'}>
+			<div>
+				<h1 className={'pt-4 pb-4 font-bold text-xl font-story'}>{'THE BOARS'}</h1>
 			</div>
-		</section>
+			<div className={'normal-case font-story text-base leading-relaxed text-plain'}>
+				<DescriptionFormater
+					addr={process.env.DUNGEON_BOARS_ADDR}
+					rawDescription={ADVENTURE[currentAdventurer?.adventures?.boars?.canAdventure ? step : 'rest'].description}
+					variables={{
+						...variables,
+						'${adventurer_name}': currentAdventurer.displayName,
+						'${next_adventure}': currentAdventurer?.adventures?.boars?.nextAdventure
+					}} />
+			</div>
+			<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
+				<OptionsFormater
+					options={ADVENTURE[currentAdventurer?.adventures?.boars?.canAdventure ? step : 'rest'].options}
+					onChoice={(choice) => {
+						if (choice === 'fight') {
+							onFightBoars();
+						} else if (choice === 'gather') {
+							onProtectBoars();
+						} else if (choice === 'adventures') {
+							onBack();
+						} else {
+							set_step(choice);
+						}
+					}}
+				/>
+			</div>
+		</AdventureTemplate>
+						
 	);
 }
 

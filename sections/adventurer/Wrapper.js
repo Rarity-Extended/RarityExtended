@@ -13,7 +13,7 @@ function	Wrapper() {
 	const	[tab, set_tab] = React.useState(0);
 
 	return (
-		<div className={'box p-4 flex flex-row space-x-16'}>
+		<div className={'box p-4 flex flex-row space-x-16 relative'}>
 			<OverviewEquipement
 				adventurer={currentAdventurer}
 				provider={provider}

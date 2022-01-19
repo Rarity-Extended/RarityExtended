@@ -13,7 +13,7 @@ import	IconNecklace			from	'components/icons/IconNecklace';
 import	IconRing				from	'components/icons/IconRing';
 import	* as actions			from	'utils/actions';
 import	{xpRequired}			from	'utils/libs/rarity';
-import	CLASSES					from	'utils/codex/classes';
+import	CLASSES					from	'utils/codex/core/classes';
 
 dayjs.extend(relativeTime);
 

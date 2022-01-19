@@ -7,11 +7,11 @@
 
 import	{ethers}				from	'ethers';
 import	{Contract}				from	'ethcall';
-import	THE_FOREST_LOOT			from	'utils/codex/items_dungeon_theForest.json';
-import	OPENMIC_LOOT			from	'utils/codex/items_dungeon_openmic.json';
-// import	MANIFEST_GOODS			from	'utils/codex/items_manifest_goods.json';
-// import	MANIFEST_ARMORS			from	'utils/codex/items_manifest_armors.json';
-// import	MANIFEST_WEAPONS		from	'utils/codex/items_manifest_weapons.json';
+import	THE_FOREST_LOOT			from	'utils/codex/items/items_dungeon_theForest.json';
+import	OPENMIC_LOOT			from	'utils/codex/items/items_dungeon_openmic.json';
+// import	MANIFEST_GOODS			from	'utils/codex/items/items_manifest_goods.json';
+// import	MANIFEST_ARMORS			from	'utils/codex/items/items_manifest_armors.json';
+// import	MANIFEST_WEAPONS		from	'utils/codex/items/items_manifest_weapons.json';
 
 const	items = [
 	{

@@ -5,12 +5,11 @@ import	useRarity									from	'contexts/useRarity';
 import	ElementRecipeCrafting						from	'sections/pages/crafting/ElementRecipeCrafting';
 import	ElementRecipeRarityCrafting					from	'sections/pages/crafting/ElementRecipeRarityCrafting';
 import	{isApprovedForAll, approveForAll, craft}	from	'utils/actions/rarity_extended_crafting_helper';
-
-import 	{getGoodsDifficulty, getArmorDifficulty, getWeaponDifficulty}	from	'utils/libs/rarityCrafting';
-import	MANIFEST_ARMORS								from	'utils/codex/items_manifest_armors.json';
-import	MANIFEST_GOODS								from	'utils/codex/items_manifest_goods.json';
-import	MANIFEST_WEAPONS 							from	'utils/codex/items_manifest_weapons.json';
-import	MANIFEST_SHIELDS							from	'utils/codex/items_manifest_shields.json';
+import 	* as difficulty								from	'utils/libs/rarityCrafting';
+import	MANIFEST_ARMORS								from	'utils/codex/items/items_manifest_armors.json';
+import	MANIFEST_GOODS								from	'utils/codex/items/items_manifest_goods.json';
+import	MANIFEST_WEAPONS 							from	'utils/codex/items/items_manifest_weapons.json';
+import	MANIFEST_SHIELDS							from	'utils/codex/items/items_manifest_shields.json';
 const	MANIFEST_COOK = [
 	{
 		img: '/items/meal/meal_mushroomsoup.png',
@@ -143,7 +142,7 @@ function	Adventures() {
 				<ElementRecipeRarityCrafting
 					key={recipe.name}
 					currentAdventurer={currentAdventurer}
-					difficultyCheckFunc={() => getGoodsDifficulty()}
+					difficultyCheckFunc={() => difficulty.getGoodsDifficulty()}
 					onCraft={materials => onCraft(recipe, materials)}
 					recipe={{
 						...recipe,
@@ -161,7 +160,7 @@ function	Adventures() {
 					<ElementRecipeRarityCrafting
 						key={recipe.name}
 						currentAdventurer={currentAdventurer}
-						difficultyCheckFunc={() => getWeaponDifficulty(recipe.armor_bonus)}
+						difficultyCheckFunc={() => difficulty.getWeaponDifficulty(recipe.armor_bonus)}
 						onCraft={materials => onCraft(recipe, materials)}
 						recipe={{
 							...recipe,
@@ -181,7 +180,7 @@ function	Adventures() {
 					<ElementRecipeRarityCrafting
 						key={recipe.name}
 						currentAdventurer={currentAdventurer}
-						difficultyCheckFunc={() => getArmorDifficulty(recipe.armor_bonus)}
+						difficultyCheckFunc={() => difficulty.getArmorDifficulty(recipe.armor_bonus)}
 						onCraft={materials => onCraft(recipe, materials)}
 						recipe={{
 							...recipe,
@@ -201,7 +200,7 @@ function	Adventures() {
 					<ElementRecipeRarityCrafting
 						key={recipe.name}
 						currentAdventurer={currentAdventurer}
-						difficultyCheckFunc={() => getArmorDifficulty(recipe.armor_bonus)}
+						difficultyCheckFunc={() => difficulty.getArmorDifficulty(recipe.armor_bonus)}
 						onCraft={materials => onCraft(recipe, materials)}
 						recipe={{
 							...recipe,

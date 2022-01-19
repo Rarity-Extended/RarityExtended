@@ -36,7 +36,7 @@ export const Web3ContextApp = ({children}) => {
 	const	[chainID, set_chainID] = useLocalStorage('chainID', -1);
 	const	[lastWallet, set_lastWallet] = useLocalStorage('lastWallet', walletType.NONE);
 	const	[, set_nonce] = useState(0);
-	const	[chainTime, set_chainTime] = useState(new Date());
+	const	[chainTime, set_chainTime] = useState(new Date() / 1000);
 	const	[isActivated, set_isActivated] = useState(false);
 	const	[currentBlock, set_currentBlock] = useState(0);
 

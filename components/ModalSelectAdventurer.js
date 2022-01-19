@@ -5,7 +5,7 @@ import	ListBox							from	'components/ListBox';
 import	useRarity						from	'contexts/useRarity';
 import	useWeb3							from	'contexts/useWeb3';
 import	useLocalStorage					from	'hook/useLocalStorage';
-import	CLASSES							from	'utils/codex/classes';
+import	CLASSES							from	'utils/codex/core/classes';
 
 export const	levelOptions = [
 	{name: 'All Levels', value: 0},

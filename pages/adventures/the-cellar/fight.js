@@ -14,7 +14,7 @@ import	useWeb3									from	'contexts/useWeb3';
 import	useRarity								from	'contexts/useRarity';
 import	{lootDungeonTheCellar}					from	'utils/actions';
 import	DialogBox								from	'components/DialogBox';
-import	CLASSES									from	'utils/codex/classes';
+import	CLASSES									from	'utils/codex/core/classes';
 
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));

@@ -91,6 +91,7 @@
 	},
 	{
 		"name": "The Tavern Hooligans",
+		"path": "openmic",
 		"key": "openMic",
 		"img": "/adventures/openmic/header.jpeg",
 		"address": "0x29d51E8736FCC8C2662aA1B2cf46753d5918606F",
@@ -142,6 +143,7 @@
 	{
 		"name": "The Forest",
 		"key": "forest",
+		"path": "the-forest",
 		"img": "/adventures/the-forest/header.jpeg",
 		"address": "0x48e6F88F1Ab05677675dE9d14a705f8A137ea2bC",
 		"overlayColor": "#124712",
@@ -198,6 +200,7 @@
 	{
 		"name": "The Cellar",
 		"key": "cellar",
+		"path": "the-cellar",
 		"img": "/adventures/the-cellar/header.jpeg",
 		"address": "0x2A0F1cB17680161cF255348dDFDeE94ea8Ca196A",
 		"overlayColor": "#000000",

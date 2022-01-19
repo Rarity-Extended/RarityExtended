@@ -1,7 +1,7 @@
 import	React					from	'react';
 import	{ethers}				from	'ethers';
 import	ElementInventoryItem	from	'sections/pages/crafting/ElementInventoryItem';
-import	ITEMS					from	'utils/codex/items';
+import	ITEMS					from	'utils/codex/items/items';
 
 const	PER_PAGE = 4;
 

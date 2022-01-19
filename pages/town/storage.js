@@ -9,9 +9,9 @@ import	React, {useState}			from	'react';
 import	Image						from	'next/image';
 import	useRarity					from	'contexts/useRarity';
 import	Box							from	'components/Box';
-import	ITEMS						from	'utils/codex/items';
-import	THE_FOREST_LOOT				from	'utils/codex/items_dungeon_theForest.json';
-import	CLASSES						from	'utils/codex/classes';
+import	ITEMS						from	'utils/codex/items/items';
+import	THE_FOREST_LOOT				from	'utils/codex/items/items_dungeon_theForest.json';
+import	CLASSES						from	'utils/codex/core/classes';
 import	{ethers}					from	'ethers';
 
 function	ItemsStandard({item, amount}) {

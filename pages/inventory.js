@@ -1,5 +1,5 @@
 import	React			from	'react';
-import	Template		from	'sections/adventurer/_template';
+import	Template		from	'components/templates/Adventurer';
 import	Inventory		from	'sections/pages/Inventory';
 
 function	Index() {

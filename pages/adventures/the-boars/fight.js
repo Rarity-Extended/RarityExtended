@@ -16,7 +16,7 @@ import	DialogNoBox								from	'components/DialogNoBox';
 import	Box										from	'components/Box';
 import	{sleep}									from	'utils';
 import	{killBoar}								from	'utils/actions/boar';
-import	CLASSES									from	'utils/codex/classes';
+import	CLASSES									from	'utils/codex/core/classes';
 
 function	DialogChoices({router, fight, boarEscaped, adventurerWon, expectedLoot, loot}) {
 	if (boarEscaped) {
@@ -98,7 +98,7 @@ function	Index({dungeon, adventurer, router}) {
 			<div className={`absolute bg-black inset-0 z-10 -top-32 -left-4 -right-4 flex flex-col items-center min-h-screen transition-opacity duration-1000 ${adventurerHealth <= 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
 				<p className={'text-2xl text-white pt-20 mx-4 md:mx-0 md:pt-64 max-w-screen-sm text-center'}>{'you passed out'}</p>
 				<p className={'text-base text-white pt-8 mx-4 md:mx-0 max-w-screen-sm text-center'}>{'After some time, the Farmer find you and bring you back in town...'}</p>
-				<Link href={'/adventures/the-boars'}>
+				<Link href={'/adventures/the-boars#action'}>
 					<div className={'text-base text-white mt-16 mx-4 md:mx-0 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 border-white hover:bg-white hover:text-black transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
 						{'Rest weak adventurer, Rest...'}
 					</div>

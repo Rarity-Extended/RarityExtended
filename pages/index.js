@@ -4,7 +4,7 @@ import	Link								from	'next/link';
 import	dayjs								from	'dayjs';
 import	relativeTime						from	'dayjs/plugin/relativeTime';
 import	toast								from	'react-hot-toast';
-import	Template							from	'sections/adventurer/_template';
+import	Template							from	'components/templates/Adventurer';
 import	AdventurerDetails					from	'sections/adventurer/WrapperMinimal';
 import	useLocalStorage						from	'hook/useLocalStorage';
 import	useWeb3								from	'contexts/useWeb3';
@@ -30,7 +30,7 @@ function	NewAdventurer() {
 				<Image src={'/classes/front/placeholder.svg'} width={140} height={140} />
 			</div>
 			<div className={'px-4'}>
-				<Link href={'/recruit'}>
+				<Link href={'/recruit#content'}>
 					<div className={'bg-600 hover-bg-900 flex flex-center text-center px-4 py-2 mt-4 w-full text-plain cursor-pointer opacity-60'}>
 						<p className={'font-story text-sm select-none normal-case'}>{'Hire Adventurer'}</p>
 					</div>

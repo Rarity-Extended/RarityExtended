@@ -1,7 +1,7 @@
 import	React					from	'react';
 import	Image					from	'next/image';
 import	useRarity				from	'contexts/useRarity';
-import	ITEMS					from	'utils/codex/items';
+import	ITEMS					from	'utils/codex/items/items';
 
 function	ElementInventoryItem({item, amount}) {
 	return (

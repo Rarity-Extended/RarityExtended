@@ -1,7 +1,7 @@
 import	React				from	'react';
 import	Image				from	'next/image';
 import	useUI				from	'contexts/useUI';
-import	CLASSES				from	'utils/codex/classes';
+import	CLASSES				from	'utils/codex/core/classes';
 
 function	WrapperMinimal({adventurer, set_currentAdventurer, favoritesAdventurers, set_favoritesAdventurers, raritySkin}) {
 	const	{raritySkins} = useUI();

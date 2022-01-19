@@ -4,7 +4,7 @@ import	useRarity										from	'contexts/useRarity';
 import	useWeb3											from	'contexts/useWeb3';
 import	{learnFeat}										from	'utils/actions';
 import	{featsPerClass, initialFeatsPerClass}			from	'utils/libs/rarityFeats';
-import	FEATS											from	'utils/codex/feats.json';
+import	FEATS											from	'utils/codex/core/feats.json';
 
 function	ElementFeat({feat, canLearn, learn}) {
 	return (
@@ -107,7 +107,7 @@ function	Feats() {
 	}	
 
 	return (
-		<div>
+		<div id={'content'}>
 			<div className={'mt-6 flex flex-col md:flex-row mb-4 items-center justify-between'}>
 				<div>
 					<input

@@ -7,11 +7,11 @@
 
 import	React						from	'react';
 import	Image						from	'next/image';
-import	ITEMS						from	'utils/codex/items';
-import	THE_FOREST_LOOT				from	'utils/codex/items_dungeon_theForest.json';
-import	MANIFEST_GOODS				from	'utils/codex/items_manifest_goods.json';
-import	MANIFEST_ARMORS				from	'utils/codex/items_manifest_armors.json';
-import	MANIFEST_WEAPONS			from	'utils/codex/items_manifest_weapons.json';
+import	ITEMS						from	'utils/codex/items/items';
+import	THE_FOREST_LOOT				from	'utils/codex/items/items_dungeon_theForest.json';
+import	MANIFEST_GOODS				from	'utils/codex/items/items_manifest_goods.json';
+import	MANIFEST_ARMORS				from	'utils/codex/items/items_manifest_armors.json';
+import	MANIFEST_WEAPONS			from	'utils/codex/items/items_manifest_weapons.json';
 
 function	Index() {
 	function	sortByRarity(a, b) {

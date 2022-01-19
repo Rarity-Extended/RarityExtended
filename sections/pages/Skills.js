@@ -5,8 +5,8 @@ import	useRarity										from	'contexts/useRarity';
 import	useWeb3											from	'contexts/useWeb3';
 import	{learnSkills}									from	'utils/actions';
 import	{availableSkillPoints, calculatePointsForSet}	from	'utils/libs/raritySkills';
-import	CLASSES											from	'utils/codex/classes';
-import	SKILLS											from	'utils/codex/skills.json';
+import	CLASSES											from	'utils/codex/core/classes';
+import	SKILLS											from	'utils/codex/core/skills.json';
 
 function	IconChevron({className}) {
 	return (
@@ -257,7 +257,7 @@ function	Skills() {
 	}	
 
 	return (
-		<div>
+		<div id={'content'}>
 			<div className={'mt-6 flex flex-col md:flex-row mb-4 items-center justify-between'}>
 				<div>
 					<input

@@ -7,7 +7,7 @@
 
 import	{ethers}			from	'ethers';
 import	toast				from	'react-hot-toast';
-import	CLASSES				from	'utils/codex/classes';
+import	CLASSES				from	'utils/codex/core/classes';
 
 function	onSuccessToast(_toast) {
 	toast.dismiss(_toast);

@@ -5,8 +5,23 @@
 **	@Filename:				Default.css
 ******************************************************************************/
 
+
+@font-face {
+	font-family: 'Runes';
+	src: url('../public/fonts/VIKING-MIDDLE-Runes-Bold.eot');
+	src: url('../public/fonts/VIKING-MIDDLE-Runes-Bold.eot?#iefix') format('embedded-opentype'),
+		url('../public/fonts/VIKING-MIDDLE-Runes-Bold.woff2') format('woff2'),
+		url('../public/fonts/VIKING-MIDDLE-Runes-Bold.woff') format('woff'),
+		url('../public/fonts/VIKING-MIDDLE-Runes-Bold.ttf') format('truetype'),
+		url('../public/fonts/VIKING-MIDDLE-Runes-Bold.svg#VIKING,-MIDDLE-Runes-Bold') format('svg');
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
 * {
 	scroll-behavior: smooth;
+	scroll-margin-top: 91px;
 }
 
 html {
@@ -22,10 +37,6 @@ body::-webkit-scrollbar {
 body {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-}
-
-#crafting {
-	scroll-margin-top: 91px;
 }
 
 #__next {

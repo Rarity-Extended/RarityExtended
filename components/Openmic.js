@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import Adventurer from 'components/Adventurer';
-import CLASSES from 'utils/codex/classes';
+import CLASSES from 'utils/codex/core/classes';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -46,7 +46,7 @@ function getOpenMicDialogOption(bard, router, openCurrentAventurerModal) {
 		label,
 		onClick: () => {
 			if (eligibility.eligible) {
-				router.push(`//adventures/openmic/perform?adventurer=${bard.tokenID}`);
+				router.push(`/adventures/openmic/perform?adventurer=${bard.tokenID}`);
 			} else {
 				openCurrentAventurerModal();
 			}

@@ -1,0 +1,130 @@
+{
+	"intro": {
+		"description": [
+			[
+				{"text": "These hooligans show up at Facu's Tavern every weekend! They drink too much and scare away the other customers. Facu is fed up. Hopefully a "},
+				{
+					"text": "bard",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "One of the type of adventurer in Rarity. Your bard should be at least lvl 2."}
+					]
+				},
+				{"text": " can calm them down."}
+			],
+			[
+				{"text": "Facu only has humble "},
+				{
+					"text": "prizes",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "The prizes can be consomables, equipement or specific items that can be handfull at some point."}
+					]
+				},
+				{"text": " to offer in return. But for the best performers, Facu will part with a secret mission pass!"}
+			],
+			[
+				{"text": "Oh and I almost forgot. If you have any "},
+				{
+					"text": "Forest",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "Their is a lot of treasure in this Forest. But they are all improving you charisma in some way."}
+					]
+				},
+				{"text": " treasures with you, The Austrian will help you win over the crowd."}
+			],
+			[
+				{"text": "Will "},
+				{
+					"text": "${adventurer_name}",
+					"hasVariable": true,
+					"highlighted": true,
+					"tooltip": [
+						{"text": "This is you. But maybe another you can sing ?"}
+					]
+				},
+				{"text": " be up to the challenge ?"}
+			]
+		],
+		"options": [
+			{"text": "Take the stage and ~~Sing~~", "goto": "sing"},
+			{"text": "Leave the Tavern", "goto": "adventures"}
+		]
+	},
+	"rest": {
+		"description": [
+			[
+				{"text": "It's daylight now and the hooligans are not yet in the tavern but Facu expects them to arrive soon. They will, as always, raise hell, knock over tables and chairs, order food and drink, sleep in the common areas, and just generally make a nuisance of themselves. He knows he must get this problem resolved and does not want to lose what little custom he has."}
+			],
+			[
+				{"text": "Facu has identified two possible solutions for the problem. The first is to build a wall around the tavern to protect it from the violent hooligans. This will be costly and the process will take a long time. It will also restrict access to the tavern by those looking for a drink, gambling, or other entertainment. The second solution is to hire a bard. This will entertain the hooligans and the customers."}
+			],
+			[
+				{"text": "Lucky you! You are a bard! If you want to help solve this problem, come back "},
+				{
+					"text": "${next_adventure}",
+					"hasVariable": true,
+					"highlighted": true,
+					"tooltip": [
+						{"text": "You know, time for they to have more beer!"}
+					]
+				},
+				{"text": ". Hooligans will be there, and rewards too."}
+			]
+		],
+		"options": [
+			{"text": "Check the ~~other adventures~~", "goto": "adventures"}
+		]
+	},
+	"noBard": {
+		"description": [
+			[
+				{"text": "It's daylight now and the hooligans are not yet in the tavern but Facu expects them to arrive soon. They will, as always, raise hell, knock over tables and chairs, order food and drink, sleep in the common areas, and just generally make a nuisance of themselves. He knows he must get this problem resolved and does not want to lose what little custom he has."}
+			],
+			[
+				{"text": "Facu has identified two possible solutions for the problem. The first is to build a wall around the tavern to protect it from the violent hooligans. This will be costly and the process will take a long time. It will also restrict access to the tavern by those looking for a drink, gambling, or other entertainment. The second solution is to hire a bard. This will entertain the hooligans and the customers."}
+			],
+			[
+				{"text": "This could be a great opportunity for fame and riches. But you have absolutely no idea how to sing. It's more a "},
+				{
+					"text": "Bard",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "Suprise! You are not a Bard, and therefor you can't participate in this specific adventure! Sorry fren!"}
+					]
+				},
+				{"text": " job."}
+			]
+		],
+		"options": [
+			{"text": "Check the ~~other adventures~~", "goto": "adventures"}
+		]
+	},
+	"noLevel": {
+		"description": [
+			[
+				{"text": "It's daylight now and the hooligans are not yet in the tavern but Facu expects them to arrive soon. They will, as always, raise hell, knock over tables and chairs, order food and drink, sleep in the common areas, and just generally make a nuisance of themselves. He knows he must get this problem resolved and does not want to lose what little custom he has."}
+			],
+			[
+				{"text": "Facu has identified two possible solutions for the problem. The first is to build a wall around the tavern to protect it from the violent hooligans. This will be costly and the process will take a long time. It will also restrict access to the tavern by those looking for a drink, gambling, or other entertainment. The second solution is to hire a bard. This will entertain the hooligans and the customers."}
+			],
+			[
+				{"text": "This could be a great opportunity for fame and fortune if the hooligans are kept happy. However, the hooligans are also very dangerous and the bard must be careful to make them happy but not make them angry. Better have a bit "},
+				{
+					"text": "more experiences",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "You must be at least "},
+						{"text": "Level 2", "highlight": true},
+						{"text": " to participate in this adventure."}
+					]
+				},
+				{"text": " than you have right now."}
+			]
+		],
+		"options": [
+			{"text": "Check the ~~other adventures~~", "goto": "adventures"}
+		]
+	}
+}

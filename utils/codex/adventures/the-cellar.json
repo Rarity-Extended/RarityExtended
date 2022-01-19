@@ -1,0 +1,67 @@
+{
+	"intro": {
+		"description": [
+			[
+				{"text": "Facu, the tavern’s owner, was sitting alone at a table. His old housecat laying on his lap and purring away. Facu had heard some scurrying about in his cellar and had gone down to check it out. He found swarms of hungry rats. In his earlier days, he would have squashed those pests, but these days he’s weak and frail."}
+			],
+			[
+				{"text": "“Ha! I told that Felipe that he should stop keeping such a messy cellar! He’ll never tidy up!”"}
+			],
+			[
+				{"text": "You look at the cat. It's a very lazy cat. It mirror its owner; old and frail. Not the kind of hunter a house needs when there are plenty of rats."}
+			],
+			[
+				{"text": "“Help me with this rat situation, adventurer. I have nothing much to offer, but you can keep everything you'll loot from these rats. And of course, a tankard of mead will be waiting for you.”"}
+			],
+			[
+				{"text": "You could do that. What is a rat for you? If you cannot handle the "},
+				{
+					"text": "Big Ugly Rat",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "The rat is not so weak. Only adventurer with a good amout of "},
+						{"text": "CONST", "highlighted": true},
+						{"text": ", "},
+						{"text": "STR", "highlighted": true},
+						{"text": " and "},
+						{"text": "DEX", "highlighted": true},
+						{"text": " should start the fight."}
+					]
+				},
+				{"text": " in this cellar. If not, will you be able to fight the boars nearby? It could be you first act of bravery."}
+			],
+			[
+				{"text": "You heard about this giant rat in the tavern. A big rat. Other adventurers have already killed it, but somehow it keeps coming back."}
+			]
+		],
+		"options": [
+			{"text": "~~Start the Fight~~", "goto": "fight"},
+			{"text": "Leave the Cellar", "goto": "adventures"}
+		]
+	},
+	"rest": {
+		"description": [
+			[
+				{"text": "You killed all the nasty, dirty rats that had infested the walls and floors of the tavern, and now you were back in the Tavern. The same bartender that still remembers you is behind the counter, cleaning a mug with a rag. There is a broad smile on his broad face."}
+			],
+			[
+				{"text": "\"Well, well, well, look at you,\" he said. \"I was just thinking about you. I'm glad to see you back. Sit down anywhere you want.\""}
+			],
+			[
+				{"text": "You go to a table in the corner, one that you knew was devoid of rats. They will be back. You know that. They always come back "},
+				{
+					"text": "${next_adventure}",
+					"hasVariable": true,
+					"highlighted": true,
+					"tooltip": [
+						{"text": "They're not magic, but the rats really like this dwelling. Now that you've killed the King of the Cellar, a new one will appear in a while..."}
+					]
+				},
+				{"text": "."}
+			]
+		],
+		"options": [
+			{"text": "Check the ~~other adventures~~", "goto": "adventures"}
+		]
+	}
+}
