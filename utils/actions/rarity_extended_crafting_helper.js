@@ -32,7 +32,7 @@ export async function	isApprovedForAll({provider}) {
 }
 
 export async function	approveForAll(
-	{provider},
+	{provider, contract},
 	onError = () => null,
 	onSuccess = () => null
 ) {
@@ -41,7 +41,7 @@ export async function	approveForAll(
 	const	raritySource = RARITY_MANIFEST.connect(signer);
 	try {
 		_toast = toast.loading('Approving Crafting...');
-		const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_CRAFTING_HELPER_ADDR, true);
+		const	transaction = await raritySource.setApprovalForAll(contract, true);
 		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {
 			onSuccessToast();
@@ -103,6 +103,66 @@ export async function	craft({
 			baseType,
 			itemType,
 			craftingMaterials
+		);
+		const	transactionResult = await transaction.wait(2);
+		if (transactionResult.status === 1) {
+			callback({error: false, data: tokenID});
+			toast.dismiss(_toast);
+			toast.success('Transaction successful');
+		} else {
+			toast.dismiss(_toast);
+			toast.error('Transaction reverted');
+			callback({error: true, data: undefined});
+		}
+	} catch (error) {
+		console.error(error);
+		toast.dismiss(_toast);
+		toast.error('Something went wrong, please try again later.');
+		callback({error, data: undefined});
+	}
+}
+
+export async function	cook({
+	provider,
+	tokenID,
+	mealAddress,
+	itemName,
+}, callback) {
+	let		_toast;
+	const	signer = provider.getSigner();
+	const	rarityCook = new ethers.Contract(
+		process.env.RARITY_COOKING_HELPER_ADDR,
+		['function cook(address, uint, uint) external'],
+		signer
+	);
+
+	_toast = toast.loading(`Trying to cook ${itemName}...`);
+	/**********************************************************************
+	**	In order to avoid dumb error, let's first check if the TX would
+	**	be successful with a static call
+	**********************************************************************/
+	try {
+		await rarityCook.callStatic.cook(
+			mealAddress,
+			tokenID,
+			tokenID
+		);
+	} catch (error) {
+		toast.dismiss(_toast);
+		toast.error('You have a bad feeling about this. You should retry later.');
+		console.log(error);
+		callback({error, data: undefined});
+		return;
+	}
+
+	/**********************************************************************
+	**	If the call is successful, try to perform the actual TX
+	**********************************************************************/
+	try {
+		const	transaction = await rarityCook.cook(
+			mealAddress,
+			tokenID,
+			tokenID
 		);
 		const	transactionResult = await transaction.wait(2);
 		if (transactionResult.status === 1) {

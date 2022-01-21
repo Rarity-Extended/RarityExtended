@@ -9,9 +9,40 @@ import	React, {Fragment, useRef}		from	'react';
 import	{Dialog, Transition}			from	'@headlessui/react';
 import	useWeb3							from	'contexts/useWeb3';
 
+function	LoginBox({set_open}) {
+	const	{connect, walletType} = useWeb3();
+
+	return (
+		<div className={'box font-story'}>
+			<div className={'p-6 space-y-4'}>
+				<div
+					onClick={() => {
+						connect(walletType.METAMASK);
+						set_open(false);
+					}}
+					className={'bg-600 hover-bg-900 hover:shadow-sm cursor-pointer flex flex-col flex-center transition-colors p-6 text-center'}>
+					<div className={'web3modal-icon text-5xl'}>{'🦊'}</div>
+					<div className={'mt-2 text-plain font-bold text-xl mb-1'}>{'MetaMask'}</div>
+					<div className={'mt-2 text-plain text-xs'}>{'Connect to your MetaMask Wallet'}</div>
+				</div>
+				<div
+					onClick={() => {
+						connect(walletType.WALLET_CONNECT);
+						set_open(false);
+					}}
+					className={'bg-600 hover-bg-900 hover:shadow-sm cursor-pointer flex flex-col flex-center transition-colors p-6 text-center'}>
+					<div className={'web3modal-icon'}>
+						<div className={'web3modal-icon text-5xl'} style={{filter: 'hue-rotate(250deg)'}}>{'👛'}</div>
+					</div>
+					<div className={'mt-2 text-plain font-bold text-xl mb-1'}>{'WalletConnect'}</div>
+					<div className={'mt-2 text-plain text-xs'}>{'Scan with WalletConnect'}</div>
+				</div>
+			</div>
+		</div>
+	);
+}
 function	ModalLogin({open, set_open}) {
 	const	walletConnectRef = useRef();
-	const	{connect, walletType} = useWeb3();
 
 	return (
 		<Transition.Root show={open} as={Fragment}>
@@ -42,33 +73,8 @@ function	ModalLogin({open, set_open}) {
 						leave={'ease-in duration-200'}
 						leaveFrom={'opacity-100 translate-y-0 sm:scale-100'}
 						leaveTo={'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'}>
-						<div className={'inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full md:mb-96 font-mono'}>
-							<div className={'p-6 space-y-4'}>
-								<div
-									onClick={() => {
-										connect(walletType.METAMASK);
-										set_open(false);
-									}}
-									ref={walletConnectRef}
-									className={'bg-white hover:shadow-sm cursor-pointer border-4 border-solid border-black dark:border-dark-100 flex flex-col flex-center transition-colors p-6 text-center'}>
-									<div className={'web3modal-icon text-5xl'}>{'🦊'}</div>
-									<div className={'mt-2 font-bold text-xl mb-1'}>{'MetaMask'}</div>
-									<div className={'mt-2 text-xs'}>{'Connect to your MetaMask Wallet'}</div>
-								</div>
-								<div
-									onClick={() => {
-										connect(walletType.WALLET_CONNECT);
-										set_open(false);
-									}}
-									ref={walletConnectRef}
-									className={'bg-white hover:shadow-sm cursor-pointer border-4 border-solid border-black dark:border-dark-100 flex flex-col flex-center transition-colors p-6 text-center'}>
-									<div className={'web3modal-icon'}>
-										<div className={'web3modal-icon text-5xl'} style={{filter: 'hue-rotate(250deg)'}}>{'👛'}</div>
-									</div>
-									<div className={'mt-2 font-bold text-xl mb-1'}>{'WalletConnect'}</div>
-									<div className={'mt-2 text-xs'}>{'Scan with WalletConnect'}</div>
-								</div>
-							</div>
+						<div ref={walletConnectRef} className={'absolute inset-0 sm:max-w-lg sm:w-full md:mb-96 mx-auto mt-20'}>
+							<LoginBox set_open={set_open} />
 						</div>
 					</Transition.Child>
 				</div>
@@ -77,5 +83,5 @@ function	ModalLogin({open, set_open}) {
 	);
 }
 
-
+export {LoginBox};
 export default ModalLogin;

@@ -7,19 +7,19 @@
 
 import	React, {useState, createContext, useContext, useEffect}	from	'react';
 import	Image									from	'next/image';
-import	Link									from	'next/link';
-import	{ethers, utils}							from	'ethers';
-import	DialogBox								from	'components/DialogBox';
-import	Box										from	'components/Box';
-import	useWeb3									from	'contexts/useWeb3';
-import	useRarity								from	'contexts/useRarity';
-import	useUI									from	'contexts/useUI';
-import	{perform}								from	'utils/actions/perform';
-import	SKILLS									from	'utils/codex/core/skills';
-import	OPENMIC_LOOT							from	'utils/codex/items/items_dungeon_openmic.json';
-import	CLASSES									from	'utils/codex/core/classes';
+import	Link						from	'next/link';
+import	{ethers, utils}				from	'ethers';
+import	useWeb3						from	'contexts/useWeb3';
+import	useRarity					from	'contexts/useRarity';
+import	useInventory				from	'contexts/useInventory';
+import	useUI						from	'contexts/useUI';
+import	{perform}					from	'utils/actions/perform';
+import	SKILLS						from	'utils/codex/core/skills';
+import	OPENMIC_LOOT				from	'utils/codex/items/items_dungeon_openmic.json';
+import	CLASSES						from	'utils/codex/core/classes';
 
 const PerformanceContext = createContext(null);
+const getIntersection = (a, ...arr) => [...new Set(a)].filter((v) => arr.every((b) => b.includes(v)));
 
 function AdventureResult() {
 	const {performanceResult} = useContext(PerformanceContext);
@@ -68,6 +68,7 @@ function AdventureResult() {
 function Adventure({router, adventurer}) {
 	const	{raritySkins} = useUI();
 	const	{rarities, updateRarity, skins} = useRarity();
+	const	{inventory, updateInventory} = useInventory();
 	const	{provider} = useWeb3();
 	const	[odds, setOdds] = useState('--- %');
 	const	performer = rarities[router?.query?.adventurer];
@@ -112,119 +113,134 @@ function Adventure({router, adventurer}) {
 					prizes: result.data.prizes
 				});
 			}
+			updateInventory(performer.tokenID);
 			updateRarity(performer.tokenID);
 		});
 	}
 
 	const charisma = performer.attributes.charisma;
 	const performSkill = performer.skills[SKILLS['Perform'].id - 1];
-	const forestTreasures = performer.inventory[process.env.DUNGEON_THE_FOREST_ADDR];
+	const forestTreasures = getIntersection(
+		Object.keys(inventory[performer?.tokenID || ''] || {}),
+		['0x0000000000000000000000000000000000000001', '0x0000000000000000000000000000000000000002', '0x0000000000000000000000000000000000000003', '0x0000000000000000000000000000000000000004', '0x0000000000000000000000000000000000000005', '0x0000000000000000000000000000000000000006', '0x0000000000000000000000000000000000000007', '0x0000000000000000000000000000000000000008', '0x0000000000000000000000000000000000000009', '0x0000000000000000000000000000000000000010', '0x0000000000000000000000000000000000000011', '0x0000000000000000000000000000000000000012', '0x0000000000000000000000000000000000000013', '0x0000000000000000000000000000000000000014', '0x0000000000000000000000000000000000000015', '0x0000000000000000000000000000000000000016', '0x0000000000000000000000000000000000000017', '0x0000000000000000000000000000000000000018', '0x0000000000000000000000000000000000000019', '0x0000000000000000000000000000000000000020', '0x0000000000000000000000000000000000000021', '0x0000000000000000000000000000000000000022', '0x0000000000000000000000000000000000000023', '0x0000000000000000000000000000000000000024', '0x0000000000000000000000000000000000000025', '0x0000000000000000000000000000000000000026', '0x0000000000000000000000000000000000000027', '0x0000000000000000000000000000000000000028', '0x0000000000000000000000000000000000000029', '0x0000000000000000000000000000000000000030', '0x0000000000000000000000000000000000000031', '0x0000000000000000000000000000000000000032', '0x0000000000000000000000000000000000000033', '0x0000000000000000000000000000000000000034', '0x0000000000000000000000000000000000000035', '0x0000000000000000000000000000000000000036', '0x0000000000000000000000000000000000000037', '0x0000000000000000000000000000000000000038', '0x0000000000000000000000000000000000000039', '0x0000000000000000000000000000000000000040', '0x0000000000000000000000000000000000000041', '0x0000000000000000000000000000000000000042', '0x0000000000000000000000000000000000000043', '0x0000000000000000000000000000000000000044', '0x0000000000000000000000000000000000000045', '0x0000000000000000000000000000000000000046', '0x0000000000000000000000000000000000000047', '0x0000000000000000000000000000000000000048', '0x0000000000000000000000000000000000000049', '0x0000000000000000000000000000000000000050', '0x0000000000000000000000000000000000000051', '0x0000000000000000000000000000000000000052', '0x0000000000000000000000000000000000000053', '0x0000000000000000000000000000000000000054', '0x0000000000000000000000000000000000000055', '0x0000000000000000000000000000000000000056']
+	);
 
-	return <>
-		<div className={'max-w-screen-sm w-full mt-12 mr-auto ml-auto'}>
-			<div className={'flex flex-col items-center'}>
-
-				{/* antagonist */}
-				<div className={'w-full'}>
-					<p className={'whitespace-nowrap'}>{'Rowdy Tavern Hooligans !'}</p>
-					<div className={'flex w-full flex-center'}>
-						<div className={'-mr-12'}>
-							<Image
-								src={'/avatar/ceazor.gif'}
-								loading={'eager'}
-								quality={100}
-								width={100}
-								height={100}
-							/>
-						</div>
-						<div className={'-mr-12'}>
-							<Image
-								src={'/avatar/janet.gif'}
-								loading={'eager'}
-								quality={100}
-								width={120}
-								height={120} />
-						</div>
-						<Image
-							src={'/avatar/facu.gif'}
-							loading={'eager'}
-							quality={100}
-							width={150}
-							height={150} />
-						<div className={'-ml-6'}>
-							<Image
-								src={'/avatar/ivan.gif'}
-								loading={'eager'}
-								quality={100}
-								width={90}
-								height={90} />
-						</div>
-						<div className={'-ml-12'}>
-							<Image
-								src={'/avatar/lara.gif'}
-								loading={'eager'}
-								quality={100}
-								width={100}
-								height={100} />
-						</div>
-					</div>
+	function	renderOptions() {
+		return (
+			<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
+				<div onClick={clickPerform} className={'rounded-md font-story p-4 flex flex-center text-base bg-light-600 dark:bg-dark-600 bg-opacity-40 hover:bg-opacity-100 dark:bg-opacity-40 dark:hover:bg-opacity-100 transition-visibility cursor-pointer normal-case'}>
+					<p>{'Sing your Heart out'}</p>
 				</div>
-
-				{/* protagonist */}
-				<div className={'w-full flex mt-2 md:-mt-10'}>
-					<div className={'w-60 hidden md:block'} style={{minWidth: 240}}>
-						<Image
-							src={skin}
-							loading={'eager'}
-							quality={100}
-							width={240}
-							height={240} />
-					</div>
-					<div className={'w-32 block md:hidden'} style={{minWidth: 120}}>
-						<Image
-							src={skin}
-							loading={'eager'}
-							quality={100}
-							width={120}
-							height={120} />
-					</div>
-					<div className={'w-full mt-auto mb-6'}>
-						<Box className={'nes-container pt-6 pb-0 px-4 with-title w-full '}>
-							<div className={'title bg-white dark:bg-dark-600 z-10 relative'} style={{paddingTop: 2}}>
-								{'Performance Check'}
-							</div>
-							<div className={'flex justify-between'}>
-								<div className={'text-sm opacity-80'}>{'Perform Skill'}</div>
-								<div>{'+'}{performSkill}</div>
-							</div>
-							<div className={'flex justify-between'}>
-								<div className={'text-sm opacity-80'}>{'Charisma'}</div>
-								<div>{abilityModifierFormated(charisma)}</div>
-							</div>
-							<div className={'flex justify-between'}>
-								<div className={'text-sm opacity-80'}>{'Forest Treasure'}</div>
-								<div>{forestTreasures.length ? '+1' : '+0'}</div>
-							</div>
-							<div className={'flex justify-between'}>
-								<div className={'text-sm opacity-80'}>{'Odds'}</div>
-								<div>{odds}</div>
-							</div>
-							<br />
-						</Box>
-					</div>
+				<div onClick={() => router.push('/adventures/openmic')} className={'rounded-md font-story p-4 flex flex-center text-base bg-600 bg-opacity-40 hover:bg-opacity-100 dark:bg-opacity-40 dark:hover:bg-opacity-100 transition-visibility cursor-pointer normal-case'}>
+					<p>{'Too much pressure, back off!'}</p>
 				</div>
-
 			</div>
-		</div>
+		);
+	}
 
-		<div className={'max-w-screen-md w-full mx-auto'}>
-			<DialogBox
-				options={[
-					{label: 'SING YOUR HEART OUT', onClick: clickPerform},
-					{label: 'I CAN\'T HANDLE THE PRESSURE !', onClick: () => router.back()},
-				]} />
-		</div>
-	</>;
+	return (
+		<section id={'action'} className={'flex flex-col w-full max-w-screen md:max-w-screen-xl mx-auto relative'}>
+
+			<div className={'box p-4 text-xs w-full relative'}>
+				<div className={'w-3/4 mx-auto mt-12'}>
+					<div className={'flex flex-col items-center'}>
+
+						{/* antagonist */}
+						<div className={'w-full flex flex-col items-end'}>
+							<p className={'whitespace-nowrap'}>{'Rowdy Tavern Hooligans !'}</p>
+							<div className={'flex w-full items-center justify-end'}>
+								<div className={'-mr-12'}>
+									<Image
+										src={'/avatar/ceazor.gif'}
+										loading={'eager'}
+										quality={90}
+										width={100}
+										height={100}
+									/>
+								</div>
+								<div className={'-mr-12'}>
+									<Image
+										src={'/avatar/janet.gif'}
+										loading={'eager'}
+										quality={90}
+										width={120}
+										height={120} />
+								</div>
+								<Image
+									src={'/avatar/facu.gif'}
+									loading={'eager'}
+									quality={90}
+									width={150}
+									height={150} />
+								<div className={'-ml-6'}>
+									<Image
+										src={'/avatar/ivan.gif'}
+										loading={'eager'}
+										quality={90}
+										width={90}
+										height={90} />
+								</div>
+								<div className={'-ml-12'}>
+									<Image
+										src={'/avatar/lara.gif'}
+										loading={'eager'}
+										quality={90}
+										width={100}
+										height={100} />
+								</div>
+							</div>
+						</div>
+
+						{/* protagonist */}
+						<div className={'w-full flex mt-2 md:mt-6'}>
+							<div className={'w-60 hidden md:block'} style={{minWidth: 240}}>
+								<Image
+									src={skin}
+									loading={'eager'}
+									quality={100}
+									width={240}
+									height={240} />
+							</div>
+							<div className={'w-32 block md:hidden'} style={{minWidth: 120}}>
+								<Image
+									src={skin}
+									loading={'eager'}
+									quality={100}
+									width={120}
+									height={120} />
+							</div>
+							<div className={'w-full mt-auto mb-6'}>
+								<div className={'pt-6 pb-0 px-4 with-title w-full font-story normal-case'}>
+									<div className={'text-base text-plain'}>{'Performance Check'}</div>
+									<div className={'flex justify-between'}>
+										<div className={'text-base text-50'}>{'Perform Skill'}</div>
+										<div>{'+'}{performSkill}</div>
+									</div>
+									<div className={'flex justify-between'}>
+										<div className={'text-base text-50'}>{'Charisma'}</div>
+										<div>{abilityModifierFormated(charisma)}</div>
+									</div>
+									<div className={'flex justify-between'}>
+										<div className={'text-base text-50'}>{'Forest Treasure'}</div>
+										<div>{forestTreasures.length ? '+1' : '+0'}</div>
+									</div>
+									<div className={'flex justify-between'}>
+										<div className={'text-base text-50'}>{'Odds'}</div>
+										<div>{odds}</div>
+									</div>
+									<br />
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div className={'w-3/4 mx-auto'}>
+					{renderOptions()}
+				</div>
+			</div>
+		</section>
+	);
 }
 
 const OpenMic = ({rarities, router}) => {

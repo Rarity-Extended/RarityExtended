@@ -1,8 +1,8 @@
-import	React											from	'react';
-import	Image											from	'next/image';
-import	ITEMS											from	'utils/codex/items/items';
+import	React					from	'react';
+import	Image					from	'next/image';
+import	useInventory			from	'contexts/useInventory';
 
-function	ElementInventoryItem({item, amount}) {
+function	ElementInventoryItem({item}) {
 	return (
 		<div key={item.name} className={'rounded-md bg-light-600 dark:bg-dark-600 px-2 flex flex-row items-center dark:bg-opacity-40'}>
 			<div className={'w-14 h-14 flex flex-center'} style={{minWidth: 56}}>
@@ -13,7 +13,7 @@ function	ElementInventoryItem({item, amount}) {
 					{item.name}
 				</p>
 				<p className={'text-plain font-story text-sm text-50 normal-case'}>
-					{`(x${amount})`}
+					{`(x${Number(item.balance)})`}
 				</p>
 			</div>
 		</div>
@@ -35,79 +35,80 @@ function	ElementInventoryItemNonFungible({item}) {
 	);
 }
 
-function	ElementInventoryList({currentAdventurer, sharedInventory}) {
+const InventoryGrid = React.memo(function InventoryGrid({currentAdventurer}) {
+	const	{inventory, sharedInventory, nonce} = useInventory();
 	const	[toRender, set_toRender] = React.useState(null);
-	let		isPreparing = false;
 
 	const prepareToRender = React.useCallback(async () => {
+		const	adventurerInventory = inventory?.[currentAdventurer.tokenID] || {};
 		const	toRender = [];
 		toRender.push(
 			<ElementInventoryItem
 				key={'xp'}
-				item={{name: 'XP', img: `/items/${process.env.RARITY_EXTENDED_XP}.png`, address: process.env.RARITY_EXTENDED_XP}}
-				amount={Number(currentAdventurer?.xp)} />
+				item={{
+					name: 'XP',
+					img: `/items/${process.env.RARITY_EXTENDED_XP}.png`,
+					address: process.env.RARITY_EXTENDED_XP,
+					balance: Number(currentAdventurer?.xp)
+				}} />
 		);
 		toRender.push(
 			<ElementInventoryItem
 				key={'gold'}
-				item={{name: 'Gold', img: `/items/${process.env.RARITY_GOLD_ADDR}.png`, address: process.env.RARITY_GOLD_ADDR}}
-				amount={Number(currentAdventurer?.gold?.balance)} />
+				item={{
+					name: 'Gold',
+					img: `/items/${process.env.RARITY_GOLD_ADDR}.png`,
+					address: process.env.RARITY_GOLD_ADDR,
+					balance: Number(currentAdventurer?.gold?.balance),
+				}} />
 		);
-		for (let index = 0; index < ITEMS.length; index++) {
-			const item = ITEMS[index];
-			if (item.type === 'ERC20') {
-				if (Number(currentAdventurer.inventory[item.address]) > 0) {
+
+		const	_inventory = Object.values(adventurerInventory || {});
+		for (let index = 0; index < (_inventory || []).length; index++) {
+			const item = _inventory[index];
+			if (item.type === 'enumerable') {
+				if (Number(item.balance) > 0) {
 					toRender.push(
 						<ElementInventoryItem
 							key={`${item.address}_${index}`}
-							item={item}
-							amount={Number(currentAdventurer.inventory[item.address])} />
-					);
-				}
-			} else if (item.type === 'ERC721') {
-				const itemGroup = item;
-				const adventurerItems = currentAdventurer.inventory[itemGroup.address];
-				for (let jindex = 0; jindex < adventurerItems.length; jindex++) {
-					const item = itemGroup.format(adventurerItems[jindex]);
-					toRender.push(
-						<ElementInventoryItemNonFungible
-							key={`${itemGroup.address}_${item.tokenID}`}
 							item={item} />
 					);
-					
 				}
+			} else if (item.type === 'unique') {
+				toRender.push(
+					<ElementInventoryItemNonFungible
+						key={`${item.address}_${index}`}
+						item={item} />
+				);
 			}
 		}
 
-		const	adventureSharedInventory = Object.values(sharedInventory).filter(e => e.crafter === currentAdventurer.tokenID);
-		for (let index = 0; index < adventureSharedInventory.length; index++) {
-			const item = adventureSharedInventory[index];
+		const	_sharedInventory = Object.values(sharedInventory || {});
+		for (let index = 0; index < (_sharedInventory || []).length; index++) {
+			const item = _sharedInventory[index];
+			if (item.crafter !== currentAdventurer?.tokenID) {
+				continue;
+			}
 			toRender.push(
 				<ElementInventoryItemNonFungible
 					key={`${item.address}_${index}`}
 					item={item} />
 			);
 		}
-
-
 		set_toRender(toRender);
-	}, [currentAdventurer, sharedInventory]);
-	
-	React.useEffect(() => {
-		if (isPreparing)
-			return;
-		isPreparing = true;
-		prepareToRender().then(() => isPreparing = false);
-	}, [prepareToRender]);
+	}, [currentAdventurer, inventory, sharedInventory, nonce]);
+	React.useEffect(() => prepareToRender(), [prepareToRender]);
 
 	return (toRender);
-}
+});
 
 function	OverviewInventory({adventurer, sharedInventory}) {
 	return (
 		<div className={'flex flex-col items-center font-story w-full mt-auto'} style={{height: 282}}>
 			<div className={'grid grid-cols-4 gap-x-4 gap-y-2 w-full overflow-auto'}>
-				<ElementInventoryList currentAdventurer={adventurer} sharedInventory={sharedInventory} />
+				<InventoryGrid
+					currentAdventurer={adventurer}
+					sharedInventory={sharedInventory} />
 			</div>
 		</div>
 	);

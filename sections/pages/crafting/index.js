@@ -2,96 +2,45 @@ import	React, {useState}							from	'react';
 import	Link										from	'next/link';
 import	useWeb3										from	'contexts/useWeb3';
 import	useRarity									from	'contexts/useRarity';
+import	useInventory								from	'contexts/useInventory';
 import	ElementRecipeCrafting						from	'sections/pages/crafting/ElementRecipeCrafting';
 import	ElementRecipeRarityCrafting					from	'sections/pages/crafting/ElementRecipeRarityCrafting';
-import	{isApprovedForAll, approveForAll, craft}	from	'utils/actions/rarity_extended_crafting_helper';
+import	{approveForAll, craft, cook}				from	'utils/actions/rarity_extended_crafting_helper';
 import 	* as difficulty								from	'utils/libs/rarityCrafting';
 import	MANIFEST_ARMORS								from	'utils/codex/items/items_manifest_armors.json';
 import	MANIFEST_GOODS								from	'utils/codex/items/items_manifest_goods.json';
 import	MANIFEST_WEAPONS 							from	'utils/codex/items/items_manifest_weapons.json';
 import	MANIFEST_SHIELDS							from	'utils/codex/items/items_manifest_shields.json';
-const	MANIFEST_COOK = [
-	{
-		img: '/items/meal/meal_mushroomsoup.png',
-		name: 'Mushroom soup',
-		effect: 'Reduce the time between two adventures by 1 hours.',
-		cost: [
-			[process.env.RARITY_GOLD_ADDR, 4],
-			[process.env.LOOT_MUSHROOM_ADDR, 2],
-		]
-	},
-	{
-		img: '/items/meal/meal_pie.png',
-		name: 'Berries pie',
-		effect: 'Reduce the time between two adventures by 1 hours.',
-		cost: [
-			[process.env.RARITY_GOLD_ADDR, 4],
-			[process.env.LOOT_BERRIES_ADDR, 2],
-		]
-	},
-	{
-		img: '/items/meal/meal_fruitandmushroommix.png',
-		name: 'Mushroom and fruid mix',
-		effect: 'Reduce the time between two adventures by 2 hours.',
-		cost: [
-			[process.env.RARITY_GOLD_ADDR, 4],
-			[process.env.LOOT_MUSHROOM_ADDR, 2],
-			[process.env.LOOT_BERRIES_ADDR, 2],
-		]
-	},
-	{
-		img: '/items/meal/meal_mushroomandmeatskewer.png',
-		name: 'Mushroom meat skewer',
-		effect: 'Reduce the time between two adventures by 3 hours.',
-		cost: [
-			[process.env.RARITY_GOLD_ADDR, 4],
-			[process.env.LOOT_MUSHROOM_ADDR, 2],
-			[process.env.LOOT_MEAT_ADDR, 1],
-		]
-	},
-	{
-		img: '/items/meal/meal_gourmetfruitandmushroom.png',
-		name: 'Gourmet meal with Mushroom',
-		effect: 'Reduce the time between two adventures by 4 hours.',
-		cost: [
-			[process.env.RARITY_GOLD_ADDR, 4],
-			[process.env.LOOT_MUSHROOM_ADDR, 2],
-			[process.env.LOOT_BERRIES_ADDR, 2],
-			[process.env.LOOT_MEAT_ADDR, 1],
-		]
-	},
-];
+import	* as ITEMS									from	'utils/codex/items/items';
 
 function	Adventures() {
 	const	{provider} = useWeb3();
-	const	{currentAdventurer, updateRarity} = useRarity();
+	const	{currentAdventurer, updateRarity, specialApprovals, set_specialApprovals} = useRarity();
+	const	{inventory, updateInventory} = useInventory();
 	const	[search, set_search] = useState('');
 	const	[shop, set_shop] = useState(4);
-	const	[isApproved, set_isApproved] = useState({rarityCrafting: false, rarityExtendedCook: false});
 	const	[txApproveStatus, set_txApproveStatus] = useState({none: true, isPending: false, isSuccess: false, isError: false});
-
-	const	checkApprovals = React.useCallback(async () => {
-		const	_isApprovedForAll = await isApprovedForAll({provider});
-		set_isApproved(s => ({...s, rarityCrafting: _isApprovedForAll}));
-	}, [provider]);
-	React.useEffect(() => checkApprovals(), [checkApprovals]);
 
 	function	onApproveAll() {
 		if (!txApproveStatus.none) {
 			return;
 		}
 		set_txApproveStatus({none: false, isPending: true, isSuccess: false, isError: false});
+		
+		const	contractToApprove = shop === 4 ? process.env.RARITY_COOKING_HELPER_ADDR : process.env.RARITY_CRAFTING_HELPER_ADDR;
 		approveForAll(
-			{provider},
+			{provider, contract: contractToApprove},
 			() => {
 				set_txApproveStatus({none: false, isPending: false, isSuccess: false, isError: true});
 				setTimeout(() => set_txApproveStatus({none: true, isPending: false, isSuccess: false, isError: false}), 5000);
 			},
-			() => set_isApproved(s => ({...s, rarityCrafting: true}))
+			() => {
+				set_specialApprovals(s => ({...s, [contractToApprove]: true}));
+			}
 		);
 	}
 
-	function	onCraft(item, materialsToUse) {
+	function	onLegacyCraft(item, materialsToUse) {
 		craft({
 			provider,
 			tokenID: currentAdventurer.tokenID,
@@ -99,7 +48,27 @@ function	Adventures() {
 			baseType: item.type,
 			itemType: item.id,
 			craftingMaterials: materialsToUse
-		}, () => updateRarity(currentAdventurer.tokenID));
+		}, ({error}) => {
+			if (error) {
+				return;
+			}
+			updateRarity(currentAdventurer.tokenID);
+			updateInventory(currentAdventurer.tokenID);
+		});
+	}
+
+	function	onCraft(recipe) {
+		cook({
+			provider,
+			mealAddress: recipe.address,
+			tokenID: currentAdventurer.tokenID,
+			itemName: recipe.name,
+		}, ({error}) => {
+			if (error) {
+				return;
+			}
+			updateInventory(currentAdventurer.tokenID);
+		});
 	}
 
 	function	renderFilters() {
@@ -142,8 +111,9 @@ function	Adventures() {
 				<ElementRecipeRarityCrafting
 					key={recipe.name}
 					currentAdventurer={currentAdventurer}
+					inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
 					difficultyCheckFunc={() => difficulty.getGoodsDifficulty()}
-					onCraft={materials => onCraft(recipe, materials)}
+					onCraft={materials => onLegacyCraft(recipe, materials)}
 					recipe={{
 						...recipe,
 						cost: [
@@ -160,8 +130,9 @@ function	Adventures() {
 					<ElementRecipeRarityCrafting
 						key={recipe.name}
 						currentAdventurer={currentAdventurer}
+						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
 						difficultyCheckFunc={() => difficulty.getWeaponDifficulty(recipe.armor_bonus)}
-						onCraft={materials => onCraft(recipe, materials)}
+						onCraft={materials => onLegacyCraft(recipe, materials)}
 						recipe={{
 							...recipe,
 							effect: (recipe.description).substring(0, 100),
@@ -180,8 +151,9 @@ function	Adventures() {
 					<ElementRecipeRarityCrafting
 						key={recipe.name}
 						currentAdventurer={currentAdventurer}
+						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
 						difficultyCheckFunc={() => difficulty.getArmorDifficulty(recipe.armor_bonus)}
-						onCraft={materials => onCraft(recipe, materials)}
+						onCraft={materials => onLegacyCraft(recipe, materials)}
 						recipe={{
 							...recipe,
 							effect: (recipe.description).substring(0, 100),
@@ -200,8 +172,9 @@ function	Adventures() {
 					<ElementRecipeRarityCrafting
 						key={recipe.name}
 						currentAdventurer={currentAdventurer}
+						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
 						difficultyCheckFunc={() => difficulty.getArmorDifficulty(recipe.armor_bonus)}
-						onCraft={materials => onCraft(recipe, materials)}
+						onCraft={materials => onLegacyCraft(recipe, materials)}
 						recipe={{
 							...recipe,
 							effect: (recipe.description).substring(0, 100),
@@ -216,11 +189,12 @@ function	Adventures() {
 		}
 		if (shop === 4) {
 			return (
-				MANIFEST_COOK.filter(e => search === '' ? true : e?.name?.toLowerCase().includes(search.toLowerCase())).map((recipe) => (
+				(ITEMS.ITEMS_MEALS).filter(e => search === '' ? true : e?.name?.toLowerCase().includes(search.toLowerCase())).map((recipe) => (
 					<ElementRecipeCrafting
 						key={recipe.name}
 						currentAdventurer={currentAdventurer}
-						onCraft={materials => onCraft(recipe, materials)}
+						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
+						onCraft={() => onCraft(recipe)}
 						recipe={recipe} />
 				))
 			);
@@ -230,8 +204,8 @@ function	Adventures() {
 
 	function	renderMainAction() {
 		if (shop < 4) {
-			if (Number(currentAdventurer?.skills?.[5] || 0) <= 0){
-				if (isApproved.rarityCrafting) {
+			if (Number(currentAdventurer?.skills?.[5] || 0) <= 0) {
+				if (specialApprovals?.[process.env.RARITY_CRAFTING_HELPER_ADDR]) {
 					return (
 						<>
 							<Link href={'/skills?tab=2&search=crafting'}>
@@ -256,20 +230,31 @@ function	Adventures() {
 						</Link>
 					</>
 				);
+			} else if (!specialApprovals?.[process.env.RARITY_CRAFTING_HELPER_ADDR]) {
+				return (
+					<>
+						<button
+							onClick={onApproveAll}
+							className={'uppercase rounded-md button-highlight flex flex-center px-4 py-2 cursor-pointer relative'}>
+							<p className={'font-story text-sm font-bold'}>{'Approve Crafting'}</p>
+						</button>
+					</>
+				);
+			}
+		} else if (shop === 4) {
+			if (!specialApprovals?.[process.env.RARITY_COOKING_HELPER_ADDR]) {
+				return (
+					<>
+						<button
+							onClick={onApproveAll}
+							className={'uppercase rounded-md button-highlight flex flex-center px-4 py-2 cursor-pointer relative'}>
+							<p className={'font-story text-sm font-bold'}>{'Approve Crafting'}</p>
+						</button>
+					</>
+				);
 			}
 		}
-		if (isApproved.rarityCrafting) {
-			return (<div />);
-		}
-		return (
-			<>
-				<button
-					onClick={onApproveAll}
-					className={'uppercase rounded-md button-highlight flex flex-center px-4 py-2 cursor-pointer relative'}>
-					<p className={'font-story text-sm font-bold'}>{'Approve Crafting'}</p>
-				</button>
-			</>
-		);
+		return null;
 	}
 
 	return (

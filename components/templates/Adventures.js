@@ -23,11 +23,11 @@ function	AdventureTemplate({children, cover, rightText, overlayColor}) {
 				<div className={'grid grid-cols-12'}>
 					<div className={'col-span-1 w-full h-full relative overflow-hidden -ml-2'}>
 						<div className={'absolute inset-0 overflow-hidden w-full flex justify-center items-center select-none'}>
-							<div className={'w-full h-10 absolute inset-x-0 top-0 from-dark-400 to-transparent bg-gradient-to-b z-10'} />
-							<p className={'font-rune text-6xl font-bold transform -rotate-180 text-dark-600 opacity-40 whitespace-nowrap uppercase'} style={{writingMode: 'vertical-rl'}}>
+							<div className={'w-full h-10 absolute inset-x-0 top-0 from-light-400 dark:from-dark-400 to-transparent bg-gradient-to-b z-10'} />
+							<p className={'font-rune text-6xl font-bold transform -rotate-180 text-light-600 dark:text-dark-600 opacity-40 whitespace-nowrap uppercase'} style={{writingMode: 'vertical-rl'}}>
 								{'A RARITY EXTENDED AWESOME ADVENTURE'}
 							</p>
-							<div className={'w-full h-10 absolute inset-x-0 -bottom-1 from-dark-400 to-transparent bg-gradient-to-t z-10'} />
+							<div className={'w-full h-10 absolute inset-x-0 -bottom-1 from-light-400 dark:from-dark-400 to-transparent bg-gradient-to-t z-10'} />
 						</div>
 					</div>
 					<div className={'col-span-10 w-full'}>
@@ -35,11 +35,11 @@ function	AdventureTemplate({children, cover, rightText, overlayColor}) {
 					</div>
 					<div className={'col-span-1 w-full h-full relative overflow-hidden -mr-2'}>
 						<div className={'absolute inset-0 overflow-hidden w-full flex justify-center items-center select-none'}>
-							<div className={'w-full h-10 absolute inset-x-0 top-0 from-dark-400 to-transparent bg-gradient-to-b z-10'} />
-							<p className={'font-rune text-6xl font-bold text-dark-600 opacity-40 whitespace-nowrap uppercase'} style={{writingMode: 'vertical-rl'}}>
+							<div className={'w-full h-10 absolute inset-x-0 top-0 from-light-400 dark:from-dark-400 to-transparent bg-gradient-to-b z-10'} />
+							<p className={'font-rune text-6xl font-bold text-light-600 dark:text-dark-600 opacity-40 whitespace-nowrap uppercase'} style={{writingMode: 'vertical-rl'}}>
 								{rightText}
 							</p>
-							<div className={'w-full h-10 absolute inset-x-0 -bottom-1 from-dark-400 to-transparent bg-gradient-to-t z-10'} />
+							<div className={'w-full h-10 absolute inset-x-0 -bottom-1 from-light-400 dark:from-dark-400 to-transparent bg-gradient-to-t z-10'} />
 						</div>
 					</div>
 				</div>

@@ -18,6 +18,18 @@
 	font-style: normal;
 	font-display: swap;
 }
+@font-face {
+    font-family: 'Nordic';
+    src: url('../public/fonts/NordicAlternative.eot');
+    src: url('../public/fonts/NordicAlternative.eot?#iefix') format('embedded-opentype'),
+        url('../public/fonts/NordicAlternative.woff2') format('woff2'),
+        url('../public/fonts/NordicAlternative.woff') format('woff'),
+        url('../public/fonts/NordicAlternative.ttf') format('truetype'),
+        url('../public/fonts/NordicAlternative.svg#NordicAlternative') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
 * {
 	scroll-behavior: smooth;

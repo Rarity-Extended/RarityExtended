@@ -9,7 +9,7 @@ import	OverviewEquipement	from	'sections/adventurer/OverviewEquipement';
 
 function	Wrapper() {
 	const	{provider, chainTime} = useWeb3();
-	const	{currentAdventurer, updateRarity, inventory, skins} = useRarity();
+	const	{currentAdventurer, inventory, skins} = useRarity();
 	const	[tab, set_tab] = React.useState(0);
 
 	return (
@@ -18,7 +18,6 @@ function	Wrapper() {
 				adventurer={currentAdventurer}
 				provider={provider}
 				chainTime={chainTime}
-				updateRarity={updateRarity}
 				raritySkin={skins[currentAdventurer?.tokenID] || currentAdventurer?.skin} />
 			<div className={'w-full'}>
 				<div className={'flex flex-row items-center font-story mb-4 normal-case border-b-2 dark:border-b-dark-300 -mt-4'}>

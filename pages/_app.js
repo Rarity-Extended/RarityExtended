@@ -14,10 +14,12 @@ import	{Web3ReactProvider}				from	'@web3-react-fork/core';
 import	{ethers}						from	'ethers';
 import	useWeb3, {Web3ContextApp}		from	'contexts/useWeb3';
 import	useRarity, {RarityContextApp}	from	'contexts/useRarity';
+import	{InventoryContextApp}			from	'contexts/useInventory';
 import	{UIContextApp}					from	'contexts/useUI';
 import	Navbar							from	'components/Navbar';
 import	Footer							from	'components/Footer';
 import	SectionNoWallet					from	'sections/SectionNoWallet';
+import	SectionNoAdventurer				from	'sections/SectionNoAdventurer';
 import	useWindowInFocus				from	'hook/useWindowInFocus';
 
 import	'tailwindcss/tailwind.css';
@@ -26,7 +28,7 @@ import	'style/TailwindCustomStyles.css';
 
 function	GameWrapper({Component, pageProps, element, router}) {
 	const	{switchChain, active, chainID} = useWeb3();
-	const	{isLoaded, rarities, fetchRarity, updateRarity, rNonce} = useRarity();
+	const	{isLoaded, rarities, fetchRarity, rNonce} = useRarity();
 	if (!isLoaded) {
 		return (
 			<div className={'absolute inset-0 backdrop-blur-3xl bg-opacity-40 pointer-events-none'}>
@@ -44,6 +46,10 @@ function	GameWrapper({Component, pageProps, element, router}) {
 		);
 	}
 
+	if (Object.values(rarities).length === 0) {
+		return (<SectionNoAdventurer />);
+	}
+
 	const getLayout = Component.getLayout || ((page) => page);
 	return (
 		<div className={'pb-24 mb-24 relative z-10'}>
@@ -57,7 +63,6 @@ function	GameWrapper({Component, pageProps, element, router}) {
 					element={element}
 					router={router}
 					rarities={rarities}
-					updateRarity={updateRarity}
 					fetchRarity={fetchRarity}
 					rNonce={rNonce}
 					{...pageProps} />
@@ -145,11 +150,13 @@ function	MyApp(props) {
 			<Web3ReactProvider getLibrary={getLibrary}>
 				<Web3ContextApp>
 					<RarityContextApp>
-						<AppWrapper
-							Component={Component}
-							pageProps={pageProps}
-							element={props.element}
-							router={props.router} />
+						<InventoryContextApp>
+							<AppWrapper
+								Component={Component}
+								pageProps={pageProps}
+								element={props.element}
+								router={props.router} />
+						</InventoryContextApp>
 					</RarityContextApp>
 				</Web3ContextApp>
 			</Web3ReactProvider>

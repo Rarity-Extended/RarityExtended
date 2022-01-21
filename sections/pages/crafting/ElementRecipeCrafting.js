@@ -1,22 +1,23 @@
 import	React		from	'react';
 import	Image		from	'next/image';
 
-function	ensureCanCraft(adventurer, ingredients) {
+function	ensureCanCraft(adventurer, inventory, ingredients) {
 	for (let index = 0; index < ingredients.length; index++) {
 		const [addr, cost] = ingredients[index];
 		if (addr === process.env.RARITY_GOLD_ADDR) {
 			if (Number(adventurer?.gold?.balance) < cost) {
 				return false;
 			}
-		} else if (Number(adventurer?.inventory?.[addr] || 0) < cost) {
+		} else if (Number(inventory?.[addr]?.balance || 0) < cost) {
 			return false;
 		}
 	}
 	return true;
 }
 
-function	ElementRecipe({recipe, currentAdventurer, onCraft}) {
-	const	canCraft = ensureCanCraft(currentAdventurer, recipe.cost);
+
+function	ElementRecipe({recipe, currentAdventurer, inventory, onCraft}) {
+	const	canCraft = ensureCanCraft(currentAdventurer, inventory, recipe.cost);
 
 	return (
 		<div className={'box p-4 flex flex-col'}>
@@ -55,7 +56,7 @@ function	ElementRecipe({recipe, currentAdventurer, onCraft}) {
 			</div>
 			<div className={'mt-auto flex flex-row space-x-2'}>
 				<div
-					onClick={() => canCraft ? onCraft() : null}
+					onClick={() => canCraft ? onCraft('0x19C469a03eF38378c9e354bFCa3D804AAF07571B', 'Grilled Meat') : null}
 					className={`bg-600 flex flex-center text-center px-4 py-2 mt-4 w-full ${canCraft ? 'cursor-pointer hover-bg-900' : 'cursor-not-allowed opacity-60'}`}>
 					<p className={'text-plain font-story text-sm'}>{'Craft'}</p>
 				</div>

@@ -42,6 +42,12 @@ function	Template({children}) {
 							{'Feats'}
 						</p>
 					</Link>
+					<Link href={'/bank'}>
+						<p
+							className={`p-4 pr-6 pl-0 text-plain text-sm transition-opacity hover:opacity-100 ${router.pathname === '/bank' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+							{'Bank'}
+						</p>
+					</Link>
 				</div>
 				{children}
 			</section>

@@ -1,19 +1,21 @@
-import	React, {useState}					from	'react';
-import	dayjs								from	'dayjs';
-import	relativeTime						from	'dayjs/plugin/relativeTime';
-import	useRarity							from	'contexts/useRarity';
-import	useWeb3								from	'contexts/useWeb3';
-import	Template							from	'components/templates/Adventurer';
-import	AdventureTemplate					from	'components/templates/Adventures';
-import	DescriptionFormater					from	'components/jsonParser/adventures/DescriptionFormater';
-import	OptionsFormater						from	'components/jsonParser/adventures/OptionsFormater';
-import	ADVENTURE							from	'utils/codex/adventures/the-forest';
-import	{exploreTheForest, discoverTreasureTheForest}	from	'utils/actions/dungeon_theForest';
+import	React, {useState}			from	'react';
+import	dayjs						from	'dayjs';
+import	relativeTime				from	'dayjs/plugin/relativeTime';
+import	useWeb3						from	'contexts/useWeb3';
+import	useRarity					from	'contexts/useRarity';
+import	useInventory				from	'contexts/useInventory';
+import	Template					from	'components/templates/Adventurer';
+import	AdventureTemplate			from	'components/templates/Adventures';
+import	DescriptionFormater			from	'components/jsonParser/adventures/DescriptionFormater';
+import	OptionsFormater				from	'components/jsonParser/adventures/OptionsFormater';
+import	ADVENTURE					from	'utils/codex/adventures/the-forest';
+import	* as actions				from	'utils/actions/dungeon_theForest';
 
 dayjs.extend(relativeTime);
 function	Index({router}) {
 	const	{provider, chainTime} = useWeb3();
 	const	{currentAdventurer, updateRarity} = useRarity();
+	const	{updateInventory} = useInventory();
 	const	[step, set_step] = useState('intro');
 
 	function	getCurrentStep() {
@@ -24,7 +26,7 @@ function	Index({router}) {
 		return 'rest';
 	}
 	function	onExplore(time) {
-		exploreTheForest({
+		actions.exploreTheForest({
 			provider,
 			tokenID: currentAdventurer.tokenID,
 			timeInDays: time
@@ -36,7 +38,7 @@ function	Index({router}) {
 		});
 	}
 	function	onDig() {
-		discoverTreasureTheForest({
+		actions.discoverTreasureTheForest({
 			provider,
 			tokenID: currentAdventurer.tokenID
 		}, ({error}) => {
@@ -44,6 +46,7 @@ function	Index({router}) {
 				return console.error(error);
 			}
 			updateRarity(currentAdventurer.tokenID);
+			updateInventory(currentAdventurer.tokenID);
 		});
 	}
 	function	onBack() {

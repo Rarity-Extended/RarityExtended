@@ -4,6 +4,7 @@ import	toast					from	'react-hot-toast';
 import	dayjs					from	'dayjs';
 import	relativeTime			from	'dayjs/plugin/relativeTime';
 import	useUI					from	'contexts/useUI';
+import	useRarity				from	'contexts/useRarity';
 import	IconHelmet				from	'components/icons/IconHelmet';
 import	IconGloves				from	'components/icons/IconGloves';
 import	IconArmor				from	'components/icons/IconArmor';
@@ -17,7 +18,8 @@ import	CLASSES					from	'utils/codex/core/classes';
 
 dayjs.extend(relativeTime);
 
-function	OverviewEquipement({adventurer, provider, chainTime, updateRarity, raritySkin}) {
+function	OverviewEquipement({adventurer, provider, chainTime, raritySkin}) {
+	const	{updateRarity} = useRarity();
 	const	{raritySkins} = useUI();
 	const	[name, set_name] = React.useState(adventurer.name || adventurer.tokenID);
 	const	canAdventure = !dayjs(new Date(adventurer.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));

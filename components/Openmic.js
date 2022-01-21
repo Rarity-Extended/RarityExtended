@@ -2,7 +2,6 @@ import React from 'react';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import Adventurer from 'components/Adventurer';
 import CLASSES from 'utils/codex/core/classes';
 
 dayjs.extend(duration);
@@ -54,30 +53,7 @@ function getOpenMicDialogOption(bard, router, openCurrentAventurerModal) {
 	};
 }
 
-function OpenMicSignUpList({bards, router}) {
-	return <div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4'}>
-		{bards.map((bard) => {
-			const eligibility = getEligibility(bard);
-			return (
-				<div key={bard.tokenID} className={'w-full'}>
-					<Adventurer
-						onClick={() => {
-							if(eligibility.eligible) {
-								router.push(`/adventures/openmic/perform?adventurer=${bard.tokenID}`);
-							}
-						}}
-						adventurer={bard}
-						rarityClass={CLASSES[bard.class]}>
-						{eligibility.sheild}
-					</Adventurer>
-				</div>
-			);
-		})}
-	</div>;
-}
-
 export {
 	getEligibility,
-	getOpenMicDialogOption,
-	OpenMicSignUpList
+	getOpenMicDialogOption
 };

@@ -9,6 +9,7 @@ import	AdventurerDetails					from	'sections/adventurer/WrapperMinimal';
 import	useLocalStorage						from	'hook/useLocalStorage';
 import	useWeb3								from	'contexts/useWeb3';
 import	useRarity							from	'contexts/useRarity';
+import	useInventory						from	'contexts/useInventory';
 import	{chunk}								from	'utils';
 import	{xpRequired}						from	'utils/libs/rarity';
 import	* as daycare						from	'utils/actions/daycare';
@@ -43,6 +44,7 @@ function	NewAdventurer() {
 function	Index() {
 	const	{provider, chainTime} = useWeb3();
 	const	{rarities, set_currentAdventurer, rNonce, skins, updateBatchRarity} = useRarity();
+	const	{updateInventories} = useInventory();
 	const	[favoritesAdventurers, set_favoritesAdventurers] = useLocalStorage('favorites', []);
 	const	[nonce, set_nonce] = useState(0);
 	const	[expanded, set_expanded] = useState(false);
@@ -138,7 +140,10 @@ function	Index() {
 				{provider, tokensID},
 				({error}) => console.error(error),
 				(_toast) => {
-					updateBatchRarity(tokensID, () => {
+					Promise.all([
+						updateInventories(tokensID),
+						updateBatchRarity(tokensID)	
+					]).then(() => {
 						set_nonce(n => n + 1);
 						toast.dismiss(_toast);
 						toast.success('Transaction successful');
@@ -178,7 +183,10 @@ function	Index() {
 				{provider, tokensID},
 				({error}) => console.error(error),
 				(_toast) => {
-					updateBatchRarity(tokensID, () => {
+					Promise.all([
+						updateInventories(tokensID),
+						updateBatchRarity(tokensID)	
+					]).then(() => {
 						set_nonce(n => n + 1);
 						toast.dismiss(_toast);
 						toast.success('Transaction successful');

@@ -6,6 +6,7 @@ import	dayjs								from	'dayjs';
 import	relativeTime						from	'dayjs/plugin/relativeTime';
 import	useRarity							from	'contexts/useRarity';
 import	useWeb3								from	'contexts/useWeb3';
+import	useInventory						from	'contexts/useInventory';
 import	Template							from	'components/templates/Adventurer';
 import	AdventureTemplate					from	'components/templates/Adventures';
 import	DescriptionFormater					from	'components/jsonParser/adventures/DescriptionFormater';
@@ -18,6 +19,7 @@ dayjs.extend(relativeTime);
 function	Index({router}) {
 	const	{provider, chainID, chainTime} = useWeb3();
 	const	{currentAdventurer, updateRarity} = useRarity();
+	const	{updateInventory} = useInventory();
 	const	[step, set_step] = useState('intro');
 	const	[variables, set_variables] = useState({
 		'${boar_count}': '0 boar',
@@ -81,6 +83,7 @@ function	Index({router}) {
 				return console.error(error);
 			}
 			updateRarity(currentAdventurer.tokenID);
+			updateInventory(currentAdventurer.tokenID);
 		});
 	}
 	function	onBack() {

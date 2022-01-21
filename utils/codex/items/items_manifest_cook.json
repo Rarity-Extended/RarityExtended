@@ -1,0 +1,61 @@
+[
+	{
+		"img": "/items/meals/0x19C469a03eF38378c9e354bFCa3D804AAF07571B.png",
+		"address": "0x19C469a03eF38378c9e354bFCa3D804AAF07571B",
+		"name": "Grilled Meat",
+		"effect": "Reduce the time between two adventures by 1 hours.",
+		"cost": [
+			["RARITY_GOLD_ADDR", 4],
+			["LOOT_MUSHROOM_ADDR", 2]
+		]
+	},
+	{
+		"img": "/items/meals/meal_mushroomsoup.png",
+		"name": "Mushroom soup",
+		"effect": "Reduce the time between two adventures by 1 hours.",
+		"cost": [
+			["RARITY_GOLD_ADDR", 4],
+			["LOOT_MUSHROOM_ADDR", 2]
+		]
+	},
+	{
+		"img": "/items/meals/meal_pie.png",
+		"name": "Berries pie",
+		"effect": "Reduce the time between two adventures by 1 hours.",
+		"cost": [
+			["RARITY_GOLD_ADDR", 4],
+			["LOOT_BERRIES_ADDR", 2]
+		]
+	},
+	{
+		"img": "/items/meals/meal_fruitandmushroommix.png",
+		"name": "Mushroom and fruid mix",
+		"effect": "Reduce the time between two adventures by 2 hours.",
+		"cost": [
+			["RARITY_GOLD_ADDR", 4],
+			["LOOT_MUSHROOM_ADDR", 2],
+			["LOOT_BERRIES_ADDR", 2]
+		]
+	},
+	{
+		"img": "/items/meals/meal_mushroomandmeatskewer.png",
+		"name": "Mushroom meat skewer",
+		"effect": "Reduce the time between two adventures by 3 hours.",
+		"cost": [
+			["RARITY_GOLD_ADDR", 4],
+			["LOOT_MUSHROOM_ADDR", 2],
+			["LOOT_MEAT_ADDR", 1]
+		]
+	},
+	{
+		"img": "/items/meals/meal_gourmetfruitandmushroom.png",
+		"name": "Gourmet meal with Mushroom",
+		"effect": "Reduce the time between two adventures by 4 hours.",
+		"cost": [
+			["RARITY_GOLD_ADDR", 4],
+			["LOOT_MUSHROOM_ADDR", 2],
+			["LOOT_BERRIES_ADDR", 2],
+			["LOOT_MEAT_ADDR", 1]
+		]
+	}
+]

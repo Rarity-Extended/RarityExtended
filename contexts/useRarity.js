@@ -18,20 +18,14 @@ import 	ModalSelectAdventurer 									from	'components/ModalSelectAdventurer';
 import	useIndexDB												from	'hook/useIDB';
 import	{chunk, fetcher, toAddress, newEthCallProvider}			from	'utils';
 import	CLASSES													from	'utils/codex/core/classes';
-import	ITEMS													from	'utils/codex/items/items';
-import	MANIFEST_GOODS											from	'utils/codex/items/items_manifest_goods.json';
-import	MANIFEST_ARMORS											from	'utils/codex/items/items_manifest_armors.json';
-import	MANIFEST_WEAPONS										from	'utils/codex/items/items_manifest_weapons.json';
-import	MANIFEST_SHIELDS										from	'utils/codex/items/items_manifest_shields.json';
-
-const	isEmptyObject = (obj) => Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
 
 dayjs.extend(relativeTime);
 dayjs.extend(duration);
 
-const	RarityContext = createContext();
-let		isUpdatingRarities = false;
+let isUpdatingRarities = false;
 
+const	isEmptyObject = (obj) => Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
+const	RarityContext = createContext();
 export const RarityContextApp = ({children}) => {
 	const	{active, address, chainID, chainTime, provider} = useWeb3();
 	const	getRaritiesRequestURI = `
@@ -45,7 +39,7 @@ export const RarityContextApp = ({children}) => {
 	const	[currentAdventurer, set_currentAdventurer] = useIndexDB('currentAdventurer', null);
 	const	[rarities, set_rarities] = useIndexDB('adventurers', {});
 	const	[skins, set_skins] = useIndexDB('adventurersSkins', {});
-	const	[inventory, set_inventory] = useState({});
+	const	[specialApprovals, set_specialApprovals] = useState(null);
 	const	[rNonce, set_rNonce] = useState(0);
 	const	[loaded, set_loaded] = useState(false);
 	const	[isModalOpen, set_isModalOpen] = useState(false);
@@ -67,15 +61,6 @@ export const RarityContextApp = ({children}) => {
 		}
 	}, [active, address, chainID, provider]);
 
-	async function	sharedCalls() {
-		const	rarityCraftingHelper = new Contract(process.env.RARITY_CRAFTING_HELPER_ADDR, process.env.RARITY_CRAFTING_HELPER_ABI);
-		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
-		const	callResult = await ethcallProvider.all([
-			rarityCraftingHelper.getItemsByAddress(address)
-		]);
-		return (callResult);
-	}
-
 	async function	fetchRaritySkins(tokensIDs) {
 		const	raritySkinHelper = new Contract(process.env.RARITY_EXTENDED_SKIN_HELPER_ADDR, process.env.RARITY_EXTENDED_SKIN_HELPER_ABI);
 		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
@@ -87,32 +72,32 @@ export const RarityContextApp = ({children}) => {
 		}
 	}
 
-	function	prepareSharedInventory(result) {
-		result.forEach((item) => {
-			if (item.base_type === 3) {
-				set_inventory((prev) => ({...prev, [item.item_id]: {
-					tokenID: item.item_id,
-					crafter: item.crafter.toString(),
-					...Object.values(MANIFEST_WEAPONS).find(e => e.id === item.item_type),
-				}}));
-			}
-			if (item.base_type === 2) {
-				set_inventory((prev) => ({...prev, [item.item_id]: {
-					tokenID: item.item_id,
-					crafter: item.crafter.toString(),
-					...[...Object.values(MANIFEST_ARMORS), ...Object.values(MANIFEST_SHIELDS)].find(e => e.id === item.item_type),
-				}}));
-			}
-			if (item.base_type === 1) {
-				set_inventory((prev) => ({...prev, [item.item_id]: {
-					tokenID: item.item_id,
-					crafter: item.crafter.toString(),
-					...Object.values(MANIFEST_GOODS).find(e => e.id === item.item_type),
-				}}));
-			}
-		});
 
-	}
+	/* 🏹🛡 - Rarity Extended ***********************************************************************
+	**	Check if some approval are made or not to avoid fetching theses data on the page and create
+	**	a delay/bad visual effect.
+	**********************************************************************************************/
+	const	checkSpecialApprovals = React.useCallback(async () => {
+		if (!provider || !address) {
+			return;
+		}
+		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
+		const	rarity = new Contract(process.env.RARITY_ADDR, process.env.RARITY_ABI);
+		const	calls = [
+			rarity.isApprovedForAll(address, process.env.RARITY_CRAFTING_HELPER_ADDR),
+			rarity.isApprovedForAll(address, process.env.RARITY_COOKING_HELPER_ADDR),
+		];
+		const	callResults = await ethcallProvider.tryAll(calls);
+		setTimeout(() => {
+			set_specialApprovals({
+				[process.env.RARITY_CRAFTING_HELPER_ADDR]: callResults[0],
+				[process.env.RARITY_COOKING_HELPER_ADDR]: callResults[1],
+			});
+		}, 1);
+	}, [address, provider]);
+	React.useEffect(() => checkSpecialApprovals(), [checkSpecialApprovals]);
+
+
 
 	/**************************************************************************
 	**	Prepare the multicall to get most of the data
@@ -149,13 +134,6 @@ export const RarityContextApp = ({children}) => {
 	}
 
 	/**************************************************************************
-	**	Prepare the multicall to get most of the data
-	**************************************************************************/
-	function		prepareAdventurerInventory(tokenID) {
-		return ITEMS.map(item => item.fetch(tokenID));
-	}
-
-	/**************************************************************************
 	**	Fetch all the items for the adventurer.
 	**************************************************************************/
 	async function	multicall(calls) {
@@ -167,7 +145,7 @@ export const RarityContextApp = ({children}) => {
 	/**************************************************************************
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
-	async function		setRarity(tokenID, multicallResult, inventoryCallResult) {
+	async function		setRarity(tokenID, multicallResult) {
 		const	[
 			owner, adventurer, name,
 			initialAttributes, abilityScores, extraPointsSpents,
@@ -185,12 +163,6 @@ export const RarityContextApp = ({children}) => {
 				set_rNonce(n => n + 1);
 			}, 1);
 			return;
-		}
-
-		const	_inventory = [];
-		for (let index = 0; index < ITEMS.length; index++) {
-			const item = ITEMS[index];
-			_inventory[item.address] = inventoryCallResult[index];
 		}
 
 		const	_adventurer = {
@@ -249,8 +221,7 @@ export const RarityContextApp = ({children}) => {
 					),
 					timeToNextPerformance: timeToNextOpenMic
 				}
-			},
-			inventory: _inventory
+			}
 		};
 
 		//Hack to bactch all of this in only 1 render
@@ -273,7 +244,6 @@ export const RarityContextApp = ({children}) => {
 		NProgress.start();
 		isUpdatingRarities = true;
 		const	preparedCalls = [];
-		const	preparedInventoryCalls = [];
 		const	tokensIDs = [];
 
 		let		uniqueElements = [];
@@ -289,21 +259,15 @@ export const RarityContextApp = ({children}) => {
 		const	chunkSize = prepareAdventurer(0).length;
 		uniqueElements?.forEach((token) => {
 			preparedCalls.push(...prepareAdventurer(token.tokenID));
-			preparedInventoryCalls.push(...prepareAdventurerInventory(token.tokenID));
 			tokensIDs.push(token.tokenID);
 		});
 
-		const	[callResults, inventoryCallResult] = await Promise.all([
-			multicall(preparedCalls),
-			multicall(preparedInventoryCalls),
-		]);
+		const	callResults = await multicall(preparedCalls);
 		const	chunkedCallResult = chunk(callResults, chunkSize);
-		const	chunkedinventoryCallResult = chunk(inventoryCallResult, ITEMS.length);
 		fetchRaritySkins(tokensIDs);
 		tokensIDs?.forEach((tokenID, i) => {
-			setRarity(tokenID, chunkedCallResult[i], chunkedinventoryCallResult[i]);
+			setRarity(tokenID, chunkedCallResult[i]);
 		});
-		sharedCalls().then(result => prepareSharedInventory(result[0]));
 		isUpdatingRarities = false;
 		NProgress.done();
 	}
@@ -315,9 +279,7 @@ export const RarityContextApp = ({children}) => {
 		const	chunkSize = prepareAdventurer(0).length;
 		const	callResults = await multicall(prepareAdventurer(tokenID));
 		const	chunkedCallResult = chunk(callResults, chunkSize);
-		const	inventoryCallResult = await multicall(prepareAdventurerInventory(tokenID));
-		const	chunkedinventoryCallResult = chunk(inventoryCallResult, ITEMS.length);
-		setRarity(tokenID, chunkedCallResult[0], chunkedinventoryCallResult[0]);
+		setRarity(tokenID, chunkedCallResult[0]);
 	}
 
 	/**************************************************************************
@@ -329,22 +291,18 @@ export const RarityContextApp = ({children}) => {
 		}
 		isUpdatingRarities = true;
 		const	preparedCalls = [];
-		const	preparedInventoryCalls = [];
 		const	tokensIDs = [];
 
 		const	chunkSize = prepareAdventurer(0).length;
 		elements?.forEach((token) => {
 			preparedCalls.push(...prepareAdventurer(token));
-			preparedInventoryCalls.push(...prepareAdventurerInventory(token));
 			tokensIDs.push(token);
 		});
 
 		const	callResults = await multicall(preparedCalls);
 		const	chunkedCallResult = chunk(callResults, chunkSize);
-		const	inventoryCallResult = await multicall(preparedInventoryCalls);
-		const	chunkedinventoryCallResult = chunk(inventoryCallResult, ITEMS.length);
 		tokensIDs?.forEach((tokenID, i) => {
-			setRarity(tokenID, chunkedCallResult[i], chunkedinventoryCallResult[i]);
+			setRarity(tokenID, chunkedCallResult[i]);
 		});
 		isUpdatingRarities = false;
 		callback();
@@ -377,7 +335,7 @@ export const RarityContextApp = ({children}) => {
 
 	useEffect(() => {
 		if (loaded === false)
-			setTimeout(() => !active ? set_loaded(true) : null, 10000); //10s before unlock
+			setTimeout(() => !active ? set_loaded(true) : null, 5000); //5s before unlock
 	}, [loaded]);
 
 	return (
@@ -386,13 +344,13 @@ export const RarityContextApp = ({children}) => {
 				isLoaded: loaded,
 				rarities,
 				skins,
-				inventory,
 				currentAdventurer,
 				set_currentAdventurer,
 				updateRarity,
 				updateBatchRarity,
 				fetchRarity,
 				rNonce,
+				specialApprovals, set_specialApprovals,
 				openCurrentAventurerModal: () => set_isModalOpen(true)
 			}}>
 			{children}

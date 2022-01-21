@@ -1,49 +1,15 @@
-import	React, {Fragment, useState}		from	'react';
-import	{Dialog, Transition}			from	'@headlessui/react';
-import	Adventurer						from	'components/Adventurer';
-import	ListBox							from	'components/ListBox';
-import	useRarity						from	'contexts/useRarity';
-import	useWeb3							from	'contexts/useWeb3';
-import	useLocalStorage					from	'hook/useLocalStorage';
-import	CLASSES							from	'utils/codex/core/classes';
+import	React, {Fragment}		from	'react';
+import	{Dialog, Transition}	from	'@headlessui/react';
+import	Image					from	'next/image';
+import	useRarity				from	'contexts/useRarity';
+import	useUI					from	'contexts/useUI';
+import	useLocalStorage			from	'hook/useLocalStorage';
+import	CLASSES					from	'utils/codex/core/classes';
 
-export const	levelOptions = [
-	{name: 'All Levels', value: 0},
-	{name: 'Level 1', value: 1},
-	{name: 'Level 2', value: 2},
-	{name: 'Level 3', value: 3},
-	{name: 'Level 4', value: 4},
-];
-
-export const	classOptions = [
-	{name: 'All Classes', value: 0},
-	{name: 'Barbarian', value: 1},
-	{name: 'Bard', value: 2},
-	{name: 'Cleric', value: 3},
-	{name: 'Druid', value: 4},
-	{name: 'Fighter', value: 5},
-	{name: 'Monk', value: 6},
-	{name: 'Paladin', value: 7},
-	{name: 'Ranger', value: 8},
-	{name: 'Rogue', value: 9},
-	{name: 'Sorcerer', value: 10},
-	{name: 'Wizard', value: 11},
-];
-
-const defaultOptions = {
-	exclusions: [],
-	level: levelOptions[0],
-	classSelected: classOptions[0]
-};
-
-function ModalSelectAdventurer({isOpen, onClose, onSelect, options = defaultOptions}) {
-	const	{rarities} = useRarity();
-	const	{address, deactivate, onDesactivate} = useWeb3();
-	const	[search, set_search] = useState('');
-	const	[classTab, set_classTab] = useState(0);
-	const	[level, set_level] = useState(options.level || defaultOptions.level);
-	const	[classSelected, set_classSelected] = useState(options.classSelected || defaultOptions.classSelected);
-	const	[favoritesAdventurers, set_favoritesAdventurers] = useLocalStorage('favorites', []);
+function ModalSelectAdventurer({isOpen, onClose, onSelect}) {
+	const	{rarities, skins} = useRarity();
+	const	{raritySkins} = useUI();
+	const	[favoritesAdventurers] = useLocalStorage('favorites', []);
 
 	function clickAdventurer(adventurer) {
 		onClose();
@@ -53,148 +19,64 @@ function ModalSelectAdventurer({isOpen, onClose, onSelect, options = defaultOpti
 	}
 
 	return (
-		<Transition appear show={isOpen} as={Fragment}>
-			<Dialog
-				as={'div'}
-				className={'fixed inset-0 z-10 overflow-none'}
-				style={{zIndex: 1000}}
-				onClose={onClose}>
-				<div className={'min-h-screen px-4 text-center'}>
-					<Transition.Child
-						as={Fragment}
-						enter={'ease-out duration-300'}
-						enterFrom={'opacity-0'}
-						enterTo={'opacity-100'}
-						leave={'ease-in duration-200'}
-						leaveFrom={'opacity-100'}
-						leaveTo={'opacity-0'}>
-						<Dialog.Overlay className={'fixed inset-0 bg-black bg-opacity-80'} />
-					</Transition.Child>
-
-					<Transition.Child
-						as={Fragment}
-						enter={'ease-out duration-300'}
-						enterFrom={'opacity-0 scale-95'}
-						enterTo={'opacity-100 scale-100'}
-						leave={'ease-in duration-200'}
-						leaveFrom={'opacity-100 scale-100'}
-						leaveTo={'opacity-0 scale-95'}>
-						<div className={'inline-block px-4 md:px-10 pt-9 mt-16 md:mt-23 text-left transition-all transform bg-white dark:bg-dark-600 shadow-xl max-w-screen-lg w-full uppercase font-title relative border-4 border-black text-plain'}>
-							<Dialog.Title as={'h3'} className={'relative text-lg font-medium leading-6 text-plain flex flex-col md:flex-row justify-between'}>
-								{'ADVENTURER'}
-								<svg onClick={onClose} className={'absolute md:relative top-0 right-0 cursor-pointer'} width={'24'} height={'24'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
-									<path d={'M6.70711 5.29289C6.31658 4.90237 5.68342 4.90237 5.29289 5.29289C4.90237 5.68342 4.90237 6.31658 5.29289 6.70711L10.5858 12L5.29289 17.2929C4.90237 17.6834 4.90237 18.3166 5.29289 18.7071C5.68342 19.0976 6.31658 19.0976 6.70711 18.7071L12 13.4142L17.2929 18.7071C17.6834 19.0976 18.3166 19.0976 18.7071 18.7071C19.0976 18.3166 19.0976 17.6834 18.7071 17.2929L13.4142 12L18.7071 6.70711C19.0976 6.31658 19.0976 5.68342 18.7071 5.29289C18.3166 4.90237 17.6834 4.90237 17.2929 5.29289L12 10.5858L6.70711 5.29289Z'} fill={'currentcolor'}/>
-								</svg>
-							</Dialog.Title>
-							<div className={'mt-6 flex flex-col md:flex-row mb-4 items-center'}>
-								<input
-									onChange={e => set_search(e?.target?.value || '')}
-									className={'border-4 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-plain'}
-									placeholder={'SEARCH'} />
-								<button
-									onClick={() => {deactivate(); onDesactivate();}}
-									className={'ml-auto border-4 border-black dark:border-dark-100 border-solid my-4 md:my-0 w-full md:w-auto h-10 px-12 text-xs text-plain hover:bg-gray-secondary dark:hover:bg-dark-900 cursor-pointer relative'}>
-									{`${address.slice(0, 4)}...${address.slice(-4)}`}
-									<div className={'absolute right-2 cursor-pointer h-10 -top-1 flex flex-center'}>
-										<svg width={'12'} height={'12'} viewBox={'0 0 24 24'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'}>
-											<path d={'M6.70711 5.29289C6.31658 4.90237 5.68342 4.90237 5.29289 5.29289C4.90237 5.68342 4.90237 6.31658 5.29289 6.70711L10.5858 12L5.29289 17.2929C4.90237 17.6834 4.90237 18.3166 5.29289 18.7071C5.68342 19.0976 6.31658 19.0976 6.70711 18.7071L12 13.4142L17.2929 18.7071C17.6834 19.0976 18.3166 19.0976 18.7071 18.7071C19.0976 18.3166 19.0976 17.6834 18.7071 17.2929L13.4142 12L18.7071 6.70711C19.0976 6.31658 19.0976 5.68342 18.7071 5.29289C18.3166 4.90237 17.6834 4.90237 17.2929 5.29289L12 10.5858L6.70711 5.29289Z'} fill={'currentcolor'}/>
-										</svg>
-									</div>
-								</button>
-							</div>
-							<div className={'w-full flex flex-col md:flex-row text-megaxs mb-4'}>
-								<div className={'w-full flex flex-row'}>
-									<div
-										onClick={() => set_classTab(0)}
-										className={`p-2 cursor-pointer text-plain mr-4 ${classTab === 0 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
-										{'ALL'}
-									</div>
-									<div
-										onClick={() => set_classTab(1)}
-										className={`p-2 cursor-pointer text-plain ${classTab === 1 ? 'bg-gray-secondary dark:bg-dark-400' : 'bg-white dark:bg-dark-600'} dark:hover:bg-dark-400 hover:bg-gray-secondary`}>
-										{'FAVORITES'}
-									</div>
-								</div>
-
-								<div className={'ml-0 md:ml-auto mt-2 md:mt-0 flex flex-row'}>
-									<ListBox
-										options={levelOptions}
-										className={'mr-4 w-28'}
-										set_selected={set_level}
-										selected={level} />
-									<ListBox
-										options={classOptions}
-										className={'mr-4 w-32'}
-										set_selected={set_classSelected}
-										selected={classSelected} />
-								</div>
-							</div>
-								
-							<div className={'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 gap-y-0 md:gap-y-4 min-h-0 md:min-h-133 max-h-72 md:max-h-133 overflow-y-scroll px-1'}>
-								{[...Object.values(rarities)]
-									.filter((adventurer) => {
-										return !options.exclusions.includes(adventurer?.tokenID);
-									})
-									.filter((adventurer) => {
-										if (classTab === 1)
-											return favoritesAdventurers.includes(adventurer?.tokenID);
-										return true;
-									})
-									.filter((adventurer) => {
-										if (level.value === 0)
-											return true;
-										return adventurer.level === level.value; 
-									})
-									.filter((adventurer) => {
-										if (classSelected.value === 0)
-											return true;
-										return adventurer.class === classSelected.value; 
-									})
-									.filter((adventurer) => {
-										if (search === '')
-											return true;
-										return adventurer?.tokenID.toLowerCase().includes(search.toLowerCase());
-									})
-									.sort((a, b) => {
-										if (favoritesAdventurers.includes(a.tokenID))
-											return -1;
-										if (favoritesAdventurers.includes(b.tokenID))
-											return 1;
-										return 0;
-									})
-									.map((adventurer, i) => {
-										return (
-											<div key={`${adventurer.tokenID}_${i}`} className={'w-full pb-0 md:pb-2'}>
-												<Adventurer
-													onClick={() => clickAdventurer(adventurer)}
-													adventurer={adventurer}
-													rarityClass={CLASSES[adventurer.class]}>
-													<div
-														onClick={(e) => {
-															e.preventDefault();
-															e.stopPropagation();
-															set_favoritesAdventurers(favoritesAdventurers.includes(adventurer.tokenID) ? favoritesAdventurers.filter(id => id !== adventurer.tokenID) : [...favoritesAdventurers, adventurer.tokenID]);
-														}}
-														className={`absolute transition-colors left-4 top-4 ${favoritesAdventurers.includes(adventurer.tokenID) ? 'text-highlight' : 'text-gray-secondary hover:text-tag-info dark:text-dark-400 dark:hover:text-tag-warning'}`}>
-														<svg width={20} height={20} aria-hidden={'true'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 576 512'}><path fill={'currentColor'} d={'M316.7 17.8l65.43 132.4l146.4 21.29c26.27 3.796 36.79 36.09 17.75 54.59l-105.9 102.1l25.05 145.5c4.508 26.31-23.23 45.9-46.49 33.7L288 439.6l-130.9 68.7C133.8 520.5 106.1 500.9 110.6 474.6l25.05-145.5L29.72 226.1c-19.03-18.5-8.516-50.79 17.75-54.59l146.4-21.29l65.43-132.4C271.1-6.083 305-5.786 316.7 17.8z'}></path></svg>
-													</div>
-													<div
-														className={'absolute transition-colors right-4 top-0 text-gray-secondary hover:text-tag-info dark:text-dark-400 dark:hover:text-dark-100'}>
-														<svg width={24} height={24} xmlns={'http://www.w3.org/2000/svg'} x={'0px'} y={'0px'} viewBox={'0 0 24 24'}>
-															<path d={'M18,2H6v2h12v16h-2v-2h-2v-2h-4v2H8v2H6V2H4v20h4v-2h2v-2h4v2h2v2h4V2H18z'} fill={'currentcolor'}/>
-															<polygon fill={'currentcolor'} points={'6,4 18,4 18,20 16,20 16,18 14,18 14,16 10,16 10,18 8,18 8,20 6,20 '}/>
-														</svg>
-													</div>
-												</Adventurer>
+		<Transition.Root show={isOpen} as={Fragment}>
+			<Dialog as={'div'} className={'fixed inset-0 overflow-hidden z-50'} onClose={onClose}>
+				<div className={'absolute inset-0 overflow-hidden'}>
+					<Dialog.Overlay className={'absolute inset-0 z-40 bg-dark-900 opacity-40'} />
+	
+					<div className={'fixed inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16 z-50'}>
+						<Transition.Child
+							as={Fragment}
+							enter={'transform transition ease-in-out duration-500 sm:duration-700'}
+							enterFrom={'translate-x-full'}
+							enterTo={'translate-x-0'}
+							leave={'transform transition ease-in-out duration-500 sm:duration-700'}
+							leaveFrom={'translate-x-0'}
+							leaveTo={'translate-x-full'}>
+							<div className={'w-screen max-w-sm'}>
+								<div className={'h-full flex flex-col bg-600 shadow-xl overflow-y-scroll border-l-2 border-light-400 dark:border-dark-400'}>
+									<div className={'px-6 py-8'}>
+										<div className={'flex items-start justify-between'}>
+											<Dialog.Title className={'text-lg font-medium text-plain font-story'}>{'Adventurers'}</Dialog.Title>
+											<div className={'ml-3 h-7 flex items-center'}>
+												<svg onClick={onClose} className={'w-5 h-5 text-plain cursor-pointer'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M5 5h2v2H5V5zm4 4H7V7h2v2zm2 2H9V9h2v2zm2 0h-2v2H9v2H7v2H5v2h2v-2h2v-2h2v-2h2v2h2v2h2v2h2v-2h-2v-2h-2v-2h-2v-2zm2-2v2h-2V9h2zm2-2v2h-2V7h2zm0 0V5h2v2h-2z'} fill={'currentColor'}/> </svg>
 											</div>
-										);
-									})}
+										</div>
+									</div>
+									<div className={'border-b-4 border-black dark:border-dark-100'} />
+									<ul role={'list'} className={'flex-1 overflow-y-auto'}>
+										{[...Object.values(rarities)].map((adventurer) => (
+											<li key={adventurer.tokenID}>
+												<div className={'relative group py-3 px-4 flex items-center hover:bg-dark-900 cursor-pointer'}>
+													<div onClick={() => clickAdventurer(adventurer)} className={'-m-1 flex-1 block p-1'}>
+														<div className={'flex-1 flex items-center min-w-0 relative'}>
+															<span className={'h-20 w-20 inline-block relative'}>
+																<Image
+																	src={raritySkins ? skins[adventurer?.tokenID] || adventurer?.skin : adventurer?.skin}
+																	loading={'eager'}
+																	width={80}
+																	height={80} />
+																{favoritesAdventurers.includes(adventurer.tokenID) ? <span className={'absolute top-0 left-0 block text-highlight'} aria-hidden={'true'}>
+																	<svg width={12} height={12} aria-hidden={'true'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 576 512'}><path fill={'currentColor'} d={'M316.7 17.8l65.43 132.4l146.4 21.29c26.27 3.796 36.79 36.09 17.75 54.59l-105.9 102.1l25.05 145.5c4.508 26.31-23.23 45.9-46.49 33.7L288 439.6l-130.9 68.7C133.8 520.5 106.1 500.9 110.6 474.6l25.05-145.5L29.72 226.1c-19.03-18.5-8.516-50.79 17.75-54.59l146.4-21.29l65.43-132.4C271.1-6.083 305-5.786 316.7 17.8z'}></path></svg>
+																</span> : null}
+															</span>
+															<div className={'ml-4 truncate font-story'}>
+																<p className={'text-base font-bold text-plain truncate'}>{adventurer.name || adventurer.tokenID}</p>
+																<p className={'text-base text-plain truncate'}>{`${CLASSES[adventurer.class].name} level ${adventurer.level}`}</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</li>
+										))}
+									</ul>
+								</div>
 							</div>
-						</div>
-					</Transition.Child>
+						</Transition.Child>
+					</div>
 				</div>
 			</Dialog>
-		</Transition>
+		</Transition.Root>
 	);
 }
 

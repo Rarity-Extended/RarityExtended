@@ -8,7 +8,7 @@ function	IconChevron({className}) {
 	);
 }
 
-function	ensureCanCraft(adventurer, ingredients) {
+function	ensureCanCraft(adventurer, inventory, ingredients) {
 	if (Number(adventurer?.skills?.[5] || 0) <= 0) {
 		return false;
 	}
@@ -22,16 +22,16 @@ function	ensureCanCraft(adventurer, ingredients) {
 			if (Number(adventurer?.gold?.balance) < cost) {
 				return false;
 			}
-		} else if (Number(adventurer?.inventory?.[addr] || 0) < cost) {
+		} else if (Number(inventory?.[addr]?.balance || 0) < cost) {
 			return false;
 		}
 	}
 	return true;
 }
 
-function	ElementRecipe({recipe, currentAdventurer, difficultyCheckFunc, onCraft}) {
-	const	canCraft = ensureCanCraft(currentAdventurer, recipe.cost);
-	const	ratSkinAvailable = Number(currentAdventurer?.inventory?.[process.env.DUNGEON_THE_CELLAR_ADDR] || 0);
+const ElementRecipe = React.memo(function ElementRecipe({recipe, currentAdventurer, inventory, difficultyCheckFunc, onCraft}) {
+	const	canCraft = ensureCanCraft(currentAdventurer, inventory, recipe.cost);
+	const	ratSkinAvailable = Number((inventory?.[process.env.DUNGEON_THE_CELLAR_ADDR])?.balance || 0);
 	const	[difficulty, set_difficulty] = React.useState(0);
 	const	[materialsToUse, set_materialsToUse] = React.useState(
 		requiredMaterials(currentAdventurer?.skills[5], currentAdventurer?.attributes?.intelligence, difficultyCheckFunc(), ratSkinAvailable)
@@ -106,6 +106,6 @@ function	ElementRecipe({recipe, currentAdventurer, difficultyCheckFunc, onCraft}
 			</div>
 		</div>
 	);
-}
+});
 
 export default ElementRecipe;

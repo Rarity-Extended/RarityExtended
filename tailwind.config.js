@@ -19,6 +19,7 @@ module.exports = {
 			story: ['Noto Sans Mono', 'monospace'],
 			sans: ['Roboto', ...defaultTheme.fontFamily.sans],
 			rune: ['Runes', ...defaultTheme.fontFamily.mono],
+			nordic: ['Nordic', ...defaultTheme.fontFamily.mono],
 		},
 		colors: {
 			transparent: 'transparent',
