@@ -41,14 +41,14 @@ function	Navbar() {
 		<>
 			<div className={'block md:hidden'}>
 				<div>
-					<div className={'flex items-start justify-between font-story pt-2 pb-4'}>
-						<h1 className={'text-lg font-medium text-plain normal-case'}>
+					<div className={'flex items-start justify-between pt-2 pb-4'}>
+						<h1 className={'text-lg font-medium text-plain'}>
 							{'Rarity Extended'}
 						</h1>
 						<div className={'flex items-center'}>
 							<button
 								type={'button'}
-								className={'rounded-md focus:outline-none text-plain'}
+								className={'rounded-sm focus:outline-none text-plain'}
 								onClick={openCurrentAventurerModal}>
 								<span className={'sr-only'}>{'Close panel'}</span>
 								<svg aria-hidden={'true'} focusable={'false'} data-prefix={'fas'} data-icon={'arrow-right-arrow-left'} className={'w-4 h-4 text-plain mt-1'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 512 512'}><path fill={'currentColor'} d={'M32 176h370.8l-57.38 57.38c-12.5 12.5-12.5 32.75 0 45.25C351.6 284.9 359.8 288 368 288s16.38-3.125 22.62-9.375l112-112c12.5-12.5 12.5-32.75 0-45.25l-112-112c-12.5-12.5-32.75-12.5-45.25 0s-12.5 32.75 0 45.25L402.8 112H32c-17.69 0-32 14.31-32 32S14.31 176 32 176zM480 336H109.3l57.38-57.38c12.5-12.5 12.5-32.75 0-45.25s-32.75-12.5-45.25 0l-112 112c-12.5 12.5-12.5 32.75 0 45.25l112 112C127.6 508.9 135.8 512 144 512s16.38-3.125 22.62-9.375c12.5-12.5 12.5-32.75 0-45.25L109.3 400H480c17.69 0 32-14.31 32-32S497.7 336 480 336z'}></path></svg>
@@ -68,8 +68,8 @@ function	Navbar() {
 							</Link>
 							<Link href={'/'}>
 								<div>
-									<p className={'hidden md:block cursor-pointer'}>{'Rarity'}</p>
-									<p className={'hidden md:block cursor-pointer'}>{'Extended'}</p>
+									<p className={'hidden md:block font-title cursor-pointer'}>{'Rarity'}</p>
+									<p className={'hidden md:block font-title cursor-pointer'}>{'Extended'}</p>
 								</div>
 							</Link>
 						</div>

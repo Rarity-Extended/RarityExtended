@@ -70,44 +70,44 @@ function	OverviewMinimal({adventurer, provider, chainTime, raritySkin}) {
 	function	renderAction() {
 		if (adventurer.xp >= (xpRequired(adventurer.level))) {
 			return (
-				<div
+				<button
 					onClick={onLevelUp}
-					className={'bg-gray-principal flex flex-center text-center px-4 py-2 mt-4 w-full cursor-pointer dark:bg-tag-warning hover:dark:bg-tag-warningDarker hover:bg-gray-secondary text-black font-bold'}>
-					<p className={'font-story text-sm select-none normal-case'}>{'Level-Up'}</p>
-				</div>
+					className={'flex flex-center mt-4 w-full button-highlight'}>
+					<p className={' text-sm select-none'}>{'Level-Up'}</p>
+				</button>
 			);
 		}
 		if (canAdventure) {
 			return (
-				<div
+				<button
 					onClick={onClaimXP}
-					className={'bg-gray-principal flex flex-center text-center px-4 py-2 mt-4 w-full cursor-pointer dark:bg-tag-warning hover:dark:bg-tag-warningDarker hover:bg-gray-secondary text-black font-bold'}>
-					<p className={'font-story text-sm select-none normal-case'}>{'Claim XP'}</p>
-				</div>
+					className={'flex flex-center mt-4 w-full button-highlight'}>
+					<p className={' text-sm select-none'}>{'Claim XP'}</p>
+				</button>
 			);
 		}
 		if (adventurer?.gold?.claimable > 0) {
 			return (
-				<div
+				<button
 					onClick={onClaimGold}
-					className={'bg-gray-principal flex flex-center text-center px-4 py-2 mt-4 w-full cursor-pointer dark:bg-tag-warning hover:dark:bg-tag-warningDarker hover:bg-gray-secondary text-black font-bold'}>
-					<p className={'font-story text-sm select-none normal-case'}>{'Claim XP'}</p>
-				</div>
+					className={'flex flex-center mt-4 w-full button-highlight'}>
+					<p className={' text-sm select-none'}>{'Claim XP'}</p>
+				</button>
 			);
 		}
 		return (
-			<div className={'bg-gray-principal flex flex-center text-center px-4 py-2 mt-4 w-full dark:bg-dark-600 text-plain cursor-not-allowed opacity-40'}>
-				<p className={'font-story text-sm select-none normal-case'}>
+			<button disabled className={'flex flex-center mt-4 w-full button-highlight'}>
+				<p className={' text-sm select-none'}>
 					{`Ready ${dayjs(new Date(adventurer.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}
 				</p>
-			</div>
+			</button>
 		);
 	}
 
 	function	renderName() {
 		const isSameName = (name && (name !== (adventurer.name || adventurer.tokenID)));
 		return (
-			<div className={'flex flex-row items-center text-center w-full relative px-4 font-story'}>
+			<div className={'flex flex-row items-center text-center w-full relative px-4'}>
 				<input
 					value={name}
 					onChange={(e) => set_name(e.target.value)}
@@ -148,7 +148,7 @@ function	OverviewMinimal({adventurer, provider, chainTime, raritySkin}) {
 			<div>
 				<div className={'text-center w-full flex flex-col px-4 items-center'}>
 					{renderName()}
-					<p className={'text-black dark:text-dark-100 text-sm font-story mb-4'}>
+					<p className={'text-black dark:text-dark-100 text-sm mb-4'}>
 						{`${CLASSES[adventurer.class].name} level ${adventurer.level}`}
 					</p>
 				</div>

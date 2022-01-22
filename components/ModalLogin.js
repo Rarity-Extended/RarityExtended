@@ -13,7 +13,7 @@ function	LoginBox({set_open}) {
 	const	{connect, walletType} = useWeb3();
 
 	return (
-		<div className={'box font-story'}>
+		<div className={'box'}>
 			<div className={'p-6 space-y-4'}>
 				<div
 					onClick={() => {

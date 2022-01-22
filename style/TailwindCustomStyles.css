@@ -2,35 +2,148 @@
 @tailwind components;
 @tailwind utilities;
 
-.button-regular {
-  @apply text-center cursor-pointer bg-gray-principal hover:bg-white dark:bg-dark-400 dark:hover:bg-dark-600 dark:focus:bg-dark-600
-}
-
-.button-regular-disabled {
-  @apply button-regular text-dark-100 dark:text-dark-600 pointer-events-none;
-}
-
-.button-bloody-base {
-  @apply text-center bg-blood-200 dark:bg-blood-900;
-}
-
-.button-bloody {
-  @apply button-bloody-base text-fire-900 hover:text-fire-200 hover:bg-blood-400 dark:text-fire-400 dark:hover:text-fire-200 dark:hover:bg-blood-400 focus:bg-blood-400;
-}
-
-.button-bloody-disabled {
-  @apply button-bloody-base text-blood-600;
-}
-
 .flex-center {
   @apply justify-center items-center;
 }
 .box {
-  @apply rounded-md bg-light-400 dark:bg-dark-400 border dark:border-dark-400 border-light-600;
+  @apply rounded-sm bg-light-0 dark:bg-dark-400;
+}
+.box-with-border {
+  @apply rounded-sm bg-light-0 dark:bg-dark-400 border border-gray-100 border-opacity-40 dark:border-dark-400;
 }
 .box-darker {
-  @apply rounded-md bg-light-600 dark:bg-dark-600 border dark:border-0 border-light-600;
+  @apply rounded-sm bg-light-600 dark:bg-dark-600;
 }
+
+.button-core {
+  @apply
+    select-none
+    font-bold
+    rounded-sm
+    px-4
+    py-2
+    text-sm
+    tracking-wide
+    text-center
+    transition-colors;
+}
+.button-highlight {
+  @apply
+    button-core
+    bg-light-primary
+    hover:bg-light-primary-darker
+    dark:bg-dark-primary
+    dark:hover:bg-dark-primary-darker
+    text-white
+    dark:text-black
+    cursor-pointer
+  ;
+}
+.button-highlight:disabled {
+  @apply
+    button-core
+    cursor-not-allowed
+    bg-light-600
+    dark:bg-dark-600
+    text-gray-200
+    dark:text-dark-200
+  ;
+}
+.button-highlight-outline {
+  @apply
+    button-core
+    bg-transparent
+    hover:bg-light-primary-lighter
+    border-light-primary
+    dark:bg-transparent
+    dark:hover:bg-dark-primary-lighter
+    dark:border-dark-primary
+    text-light-primary
+    dark:text-dark-primary
+    border
+    cursor-pointer
+  ;
+}
+.button-highlight-with-arrow {
+  @apply
+    select-none
+    rounded-l-sm
+    rounded-r-none
+    px-4
+    py-2
+    pl-3
+    pr-4
+    text-sm
+    tracking-wide
+    text-center
+    transition-colors
+    bg-light-primary
+    hover:bg-light-primary-darker
+    dark:bg-dark-primary
+    dark:hover:bg-dark-primary-darker
+    text-white
+    dark:text-black
+    cursor-pointer
+  ;
+}
+.button-outline-arrow {
+  @apply
+    select-none
+    rounded-r-sm
+    rounded-l-none
+    p-2
+    text-sm
+    tracking-wide
+    text-center
+    bg-transparent
+    transition-colors
+    hover:bg-light-primary-lighter
+    border-light-primary
+    dark:bg-transparent
+    dark:hover:bg-dark-primary-lighter
+    dark:border-dark-primary
+    text-light-primary
+    dark:text-dark-primary
+    border
+    border-l-0
+    cursor-pointer
+  ;
+}
+.button-fake {
+  @apply
+    select-none
+    rounded-sm
+    px-4
+    py-2
+    text-sm
+    tracking-wide
+    text-center
+    bg-light-background
+    dark:bg-dark-600
+    text-black
+    dark:text-white
+  ;
+}
+.button-regular {
+  @apply
+    select-none
+    rounded-sm
+    p-4
+    text-sm
+    tracking-wide
+    text-center
+    font-bold
+    cursor-pointer
+    transition-colors
+    bg-light-background
+    hover:bg-light-primary-lighter
+    dark:bg-dark-600
+    dark:hover:bg-dark-900
+    text-black
+    dark:text-white
+  ;
+}
+
 
 .text-plain {
   @apply text-black dark:text-white;
@@ -44,38 +157,21 @@
 .text-50 {
   @apply text-black dark:text-white text-opacity-60 dark:text-opacity-60;
 }
-.bg-400 {
-  @apply bg-light-400 dark:bg-dark-400;
-}
 .bg-600 {
   @apply bg-light-600 dark:bg-dark-600;
 }
 .bg-900 {
-  @apply bg-light-900 dark:bg-dark-900;
+  @apply bg-light-0 dark:bg-dark-900;
 }
 .hover-bg-900 {
   @apply hover:bg-light-300 dark:hover:bg-dark-900;
 }
 .border-highlight {
-  @apply border-tag-info dark:border-tag-warning;
-}
-.bg-highlight {
-  @apply bg-tag-info dark:bg-tag-warning;
-}
-.button-highlight {
-  @apply bg-tag-info hover:bg-tag-infoDarker dark:bg-tag-warning dark:hover:bg-tag-warningDarker text-white dark:text-black;
+  @apply border-light-primary dark:border-dark-primary;
 }
 .text-highlight {
-  @apply text-tag-info dark:text-tag-warning;
+  @apply text-light-primary dark:text-dark-primary;
 }
-.hover-text-highlight {
-  @apply text-tag-info hover:bg-tag-infoDarker dark:text-tag-warning dark:hover:bg-tag-warningDarker;
-}
-
-.button-600 {
-  @apply bg-light-600 dark:bg-dark-600 text-white dark:text-black border border-light-900 dark:border-dark-900 border-opacity-50 dark:border-opacity-50 hover:bg-light-900 dark:hover:bg-dark-900;
-}
-
-.box-600 {
-  @apply bg-light-600 dark:bg-dark-600 text-white dark:text-black border border-light-900 dark:border-dark-900 border-opacity-50 dark:border-opacity-50 rounded-md;
+.bg-highlight {
+  @apply bg-light-primary dark:bg-dark-primary;
 }

@@ -27,9 +27,9 @@ function	Index({router}) {
 			overlayColor={'#000000'}
 			rightText={'YOU SHOULD KILL THE BIG UGLY RAT'}>
 			<div>
-				<h1 className={'pt-4 pb-4 font-bold text-xl font-story'}>{'THE CELLAR'}</h1>
+				<h1 className={'pt-4 pb-4 font-bold text-xl'}>{'THE CELLAR'}</h1>
 			</div>
-			<div className={'normal-case font-story text-base leading-relaxed text-plain'}>
+			<div className={'normal-case text-base leading-relaxed text-plain'}>
 				<DescriptionFormater
 					addr={process.env.DUNGEON_THE_CELLAR_ADDR}
 					rawDescription={ADVENTURE[currentAdventurer?.adventures?.cellar?.canAdventure ? step : 'rest'].description}

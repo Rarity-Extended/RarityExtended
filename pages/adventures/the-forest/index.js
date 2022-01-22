@@ -59,9 +59,9 @@ function	Index({router}) {
 			overlayColor={'#124712'}
 			rightText={'THIS IS A BIG AND DARK FOREST WITH SOME MUSHROOM'}>
 			<div>
-				<h1 className={'pt-4 pb-4 font-bold text-xl font-story'}>{'THE FOREST'}</h1>
+				<h1 className={'pt-4 pb-4 font-bold text-xl'}>{'THE FOREST'}</h1>
 			</div>
-			<div className={'normal-case font-story text-base leading-relaxed text-plain'}>
+			<div className={'normal-case text-base leading-relaxed text-plain'}>
 				<DescriptionFormater
 					addr={process.env.DUNGEON_THE_FOREST_ADDR}
 					rawDescription={ADVENTURE[getCurrentStep()].description}

@@ -155,7 +155,7 @@ function	AttributeSetter({adventurer, value, attributesAreInit, updateAttribute,
 							}));
 						}
 					}}
-					className={`text-xl -m-2 p-2 text-center font-story ${updateAttribute[name] === value || !(updateAttribute.remainingPoints >= 0) ? 'opacity-0' : 'cursor-pointer opacity-20 hover:opacity-100 transition-opacity select-none'}`}>
+					className={`text-xl -m-2 p-2 text-center ${updateAttribute[name] === value || !(updateAttribute.remainingPoints >= 0) ? 'opacity-0' : 'cursor-pointer opacity-20 hover:opacity-100 transition-opacity select-none'}`}>
 					{'-'}
 				</div>
 				<p className={'text-xl px-3'}>{updateAttribute[name]}</p>
@@ -172,7 +172,7 @@ function	AttributeSetter({adventurer, value, attributesAreInit, updateAttribute,
 							}));
 						}
 					}}
-					className={`text-xl -m-2 p-2 text-center font-story ${getNextRemainingPoints() < 0 || !(updateAttribute.remainingPoints >= 0) ? 'opacity-0' : 'cursor-pointer opacity-20 hover:opacity-100 transition-opacity select-none'}`}>
+					className={`text-xl -m-2 p-2 text-center ${getNextRemainingPoints() < 0 || !(updateAttribute.remainingPoints >= 0) ? 'opacity-0' : 'cursor-pointer opacity-20 hover:opacity-100 transition-opacity select-none'}`}>
 					{'+'}
 				</div>
 			</div>
@@ -198,7 +198,7 @@ function	AttributeSetter({adventurer, value, attributesAreInit, updateAttribute,
 							increaseCharisma();
 						}
 					}}
-					className={'text-xl -m-2 p-2 text-center opacity-20 hover:opacity-100 cursor-pointer font-story'}>
+					className={'text-xl -m-2 p-2 text-center opacity-20 hover:opacity-100 cursor-pointer'}>
 					{'+'}
 				</div>
 			</div>
@@ -208,7 +208,7 @@ function	AttributeSetter({adventurer, value, attributesAreInit, updateAttribute,
 		<div className={'flex flex-row items-center'}>
 			<p className={'text-xl px-3'}>{value}</p>
 			<div 
-				className={'text-xl -m-2 p-2 text-center opacity-0 font-story'}>
+				className={'text-xl -m-2 p-2 text-center opacity-0'}>
 				{'+'}
 			</div>
 		</div>
@@ -218,12 +218,12 @@ function	FakeAttributeSetter({value}) {
 	return (
 		<div className={'flex flex-row items-center'}>
 			<div 
-				className={'text-xl -m-2 p-2 text-center opacity-0 font-story'}>
+				className={'text-xl -m-2 p-2 text-center opacity-0'}>
 				{'-'}
 			</div>
 			<p className={'text-xl px-3'}>{value}</p>
 			<div 
-				className={'text-xl -m-2 p-2 text-center opacity-0 font-story'}>
+				className={'text-xl -m-2 p-2 text-center opacity-0'}>
 				{'+'}
 			</div>
 		</div>
@@ -284,7 +284,7 @@ function	OverviewAttributes({adventurer}) {
 			return (
 				<div
 					onClick={() => updateAttribute.remainingPoints === 0 ? buyPoints() : null}
-					className={`w-full text-sm normal-case font-bold text-highlight ${updateAttribute.remainingPoints === 0 ? 'cursor-pointer animate-pulse' : ''}`}>
+					className={`w-full text-sm font-bold text-highlight ${updateAttribute.remainingPoints === 0 ? 'cursor-pointer animate-pulse' : ''}`}>
 					{
 						updateAttribute.remainingPoints === 0 ?
 							'Save attributes' :
@@ -298,7 +298,7 @@ function	OverviewAttributes({adventurer}) {
 		if (updateAttribute.extraPoints > updateAttribute.extraPointsSpents) {
 			const	extraRemainingPoints = updateAttribute.extraPoints - updateAttribute.extraPointsSpents;
 			return (
-				<div className={`w-full text-sm normal-case font-bold text-highlight ${extraRemainingPoints === 0 ? 'cursor-pointer animate-pulse' : ''}`}>
+				<div className={`w-full text-sm font-bold text-highlight ${extraRemainingPoints === 0 ? 'cursor-pointer animate-pulse' : ''}`}>
 					{extraRemainingPoints === 0 ? 
 						'Save attributes' :
 						`${extraRemainingPoints} point${extraRemainingPoints > 1 ? 's' : ''} left`
@@ -307,7 +307,7 @@ function	OverviewAttributes({adventurer}) {
 			);	
 		}
 		return (
-			<div className={'w-full text-sm normal-case text-highlight font-bold opacity-0'}>
+			<div className={'w-full text-sm text-highlight font-bold opacity-0'}>
 				{'Save attributes'}
 			</div>
 		);
@@ -315,12 +315,12 @@ function	OverviewAttributes({adventurer}) {
 
 	const	health = health_by_class_and_level(adventurer.class, adventurer.level, adventurer.attributes.constitution);
 	return (
-		<div className={'flex flex-col items-center font-story w-full mt-auto'}>
+		<div className={'flex flex-col items-center w-full mt-auto'}>
 			<div className={'grid grid-cols-2 gap-x-16 gap-y-2 w-full'}>
 				<div className={'flex flex-row items-center justify-between'}>
 					<div className={'flex flex-row items-center opacity-60'}>
 						<IconAttributeStrength width={16} height={16} />
-						<p className={'text-xs normal-case ml-2'}>{'Strength'}</p>
+						<p className={'text-xs ml-2'}>{'Strength'}</p>
 					</div>
 					<AttributeSetter
 						adventurer={adventurer}
@@ -333,7 +333,7 @@ function	OverviewAttributes({adventurer}) {
 				<div className={'flex flex-row items-center justify-between'}>
 					<div className={'flex flex-row items-center opacity-60'}>
 						<IconAttributeDexterity width={16} height={16} />
-						<p className={'text-xs normal-case ml-2'}>{'Dexterity'}</p>
+						<p className={'text-xs ml-2'}>{'Dexterity'}</p>
 					</div>
 					<AttributeSetter
 						adventurer={adventurer}
@@ -346,7 +346,7 @@ function	OverviewAttributes({adventurer}) {
 				<div className={'flex flex-row items-center justify-between'}>
 					<div className={'flex flex-row items-center opacity-60'}>
 						<IconAttributeConstitution width={16} height={16} />
-						<p className={'text-xs normal-case ml-2'}>{'Constitution'}</p>
+						<p className={'text-xs ml-2'}>{'Constitution'}</p>
 					</div>
 					<AttributeSetter
 						adventurer={adventurer}
@@ -359,7 +359,7 @@ function	OverviewAttributes({adventurer}) {
 				<div className={'flex flex-row items-center justify-between'}>
 					<div className={'flex flex-row items-center opacity-60'}>
 						<IconAttributeWisdom width={16} height={16} />
-						<p className={'text-xs normal-case ml-2'}>{'Wisdom'}</p>
+						<p className={'text-xs ml-2'}>{'Wisdom'}</p>
 					</div>
 					<AttributeSetter
 						adventurer={adventurer}
@@ -372,7 +372,7 @@ function	OverviewAttributes({adventurer}) {
 				<div className={'flex flex-row items-center justify-between'}>
 					<div className={'flex flex-row items-center opacity-60'}>
 						<IconAttributeCharisma width={16} height={16} />
-						<p className={'text-xs normal-case ml-2'}>{'Charisma'}</p>
+						<p className={'text-xs ml-2'}>{'Charisma'}</p>
 					</div>
 					<AttributeSetter
 						adventurer={adventurer}
@@ -385,7 +385,7 @@ function	OverviewAttributes({adventurer}) {
 				<div className={'flex flex-row items-center justify-between'}>
 					<div className={'flex flex-row items-center opacity-60'}>
 						<IconAttributeIntelligence width={16} height={16} />
-						<p className={'text-xs normal-case ml-2'}>{'Intelligence'}</p>
+						<p className={'text-xs ml-2'}>{'Intelligence'}</p>
 					</div>
 					<AttributeSetter
 						adventurer={adventurer}
@@ -399,21 +399,21 @@ function	OverviewAttributes({adventurer}) {
 				<div className={'flex flex-row items-center justify-between'}>
 					<div className={'flex flex-row items-center text-50'}>
 						<IconAttributeAttack width={16} height={16} />
-						<p className={'text-xs normal-case ml-2'}>{'Attack'}</p>
+						<p className={'text-xs ml-2'}>{'Attack'}</p>
 					</div>
 					<FakeAttributeSetter value={attack_bonus(adventurer.class, adventurer.attributes.strength, adventurer.level)} />
 				</div>
 				<div className={'flex flex-row items-center justify-between'}>
 					<div className={'flex flex-row items-center opacity-60'}>
 						<IconAttributeDamage width={16} height={16} />
-						<p className={'text-xs normal-case ml-2'}>{'Damage'}</p>
+						<p className={'text-xs ml-2'}>{'Damage'}</p>
 					</div>
 					<FakeAttributeSetter value={damage(adventurer.attributes.strength)} />
 				</div>
 				<div className={'flex flex-row items-center justify-between'}>
 					<div className={'flex flex-row items-center opacity-60'}>
 						<IconAttributeArmor width={16} height={16} />
-						<p className={'text-xs normal-case ml-2'}>{'Armor'}</p>
+						<p className={'text-xs ml-2'}>{'Armor'}</p>
 					</div>
 					<FakeAttributeSetter value={modifier_for_attribute(adventurer.attributes.dexterity)} />
 				</div>
@@ -424,26 +424,26 @@ function	OverviewAttributes({adventurer}) {
 
 
 			<div className={'w-full mt-9'}>
-				<div className={'w-full flex flex-row justify-between items-center font-bold text-xs opacity-60 normal-case mb-1'}>
+				<div className={'w-full flex flex-row justify-between items-center font-bold text-xs opacity-60 mb-1'}>
 					<div>{'Health'}</div>
 					<div>{`${health} / ${health}`}</div>
 				</div>
 				<div className={'w-full h-4'}>
 					<div className={'bg-600 h-2 flex w-full relative overflow-hidden'}>
-						<div className={'absolute left-0 inset-y-0 h-2 bg-tag-withdraw'} style={{width: '100%'}} />
+						<div className={'absolute left-0 inset-y-0 h-2 bg-red'} style={{width: '100%'}} />
 					</div>
 				</div>
 			</div>
 
 			<div className={'w-full mt-1'}>
-				<div className={'w-full flex flex-row justify-between items-center font-bold text-xs opacity-60 normal-case mb-1'}>
+				<div className={'w-full flex flex-row justify-between items-center font-bold text-xs opacity-60 mb-1'}>
 					<div>{`Level ${adventurer.level}`}</div>
 					<div>{`${Number(adventurer.xp)} / ${xpRequired(adventurer.level)}`}</div>
 				</div>
 				<div className={'w-full h-4'}>
 					<div className={'bg-600 h-2 flex w-full relative overflow-hidden'}>
 						<div
-							className={'absolute left-0 inset-y-0 h-2 bg-tag-warning'}
+							className={'absolute left-0 inset-y-0 h-2 bg-highlight'}
 							style={{width: `${Number(adventurer.xp) / xpRequired(adventurer.level) * 100}%`}} />
 					</div>
 				</div>

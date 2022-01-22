@@ -35,49 +35,48 @@ const	VAULT_ABI = [
 
 function	BankCard({vault, situation, name, onDeposit}) {
 	const	apy = vault?.apy?.net_apy * 100;
-
 	return (
-		<div className={'col-span-1 w-full box p-4 overflow-hidden'}>
-			<div className={'bg-light-600 dark:bg-dark-600 -mx-4 -mt-4 py-3 mb-6'}>
+		<div className={'col-span-1 w-full box-with-border p-4 overflow-hidden'}>
+			<div className={'box-darker -mx-4 -mt-4 py-3 mb-6'}>
 				<h1 className={'font-nordic text-4xl text-plain opacity-80 text-center'}>{name}</h1>
 			</div>
-			<h2 className={'font-nordic text-3xl text-tag-warning text-center'}>
+			<h2 className={'font-nordic text-3xl text-highlight text-center'}>
 				{`${(apy).toFixed(2)}%`}
 			</h2>
 			<div className={'grid grid-cols-2 my-4'}>
-				<div className={'font-story text-sm  normal-case'}>
+				<div className={' text-sm '}>
 					<p className={'text-plain opacity-20'}>{'In Wallet'}</p>
 					<p className={'text-base'}>{Number(situation?.inWallet || 0).toFixed(2)}</p>
 				</div>
-				<div className={'font-story text-sm normal-case'}>
+				<div className={' text-sm'}>
 					<p className={'text-plain opacity-20'}>{'In Vault'}</p>
 					<p className={'text-base'}>{Number(situation?.inVault || 0).toFixed(2)}</p>
 				</div>
 			</div>
 
-			<div className={'font-story text-sm normal-case mt-8'}>
+			<div className={' text-sm mt-8'}>
 				<p className={'text-plain opacity-20'}>{'Deposit'}</p>
 			</div>
 			<div className={'grid grid-cols-2 mt-2 gap-x-4 gap-y-2'}>
 				<div
 					onClick={() => onDeposit(situation?.inWalletRaw[0])}
-					className={'bg-light-600 dark:bg-dark-600 bg-opacity-60 rounded-md hover:bg-opacity-100 transition-visibility cursor-pointer font-story text-base text-center normal-case py-2'}>
-					<p className={'text-plain'}>{'25%'}</p>
+					className={'button-regular'}>
+					<p>{'25%'}</p>
 				</div>
 				<div
 					onClick={() => onDeposit(situation?.inWalletRaw[1])}
-					className={'bg-light-600 dark:bg-dark-600 bg-opacity-60 rounded-md hover:bg-opacity-100 transition-visibility cursor-pointer font-story text-base text-center normal-case py-2'}>
-					<p className={'text-plain'}>{'50%'}</p>
+					className={'button-regular'}>
+					<p>{'50%'}</p>
 				</div>
 				<div
 					onClick={() => onDeposit(situation?.inWalletRaw[2])}
-					className={'bg-light-600 dark:bg-dark-600 bg-opacity-60 rounded-md hover:bg-opacity-100 transition-visibility cursor-pointer font-story text-base text-center normal-case py-2'}>
-					<p className={'text-plain'}>{'75%'}</p>
+					className={'button-regular'}>
+					<p>{'75%'}</p>
 				</div>
 				{name === 'FTM' ? null : <div
 					onClick={() => onDeposit(situation?.inWalletRaw[3])}
-					className={'bg-light-600 dark:bg-dark-600 bg-opacity-60 rounded-md hover:bg-opacity-100 transition-visibility cursor-pointer font-story text-base text-center normal-case py-2'}>
-					<p className={'text-plain'}>{'100%'}</p>
+					className={'button-regular'}>
+					<p>{'100%'}</p>
 				</div>}
 			</div>
 		</div>
@@ -265,7 +264,7 @@ function	Index() {
 					vault={vaults?.find(e => e.address === '0x148c05caf1Bb09B5670f00D511718f733C54bC4c') || {}}
 					situation={bankSituation['0x148c05caf1Bb09B5670f00D511718f733C54bC4c']} />
 			</div>
-			<div className={'text-sx text-50 font-story normal-case mt-8'}>
+			<div className={'text-sx text-50 mt-8'}>
 				{'The Bank is powered by '}
 				<a className={'font-bold cursor-pointer hover:underline'} href={'https://yearn.finance.com'} target={'_blank'} rel={'noreferrer'}>{'Yearn Finance'}</a>
 				{'. You check details about the Vaults and the Strategies and withdraw your funds on Yearn\'s website.'}

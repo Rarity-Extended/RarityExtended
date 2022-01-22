@@ -9,8 +9,8 @@ function	parseMarkdown(markdownText) {
 function	OptionsFormater({options, onChoice}) {
 	return (
 		options.map((opt, index) => (
-			<div key={`${opt.goto}_${index}`} onClick={() => onChoice(opt.goto)} className={'rounded-md font-story p-4 flex flex-center text-base bg-light-600 dark:bg-dark-600 bg-opacity-40 hover:bg-opacity-100 transition-visibility cursor-pointer normal-case'}>
-				<p dangerouslySetInnerHTML={{__html: parseMarkdown(opt?.text || '')}} />
+			<div key={`${opt.goto}_${index}`} onClick={() => onChoice(opt.goto)} className={'flex flex-center button-regular'}>
+				<p className={'text-base'} dangerouslySetInnerHTML={{__html: parseMarkdown(opt?.text || '')}} />
 			</div>
 		))
 	);

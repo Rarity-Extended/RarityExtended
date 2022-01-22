@@ -78,7 +78,7 @@ function	Index({dungeon, adventurer, router}) {
 		if (ratEscaped) {
 			return (
 				<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
-					<div onClick={() => router.push('/adventures/the-cellar')} className={'rounded-md font-story p-4 flex flex-center text-base bg-600 bg-opacity-40 hover:bg-opacity-100 dark:bg-opacity-40 dark:hover:bg-opacity-100 transition-visibility cursor-pointer normal-case'}>
+					<div onClick={() => router.push('/adventures/the-cellar')} className={'flex flex-center button-regular'}>
 						<p>{'The Wild Boar has escaped'}</p>
 					</div>
 				</div>
@@ -87,7 +87,7 @@ function	Index({dungeon, adventurer, router}) {
 		if (adventurerWon && (dungeon.scout) === 0) {
 			return (
 				<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
-					<div onClick={() => router.push('/adventures/the-cellar')} className={'rounded-md font-story p-4 flex flex-center text-base bg-600 bg-opacity-40 hover:bg-opacity-100 dark:bg-opacity-40 dark:hover:bg-opacity-100 transition-visibility cursor-pointer normal-case'}>
+					<div onClick={() => router.push('/adventures/the-cellar')} className={'flex flex-center button-regular'}>
 						<p>{'You have defeated the Wild Boar, but there is nothing to recover'}</p>
 					</div>
 				</div>
@@ -96,7 +96,7 @@ function	Index({dungeon, adventurer, router}) {
 		if (adventurerWon) {
 			return (
 				<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
-					<div onClick={onLoot} className={'rounded-md font-story p-4 flex flex-center text-base bg-600 bg-opacity-40 hover:bg-opacity-100 dark:bg-opacity-40 dark:hover:bg-opacity-100 transition-visibility cursor-pointer normal-case'}>
+					<div onClick={onLoot} className={'flex flex-center button-regular'}>
 						<p>{'You have defeated the Wild Boar! Collect loot!'}</p>
 					</div>
 				</div>
@@ -104,10 +104,10 @@ function	Index({dungeon, adventurer, router}) {
 		}
 		return (
 			<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
-				<div onClick={fight} className={'rounded-md font-story p-4 flex flex-center text-base bg-light-600 dark:bg-dark-600 bg-opacity-40 hover:bg-opacity-100 dark:bg-opacity-40 dark:hover:bg-opacity-100 transition-visibility cursor-pointer normal-case'}>
+				<div onClick={fight} className={'flex flex-center button-regular'}>
 					<p>{'Fight'}</p>
 				</div>
-				<div onClick={() => router.push('/adventures/the-cellar')} className={'rounded-md font-story p-4 flex flex-center text-base bg-600 bg-opacity-40 hover:bg-opacity-100 dark:bg-opacity-40 dark:hover:bg-opacity-100 transition-visibility cursor-pointer normal-case'}>
+				<div onClick={() => router.push('/adventures/the-cellar')} className={'flex flex-center button-regular'}>
 					<p>{'Escape'}</p>
 				</div>
 			</div>

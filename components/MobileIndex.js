@@ -10,7 +10,7 @@ const MobileIndex = React.memo(function MobileIndex() {
 	return (
 		<div className={'relative flex-1 mt-0'}>
 			<AdventurerDetails media={'sm'} />
-			<section className={'grid grid-cols-2 gap-2 font-story my-4'}>
+			<section className={'grid grid-cols-2 gap-2 my-4'}>
 				<Link href={'/party'}>
 					<button
 						className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/' || router.pathname === '/recruit' ? '' : 'cursor-pointer'}`}>

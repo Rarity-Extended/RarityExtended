@@ -41,7 +41,7 @@ function	NewAdventurer({rarityClass}) {
 	return (
 		<div className={'box flex justify-between items-center w-full flex-col p-4 relative'}>
 			<div className={'text-center'}>
-				<p className={'text-plain dark:text-opacity-70 font-bold text-xl font-story text-center'}>
+				<p className={'text-plain dark:text-opacity-70 font-bold text-xl text-center'}>
 					{rarityClass.name}
 				</p>
 			</div>
@@ -49,13 +49,13 @@ function	NewAdventurer({rarityClass}) {
 				<Image src={rarityClass?.images?.front} width={160} height={160} />
 			</div>
 			<div className={'px-4 py-2'}>
-				<p className={'text-50 text-sm font-story mb-4 text-center normal-case'}>
+				<p className={'text-50 text-sm mb-4 text-center'}>
 					{rarityClass.description}
 				</p>
 				<button
 					onClick={recruit}
 					className={'bg-600 hover-bg-900 flex flex-center px-4 py-2 mt-4 w-full text-plain cursor-pointer opacity-60 text-center'}>
-					<p className={'font-story text-sm select-none normal-case'}>{'Hire Adventurer'}</p>
+					<p className={' text-sm select-none'}>{'Hire Adventurer'}</p>
 				</button>
 			</div>
 		</div>
@@ -66,7 +66,7 @@ function	Index() {
 	return (
 		<section className={'mt-24 md:mt-12 max-w-screen md:max-w-screen-xl mx-auto mb-24'}>
 			<section className={'mt-6 max-w-screen md:max-w-screen-xl mx-auto'}>
-				<div className={'font-story normal-case text-xl'}>
+				<div className={' text-xl'}>
 					<p>{'Welcome!'}</p>
 					<p className={'my-4'}>{'You are about to start a journey beyond imagination. you will meet new friends and fight great dangers! The world of Rarity is filled with wonders and perils! Do you have what it takes to survive. Is your curiosity strong enough to get you to the end?'}</p>
 

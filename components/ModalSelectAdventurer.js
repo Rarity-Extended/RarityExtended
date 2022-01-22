@@ -37,7 +37,7 @@ function ModalSelectAdventurer({isOpen, onClose, onSelect}) {
 								<div className={'h-full flex flex-col bg-600 shadow-xl overflow-y-scroll border-l-2 border-light-400 dark:border-dark-400'}>
 									<div className={'px-4 md:px-6 pt-6 py-4 md:py-8 md:pt-8'}>
 										<div className={'flex items-start justify-between'}>
-											<Dialog.Title className={'text-lg font-medium text-plain font-story'}>
+											<Dialog.Title className={'text-lg font-medium text-plain'}>
 												{'Adventurers'}
 											</Dialog.Title>
 											<div className={'ml-3 h-7 flex items-center'}>
@@ -62,7 +62,7 @@ function ModalSelectAdventurer({isOpen, onClose, onSelect}) {
 																	<svg width={12} height={12} aria-hidden={'true'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 576 512'}><path fill={'currentColor'} d={'M316.7 17.8l65.43 132.4l146.4 21.29c26.27 3.796 36.79 36.09 17.75 54.59l-105.9 102.1l25.05 145.5c4.508 26.31-23.23 45.9-46.49 33.7L288 439.6l-130.9 68.7C133.8 520.5 106.1 500.9 110.6 474.6l25.05-145.5L29.72 226.1c-19.03-18.5-8.516-50.79 17.75-54.59l146.4-21.29l65.43-132.4C271.1-6.083 305-5.786 316.7 17.8z'}></path></svg>
 																</span> : null}
 															</span>
-															<div className={'ml-4 truncate font-story'}>
+															<div className={'ml-4 truncate'}>
 																<p className={'text-base font-bold text-plain truncate'}>{adventurer.name || adventurer.tokenID}</p>
 																<p className={'text-base text-plain truncate'}>{`${CLASSES[adventurer.class].name} level ${adventurer.level}`}</p>
 															</div>

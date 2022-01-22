@@ -4,15 +4,15 @@ import	useInventory			from	'contexts/useInventory';
 
 function	ElementInventoryItem({item}) {
 	return (
-		<div key={item.name} className={'rounded-md bg-light-600 dark:bg-dark-600 px-2 flex flex-row items-center dark:bg-opacity-40'}>
+		<div key={item.name} className={'flex flex-row items-center button-fake'}>
 			<div className={'w-14 h-14 flex flex-center'} style={{minWidth: 56}}>
 				<Image src={item.img} width={56} height={56} />
 			</div>
 			<div className={'ml-1'}>
-				<p className={'text-plain font-story text-sm text-50 normal-case'}>
+				<p className={'text-plain text-sm text-50'}>
 					{item.name}
 				</p>
-				<p className={'text-plain font-story text-sm text-50 normal-case'}>
+				<p className={'text-plain text-sm text-50'}>
 					{`(x${Number(item.balance)})`}
 				</p>
 			</div>
@@ -22,12 +22,12 @@ function	ElementInventoryItem({item}) {
 
 function	ElementInventoryItemNonFungible({item}) {
 	return (
-		<div key={item.name} className={'rounded-md bg-light-600 dark:bg-dark-600 px-2 flex flex-row items-center dark:bg-opacity-40'}>
+		<div key={item.name} className={'flex flex-row items-center button-fake'}>
 			<div className={'w-14 h-14 flex flex-center'} style={{minWidth: 56}}>
 				<Image src={item?.img || '/items/rarity_crafting/shields/buckler.png'} width={56} height={56} />
 			</div>
 			<div className={'ml-1'}>
-				<p className={'text-plain font-story text-sm text-50 normal-case'}>
+				<p className={'text-plain text-sm text-50'}>
 					{item.name}
 				</p>
 			</div>
@@ -104,7 +104,7 @@ const InventoryGrid = React.memo(function InventoryGrid({currentAdventurer}) {
 
 function	OverviewInventory({adventurer, sharedInventory}) {
 	return (
-		<div className={'flex flex-col items-center font-story w-full mt-auto'} style={{height: 282}}>
+		<div className={'flex flex-col items-center w-full mt-auto'} style={{height: 282}}>
 			<div className={'grid grid-cols-4 gap-x-4 gap-y-2 w-full overflow-auto'}>
 				<InventoryGrid
 					currentAdventurer={adventurer}

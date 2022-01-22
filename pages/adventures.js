@@ -67,22 +67,25 @@ function	Index() {
 							quality={70}
 							width={1500}
 							height={300} />
-						<div className={'absolute inset-0 bottom-1 opacity-30'} style={{backgroundColor: adventure.overlayColor}} />
+						<div className={'absolute inset-0 bottom-1.5 opacity-30'} style={{backgroundColor: adventure.overlayColor}} />
 					</div>
 
-					<div className={'relative flex flex-col font-story'}>
+					<div className={'relative flex flex-col'}>
 						<div className={'w-full h-full p-6 pt-4'}>
 							<div className={'flex flex-row justify-between items-center mb-4'}>
 								<h1 className={'text-xl font-bold'}>{adventure.name}</h1>
 								<div>
 									<Link href={`/adventures/${adventure.path}#action`}>
-										<div className={`flex flex-center text-center px-4 py-2 w-full tracking-wide text-sm ${canAdventure ? 'cursor-pointer button-highlight font-bold' : 'cursor-not-allowed bg-600 opacity-60 text-plain'} ${nextAdventure ? '' : 'pointer-events-none'}`} style={!nextAdventure ? {opacity: 0} : {}}>
+										<button
+											disabled={!canAdventure}
+											className={`flex flex-center w-full button-highlight ${nextAdventure ? '' : 'pointer-events-none'}`}
+											style={!nextAdventure ? {opacity: 0} : {}}>
 											{canAdventure ? 'Accept Adventure' : `Ready ${currentAdventurer?.adventures?.[adventure.key]?.nextAdventure}`}
-										</div>
+										</button>
 									</Link>
 								</div>
 							</div>
-							<div className={'normal-case font-story text-sm leading-normal inline'}>
+							<div className={'normal-case text-sm leading-normal inline'}>
 								<FormatedDescription addr={adventure.address} rawDescription={adventure.description} />
 							</div>
 							<h1 className={'text-base font-bold mt-12 text-50 mb-2'}>{'Potential Rewards'}</h1>
@@ -92,7 +95,7 @@ function	Index() {
 										<div className={'w-14 h-14 flex flex-center'} style={{minWidth: 56}}>
 											<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={56} height={56} />
 										</div>
-										<p className={'text-plain font-story text-sm text-50 normal-case ml-1'}>
+										<p className={'text-plain text-sm text-50 ml-1'}>
 											{name}
 										</p>
 									</div>
@@ -116,16 +119,16 @@ function	Index() {
 					<Link key={adventure.address}href={`/adventures/${adventure.path}#action`}>
 						<div
 							onClick={() => set_selectedAdventure(index)}
-							className={'w-full relative box group overflow-hidden cursor-pointer font-story'}>
+							className={'w-full relative box group overflow-hidden cursor-pointer'}>
 							<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-0 md:border-l-4 border-highlight' : 'pl-0 md:pl-1'}`}>
 								<div className={'w-full h-full p-4'}>
 									<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
-									<div className={'flex flex-row items-center justify-between mt-2 normal-case opacity-60'}>
+									<div className={'flex flex-row items-center justify-between mt-2 opacity-60'}>
 										<div className={'flex flex-row items-center'}>
 											<p className={'text-xs'}>{adventure.minimalDescription}</p>
 										</div>
 									</div>
-									<div className={'flex flex-col justify-between mt-4 normal-case'}>
+									<div className={'flex flex-col justify-between mt-4'}>
 										<div className={'flex flex-row items-center'}>
 											<p className={'text-xs'}>{'Rewards'}</p>
 										</div>
@@ -135,7 +138,7 @@ function	Index() {
 													<div className={'w-10 h-10 flex flex-center'} style={{minWidth: 40}}>
 														<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={40} height={40} />
 													</div>
-													<p className={'text-plain font-story text-sm text-50 normal-case ml-1'}>
+													<p className={'text-plain text-sm text-50 ml-1'}>
 														{name}
 													</p>
 												</div>
@@ -152,21 +155,21 @@ function	Index() {
 					<div
 						key={adventure.address}
 						onClick={() => set_selectedAdventure(index)}
-						className={'w-full relative box group overflow-hidden font-story opacity-40'}>
+						className={'w-full relative box group overflow-hidden opacity-40'}>
 						<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-4 border-highlight' : 'pl-1'}`}>
 							<div className={'w-full h-full p-4'}>
 								<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
-								<div className={'flex flex-row items-center justify-between mt-2 normal-case'}>
+								<div className={'flex flex-row items-center justify-between mt-2'}>
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{nextAdventure ? `Ready ${nextAdventure}` : 'Not eligible'}</p>
 									</div>
 								</div>
-								<div className={'flex flex-row items-center justify-between mt-2 normal-case opacity-60'}>
+								<div className={'flex flex-row items-center justify-between mt-2 opacity-60'}>
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{adventure.minimalDescription}</p>
 									</div>
 								</div>
-								<div className={'flex flex-col justify-between mt-4 normal-case'}>
+								<div className={'flex flex-col justify-between mt-4'}>
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{'Rewards'}</p>
 									</div>
@@ -176,7 +179,7 @@ function	Index() {
 												<div className={'w-10 h-10 flex flex-center'} style={{minWidth: 40}}>
 													<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={40} height={40} />
 												</div>
-												<p className={'text-plain font-story text-sm text-50 normal-case ml-1'}>
+												<p className={'text-plain text-sm text-50 ml-1'}>
 													{name}
 												</p>
 											</div>
@@ -203,17 +206,17 @@ function	Index() {
 					<div
 						key={adventure.address}
 						onClick={() => set_selectedAdventure(index)}
-						className={'w-full relative box group overflow-hidden cursor-pointer font-story'}>
+						className={'w-full relative box group overflow-hidden cursor-pointer'}>
 						<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-0 md:border-l-4 border-highlight' : 'pl-0 md:pl-1'}`}>
 							<div className={'w-full h-full p-4'}>
 								<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
 				
-								<div className={'flex flex-row items-center justify-between mt-2 normal-case'}>
+								<div className={'flex flex-row items-center justify-between mt-2'}>
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{nextAdventure ? `Ready ${nextAdventure}` : 'Not eligible'}</p>
 									</div>
 								</div>
-								<div className={'flex flex-row items-center justify-between mt-2 normal-case opacity-60'}>
+								<div className={'flex flex-row items-center justify-between mt-2 opacity-60'}>
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{'Difficulty'}</p>
 									</div>
@@ -228,16 +231,16 @@ function	Index() {
 					<div
 						key={adventure.address}
 						onClick={() => set_selectedAdventure(index)}
-						className={'w-full relative box group overflow-hidden font-story opacity-40'}>
+						className={'w-full relative box group overflow-hidden opacity-40'}>
 						<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-4 border-highlight' : 'pl-1'}`}>
 							<div className={'w-full h-full p-4'}>
 								<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
-								<div className={'flex flex-row items-center justify-between mt-2 normal-case'}>
+								<div className={'flex flex-row items-center justify-between mt-2'}>
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{nextAdventure ? `Ready ${nextAdventure}` : 'Not eligible'}</p>
 									</div>
 								</div>
-								<div className={'flex flex-row items-center justify-between mt-2 normal-case opacity-60'}>
+								<div className={'flex flex-row items-center justify-between mt-2 opacity-60'}>
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{'Difficulty'}</p>
 									</div>

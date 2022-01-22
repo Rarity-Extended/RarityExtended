@@ -96,9 +96,9 @@ function	Index({router}) {
 			overlayColor={'#554a40'}
 			rightText={'THE BOARS WILL HUNT YOU DOWN UNLESS YOU DO'}>
 			<div>
-				<h1 className={'pt-4 pb-4 font-bold text-xl font-story'}>{'THE BOARS'}</h1>
+				<h1 className={'pt-4 pb-4 font-bold text-xl'}>{'THE BOARS'}</h1>
 			</div>
-			<div className={'normal-case font-story text-base leading-relaxed text-plain'}>
+			<div className={'normal-case text-base leading-relaxed text-plain'}>
 				<DescriptionFormater
 					addr={process.env.DUNGEON_BOARS_ADDR}
 					rawDescription={ADVENTURE[currentAdventurer?.adventures?.boars?.canAdventure ? step : 'rest'].description}

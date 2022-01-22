@@ -16,7 +16,7 @@ function AdventurerModalMenu() {
 
 	const	skin = raritySkins ? skins[currentAdventurer?.tokenID] || currentAdventurer?.skin : currentAdventurer?.skin;
 	return (
-		<div className={'hidden md:flex flex-row h-8 flex-center relative'}>
+		<div className={'hidden md:flex flex-row h-8 flex-center relative font-title'}>
 			<div onClick={openModal} className={'group items-center justify-end flex-row mr-6 cursor-pointer outline-none focus:outline-none hidden md:flex'}>
 				{currentAdventurer ? <div className={'flex flex-center'}>
 					<Image

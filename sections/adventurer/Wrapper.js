@@ -33,7 +33,7 @@ function	Wrapper({media}) {
 				chainTime={chainTime}
 				raritySkin={skins[currentAdventurer?.tokenID] || currentAdventurer?.skin} />
 			<div className={'w-full'}>
-				<div className={'flex flex-row items-center font-story mb-4 normal-case border-b-2 dark:border-b-dark-300 -mt-4'}>
+				<div className={'flex flex-row items-center mb-4 border-b-2 dark:border-b-dark-300 -mt-4'}>
 					<p
 						onClick={() => set_tab(0)}
 						className={`p-4 pl-0 text-plain text-sm transition-opacity hover:opacity-100 ${tab === 0 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>

@@ -24,9 +24,9 @@ function	OverviewFeats({adventurer}) {
 	}
 
 	return (
-		<div className={'flex flex-col items-center font-story w-full mt-auto'} style={{height: 282}}>
+		<div className={'flex flex-col items-center w-full mt-auto'} style={{height: 282}}>
 			<div className={'mb-6'}>
-				<p className={'font-story text-sm normal-case'}>
+				<p className={' text-sm'}>
 					<span className={'text-50'}>{'A feat represents a talent or an area of expertise that gives a character special capabilities. It embodies training, experience, and abilities beyond what a class provides. Some are inherent to the class, while others can be learned. You have '}</span>
 					<Link href={'/feats#content'}>
 						<span className={'text-highlight font-bold cursor-pointer hover:underline'}>{`${_pointLefts <= 1 ? `${_pointLefts} point` : `${_pointLefts} points`} left`}</span>
@@ -40,8 +40,8 @@ function	OverviewFeats({adventurer}) {
 						<div className={'flex flex-row items-center'}>
 							<Image src={feat.img} width={56} height={56} />
 							<div className={'flex flex-col justify-between h-14'}>
-								<p className={'text-sm normal-case ml-2'}>{feat.name}</p>
-								<p className={'text-xs normal-case ml-2 opacity-60'}>{`Type: ${feat?.type || '-'}`}</p>
+								<p className={'text-sm ml-2'}>{feat.name}</p>
+								<p className={'text-xs ml-2 opacity-60'}>{`Type: ${feat?.type || '-'}`}</p>
 							</div>
 						</div>
 					</div>

@@ -23,21 +23,21 @@ function	ElementRecipe({recipe, currentAdventurer, inventory, onCraft}) {
 		<div className={'box p-4 flex flex-col'}>
 			<div className={'grid grid-cols-2 h-full'}>
 				<div className={'flex flex-col border-r border-dark-600 px-4 h-full'}>
-					<p className={'text-plain font-story text-sm w-4/5'}>{recipe.name}</p>
+					<p className={'text-plain text-sm w-4/5'}>{recipe.name}</p>
 					<div className={'flex flex-center h-full'}>
 						<Image src={recipe.img} width={96} height={96} />
 					</div>
 				</div>
 
 				<div className={'flex flex-col px-4'}>
-					<p className={'font-story text-black dark:text-dark-200 text-opacity-60 text-sm mb-2'}>
+					<p className={' text-black dark:text-dark-200 text-opacity-60 text-sm mb-2'}>
 						{'Effects'}
 					</p>
-					<div className={'font-story text-plain opacity-60 text-sm normal-case'}>
+					<div className={' text-plain opacity-60 text-sm'}>
 						{recipe.effect}
 					</div>
 
-					<p className={'font-story text-black dark:text-dark-200 text-opacity-60 text-sm mt-6 mb-2'}>
+					<p className={' text-black dark:text-dark-200 text-opacity-60 text-sm mt-6 mb-2'}>
 						{'Cost'}
 					</p>
 					<div className={'grid grid-cols-2 gap-x-4 gap-y-4'}>
@@ -46,7 +46,7 @@ function	ElementRecipe({recipe, currentAdventurer, inventory, onCraft}) {
 								<div className={'w-14 h-14 -m-4 -mr-1 flex flex-center'}>
 									<Image src={`/items/${addr}.png`} width={56} height={56} />
 								</div>
-								<p className={'text-plain font-story text-base ml-1'}>
+								<p className={'text-plain text-base ml-1'}>
 									{cost}
 								</p>
 							</div>
@@ -55,11 +55,12 @@ function	ElementRecipe({recipe, currentAdventurer, inventory, onCraft}) {
 				</div>
 			</div>
 			<div className={'mt-auto flex flex-row space-x-2'}>
-				<div
-					onClick={() => canCraft ? onCraft('0x19C469a03eF38378c9e354bFCa3D804AAF07571B', 'Grilled Meat') : null}
-					className={`bg-600 flex flex-center text-center px-4 py-2 mt-4 w-full ${canCraft ? 'cursor-pointer hover-bg-900' : 'cursor-not-allowed opacity-60'}`}>
-					<p className={'text-plain font-story text-sm'}>{'Craft'}</p>
-				</div>
+				<button
+					disabled={!canCraft}
+					onClick={() => canCraft ? onCraft() : null}
+					className={'flex flex-center mt-4 w-full button-highlight'}>
+					<p>{'Craft'}</p>
+				</button>
 			</div>
 		</div>
 	);

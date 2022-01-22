@@ -128,10 +128,10 @@ function Adventure({router, adventurer}) {
 	function	renderOptions() {
 		return (
 			<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
-				<div onClick={clickPerform} className={'rounded-md font-story p-4 flex flex-center text-base bg-light-600 dark:bg-dark-600 bg-opacity-40 hover:bg-opacity-100 dark:bg-opacity-40 dark:hover:bg-opacity-100 transition-visibility cursor-pointer normal-case'}>
+				<div onClick={clickPerform} className={'flex flex-center button-regular'}>
 					<p>{'Sing your Heart out'}</p>
 				</div>
-				<div onClick={() => router.push('/adventures/openmic')} className={'rounded-md font-story p-4 flex flex-center text-base bg-600 bg-opacity-40 hover:bg-opacity-100 dark:bg-opacity-40 dark:hover:bg-opacity-100 transition-visibility cursor-pointer normal-case'}>
+				<div onClick={() => router.push('/adventures/openmic')} className={'flex flex-center button-regular'}>
 					<p>{'Too much pressure, back off!'}</p>
 				</div>
 			</div>
@@ -210,7 +210,7 @@ function Adventure({router, adventurer}) {
 									height={120} />
 							</div>
 							<div className={'w-full mt-auto mb-6'}>
-								<div className={'pt-6 pb-0 px-4 with-title w-full font-story normal-case'}>
+								<div className={'pt-6 pb-0 px-4 with-title w-full'}>
 									<div className={'text-base text-plain'}>{'Performance Check'}</div>
 									<div className={'flex justify-between'}>
 										<div className={'text-base text-50'}>{'Perform Skill'}</div>

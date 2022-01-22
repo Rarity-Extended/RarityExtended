@@ -11,7 +11,7 @@ import	SKILLS											from	'utils/codex/core/skills.json';
 
 function	IconChevron({className}) {
 	return (
-		<svg className={`w-6 h-6 text-plain ${className}`} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M16 5v2h-2V5h2zm-4 4V7h2v2h-2zm-2 2V9h2v2h-2zm0 2H8v-2h2v2zm2 2v-2h-2v2h2zm0 0h2v2h-2v-2zm4 4v-2h-2v2h2z'} fill={'currentColor'}/> </svg>
+		<svg aria-hidden={'true'} focusable={'false'} data-prefix={'fas'} data-icon={'chevron-right'} className={`w-3 h-3 ${className}`} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 320 512'}><path fill={'currentColor'} d={'M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z'}></path></svg>
 	);
 }
 
@@ -22,7 +22,7 @@ function	ElementSkill({currentAdventurer, skill, isClassSpecific, updateSkills, 
 
 	return (
 		<div className={'box p-4 flex flex-col'}>
-			<p className={'font-story text-plain font-bold text-base mb-4'}>
+			<p className={' text-plain font-bold text-base mb-4'}>
 				{skill.name}
 			</p>
 			<div className={'flex flex-row pb-2 mb-4'}>
@@ -34,65 +34,64 @@ function	ElementSkill({currentAdventurer, skill, isClassSpecific, updateSkills, 
 
 				<div className={'flex flex-col px-4 w-full'}>
 					<div className={'flex flex-row justify-between'}>
-						<p className={'font-story text-200 text-sm mb-2'}>
+						<p className={' text-200 text-sm mb-2'}>
 							{'Attribute'}
 						</p>
-						<div className={'font-story text-50 text-sm normal-case'}>
+						<div className={' text-50 text-sm'}>
 							{skill?.attributeLabel || '-'}
 						</div>
 					</div>
 
 					<div className={'flex flex-row justify-between'}>
-						<p className={'font-story text-200 text-sm mb-2'}>
+						<p className={' text-200 text-sm mb-2'}>
 							{'Cost'}
 						</p>
-						<div className={'font-story text-50 text-sm normal-case'}>
+						<div className={' text-50 text-sm'}>
 							{isClassSpecific ? '1' : '2'}
 						</div>
 					</div>
 
 					<div className={'flex flex-row justify-between'}>
-						<p className={'font-story text-200 text-sm mb-2'}>
+						<p className={' text-200 text-sm mb-2'}>
 							{'Armor Check'}
 						</p>
-						<div className={'font-story text-50 text-sm normal-case'}>
+						<div className={' text-50 text-sm'}>
 							{skill?.armorCheckPenalty ? 'YES' : 'NO'}
 						</div>
 					</div>
 
 					<div className={'flex flex-row justify-between'}>
-						<p className={'font-story text-200 text-sm mb-2'}>
+						<p className={' text-200 text-sm mb-2'}>
 							{'Synergy'}
 						</p>
-						<div className={'font-story text-50 text-sm normal-case'}>
+						<div className={' text-50 text-sm'}>
 							{skill?.synergy > 0 ? Object.values(SKILLS).find(s => s.id === skill?.synergy)?.name || '-' : '-'}
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className={'font-story text-50 text-sm normal-case'}>
+			<div className={' text-50 text-sm'}>
 				{skill.check}
 			</div>
 			<div className={'mt-auto flex flex-row space-x-2'}>
-				<div className={`bg-600 flex justify-between text-center items-center px-1 py-2 w-2/3 mt-4 ${updateSkills.canBuyPoint ? '' : 'opacity-60'}`}>
+				<div className={'flex justify-between items-center w-2/3 mt-4 button-fake'}>
 					<div onClick={() => onReduceLevel()}>
 						<IconChevron
-							className={`${canReduce ? 'opacity-0' : updateSkills.canBuyPoint ? 'opacity-10 hover:opacity-100 cursor-pointer' : 'opacity-10'}`} />
+							className={`${canReduce ? 'opacity-0' : 'text-gray-100 cursor-pointer'} transform rotate-180`} />
 					</div>
-					<p className={'text-plain font-story text-sm select-none'}>
-						{`Level ${updateSkills[skill?.id]}`}
-					</p>
+					<p>{`Level ${updateSkills[skill?.id]}`}</p>
 					<div onClick={() => onIncreaseLevel()}>
 						<IconChevron
-							className={`${canIncrease ? 'opacity-0' : updateSkills.canBuyPoint ? 'opacity-10 hover:opacity-100 cursor-pointer' : 'opacity-10'} transform rotate-180`} />
+							className={`${canIncrease ? 'opacity-0' : 'text-gray-100 cursor-pointer'}`} />
 					</div>
 				</div>
 
-				<div
+				<button
+					disabled={!canSave}
 					onClick={() => canSave ? onLearn() : null}
-					className={`flex flex-center text-center px-4 py-2 mt-4 w-1/3 tracking-wide ${canSave ? 'cursor-pointer button-highlight font-bold' : 'bg-600 text-plain cursor-not-allowed opacity-60'}`}>
-					<p className={'font-story text-sm select-none'}>{'Learn'}</p>
-				</div>
+					className={'flex flex-center mt-4 w-1/3 button-highlight'}>
+					<p className={'select-none'}>{'Learn'}</p>
+				</button>
 			</div>
 		</div>
 	);
@@ -202,7 +201,7 @@ function	Index() {
 
 	function	renderFilters() {
 		return (
-			<div className={'w-full hidden md:flex flex-row justify-between font-story text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
+			<div className={'w-full hidden md:flex flex-row justify-between text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
 				<div className={'flex flex-row space-x-4'}>
 					<p
 						onClick={() => set_classTab(2)}
@@ -268,7 +267,7 @@ function	Index() {
 						placeholder={'SEARCH'} />
 				</div>
 				<div className={'flex flex-row items-center space-x-4 w-full md:w-auto justify-between md:justify-center mt-2 md:mt-0'}>
-					<div className={'font-story text-xs text-plain flex'}>
+					<div className={' text-xs text-plain flex'}>
 						{`${updateSkills.remainingPoints <= 1 ? 'Point left:' : 'Points left:'}`}&nbsp;
 						<span className={'text-highlight font-bold'}>{updateSkills.remainingPoints}</span>
 					</div>
@@ -280,8 +279,8 @@ function	Index() {
 									onSetSkills();
 							}}
 							disabled={!updateSkills.canBuyPoint || updateSkills.remainingPoints === updateSkills.initialPointsToSend}
-							className={`flex flex-center text-center px-4 py-2 w-full tracking-wide ${updateSkills.canBuyPoint && updateSkills.remainingPoints !== updateSkills.initialPointsToSend ? 'cursor-pointer button-highlight text-black font-bold' : 'cursor-not-allowed bg-600 opacity-60 text-plain'}`}>
-							<p className={'font-story text-xs select-none'}>{'LEARN SELECTED'}</p>
+							className={'flex flex-center w-full button-highlight'}>
+							<p className={'select-none'}>{'LEARN SELECTED'}</p>
 						</button>
 					</div>
 				</div>

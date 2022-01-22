@@ -10,7 +10,7 @@ import	FEATS											from	'utils/codex/core/feats.json';
 function	ElementFeat({feat, canLearn, learn}) {
 	return (
 		<div className={'box p-4 flex flex-col'}>
-			<p className={'font-story text-plain font-bold text-base mb-4'}>
+			<p className={'text-plain font-bold text-base mb-4'}>
 				{feat.name}
 			</p>
 			<div className={'flex flex-row pb-2 mb-4'}>
@@ -22,24 +22,25 @@ function	ElementFeat({feat, canLearn, learn}) {
 
 				<div className={'flex flex-col px-4 w-full'}>
 					<div className={'flex flex-col justify-between'}>
-						<p className={'font-story text-200 text-opacity-60 text-sm mb-2'}>
+						<p className={'text-200 text-opacity-60 text-sm mb-2'}>
 							{'Prerequisites'}
 						</p>
-						<div className={'font-story text-50 text-sm normal-case'}>
+						<div className={'text-50 text-sm'}>
 							{feat?.prerequisites ? Object.values(FEATS).find(s => s.id === feat?.prerequisites_feat)?.name || '-' : '-'}
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className={'font-story text-50 text-sm normal-case'}>
+			<div className={'text-50 text-sm'}>
 				{feat.benefit}
 			</div>
 			<div className={'mt-auto flex flex-row space-x-2'}>
-				<div
+				<button
+					disabled={!canLearn}
 					onClick={() => canLearn ? learn() : null}
-					className={`bg-600 flex flex-center text-center px-4 py-2 mt-4 w-full ${canLearn ? 'cursor-pointer hover-bg-900' : 'cursor-not-allowed opacity-60'}`}>
-					<p className={'text-plain font-story text-sm select-none'}>{'Learn'}</p>
-				</div>
+					className={'flex flex-center mt-4 w-full button-highlight'}>
+					<p>{'Learn'}</p>
+				</button>
 			</div>
 		</div>
 	);
@@ -72,7 +73,7 @@ function	Index() {
 
 	function	renderFilters() {
 		return (
-			<div className={'w-full hidden md:flex flex-row justify-between font-story text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
+			<div className={'w-full hidden md:flex flex-row justify-between text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
 				<div className={'flex flex-row space-x-4'}>
 					<p
 						onClick={() => set_learnTab(0)}
@@ -117,7 +118,7 @@ function	Index() {
 						placeholder={'SEARCH'} />
 				</div>
 				<div className={'flex flex-row items-center space-x-4 w-full md:w-auto justify-between md:justify-center mt-2 md:mt-0'}>
-					<div className={'font-story text-xs text-plain flex'}>
+					<div className={'text-xs text-plain flex'}>
 						{`${_pointLefts <= 1 ? 'Point left:' : 'Points left:'}`}&nbsp;
 						<span className={'text-highlight font-bold'}>{_pointLefts}</span>
 					</div>

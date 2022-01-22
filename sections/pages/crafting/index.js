@@ -73,8 +73,8 @@ function	Adventures() {
 
 	function	renderFilters() {
 		return (
-			<div className={'w-full flex flex-row justify-between font-story text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
-				<div className={'flex flex-row space-x-4 normal-case'}>
+			<div className={'w-full flex flex-row justify-between text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
+				<div className={'flex flex-row space-x-4'}>
 					<p
 						onClick={() => set_shop(4)}
 						className={`transition-opacity hover:opacity-100 ${shop === 4 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
@@ -209,8 +209,8 @@ function	Adventures() {
 					return (
 						<>
 							<Link href={'/skills?tab=2&search=crafting'}>
-								<div className={'uppercase rounded-md button-highlight flex flex-center px-4 py-2 cursor-pointer'}>
-									<p className={'font-story text-sm font-bold'}>{'Learn Crafting'}</p>
+								<div className={'uppercase rounded-sm button-highlight flex flex-center px-4 py-2 cursor-pointer'}>
+									<p className={' text-sm font-bold'}>{'Learn Crafting'}</p>
 								</div>
 							</Link>
 						</>
@@ -220,12 +220,12 @@ function	Adventures() {
 					<>
 						<button
 							onClick={onApproveAll}
-							className={'uppercase rounded-md button-highlight flex flex-center px-4 py-2 cursor-pointer'}>
-							<p className={'font-story text-sm font-bold'}>{'Approve Crafting'}</p>
+							className={'uppercase rounded-sm button-highlight flex flex-center px-4 py-2 cursor-pointer'}>
+							<p className={' text-sm font-bold'}>{'Approve Crafting'}</p>
 						</button>
 						<Link href={'/skills?tab=2&search=crafting'}>
-							<div className={'uppercase rounded-md button-highlight flex flex-center px-4 py-2 cursor-pointer'}>
-								<p className={'font-story text-sm font-bold'}>{'Learn Crafting'}</p>
+							<div className={'uppercase rounded-sm button-highlight flex flex-center px-4 py-2 cursor-pointer'}>
+								<p className={' text-sm font-bold'}>{'Learn Crafting'}</p>
 							</div>
 						</Link>
 					</>
@@ -235,8 +235,8 @@ function	Adventures() {
 					<>
 						<button
 							onClick={onApproveAll}
-							className={'uppercase rounded-md button-highlight flex flex-center px-4 py-2 cursor-pointer relative'}>
-							<p className={'font-story text-sm font-bold'}>{'Approve Crafting'}</p>
+							className={'uppercase rounded-sm button-highlight flex flex-center px-4 py-2 cursor-pointer relative'}>
+							<p className={' text-sm font-bold'}>{'Approve Crafting'}</p>
 						</button>
 					</>
 				);
@@ -247,8 +247,8 @@ function	Adventures() {
 					<>
 						<button
 							onClick={onApproveAll}
-							className={'uppercase rounded-md button-highlight flex flex-center px-4 py-2 cursor-pointer relative'}>
-							<p className={'font-story text-sm font-bold'}>{'Approve Crafting'}</p>
+							className={'uppercase rounded-sm button-highlight flex flex-center px-4 py-2 cursor-pointer relative'}>
+							<p className={' text-sm font-bold'}>{'Approve Crafting'}</p>
 						</button>
 					</>
 				);

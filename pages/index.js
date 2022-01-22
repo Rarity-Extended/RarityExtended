@@ -12,10 +12,10 @@ function	NewAdventurer() {
 	return (
 		<div className={'box flex justify-between items-center w-full flex-col p-4 relative'}>
 			<div className={'text-center'}>
-				<p className={'text-plain dark:text-opacity-70 font-bold text-xl font-story text-center'}>
+				<p className={'text-plain dark:text-opacity-70 font-bold text-xl text-center'}>
 					{'Recruit'}
 				</p>
-				<p className={'text-black dark:text-dark-100 text-sm font-story mb-4'}>
+				<p className={'text-black dark:text-dark-100 text-sm mb-4'}>
 					{'Unknown'}
 				</p>
 			</div>
@@ -24,9 +24,9 @@ function	NewAdventurer() {
 			</div>
 			<div className={'px-4'}>
 				<Link href={'/recruit#content'}>
-					<div className={'bg-600 hover-bg-900 flex flex-center text-center px-4 py-2 mt-4 w-full text-plain cursor-pointer opacity-60'}>
-						<p className={'font-story text-sm select-none normal-case'}>{'Hire Adventurer'}</p>
-					</div>
+					<button className={'button-highlight-outline mt-4'}>
+						<p>{'Hire Adventurer'}</p>
+					</button>
 				</Link>
 			</div>
 		</div>

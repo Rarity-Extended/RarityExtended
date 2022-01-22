@@ -50,7 +50,7 @@ const MobileMenu = React.memo(function MobileMenu() {
 								leave={'ease-in duration-200'}
 								leaveFrom={'opacity-100 translate-y-0 sm:scale-100'}
 								leaveTo={'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'}>
-								<div className={'w-screen h-screen pt-14 font-story'}>
+								<div className={'w-screen h-screen pt-14'}>
 									<div className={'h-full flex flex-col pt-2 bg-600 overflow-y-scroll relative'}>
 										<div>
 											<div className={'flex items-start justify-between p-4'}>
@@ -60,7 +60,7 @@ const MobileMenu = React.memo(function MobileMenu() {
 												<div className={'flex items-center'}>
 													<button
 														type={'button'}
-														className={'rounded-md focus:outline-none text-plain'}
+														className={'rounded-sm focus:outline-none text-plain'}
 														onClick={() => set_open(false)}>
 														<span className={'sr-only'}>{'Close panel'}</span>
 														<svg aria-hidden={'true'} focusable={'false'} data-prefix={'fas'} data-icon={'xmark'} className={'w-6 h-6 text-plain'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 320 512'}><path fill={'currentColor'} d={'M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z'}></path></svg>
@@ -70,7 +70,7 @@ const MobileMenu = React.memo(function MobileMenu() {
 										</div>
 										<div className={'relative flex-1 px-4 sm:px-6'}>
 											<AdventurerDetails media={'sm'} />
-											<section className={'grid grid-cols-2 gap-2 font-story my-4'}>
+											<section className={'grid grid-cols-2 gap-2 my-4'}>
 												<Link href={'/party'}>
 													<button
 														className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/' || router.pathname === '/recruit' ? '' : 'cursor-pointer'}`}>
@@ -131,7 +131,7 @@ function	Template({children}) {
 					<AdventurerDetails />
 
 					<section className={'mt-6 max-w-screen md:max-w-screen-xl mx-auto'}>
-						<div className={'flex flex-row items-center font-story mb-4 normal-case border-b-2 dark:border-b-dark-300'}>
+						<div className={'flex flex-row items-center mb-4 border-b-2 dark:border-b-dark-300'}>
 							<Link href={'/'}>
 								<p
 									className={`p-4 pr-6 pl-0 text-plain text-sm transition-opacity hover:opacity-100 ${router.pathname === '/' || router.pathname === '/recruit' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>

@@ -54,7 +54,7 @@ function	Footer() {
 									<div className={'mt-4'}>
 										<div
 											onClick={switchTheme}
-											className={'flex flex-row items-center p-4 text-regular hover:bg-gray-principal dark:hover:bg-dark-400 cursor-pointer'}>
+											className={'flex flex-row items-center p-4 text-regular hover:bg-gray-200 dark:hover:bg-dark-400 cursor-pointer'}>
 											<div className={'mr-6'}>
 												{theme === 'light' || theme === 'light-initial' ? <svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M3 3h18v18H3V3zm16 16V5H5v14h14z'} fill={'currentColor'}/> </svg> : <svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M5 3H3v18h18V3H5zm0 2h14v14H5V5zm4 7H7v2h2v2h2v-2h2v-2h2v-2h2V8h-2v2h-2v2h-2v2H9v-2z'} fill={'currentColor'}/> </svg>}
 											</div>
@@ -65,7 +65,7 @@ function	Footer() {
 
 										<div
 											onClick={switchSkin}
-											className={'flex flex-row items-center p-4 text-regular hover:bg-gray-principal dark:hover:bg-dark-400 cursor-pointer'}>
+											className={'flex flex-row items-center p-4 text-regular hover:bg-gray-200 dark:hover:bg-dark-400 cursor-pointer'}>
 											<div className={'mr-6'}>
 												{!raritySkins ? <svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M3 3h18v18H3V3zm16 16V5H5v14h14z'} fill={'currentColor'}/> </svg> : <svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M5 3H3v18h18V3H5zm0 2h14v14H5V5zm4 7H7v2h2v2h2v-2h2v-2h2v-2h2V8h-2v2h-2v2h-2v2H9v-2z'} fill={'currentColor'}/> </svg>}
 											</div>
