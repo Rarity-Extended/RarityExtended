@@ -14,26 +14,24 @@ const MobileMenu = React.memo(function MobileMenu() {
 		set_open(false);
 	}, [router.pathname]);
 
-	console.log(router);
-
 	return (
 		<>
 			<div
 				id={'footbar'}
-				className={'block md:hidden fixed bottom-0 left-0 bg-white dark:bg-dark-600 border-t-2 border-black dark:border-dark-100 transition-all duration-500 w-full'} style={{zIndex: 10000}}>
+				className={'block md:hidden fixed bottom-0 left-0 bg-white dark:bg-dark-600 transition-all duration-500 w-full'} style={{zIndex: 10000}}>
 				<div className={'flex flex-row items-center justify-between text-lightGray text-base font-bold p-4 px-12'}>
 					<Link href={'/'}>
 						<p className={'cursor-pointer hover:text-tangerine-dark transition-colors'}>
-							<svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M10 2h4v4h-4V2zM7 7h10v2h-2v13h-2v-6h-2v6H9V9H7V7zm-2 4h2V9H5v2zm0 0v2H3v-2h2zm14 0h-2V9h2v2zm0 0h2v2h-2v-2z'} fill={'currentcolor'}/> </svg>
+							<svg aria-hidden={'true'} focusable={'false'} data-prefix={'fas'} data-icon={'house'} className={'w-5 h-5'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 576 512'}><path fill={'currentColor'} d={'M575.8 255.5C575.8 273.5 560.8 287.6 543.8 287.6H511.8L512.5 447.7C512.5 450.5 512.3 453.1 512 455.8V472C512 494.1 494.1 512 472 512H456C454.9 512 453.8 511.1 452.7 511.9C451.3 511.1 449.9 512 448.5 512H392C369.9 512 352 494.1 352 472V384C352 366.3 337.7 352 320 352H256C238.3 352 224 366.3 224 384V472C224 494.1 206.1 512 184 512H128.1C126.6 512 125.1 511.9 123.6 511.8C122.4 511.9 121.2 512 120 512H104C81.91 512 64 494.1 64 472V360C64 359.1 64.03 358.1 64.09 357.2V287.6H32.05C14.02 287.6 0 273.5 0 255.5C0 246.5 3.004 238.5 10.01 231.5L266.4 8.016C273.4 1.002 281.4 0 288.4 0C295.4 0 303.4 2.004 309.5 7.014L564.8 231.5C572.8 238.5 576.9 246.5 575.8 255.5L575.8 255.5z'}></path></svg>
 						</p>
 					</Link>
-					<div onClick={() => set_open(!open)} className={'text-plain'}>
+					<div onClick={() => router.pathname === '/' ? null : set_open(!open)} className={'text-plain'}>
 						<svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M4 6h16v2H4V6zm0 5h16v2H4v-2zm16 5H4v2h16v-2z'} fill={'currentColor'}/> </svg>
 					</div>
 
-					<Link href={'/town/guild-house'}>
+					<Link href={'/adventures'}>
 						<p className={'cursor-pointer hover:text-tangerine-dark transition-colors'}>
-							<svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M9 2H5v2H3v2H1v6h2v2h2v2h2v2h2v2h2v2h2v-2h2v-2h2v-2h2v-2h2v-2h2V6h-2V4h-2V2h-4v2h-2v2h-2V4H9V2zm0 2v2h2v2h2V6h2V4h4v2h2v6h-2v2h-2v2h-2v2h-2v2h-2v-2H9v-2H7v-2H5v-2H3V6h2V4h4z'} fill={'currentcolor'}/> </svg>
+							<svg aria-hidden={'true'} focusable={'false'} data-prefix={'fas'} data-icon={'scroll-old'} className={'w-5 h-5'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 576 512'}><path fill={'currentColor'} d={'M560 352H416l-32 32l-31.1-32h-64l.0006 32c0 52.88-43 96-96 96h272C525.6 480 575.6 430.3 576 368.7C576.1 359.6 569.1 352 560 352zM48 32c-26.5 0-48 21.5-48 48l-.001 64c0 8.875 7.125 16 15.1 16H96V80C96 53.5 74.5 32 48 32zM256 380.6V320h223.1L480 287.1l-4.342-4.343c-.1445-.125-.2539-.1289-.4062-.2813L448 256l31.1-31.1v-32L448 160l31.1-32c0 0 .1263-2.75-.2487-7.25C476 71.13 434.5 32 384 32H111.6C121.8 45.38 128 61.88 128 80L128 192l4.345 4.344c.1445 .125 .2539 .1289 .4062 .2813L160 224l-32 32l.0003 128c0 38.88 34.63 69.63 74.75 63.13C234.3 442 256 412.5 256 380.6z'}></path></svg>
 						</p>
 					</Link>
 				</div>
@@ -73,7 +71,7 @@ const MobileMenu = React.memo(function MobileMenu() {
 										<div className={'relative flex-1 px-4 sm:px-6'}>
 											<AdventurerDetails media={'sm'} />
 											<section className={'grid grid-cols-2 gap-2 font-story my-4'}>
-												<Link href={'/'}>
+												<Link href={'/party'}>
 													<button
 														className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/' || router.pathname === '/recruit' ? '' : 'cursor-pointer'}`}>
 														{'Your Party'}

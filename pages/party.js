@@ -3,7 +3,6 @@ import	Image					from	'next/image';
 import	Link					from	'next/link';
 import	Template				from	'components/templates/Adventurer';
 import	RarityCareSystem		from	'components/RarityCareSystem';
-import	MobileIndex				from	'components/MobileIndex';
 import	AdventurerDetails		from	'sections/adventurer/WrapperMinimal';
 import	useLocalStorage			from	'hook/useLocalStorage';
 import	useRarity				from	'contexts/useRarity';
@@ -38,43 +37,34 @@ function	Index() {
 	const	[favoritesAdventurers, set_favoritesAdventurers] = useLocalStorage('favorites', []);
 
 	return (
-		<div>
-			<div className={'block md:hidden'}>
-				<Template>
-					<MobileIndex />
-				</Template>
+		<Template>
+			<RarityCareSystem />
+			<div className={'col-span-12 mt-4 md:mt-8'}>
+				<div className={'grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-4'}>
+					{([...Object.values(rarities || {})] || [])
+						.sort((a, b) => {
+							if (favoritesAdventurers.includes(a.tokenID))
+								return -1;
+							if (favoritesAdventurers.includes(b.tokenID))
+								return 1;
+							return 0;
+						})
+						.map((adventurer, i) => {
+							return (
+								<AdventurerDetails
+									key={i}
+									adventurer={adventurer}
+									set_currentAdventurer={set_currentAdventurer}
+									favoritesAdventurers={favoritesAdventurers}
+									set_favoritesAdventurers={set_favoritesAdventurers}
+									raritySkin={skins[adventurer?.tokenID] || adventurer?.skin}
+								/>
+							);
+						})}
+					<NewAdventurer />
+				</div>
 			</div>
-			<div className={'hidden md:block'}>
-				<Template>
-					<RarityCareSystem />
-					<div className={'col-span-12 mt-4 md:mt-8'}>
-						<div className={'grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-4'}>
-							{([...Object.values(rarities || {})] || [])
-								.sort((a, b) => {
-									if (favoritesAdventurers.includes(a.tokenID))
-										return -1;
-									if (favoritesAdventurers.includes(b.tokenID))
-										return 1;
-									return 0;
-								})
-								.map((adventurer, i) => {
-									return (
-										<AdventurerDetails
-											key={i}
-											adventurer={adventurer}
-											set_currentAdventurer={set_currentAdventurer}
-											favoritesAdventurers={favoritesAdventurers}
-											set_favoritesAdventurers={set_favoritesAdventurers}
-											raritySkin={skins[adventurer?.tokenID] || adventurer?.skin}
-										/>
-									);
-								})}
-							<NewAdventurer />
-						</div>
-					</div>
-				</Template>
-			</div>
-		</div>
+		</Template>
 	);
 }
 
