@@ -6,6 +6,7 @@ import	dayjs						from	'dayjs';
 import	duration					from	'dayjs/plugin/duration';
 import	relativeTime				from	'dayjs/plugin/relativeTime';
 import	useRarity					from	'contexts/useRarity';
+import	{Media}						from	'contexts/useUI';
 import	Tooltip						from	'components/Tooltip';
 import	ADVENTURES					from	'utils/codex/adventures/adventures';
 
@@ -104,6 +105,93 @@ function	Index() {
 		);
 	}
 
+	function	renderAdventuresSelectionMobile() {
+		const	resultOK = [];
+		const	resultKO = [];
+		for (let index = 0; index < ADVENTURES.length; index++) {
+			const adventure = ADVENTURES[index];
+			const nextAdventure = currentAdventurer?.adventures?.[adventure.key]?.nextAdventure;
+			if (currentAdventurer?.adventures?.[adventure.key]?.canAdventure) {
+				resultOK.push(
+					<Link key={adventure.address}href={`/adventures/${adventure.path}#action`}>
+						<div
+							onClick={() => set_selectedAdventure(index)}
+							className={'w-full relative box group overflow-hidden cursor-pointer font-story'}>
+							<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-0 md:border-l-4 border-highlight' : 'pl-0 md:pl-1'}`}>
+								<div className={'w-full h-full p-4'}>
+									<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
+									<div className={'flex flex-row items-center justify-between mt-2 normal-case opacity-60'}>
+										<div className={'flex flex-row items-center'}>
+											<p className={'text-xs'}>{adventure.minimalDescription}</p>
+										</div>
+									</div>
+									<div className={'flex flex-col justify-between mt-4 normal-case'}>
+										<div className={'flex flex-row items-center'}>
+											<p className={'text-xs'}>{'Rewards'}</p>
+										</div>
+										<div className={'grid grid-cols-2 gap-1 w-full -ml-2 mt-2'}>
+											{adventure.rewards.map(([envName, name, addr]) => (
+												<div key={addr} className={'flex flex-row items-center'}>
+													<div className={'w-10 h-10 flex flex-center'} style={{minWidth: 40}}>
+														<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={40} height={40} />
+													</div>
+													<p className={'text-plain font-story text-sm text-50 normal-case ml-1'}>
+														{name}
+													</p>
+												</div>
+											))}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</Link>
+				);
+			} else {
+				resultKO.push(
+					<div
+						key={adventure.address}
+						onClick={() => set_selectedAdventure(index)}
+						className={'w-full relative box group overflow-hidden font-story opacity-40'}>
+						<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-4 border-highlight' : 'pl-1'}`}>
+							<div className={'w-full h-full p-4'}>
+								<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
+								<div className={'flex flex-row items-center justify-between mt-2 normal-case'}>
+									<div className={'flex flex-row items-center'}>
+										<p className={'text-xs'}>{nextAdventure ? `Ready ${nextAdventure}` : 'Not eligible'}</p>
+									</div>
+								</div>
+								<div className={'flex flex-row items-center justify-between mt-2 normal-case opacity-60'}>
+									<div className={'flex flex-row items-center'}>
+										<p className={'text-xs'}>{adventure.minimalDescription}</p>
+									</div>
+								</div>
+								<div className={'flex flex-col justify-between mt-4 normal-case'}>
+									<div className={'flex flex-row items-center'}>
+										<p className={'text-xs'}>{'Rewards'}</p>
+									</div>
+									<div className={'grid grid-cols-2 gap-1 w-full -ml-2 mt-2'}>
+										{adventure.rewards.map(([envName, name, addr]) => (
+											<div key={addr} className={'flex flex-row items-center'}>
+												<div className={'w-10 h-10 flex flex-center'} style={{minWidth: 40}}>
+													<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={40} height={40} />
+												</div>
+												<p className={'text-plain font-story text-sm text-50 normal-case ml-1'}>
+													{name}
+												</p>
+											</div>
+										))}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				);
+			}
+		}
+		return ([...resultOK, ...resultKO]);
+	}
+
 	function	renderAdventuresSelection() {
 		const	resultOK = [];
 		const	resultKO = [];
@@ -116,7 +204,7 @@ function	Index() {
 						key={adventure.address}
 						onClick={() => set_selectedAdventure(index)}
 						className={'w-full relative box group overflow-hidden cursor-pointer font-story'}>
-						<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-4 border-highlight' : 'pl-1'}`}>
+						<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-0 md:border-l-4 border-highlight' : 'pl-0 md:pl-1'}`}>
 							<div className={'w-full h-full p-4'}>
 								<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
 				
@@ -168,12 +256,21 @@ function	Index() {
 		<div>
 			<div className={'flex flex-col md:grid grid-cols-12 gap-x-10 max-w-full'}>
 				<div className={'col-span-3 relative'}>
-					<div className={'grid grid-cols-2 md:grid-cols-1 gap-4 sticky top-4 max-h-screen'}>
-						{renderAdventuresSelection()}
-					</div>
+					<Media lessThan={'md'}>
+						<div className={'grid grid-cols-1 md:grid-cols-1 gap-4 sticky top-4 max-h-full md:max-h-screen'}>
+							{renderAdventuresSelectionMobile()}
+						</div>
+					</Media>
+					<Media greaterThan={'md'}>
+						<div className={'grid grid-cols-1 md:grid-cols-1 gap-4 sticky top-4 max-h-full md:max-h-screen'}>
+							{renderAdventuresSelection()}
+						</div>
+					</Media>
 				</div>
-				<div className={'col-span-9'} style={{minHeight: 800}}>
-					{renderAdventures()}
+				<div className={'col-span-9 hidden md:block'} style={{minHeight: 800}}>
+					<Media greaterThan={'md'}>
+						{renderAdventures()}
+					</Media>
 				</div>
 			</div>
 		</div>

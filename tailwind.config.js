@@ -42,8 +42,8 @@ module.exports = {
 				new: '#059669',
 				info: '#167df0',
 				infoDarker: '#0e71de',
-				warning: '#FBBF24',
-				warningDarker: '#FACC15',
+				warning: '#eab308',
+				warningDarker: '#FBBF24 ',
 				withdraw: '#EF4444'
 			},
 			white: colors.white,

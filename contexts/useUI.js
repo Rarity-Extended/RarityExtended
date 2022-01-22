@@ -6,7 +6,19 @@
 ******************************************************************************/
 
 import	React, {useEffect, useContext, createContext}	from	'react';
+import	{createMedia}									from	'@artsy/fresnel';
 import	useLocalStorage									from	'hook/useLocalStorage';
+
+const AppMedia = createMedia({
+	breakpoints: {
+		xs: 0,
+		sm: 640,
+		md: 768,
+		lg: 1024,
+		xl: 1280,
+		xxl: 1536,
+	},
+});
 
 const	UI = createContext();
 export const UIContextApp = ({children}) => {
@@ -46,5 +58,7 @@ export const UIContextApp = ({children}) => {
 	);
 };
 
+export const mediaStyle = AppMedia.createMediaStyle();
+export const {Media, MediaContextProvider} = AppMedia;
 export const useUI = () => useContext(UI);
 export default useUI;

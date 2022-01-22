@@ -15,10 +15,10 @@ import	{WalletConnectConnector}												from	'@web3-react-fork/walletconnect-
 import	useLocalStorage															from	'hook/useLocalStorage';
 import	useClientEffect															from	'hook/useClientEffect';
 import	{toAddress}																from	'utils';
-import	useSWR				 													from	'swr';
+// import	useSWR				 													from	'swr';
 
-let fakeFetcherNonce = 0;
-const fakeFetcher = () => fakeFetcherNonce++;
+// let fakeFetcherNonce = 0;
+// const fakeFetcher = () => fakeFetcherNonce++;
 
 const walletType = {NONE: -1, METAMASK: 0, WALLET_CONNECT: 1};
 const Web3Context = createContext();

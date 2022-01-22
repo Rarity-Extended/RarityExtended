@@ -119,6 +119,8 @@ function	Index({router}) {
 						} else if (choice === 'adventures') {
 							onBack();
 						} else {
+							const	element_to_scroll_to = document.getElementById('action');
+							element_to_scroll_to.scrollIntoView();
 							set_step(choice);
 						}
 					}}

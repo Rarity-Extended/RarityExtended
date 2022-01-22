@@ -50,6 +50,9 @@
 .bg-600 {
   @apply bg-light-600 dark:bg-dark-600;
 }
+.bg-900 {
+  @apply bg-light-900 dark:bg-dark-900;
+}
 .hover-bg-900 {
   @apply hover:bg-light-300 dark:hover:bg-dark-900;
 }
@@ -67,4 +70,12 @@
 }
 .hover-text-highlight {
   @apply text-tag-info hover:bg-tag-infoDarker dark:text-tag-warning dark:hover:bg-tag-warningDarker;
+}
+
+.button-600 {
+  @apply bg-light-600 dark:bg-dark-600 text-white dark:text-black border border-light-900 dark:border-dark-900 border-opacity-50 dark:border-opacity-50 hover:bg-light-900 dark:hover:bg-dark-900;
+}
+
+.box-600 {
+  @apply bg-light-600 dark:bg-dark-600 text-white dark:text-black border border-light-900 dark:border-dark-900 border-opacity-50 dark:border-opacity-50 rounded-md;
 }

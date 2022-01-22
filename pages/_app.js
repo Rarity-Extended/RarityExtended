@@ -93,15 +93,10 @@ function	AppWrapper(props) {
 				<meta name={'msapplication-TileColor'} content={'#9fcc2e'} />
 				<meta name={'theme-color'} content={'#ffffff'} />
 				<meta charSet={'utf-8'} />
-				<link rel={'preconnect'} href={'https://fonts.googleapis.com'} />
-				<link rel={'preconnect'} href={'https://fonts.gstatic.com'} crossOrigin={'true'} />
-				<link href={'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap'} rel={'stylesheet'} />
-				<link href={'https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;500;600;700&display=swap'} rel={'stylesheet'} />
 
 				<meta name={'robots'} content={'index,nofollow'} />
 				<meta name={'googlebot'} content={'index,nofollow'} />
 				<meta charSet={'utf-8'} />
-				<script defer data-domain={'rarityextended.com'} src={'https://plausible.io/js/plausible.js'} />
 			</Head>
 			<DefaultSeo
 				title={'Rarity Extended'}
@@ -128,7 +123,7 @@ function	AppWrapper(props) {
 					site: '@RXtended',
 					cardType: 'summary_large_image',
 				}} />
-			<main id={'app'} className={'p-4 relative font-title uppercase text-plain bg-light-900 dark:bg-dark-600 scrollbar-none'} style={{minHeight: '100vh'}}>
+			<main id={'app'} className={'p-4 relative font-title uppercase text-plain bg-light-900 dark:bg-dark-600 scrollbar-none overflow-x-hidden md:overflow-x-auto'} style={{minHeight: '100vh'}}>
 				<Toaster position={'bottom-right'} toastOptions={{className: 'text-sx border-4 border-black dark:border-dark-100 text-plain bg-white dark:bg-dark-600 noBr shadow-xl'}} />
 				<Navbar router={router} />
 				<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />

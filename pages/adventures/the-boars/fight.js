@@ -128,7 +128,7 @@ function	Index({dungeon, adventurer, router}) {
 
 
 			<div className={'box p-4 text-xs w-full relative'}>
-				<div className={'w-3/4 mx-auto mt-12'}>
+				<div className={'w-full md:w-3/4 mx-auto mt-2 md:mt-12'}>
 					<div className={'flex flex-col items-center'}>
 						<div className={'w-full flex flex-row ml-0 md:ml-32'}>
 							<div className={'w-full mr-14'}>
@@ -190,7 +190,7 @@ function	Index({dungeon, adventurer, router}) {
 						</div>
 					</div>
 				</div>
-				<div className={'w-3/4 mx-auto'}>
+				<div className={'w-full md:w-3/4 mx-auto'}>
 					{renderOptions()}
 				</div>
 			</div>

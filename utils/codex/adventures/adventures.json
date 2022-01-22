@@ -7,6 +7,7 @@
 		"address": "0xa79358CB5aefa3c550A8773848Dbb6E99e74300f",
 		"overlayColor": "#554a40",
 		"difficulty": "easy",
+		"minimalDescription": "Kill or protect the boars. The destiny of the forest is in your hands ...",
 		"description": [
 			[
 				{"text": "You are walking near a large forest. The air fills with the scent of sap, leaves, and decaying leaves. The sun dips below the mountains, revealing the speckled green and brown of the forest floor, the slender trunks of stunted trees, the bird nests in the tops of branches."}
@@ -97,6 +98,7 @@
 		"address": "0x29d51E8736FCC8C2662aA1B2cf46753d5918606F",
 		"overlayColor": "#FDAC53",
 		"difficulty": "easy",
+		"minimalDescription": "Hooligans are taking over the tavern. Get up there and give them a show, see if you can calm them down...",
 		"description": [
 			[
 				{"text": "These hooligans show up at Facu's Tavern every weekend! They drink too much and scare away the other customers. Facu is fed up. Hopefully a "},
@@ -148,6 +150,7 @@
 		"address": "0x48e6F88F1Ab05677675dE9d14a705f8A137ea2bC",
 		"overlayColor": "#124712",
 		"difficulty": "easy",
+		"minimalDescription": "This drunk man in the tavern talked about treasure ... What does this big forest hide ?",
 		"description": [
 			[
 				{"text": "There is a dark looking man sitting at a table in the corner. His face is hidden under a full faced mask. He speaks of a forest to the north where he has buried a "},
@@ -205,6 +208,7 @@
 		"address": "0x2A0F1cB17680161cF255348dDFDeE94ea8Ca196A",
 		"overlayColor": "#000000",
 		"difficulty": "easy",
+		"minimalDescription": "A big ugly rat in the cellar? Sounds like the perfect adventurer for a beginner!",
 		"description": [
 			[
 				{"text": "Facu, the tavern’s owner, was sitting alone at a table. His old housecat laying on his lap and purring away. Facu had heard some scurrying about in his cellar and had gone down to check it out. He found swarms of hungry rats. In his earlier days, he would have squashed those pests, but these days he’s weak and frail."}

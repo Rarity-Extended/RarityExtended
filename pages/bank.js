@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /******************************************************************************
 **	@Author:				Rarity Extended
 **	@Twitter:				@RXtended
@@ -210,7 +211,7 @@ function	Index() {
 
 	return (
 		<div className={'flex flex-col max-w-full'}>
-			<div className={'grid grid-cols-5 w-full gap-6'}>
+			<div className={'grid grid-cols-1 md:grid-cols-5 w-full gap-4 md:gap-6'}>
 				<BankCard
 					name={'FTM'}
 					vault={vaults?.find(e => e.address === '0x0DEC85e74A92c52b7F708c4B10207D9560CEFaf0') || {}}

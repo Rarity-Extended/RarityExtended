@@ -24,7 +24,7 @@ function ModalSelectAdventurer({isOpen, onClose, onSelect}) {
 				<div className={'absolute inset-0 overflow-hidden'}>
 					<Dialog.Overlay className={'absolute inset-0 z-40 bg-dark-900 opacity-40'} />
 	
-					<div className={'fixed inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16 z-50'}>
+					<div className={'fixed inset-y-0 right-0 pl-0 md:pl-10 max-w-full flex sm:pl-16 z-50'}>
 						<Transition.Child
 							as={Fragment}
 							enter={'transform transition ease-in-out duration-500 sm:duration-700'}
@@ -33,17 +33,19 @@ function ModalSelectAdventurer({isOpen, onClose, onSelect}) {
 							leave={'transform transition ease-in-out duration-500 sm:duration-700'}
 							leaveFrom={'translate-x-0'}
 							leaveTo={'translate-x-full'}>
-							<div className={'w-screen max-w-sm'}>
+							<div className={'w-screen max-w-screen md:max-w-sm'}>
 								<div className={'h-full flex flex-col bg-600 shadow-xl overflow-y-scroll border-l-2 border-light-400 dark:border-dark-400'}>
-									<div className={'px-6 py-8'}>
+									<div className={'px-4 md:px-6 pt-6 py-4 md:py-8 md:pt-8'}>
 										<div className={'flex items-start justify-between'}>
-											<Dialog.Title className={'text-lg font-medium text-plain font-story'}>{'Adventurers'}</Dialog.Title>
+											<Dialog.Title className={'text-lg font-medium text-plain font-story'}>
+												{'Adventurers'}
+											</Dialog.Title>
 											<div className={'ml-3 h-7 flex items-center'}>
-												<svg onClick={onClose} className={'w-5 h-5 text-plain cursor-pointer'} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M5 5h2v2H5V5zm4 4H7V7h2v2zm2 2H9V9h2v2zm2 0h-2v2H9v2H7v2H5v2h2v-2h2v-2h2v-2h2v2h2v2h2v2h2v-2h-2v-2h-2v-2h-2v-2zm2-2v2h-2V9h2zm2-2v2h-2V7h2zm0 0V5h2v2h-2z'} fill={'currentColor'}/> </svg>
+												<svg onClick={onClose} aria-hidden={'true'} focusable={'false'} data-prefix={'fas'} data-icon={'xmark'} className={'w-5 h-5 text-plain'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 320 512'}><path fill={'currentColor'} d={'M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z'}></path></svg>
 											</div>
 										</div>
 									</div>
-									<div className={'border-b-4 border-black dark:border-dark-100'} />
+									<div className={'border-b-2 md:border-b-4 border-black dark:border-dark-100'} />
 									<ul role={'list'} className={'flex-1 overflow-y-auto'}>
 										{[...Object.values(rarities)].map((adventurer) => (
 											<li key={adventurer.tokenID}>

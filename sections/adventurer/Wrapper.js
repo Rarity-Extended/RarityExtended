@@ -6,11 +6,24 @@ import	OverviewSkills		from	'sections/adventurer/OverviewSkills';
 import	OverviewFeats		from	'sections/adventurer/OverviewFeats';
 import	OverviewInventory	from	'sections/adventurer/OverviewInventory';
 import	OverviewEquipement	from	'sections/adventurer/OverviewEquipement';
+import	OverviewMinimal		from	'sections/adventurer/OverviewMinimal';
 
-function	Wrapper() {
+function	Wrapper({media}) {
 	const	{provider, chainTime} = useWeb3();
 	const	{currentAdventurer, inventory, skins} = useRarity();
 	const	[tab, set_tab] = React.useState(0);
+
+	if (media === 'sm') {
+		return (
+			<div className={'box p-4 flex flex-row relative'}>
+				<OverviewMinimal
+					adventurer={currentAdventurer}
+					provider={provider}
+					chainTime={chainTime}
+					raritySkin={skins[currentAdventurer?.tokenID] || currentAdventurer?.skin} />
+			</div>
+		);	
+	}
 
 	return (
 		<div className={'box p-4 flex flex-row space-x-16 relative'}>
