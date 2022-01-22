@@ -8,7 +8,7 @@ import	AdventurerDetails				from	'sections/adventurer/Wrapper';
 
 const MobileMenu = React.memo(function MobileMenu() {
 	const	router = useRouter();
-	const	[open, set_open] = React.useState(true);
+	const	[open, set_open] = React.useState(false);
 
 	React.useEffect(() => {
 		set_open(false);
