@@ -305,7 +305,7 @@ function	Index({minimal}) {
 			<div>
 				<div className={'w-full relative box h-full'}>
 					<div className={'relative flex flex-row'}>
-						<div className={'w-full h-full p-2'}>
+						<div className={'w-full h-full p-4'}>
 							<h1 className={'text-lg font-bold text-plain'}>{'Care system'}</h1>
 							<p className={'text-sm pb-1 text-50'}>
 								{'You can send '}

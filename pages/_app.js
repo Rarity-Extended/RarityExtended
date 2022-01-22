@@ -41,9 +41,7 @@ function	GameWrapper({Component, pageProps, element, router}) {
 	}
 
 	if (!active) {
-		return (
-			<SectionNoWallet />
-		);
+		return (<SectionNoWallet />);
 	}
 
 	if (Object.values(rarities).length === 0) {

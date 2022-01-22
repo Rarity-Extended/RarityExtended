@@ -64,9 +64,9 @@ function	NewAdventurer({rarityClass}) {
 
 function	Index() {
 	return (
-		<section className={'mt-24 md:mt-12 max-w-screen md:max-w-screen-xl mx-auto mb-24'}>
-			<section className={'mt-6 max-w-screen md:max-w-screen-xl mx-auto'}>
-				<div className={' text-xl'}>
+		<section className={'mt-2 md:mt-12 max-w-screen md:max-w-screen-xl mx-auto mb-24'}>
+			<section className={'mt-0 max-w-screen md:max-w-screen-xl mx-auto'}>
+				<div className={'text-sm md:text-xl'}>
 					<p>{'Welcome!'}</p>
 					<p className={'my-4'}>{'You are about to start a journey beyond imagination. you will meet new friends and fight great dangers! The world of Rarity is filled with wonders and perils! Do you have what it takes to survive. Is your curiosity strong enough to get you to the end?'}</p>
 
