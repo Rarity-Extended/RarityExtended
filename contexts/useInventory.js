@@ -87,7 +87,6 @@ export const InventoryContextApp = ({children}) => {
 				};
 			}	
 		}
-		console.log(_sharedInventory);
 		setTimeout(() => {
 			set_sharedInventory(_sharedInventory);
 			set_nonce(n => n + 1);

@@ -141,8 +141,6 @@ function	Index() {
 				],
 			};
 		}
-
-		console.log(_bankSituation);
 		set_bankSituation(_bankSituation);
 	}, [provider, address, chainID]);
 	React.useEffect(() => fetchVaultsPositions(), [fetchVaultsPositions]);

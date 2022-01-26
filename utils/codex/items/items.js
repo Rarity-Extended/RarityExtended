@@ -94,8 +94,8 @@ const	ITEMS_MEALS = [
 	{
 		name: 'Grilled Meat',
 		description: 'Reduce the time between two adventures by 1 hours.',
-		img: '/items/meals/0x132bC845CC5C06145e0e3593E90098954013573d.png',
-		address: '0x132bC845CC5C06145e0e3593E90098954013573d',
+		img: '/items/meals/0x97e8f1061224cb532F808b074786C76e977BA6EE.png',
+		address: '0x97e8f1061224cb532F808b074786C76e977BA6EE',
 		type: 'enumerable',
 		cost: [
 			[process.env.RARITY_GOLD_ADDR, 10],
@@ -105,8 +105,8 @@ const	ITEMS_MEALS = [
 	{
 		name: 'Mushroom Soup',
 		description: 'Reduce the time between two adventures by 1 hours.',
-		img: '/items/meals/0x0cE1043C273463B9B0fce18b2f89E65E415E65a8.png',
-		address: '0x0cE1043C273463B9B0fce18b2f89E65E415E65a8',
+		img: '/items/meals/0x2e3e1C1F49A288ebF88be66a3ED3539B5971f25D.png',
+		address: '0x2e3e1C1F49A288ebF88be66a3ED3539B5971f25D',
 		type: 'enumerable',
 		cost: [
 			[process.env.RARITY_GOLD_ADDR, 10],
@@ -116,8 +116,8 @@ const	ITEMS_MEALS = [
 	{
 		name: 'Berries Pie',
 		description: 'Reduce the time between two adventures by 1 hours.',
-		img: '/items/meals/0x7F6fA8e40D80207d082fe08c3848af6b617b67aD.png',
-		address: '0x7F6fA8e40D80207d082fe08c3848af6b617b67aD',
+		img: '/items/meals/0x57e4cD55289da26aa7cb607c00c5dDcd0f7980a2.png',
+		address: '0x57e4cD55289da26aa7cb607c00c5dDcd0f7980a2',
 		type: 'enumerable',
 		cost: [
 			[process.env.RARITY_GOLD_ADDR, 10],
@@ -127,8 +127,8 @@ const	ITEMS_MEALS = [
 	{
 		name: 'Mushroom and Meat Skewer',
 		description: 'Reduce the time between two adventures by 2 hours.',
-		img: '/items/meals/0x2666Ddf45D6225240c118fc549791c6Ffbba6Bdd.png',
-		address: '0x2666Ddf45D6225240c118fc549791c6Ffbba6Bdd',
+		img: '/items/meals/0x65567a2fBC14B4aBCd414bb6902384745d4353f6.png',
+		address: '0x65567a2fBC14B4aBCd414bb6902384745d4353f6',
 		type: 'enumerable',
 		cost: [
 			[process.env.RARITY_GOLD_ADDR, 10],
@@ -139,8 +139,8 @@ const	ITEMS_MEALS = [
 	{
 		name: 'Mushroom and Berries Mix',
 		description: 'Reduce the time between two adventures by 1 hours.',
-		img: '/items/meals/0x4DD911c5c32A63E89ca56f430D3281B2b255f941.png',
-		address: '0x4DD911c5c32A63E89ca56f430D3281B2b255f941',
+		img: '/items/meals/0xF06FfE67CB96641eEC55eA19126BD8F0107Ff0Ad.png',
+		address: '0xF06FfE67CB96641eEC55eA19126BD8F0107Ff0Ad',
 		type: 'enumerable',
 		cost: [
 			[process.env.RARITY_GOLD_ADDR, 10],
@@ -151,8 +151,8 @@ const	ITEMS_MEALS = [
 	{
 		name: 'Berries Wine',
 		description: 'A tasty wine made from berries. Useful to get drunk.',
-		img: '/items/meals/0xeA936830b341b6DC9Dc1aA1Fd3C6a512012BeE6A.png',
-		address: '0xeA936830b341b6DC9Dc1aA1Fd3C6a512012BeE6A',
+		img: '/items/meals/0xA0e9159EfC4407c4465bbCDF0e7538D6869d81a3.png',
+		address: '0xA0e9159EfC4407c4465bbCDF0e7538D6869d81a3',
 		type: 'enumerable',
 		cost: [
 			[process.env.RARITY_GOLD_ADDR, 50],
