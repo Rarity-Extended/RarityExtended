@@ -8,7 +8,7 @@ function	ElementInventoryItem({item}) {
 			<div className={'w-14 h-14 flex flex-center'} style={{minWidth: 56}}>
 				<Image src={item.img} width={56} height={56} />
 			</div>
-			<div className={'ml-1'}>
+			<div className={'ml-1 w-full text-start'}>
 				<p className={'text-plain text-sm text-50'}>
 					{item.name}
 				</p>
@@ -24,9 +24,9 @@ function	ElementInventoryItemNonFungible({item}) {
 	return (
 		<div key={item.name} className={'flex flex-row items-center button-fake'}>
 			<div className={'w-14 h-14 flex flex-center'} style={{minWidth: 56}}>
-				<Image src={item?.img || '/items/rarity_crafting/shields/buckler.png'} width={56} height={56} />
+				<Image src={item?.img} width={56} height={56} />
 			</div>
-			<div className={'ml-1'}>
+			<div className={'pl-1 w-full text-start'}>
 				<p className={'text-plain text-sm text-50'}>
 					{item.name}
 				</p>
@@ -50,16 +50,6 @@ const InventoryGrid = React.memo(function InventoryGrid({currentAdventurer}) {
 					img: `/items/${process.env.RARITY_EXTENDED_XP}.png`,
 					address: process.env.RARITY_EXTENDED_XP,
 					balance: Number(currentAdventurer?.xp)
-				}} />
-		);
-		toRender.push(
-			<ElementInventoryItem
-				key={'gold'}
-				item={{
-					name: 'Gold',
-					img: `/items/${process.env.RARITY_GOLD_ADDR}.png`,
-					address: process.env.RARITY_GOLD_ADDR,
-					balance: Number(currentAdventurer?.gold?.balance),
 				}} />
 		);
 

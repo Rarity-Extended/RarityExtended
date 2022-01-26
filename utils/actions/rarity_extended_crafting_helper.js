@@ -132,28 +132,11 @@ export async function	cook({
 	const	signer = provider.getSigner();
 	const	rarityCook = new ethers.Contract(
 		process.env.RARITY_COOKING_HELPER_ADDR,
-		['function cook(address, uint, uint) external'],
+		[{'inputs': [{'internalType': 'address', 'name': '_meal', 'type': 'address'}, {'internalType': 'uint256', 'name': '_adventurer', 'type': 'uint256'}, {'internalType': 'uint256', 'name': '_receiver', 'type': 'uint256'}], 'name': 'cook', 'outputs': [], 'stateMutability': 'nonpayable', 'type': 'function'}],
 		signer
 	);
 
 	_toast = toast.loading(`Trying to cook ${itemName}...`);
-	/**********************************************************************
-	**	In order to avoid dumb error, let's first check if the TX would
-	**	be successful with a static call
-	**********************************************************************/
-	try {
-		await rarityCook.callStatic.cook(
-			mealAddress,
-			tokenID,
-			tokenID
-		);
-	} catch (error) {
-		toast.dismiss(_toast);
-		toast.error('You have a bad feeling about this. You should retry later.');
-		console.log(error);
-		callback({error, data: undefined});
-		return;
-	}
 
 	/**********************************************************************
 	**	If the call is successful, try to perform the actual TX

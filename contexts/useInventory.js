@@ -17,7 +17,6 @@ import	MANIFEST_ARMORS									from	'utils/codex/items/items_manifest_armors.jso
 import	MANIFEST_WEAPONS								from	'utils/codex/items/items_manifest_weapons.json';
 import	MANIFEST_SHIELDS								from	'utils/codex/items/items_manifest_shields.json';
 
-
 const	MEAL_ABI = [
 	{'inputs': [{'internalType': 'uint256','name': 'summonerId','type': 'uint256'}],'name': 'getTotalMealsBySummoner','outputs': [{'components': [{'internalType': 'address','name': 'meal','type': 'address'},{'internalType': 'uint256[]','name': 'balance','type': 'uint256[]'}],'internalType': 'struct Cooking.MealBalance[]','name': '','type': 'tuple[]'}],'stateMutability': 'view','type': 'function'},
 ];
@@ -101,11 +100,13 @@ export const InventoryContextApp = ({children}) => {
 	**	3. Parse and assign the multicall result
 	**********************************************************************************************/
 	function		prepareInventory(tokenID) {
+		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, process.env.RARITY_GOLD_ABI);
 		const	rarityMealts = new Contract(process.env.RARITY_COOKING_ADDR, MEAL_ABI);
 		const	raritytheForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI);
 		const	rarityOpenMic = new Contract(process.env.DUNGEON_OPEN_MIC_V2_ADDR, process.env.DUNGEON_OPEN_MIC_V2_ABI);
 
 		return [
+			rarityGold.balanceOf(tokenID),
 			...ITEMS.ITEMS_ERC20.map(item => item.fetch(tokenID)),
 			rarityMealts.getTotalMealsBySummoner(tokenID),
 			raritytheForest.getTreasuresBySummoner(tokenID),
@@ -115,6 +116,17 @@ export const InventoryContextApp = ({children}) => {
 	async function	assignInventory(tokenID, inventoryCallResult) {
 		const	_inventory = [];
 		
+		let	rIndex = 0;
+		_inventory[process.env.RARITY_GOLD_ADDR] = {
+			name: 'Gold',
+			description: 'Currency in the realm',
+			img: `/items/${process.env.RARITY_GOLD_ADDR}.png`,
+			address: process.env.RARITY_GOLD_ADDR,
+			type: 'enumerable',
+			balance: ethers.utils.formatEther(inventoryCallResult[rIndex])
+		};
+		rIndex++;
+
 		for (let index = 0; index < ITEMS.ITEMS_ERC20.length; index++) {
 			const item = ITEMS.ITEMS_ERC20[index];
 			_inventory[item.address] = {
@@ -123,11 +135,10 @@ export const InventoryContextApp = ({children}) => {
 				img: item.img,
 				address: item.address,
 				type: item.type,
-				balance: ethers.BigNumber.from(inventoryCallResult[index]).toNumber()
+				balance: ethers.BigNumber.from(inventoryCallResult[rIndex++]).toNumber()
 			};
 		}
 		
-		let	rIndex = ITEMS.ITEMS_ERC20.length;
 		for (let index = 0; index < inventoryCallResult[rIndex].length; index++) {
 			const item = inventoryCallResult[rIndex][index];
 			const meal = ITEMS.ITEMS_MEALS.find(m => m.address === item.meal);

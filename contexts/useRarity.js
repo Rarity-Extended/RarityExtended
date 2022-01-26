@@ -97,8 +97,6 @@ export const RarityContextApp = ({children}) => {
 	}, [address, provider]);
 	React.useEffect(() => checkSpecialApprovals(), [checkSpecialApprovals]);
 
-
-
 	/**************************************************************************
 	**	Prepare the multicall to get most of the data
 	**************************************************************************/

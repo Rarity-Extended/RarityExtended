@@ -16,7 +16,7 @@ function	ensureCanCraft(adventurer, inventory, ingredients) {
 }
 
 
-function	ElementRecipe({recipe, currentAdventurer, inventory, onCraft}) {
+function	ElementRecipe({recipe, currentAdventurer, inventory, onCraft, isApproved, onApprove}) {
 	const	canCraft = ensureCanCraft(currentAdventurer, inventory, recipe.cost);
 
 	return (
@@ -57,9 +57,9 @@ function	ElementRecipe({recipe, currentAdventurer, inventory, onCraft}) {
 			<div className={'mt-auto flex flex-row space-x-2'}>
 				<button
 					disabled={!canCraft}
-					onClick={() => canCraft ? onCraft() : null}
+					onClick={() => !isApproved ? onApprove() : canCraft ? onCraft() : null}
 					className={'flex flex-center mt-4 w-full button-highlight'}>
-					<p>{'Craft'}</p>
+					<p>{canCraft && !isApproved ? 'Approve' : 'Craft'}</p>
 				</button>
 			</div>
 		</div>
