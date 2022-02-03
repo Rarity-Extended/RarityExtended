@@ -77,7 +77,7 @@ function	Index({dungeon, adventurer, router}) {
 	function	renderOptions() {
 		if (boarEscaped) {
 			return (
-				<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
+				<div className={'grid grid-cols-1 gap-4 pt-4 mt-4 border-t-2 border-black dark:border-dark-300'}>
 					<div onClick={() => router.push('/adventures/the-boars')} className={'flex flex-center button-regular'}>
 						<p>{'The Wild Boar has escaped'}</p>
 					</div>
@@ -86,7 +86,7 @@ function	Index({dungeon, adventurer, router}) {
 		}
 		if (adventurerWon && (dungeon.scout) === 0) {
 			return (
-				<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
+				<div className={'grid grid-cols-1 gap-4 pt-4 mt-4 border-t-2 border-black dark:border-dark-300'}>
 					<div onClick={() => router.push('/adventures/the-boars')} className={'flex flex-center button-regular'}>
 						<p>{'You have defeated the Wild Boar, but there is nothing to recover'}</p>
 					</div>
@@ -95,7 +95,7 @@ function	Index({dungeon, adventurer, router}) {
 		}
 		if (adventurerWon) {
 			return (
-				<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
+				<div className={'grid grid-cols-1 gap-4 pt-4 mt-4 border-t-2 border-black dark:border-dark-300'}>
 					<div onClick={onLoot} className={'flex flex-center button-regular'}>
 						<p>{'You have defeated the Wild Boar! Collect loot!'}</p>
 					</div>
@@ -103,7 +103,7 @@ function	Index({dungeon, adventurer, router}) {
 			);
 		}
 		return (
-			<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
+			<div className={'grid grid-cols-1 gap-4 pt-4 mt-4 border-t-2 border-black dark:border-dark-300'}>
 				<div onClick={fight} className={'flex flex-center button-regular'}>
 					<p>{'Fight'}</p>
 				</div>
@@ -115,33 +115,33 @@ function	Index({dungeon, adventurer, router}) {
 	}
 
 	return (
-		<section id={'action'} className={'flex flex-col w-full max-w-screen md:max-w-screen-xl mx-auto relative'}>
+		<section id={'action'} className={'flex relative flex-col mx-auto w-full md:max-w-screen-xl max-w-screen'}>
 			<div className={`absolute bg-black inset-0 z-10 -top-32 -left-4 -right-4 flex flex-col items-center min-h-screen transition-opacity duration-1000 ${adventurerHealth <= 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-				<p className={'text-2xl text-white pt-20 mx-4 md:mx-0 md:pt-64 max-w-screen-sm text-center'}>{'you passed out'}</p>
-				<p className={'text-base text-white pt-8 mx-4 md:mx-0 max-w-screen-sm text-center'}>{'After some time, the Farmer find you and bring you back in town...'}</p>
+				<p className={'pt-20 mx-4 max-w-screen-sm text-2xl text-center text-white md:pt-64 md:mx-0'}>{'you passed out'}</p>
+				<p className={'pt-8 mx-4 max-w-screen-sm text-base text-center text-white md:mx-0'}>{'After some time, the Farmer find you and bring you back in town...'}</p>
 				<Link href={'/adventures/the-boars#action'}>
-					<div className={'text-base text-white mt-16 mx-4 md:mx-0 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 border-white hover:bg-white hover:text-black transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
+					<div className={'py-2 px-4 mx-4 mt-16 max-w-screen-sm text-base text-center text-white hover:text-black hover:bg-white border-y-4 border-white transition-colors animate-pulse hover:animate-none cursor-pointer md:mx-0'} style={{cursor: 'pointer'}}>
 						{'Rest weak adventurer, Rest...'}
 					</div>
 				</Link>
 			</div>
 
 
-			<div className={'box p-4 text-xs w-full relative'}>
-				<div className={'w-full md:w-3/4 mx-auto mt-2 md:mt-12'}>
+			<div className={'relative p-4 w-full text-xs box'}>
+				<div className={'mx-auto mt-2 w-full md:mt-12 md:w-3/4'}>
 					<div className={'flex flex-col items-center'}>
-						<div className={'w-full flex flex-row ml-0 md:ml-32'}>
-							<div className={'w-full mr-14'}>
+						<div className={'flex flex-row ml-0 w-full md:ml-32'}>
+							<div className={'mr-14 w-full'}>
 								<p className={'whitespace-nowrap'}>{'Angry Boar'}</p>
-								<div className={'flex flex-row items-center w-full py-2'}>
-									<div className={'text-opacity-80 text-plain text-sm w-32'}>{'HP:'}</div>
+								<div className={'flex flex-row items-center py-2 w-full'}>
+									<div className={'w-32 text-sm text-opacity-80 text-plain'}>{'HP:'}</div>
 									<progress
-										className={'border-solid border-2 border-black dark:border-dark-400 p-1.5 nes-progress is-error w-full transition-all'}
+										className={'p-1.5 w-full border-2 border-black dark:border-dark-400 border-solid transition-all nes-progress is-error'}
 										value={dungeonHealth}
 										max={dungeon.dungeonHealth} />
 								</div>
 							</div>
-							<div className={'w-60 hidden md:block transform'} style={{minWidth: 240, opacity: boarEscaped ? 0 : 100}}>
+							<div className={'hidden w-60 md:block'} style={{minWidth: 240, opacity: boarEscaped ? 0 : 100}}>
 								<Image
 									src={dungeonHealth <= 0 ? '/adventures/the-boars/creature_dead.png' : '/adventures/the-boars/creature.gif'}
 									loading={'eager'}
@@ -149,7 +149,7 @@ function	Index({dungeon, adventurer, router}) {
 									width={240}
 									height={141} />
 							</div>
-							<div className={'w-30 block md:hidden transform'} style={{minWidth: 120, opacity: boarEscaped ? 0 : 100}}>
+							<div className={'block md:hidden w-30'} style={{minWidth: 120, opacity: boarEscaped ? 0 : 100}}>
 								<Image
 									src={dungeonHealth <= 0 ? '/adventures/the-boars/creature_dead.png' : '/adventures/the-boars/creature.gif'}
 									loading={'eager'}
@@ -159,8 +159,8 @@ function	Index({dungeon, adventurer, router}) {
 							</div>
 						</div>
 
-						<div className={'w-full flex flex-row mt-2 md:-mt-10 mr-0 md:mr-32'}>
-							<div className={'w-60 hidden md:block'} style={{minWidth: 240}}>
+						<div className={'flex flex-row mt-2 mr-0 w-full md:-mt-10 md:mr-32'}>
+							<div className={'hidden w-60 md:block'} style={{minWidth: 240}}>
 								<Image
 									src={skin}
 									loading={'eager'}
@@ -168,7 +168,7 @@ function	Index({dungeon, adventurer, router}) {
 									width={240}
 									height={240} />
 							</div>
-							<div className={'w-32 block md:hidden'} style={{minWidth: 120}}>
+							<div className={'block w-32 md:hidden'} style={{minWidth: 120}}>
 								<Image
 									src={skin}
 									loading={'eager'}
@@ -177,12 +177,12 @@ function	Index({dungeon, adventurer, router}) {
 									height={120} />
 							</div>
 
-							<div className={'w-full mt-auto mb-2'}>
+							<div className={'mt-auto mb-2 w-full'}>
 								<p>{dungeon.tokenID}</p>
-								<div className={'flex flex-row items-center w-full py-2'}>
-									<div className={'text-opacity-80 text-plain text-sm w-32'}>{'HP:'}</div>
+								<div className={'flex flex-row items-center py-2 w-full'}>
+									<div className={'w-32 text-sm text-opacity-80 text-plain'}>{'HP:'}</div>
 									<progress
-										className={'nes-progress border-solid border-2 border-black dark:border-dark-400 p-1.5 is-success w-full transition-all'}
+										className={'p-1.5 w-full border-2 border-black dark:border-dark-400 border-solid transition-all nes-progress is-success'}
 										value={adventurerHealth}
 										max={dungeon.adventurerHealth} />
 								</div>
@@ -190,7 +190,7 @@ function	Index({dungeon, adventurer, router}) {
 						</div>
 					</div>
 				</div>
-				<div className={'w-full md:w-3/4 mx-auto'}>
+				<div className={'mx-auto w-full md:w-3/4'}>
 					{renderOptions()}
 				</div>
 			</div>

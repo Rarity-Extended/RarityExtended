@@ -10,15 +10,9 @@ import	{ethers}																from	'ethers';
 import	QRCodeModal																from	'@walletconnect/qrcode-modal';
 import	{useWeb3React}															from	'@web3-react-fork/core';
 import	{InjectedConnector}														from	'@web3-react-fork/injected-connector';
-import	{ConnectorEvent}														from	'@web3-react-fork/types';
 import	{WalletConnectConnector}												from	'@web3-react-fork/walletconnect-connector';
 import	useLocalStorage															from	'hook/useLocalStorage';
 import	useClientEffect															from	'hook/useClientEffect';
-import	{toAddress}																from	'utils';
-// import	useSWR				 													from	'swr';
-
-// let fakeFetcherNonce = 0;
-// const fakeFetcher = () => fakeFetcherNonce++;
 
 const walletType = {NONE: -1, METAMASK: 0, WALLET_CONNECT: 1};
 const Web3Context = createContext();
@@ -29,88 +23,24 @@ function getProvider() {
 
 const	isClient = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 export const Web3ContextApp = ({children}) => {
-	const	web3 = useWeb3React();
-	const	[initialized, set_initialized] = useState(false);
-	const	[provider, set_provider] = useState(undefined);
-	const	[address, set_address] = useLocalStorage('address', '');
-	const	[chainID, set_chainID] = useLocalStorage('chainID', -1);
+	const	{activate, active, library, account, chainId, deactivate} = useWeb3React();
 	const	[lastWallet, set_lastWallet] = useLocalStorage('lastWallet', walletType.NONE);
-	const	[, set_nonce] = useState(0);
-	const	[chainTime, set_chainTime] = useState(new Date() / 1000);
-	const	[isActivated, set_isActivated] = useState(false);
-	const	[currentBlock, set_currentBlock] = useState(0);
-
-	const	{activate, active, library, connector, account, chainId, deactivate} = web3;
-	// const	{data: chainTimeNonce} = useSWR('chainTime', fakeFetcher, {
-	// 	refreshInterval: 10 * 1000,
-	// 	revalidateIfStale: true,
-	// 	revalidateOnMount: true,
-	// 	revalidateOnFocus: true,
-	// 	revalidateOnReconnect: true,
-	// 	refreshWhenHidden: true,
-	// 	dedupingInterval: 8 * 1000,
-	// });
+	const	[chainTime, set_chainTime] = useState(-1);
 
 	useEffect(() => {
-		if (provider)
-			provider.getBlock().then(e => set_chainTime(e.timestamp));
-		else
-			getProvider().getBlock().then(e => set_chainTime(e.timestamp));
-	}, [provider]);
-
-	const onUpdate = useCallback(async (update) => {
-		if (update.provider) {
-			set_provider(library);
-		}
-		if (update.chainId) {
-			if (update.chainId.startsWith('0x')) {
-				set_chainID(parseInt(update.chainId, 16));
-			} else {
-				set_chainID(Number(update.chainId));
-			}
-		}
-		if (update.account) {
-			set_address(toAddress(update.account));
-		}
-		set_nonce(n => n + 1);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		if (library)
+			library.getBlock().then(e => set_chainTime(e.timestamp));
 	}, [library]);
 
-	const onDesactivate = useCallback(() => {
-		set_chainID(-1);
-		set_provider(undefined);
-		set_lastWallet(walletType.NONE);
-		set_address('');
-		if (connector !== undefined) {
-			connector
-				.off(ConnectorEvent.Update, onUpdate)
-				.off(ConnectorEvent.Deactivate, onDesactivate);
-		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [connector]);
-
-	const onActivate = useCallback(async () => {
-		set_provider(library);
-		set_address(toAddress(account));
-		library.getNetwork().then(e => set_chainID(e.chainId));
-		library.getNetwork().then(e => set_chainTime(e.timestamp));
-		library.on('block', (block) => set_currentBlock(block));
-
-		connector
-			.on(ConnectorEvent.Update, onUpdate)
-			.on(ConnectorEvent.Deactivate, onDesactivate);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [account, chainId, connector, library, onDesactivate, onUpdate]);
-
 	const switchChain = useCallback(() => {
-		if (Number(chainID) === 250) {
+		if (Number(chainId) === 250) {
 			return;
 		}
-		if (!provider || !active) {
+		if (!library || !active) {
 			console.error('Not initialized');
 			return;
 		}
-		provider.send('wallet_addEthereumChain', [{
+		library.send('wallet_addEthereumChain', [{
 			'chainId': '0xFA',
 			'blockExplorerUrls': ['https://ftmscan.com'],
 			'chainName': 'Fantom Opera',
@@ -120,8 +50,8 @@ export const Web3ContextApp = ({children}) => {
 				'symbol': 'FTM',
 				'decimals': 18
 			}
-		}, address]).catch((error) => console.error(error));
-	}, [active, address, chainID, provider]);
+		}, account]).catch((error) => console.error(error));
+	}, [active, account, chainId, library]);
 
 	/**************************************************************************
 	**	connect
@@ -146,7 +76,6 @@ export const Web3ContextApp = ({children}) => {
 			const	injected = new InjectedConnector();
 			await activate(injected, undefined, true);
 			set_lastWallet(walletType.METAMASK);
-			set_isActivated(true);
 		} else if (_providerType === walletType.WALLET_CONNECT) {
 			if (active) {
 				deactivate();
@@ -162,7 +91,6 @@ export const Web3ContextApp = ({children}) => {
 			try {
 				await activate(walletconnect, undefined, true);
 				set_lastWallet(walletType.WALLET_CONNECT);
-				set_isActivated(true);
 			} catch (error) {
 				console.error(error);
 				set_lastWallet(walletType.NONE);
@@ -171,41 +99,25 @@ export const Web3ContextApp = ({children}) => {
 	}
 
 	useClientEffect(() => {
-		if (active) {
-			set_initialized(true);
-			onActivate();
-		}
-	}, [isClient, active, onActivate]);
-
-	useClientEffect(() => {
 		if (!active && lastWallet !== walletType.NONE) {
 			connect(lastWallet);
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isClient, active]);
 
-	useEffect(() => {
-		setTimeout(() => set_initialized(true), 1000);
-	}, []);
-
 	return (
 		<Web3Context.Provider
 			value={{
-				address,
+				address: account,
 				connect,
 				deactivate,
-				onDesactivate,
 				walletType,
-				chainID,
-				isActivated,
-				active: active && (Number(chainID) === 250 || Number(chainID) === 1337),
-				initialized,
+				chainID: Number(chainId || 0),
+				active: active && (Number(chainId) === 250 || Number(chainId) === 1337),
 				switchChain,
 				chainTime,
-				provider,
-				getProvider,
-				currentRPCProvider: provider,
-				currentBlock
+				provider: library,
+				getProvider
 			}}>
 			{children}
 		</Web3Context.Provider>

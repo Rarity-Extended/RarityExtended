@@ -26,15 +26,16 @@ import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
 import	'style/TailwindCustomStyles.css';
 
-function	GameWrapper({Component, pageProps, element, router}) {
-	const	{switchChain, active, chainID} = useWeb3();
-	const	{isLoaded, rarities, fetchRarity, rNonce} = useRarity();
-	if (!isLoaded) {
+const GameWrapper = React.memo(function GameWrapper({Component}) {
+	const	{switchChain, active, chainID, chainTime} = useWeb3();
+	const	{isLoaded, currentAdventurer} = useRarity();
+
+	if (!isLoaded || chainTime === -1) {
 		return (
-			<div className={'absolute inset-0 backdrop-blur-3xl bg-opacity-40 pointer-events-none'}>
+			<div className={'absolute inset-0 bg-opacity-40 backdrop-blur-3xl pointer-events-none'}>
 				<div className={'loader'} />
-				<div className={'absolute inset-0 mt-32 flex flex-center w-full'}>
-					<p className={'text-center text-white z-40'}>{'Retrieving your adventurers...'}</p>
+				<div className={'flex absolute inset-0 mt-32 w-full flex-center'}>
+					<p className={'z-40 text-center text-white'}>{'Retrieving your adventurers...'}</p>
 				</div>
 			</div>
 		);
@@ -44,33 +45,23 @@ function	GameWrapper({Component, pageProps, element, router}) {
 		return (<SectionNoWallet />);
 	}
 
-	if (Object.values(rarities).length === 0) {
+	if (!currentAdventurer) {
 		return (<SectionNoAdventurer />);
 	}
 
-	const getLayout = Component.getLayout || ((page) => page);
 	return (
-		<div className={'pb-24 mb-24 relative z-10'}>
+		<div className={'relative z-10 pb-24 mb-24'}>
 			{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
-				<div aria-label={'switchchain'} className={'flex w-full text-lg text-center justify-center'} onClick={switchChain}>
+				<div aria-label={'switchchain'} className={'flex justify-center w-full text-lg text-center'} onClick={switchChain}>
 					{'PLEASE SWITCH TO FANTOM NETWORK'}
 				</div>
 			) : null}
-			{getLayout(
-				<Component
-					element={element}
-					router={router}
-					rarities={rarities}
-					fetchRarity={fetchRarity}
-					rNonce={rNonce}
-					{...pageProps} />
-			)}
+			<Component />
 		</div>
 	);
-}
+});
 
 function	AppWrapper(props) {
-	const	{Component, pageProps, router} = props;
 	const	{switchChain, chainID} = useWeb3();
 	const	windowInFocus = useWindowInFocus();
 
@@ -121,10 +112,10 @@ function	AppWrapper(props) {
 					site: '@RXtended',
 					cardType: 'summary_large_image',
 				}} />
-			<main id={'app'} className={'p-4 relative font-story text-plain bg-light-background dark:bg-dark-600 scrollbar-none overflow-x-hidden md:overflow-x-auto'} style={{minHeight: '100vh'}}>
+			<main id={'app'} className={'overflow-x-hidden relative p-4 font-story bg-light-background dark:bg-dark-600 md:overflow-x-auto text-plain scrollbar-none'} style={{minHeight: '100vh'}}>
 				<Toaster position={'bottom-right'} toastOptions={{className: 'text-sx border-4 border-black dark:border-dark-100 text-plain bg-white dark:bg-dark-600 noBr shadow-xl'}} />
-				<Navbar router={router} />
-				<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />
+				<Navbar />
+				<GameWrapper {...props} />
 				<Footer />
 			</main>
 		</>

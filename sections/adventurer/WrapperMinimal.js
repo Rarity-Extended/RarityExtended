@@ -9,12 +9,12 @@ function	WrapperMinimal({adventurer, set_currentAdventurer, favoritesAdventurers
 	return (
 		<div>
 			<Media greaterThan={'md'}>
-				<div className={'box flex justify-between items-center w-full flex-col p-4 relative'}>
+				<div className={'flex relative flex-col justify-between items-center p-4 w-full box'}>
 					<div className={'text-center'}>
-						<p className={'text-plain dark:text-opacity-70 font-bold text-xl text-center'}>
+						<p className={'text-xl font-bold text-center text-plain dark:text-opacity-70'}>
 							{adventurer.name || adventurer.tokenID}
 						</p>
-						<p className={'text-black dark:text-dark-100 text-sm mb-4'}>
+						<p className={'mb-4 text-sm text-black dark:text-dark-100'}>
 							{adventurer.class ? `${CLASSES[adventurer.class].name} level ${adventurer.level}` : 'Unknown'}
 						</p>
 					</div>
@@ -33,23 +33,23 @@ function	WrapperMinimal({adventurer, set_currentAdventurer, favoritesAdventurers
 					<div className={'px-4'}>
 						<button
 							onClick={() => set_currentAdventurer(adventurer)}
-							className={'button-highlight-outline mt-4'}>
+							className={'mt-4 button-highlight-outline'}>
 							<p>{'Select Adventurer'}</p>
 						</button>
 					</div>
 				</div>
 			</Media>
 			<Media lessThan={'md'}>
-				<div className={'box flex justify-between items-center w-full flex-row p-2 relative'}>
+				<div className={'flex relative flex-row justify-between items-center p-2 w-full box'}>
 					<div className={'w-36'}>
 						<Image src={raritySkins ? raritySkin : adventurer?.skin} width={144} height={144} />
 					</div>
 					<div>
 						<div className={'text-center'}>
-							<p className={'text-plain dark:text-opacity-70 font-bold text-xl text-center'}>
+							<p className={'text-xl font-bold text-center text-plain dark:text-opacity-70'}>
 								{adventurer.name || adventurer.tokenID}
 							</p>
-							<p className={'text-black dark:text-dark-100 text-sm mb-4'}>
+							<p className={'mb-4 text-sm text-black dark:text-dark-100'}>
 								{adventurer.class ? `${CLASSES[adventurer.class].name} level ${adventurer.level}` : 'Unknown'}
 							</p>
 						</div>
@@ -67,7 +67,7 @@ function	WrapperMinimal({adventurer, set_currentAdventurer, favoritesAdventurers
 						<div className={'px-4'}>
 							<button
 								onClick={() => set_currentAdventurer(adventurer)}
-								className={'bg-600 hover-bg-900 flex flex-center text-center px-4 py-2 mt-4 w-full text-plain cursor-pointer opacity-60'}>
+								className={'flex py-2 px-4 mt-4 w-full text-center opacity-60 cursor-pointer bg-600 hover-bg-900 flex-center text-plain'}>
 								<p className={' text-sm select-none'}>{'Select Adventurer'}</p>
 							</button>
 						</div>

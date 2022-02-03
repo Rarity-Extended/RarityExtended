@@ -4,6 +4,7 @@ import	toast					from	'react-hot-toast';
 import	dayjs					from	'dayjs';
 import	relativeTime			from	'dayjs/plugin/relativeTime';
 import	useUI					from	'contexts/useUI';
+import	useInventory			from	'contexts/useInventory';
 import	useRarity				from	'contexts/useRarity';
 import	IconHelmet				from	'components/icons/IconHelmet';
 import	IconGloves				from	'components/icons/IconGloves';
@@ -18,14 +19,14 @@ import	CLASSES					from	'utils/codex/core/classes';
 
 dayjs.extend(relativeTime);
 
-function	OverviewEquipement({adventurer, provider, chainTime, raritySkin}) {
-	const	{updateRarity} = useRarity();
+function	OverviewEquipement({provider, raritySkin}) {
+	const	{updateRarity, currentAdventurer} = useRarity();
+	const	{equipements} = useInventory();
 	const	{raritySkins} = useUI();
-	const	[name, set_name] = React.useState(adventurer.name || adventurer.tokenID);
-	const	canAdventure = !dayjs(new Date(adventurer.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
+	const	[name, set_name] = React.useState(currentAdventurer.name || currentAdventurer.tokenID);
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	React.useEffect(() => set_name(adventurer.name || adventurer.tokenID), [adventurer.tokenID]);
+	React.useEffect(() => set_name(currentAdventurer.name || currentAdventurer.tokenID), [currentAdventurer.tokenID]);
 
 	/* 🏹🛡 - Rarity Extended ***********************************************************************
 	**	Claim the daily XP for a specific adventurer. This can be called once a day for each
@@ -36,7 +37,7 @@ function	OverviewEquipement({adventurer, provider, chainTime, raritySkin}) {
 			loader: 'Claiming XP...',
 			provider,
 			contractAddress: process.env.RARITY_ADDR,
-			tokenID: adventurer.tokenID,
+			tokenID: currentAdventurer.tokenID,
 		}, ({error, data}) => {
 			if (error)
 				return console.error(error);
@@ -49,7 +50,7 @@ function	OverviewEquipement({adventurer, provider, chainTime, raritySkin}) {
 	**	required XP.
 	**********************************************************************************************/
 	function	onLevelUp() {
-		actions.levelUp({provider, tokenID: adventurer.tokenID}, ({error, data}) => {
+		actions.levelUp({provider, tokenID: currentAdventurer.tokenID}, ({error, data}) => {
 			if (error)
 				return console.error(error);
 			updateRarity(data);
@@ -61,7 +62,7 @@ function	OverviewEquipement({adventurer, provider, chainTime, raritySkin}) {
 	**	have reached some claimable gold.
 	**********************************************************************************************/
 	function	onClaimGold() {
-		actions.claimGold({provider, tokenID: adventurer.tokenID}, ({error, data}) => {
+		actions.claimGold({provider, tokenID: currentAdventurer.tokenID}, ({error, data}) => {
 			if (error)
 				return console.error(error);
 			updateRarity(data);
@@ -75,61 +76,61 @@ function	OverviewEquipement({adventurer, provider, chainTime, raritySkin}) {
 	**	- Claim Gold
 	**********************************************************************************************/
 	function	renderAction() {
-		if (adventurer.xp >= (xpRequired(adventurer.level))) {
+		if (currentAdventurer.xp >= (xpRequired(currentAdventurer.level))) {
 			return (
 				<button
 					onClick={onLevelUp}
-					className={'flex flex-center mt-4 w-full button-highlight'}>
+					className={'flex mt-4 w-full flex-center button-highlight'}>
 					<p className={' text-sm select-none'}>{'Level-Up'}</p>
 				</button>
 			);
 		}
-		if (canAdventure) {
+		if (currentAdventurer.canAdventure) {
 			return (
 				<button
 					onClick={onClaimXP}
-					className={'flex flex-center mt-4 w-full button-highlight'}>
+					className={'flex mt-4 w-full flex-center button-highlight'}>
 					<p className={' text-sm select-none'}>{'Claim XP'}</p>
 				</button>
 			);
 		}
-		if (adventurer?.gold?.claimable > 0) {
+		if (currentAdventurer?.gold?.claimable > 0) {
 			return (
 				<button
 					onClick={onClaimGold}
-					className={'flex flex-center mt-4 w-full button-highlight'}>
+					className={'flex mt-4 w-full flex-center button-highlight'}>
 					<p className={' text-sm select-none'}>{'Claim XP'}</p>
 				</button>
 			);
 		}
 		return (
-			<button disabled className={'flex flex-center mt-4 w-full button-highlight'}>
+			<button disabled className={'flex mt-4 w-full flex-center button-highlight'}>
 				<p className={' text-sm select-none'}>
-					{`Ready ${dayjs(new Date(adventurer.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}
+					{`Ready ${currentAdventurer.nextAdventure}`}
 				</p>
 			</button>
 		);
 	}
 
 	function	renderName() {
-		const isSameName = (name && (name !== (adventurer.name || adventurer.tokenID)));
+		const isSameName = (name && (name !== (currentAdventurer.name || currentAdventurer.tokenID)));
 		return (
-			<div className={'flex flex-row items-center text-center w-full relative px-4'}>
+			<div className={'flex relative flex-row items-center px-4 w-full text-center'}>
 				<input
 					value={name}
 					onChange={(e) => set_name(e.target.value)}
-					placeholder={adventurer.name || adventurer.tokenID}
-					className={'bg-opacity-0 bg-white focus:outline-none pl-1 relative uppercase w-full text-center'} />
+					placeholder={currentAdventurer.name || currentAdventurer.tokenID}
+					className={'relative pl-1 w-full text-center uppercase bg-white bg-opacity-0 focus:outline-none'} />
 				<div
 					onClick={() => {
 						if (isSameName) {
 							actions.setName(
-								{provider, name, tokenID: adventurer.tokenID},
+								{provider, name, tokenID: currentAdventurer.tokenID},
 								({error}) => console.error(error),
 								(_toast) => {
-									updateRarity(adventurer.tokenID);
+									updateRarity(currentAdventurer.tokenID);
 									toast.dismiss(_toast);
-									toast.success(`You can now call ${adventurer.tokenID}: ${name}!`);
+									toast.success(`You can now call ${currentAdventurer.tokenID}: ${name}!`);
 								}
 							);
 						}
@@ -150,44 +151,70 @@ function	OverviewEquipement({adventurer, provider, chainTime, raritySkin}) {
 	return (
 		<div>
 			<div className={'flex flex-row'} style={{width: 384}}>
-				<div className={'grid grid-cols-1 ml-auto gap-y-4 w-18'}>
-					<div className={'w-18 box-darker flex flex-center aspect-1'}>
-						<IconHelmet className={'text-400 h-12 w-12'} />
+				<div className={'grid grid-cols-1 gap-y-4 ml-auto w-18'}>
+					<div className={'aspect-1 flex w-18 box-darker flex-center'}>
+						{
+							equipements[currentAdventurer.tokenID]?.[1] !== undefined ?
+								<Image src={equipements[currentAdventurer.tokenID][1].img} width={64} height={64} />
+								: <IconHelmet className={'w-12 h-12 text-400'} />
+						}
 					</div>
-					<div className={'w-18 box-darker flex flex-center aspect-1'}>
-						<IconGloves className={'text-400 h-12 w-12'} />
+					<div className={'aspect-1 flex w-18 box-darker flex-center'}>
+						{
+							equipements[currentAdventurer.tokenID]?.[2] !== undefined ?
+								<Image src={equipements[currentAdventurer.tokenID][2].img} width={64} height={64} />
+								: <IconArmor className={'w-12 h-12 text-400'} />
+						}
 					</div>
-					<div className={'w-18 box-darker flex flex-center aspect-1'}>
-						<IconArmor className={'text-400 h-12 w-12'} />
+					<div className={'aspect-1 flex w-18 box-darker flex-center'}>
+						{
+							equipements[currentAdventurer.tokenID]?.[3] !== undefined ?
+								<Image src={equipements[currentAdventurer.tokenID][3].img} width={64} height={64} />
+								: <IconGloves className={'w-12 h-12 text-400'} />
+						}
 					</div>
-					<div className={'w-18 box-darker flex flex-center aspect-1'}>
-						<IconBoots className={'text-400 h-12 w-12'} />
+					<div className={'aspect-1 flex w-18 box-darker flex-center'}>
+						{
+							equipements[currentAdventurer.tokenID]?.[4] !== undefined ?
+								<Image src={equipements[currentAdventurer.tokenID][4].img} width={64} height={64} />
+								: <IconBoots className={'w-12 h-12 text-400'} />
+						}
 					</div>
 				</div>
-				<div className={'flex justify-between items-center w-60 flex-col pt-4 pb-8'}>
-					<div className={'text-center w-full flex flex-col px-4 items-center'}>
+				<div className={'flex flex-col justify-between items-center pt-4 pb-8 w-60'}>
+					<div className={'flex flex-col items-center px-4 w-full text-center'}>
 						{renderName()}
-						<p className={'text-black dark:text-dark-100 text-sm mb-4'}>
-							{`${CLASSES[adventurer.class].name} level ${adventurer.level}`}
+						<p className={'mb-4 text-sm text-black dark:text-dark-100'}>
+							{`${CLASSES[currentAdventurer.class].name} level ${currentAdventurer.level}`}
 						</p>
 					</div>
-					<Image src={raritySkins ? raritySkin : adventurer?.skin} width={180} height={180} />
+					<Image src={raritySkins ? raritySkin : currentAdventurer?.skin} width={180} height={180} />
 					<div className={'px-4'}>
 						{renderAction()}
 					</div>
 				</div>
 				<div className={'grid grid-cols-1 gap-y-4 w-18'}>
-					<div className={'w-18 box-darker flex flex-center aspect-1'}>
-						<IconWeapon className={'text-400 h-12 w-12'} />
+					<div className={'aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center text-400 hover-text-plain'}>
+						{
+							equipements[currentAdventurer.tokenID]?.[5] !== undefined ?
+								<Image src={equipements[currentAdventurer.tokenID][5].img} width={64} height={64} />
+								: <IconWeapon className={'w-12 h-12'} />
+						}
 					</div>
-					<div className={'w-18 box-darker flex flex-center aspect-1'}>
-						<IconWeapon className={'text-400 h-12 w-12'} />
+					<div className={'aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center text-400 hover-text-plain'}>
+						{
+							equipements[currentAdventurer.tokenID]?.[6] !== undefined ?
+								<Image src={equipements[currentAdventurer.tokenID][6].img} width={64} height={64} /> :
+								equipements[currentAdventurer.tokenID]?.[101] !== undefined ?
+									<Image src={equipements[currentAdventurer.tokenID][101].img} width={64} height={64} /> :
+									<IconWeapon className={'w-12 h-12'} />
+						}
 					</div>
-					<div className={'w-18 box-darker flex flex-center aspect-1'}>
-						<IconNecklace className={'text-400 h-12 w-12'} />
+					<div className={'aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center text-400 hover-text-plain'}>
+						<IconNecklace className={'w-12 h-12'} />
 					</div>
-					<div className={'w-18 box-darker flex flex-center aspect-1'}>
-						<IconRing className={'text-400 h-12 w-12'} />
+					<div className={'aspect-1 flex w-18 box-darker flex-center'}>
+						<IconRing className={'w-12 h-12 text-400'} />
 					</div>
 				</div>
 			</div>

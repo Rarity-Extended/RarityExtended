@@ -43,6 +43,8 @@ module.exports = {
 				'primary-darker': '#FBBF24',
 				900: '#09162E',
 				600: 'rgb(19,38,75)',
+				// 600: '#112243',
+				500: '#162b56',
 				400: 'rgb(24,48,95)',
 				300: '#2f446f',
 				200: '#46597e',
@@ -95,12 +97,13 @@ module.exports = {
 				75: '18.75rem',
 				77: '19.25rem',
 				screen: '100vw',
-				'adventure-card': '272px'
+			},
+			maxWidth: {
+				screen: '100vw'
 			},
 			height: {
 				15: '60px',
 				18: '4.5rem',
-				'adventure-card': '307px'
 			},
 			minHeight: {
 				120: '480px',

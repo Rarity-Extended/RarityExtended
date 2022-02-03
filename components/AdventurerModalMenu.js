@@ -16,19 +16,19 @@ function AdventurerModalMenu() {
 
 	const	skin = raritySkins ? skins[currentAdventurer?.tokenID] || currentAdventurer?.skin : currentAdventurer?.skin;
 	return (
-		<div className={'hidden md:flex flex-row h-8 flex-center relative font-title'}>
-			<div onClick={openModal} className={'group items-center justify-end flex-row mr-6 cursor-pointer outline-none focus:outline-none hidden md:flex'}>
+		<div className={'hidden relative flex-row h-8 font-title md:flex flex-center'}>
+			<div onClick={openModal} className={'group hidden flex-row justify-end items-center mr-6 outline-none focus:outline-none cursor-pointer md:flex'}>
 				{currentAdventurer ? <div className={'flex flex-center'}>
 					<Image
 						src={skin}
 						quality={100}
 						width={60}
 						height={60} />
-					<div className={'text-sm cursor-pointer uppercase ml-2'}>
-						<div className={'text-sx cursor-pointer mb-1 group-hover:underline'}>
+					<div className={'ml-2 text-sm uppercase cursor-pointer'}>
+						<div className={'mb-1 text-sx group-hover:underline cursor-pointer'}>
 							{currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}
 						</div>
-						<div className={'text-megaxs cursor-pointer group-hover:underline'}>
+						<div className={'text-megaxs group-hover:underline cursor-pointer'}>
 							{currentAdventurer ? `${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}` : null}
 						</div>
 					</div>
@@ -38,11 +38,11 @@ function AdventurerModalMenu() {
 						quality={100}
 						width={60}
 						height={60} />
-					<div className={'text-sm cursor-pointer uppercase ml-2'}>
-						<div className={'text-sx cursor-pointer mb-1 group-hover:underline'}>
+					<div className={'ml-2 text-sm uppercase cursor-pointer'}>
+						<div className={'mb-1 text-sx group-hover:underline cursor-pointer'}>
 							{'Nobody'}
 						</div>
-						<div className={'text-megaxs cursor-pointer group-hover:underline'}>
+						<div className={'text-megaxs group-hover:underline cursor-pointer'}>
 							{`${address.slice(0, 4)}...${address.slice(-4)}`}
 						</div>
 					</div>

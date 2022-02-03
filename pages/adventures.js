@@ -22,13 +22,13 @@ function	FormatedDescription({addr, rawDescription}) {
 						{part.map(({text, highlighted, tooltip}, index) => {
 							if (highlighted) {
 								return (
-									<span key={`${addr}_${index}`} className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+									<span key={`${addr}_${index}`} className={'group inline-flex justify-evenly font-bold cursor-help text-highlight tooltip'}>
 										{text}
 										<Tooltip>
 											{tooltip.map(({text, highlighted}, jindex) => {
 												if (highlighted) {
 													return (
-														<p key={`${addr}_${index}_${jindex}`} className={'inline text-highlight font-bold'}>{text}</p>
+														<p key={`${addr}_${index}_${jindex}`} className={'inline font-bold text-highlight'}>{text}</p>
 													);
 												}
 												return (<p key={`${addr}_${index}_${jindex}`} className={'inline'}>{text}</p>);
@@ -58,8 +58,8 @@ function	Index() {
 		const	nextAdventure = currentAdventurer?.adventures?.[adventure.key]?.nextAdventure;
 		return (
 			<div key={adventure.address}>
-				<div className={'w-full relative box overflow-hidden'}>
-					<div className={'opacity-100 overflow-hidden relative'}>
+				<div className={'overflow-hidden relative w-full box'}>
+					<div className={'overflow-hidden relative opacity-100'}>
 						<Image
 							src={adventure.img}
 							loading={'eager'}
@@ -70,8 +70,8 @@ function	Index() {
 						<div className={'absolute inset-0 bottom-1.5 opacity-30'} style={{backgroundColor: adventure.overlayColor}} />
 					</div>
 
-					<div className={'relative flex flex-col'}>
-						<div className={'w-full h-full p-6 pt-4'}>
+					<div className={'flex relative flex-col'}>
+						<div className={'p-6 pt-4 w-full h-full'}>
 							<div className={'flex flex-row justify-between items-center mb-4'}>
 								<h1 className={'text-xl font-bold'}>{adventure.name}</h1>
 								<div>
@@ -85,17 +85,17 @@ function	Index() {
 									</Link>
 								</div>
 							</div>
-							<div className={'normal-case text-sm leading-normal inline'}>
+							<div className={'inline text-sm leading-normal normal-case'}>
 								<FormatedDescription addr={adventure.address} rawDescription={adventure.description} />
 							</div>
-							<h1 className={'text-base font-bold mt-12 text-50 mb-2'}>{'Potential Rewards'}</h1>
-							<div className={'grid grid-cols-3 gap-4 w-2/3 -ml-2'}>
+							<h1 className={'mt-12 mb-2 text-base font-bold text-50'}>{'Potential Rewards'}</h1>
+							<div className={'grid grid-cols-3 gap-4 -ml-2 w-2/3'}>
 								{adventure.rewards.map(([envName, name, addr]) => (
 									<div key={addr} className={'flex flex-row items-center'}>
-										<div className={'w-14 h-14 flex flex-center'} style={{minWidth: 56}}>
+										<div className={'flex w-14 h-14 flex-center'} style={{minWidth: 56}}>
 											<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={56} height={56} />
 										</div>
-										<p className={'text-plain text-sm text-50 ml-1'}>
+										<p className={'ml-1 text-sm text-plain text-50'}>
 											{name}
 										</p>
 									</div>
@@ -119,11 +119,11 @@ function	Index() {
 					<Link key={adventure.address}href={`/adventures/${adventure.path}#action`}>
 						<div
 							onClick={() => set_selectedAdventure(index)}
-							className={'w-full relative box group overflow-hidden cursor-pointer'}>
+							className={'group overflow-hidden relative w-full cursor-pointer box'}>
 							<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-0 md:border-l-4 border-highlight' : 'pl-0 md:pl-1'}`}>
-								<div className={'w-full h-full p-4'}>
+								<div className={'p-4 w-full h-full'}>
 									<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
-									<div className={'flex flex-row items-center justify-between mt-2 opacity-60'}>
+									<div className={'flex flex-row justify-between items-center mt-2 opacity-60'}>
 										<div className={'flex flex-row items-center'}>
 											<p className={'text-xs'}>{adventure.minimalDescription}</p>
 										</div>
@@ -132,13 +132,13 @@ function	Index() {
 										<div className={'flex flex-row items-center'}>
 											<p className={'text-xs'}>{'Rewards'}</p>
 										</div>
-										<div className={'grid grid-cols-2 gap-1 w-full -ml-2 mt-2'}>
+										<div className={'grid grid-cols-2 gap-1 mt-2 -ml-2 w-full'}>
 											{adventure.rewards.map(([envName, name, addr]) => (
 												<div key={addr} className={'flex flex-row items-center'}>
-													<div className={'w-10 h-10 flex flex-center'} style={{minWidth: 40}}>
+													<div className={'flex w-10 h-10 flex-center'} style={{minWidth: 40}}>
 														<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={40} height={40} />
 													</div>
-													<p className={'text-plain text-sm text-50 ml-1'}>
+													<p className={'ml-1 text-sm text-plain text-50'}>
 														{name}
 													</p>
 												</div>
@@ -155,16 +155,16 @@ function	Index() {
 					<div
 						key={adventure.address}
 						onClick={() => set_selectedAdventure(index)}
-						className={'w-full relative box group overflow-hidden opacity-40'}>
+						className={'group overflow-hidden relative w-full opacity-40 box'}>
 						<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-4 border-highlight' : 'pl-1'}`}>
-							<div className={'w-full h-full p-4'}>
+							<div className={'p-4 w-full h-full'}>
 								<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
-								<div className={'flex flex-row items-center justify-between mt-2'}>
+								<div className={'flex flex-row justify-between items-center mt-2'}>
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{nextAdventure ? `Ready ${nextAdventure}` : 'Not eligible'}</p>
 									</div>
 								</div>
-								<div className={'flex flex-row items-center justify-between mt-2 opacity-60'}>
+								<div className={'flex flex-row justify-between items-center mt-2 opacity-60'}>
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{adventure.minimalDescription}</p>
 									</div>
@@ -173,13 +173,13 @@ function	Index() {
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{'Rewards'}</p>
 									</div>
-									<div className={'grid grid-cols-2 gap-1 w-full -ml-2 mt-2'}>
+									<div className={'grid grid-cols-2 gap-1 mt-2 -ml-2 w-full'}>
 										{adventure.rewards.map(([envName, name, addr]) => (
 											<div key={addr} className={'flex flex-row items-center'}>
-												<div className={'w-10 h-10 flex flex-center'} style={{minWidth: 40}}>
+												<div className={'flex w-10 h-10 flex-center'} style={{minWidth: 40}}>
 													<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={40} height={40} />
 												</div>
-												<p className={'text-plain text-sm text-50 ml-1'}>
+												<p className={'ml-1 text-sm text-plain text-50'}>
 													{name}
 												</p>
 											</div>
@@ -206,17 +206,17 @@ function	Index() {
 					<div
 						key={adventure.address}
 						onClick={() => set_selectedAdventure(index)}
-						className={'w-full relative box group overflow-hidden cursor-pointer'}>
+						className={'group overflow-hidden relative w-full cursor-pointer box'}>
 						<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-0 md:border-l-4 border-highlight' : 'pl-0 md:pl-1'}`}>
-							<div className={'w-full h-full p-4'}>
+							<div className={'p-4 w-full h-full'}>
 								<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
 				
-								<div className={'flex flex-row items-center justify-between mt-2'}>
+								<div className={'flex flex-row justify-between items-center mt-2'}>
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{nextAdventure ? `Ready ${nextAdventure}` : 'Not eligible'}</p>
 									</div>
 								</div>
-								<div className={'flex flex-row items-center justify-between mt-2 opacity-60'}>
+								<div className={'flex flex-row justify-between items-center mt-2 opacity-60'}>
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{'Difficulty'}</p>
 									</div>
@@ -231,16 +231,16 @@ function	Index() {
 					<div
 						key={adventure.address}
 						onClick={() => set_selectedAdventure(index)}
-						className={'w-full relative box group overflow-hidden opacity-40'}>
+						className={'group overflow-hidden relative w-full opacity-40 box'}>
 						<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-4 border-highlight' : 'pl-1'}`}>
-							<div className={'w-full h-full p-4'}>
+							<div className={'p-4 w-full h-full'}>
 								<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
-								<div className={'flex flex-row items-center justify-between mt-2'}>
+								<div className={'flex flex-row justify-between items-center mt-2'}>
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{nextAdventure ? `Ready ${nextAdventure}` : 'Not eligible'}</p>
 									</div>
 								</div>
-								<div className={'flex flex-row items-center justify-between mt-2 opacity-60'}>
+								<div className={'flex flex-row justify-between items-center mt-2 opacity-60'}>
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{'Difficulty'}</p>
 									</div>
@@ -257,20 +257,20 @@ function	Index() {
 
 	return (
 		<div>
-			<div className={'flex flex-col md:grid grid-cols-12 gap-x-10 max-w-full'}>
-				<div className={'col-span-3 relative'}>
+			<div className={'flex flex-col grid-cols-12 gap-x-10 max-w-full md:grid'}>
+				<div className={'relative col-span-3'}>
 					<Media lessThan={'md'}>
-						<div className={'grid grid-cols-1 md:grid-cols-1 gap-4 sticky top-4 max-h-full md:max-h-screen'}>
+						<div className={'grid sticky top-4 grid-cols-1 gap-4 max-h-full md:grid-cols-1 md:max-h-screen'}>
 							{renderAdventuresSelectionMobile()}
 						</div>
 					</Media>
 					<Media greaterThan={'md'}>
-						<div className={'grid grid-cols-1 md:grid-cols-1 gap-4 sticky top-4 max-h-full md:max-h-screen'}>
+						<div className={'grid sticky top-4 grid-cols-1 gap-4 max-h-full md:grid-cols-1 md:max-h-screen'}>
 							{renderAdventuresSelection()}
 						</div>
 					</Media>
 				</div>
-				<div className={'col-span-9 hidden md:block'} style={{minHeight: 800}}>
+				<div className={'hidden col-span-9 md:block'} style={{minHeight: 800}}>
 					<Media greaterThan={'md'}>
 						{renderAdventures()}
 					</Media>

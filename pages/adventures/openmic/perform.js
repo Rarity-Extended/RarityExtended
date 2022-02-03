@@ -36,14 +36,14 @@ function AdventureResult() {
 			: 'Well, you\'re no Orpheus or Keoghtom, but you got the job done. The hooligans have settled down and Facu has a humble prize for you !'
 		: 'Your performance was so bad it actually made the hooligans worse. Facu only has one word for you. Cringe !';
 
-	return <div className={'max-w-screen-sm w-full mt-12 mr-auto ml-auto'}>
+	return <div className={'mx-auto mt-12 w-full max-w-screen-sm'}>
 		<p className={'text-yellow-300'}>{title}</p>
 		<p className={'text-sm opacity-80'}>{message}</p>
-		<div className={'flex w-full items-start justify-center mt-8'}>
+		<div className={'flex justify-center items-start mt-8 w-full'}>
 			{performanceResult.prizes.map(prize => {
 				return (
-					<div key={prize.tokenId} className={'flow justify-center w-56'}>
-						<div className={'text-center mb-4'}>
+					<div key={prize.tokenId} className={'justify-center w-56 flow'}>
+						<div className={'mb-4 text-center'}>
 							<Image
 								src={OPENMIC_LOOT[prize.name].img}
 								loading={'eager'}
@@ -58,7 +58,7 @@ function AdventureResult() {
 			})}
 		</div>
 		<Link href={'/adventures/openmic#action'}>
-			<div className={'text-base mt-16 mx-4 md:mx-0 py-2 px-4 max-w-screen-sm text-center animate-pulse border-t-4 border-b-4 hover:bg-dark-600 dark:hover:bg-white hover:text-white dark:hover:text-dark-600 transition-colors cursor-pointer hover:animate-none'} style={{cursor: 'pointer'}}>
+			<div className={'py-2 px-4 mx-4 mt-16 max-w-screen-sm text-base text-center hover:text-white dark:hover:text-dark-600 hover:bg-dark-600 dark:hover:bg-white border-y-4 transition-colors animate-pulse hover:animate-none cursor-pointer md:mx-0'} style={{cursor: 'pointer'}}>
 				{'Start a new adventure'}
 			</div>
 		</Link>
@@ -127,7 +127,7 @@ function Adventure({router, adventurer}) {
 
 	function	renderOptions() {
 		return (
-			<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
+			<div className={'grid grid-cols-1 gap-4 pt-4 mt-4 border-t-2 border-black dark:border-dark-300'}>
 				<div onClick={clickPerform} className={'flex flex-center button-regular'}>
 					<p>{'Sing your Heart out'}</p>
 				</div>
@@ -139,16 +139,16 @@ function Adventure({router, adventurer}) {
 	}
 
 	return (
-		<section id={'action'} className={'flex flex-col w-full max-w-screen md:max-w-screen-xl mx-auto relative'}>
+		<section id={'action'} className={'flex relative flex-col mx-auto w-full md:max-w-screen-xl max-w-screen'}>
 
-			<div className={'box p-4 text-xs w-full relative'}>
-				<div className={'w-3/4 mx-auto mt-12'}>
+			<div className={'relative p-4 w-full text-xs box'}>
+				<div className={'mx-auto mt-12 w-3/4'}>
 					<div className={'flex flex-col items-center'}>
 
 						{/* antagonist */}
-						<div className={'w-full flex flex-col items-end'}>
+						<div className={'flex flex-col items-end w-full'}>
 							<p className={'whitespace-nowrap'}>{'Rowdy Tavern Hooligans !'}</p>
-							<div className={'flex w-full items-center justify-end'}>
+							<div className={'flex justify-end items-center w-full'}>
 								<div className={'-mr-12'}>
 									<Image
 										src={'/avatar/ceazor.gif'}
@@ -192,8 +192,8 @@ function Adventure({router, adventurer}) {
 						</div>
 
 						{/* protagonist */}
-						<div className={'w-full flex mt-2 md:mt-6'}>
-							<div className={'w-60 hidden md:block'} style={{minWidth: 240}}>
+						<div className={'flex mt-2 w-full md:mt-6'}>
+							<div className={'hidden w-60 md:block'} style={{minWidth: 240}}>
 								<Image
 									src={skin}
 									loading={'eager'}
@@ -201,7 +201,7 @@ function Adventure({router, adventurer}) {
 									width={240}
 									height={240} />
 							</div>
-							<div className={'w-32 block md:hidden'} style={{minWidth: 120}}>
+							<div className={'block w-32 md:hidden'} style={{minWidth: 120}}>
 								<Image
 									src={skin}
 									loading={'eager'}
@@ -209,8 +209,8 @@ function Adventure({router, adventurer}) {
 									width={120}
 									height={120} />
 							</div>
-							<div className={'w-full mt-auto mb-6'}>
-								<div className={'pt-6 pb-0 px-4 with-title w-full'}>
+							<div className={'mt-auto mb-6 w-full'}>
+								<div className={'px-4 pt-6 pb-0 w-full with-title'}>
 									<div className={'text-base text-plain'}>{'Performance Check'}</div>
 									<div className={'flex justify-between'}>
 										<div className={'text-base text-50'}>{'Perform Skill'}</div>
@@ -235,7 +235,7 @@ function Adventure({router, adventurer}) {
 
 					</div>
 				</div>
-				<div className={'w-3/4 mx-auto'}>
+				<div className={'mx-auto w-3/4'}>
 					{renderOptions()}
 				</div>
 			</div>

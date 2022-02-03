@@ -9,21 +9,21 @@ import	useRarity				from	'contexts/useRarity';
 
 function	NewAdventurer() {
 	return (
-		<div className={'box flex justify-between items-center w-full flex-col p-4 relative'}>
+		<div className={'flex relative flex-col justify-between items-center p-4 w-full box'}>
 			<div className={'text-center'}>
-				<p className={'text-plain dark:text-opacity-70 font-bold text-xl text-center'}>
+				<p className={'text-xl font-bold text-center text-plain dark:text-opacity-70'}>
 					{'Recruit'}
 				</p>
-				<p className={'text-black dark:text-dark-100 text-sm mb-4'}>
+				<p className={'mb-4 text-sm text-black dark:text-dark-100'}>
 					{'Unknown'}
 				</p>
 			</div>
-			<div className={'w-40 h-40 filter brightness-0 flex justify-center items-end'}>
+			<div className={'flex justify-center items-end w-40 h-40 brightness-0'}>
 				<Image src={'/classes/front/placeholder.svg'} width={140} height={140} />
 			</div>
 			<div className={'px-4'}>
 				<Link href={'/recruit#content'}>
-					<button className={'button-highlight-outline mt-4'}>
+					<button className={'mt-4 button-highlight-outline'}>
 						<p>{'Hire Adventurer'}</p>
 					</button>
 				</Link>
@@ -40,7 +40,7 @@ function	Index() {
 		<Template>
 			<RarityCareSystem />
 			<div className={'col-span-12 mt-4 md:mt-8'}>
-				<div className={'grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-4'}>
+				<div className={'grid grid-cols-1 gap-2 md:grid-cols-4 md:gap-4'}>
 					{([...Object.values(rarities || {})] || [])
 						.sort((a, b) => {
 							if (favoritesAdventurers.includes(a.tokenID))

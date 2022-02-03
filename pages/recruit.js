@@ -33,22 +33,22 @@ function	NewAdventurer({rarityClass}) {
 	}
 
 	return (
-		<div className={'box flex justify-between items-center w-full flex-col p-4 relative'}>
+		<div className={'flex relative flex-col justify-between items-center p-4 w-full box'}>
 			<div className={'text-center'}>
-				<p className={'text-plain dark:text-opacity-70 font-bold text-xl text-center'}>
+				<p className={'text-xl font-bold text-center text-plain dark:text-opacity-70'}>
 					{rarityClass.name}
 				</p>
 			</div>
-			<div className={'w-40 h-40 flex justify-center items-end'}>
+			<div className={'flex justify-center items-end w-40 h-40'}>
 				<Image src={rarityClass?.images?.front} width={160} height={160} />
 			</div>
-			<div className={'px-4 py-2'}>
-				<p className={'text-50 text-sm mb-4 text-center'}>
+			<div className={'py-2 px-4'}>
+				<p className={'mb-4 text-sm text-center text-50'}>
 					{rarityClass.description}
 				</p>
 				<button
 					onClick={recruit}
-					className={'bg-600 hover-bg-900 flex flex-center px-4 py-2 mt-4 w-full text-plain cursor-pointer opacity-60 text-center'}>
+					className={'flex py-2 px-4 mt-4 w-full text-center opacity-60 cursor-pointer bg-600 hover-bg-900 flex-center text-plain'}>
 					<p className={' text-sm select-none'}>{'Hire Adventurer'}</p>
 				</button>
 			</div>
@@ -60,7 +60,7 @@ function	Index() {
 	return (
 		<Template>
 			<div id={'content'} className={'col-span-12 mt-8'}>
-				<div className={'grid grid-cols-1 md:grid-cols-4 gap-4'}>
+				<div className={'grid grid-cols-1 gap-4 md:grid-cols-4'}>
 					<NewAdventurer rarityClass={CLASSES['Barbarian']} />
 					<NewAdventurer rarityClass={CLASSES['Bard']} />
 					<NewAdventurer rarityClass={CLASSES['Cleric']} />

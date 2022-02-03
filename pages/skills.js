@@ -21,60 +21,60 @@ function	ElementSkill({currentAdventurer, skill, isClassSpecific, updateSkills, 
 	const canSave = currentAdventurer.skills[skill?.id - 1] !== updateSkills[skill?.id];
 
 	return (
-		<div className={'box p-4 flex flex-col'}>
-			<p className={' text-plain font-bold text-base mb-4'}>
+		<div className={'flex flex-col p-4 box'}>
+			<p className={'mb-4 text-base font-bold text-plain'}>
 				{skill.name}
 			</p>
 			<div className={'flex flex-row pb-2 mb-4'}>
-				<div className={'flex flex-col h-full pr-6'}>
-					<div className={'flex h-23 w-23'}>
+				<div className={'flex flex-col pr-6 h-full'}>
+					<div className={'flex w-23 h-23'}>
 						<Image src={skill.img} width={96} height={96} />
 					</div>
 				</div>
 
 				<div className={'flex flex-col px-4 w-full'}>
 					<div className={'flex flex-row justify-between'}>
-						<p className={' text-200 text-sm mb-2'}>
+						<p className={'mb-2 text-sm text-200'}>
 							{'Attribute'}
 						</p>
-						<div className={' text-50 text-sm'}>
+						<div className={'text-sm text-50'}>
 							{skill?.attributeLabel || '-'}
 						</div>
 					</div>
 
 					<div className={'flex flex-row justify-between'}>
-						<p className={' text-200 text-sm mb-2'}>
+						<p className={'mb-2 text-sm text-200'}>
 							{'Cost'}
 						</p>
-						<div className={' text-50 text-sm'}>
+						<div className={'text-sm text-50'}>
 							{isClassSpecific ? '1' : '2'}
 						</div>
 					</div>
 
 					<div className={'flex flex-row justify-between'}>
-						<p className={' text-200 text-sm mb-2'}>
+						<p className={'mb-2 text-sm text-200'}>
 							{'Armor Check'}
 						</p>
-						<div className={' text-50 text-sm'}>
+						<div className={'text-sm text-50'}>
 							{skill?.armorCheckPenalty ? 'YES' : 'NO'}
 						</div>
 					</div>
 
 					<div className={'flex flex-row justify-between'}>
-						<p className={' text-200 text-sm mb-2'}>
+						<p className={'mb-2 text-sm text-200'}>
 							{'Synergy'}
 						</p>
-						<div className={' text-50 text-sm'}>
+						<div className={'text-sm text-50'}>
 							{skill?.synergy > 0 ? Object.values(SKILLS).find(s => s.id === skill?.synergy)?.name || '-' : '-'}
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className={' text-50 text-sm'}>
+			<div className={'text-sm text-50'}>
 				{skill.check}
 			</div>
-			<div className={'mt-auto flex flex-row space-x-2'}>
-				<div className={'flex justify-between items-center w-2/3 mt-4 button-fake'}>
+			<div className={'flex flex-row mt-auto space-x-2'}>
+				<div className={'flex justify-between items-center mt-4 w-2/3 button-fake'}>
 					<div onClick={() => onReduceLevel()}>
 						<IconChevron
 							className={`${canReduce ? 'opacity-0' : 'text-gray-100 cursor-pointer'} transform rotate-180`} />
@@ -89,7 +89,7 @@ function	ElementSkill({currentAdventurer, skill, isClassSpecific, updateSkills, 
 				<button
 					disabled={!canSave}
 					onClick={() => canSave ? onLearn() : null}
-					className={'flex flex-center mt-4 w-1/3 button-highlight'}>
+					className={'flex mt-4 w-1/3 flex-center button-highlight'}>
 					<p className={'select-none'}>{'Learn'}</p>
 				</button>
 			</div>
@@ -201,7 +201,7 @@ function	Index() {
 
 	function	renderFilters() {
 		return (
-			<div className={'w-full hidden md:flex flex-row justify-between text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
+			<div className={'hidden flex-row justify-between mb-4 w-full text-sm md:flex text-plain text-opacity-60 dark:text-opacity-60'}>
 				<div className={'flex flex-row space-x-4'}>
 					<p
 						onClick={() => set_classTab(2)}
@@ -258,18 +258,18 @@ function	Index() {
 
 	return (
 		<div id={'content'}>
-			<div className={'mt-6 flex flex-col md:flex-row mb-4 items-center justify-between'}>
+			<div className={'flex flex-col justify-between items-center mt-6 mb-4 md:flex-row'}>
 				<div className={'w-full md:w-auto'}>
 					<input
 						value={search}
 						onChange={e => set_search(e?.target?.value || '')}
-						className={'border-2 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-plain'}
+						className={'px-2 mr-0 w-full h-10 text-xs bg-white dark:bg-dark-600 border-2 border-black dark:border-dark-100 border-solid focus:outline-none md:mr-4 md:w-75 text-plain'}
 						placeholder={'SEARCH'} />
 				</div>
-				<div className={'flex flex-row items-center space-x-4 w-full md:w-auto justify-between md:justify-center mt-2 md:mt-0'}>
-					<div className={' text-xs text-plain flex'}>
+				<div className={'flex flex-row justify-between items-center mt-2 space-x-4 w-full md:justify-center md:mt-0 md:w-auto'}>
+					<div className={'flex text-xs text-plain'}>
 						{`${updateSkills.remainingPoints <= 1 ? 'Point left:' : 'Points left:'}`}&nbsp;
-						<span className={'text-highlight font-bold'}>{updateSkills.remainingPoints}</span>
+						<span className={'font-bold text-highlight'}>{updateSkills.remainingPoints}</span>
 					</div>
 
 					<div className={'flex'}>
@@ -279,7 +279,7 @@ function	Index() {
 									onSetSkills();
 							}}
 							disabled={!updateSkills.canBuyPoint || updateSkills.remainingPoints === updateSkills.initialPointsToSend}
-							className={'flex flex-center w-full button-highlight'}>
+							className={'flex w-full flex-center button-highlight'}>
 							<p className={'select-none'}>{'LEARN SELECTED'}</p>
 						</button>
 					</div>
@@ -288,7 +288,7 @@ function	Index() {
 
 			{renderFilters()}
 				
-			<div className={'grid grid-cols-1 md:grid-cols-3 gap-4'}>
+			<div className={'grid grid-cols-1 gap-4 md:grid-cols-3'}>
 				{
 					Object.values(SKILLS)
 						.filter((skill) => {

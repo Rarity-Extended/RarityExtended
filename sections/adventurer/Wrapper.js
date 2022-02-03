@@ -9,31 +9,28 @@ import	OverviewEquipement	from	'sections/adventurer/OverviewEquipement';
 import	OverviewMinimal		from	'sections/adventurer/OverviewMinimal';
 
 function	Wrapper({media}) {
-	const	{provider, chainTime} = useWeb3();
-	const	{currentAdventurer, inventory, skins} = useRarity();
+	const	{provider} = useWeb3();
+	const	{currentAdventurer, skins} = useRarity();
 	const	[tab, set_tab] = React.useState(0);
 
 	if (media === 'sm') {
 		return (
-			<div className={'box p-4 flex flex-row relative'}>
+			<div className={'flex relative flex-row p-4 box'}>
 				<OverviewMinimal
 					adventurer={currentAdventurer}
 					provider={provider}
-					chainTime={chainTime}
 					raritySkin={skins[currentAdventurer?.tokenID] || currentAdventurer?.skin} />
 			</div>
 		);	
 	}
 
 	return (
-		<div className={'box p-4 flex flex-row space-x-16 relative'}>
+		<div className={'flex overflow-hidden relative flex-row p-4 space-x-16 box'}>
 			<OverviewEquipement
-				adventurer={currentAdventurer}
 				provider={provider}
-				chainTime={chainTime}
 				raritySkin={skins[currentAdventurer?.tokenID] || currentAdventurer?.skin} />
-			<div className={'w-full'}>
-				<div className={'flex flex-row items-center mb-4 border-b-2 dark:border-b-dark-300 -mt-4'}>
+			<div className={'relative w-full'}>
+				<div className={'flex flex-row items-center -mt-4 mb-4 border-b-2 dark:border-b-dark-300'}>
 					<p
 						onClick={() => set_tab(0)}
 						className={`p-4 pl-0 text-plain text-sm transition-opacity hover:opacity-100 ${tab === 0 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
@@ -58,7 +55,7 @@ function	Wrapper({media}) {
 				{tab === 0 ? <OverviewAttributes adventurer={currentAdventurer} /> : null}
 				{tab === 1 ? <OverviewSkills adventurer={currentAdventurer} /> : null}
 				{tab === 2 ? <OverviewFeats adventurer={currentAdventurer} /> : null}
-				{tab === 3 ? <OverviewInventory adventurer={currentAdventurer} sharedInventory={inventory} /> : null}
+				{tab === 3 ? <OverviewInventory adventurer={currentAdventurer} /> : null}
 			</div>
 			
 		</div>

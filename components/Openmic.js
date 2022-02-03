@@ -17,7 +17,7 @@ function getEligibility(bard) {
 		result = {eligible: false, reason: ` Will be ready in ${dayjs.duration({seconds: bard?.adventures?.openMic?.timeToNextPerformance}).humanize()}`};
 	if(!result.eligible)
 		result.sheild = (
-			<div className={'absolute inset-0 backdrop-blur-3xl bg-black bg-opacity-60 cursor-not-allowed flex flex-center text-center p-6'}>
+			<div className={'flex absolute inset-0 p-6 text-center bg-black bg-opacity-60 backdrop-blur-3xl cursor-not-allowed flex-center'}>
 				<p className={'text-white'}>
 					{result.reason}
 				</p>

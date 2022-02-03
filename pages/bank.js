@@ -36,28 +36,28 @@ const	VAULT_ABI = [
 function	BankCard({vault, situation, name, onDeposit}) {
 	const	apy = vault?.apy?.net_apy * 100;
 	return (
-		<div className={'col-span-1 w-full box-with-border p-4 overflow-hidden'}>
-			<div className={'box-darker -mx-4 -mt-4 py-3 mb-6'}>
-				<h1 className={'font-nordic text-4xl text-plain opacity-80 text-center'}>{name}</h1>
+		<div className={'overflow-hidden col-span-1 p-4 w-full box-with-border'}>
+			<div className={'py-3 -mx-4 -mt-4 mb-6 box-darker'}>
+				<h1 className={'font-nordic text-4xl text-center opacity-80 text-plain'}>{name}</h1>
 			</div>
-			<h2 className={'font-nordic text-3xl text-highlight text-center'}>
+			<h2 className={'font-nordic text-3xl text-center text-highlight'}>
 				{`${(apy).toFixed(2)}%`}
 			</h2>
 			<div className={'grid grid-cols-2 my-4'}>
 				<div className={' text-sm '}>
-					<p className={'text-plain opacity-20'}>{'In Wallet'}</p>
+					<p className={'opacity-20 text-plain'}>{'In Wallet'}</p>
 					<p className={'text-base'}>{Number(situation?.inWallet || 0).toFixed(2)}</p>
 				</div>
 				<div className={' text-sm'}>
-					<p className={'text-plain opacity-20'}>{'In Vault'}</p>
+					<p className={'opacity-20 text-plain'}>{'In Vault'}</p>
 					<p className={'text-base'}>{Number(situation?.inVault || 0).toFixed(2)}</p>
 				</div>
 			</div>
 
-			<div className={' text-sm mt-8'}>
-				<p className={'text-plain opacity-20'}>{'Deposit'}</p>
+			<div className={'mt-8 text-sm'}>
+				<p className={'opacity-20 text-plain'}>{'Deposit'}</p>
 			</div>
-			<div className={'grid grid-cols-2 mt-2 gap-x-4 gap-y-2'}>
+			<div className={'grid grid-cols-2 gap-x-4 gap-y-2 mt-2'}>
 				<div
 					onClick={() => onDeposit(situation?.inWalletRaw[0])}
 					className={'button-regular'}>
@@ -208,7 +208,7 @@ function	Index() {
 
 	return (
 		<div className={'flex flex-col max-w-full'}>
-			<div className={'grid grid-cols-1 md:grid-cols-5 w-full gap-4 md:gap-6'}>
+			<div className={'grid grid-cols-1 gap-4 w-full md:grid-cols-5 md:gap-6'}>
 				<BankCard
 					name={'FTM'}
 					vault={vaults?.find(e => e.address === '0x0DEC85e74A92c52b7F708c4B10207D9560CEFaf0') || {}}
@@ -262,9 +262,9 @@ function	Index() {
 					vault={vaults?.find(e => e.address === '0x148c05caf1Bb09B5670f00D511718f733C54bC4c') || {}}
 					situation={bankSituation['0x148c05caf1Bb09B5670f00D511718f733C54bC4c']} />
 			</div>
-			<div className={'text-sx text-50 mt-8'}>
+			<div className={'mt-8 text-sx text-50'}>
 				{'The Bank is powered by '}
-				<a className={'font-bold cursor-pointer hover:underline'} href={'https://yearn.finance.com'} target={'_blank'} rel={'noreferrer'}>{'Yearn Finance'}</a>
+				<a className={'font-bold hover:underline cursor-pointer'} href={'https://yearn.finance.com'} target={'_blank'} rel={'noreferrer'}>{'Yearn Finance'}</a>
 				{'. You check details about the Vaults and the Strategies and withdraw your funds on Yearn\'s website.'}
 
 			</div>

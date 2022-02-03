@@ -11,6 +11,7 @@ import	{Contract}										from	'ethcall';
 import	useWeb3											from	'contexts/useWeb3';
 import	useRarity										from	'contexts/useRarity';
 import	{chunk, newEthCallProvider}						from	'utils';
+import	performBatchedUpdates							from	'utils/performBatchedUpdates';
 import	* as ITEMS										from	'utils/codex/items/items';
 import	MANIFEST_GOODS									from	'utils/codex/items/items_manifest_goods.json';
 import	MANIFEST_ARMORS									from	'utils/codex/items/items_manifest_armors.json';
@@ -20,13 +21,18 @@ import	MANIFEST_SHIELDS								from	'utils/codex/items/items_manifest_shields.js
 const	MEAL_ABI = [
 	{'inputs': [{'internalType': 'uint256','name': 'summonerId','type': 'uint256'}],'name': 'getTotalMealsBySummoner','outputs': [{'components': [{'internalType': 'address','name': 'meal','type': 'address'},{'internalType': 'uint256[]','name': 'balance','type': 'uint256[]'}],'internalType': 'struct Cooking.MealBalance[]','name': '','type': 'tuple[]'}],'stateMutability': 'view','type': 'function'},
 ];
+const	EQUIPEMENT_ABI = [
+	{'inputs':[{'internalType':'uint256','name':'_adventurer','type':'uint256'},{'internalType':'uint256','name':'_slot','type':'uint256'}],'name':'getEquipementBySlot','outputs':[{'internalType':'uint256','name':'','type':'uint256'},{'internalType':'address','name':'','type':'address'},{'internalType':'address','name':'','type':'address'},{'internalType':'uint8','name':'','type':'uint8'},{'internalType':'uint8','name':'','type':'uint8'},{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'}
+];
 
 const	InventoryContext = createContext();
 export const InventoryContextApp = ({children}) => {
 	const	{address, chainID, provider} = useWeb3();
 	const	{rarities, isLoaded} = useRarity();
 	const	[inventory, set_inventory] = useState({});
+	const	[equipements, set_equipements] = useState([]);
 	const	[sharedInventory, set_sharedInventory] = useState({});
+	const	[initialFetchSet, set_initialFetchSet] = useState(false);
 	const	[nonce, set_nonce] = useState(0);
 
 	/* 🏹🛡 - Rarity Extended ***********************************************************************
@@ -65,6 +71,7 @@ export const InventoryContextApp = ({children}) => {
 					name: weapon.name,
 					description: weapon.description,
 					img: weapon.img,
+					...weapon,
 				};
 			}
 			if (item.base_type === 2) {
@@ -74,6 +81,7 @@ export const InventoryContextApp = ({children}) => {
 					name: armor.name,
 					description: armor.description,
 					img: armor.img,
+					...armor,
 				};
 			}
 			if (item.base_type === 1) {
@@ -83,13 +91,14 @@ export const InventoryContextApp = ({children}) => {
 					name: good.name,
 					description: good.description,
 					img: good.img,
+					...good
 				};
 			}	
 		}
-		setTimeout(() => {
+		performBatchedUpdates(() => {
 			set_sharedInventory(_sharedInventory);
 			set_nonce(n => n + 1);
-		}, 1);
+		});
 	}, [address, provider]);
 	React.useEffect(() => assignSharedInventory(), [assignSharedInventory]);
 	
@@ -104,6 +113,7 @@ export const InventoryContextApp = ({children}) => {
 		const	rarityMealts = new Contract(process.env.RARITY_COOKING_ADDR, MEAL_ABI);
 		const	raritytheForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI);
 		const	rarityOpenMic = new Contract(process.env.DUNGEON_OPEN_MIC_V2_ADDR, process.env.DUNGEON_OPEN_MIC_V2_ABI);
+		const	rarityEquipementWrapper = new Contract(process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, EQUIPEMENT_ABI);
 
 		return [
 			rarityGold.balanceOf(tokenID),
@@ -111,10 +121,19 @@ export const InventoryContextApp = ({children}) => {
 			rarityMealts.getTotalMealsBySummoner(tokenID),
 			raritytheForest.getTreasuresBySummoner(tokenID),
 			rarityOpenMic.getPrizes(tokenID),
+
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 1), //Head
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 2), //Chest
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 3), //Hand
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 4), //Feet
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 5), //Primary weapon
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 6), //Secondary weapon
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 101), //Secondary weapon
 		];
 	}
 	async function	assignInventory(tokenID, inventoryCallResult) {
 		const	_inventory = [];
+		const	_equipements = [];
 		
 		let	rIndex = 0;
 		_inventory[process.env.RARITY_GOLD_ADDR] = {
@@ -181,18 +200,45 @@ export const InventoryContextApp = ({children}) => {
 				balance: 1
 			};
 		}
+
+		rIndex++;
+		for (let index = 1; index < 8; index++) {
+			const	element = inventoryCallResult[rIndex++];
+			const	elementDetails = {
+				tokenID: (element[0]).toNumber(),
+				registry: (element[1]),
+				codex: (element[2]),
+				baseType: (element[3]),
+				itemType: (element[4])
+			};
+			if ((index === 2) && elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
+				const	_equipement = Object.values(MANIFEST_ARMORS).find(e => e.id === elementDetails.itemType);
+				_equipements[index] = {...elementDetails, ..._equipement};
+			}
+			if ((index === 5 || index === 6) && elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
+				const	_equipement = Object.values(MANIFEST_WEAPONS).find(e => e.id === elementDetails.itemType);
+				_equipements[index] = {...elementDetails, ..._equipement};
+			}
+			if ((index === 7) && elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
+				const	_equipement = Object.values(MANIFEST_SHIELDS).find(e => e.id === elementDetails.itemType);
+				_equipements[101] = {...elementDetails, ..._equipement};
+			}
+		}
+	
 		//Hack to bactch all of this in only 1 render
-		setTimeout(() => {
+		performBatchedUpdates(() => {
 			set_nonce(n => n + 1);
 			set_inventory((prev) => ({...prev, [tokenID]: _inventory}));
-		}, 1);
+			set_equipements((prev) => ({...prev, [tokenID]: _equipements}));
+		});
 	}
-	const updateInventories = React.useCallback(async (adventurers) => {
+	const	updateInventories = React.useCallback(async (_rarities) => {
+		const adventurers = Object.values(_rarities || {});
 		if (!adventurers || adventurers.length === 0) {
 			return;
 		}
-		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
 
+		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
 		let		chunckLen = 0;
 		const	preparedInventoryCalls = [];
 		for (let index = 0; index < adventurers.length; index++) {
@@ -210,12 +256,14 @@ export const InventoryContextApp = ({children}) => {
 			const callResult = chunkedCallResult[index];
 			assignInventory(adventurers[index].tokenID, callResult);
 		}
-	}, [rarities, provider]);
+	}, [chainID, provider]);
+
 	React.useEffect(() => {
-		if (!isLoaded)
+		if (!isLoaded || initialFetchSet)
 			return;
-		updateInventories(Object.values(rarities || {}));
-	}, [updateInventories, rarities, isLoaded]);
+		set_initialFetchSet(true);
+		updateInventories(rarities);
+	}, [rarities, updateInventories, isLoaded, initialFetchSet]);
 
 	/* 🏹🛡 - Rarity Extended ***********************************************************************
 	**	Prepare the calls for all the inventory of a specific adventurer. This is the same 3 steps
@@ -240,6 +288,7 @@ export const InventoryContextApp = ({children}) => {
 				sharedInventory,
 				updateInventory,
 				updateInventories,
+				equipements,
 				nonce
 			}}>
 			{children}

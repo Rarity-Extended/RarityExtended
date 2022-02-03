@@ -11,11 +11,10 @@ import	CLASSES					from	'utils/codex/core/classes';
 
 dayjs.extend(relativeTime);
 
-function	OverviewMinimal({adventurer, provider, chainTime, raritySkin}) {
+function	OverviewMinimal({adventurer, provider, raritySkin}) {
 	const	{updateRarity} = useRarity();
 	const	{raritySkins} = useUI();
 	const	[name, set_name] = React.useState(adventurer.name || adventurer.tokenID);
-	const	canAdventure = !dayjs(new Date(adventurer.log * 1000)).isAfter(dayjs(new Date(chainTime * 1000)));
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	React.useEffect(() => set_name(adventurer.name || adventurer.tokenID), [adventurer.tokenID]);
@@ -72,16 +71,16 @@ function	OverviewMinimal({adventurer, provider, chainTime, raritySkin}) {
 			return (
 				<button
 					onClick={onLevelUp}
-					className={'flex flex-center mt-4 w-full button-highlight'}>
+					className={'flex mt-4 w-full flex-center button-highlight'}>
 					<p className={' text-sm select-none'}>{'Level-Up'}</p>
 				</button>
 			);
 		}
-		if (canAdventure) {
+		if (adventurer.canAdventure) {
 			return (
 				<button
 					onClick={onClaimXP}
-					className={'flex flex-center mt-4 w-full button-highlight'}>
+					className={'flex mt-4 w-full flex-center button-highlight'}>
 					<p className={' text-sm select-none'}>{'Claim XP'}</p>
 				</button>
 			);
@@ -90,15 +89,15 @@ function	OverviewMinimal({adventurer, provider, chainTime, raritySkin}) {
 			return (
 				<button
 					onClick={onClaimGold}
-					className={'flex flex-center mt-4 w-full button-highlight'}>
+					className={'flex mt-4 w-full flex-center button-highlight'}>
 					<p className={' text-sm select-none'}>{'Claim XP'}</p>
 				</button>
 			);
 		}
 		return (
-			<button disabled className={'flex flex-center mt-4 w-full button-highlight'}>
-				<p className={' text-sm select-none'}>
-					{`Ready ${dayjs(new Date(adventurer.log * 1000)).from(dayjs(new Date(chainTime * 1000)))}`}
+			<button disabled className={'flex mt-4 w-full flex-center button-highlight'}>
+				<p className={'text-sm select-none'}>
+					{`Ready ${adventurer.nextAdventure}`}
 				</p>
 			</button>
 		);
@@ -107,12 +106,12 @@ function	OverviewMinimal({adventurer, provider, chainTime, raritySkin}) {
 	function	renderName() {
 		const isSameName = (name && (name !== (adventurer.name || adventurer.tokenID)));
 		return (
-			<div className={'flex flex-row items-center text-center w-full relative px-4'}>
+			<div className={'flex relative flex-row items-center px-4 w-full text-center'}>
 				<input
 					value={name}
 					onChange={(e) => set_name(e.target.value)}
 					placeholder={adventurer.name || adventurer.tokenID}
-					className={'bg-opacity-0 bg-white focus:outline-none pl-1 relative uppercase w-full text-center text-plain'} />
+					className={'relative pl-1 w-full text-center uppercase bg-white bg-opacity-0 focus:outline-none text-plain'} />
 				<div
 					onClick={() => {
 						if (isSameName) {
@@ -141,14 +140,14 @@ function	OverviewMinimal({adventurer, provider, chainTime, raritySkin}) {
 	}
 
 	return (
-		<div className={'flex justify-between items-center w-full flex-row mx-auto'}>
+		<div className={'flex flex-row justify-between items-center mx-auto w-full'}>
 			<div className={'w-36'}>
 				<Image src={raritySkins ? raritySkin : adventurer?.skin} width={144} height={144} />
 			</div>
 			<div>
-				<div className={'text-center w-full flex flex-col px-4 items-center'}>
+				<div className={'flex flex-col items-center px-4 w-full text-center'}>
 					{renderName()}
-					<p className={'text-black dark:text-dark-100 text-sm mb-4'}>
+					<p className={'mb-4 text-sm text-black dark:text-dark-100'}>
 						{`${CLASSES[adventurer.class].name} level ${adventurer.level}`}
 					</p>
 				</div>

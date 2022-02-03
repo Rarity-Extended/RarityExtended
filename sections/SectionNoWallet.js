@@ -4,7 +4,7 @@ import	{LoginBox}			from	'components/ModalLogin';
 function	SectionNoWallet() {
 	return (
 		<section className={'max-w-full'}>
-			<div className={'sm:max-w-lg sm:w-full md:mb-96 mx-auto mt-auto'}>
+			<div className={'mx-auto mt-auto sm:w-full sm:max-w-lg md:mb-96'}>
 				<LoginBox set_open={() => null} />
 			</div>
 		</section>

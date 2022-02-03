@@ -74,7 +74,7 @@ function	Index() {
 
 	function	renderFilters() {
 		return (
-			<div className={'w-full flex flex-row justify-between text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
+			<div className={'flex flex-row justify-between mb-4 w-full text-sm text-plain text-opacity-60 dark:text-opacity-60'}>
 				<div className={'flex flex-row space-x-4'}>
 					<p
 						onClick={() => set_shop(4)}
@@ -134,9 +134,10 @@ function	Index() {
 						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
 						difficultyCheckFunc={() => difficulty.getWeaponDifficulty(recipe.armor_bonus)}
 						onCraft={materials => onLegacyCraft(recipe, materials)}
+						category={'weapon'}
 						recipe={{
 							...recipe,
-							effect: (recipe.description).substring(0, 100),
+							effect: recipe.description,
 							cost: [
 								[process.env.RARITY_GOLD_ADDR, recipe.cost],
 								[process.env.RARITY_EXTENDED_XP, 250],
@@ -155,9 +156,10 @@ function	Index() {
 						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
 						difficultyCheckFunc={() => difficulty.getArmorDifficulty(recipe.armor_bonus)}
 						onCraft={materials => onLegacyCraft(recipe, materials)}
+						category={'armor'}
 						recipe={{
 							...recipe,
-							effect: (recipe.description).substring(0, 100),
+							effect: recipe.description,
 							cost: [
 								[process.env.RARITY_GOLD_ADDR, recipe.cost],
 								[process.env.RARITY_EXTENDED_XP, 250],
@@ -176,9 +178,10 @@ function	Index() {
 						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
 						difficultyCheckFunc={() => difficulty.getArmorDifficulty(recipe.armor_bonus)}
 						onCraft={materials => onLegacyCraft(recipe, materials)}
+						category={'armor'}
 						recipe={{
 							...recipe,
-							effect: (recipe.description).substring(0, 100),
+							effect: recipe.description,
 							cost: [
 								[process.env.RARITY_GOLD_ADDR, recipe.cost],
 								[process.env.RARITY_EXTENDED_XP, 250],
@@ -198,7 +201,10 @@ function	Index() {
 						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
 						onCraft={() => onCraft(recipe)}
 						onApprove={onApproveAll}
-						recipe={recipe} />
+						recipe={{
+							...recipe,
+							effect: recipe.description,
+						}} />
 				))
 			);
 		}
@@ -212,7 +218,7 @@ function	Index() {
 					return (
 						<>
 							<Link href={'/skills?tab=2&search=crafting'}>
-								<div className={'uppercase rounded-sm button-highlight flex flex-center px-4 py-2 cursor-pointer'}>
+								<div className={'flex py-2 px-4 uppercase rounded-sm cursor-pointer button-highlight flex-center'}>
 									<p className={' text-sm font-bold'}>{'Learn Crafting'}</p>
 								</div>
 							</Link>
@@ -223,11 +229,11 @@ function	Index() {
 					<>
 						<button
 							onClick={onApproveAll}
-							className={'uppercase rounded-sm button-highlight flex flex-center px-4 py-2 cursor-pointer'}>
+							className={'flex py-2 px-4 uppercase rounded-sm cursor-pointer button-highlight flex-center'}>
 							<p className={' text-sm font-bold'}>{'Approve Crafting'}</p>
 						</button>
 						<Link href={'/skills?tab=2&search=crafting'}>
-							<div className={'uppercase rounded-sm button-highlight flex flex-center px-4 py-2 cursor-pointer'}>
+							<div className={'flex py-2 px-4 uppercase rounded-sm cursor-pointer button-highlight flex-center'}>
 								<p className={' text-sm font-bold'}>{'Learn Crafting'}</p>
 							</div>
 						</Link>
@@ -238,7 +244,7 @@ function	Index() {
 					<>
 						<button
 							onClick={onApproveAll}
-							className={'uppercase rounded-sm button-highlight flex flex-center px-4 py-2 cursor-pointer relative'}>
+							className={'flex relative py-2 px-4 uppercase rounded-sm cursor-pointer button-highlight flex-center'}>
 							<p className={' text-sm font-bold'}>{'Approve Crafting'}</p>
 						</button>
 					</>
@@ -250,7 +256,7 @@ function	Index() {
 					<>
 						<button
 							onClick={onApproveAll}
-							className={'uppercase rounded-sm button-highlight flex flex-center px-4 py-2 cursor-pointer relative'}>
+							className={'flex relative py-2 px-4 uppercase rounded-sm cursor-pointer button-highlight flex-center'}>
 							<p className={' text-sm font-bold'}>{'Approve Crafting'}</p>
 						</button>
 					</>
@@ -262,19 +268,19 @@ function	Index() {
 
 	return (
 		<div>
-			<div className={'mt-6 flex flex-col md:flex-row mb-4 items-center justify-between'}>
+			<div className={'flex flex-col justify-between items-center mt-6 mb-4 md:flex-row'}>
 				<div>
 					<input
 						onChange={e => set_search(e?.target?.value || '')}
-						className={'border-2 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-plain'}
+						className={'px-2 mr-0 w-full h-10 text-xs bg-white dark:bg-dark-600 border-2 border-black dark:border-dark-100 border-solid focus:outline-none md:mr-4 md:w-75 text-plain'}
 						placeholder={'SEARCH'} />
 				</div>
-				<div className={'flex flex-row flex-center space-x-4'}>
+				<div className={'flex flex-row space-x-4 flex-center'}>
 					{renderMainAction()}
 				</div>
 			</div>
 			{renderFilters()}
-			<div className={'grid grid-cols-1 md:grid-cols-3 gap-4'}>
+			<div className={'grid grid-cols-1 gap-6 md:grid-cols-3'}>
 				{renderShop()}
 			</div>
 		</div>

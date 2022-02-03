@@ -16,6 +16,7 @@ import	duration												from	'dayjs/plugin/duration';
 import	useWeb3													from	'contexts/useWeb3';
 import 	ModalSelectAdventurer 									from	'components/ModalSelectAdventurer';
 import	useIndexDB												from	'hook/useIDB';
+import	performBatchedUpdates									from	'utils/performBatchedUpdates';
 import	{chunk, fetcher, toAddress, newEthCallProvider}			from	'utils';
 import	CLASSES													from	'utils/codex/core/classes';
 
@@ -40,36 +41,25 @@ export const RarityContextApp = ({children}) => {
 	const	[rarities, set_rarities] = useIndexDB('adventurers', {});
 	const	[skins, set_skins] = useIndexDB('adventurersSkins', {});
 	const	[specialApprovals, set_specialApprovals] = useState(null);
-	const	[rNonce, set_rNonce] = useState(0);
 	const	[loaded, set_loaded] = useState(false);
 	const	[isModalOpen, set_isModalOpen] = useState(false);
-
-	useEffect(() => {
-		if (!isEmptyObject(rarities) && address && active) {
-			set_loaded(true);
-		}
-	}, [rarities, address, active]);
-
-	/**************************************************************************
-	**	Reset the rarities when the chain changes, when the address changes or
-	**	when the web3 become inactive.
-	**************************************************************************/
-	useEffect(() => {
-		set_rNonce(n => n + 1);
-		if (active && provider && address) {
-			fetchRarity();
-		}
-	}, [active, address, chainID, provider]);
 
 	async function	fetchRaritySkins(tokensIDs) {
 		const	raritySkinHelper = new Contract(process.env.RARITY_EXTENDED_SKIN_HELPER_ADDR, process.env.RARITY_EXTENDED_SKIN_HELPER_ABI);
 		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
+
+		const	calls = [];
 		for (let index = 0; index < tokensIDs.length; index++) {
-			const tokenID = tokensIDs[index];
-			const callResult = await ethcallProvider.tryAll([raritySkinHelper.getAdventurerSkin(tokenID)]);
-			const element = callResult[0];
-			set_skins((prev) => ({...prev, [tokenID]: element ? JSON.parse(element).image : ''}));
+			calls.push(raritySkinHelper.getAdventurerSkin(tokensIDs[index]));
 		}
+		const callResult = await ethcallProvider.tryAll(calls);
+		performBatchedUpdates(() => {
+			for (let index = 0; index < tokensIDs.length; index++) {
+				const tokenID = tokensIDs[index];
+				const element = callResult[index];
+				set_skins((prev) => ({...prev, [tokenID]: element ? JSON.parse(element).image : ''}));
+			}
+		});
 	}
 
 
@@ -88,12 +78,12 @@ export const RarityContextApp = ({children}) => {
 			rarity.isApprovedForAll(address, process.env.RARITY_COOKING_HELPER_ADDR),
 		];
 		const	callResults = await ethcallProvider.tryAll(calls);
-		setTimeout(() => {
+		performBatchedUpdates(() => {
 			set_specialApprovals({
 				[process.env.RARITY_CRAFTING_HELPER_ADDR]: callResults[0],
 				[process.env.RARITY_COOKING_HELPER_ADDR]: callResults[1],
 			});
-		}, 1);
+		});
 	}, [address, provider]);
 	React.useEffect(() => checkSpecialApprovals(), [checkSpecialApprovals]);
 
@@ -143,7 +133,7 @@ export const RarityContextApp = ({children}) => {
 	/**************************************************************************
 	**	Actually update the state based on the data fetched
 	**************************************************************************/
-	async function		setRarity(tokenID, multicallResult) {
+	async function	setRarity(tokenID, multicallResult) {
 		const	[
 			owner, adventurer, name,
 			initialAttributes, abilityScores, extraPointsSpents,
@@ -153,13 +143,10 @@ export const RarityContextApp = ({children}) => {
 		] = multicallResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
-			setTimeout(() => {
-				set_rarities((prev) => {
-					delete prev[tokenID];
-					return ({...prev});
-				});
-				set_rNonce(n => n + 1);
-			}, 1);
+			set_rarities((prev) => {
+				delete prev[tokenID];
+				return ({...prev});
+			});
 			return;
 		}
 
@@ -172,7 +159,8 @@ export const RarityContextApp = ({children}) => {
 			class: Number(adventurer['_class']),
 			level: Number(adventurer['_level']),
 			log: Number(adventurer['_log']),
-			logCanAdventure: dayjs(new Date(Number(adventurer['_log']) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
+			nextAdventure: Number(adventurer['_log']) === 0 ? 'Now' : dayjs(new Date(Number(adventurer['_log']) * 1000)).from(dayjs(new Date(chainTime * 1000))),
+			canAdventure: dayjs(new Date(Number(adventurer['_log']) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
 			gold: {
 				balance: ethers.utils.formatEther(balanceOfGold),
 				claimable: claimableGold ? ethers.utils.formatEther(claimableGold) : '0'
@@ -223,13 +211,10 @@ export const RarityContextApp = ({children}) => {
 		};
 
 		//Hack to bactch all of this in only 1 render
-		setTimeout(() => {
-			if (!currentAdventurer || (currentAdventurer && tokenID === currentAdventurer.tokenID)) {
-				set_currentAdventurer(p => (!p || (p && tokenID === p.tokenID)) ? _adventurer : p);
-			}
-			set_rarities((prev) => ({...prev, [tokenID]: _adventurer}));
-			set_rNonce(n => n + 1);
-		}, 1);
+		if (!currentAdventurer || (currentAdventurer && tokenID === currentAdventurer.tokenID)) {
+			set_currentAdventurer(p => (!p || (p && tokenID === p.tokenID)) ? _adventurer : p);
+		}
+		set_rarities((prev) => ({...prev, [tokenID]: _adventurer}));
 	}
 
 	/**************************************************************************
@@ -262,12 +247,16 @@ export const RarityContextApp = ({children}) => {
 
 		const	callResults = await multicall(preparedCalls);
 		const	chunkedCallResult = chunk(callResults, chunkSize);
-		fetchRaritySkins(tokensIDs);
-		tokensIDs?.forEach((tokenID, i) => {
-			setRarity(tokenID, chunkedCallResult[i]);
+		performBatchedUpdates(() => {
+			tokensIDs?.forEach((tokenID, i) => {
+				setRarity(tokenID, chunkedCallResult[i]);
+			});
 		});
 		isUpdatingRarities = false;
 		NProgress.done();
+		
+		//Extra stuffs
+		fetchRaritySkins(tokensIDs);
 	}
 
 	/**************************************************************************
@@ -299,8 +288,10 @@ export const RarityContextApp = ({children}) => {
 
 		const	callResults = await multicall(preparedCalls);
 		const	chunkedCallResult = chunk(callResults, chunkSize);
-		tokensIDs?.forEach((tokenID, i) => {
-			setRarity(tokenID, chunkedCallResult[i]);
+		performBatchedUpdates(() => {
+			tokensIDs?.forEach((tokenID, i) => {
+				setRarity(tokenID, chunkedCallResult[i]);
+			});
 		});
 		isUpdatingRarities = false;
 		callback();
@@ -319,6 +310,24 @@ export const RarityContextApp = ({children}) => {
 		await updateRarities(result);
 	}
 
+
+
+	useEffect(() => {
+		if (!isEmptyObject(rarities) && address && active) {
+			set_loaded(true);
+		}
+	}, [rarities, address, active]);
+
+	/**************************************************************************
+	**	Reset the rarities when the chain changes, when the address changes or
+	**	when the web3 become inactive.
+	**************************************************************************/
+	useEffect(() => {
+		if (active && provider && address) {
+			fetchRarity();
+		}
+	}, [active, address, chainID, provider]);
+
 	/**************************************************************************
 	**	Once we got data from FTMScan, try to build the rarities
 	**************************************************************************/
@@ -334,7 +343,7 @@ export const RarityContextApp = ({children}) => {
 	useEffect(() => {
 		if (loaded === false)
 			setTimeout(() => !active ? set_loaded(true) : null, 5000); //5s before unlock
-	}, [loaded]);
+	}, [active, loaded]);
 
 	return (
 		<RarityContext.Provider
@@ -347,7 +356,6 @@ export const RarityContextApp = ({children}) => {
 				updateRarity,
 				updateBatchRarity,
 				fetchRarity,
-				rNonce,
 				specialApprovals, set_specialApprovals,
 				openCurrentAventurerModal: () => set_isModalOpen(true)
 			}}>

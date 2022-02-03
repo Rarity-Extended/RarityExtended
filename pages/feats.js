@@ -9,36 +9,36 @@ import	FEATS											from	'utils/codex/core/feats.json';
 
 function	ElementFeat({feat, canLearn, learn}) {
 	return (
-		<div className={'box p-4 flex flex-col'}>
-			<p className={'text-plain font-bold text-base mb-4'}>
+		<div className={'flex flex-col p-4 box'}>
+			<p className={'mb-4 text-base font-bold text-plain'}>
 				{feat.name}
 			</p>
 			<div className={'flex flex-row pb-2 mb-4'}>
-				<div className={'flex flex-col h-full pr-6'}>
-					<div className={'flex h-23 w-23'}>
+				<div className={'flex flex-col pr-6 h-full'}>
+					<div className={'flex w-23 h-23'}>
 						<Image src={feat.img} width={96} height={96} />
 					</div>
 				</div>
 
 				<div className={'flex flex-col px-4 w-full'}>
 					<div className={'flex flex-col justify-between'}>
-						<p className={'text-200 text-opacity-60 text-sm mb-2'}>
+						<p className={'mb-2 text-sm text-200 text-opacity-60'}>
 							{'Prerequisites'}
 						</p>
-						<div className={'text-50 text-sm'}>
+						<div className={'text-sm text-50'}>
 							{feat?.prerequisites ? Object.values(FEATS).find(s => s.id === feat?.prerequisites_feat)?.name || '-' : '-'}
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className={'text-50 text-sm'}>
+			<div className={'text-sm text-50'}>
 				{feat.benefit}
 			</div>
-			<div className={'mt-auto flex flex-row space-x-2'}>
+			<div className={'flex flex-row mt-auto space-x-2'}>
 				<button
 					disabled={!canLearn}
 					onClick={() => canLearn ? learn() : null}
-					className={'flex flex-center mt-4 w-full button-highlight'}>
+					className={'flex mt-4 w-full flex-center button-highlight'}>
 					<p>{'Learn'}</p>
 				</button>
 			</div>
@@ -73,7 +73,7 @@ function	Index() {
 
 	function	renderFilters() {
 		return (
-			<div className={'w-full hidden md:flex flex-row justify-between text-plain text-opacity-60 dark:text-opacity-60 text-sm mb-4'}>
+			<div className={'hidden flex-row justify-between mb-4 w-full text-sm md:flex text-plain text-opacity-60 dark:text-opacity-60'}>
 				<div className={'flex flex-row space-x-4'}>
 					<p
 						onClick={() => set_learnTab(0)}
@@ -110,24 +110,24 @@ function	Index() {
 
 	return (
 		<div id={'content'}>
-			<div className={'mt-6 flex flex-col md:flex-row mb-4 items-center justify-between'}>
+			<div className={'flex flex-col justify-between items-center mt-6 mb-4 md:flex-row'}>
 				<div className={'w-full md:w-auto'}>
 					<input
 						onChange={e => set_search(e?.target?.value || '')}
-						className={'border-2 border-black dark:border-dark-100 bg-white dark:bg-dark-600 border-solid h-10 w-full md:w-75 mr-0 md:mr-4 text-xs px-2 focus:outline-none text-plain'}
+						className={'px-2 mr-0 w-full h-10 text-xs bg-white dark:bg-dark-600 border-2 border-black dark:border-dark-100 border-solid focus:outline-none md:mr-4 md:w-75 text-plain'}
 						placeholder={'SEARCH'} />
 				</div>
-				<div className={'flex flex-row items-center space-x-4 w-full md:w-auto justify-between md:justify-center mt-2 md:mt-0'}>
-					<div className={'text-xs text-plain flex'}>
+				<div className={'flex flex-row justify-between items-center mt-2 space-x-4 w-full md:justify-center md:mt-0 md:w-auto'}>
+					<div className={'flex text-xs text-plain'}>
 						{`${_pointLefts <= 1 ? 'Point left:' : 'Points left:'}`}&nbsp;
-						<span className={'text-highlight font-bold'}>{_pointLefts}</span>
+						<span className={'font-bold text-highlight'}>{_pointLefts}</span>
 					</div>
 				</div>
 			</div>
 
 			{renderFilters()}
 				
-			<div className={'grid grid-cols-1 md:grid-cols-3 gap-4'}>
+			<div className={'grid grid-cols-1 gap-4 md:grid-cols-3'}>
 				{
 					Object.values(FEATS)
 						.filter((feat) => {

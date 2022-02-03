@@ -59,9 +59,9 @@ function	Index({router}) {
 			overlayColor={'#124712'}
 			rightText={'THIS IS A BIG AND DARK FOREST WITH SOME MUSHROOM'}>
 			<div>
-				<h1 className={'pt-4 pb-4 font-bold text-xl'}>{'THE FOREST'}</h1>
+				<h1 className={'py-4 text-xl font-bold'}>{'THE FOREST'}</h1>
 			</div>
-			<div className={'normal-case text-base leading-relaxed text-plain'}>
+			<div className={'text-base leading-relaxed normal-case text-plain'}>
 				<DescriptionFormater
 					addr={process.env.DUNGEON_THE_FOREST_ADDR}
 					rawDescription={ADVENTURE[getCurrentStep()].description}
@@ -72,7 +72,7 @@ function	Index({router}) {
 						'${next_adventure}': currentAdventurer?.adventures?.forest?.nextAdventure
 					}} />
 			</div>
-			<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
+			<div className={'grid grid-cols-1 gap-4 pt-4 mt-4 border-t-2 border-black dark:border-dark-300'}>
 				<OptionsFormater
 					options={ADVENTURE[getCurrentStep()].options}
 					onChoice={(choice) => {

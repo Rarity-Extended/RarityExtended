@@ -13,7 +13,7 @@ function	DescriptionFormater({addr, rawDescription, variables}) {
 							}
 							if (highlighted) {
 								return (
-									<span key={`${addr}_${index}`} className={'text-highlight font-bold tooltip cursor-help group inline-flex justify-evenly'}>
+									<span key={`${addr}_${index}`} className={'group inline-flex justify-evenly font-bold cursor-help text-highlight tooltip'}>
 										{text}
 										<Tooltip>
 											{tooltip.map(({text, highlighted, hasVariable}, jindex) => {
@@ -22,7 +22,7 @@ function	DescriptionFormater({addr, rawDescription, variables}) {
 												}
 												if (highlighted) {
 													return (
-														<p key={`${addr}_${index}_${jindex}`} className={'inline text-highlight font-bold'}>{text}</p>
+														<p key={`${addr}_${index}_${jindex}`} className={'inline font-bold text-highlight'}>{text}</p>
 													);
 												}
 												return (<p key={`${addr}_${index}_${jindex}`} className={'inline'}>{text}</p>);

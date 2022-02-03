@@ -18,10 +18,10 @@ const MobileMenu = React.memo(function MobileMenu() {
 		<>
 			<div
 				id={'footbar'}
-				className={'block md:hidden fixed bottom-0 left-0 bg-white dark:bg-dark-600 transition-all duration-500 w-full'} style={{zIndex: 10000}}>
-				<div className={'flex flex-row items-center justify-between text-lightGray text-base font-bold p-4 px-12'}>
+				className={'block fixed bottom-0 left-0 w-full bg-white dark:bg-dark-600 transition-all duration-500 md:hidden'} style={{zIndex: 10000}}>
+				<div className={'flex flex-row justify-between items-center p-4 px-12 text-base font-bold'}>
 					<Link href={'/'}>
-						<p className={'cursor-pointer hover:text-tangerine-dark transition-colors'}>
+						<p className={'transition-colors cursor-pointer'}>
 							<svg aria-hidden={'true'} focusable={'false'} data-prefix={'fas'} data-icon={'house'} className={'w-5 h-5'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 576 512'}><path fill={'currentColor'} d={'M575.8 255.5C575.8 273.5 560.8 287.6 543.8 287.6H511.8L512.5 447.7C512.5 450.5 512.3 453.1 512 455.8V472C512 494.1 494.1 512 472 512H456C454.9 512 453.8 511.1 452.7 511.9C451.3 511.1 449.9 512 448.5 512H392C369.9 512 352 494.1 352 472V384C352 366.3 337.7 352 320 352H256C238.3 352 224 366.3 224 384V472C224 494.1 206.1 512 184 512H128.1C126.6 512 125.1 511.9 123.6 511.8C122.4 511.9 121.2 512 120 512H104C81.91 512 64 494.1 64 472V360C64 359.1 64.03 358.1 64.09 357.2V287.6H32.05C14.02 287.6 0 273.5 0 255.5C0 246.5 3.004 238.5 10.01 231.5L266.4 8.016C273.4 1.002 281.4 0 288.4 0C295.4 0 303.4 2.004 309.5 7.014L564.8 231.5C572.8 238.5 576.9 246.5 575.8 255.5L575.8 255.5z'}></path></svg>
 						</p>
 					</Link>
@@ -30,18 +30,18 @@ const MobileMenu = React.memo(function MobileMenu() {
 					</div>
 
 					<Link href={'/adventures'}>
-						<p className={'cursor-pointer hover:text-tangerine-dark transition-colors'}>
+						<p className={'transition-colors cursor-pointer'}>
 							<svg aria-hidden={'true'} focusable={'false'} data-prefix={'fas'} data-icon={'scroll-old'} className={'w-5 h-5'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 576 512'}><path fill={'currentColor'} d={'M560 352H416l-32 32l-31.1-32h-64l.0006 32c0 52.88-43 96-96 96h272C525.6 480 575.6 430.3 576 368.7C576.1 359.6 569.1 352 560 352zM48 32c-26.5 0-48 21.5-48 48l-.001 64c0 8.875 7.125 16 15.1 16H96V80C96 53.5 74.5 32 48 32zM256 380.6V320h223.1L480 287.1l-4.342-4.343c-.1445-.125-.2539-.1289-.4062-.2813L448 256l31.1-31.1v-32L448 160l31.1-32c0 0 .1263-2.75-.2487-7.25C476 71.13 434.5 32 384 32H111.6C121.8 45.38 128 61.88 128 80L128 192l4.345 4.344c.1445 .125 .2539 .1289 .4062 .2813L160 224l-32 32l.0003 128c0 38.88 34.63 69.63 74.75 63.13C234.3 442 256 412.5 256 380.6z'}></path></svg>
 						</p>
 					</Link>
 				</div>
 			</div>
 			<Transition.Root show={open} as={React.Fragment}>
-				<Dialog as={'div'} className={'fixed inset-0 overflow-hidden'} style={{zIndex: 1000}} onClose={set_open}>
-					<div className={'absolute inset-0 overflow-hidden'}>
+				<Dialog as={'div'} className={'overflow-hidden fixed inset-0'} style={{zIndex: 1000}} onClose={set_open}>
+					<div className={'overflow-hidden absolute inset-0'}>
 						<Dialog.Overlay className={'absolute inset-0'} />
 
-						<div className={'fixed inset-x-0 bottom-14 max-w-full flex'}>
+						<div className={'flex fixed inset-x-0 bottom-14 max-w-full'}>
 							<Transition.Child
 								as={React.Fragment}
 								enter={'ease-out duration-300'}
@@ -50,10 +50,10 @@ const MobileMenu = React.memo(function MobileMenu() {
 								leave={'ease-in duration-200'}
 								leaveFrom={'opacity-100 translate-y-0 sm:scale-100'}
 								leaveTo={'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'}>
-								<div className={'w-screen h-screen pt-14 font-story'}>
-									<div className={'h-full flex flex-col pt-2 bg-600 overflow-y-scroll relative'}>
+								<div className={'pt-14 w-screen h-screen font-story'}>
+									<div className={'flex overflow-y-scroll relative flex-col pt-2 h-full bg-600'}>
 										<div>
-											<div className={'flex items-start justify-between p-4'}>
+											<div className={'flex justify-between items-start p-4'}>
 												<Dialog.Title className={'text-lg font-medium text-plain'}>
 													{'Rarity Extended'}
 												</Dialog.Title>
@@ -101,6 +101,12 @@ const MobileMenu = React.memo(function MobileMenu() {
 														{'Feats'}
 													</button>
 												</Link>
+												<Link href={'/equipements'}>
+													<button
+														className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/equipements' ? '' : 'cursor-pointer'}`}>
+														{'Equipements'}
+													</button>
+												</Link>
 												<Link href={'/bank'}>
 													<button
 														className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/bank' ? '' : 'cursor-pointer'}`}>
@@ -127,10 +133,10 @@ function	Template({children}) {
 	return (
 		<MediaContextProvider>
 			<Media greaterThan={'md'}>
-				<section className={'mt-24 md:mt-12 max-w-screen md:max-w-screen-xl mx-auto'}>
+				<section className={'mx-auto mt-24 max-w-screen md:mt-12 md:max-w-screen-xl'}>
 					<AdventurerDetails />
 
-					<section className={'mt-6 max-w-screen md:max-w-screen-xl mx-auto'}>
+					<section className={'mx-auto mt-6 max-w-screen md:max-w-screen-xl'}>
 						<div className={'flex flex-row items-center mb-4 border-b-2 dark:border-b-dark-300'}>
 							<Link href={'/'}>
 								<p
@@ -162,9 +168,15 @@ function	Template({children}) {
 									{'Feats'}
 								</p>
 							</Link>
+							<Link href={'/equipements'}>
+								<p
+									className={`p-4 pr-6 pl-0 text-plain text-sm transition-opacity hover:opacity-100 ${router.pathname === '/equipements' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+									{'Equipements'}
+								</p>
+							</Link>
 							<Link href={'/bank'}>
 								<p
-									className={`p-4 pr-6 pl-0 text-plain text-sm transition-opacity hover:opacity-100 ${router.pathname === '/bank' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+									className={`p-4 pr-6 pl-0 ml-auto text-plain text-sm transition-opacity hover:opacity-100 ${router.pathname === '/bank' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 									{'Bank'}
 								</p>
 							</Link>

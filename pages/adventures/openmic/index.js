@@ -36,9 +36,9 @@ function	Index({router}) {
 			overlayColor={'#FDAC53'}
 			rightText={'Toss a coin to your Adventurer O Valley of Plenty'}>
 			<div>
-				<h1 className={'pt-4 pb-4 font-bold text-xl uppercase'}>{'The Tavern Hooligans'}</h1>
+				<h1 className={'py-4 text-xl font-bold uppercase'}>{'The Tavern Hooligans'}</h1>
 			</div>
-			<div className={'normal-case text-base leading-relaxed text-plain'}>
+			<div className={'text-base leading-relaxed normal-case text-plain'}>
 				<DescriptionFormater
 					addr={process.env.DUNGEON_OPEN_MIC_V2_ADDR}
 					rawDescription={ADVENTURE[getCurrentStep()].description}
@@ -48,7 +48,7 @@ function	Index({router}) {
 						'${next_adventure}': currentAdventurer?.adventures?.openMic?.nextAdventure
 					}} />
 			</div>
-			<div className={'grid grid-cols-1 gap-4 mt-4 border-t-2 border-black dark:border-dark-300 pt-4'}>
+			<div className={'grid grid-cols-1 gap-4 pt-4 mt-4 border-t-2 border-black dark:border-dark-300'}>
 				<OptionsFormater
 					options={ADVENTURE[getCurrentStep()].options}
 					onChoice={(choice) => {

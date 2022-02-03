@@ -119,7 +119,7 @@
     tracking-wide
     text-center
     bg-light-background
-    dark:bg-dark-600
+    dark:bg-dark-500
     text-black
     dark:text-white
   ;
@@ -150,6 +150,9 @@
 }
 .text-plain {
   @apply text-black dark:text-white;
+}
+.hover-text-plain {
+  @apply hover:text-black dark:hover:text-white;
 }
 .text-400 {
   @apply text-light-400 dark:text-dark-400;

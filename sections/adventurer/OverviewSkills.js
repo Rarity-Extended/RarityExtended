@@ -11,22 +11,22 @@ function	OverviewSkills({adventurer}) {
 	const	remainingPoints = skillPointsAvailable - pointSpentByAdventurer < 0 ? 0 : skillPointsAvailable - pointSpentByAdventurer;
 
 	return (
-		<div className={'flex flex-col items-center w-full mt-auto'}>
+		<div className={'flex flex-col items-center mt-auto w-full'}>
 			<div className={'mb-6'}>
 				<p className={' text-sm'}>
 					<span className={'text-50'}>{'Skills represent the other, non-weapon, non-magical, non-standard checks. They help with combat and magic, as well as movement and general conversation. You have '}</span>
 					<Link href={'/skills#content'}>
-						<span className={'text-highlight font-bold  cursor-pointer hover:underline'}>{`${remainingPoints <= 1 ? `${remainingPoints} point` : `${remainingPoints} points`} left`}</span>
+						<span className={'font-bold hover:underline cursor-pointer text-highlight'}>{`${remainingPoints <= 1 ? `${remainingPoints} point` : `${remainingPoints} points`} left`}</span>
 					</Link>
 					<span className={'text-50'}>{' to spend.'}</span>
 				</p>
 			</div>
-			<div className={'grid grid-cols-3 gap-x-8 gap-y-4 w-full overflow-auto scrollbar-none'}>
+			<div className={'grid overflow-auto grid-cols-3 gap-x-8 gap-y-4 w-full scrollbar-none'}>
 				{Object.values(SKILLS).filter((skill) => availableSkills[skill?.id - 1] > 0).map((skill) => (
-					<div key={skill.id} className={'flex flex-row items-center justify-between'}>
+					<div key={skill.id} className={'flex flex-row justify-between items-center'}>
 						<div className={'flex flex-row items-center'}>
 							<Image src={skill.img} width={56} height={56} />
-							<div className={'flex flex-col justify-between h-14 ml-2'}>
+							<div className={'flex flex-col justify-between ml-2 h-14'}>
 								<p className={'text-sm'}>{skill.name}</p>
 								<div>
 									<p className={'text-xs opacity-60'}>{`Level: ${availableSkills[skill?.id - 1]}`}</p>

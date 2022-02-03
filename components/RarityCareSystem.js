@@ -15,7 +15,7 @@ dayjs.extend(relativeTime);
 
 function	Index({minimal}) {
 	const	{provider, chainTime} = useWeb3();
-	const	{rarities, rNonce, updateBatchRarity} = useRarity();
+	const	{rarities, updateBatchRarity} = useRarity();
 	const	{updateInventories} = useInventory();
 	const	[favoritesAdventurers] = useLocalStorage('favorites', []);
 	const	[nonce, set_nonce] = useState(0);
@@ -55,7 +55,7 @@ function	Index({minimal}) {
 			}
 		}
 		set_selectedAdventurersActions({canAdventure, canClaimGold, canAdventureCellar, canLevelUp});
-	}, [rNonce, nonce, favoritesAdventurers.length]);
+	}, [nonce, favoritesAdventurers.length]);
 
 	/* 🏹🛡 - Rarity Extended ***********************************************************************
 	**	Filter the Favorites Adventurer to remove the one that cannot do anything with the current
@@ -258,13 +258,13 @@ function	Index({minimal}) {
 						<Listbox.Label className={'sr-only'}>{'Care options'}</Listbox.Label>
 						<div className={'relative w-full md:w-auto'}>
 							<div className={'inline-flex w-full md:w-auto'}>
-								<div className={'relative z-0 inline-flex w-full md:w-auto'}>
+								<div className={'inline-flex relative z-0 w-full md:w-auto'}>
 									<button
-										className={'relative inline-flex items-center button-highlight-with-arrow w-full md:w-auto'} onClick={onCareOf}>
+										className={'inline-flex relative items-center w-full md:w-auto button-highlight-with-arrow'} onClick={onCareOf}>
 										<p>{selected}</p>
 									</button>
-									<Listbox.Button className={'relative inline-flex items-center button-outline-arrow'}>
-										<svg aria-hidden={'true'} focusable={'false'} data-prefix={'fas'} data-icon={'chevron-down'} className={'h-3 w-3'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 448 512'}><path fill={'currentColor'} d={'M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z'}></path></svg>
+									<Listbox.Button className={'inline-flex relative items-center button-outline-arrow'}>
+										<svg aria-hidden={'true'} focusable={'false'} data-prefix={'fas'} data-icon={'chevron-down'} className={'w-3 h-3'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 448 512'}><path fill={'currentColor'} d={'M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z'}></path></svg>
 									</Listbox.Button>
 								</div>
 							</div>
@@ -275,17 +275,17 @@ function	Index({minimal}) {
 								leave={'transition ease-in duration-100'}
 								leaveFrom={'opacity-100'}
 								leaveTo={'opacity-0'}>
-								<Listbox.Options className={'origin-top-right absolute z-10 right-0 mt-2 w-72 overflow-hidden shadow-lg box-with-border'}>
+								<Listbox.Options className={'overflow-hidden absolute right-0 z-10 mt-2 w-72 shadow-lg origin-top-right box-with-border'}>
 									{publishingOptions.map((option) => (
 										<Listbox.Option
 											key={option.title}
-											className={'select-none relative px-4 py-2 hover:bg-light-primary-lighter dark:hover:bg-dark-primary-lighter'}
+											className={'relative py-2 px-4 hover:bg-light-primary-lighter dark:hover:bg-dark-primary-lighter select-none'}
 											value={option}>
 											<div className={'flex flex-col cursor-pointer'}>
 												<div className={'flex justify-between'}>
-													<p className={'font-bold text-sm text-plain normal-normal-case'}>{option.title}</p>
+													<p className={'text-sm font-bold text-plain normal-normal-case'}>{option.title}</p>
 												</div>
-												<p className={'text-50 text-sm mt-2'}>
+												<p className={'mt-2 text-sm text-50'}>
 													{option.description}
 												</p>
 											</div>
@@ -303,16 +303,16 @@ function	Index({minimal}) {
 	if (minimal) {
 		return (
 			<div>
-				<div className={'w-full relative box h-full'}>
-					<div className={'relative flex flex-row'}>
-						<div className={'w-full h-full p-4'}>
+				<div className={'relative w-full h-full box'}>
+					<div className={'flex relative flex-row'}>
+						<div className={'p-4 w-full h-full'}>
 							<h1 className={'text-lg font-bold text-plain'}>{'Care system'}</h1>
-							<p className={'text-sm pb-1 text-50'}>
+							<p className={'pb-1 text-sm text-50'}>
 								{'You can send '}
 								<b className={'text-highlight'}>{'all your favorite adventurers'}</b>
 								{' to perform some regular task, all in one transaction!'}
 							</p>
-							<div className={'flex flex-col md:flex-row w-full justify-between items-start md:items-center mt-2'}>
+							<div className={'flex flex-col justify-between items-start mt-2 w-full md:flex-row md:items-center'}>
 								{renderCareButton()}
 							</div>
 						</div>
@@ -324,15 +324,15 @@ function	Index({minimal}) {
 
 	return (
 		<div>
-			<div className={'w-full relative box h-full'}>
-				<div className={'relative hidden md:flex flex-row'}>
-					<div className={'w-full h-full p-4'}>
+			<div className={'relative w-full h-full box'}>
+				<div className={'hidden relative flex-row md:flex'}>
+					<div className={'p-4 w-full h-full'}>
 						<h1 className={'text-lg font-bold text-plain'}>{'Care system'}</h1>
 
-						<div className={'flex flex-col md:flex-row w-full justify-between items-start md:items-center'}>
-							<div className={'items-start md:items-center justify-between mt-2 mb-4 md:mb-0 w-full md:w-2/3'}>
+						<div className={'flex flex-col justify-between items-start w-full md:flex-row md:items-center'}>
+							<div className={'justify-between items-start mt-2 mb-4 w-full md:items-center md:mb-0 md:w-2/3'}>
 								<div className={'flex flex-col text-50'}>
-									<p className={'text-sm pb-1'}>
+									<p className={'pb-1 text-sm'}>
 										{'With the Care System you can send '}
 										<b className={'text-highlight'}>{'all your favorite adventurers'}</b>
 										{' perform some regular task, all in one transaction! No fees, no secret, just easy peazy.'}
