@@ -5,9 +5,9 @@ import	useWeb3						from	'contexts/useWeb3';
 import	useRarity					from	'contexts/useRarity';
 import	useInventory				from	'contexts/useInventory';
 import	Template					from	'components/templates/Adventurer';
-import	AdventureTemplate			from	'components/templates/Adventures';
-import	DescriptionFormater			from	'components/jsonParser/adventures/DescriptionFormater';
-import	OptionsFormater				from	'components/jsonParser/adventures/OptionsFormater';
+import	AdventureTemplate			from	'components/adventures/Template';
+import	DescriptionFormater			from	'components/adventures/DescriptionFormater';
+import	OptionsFormater				from	'components/adventures/OptionsFormater';
 import	ADVENTURE					from	'utils/codex/adventures/the-forest';
 import	* as actions				from	'utils/actions/dungeon_theForest';
 

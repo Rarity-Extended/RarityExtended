@@ -399,7 +399,7 @@ function	OverviewAttributes({adventurer}) {
 				</div>
 
 				<div className={'flex flex-row justify-between items-center'}>
-					<div className={'flex flex-row items-center text-50'}>
+					<div className={'flex flex-row items-center text-plain-60'}>
 						<IconAttributeAttack width={16} height={16} />
 						<p className={'ml-2 text-xs'}>{'Attack'}</p>
 					</div>

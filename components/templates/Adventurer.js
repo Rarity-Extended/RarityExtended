@@ -150,6 +150,12 @@ function	Template({children}) {
 									{'Adventures'}
 								</p>
 							</Link>
+							<Link href={'/farming'}>
+								<p
+									className={`p-4 pr-6 pl-0 text-plain text-sm transition-opacity hover:opacity-100 ${router.pathname === '/farming' || router.pathname.startsWith('/farming') ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+									{'Farming'}
+								</p>
+							</Link>
 							<Link href={'/crafting'}>
 								<p
 									className={`p-4 pr-6 pl-0 text-plain text-sm transition-opacity hover:opacity-100 ${router.pathname === '/crafting' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>

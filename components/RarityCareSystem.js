@@ -285,7 +285,7 @@ function	Index({minimal}) {
 												<div className={'flex justify-between'}>
 													<p className={'text-sm font-bold text-plain normal-normal-case'}>{option.title}</p>
 												</div>
-												<p className={'mt-2 text-sm text-50'}>
+												<p className={'mt-2 text-sm text-plain-60'}>
 													{option.description}
 												</p>
 											</div>
@@ -307,7 +307,7 @@ function	Index({minimal}) {
 					<div className={'flex relative flex-row'}>
 						<div className={'p-4 w-full h-full'}>
 							<h1 className={'text-lg font-bold text-plain'}>{'Care system'}</h1>
-							<p className={'pb-1 text-sm text-50'}>
+							<p className={'pb-1 text-sm text-plain-60'}>
 								{'You can send '}
 								<b className={'text-highlight'}>{'all your favorite adventurers'}</b>
 								{' to perform some regular task, all in one transaction!'}
@@ -331,7 +331,7 @@ function	Index({minimal}) {
 
 						<div className={'flex flex-col justify-between items-start w-full md:flex-row md:items-center'}>
 							<div className={'justify-between items-start mt-2 mb-4 w-full md:items-center md:mb-0 md:w-2/3'}>
-								<div className={'flex flex-col text-50'}>
+								<div className={'flex flex-col text-plain-60'}>
 									<p className={'pb-1 text-sm'}>
 										{'With the Care System you can send '}
 										<b className={'text-highlight'}>{'all your favorite adventurers'}</b>

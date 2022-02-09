@@ -38,7 +38,7 @@ function	Index() {
 	const	[favoritesAdventurers, set_favoritesAdventurers] = useLocalStorage('favorites', []);
 
 	return (
-		<Template>
+		<>
 			<div className={'block md:hidden'}>
 				<MobileIndex />
 			</div>
@@ -70,8 +70,16 @@ function	Index() {
 					</div>
 				</div>
 			</div>
-		</Template>
+		</>
 	);
 }
+
+Index.getLayout = function getLayout(page) {
+	return (
+		<Template>
+			{page}
+		</Template>
+	);
+};
 
 export default Index;

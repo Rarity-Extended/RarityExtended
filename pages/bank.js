@@ -262,7 +262,7 @@ function	Index() {
 					vault={vaults?.find(e => e.address === '0x148c05caf1Bb09B5670f00D511718f733C54bC4c') || {}}
 					situation={bankSituation['0x148c05caf1Bb09B5670f00D511718f733C54bC4c']} />
 			</div>
-			<div className={'mt-8 text-sx text-50'}>
+			<div className={'mt-8 text-sx text-plain-60'}>
 				{'The Bank is powered by '}
 				<a className={'font-bold hover:underline cursor-pointer'} href={'https://yearn.finance.com'} target={'_blank'} rel={'noreferrer'}>{'Yearn Finance'}</a>
 				{'. You check details about the Vaults and the Strategies and withdraw your funds on Yearn\'s website.'}

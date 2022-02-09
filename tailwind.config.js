@@ -93,16 +93,23 @@ module.exports = {
 			},
 			width: {
 				18: '4.5rem',
+				22: '5.5rem',
 				57: '14.25rem',
 				75: '18.75rem',
 				77: '19.25rem',
 				screen: '100vw',
+			},
+			minWidth: {
+				4: '1rem',
+				20: '5rem',
+				22: '5.5rem',
 			},
 			maxWidth: {
 				screen: '100vw'
 			},
 			height: {
 				15: '60px',
+				22: '5.5rem',
 				18: '4.5rem',
 			},
 			minHeight: {
@@ -150,6 +157,7 @@ module.exports = {
 	plugins: [
 		require('@tailwindcss/typography'),
 		require('@tailwindcss/forms'),
-		require('@tailwindcss/aspect-ratio')
+		require('@tailwindcss/aspect-ratio'),
+		require('@tailwindcss/line-clamp'),
 	],
 };

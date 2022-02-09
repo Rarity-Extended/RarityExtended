@@ -43,7 +43,7 @@ function	NewAdventurer({rarityClass}) {
 				<Image src={rarityClass?.images?.front} width={160} height={160} />
 			</div>
 			<div className={'py-2 px-4'}>
-				<p className={'mb-4 text-sm text-center text-50'}>
+				<p className={'mb-4 text-sm text-center text-plain-60'}>
 					{rarityClass.description}
 				</p>
 				<button

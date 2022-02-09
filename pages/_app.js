@@ -16,8 +16,8 @@ import	useWeb3, {Web3ContextApp}		from	'contexts/useWeb3';
 import	useRarity, {RarityContextApp}	from	'contexts/useRarity';
 import	{InventoryContextApp}			from	'contexts/useInventory';
 import	{UIContextApp}					from	'contexts/useUI';
-import	Navbar							from	'components/Navbar';
-import	Footer							from	'components/Footer';
+import	Navbar							from	'components/layout/Navbar';
+import	Footer							from	'components/layout/Footer';
 import	SectionNoWallet					from	'sections/SectionNoWallet';
 import	SectionNoAdventurer				from	'sections/SectionNoAdventurer';
 import	useWindowInFocus				from	'hook/useWindowInFocus';
@@ -27,10 +27,10 @@ import	'style/Default.css';
 import	'style/TailwindCustomStyles.css';
 
 const GameWrapper = React.memo(function GameWrapper({Component}) {
-	const	{switchChain, active, chainID, chainTime} = useWeb3();
+	const	{switchChain, active, chainID} = useWeb3();
 	const	{isLoaded, currentAdventurer} = useRarity();
 
-	if (!isLoaded || chainTime === -1) {
+	if (!isLoaded) {
 		return (
 			<div className={'absolute inset-0 bg-opacity-40 backdrop-blur-3xl pointer-events-none'}>
 				<div className={'loader'} />
@@ -49,6 +49,7 @@ const GameWrapper = React.memo(function GameWrapper({Component}) {
 		return (<SectionNoAdventurer />);
 	}
 
+	const getLayout = Component.getLayout || ((page) => page);
 	return (
 		<div className={'relative z-10 pb-24 mb-24'}>
 			{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
@@ -56,7 +57,7 @@ const GameWrapper = React.memo(function GameWrapper({Component}) {
 					{'PLEASE SWITCH TO FANTOM NETWORK'}
 				</div>
 			) : null}
-			<Component />
+			{getLayout(<Component />)}
 		</div>
 	);
 });

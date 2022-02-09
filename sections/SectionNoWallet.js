@@ -1,5 +1,5 @@
 import	React				from	'react';
-import	{LoginBox}			from	'components/ModalLogin';
+import	{LoginBox}			from	'components/modals/ModalLogin';
 
 function	SectionNoWallet() {
 	return (

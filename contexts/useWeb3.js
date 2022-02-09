@@ -25,7 +25,7 @@ const	isClient = !!(typeof window !== 'undefined' && window.document && window.d
 export const Web3ContextApp = ({children}) => {
 	const	{activate, active, library, account, chainId, deactivate} = useWeb3React();
 	const	[lastWallet, set_lastWallet] = useLocalStorage('lastWallet', walletType.NONE);
-	const	[chainTime, set_chainTime] = useState(-1);
+	const	[chainTime, set_chainTime] = useState(new Date() / 1000);
 
 	useEffect(() => {
 		if (library)

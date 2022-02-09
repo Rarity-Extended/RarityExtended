@@ -33,7 +33,7 @@ function ModalSelectAdventurer({isOpen, onClose, onSelect}) {
 							leave={'transform transition ease-in-out duration-500 sm:duration-700'}
 							leaveFrom={'translate-x-0'}
 							leaveTo={'translate-x-full'}>
-							<div className={'w-screen md:max-w-sm max-w-screen'}>
+							<div className={'w-screen max-w-screen md:max-w-sm'}>
 								<div className={'flex overflow-y-scroll flex-col h-full border-l-2 border-light-400 dark:border-dark-400 shadow-xl bg-600'}>
 									<div className={'p-4 pt-6 md:py-8 md:px-6'}>
 										<div className={'flex justify-between items-start'}>

@@ -122,13 +122,13 @@ export const InventoryContextApp = ({children}) => {
 			raritytheForest.getTreasuresBySummoner(tokenID),
 			rarityOpenMic.getPrizes(tokenID),
 
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 1), //Head
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 2), //Chest
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 3), //Hand
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 4), //Feet
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 5), //Primary weapon
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 6), //Secondary weapon
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 101), //Secondary weapon
+			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 1), //Head
+			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 2), //Chest
+			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 3), //Hand
+			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 4), //Feet
+			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 5), //Primary weapon
+			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 6), //Secondary weapon
+			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 101), //Secondary weapon
 		];
 	}
 	async function	assignInventory(tokenID, inventoryCallResult) {
@@ -201,29 +201,29 @@ export const InventoryContextApp = ({children}) => {
 			};
 		}
 
-		rIndex++;
-		for (let index = 1; index < 8; index++) {
-			const	element = inventoryCallResult[rIndex++];
-			const	elementDetails = {
-				tokenID: (element[0]).toNumber(),
-				registry: (element[1]),
-				codex: (element[2]),
-				baseType: (element[3]),
-				itemType: (element[4])
-			};
-			if ((index === 2) && elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
-				const	_equipement = Object.values(MANIFEST_ARMORS).find(e => e.id === elementDetails.itemType);
-				_equipements[index] = {...elementDetails, ..._equipement};
-			}
-			if ((index === 5 || index === 6) && elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
-				const	_equipement = Object.values(MANIFEST_WEAPONS).find(e => e.id === elementDetails.itemType);
-				_equipements[index] = {...elementDetails, ..._equipement};
-			}
-			if ((index === 7) && elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
-				const	_equipement = Object.values(MANIFEST_SHIELDS).find(e => e.id === elementDetails.itemType);
-				_equipements[101] = {...elementDetails, ..._equipement};
-			}
-		}
+		// rIndex++;
+		// for (let index = 1; index < 8; index++) {
+		// 	const	element = inventoryCallResult[rIndex++];
+		// 	const	elementDetails = {
+		// 		tokenID: (element[0]).toNumber(),
+		// 		registry: (element[1]),
+		// 		codex: (element[2]),
+		// 		baseType: (element[3]),
+		// 		itemType: (element[4])
+		// 	};
+		// 	if ((index === 2) && elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
+		// 		const	_equipement = Object.values(MANIFEST_ARMORS).find(e => e.id === elementDetails.itemType);
+		// 		_equipements[index] = {...elementDetails, ..._equipement};
+		// 	}
+		// 	if ((index === 5 || index === 6) && elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
+		// 		const	_equipement = Object.values(MANIFEST_WEAPONS).find(e => e.id === elementDetails.itemType);
+		// 		_equipements[index] = {...elementDetails, ..._equipement};
+		// 	}
+		// 	if ((index === 7) && elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
+		// 		const	_equipement = Object.values(MANIFEST_SHIELDS).find(e => e.id === elementDetails.itemType);
+		// 		_equipements[101] = {...elementDetails, ..._equipement};
+		// 	}
+		// }
 	
 		//Hack to bactch all of this in only 1 render
 		performBatchedUpdates(() => {
@@ -232,8 +232,7 @@ export const InventoryContextApp = ({children}) => {
 			set_equipements((prev) => ({...prev, [tokenID]: _equipements}));
 		});
 	}
-	const	updateInventories = React.useCallback(async (_rarities) => {
-		const adventurers = Object.values(_rarities || {});
+	const	updateInventories = React.useCallback(async (adventurers) => {
 		if (!adventurers || adventurers.length === 0) {
 			return;
 		}
@@ -262,7 +261,7 @@ export const InventoryContextApp = ({children}) => {
 		if (!isLoaded || initialFetchSet)
 			return;
 		set_initialFetchSet(true);
-		updateInventories(rarities);
+		updateInventories(Object.values(rarities || {}));
 	}, [rarities, updateInventories, isLoaded, initialFetchSet]);
 
 	/* 🏹🛡 - Rarity Extended ***********************************************************************

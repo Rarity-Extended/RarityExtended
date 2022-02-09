@@ -14,11 +14,11 @@ function	OverviewSkills({adventurer}) {
 		<div className={'flex flex-col items-center mt-auto w-full'}>
 			<div className={'mb-6'}>
 				<p className={' text-sm'}>
-					<span className={'text-50'}>{'Skills represent the other, non-weapon, non-magical, non-standard checks. They help with combat and magic, as well as movement and general conversation. You have '}</span>
+					<span className={'text-plain-60'}>{'Skills represent the other, non-weapon, non-magical, non-standard checks. They help with combat and magic, as well as movement and general conversation. You have '}</span>
 					<Link href={'/skills#content'}>
 						<span className={'font-bold hover:underline cursor-pointer text-highlight'}>{`${remainingPoints <= 1 ? `${remainingPoints} point` : `${remainingPoints} points`} left`}</span>
 					</Link>
-					<span className={'text-50'}>{' to spend.'}</span>
+					<span className={'text-plain-60'}>{' to spend.'}</span>
 				</p>
 			</div>
 			<div className={'grid overflow-auto grid-cols-3 gap-x-8 gap-y-4 w-full scrollbar-none'}>

@@ -2,8 +2,8 @@ import	React, {useState, useEffect}	from	'react';
 import	Link							from	'next/link';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
-import	ModalLogin						from	'components/ModalLogin';
-import	AdventurerModalMenu				from	'components/AdventurerModalMenu';
+import	ModalLogin						from	'components/modals/ModalLogin';
+import	AdventurerModalMenu				from	'components/modals/AdventurerModalMenu';
 
 function	Navbar() {
 	const	{active, address} = useWeb3();

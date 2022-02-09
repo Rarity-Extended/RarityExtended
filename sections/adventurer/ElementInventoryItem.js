@@ -9,10 +9,10 @@ function	ElementInventoryItem({item}) {
 				<Image src={item.img} width={56} height={56} />
 			</div>
 			<div className={'ml-1 w-full text-start'}>
-				<p className={'text-sm text-plain text-50'}>
+				<p className={'text-sm text-plain text-plain-60'}>
 					{item.name}
 				</p>
-				<p className={'text-sm text-plain text-50'}>
+				<p className={'text-sm text-plain text-plain-60'}>
 					{`(x${Number(item.balance)})`}
 				</p>
 			</div>

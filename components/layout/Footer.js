@@ -43,7 +43,7 @@ function	Footer() {
 								leave={'ease-in duration-200'}
 								leaveFrom={'opacity-100 scale-100'}
 								leaveTo={'opacity-0 scale-95'}>
-								<div className={'inline-block overflow-hidden p-6 my-8 w-full max-w-md font-title text-left uppercase align-middle bg-white dark:bg-dark-600 shadow-xl transition-all text-plain'}>
+								<div className={'inline-block overflow-hidden relative p-6 my-8 w-full max-w-md font-title text-left uppercase align-middle bg-white dark:bg-dark-600 shadow-xl transition-all text-plain'}>
 									<Dialog.Title className={'relative text-lg font-medium leading-6 text-gray-900'}>
 										{'Options'}
 										<div className={'absolute top-0 right-0 cursor-pointer'} onClick={() => set_options(false)}>

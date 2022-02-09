@@ -8,7 +8,7 @@ function	ElementInventoryItemNonFungible({item}) {
 				<Image src={item?.img} width={56} height={56} />
 			</div>
 			<div className={'pl-1 w-full text-start'}>
-				<p className={'text-sm text-plain text-50'}>
+				<p className={'text-sm text-plain text-plain-60'}>
 					{item.name}
 				</p>
 			</div>

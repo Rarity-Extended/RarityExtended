@@ -139,7 +139,7 @@ function Adventure({router, adventurer}) {
 	}
 
 	return (
-		<section id={'action'} className={'flex relative flex-col mx-auto w-full md:max-w-screen-xl max-w-screen'}>
+		<section id={'action'} className={'flex relative flex-col mx-auto w-full max-w-screen md:max-w-screen-xl'}>
 
 			<div className={'relative p-4 w-full text-xs box'}>
 				<div className={'mx-auto mt-12 w-3/4'}>
@@ -213,19 +213,19 @@ function Adventure({router, adventurer}) {
 								<div className={'px-4 pt-6 pb-0 w-full with-title'}>
 									<div className={'text-base text-plain'}>{'Performance Check'}</div>
 									<div className={'flex justify-between'}>
-										<div className={'text-base text-50'}>{'Perform Skill'}</div>
+										<div className={'text-base text-plain-60'}>{'Perform Skill'}</div>
 										<div>{'+'}{performSkill}</div>
 									</div>
 									<div className={'flex justify-between'}>
-										<div className={'text-base text-50'}>{'Charisma'}</div>
+										<div className={'text-base text-plain-60'}>{'Charisma'}</div>
 										<div>{abilityModifierFormated(charisma)}</div>
 									</div>
 									<div className={'flex justify-between'}>
-										<div className={'text-base text-50'}>{'Forest Treasure'}</div>
+										<div className={'text-base text-plain-60'}>{'Forest Treasure'}</div>
 										<div>{forestTreasures.length ? '+1' : '+0'}</div>
 									</div>
 									<div className={'flex justify-between'}>
-										<div className={'text-base text-50'}>{'Odds'}</div>
+										<div className={'text-base text-plain-60'}>{'Odds'}</div>
 										<div>{odds}</div>
 									</div>
 									<br />

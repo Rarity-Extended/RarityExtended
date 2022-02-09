@@ -27,11 +27,11 @@ function	OverviewFeats({adventurer}) {
 		<div className={'flex flex-col items-center mt-auto w-full'} style={{height: 282}}>
 			<div className={'mb-6'}>
 				<p className={' text-sm'}>
-					<span className={'text-50'}>{'A feat represents a talent or an area of expertise that gives a character special capabilities. It embodies training, experience, and abilities beyond what a class provides. Some are inherent to the class, while others can be learned. You have '}</span>
+					<span className={'text-plain-60'}>{'A feat represents a talent or an area of expertise that gives a character special capabilities. It embodies training, experience, and abilities beyond what a class provides. Some are inherent to the class, while others can be learned. You have '}</span>
 					<Link href={'/feats#content'}>
 						<span className={'font-bold hover:underline cursor-pointer text-highlight'}>{`${_pointLefts <= 1 ? `${_pointLefts} point` : `${_pointLefts} points`} left`}</span>
 					</Link>
-					<span className={'text-50'}>{' to spend.'}</span>
+					<span className={'text-plain-60'}>{' to spend.'}</span>
 				</p>
 			</div>
 			<div className={'grid overflow-auto grid-cols-3 gap-x-4 gap-y-5 w-full scrollbar-none'}>

@@ -64,3 +64,5 @@ export async function newEthCallProvider(provider, devMode) {
 	await	ethcallProvider.init(provider);
 	return	ethcallProvider;
 }
+
+export const slugify = (str) => str.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');

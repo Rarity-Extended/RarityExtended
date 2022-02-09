@@ -38,7 +38,7 @@ function	FormatedDescription({addr, rawDescription}) {
 								);
 
 							}
-							return (<p key={`${addr}_${index}`} className={'inline text-50'}>{text}</p>);
+							return (<p key={`${addr}_${index}`} className={'inline text-plain-60'}>{text}</p>);
 						})}
 					</div>
 				);
@@ -88,14 +88,14 @@ function	Index() {
 							<div className={'inline text-sm leading-normal normal-case'}>
 								<FormatedDescription addr={adventure.address} rawDescription={adventure.description} />
 							</div>
-							<h1 className={'mt-12 mb-2 text-base font-bold text-50'}>{'Potential Rewards'}</h1>
+							<h1 className={'mt-12 mb-2 text-base font-bold text-plain-60'}>{'Potential Rewards'}</h1>
 							<div className={'grid grid-cols-3 gap-4 -ml-2 w-2/3'}>
 								{adventure.rewards.map(([envName, name, addr]) => (
 									<div key={addr} className={'flex flex-row items-center'}>
 										<div className={'flex w-14 h-14 flex-center'} style={{minWidth: 56}}>
 											<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={56} height={56} />
 										</div>
-										<p className={'ml-1 text-sm text-plain text-50'}>
+										<p className={'ml-1 text-sm text-plain text-plain-60'}>
 											{name}
 										</p>
 									</div>
@@ -138,7 +138,7 @@ function	Index() {
 													<div className={'flex w-10 h-10 flex-center'} style={{minWidth: 40}}>
 														<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={40} height={40} />
 													</div>
-													<p className={'ml-1 text-sm text-plain text-50'}>
+													<p className={'ml-1 text-sm text-plain text-plain-60'}>
 														{name}
 													</p>
 												</div>
@@ -179,7 +179,7 @@ function	Index() {
 												<div className={'flex w-10 h-10 flex-center'} style={{minWidth: 40}}>
 													<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={40} height={40} />
 												</div>
-												<p className={'ml-1 text-sm text-plain text-50'}>
+												<p className={'ml-1 text-sm text-plain text-plain-60'}>
 													{name}
 												</p>
 											</div>

@@ -1,10 +1,10 @@
-import	React, {useState}				from	'react';
-import	Link							from	'next/link';
+import	React, {useState}						from	'react';
+import	{useRouter}								from	'next/router';
 import	Image									from	'next/image';
-import	useWeb3							from	'contexts/useWeb3';
-import	useRarity						from	'contexts/useRarity';
-import	useInventory					from	'contexts/useInventory';
-import	Template						from	'components/templates/Adventurer';
+import	useWeb3									from	'contexts/useWeb3';
+import	useRarity								from	'contexts/useRarity';
+import	useInventory							from	'contexts/useInventory';
+import	Template								from	'components/templates/Adventurer';
 import	IconAttributeDamage						from	'components/icons/IconAttributeDamage';
 import	IconAttributeDamageType					from	'components/icons/IconAttributeDamageType';
 import	IconAttributeCritical					from	'components/icons/IconAttributeCritical';
@@ -227,54 +227,69 @@ function	ItemList({tab}) {
 }
 
 function	Index() {
+	const	router = useRouter();
 	const	[tab, set_tab] = useState('all');
+
+	React.useEffect(() => {
+		if (router?.query?.slot) {
+			if (Number(router?.query?.slot) === 0) set_tab('all');
+			if (Number(router?.query?.slot) === 1) set_tab('head-armor');
+			if (Number(router?.query?.slot) === 2) set_tab('body-armor');
+			if (Number(router?.query?.slot) === 3) set_tab('hand-armor');
+			if (Number(router?.query?.slot) === 4) set_tab('foot-armor');
+			if (Number(router?.query?.slot) === 5) set_tab('weapon');
+			if (Number(router?.query?.slot) === 6) set_tab('weapon-secondary');
+			if (Number(router?.query?.slot) === 7) set_tab('jewelry');
+			if (Number(router?.query?.slot) === 8) set_tab('jewelry-secondary');
+		}
+	}, [router]);
 
 	function	renderFilters() {
 		return (
 			<div className={'flex flex-row justify-between mb-4 w-full text-sm text-plain'}>
 				<div className={'flex flex-row space-x-4'}>
 					<p
-						onClick={() => set_tab('all')}
+						onClick={() => router.push('/equipements?slot=0')}
 						className={`transition-opacity hover:opacity-100 ${tab === 'all' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 						{'All'}
 					</p>
 					<p
-						onClick={() => set_tab('head-armor')}
+						onClick={() => router.push('/equipements?slot=1')}
 						className={`transition-opacity hover:opacity-100 ${tab === 'head-armor' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 						{'Head Armors'}
 					</p>
 					<p
-						onClick={() => set_tab('body-armor')}
+						onClick={() => router.push('/equipements?slot=2')}
 						className={`transition-opacity hover:opacity-100 ${tab === 'body-armor' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 						{'Body Armors'}
 					</p>
 					<p
-						onClick={() => set_tab('hand-armor')}
+						onClick={() => router.push('/equipements?slot=3')}
 						className={`transition-opacity hover:opacity-100 ${tab === 'hand-armor' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 						{'Hand Armors'}
 					</p>
 					<p
-						onClick={() => set_tab('foot-armor')}
+						onClick={() => router.push('/equipements?slot=4')}
 						className={`transition-opacity hover:opacity-100 ${tab === 'foot-armor' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 						{'Foot Armors'}
 					</p>
 					<p
-						onClick={() => set_tab('weapon')}
+						onClick={() => router.push('/equipements?slot=5')}
 						className={`transition-opacity hover:opacity-100 ${tab === 'weapon' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 						{'Primary Weapons'}
 					</p>
 					<p
-						onClick={() => set_tab('weapon-secondary')}
+						onClick={() => router.push('/equipements?slot=6')}
 						className={`transition-opacity hover:opacity-100 ${tab === 'weapon-secondary' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 						{'Secondary Weapons'}
 					</p>
 					<p
-						onClick={() => set_tab('jewelry')}
+						onClick={() => router.push('/equipements?slot=7')}
 						className={`transition-opacity hover:opacity-100 ${tab === 'jewelry' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 						{'First Jewelleries'}
 					</p>
 					<p
-						onClick={() => set_tab('jewelry-secondary')}
+						onClick={() => router.push('/equipements?slot=8')}
 						className={`transition-opacity hover:opacity-100 ${tab === 'jewelry-secondary' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 						{'Second Jewelleries'}
 					</p>

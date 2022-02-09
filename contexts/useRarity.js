@@ -14,7 +14,7 @@ import	dayjs													from	'dayjs';
 import	relativeTime											from	'dayjs/plugin/relativeTime';
 import	duration												from	'dayjs/plugin/duration';
 import	useWeb3													from	'contexts/useWeb3';
-import 	ModalSelectAdventurer 									from	'components/ModalSelectAdventurer';
+import 	ModalSelectAdventurer 									from	'components/modals/ModalSelectAdventurer';
 import	useIndexDB												from	'hook/useIDB';
 import	performBatchedUpdates									from	'utils/performBatchedUpdates';
 import	{chunk, fetcher, toAddress, newEthCallProvider}			from	'utils';

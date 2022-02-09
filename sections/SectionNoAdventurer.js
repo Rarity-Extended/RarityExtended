@@ -49,7 +49,7 @@ function	NewAdventurer({rarityClass}) {
 				<Image src={rarityClass?.images?.front} width={160} height={160} />
 			</div>
 			<div className={'py-2 px-4'}>
-				<p className={'mb-4 text-sm text-center text-50'}>
+				<p className={'mb-4 text-sm text-center text-plain-60'}>
 					{rarityClass.description}
 				</p>
 				<button
@@ -64,8 +64,8 @@ function	NewAdventurer({rarityClass}) {
 
 function	Index() {
 	return (
-		<section className={'mx-auto mt-2 mb-24 md:mt-12 md:max-w-screen-xl max-w-screen'}>
-			<section className={'mx-auto mt-0 md:max-w-screen-xl max-w-screen'}>
+		<section className={'mx-auto mt-2 mb-24 max-w-screen md:mt-12 md:max-w-screen-xl'}>
+			<section className={'mx-auto mt-0 max-w-screen md:max-w-screen-xl'}>
 				<div className={'text-sm md:text-xl'}>
 					<p>{'Welcome!'}</p>
 					<p className={'my-4'}>{'You are about to start a journey beyond imagination. you will meet new friends and fight great dangers! The world of Rarity is filled with wonders and perils! Do you have what it takes to survive. Is your curiosity strong enough to get you to the end?'}</p>
