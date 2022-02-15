@@ -16,7 +16,7 @@ function	ensureCanCraft(adventurer, inventory, ingredients) {
 }
 
 
-function	RowCraftMeals({recipe, currentAdventurer, inventory, onCraft, isApproved, onApprove}) {
+const RowCraftMeals = React.memo(function RowCraftMeals({recipe, currentAdventurer, inventory, onCraft, isApproved, onApprove}) {
 	const	canCraft = ensureCanCraft(currentAdventurer, inventory, recipe.cost);
 
 	return (
@@ -62,6 +62,6 @@ function	RowCraftMeals({recipe, currentAdventurer, inventory, onCraft, isApprove
 			</div>
 		</div>
 	);
-}
+});
 
 export default RowCraftMeals;

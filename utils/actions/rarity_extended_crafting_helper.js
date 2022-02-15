@@ -31,18 +31,14 @@ export async function	isApprovedForAll({provider}) {
 	return isApprovedForAll;
 }
 
-export async function	approveForAll(
-	{provider, contract},
-	onError = () => null,
-	onSuccess = () => null
-) {
+export async function	approveForAll({provider, contract}, onError = () => null, onSuccess = () => null) {
 	let		_toast;
 	const	signer = provider.getSigner();
 	const	raritySource = RARITY_MANIFEST.connect(signer);
 	try {
 		_toast = toast.loading('Approving Crafting...');
 		const	transaction = await raritySource.setApprovalForAll(contract, true);
-		const	transactionResult = await transaction.wait(2);
+		const	transactionResult = await transaction.wait(1);
 		if (transactionResult.status === 1) {
 			onSuccessToast();
 			onSuccess();

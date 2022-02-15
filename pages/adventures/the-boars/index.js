@@ -7,18 +7,21 @@ import	relativeTime						from	'dayjs/plugin/relativeTime';
 import	useRarity							from	'contexts/useRarity';
 import	useWeb3								from	'contexts/useWeb3';
 import	useInventory						from	'contexts/useInventory';
+import	useDungeons							from	'contexts/useDungeons';
 import	Template							from	'components/templates/Adventurer';
 import	AdventureTemplate					from	'components/adventures/Template';
 import	DescriptionFormater					from	'components/adventures/DescriptionFormater';
 import	OptionsFormater						from	'components/adventures/OptionsFormater';
 import	{newEthCallProvider}				from	'utils';
 import	ADVENTURE							from	'utils/codex/adventures/the-boars';
+import	{RARITY_EXTENDED_NAME_ABI}			from	'utils/abi/mixed.min.abi';
 import	{protectBoars}						from	'utils/actions/boar';
 
 dayjs.extend(relativeTime);
 function	Index({router}) {
 	const	{provider, chainID, chainTime} = useWeb3();
-	const	{currentAdventurer, updateRarity} = useRarity();
+	const	{dungeons, updateDungeonForOne} = useDungeons();
+	const	{currentAdventurer} = useRarity();
 	const	{updateInventory} = useInventory();
 	const	[step, set_step] = useState('intro');
 	const	[variables, set_variables] = useState({
@@ -49,11 +52,7 @@ function	Index({router}) {
 		let		extinctionByName = '';
 
 		if (extinctionBy > 0) {
-			const	nameContract = new ethers.Contract(
-				process.env.RARITY_EXTENDED_NAME,
-				process.env.RARITY_EXTENDED_NAME_ABI,
-				provider
-			);
+			const	nameContract = new ethers.Contract(process.env.RARITY_EXTENDED_NAME, RARITY_EXTENDED_NAME_ABI, provider);
 			extinctionByName = await nameContract.get_name(extinctionBy);
 			set_step('end');
 		}
@@ -82,7 +81,7 @@ function	Index({router}) {
 			if (error) {
 				return console.error(error);
 			}
-			updateRarity(currentAdventurer.tokenID);
+			updateDungeonForOne(currentAdventurer.tokenID);
 			updateInventory(currentAdventurer.tokenID);
 		});
 	}
@@ -101,16 +100,16 @@ function	Index({router}) {
 			<div className={'text-base leading-relaxed normal-case text-plain'}>
 				<DescriptionFormater
 					addr={process.env.DUNGEON_BOARS_ADDR}
-					rawDescription={ADVENTURE[currentAdventurer?.adventures?.boars?.canAdventure ? step : 'rest'].description}
+					rawDescription={ADVENTURE[dungeons[currentAdventurer.tokenID]?.boars?.canAdventure ? step : 'rest'].description}
 					variables={{
 						...variables,
 						'${adventurer_name}': currentAdventurer.displayName,
-						'${next_adventure}': currentAdventurer?.adventures?.boars?.nextAdventure
+						'${next_adventure}': dungeons[currentAdventurer.tokenID]?.boars?.nextAdventure
 					}} />
 			</div>
 			<div className={'grid grid-cols-1 gap-4 pt-4 mt-4 border-t-2 border-black dark:border-dark-300'}>
 				<OptionsFormater
-					options={ADVENTURE[currentAdventurer?.adventures?.boars?.canAdventure ? step : 'rest'].options}
+					options={ADVENTURE[dungeons[currentAdventurer.tokenID]?.boars?.canAdventure ? step : 'rest'].options}
 					onChoice={(choice) => {
 						if (choice === 'fight') {
 							onFightBoars();

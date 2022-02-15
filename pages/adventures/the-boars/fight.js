@@ -12,6 +12,7 @@ import	useDungeon, {DungeonContextApp}			from	'contexts/useDungeonsTheBoars';
 import	useWeb3									from	'contexts/useWeb3';
 import	useRarity								from	'contexts/useRarity';
 import	useInventory							from	'contexts/useInventory';
+import	useDungeons								from	'contexts/useDungeons';
 import	useUI									from	'contexts/useUI';
 import	{sleep}									from	'utils';
 import	{killBoar}								from	'utils/actions/boar';
@@ -20,8 +21,9 @@ import	CLASSES									from	'utils/codex/core/classes';
 function	Index({dungeon, adventurer, router}) {
 	const	STEP_LIMIT = 100;
 	const	{provider} = useWeb3();
-	const	{updateRarity, skins} = useRarity();
+	const	{skins} = useRarity();
 	const	{updateInventory} = useInventory();
+	const	{updateDungeonForOne} = useDungeons();
 	const	{raritySkins} = useUI();
 	const	[boarEscaped, set_boarEscaped] = useState(false);
 	const	[adventurerWon, set_adventurerWon] = useState(false);
@@ -68,7 +70,7 @@ function	Index({dungeon, adventurer, router}) {
 				return console.error(error);
 			}
 			updateInventory(dungeon.tokenID);
-			updateRarity(dungeon.tokenID);
+			updateDungeonForOne(dungeon.tokenID);
 			if (router.pathname === '/adventures/the-boars/fight')	
 				router.push('/adventures/the-boars');
 		});
@@ -115,7 +117,7 @@ function	Index({dungeon, adventurer, router}) {
 	}
 
 	return (
-		<section id={'action'} className={'flex relative flex-col mx-auto w-full md:max-w-screen-xl max-w-screen'}>
+		<section id={'action'} className={'flex relative flex-col mx-auto w-full max-w-screen md:max-w-screen-xl'}>
 			<div className={`absolute bg-black inset-0 z-10 -top-32 -left-4 -right-4 flex flex-col items-center min-h-screen transition-opacity duration-1000 ${adventurerHealth <= 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
 				<p className={'pt-20 mx-4 max-w-screen-sm text-2xl text-center text-white md:pt-64 md:mx-0'}>{'you passed out'}</p>
 				<p className={'pt-8 mx-4 max-w-screen-sm text-base text-center text-white md:mx-0'}>{'After some time, the Farmer find you and bring you back in town...'}</p>

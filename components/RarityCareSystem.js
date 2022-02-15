@@ -7,6 +7,7 @@ import	useLocalStorage						from	'hook/useLocalStorage';
 import	useWeb3								from	'contexts/useWeb3';
 import	useRarity							from	'contexts/useRarity';
 import	useInventory						from	'contexts/useInventory';
+import	useDungeons							from	'contexts/useDungeons';
 import	{chunk}								from	'utils';
 import	{xpRequired}						from	'utils/libs/rarity';
 import	* as daycare						from	'utils/actions/daycare';
@@ -17,6 +18,7 @@ function	Index({minimal}) {
 	const	{provider, chainTime} = useWeb3();
 	const	{rarities, updateBatchRarity} = useRarity();
 	const	{updateInventories} = useInventory();
+	const	{dungeons} = useDungeons();
 	const	[favoritesAdventurers] = useLocalStorage('favorites', []);
 	const	[nonce, set_nonce] = useState(0);
 	const	[selected] = useState('Take care of everything');
@@ -45,8 +47,8 @@ function	Index({minimal}) {
 			if (Number(adventurer?.gold?.claimable || 0) > 0) {
 				canClaimGold++;
 			}
-			if (dayjs(new Date(adventurer?.adventures?.cellar?.log * 1000)).isBefore(dayjs(new Date(chainTime * 1000)))) {
-				if (Number(adventurer?.adventures?.cellar?.scout || 0) >= 1) {
+			if (dayjs(new Date(dungeons[adventurer.tokenID]?.cellar?.log * 1000)).isBefore(dayjs(new Date(chainTime * 1000)))) {
+				if (Number(dungeons[adventurer.tokenID]?.cellar?.scout || 0) >= 1) {
 					canAdventureCellar++;
 				}
 			}
@@ -55,7 +57,7 @@ function	Index({minimal}) {
 			}
 		}
 		set_selectedAdventurersActions({canAdventure, canClaimGold, canAdventureCellar, canLevelUp});
-	}, [nonce, favoritesAdventurers.length]);
+	}, [nonce, dungeons, rarities, favoritesAdventurers.length]);
 
 	/* 🏹🛡 - Rarity Extended ***********************************************************************
 	**	Filter the Favorites Adventurer to remove the one that cannot do anything with the current
@@ -73,8 +75,8 @@ function	Index({minimal}) {
 				}
 			}
 			if (type === 0 || type === 2) {
-				if (dayjs(new Date(adventurer?.adventures?.cellar?.log * 1000)).isBefore(dayjs(new Date(chainTime * 1000)))) {
-					if (Number(adventurer?.adventures?.cellar?.scout || 0) >= 1) {
+				if (dayjs(new Date(dungeons[adventurer.tokenID]?.cellar?.log * 1000)).isBefore(dayjs(new Date(chainTime * 1000)))) {
+					if (Number(dungeons[adventurer.tokenID]?.cellar?.scout || 0) >= 1) {
 						favoriteList.push(favoritesAdventurers[index]);
 						continue;
 					}

@@ -11,7 +11,7 @@ function	ensureCanCraft(adventurer, inventory, ingredients) {
 	}
 	for (let index = 0; index < ingredients.length; index++) {
 		const [addr, cost] = ingredients[index];
-		if (addr === process.env.RARITY_EXTENDED_XP) {
+		if (addr === process.env.RARITY_EXTENDED_XP_ADDR) {
 			if (Number(adventurer?.xp) < cost) {
 				return false;
 			}

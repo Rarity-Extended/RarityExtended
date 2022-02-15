@@ -4,6 +4,7 @@ import	relativeTime				from	'dayjs/plugin/relativeTime';
 import	useWeb3						from	'contexts/useWeb3';
 import	useRarity					from	'contexts/useRarity';
 import	useInventory				from	'contexts/useInventory';
+import	useDungeons					from	'contexts/useDungeons';
 import	Template					from	'components/templates/Adventurer';
 import	AdventureTemplate			from	'components/adventures/Template';
 import	DescriptionFormater			from	'components/adventures/DescriptionFormater';
@@ -14,14 +15,15 @@ import	* as actions				from	'utils/actions/dungeon_theForest';
 dayjs.extend(relativeTime);
 function	Index({router}) {
 	const	{provider, chainTime} = useWeb3();
-	const	{currentAdventurer, updateRarity} = useRarity();
+	const	{currentAdventurer} = useRarity();
+	const	{dungeons, updateDungeonForOne} = useDungeons();
 	const	{updateInventory} = useInventory();
 	const	[step, set_step] = useState('intro');
 
 	function	getCurrentStep() {
-		if (!currentAdventurer?.adventures?.forest?.canAdventure && dayjs(new Date(currentAdventurer?.adventures?.forest?.endBlockTs * 1000)).isBefore(dayjs(new Date(chainTime * 1000))))
+		if (!dungeons[currentAdventurer.tokenID]?.forest?.canAdventure && dayjs(new Date(dungeons[currentAdventurer.tokenID]?.forest?.endBlockTs * 1000)).isBefore(dayjs(new Date(chainTime * 1000))))
 			return 'dig';
-		if (currentAdventurer?.adventures?.forest?.canAdventure)
+		if (dungeons[currentAdventurer.tokenID]?.forest?.canAdventure)
 			return step;
 		return 'rest';
 	}
@@ -34,7 +36,7 @@ function	Index({router}) {
 			if (error) {
 				return console.error(error);
 			}
-			updateRarity(currentAdventurer.tokenID);
+			updateDungeonForOne(currentAdventurer.tokenID);
 		});
 	}
 	function	onDig() {
@@ -45,7 +47,7 @@ function	Index({router}) {
 			if (error) {
 				return console.error(error);
 			}
-			updateRarity(currentAdventurer.tokenID);
+			updateDungeonForOne(currentAdventurer.tokenID);
 			updateInventory(currentAdventurer.tokenID);
 		});
 	}
@@ -67,9 +69,9 @@ function	Index({router}) {
 					rawDescription={ADVENTURE[getCurrentStep()].description}
 					variables={{
 
-						'${dig_time}': dayjs(new Date(currentAdventurer?.adventures?.forest?.endBlockTs * 1000)).from(dayjs(new Date(chainTime * 1000))),
+						'${dig_time}': dayjs(new Date(dungeons[currentAdventurer.tokenID]?.forest?.endBlockTs * 1000)).from(dayjs(new Date(chainTime * 1000))),
 						'${adventurer_name}': currentAdventurer.displayName,
-						'${next_adventure}': currentAdventurer?.adventures?.forest?.nextAdventure
+						'${next_adventure}': dungeons[currentAdventurer.tokenID]?.forest?.nextAdventure
 					}} />
 			</div>
 			<div className={'grid grid-cols-1 gap-4 pt-4 mt-4 border-t-2 border-black dark:border-dark-300'}>

@@ -1,136 +1,144 @@
-import	React, {useState}						from	'react';
-import	{useRouter}								from	'next/router';
-import	Image									from	'next/image';
-import	useWeb3									from	'contexts/useWeb3';
-import	useRarity								from	'contexts/useRarity';
-import	useInventory							from	'contexts/useInventory';
-import	Template								from	'components/templates/Adventurer';
-import	IconAttributeDamage						from	'components/icons/IconAttributeDamage';
-import	IconAttributeDamageType					from	'components/icons/IconAttributeDamageType';
-import	IconAttributeCritical					from	'components/icons/IconAttributeCritical';
-import	IconAttributeCriticalModifier			from	'components/icons/IconAttributeCriticalModifier';
-import	IconAttributeProficiency				from	'components/icons/IconAttributeProficiency';
-import	IconAttributeProficiencyArmor			from	'components/icons/IconAttributeProficiencyArmor';
-import	IconAttributePenaltyArmor				from	'components/icons/IconAttributePenaltyArmor';
-import	IconAttributeSpellFailure				from	'components/icons/IconAttributeSpellFailure';
-import	IconAttributeRange						from	'components/icons/IconAttributeRange';
-import	IconAttributeDexterity					from	'components/icons/IconAttributeDexterity';
-import	IconAttributeArmor						from	'components/icons/IconAttributeArmor';
-import	{equip}									from	'utils/actions/rarity_extended_equipements';
+import	React, {useState}					from	'react';
+import	{useRouter}							from	'next/router';
+import	Image								from	'next/image';
+import	useWeb3								from	'contexts/useWeb3';
+import	useRarity							from	'contexts/useRarity';
+import	useInventory						from	'contexts/useInventory';
+import	Template							from	'components/templates/Adventurer';
+import	IconChevron							from	'components/icons/IconChevron';
+import	ItemAttributes						from	'components/itemAttributes';
+import	Section								from	'components/layout/Section';
+import	RowBasicSets						from	'components/layout/RowBasicSets';
+import	{equip, rEquip, approveForAll}		from	'utils/actions/rarity_extended_equipements';
+import	performBatchedUpdates				from	'utils/performBatchedUpdates';
+import	BASIC_SET_ARMORS					from	'utils/codex/items/items_manifest_basic_set_armors.json';
+import	BASIC_SET_SHIELDS					from	'utils/codex/items/items_manifest_basic_set_shields.json';
+import	BASIC_SET_WEAPONS					from	'utils/codex/items/items_manifest_basic_set_weapons.json';
 
-function	ItemAttributes({category, item}) {
-	if (category && category.includes('weapon')) {
-		return (
-			<div className={'mt-2'}>
-				<div className={'flex flex-row justify-between items-center my-1'}>
-					<div className={'flex flex-row items-center opacity-60'}>
-						<IconAttributeDamageType width={16} height={16} />
-						<p className={'ml-2 text-xs'}>{'Damage Type'}</p>
-					</div>
-					<div className={'flex flex-row items-center'}>
-						<p className={'text-sm'}>{item.damageType}</p>
-					</div>
-				</div>
-				<div className={'flex flex-row justify-between items-center my-1'}>
-					<div className={'flex flex-row items-center opacity-60'}>
-						<IconAttributeProficiency width={16} height={16} />
-						<p className={'ml-2 text-xs'}>{'Proficiency'}</p>
-					</div>
-					<div className={'flex flex-row items-center'}>
-						<p className={'text-sm'}>{item.proficiency}</p>
-					</div>
-				</div>
-				<div className={'flex flex-row justify-between items-center my-1'}>
-					<div className={'flex flex-row items-center opacity-60'}>
-						<IconAttributeDamage width={16} height={16} />
-						<p className={'ml-2 text-xs'}>{'Damage'}</p>
-					</div>
-					<div className={'flex flex-row items-center'}>
-						<p className={'text-sm'}>{item.damage}</p>
-					</div>
-				</div>
-				<div className={'flex flex-row justify-between items-center my-1'}>
-					<div className={'flex flex-row items-center opacity-60'}>
-						<IconAttributeCritical width={16} height={16} />
-						<p className={'ml-2 text-xs'}>{'Critical'}</p>
-					</div>
-					<div className={'flex flex-row items-center'}>
-						<p className={'text-sm'}>{item.critical}</p>
-					</div>
-				</div>
-				<div className={'flex flex-row justify-between items-center my-1'}>
-					<div className={'flex flex-row items-center opacity-60'}>
-						<IconAttributeCriticalModifier width={16} height={16} />
-						<p className={'ml-2 text-xs'}>{'Critical Modifier'}</p>
-					</div>
-					<div className={'flex flex-row items-center'}>
-						<p className={'text-sm'}>{item.critical_modifier}</p>
-					</div>
-				</div>
-				<div className={'flex flex-row justify-between items-center my-1'}>
-					<div className={'flex flex-row items-center opacity-60'}>
-						<IconAttributeRange width={16} height={16} />
-						<p className={'ml-2 text-xs'}>{'Range'}</p>
-					</div>
-					<div className={'flex flex-row items-center'}>
-						<p className={'text-sm'}>{item.range_increment}</p>
-					</div>
+const	SETS = [
+	{id: 1, name: 'Barbarian Basic Set', src: '/classes/front/barbarian.svg', width: 56, height: 56, cost: [
+		{name: 'Head', src: ''},
+		{name: 'Hide', src: 'rarity_crafting/armors/hide', item: BASIC_SET_ARMORS['Hide']},
+		{name: 'Leather gloves', src: 'rarity_crafting/hand/leather_gloves', item: BASIC_SET_ARMORS['Leather gloves']},
+		{name: 'Stuffed boots', src: 'rarity_crafting/foot/stuffed_boots', item: BASIC_SET_ARMORS['Stuffed boots']},
+		{name: 'Greataxe', src: 'rarity_crafting/weapons/greataxe', item: BASIC_SET_WEAPONS['Greataxe']},
+		{name: 'Secondary weapon', src: ''},
+	]},
+	{id: 2, name: 'Bard Basic Set', src: '/classes/front/bard.png', width: 56, height: 56, cost: [
+		{name: 'Fancy hat', src: 'rarity_crafting/head/fancy_hat', item: BASIC_SET_ARMORS['Fancy hat']},
+		{name: 'Padded', src: 'rarity_crafting/armors/padded', item: BASIC_SET_ARMORS['Padded']},
+		{name: 'Light gloves', src: 'rarity_crafting/hand/light_gloves', item: BASIC_SET_ARMORS['Light gloves']},
+		{name: 'Light shoes', src: 'rarity_crafting/foot/light_shoes', item: BASIC_SET_ARMORS['Light shoes']},
+		{name: 'Dagger', src: 'rarity_crafting/weapons/dagger', item: BASIC_SET_WEAPONS['Dagger']},
+		{name: 'Secondary weapon', src: ''},
+	]},
+	{id: 3, name: 'Cleric Basic Set', src: '/classes/front/cleric.png', width: 56, height: 56, cost: [
+		{name: 'Hood', src: 'rarity_crafting/head/hood', item: BASIC_SET_ARMORS['Hood']},
+		{name: 'Chain shirt', src: 'rarity_crafting/armors/chain_shirt', item: BASIC_SET_ARMORS['Chain shirt']},
+		{name: 'Gauntlet', src: 'rarity_crafting/hand/metal_gloves', item: BASIC_SET_ARMORS['Gauntlet']},
+		{name: 'Stuffed boots', src: 'rarity_crafting/foot/stuffed_boots', item: BASIC_SET_ARMORS['Stuffed boots']},
+		{name: 'Hammer, light', src: 'rarity_crafting/weapons/hammer_light', item: BASIC_SET_WEAPONS['Hammer, light']},
+		{name: 'Practice shield', src: 'rarity_crafting/shields/shield_practice', item: BASIC_SET_SHIELDS['Practice shield']},
+	]},
+	{id: 4, name: 'Druid Basic Set', src: '/classes/front/druid.png', width: 56, height: 56, cost: [
+		{name: 'Hood', src: 'rarity_crafting/head/hood', item: BASIC_SET_ARMORS['Hood']},
+		{name: 'Hide', src: 'rarity_crafting/armors/hide', item: BASIC_SET_ARMORS['Hide']},
+		{name: 'Leather gloves', src: 'rarity_crafting/hand/leather_gloves', item: BASIC_SET_ARMORS['Leather gloves']},
+		{name: 'Stuffed boots', src: 'rarity_crafting/foot/stuffed_boots', item: BASIC_SET_ARMORS['Stuffed boots']},
+		{name: 'Sickle', src: 'rarity_crafting/weapons/sickle', item: BASIC_SET_WEAPONS['Sickle']},
+		{name: 'Practice shield', src: 'rarity_crafting/shields/shield_practice', item: BASIC_SET_SHIELDS['Practice shield']},
+	]},
+	{id: 5, name: 'Fighter Basic Set', src: '/classes/front/fighter.png', width: 56, height: 56, cost: [
+		{name: 'Warrior helmet', src: 'rarity_crafting/head/warrior_helmet', item: BASIC_SET_ARMORS['Warrior helmet']},
+		{name: 'Splint mail', src: 'rarity_crafting/armors/splint_mail', item: BASIC_SET_ARMORS['Splint mail']},
+		{name: 'Armored Bracers', src: 'rarity_crafting/hand/armored_bracers', item: BASIC_SET_ARMORS['Armored Bracers']},
+		{name: 'War boots', src: 'rarity_crafting/foot/war_boots', item: BASIC_SET_ARMORS['War boots']},
+		{name: 'Sword, short', src: 'rarity_crafting/weapons/short_sword', item: BASIC_SET_WEAPONS['Sword, short']},
+		{name: 'Practice shield', src: 'rarity_crafting/shields/shield_practice', item: BASIC_SET_SHIELDS['Practice shield']},
+	]},
+	{id: 6, name: 'Monk Basic Set', src: '/classes/front/monk.svg', width: 56, height: 56, cost: [
+		{name: 'Head', src: ''},
+		{name: 'Padded', src: 'rarity_crafting/armors/padded', item: BASIC_SET_ARMORS['Padded']},
+		{name: 'Cestus', src: 'rarity_crafting/hand/cestus', item: BASIC_SET_ARMORS['Cestus']},
+		{name: 'Light shoes', src: 'rarity_crafting/foot/light_shoes', item: BASIC_SET_ARMORS['Light shoes']},
+		{name: 'Gauntlet', src: 'rarity_crafting/weapons/gauntlet', item: BASIC_SET_WEAPONS['Gauntlet']},
+		{name: 'Secondary weapon', src: ''},
+	]},
+	{id: 7, name: 'Paladin Basic Set', src: '/classes/front/paladin.png', width: 56, height: 56, cost: [
+		{name: 'Warrior helmet', src: 'rarity_crafting/head/warrior_helmet', item: BASIC_SET_ARMORS['Warrior helmet']},
+		{name: 'Splint mail', src: 'rarity_crafting/armors/splint_mail', item: BASIC_SET_ARMORS['Splint mail']},
+		{name: 'Armored Bracers', src: 'rarity_crafting/hand/armored_bracers', item: BASIC_SET_ARMORS['Armored Bracers']},
+		{name: 'War boots', src: 'rarity_crafting/foot/war_boots', item: BASIC_SET_ARMORS['War boots']},
+		{name: 'Longsword', src: 'rarity_crafting/weapons/longsword', item: BASIC_SET_WEAPONS['Longsword']},
+		{name: 'Practice shield', src: 'rarity_crafting/shields/shield_practice', item: BASIC_SET_SHIELDS['Practice shield']},
+	]},
+	{id: 8, name: 'Ranger Basic Set', src: '/classes/front/ranger.png', width: 56, height: 56, cost: [
+		{name: 'Hood', src: 'rarity_crafting/head/hood', item: BASIC_SET_ARMORS['Hood']},
+		{name: 'leather', src: 'rarity_crafting/armors/leather', item: BASIC_SET_ARMORS['Leather']},
+		{name: 'Light gloves', src: 'rarity_crafting/hand/light_gloves', item: BASIC_SET_ARMORS['Light gloves']},
+		{name: 'Light shoes', src: 'rarity_crafting/foot/light_shoes', item: BASIC_SET_ARMORS['Light shoes']},
+		{name: 'Longbow', src: 'rarity_crafting/weapons/longbow', item: BASIC_SET_WEAPONS['Longbow']},
+		{name: 'Secondary weapon', src: ''},
+	]},
+	{id: 9, name: 'Rogue Basic Set', src: '/classes/front/rogue.png', width: 56, height: 56, cost: [
+		{name: 'Hood', src: 'rarity_crafting/head/hood', item: BASIC_SET_ARMORS['Hood']},
+		{name: 'leather', src: 'rarity_crafting/armors/leather', item: BASIC_SET_ARMORS['Leather']},
+		{name: 'Light gloves', src: 'rarity_crafting/hand/light_gloves', item: BASIC_SET_ARMORS['Light gloves']},
+		{name: 'Light shoes', src: 'rarity_crafting/foot/light_shoes', item: BASIC_SET_ARMORS['Light shoes']},
+		{name: 'Dagger', src: 'rarity_crafting/weapons/dagger', item: BASIC_SET_WEAPONS['Dagger']},
+		{name: 'Dagger', src: 'rarity_crafting/weapons/dagger', item: BASIC_SET_WEAPONS['Dagger']}
+	]},
+	{id: 10, name: 'Sorcerer Basic Set', src: '/classes/front/sorcerer.png', width: 56, height: 56, cost: [
+		{name: 'Magician hat', src: 'rarity_crafting/head/magician_hat', item: BASIC_SET_ARMORS['Magician hat']},
+		{name: 'Robe', src: 'rarity_crafting/armors/robe', item: BASIC_SET_ARMORS['Robe']},
+		{name: 'Light gloves', src: 'rarity_crafting/hand/light_gloves', item: BASIC_SET_ARMORS['Light gloves']},
+		{name: 'Light shoes', src: 'rarity_crafting/foot/light_shoes', item: BASIC_SET_ARMORS['Light shoes']},
+		{name: 'Wand', src: 'rarity_crafting/weapons/wand', item: BASIC_SET_WEAPONS['Wand']},
+		{name: 'Secondary weapon', src: ''},
+	]},
+	{id: 11, name: 'Wizard Basic Set', src: '/classes/front/wizard.png', width: 56, height: 56, cost: [
+		{name: 'Magician hat', src: 'rarity_crafting/head/magician_hat', item: BASIC_SET_ARMORS['Magician hat']},
+		{name: 'Robe', src: 'rarity_crafting/armors/robe', item: BASIC_SET_ARMORS['Robe']},
+		{name: 'Light gloves', src: 'rarity_crafting/hand/light_gloves', item: BASIC_SET_ARMORS['Light gloves']},
+		{name: 'Light shoes', src: 'rarity_crafting/foot/light_shoes', item: BASIC_SET_ARMORS['Light shoes']},
+		{name: 'Wand', src: 'rarity_crafting/weapons/wand', item: BASIC_SET_WEAPONS['Wand']},
+		{name: 'Secondary weapon', src: ''},
+	]},
+];
+
+function	Details() {
+	const	[isExpanded, set_isExpanded] = React.useState(false);
+	const	[isExpandedAnimation, set_isExpandedAnimation] = React.useState(false);
+
+	function	onExpand() {
+		if (isExpanded) {
+			set_isExpandedAnimation(false);
+			setTimeout(() => set_isExpanded(false), 500);
+		} else {
+			performBatchedUpdates(() => {
+				set_isExpanded(true);
+				set_isExpandedAnimation(true);
+			});
+		}
+	}
+
+	return (
+		<div className={'m-4 mt-0 rounded-sm bg-500'}>
+			<summary className={'group flex flex-row items-center p-4 text-sm cursor-pointer'} onClick={onExpand}>
+				<IconChevron className={`${isExpanded ? 'rotate-90' : 'rotate-0'} transform transition-all mr-4`} />
+				{'Check other classes sets'}
+			</summary>
+			<div className={`w-full transition-max-height duration-500 overflow-hidden ${isExpandedAnimation ? 'max-h-full' : 'max-h-0'}`}>
+				<div className={'grid grid-cols-1 pt-0 divide-y divide-dark-600'}>
+					{isExpanded ? (
+						SETS.map((set, index) => (
+							<RowBasicSets key={`${set.name}_${index}`} darker set={set} />
+						))
+					) : <div />}
 				</div>
 			</div>
-		);
-	}
-	if (category && (category.includes('armor') || category.includes('shield'))) {
-		return (
-			<div className={'mt-2'}>
-				<div className={'flex flex-row justify-between items-center my-1'}>
-					<div className={'flex flex-row items-center opacity-60'}>
-						<IconAttributeProficiencyArmor width={16} height={16} />
-						<p className={'ml-2 text-xs'}>{'Proficiency'}</p>
-					</div>
-					<div className={'flex flex-row items-center'}>
-						<p className={'text-sm'}>{item.proficiency}</p>
-					</div>
-				</div>
-				<div className={'flex flex-row justify-between items-center my-1'}>
-					<div className={'flex flex-row items-center opacity-60'}>
-						<IconAttributeArmor width={16} height={16} />
-						<p className={'ml-2 text-xs'}>{'Armor Bonus'}</p>
-					</div>
-					<div className={'flex flex-row items-center'}>
-						<p className={'text-sm'}>{item.armor_bonus}</p>
-					</div>
-				</div>
-				<div className={'flex flex-row justify-between items-center my-1'}>
-					<div className={'flex flex-row items-center opacity-60'}>
-						<IconAttributeDexterity width={16} height={16} />
-						<p className={'ml-2 text-xs'}>{'Dexterity Bonus'}</p>
-					</div>
-					<div className={'flex flex-row items-center'}>
-						<p className={'text-sm'}>{item.max_dex_bonus}</p>
-					</div>
-				</div>
-				<div className={'flex flex-row justify-between items-center my-1'}>
-					<div className={'flex flex-row items-center opacity-60'}>
-						<IconAttributePenaltyArmor width={16} height={16} />
-						<p className={'ml-2 text-xs'}>{'Penalty'}</p>
-					</div>
-					<div className={'flex flex-row items-center'}>
-						<p className={'text-sm'}>{item.penalty}</p>
-					</div>
-				</div>
-				<div className={'flex flex-row justify-between items-center my-1'}>
-					<div className={'flex flex-row items-center opacity-60'}>
-						<IconAttributeSpellFailure width={16} height={16} />
-						<p className={'ml-2 text-xs'}>{'Spell Failure'}</p>
-					</div>
-					<div className={'flex flex-row items-center'}>
-						<p className={'text-sm'}>{`${item.spell_failure}%`}</p>
-					</div>
-				</div>
-			</div>
-		);
-	}
-	return null;
+		</div>
+	);
 }
 
 function	ItemList({tab}) {
@@ -147,26 +155,34 @@ function	ItemList({tab}) {
 		for (let index = 0; index < (_inventory || []).length; index++) {
 			const item = _inventory[index];
 			if (item.type === 'unique') {
-				if ((item.category === tab || (tab === 'all' && item.category && item.category !== 'good'))) {
+				if ((tab === 0 && item.category && item.category !== 'good')) toRender.push(item);
+				else if (tab === 1 && item?.category === 'head-armor') toRender.push(item);
+				else if (tab === 2 && item?.category === 'body-armor') toRender.push(item);
+				else if (tab === 3 && item?.category === 'hand-armor') toRender.push(item);
+				else if (tab === 4 && item?.category === 'foot-armor') toRender.push(item);
+				else if (tab === 5 && item?.category === 'weapon') toRender.push(item);
+				else if (tab === 6 && item?.category === 'shield') toRender.push(item);
+				else if (
+					(tab === 6 && item?.category === 'weapon' &&
+					(item.encumbrance !== 'Ranged Weapons' && item.encumbrance !== 'Two-Handed Melee Weapons')))
 					toRender.push(item);
-				} else if (tab === 'weapon-secondary' && item.category === 'weapon' && (item.encumbrance !== 'Ranged Weapons' && item.encumbrance !== 'Two-Handed Melee Weapons')) {
-					toRender.push(item);
-				} else if (tab === 'weapon-secondary' && item.category === 'shield') {
-					toRender.push(item);
-				}
 			}
 		}
 
 		const	_sharedInventory = Object.values(sharedInventory || {});
 		for (let index = 0; index < (_sharedInventory || []).length; index++) {
 			const item = _sharedInventory[index];
-			if ((item.category === tab || (tab === 'all' && item.category && item.category !== 'good'))) {
+			if ((tab === 0 && item.category && item.category !== 'good')) toRender.push(item);
+			else if (tab === 1 && item?.category === 'head-armor') toRender.push(item);
+			else if (tab === 2 && item?.category === 'body-armor') toRender.push(item);
+			else if (tab === 3 && item?.category === 'hand-armor') toRender.push(item);
+			else if (tab === 4 && item?.category === 'foot-armor') toRender.push(item);
+			else if (tab === 5 && item?.category === 'weapon') toRender.push(item);
+			else if (tab === 6 && item?.category === 'shield') toRender.push(item);
+			else if (
+				(tab === 6 && item?.category === 'weapon' &&
+				(item.encumbrance !== 'Ranged Weapons' && item.encumbrance !== 'Two-Handed Melee Weapons')))
 				toRender.push(item);
-			} else if (tab === 'weapon-secondary' && item.category === 'weapon' && (item.encumbrance !== 'Ranged Weapons' && item.encumbrance !== 'Two-Handed Melee Weapons')) {
-				toRender.push(item);
-			} else if (tab === 'weapon-secondary' && item.category === 'shield') {
-				toRender.push(item);
-			}
 		}
 		set_itemList(toRender);
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -183,15 +199,17 @@ function	ItemList({tab}) {
 			}
 			return 6;
 		}
-		if (item.category.includes('armor')) {
-			return 2;
-		}
+		if (item.category === 'head-armor') return 1;
+		if (item.category === 'body-armor') return 2;
+		if (item.category === 'hand-armor') return 3;
+		if (item.category === 'foot-armor') return 4;
 
 	}
-	function	onEquip(item) {
+	function	_onAddressEquip(item) {
 		equip({
 			provider,
 			tokenID: currentAdventurer.tokenID,
+			minter: item.minter,
 			itemID: item.tokenID,
 			itemName: item.name,
 			slot: getSlotForItem(item)
@@ -203,11 +221,39 @@ function	ItemList({tab}) {
 		});
 	}
 
+	function	_onRarityEquip(item) {
+		rEquip({
+			provider,
+			tokenID: currentAdventurer.tokenID,
+			minter: item.minter,
+			itemID: item.tokenID,
+			itemName: item.name,
+			slot: getSlotForItem(item)
+		}, ({error}) => {
+			if (error) {
+				return;
+			}
+			updateInventory(currentAdventurer.tokenID);
+		});
+	}
+	function	onEquipItem(item) {
+		if (item.ownerType === 'uint') {
+			_onRarityEquip(item);
+		} else {
+			_onAddressEquip(item);
+		}
+	}
+
 
 	return (
-		<div className={'grid grid-cols-1 gap-4 md:grid-cols-4'}>
+		<div className={'grid grid-cols-1 gap-4 px-4 pb-4 md:grid-cols-4'} style={{minHeight: '20rem'}}>
+			{itemList.length === 0 ?
+				<div className={'flex col-span-4 mx-auto w-full opacity-20 flex-center'}>
+					<p>{'No equipement available'}</p>
+				</div>
+				: null}
 			{itemList.map((item, index) => (
-				<div key={index} className={'flex flex-col col-span-1 p-4 h-full rounded-sm box'}>
+				<div key={index} className={'flex flex-col col-span-1 p-4 h-full rounded-sm bg-500'}>
 					<p className={'w-4/5 text-sm text-plain'}>{item.name}</p>
 					<div className={'flex h-full flex-center'}>
 						<Image src={item.img} width={105} height={105} />
@@ -216,7 +262,7 @@ function	ItemList({tab}) {
 						category={item.category}
 						item={item} />
 					<button
-						onClick={() => onEquip(item)}
+						onClick={() => onEquipItem(item)}
 						className={'flex mt-4 w-full flex-center button-highlight'}>
 						<p className={'select-none'}>{'Equip'}</p>
 					</button>
@@ -226,96 +272,72 @@ function	ItemList({tab}) {
 	);
 }
 
-function	Index() {
+function	Index({tab, set_tab}) {
 	const	router = useRouter();
-	const	[tab, set_tab] = useState('all');
 
 	React.useEffect(() => {
 		if (router?.query?.slot) {
-			if (Number(router?.query?.slot) === 0) set_tab('all');
-			if (Number(router?.query?.slot) === 1) set_tab('head-armor');
-			if (Number(router?.query?.slot) === 2) set_tab('body-armor');
-			if (Number(router?.query?.slot) === 3) set_tab('hand-armor');
-			if (Number(router?.query?.slot) === 4) set_tab('foot-armor');
-			if (Number(router?.query?.slot) === 5) set_tab('weapon');
-			if (Number(router?.query?.slot) === 6) set_tab('weapon-secondary');
-			if (Number(router?.query?.slot) === 7) set_tab('jewelry');
-			if (Number(router?.query?.slot) === 8) set_tab('jewelry-secondary');
+			set_tab(Number(router?.query?.slot));
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [router]);
-
-	function	renderFilters() {
-		return (
-			<div className={'flex flex-row justify-between mb-4 w-full text-sm text-plain'}>
-				<div className={'flex flex-row space-x-4'}>
-					<p
-						onClick={() => router.push('/equipements?slot=0')}
-						className={`transition-opacity hover:opacity-100 ${tab === 'all' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{'All'}
-					</p>
-					<p
-						onClick={() => router.push('/equipements?slot=1')}
-						className={`transition-opacity hover:opacity-100 ${tab === 'head-armor' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{'Head Armors'}
-					</p>
-					<p
-						onClick={() => router.push('/equipements?slot=2')}
-						className={`transition-opacity hover:opacity-100 ${tab === 'body-armor' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{'Body Armors'}
-					</p>
-					<p
-						onClick={() => router.push('/equipements?slot=3')}
-						className={`transition-opacity hover:opacity-100 ${tab === 'hand-armor' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{'Hand Armors'}
-					</p>
-					<p
-						onClick={() => router.push('/equipements?slot=4')}
-						className={`transition-opacity hover:opacity-100 ${tab === 'foot-armor' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{'Foot Armors'}
-					</p>
-					<p
-						onClick={() => router.push('/equipements?slot=5')}
-						className={`transition-opacity hover:opacity-100 ${tab === 'weapon' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{'Primary Weapons'}
-					</p>
-					<p
-						onClick={() => router.push('/equipements?slot=6')}
-						className={`transition-opacity hover:opacity-100 ${tab === 'weapon-secondary' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{'Secondary Weapons'}
-					</p>
-					<p
-						onClick={() => router.push('/equipements?slot=7')}
-						className={`transition-opacity hover:opacity-100 ${tab === 'jewelry' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{'First Jewelleries'}
-					</p>
-					<p
-						onClick={() => router.push('/equipements?slot=8')}
-						className={`transition-opacity hover:opacity-100 ${tab === 'jewelry-secondary' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-						{'Second Jewelleries'}
-					</p>
-				</div>
-			</div>
-		);
-	}
 
 	return (
 		<div>
-			<div className={'flex flex-col justify-between items-center mt-6 mb-4 md:flex-row'}>
-				<div>
-					<input
-						className={'px-2 mr-0 w-full h-10 text-xs bg-white dark:bg-dark-600 border-2 border-black dark:border-dark-100 border-solid focus:outline-none md:mr-4 md:w-75 text-plain'}
-						placeholder={'SEARCH'} />
-				</div>
-				<div className={'flex flex-row space-x-4 flex-center'}>
-				</div>
-			</div>
-			{renderFilters()}
 			<ItemList tab={tab} />
 		</div>
 	);
 }
-	
-Index.getLayout = function getLayout(page) {
+
+function	Wrapper() {
+	const	{provider} = useWeb3();
+	const	{currentAdventurer, specialApprovals, set_specialApprovals} = useRarity();
+	const	[txApproveStatus, set_txApproveStatus] = useState({none: true, isPending: false, isSuccess: false, isError: false});
+
+	function	onApproveAll() {
+		if (!txApproveStatus.none) {
+			return;
+		}
+		set_txApproveStatus({none: false, isPending: true, isSuccess: false, isError: false});
+		
+		approveForAll(
+			{provider},
+			() => {
+				set_txApproveStatus({none: false, isPending: false, isSuccess: false, isError: true});
+				setTimeout(() => set_txApproveStatus({none: true, isPending: false, isSuccess: false, isError: false}), 5000);
+			},
+			() => {
+				set_specialApprovals(s => ({...s, [process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR]: true}));
+			}
+		);
+	}
+
+	return (
+		<>
+			<Section
+				title={'Equipements'}
+				tabs={['All', 'Head Armors', 'Body Armors', 'Hand Armors', 'Foot Armors', 'Primary Weapons', 'Secondary Weapons', 'Jewelleries']}
+				button={{
+					onClick: onApproveAll,
+					disabled: specialApprovals[process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR] === true,
+					label: specialApprovals[process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR] ? 'Equipement approved!' : 'Approve equipements'
+				}}>
+				<Index />
+			</Section>
+			<div className={'pb-4 mt-8 box'}>
+				<div className={'p-4'}>
+					<p className={'mb-2 text-lg font-bold text-plain'}>{'Basic set'}</p>
+					<p className={'w-3/4 text-sm italic font-normal text-plain-60'}>
+						{'Hello adventurer! Are you ready to start your great journey? As an old man told us years ago, it\'s dangerous to go alone. I have here some of my old equipement. Do you want to buy some?'}
+					</p>
+				</div>
+				<RowBasicSets set={SETS[currentAdventurer.class - 1]} />
+				<Details />
+			</div>
+		</>
+	);
+}
+Wrapper.getLayout = function getLayout(page) {
 	return (
 		<Template>
 			{page}
@@ -323,4 +345,4 @@ Index.getLayout = function getLayout(page) {
 	);
 };
 
-export default Index;
+export default Wrapper;

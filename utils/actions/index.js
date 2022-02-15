@@ -8,6 +8,7 @@
 import	{ethers}			from	'ethers';
 import	toast				from	'react-hot-toast';
 import	CLASSES				from	'utils/codex/core/classes';
+import	{RARITY_EXTENDED_NAME_ABI}			from	'utils/abi/mixed.min.abi';
 
 function	onSuccessToast(_toast) {
 	toast.dismiss(_toast);
@@ -430,7 +431,7 @@ export async function	setName({provider, tokenID, name}, onError, onSuccess = on
 	const	signer = provider.getSigner();
 	const	rarity = new ethers.Contract(
 		process.env.RARITY_EXTENDED_NAME,
-		process.env.RARITY_EXTENDED_NAME_ABI,
+		RARITY_EXTENDED_NAME_ABI,
 		signer
 	);
 

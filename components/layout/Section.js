@@ -4,8 +4,8 @@ import	IconHelp						from	'components/icons/IconHelp';
 
 function Head({children, title, tabs, button, tab, set_tab}) {
 	return (
-		<header id={'content'} aria-label={`tab ${tab}`} className={'box'}>
-			<div className={'flex flex-col p-4 pb-2 mb-6 border-b-2 dark:border-b-dark-300'}>
+		<header id={'content'} aria-label={`tab ${tab}`} className={'pb-6 box'}>
+			<div className={'flex flex-col p-4 pb-2 border-b-2 dark:border-b-dark-300'}>
 				<div className={'flex flex-row justify-between items-center mb-4 h-9'}>
 					<div className={'flex flex-row items-center'}>
 						<h2 className={'text-base font-bold text-plain'}>{title}</h2>
@@ -40,7 +40,7 @@ function Head({children, title, tabs, button, tab, set_tab}) {
 	);
 }
 
-function Section({children, headChildren, title, tabs, button}) {
+function Section({children, headChildren, title, tabs, button, className = 'box'}) {
 	const	router = useRouter();
 	const	[tab, set_tab] = React.useState(0);
 	const	[search, set_search] = useState(router?.query?.search || '');
@@ -51,7 +51,7 @@ function Section({children, headChildren, title, tabs, button}) {
 	}, [router]);
 
 	return (
-		<section id={'content'} className={'box'}>
+		<section id={'content'} className={className}>
 			<Head
 				title={title}
 				tabs={tabs}
@@ -60,7 +60,7 @@ function Section({children, headChildren, title, tabs, button}) {
 				set_tab={set_tab}>
 				{headChildren}
 			</Head>
-			{React.cloneElement(children, {tab, search})}
+			{React.cloneElement(children, {tab, set_tab, search})}
 		</section>
 	);
 }

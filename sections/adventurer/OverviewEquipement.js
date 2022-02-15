@@ -15,7 +15,10 @@ import	IconBoots				from	'components/icons/IconBoots';
 import	IconWeapon				from	'components/icons/IconWeapon';
 import	IconNecklace			from	'components/icons/IconNecklace';
 import	IconRing				from	'components/icons/IconRing';
+import	Tooltip					from	'components/Tooltip';
+import	ItemAttributes			from	'components/itemAttributes';
 import	* as actions			from	'utils/actions';
+import	{unequip}				from	'utils/actions/rarity_extended_equipements';
 import	{xpRequired}			from	'utils/libs/rarity';
 import	CLASSES					from	'utils/codex/core/classes';
 
@@ -24,16 +27,16 @@ dayjs.extend(relativeTime);
 function	OverviewEquipement({provider, raritySkin}) {
 	const	router = useRouter();
 	const	{updateRarity, currentAdventurer} = useRarity();
-	const	{equipements} = useInventory();
+	const	{equipements, updateInventory} = useInventory();
 	const	{raritySkins} = useUI();
 	const	[name, set_name] = React.useState(currentAdventurer.name || currentAdventurer.tokenID);
-	const	[pageSlot, set_pageSlot] = React.useState(0);
+	const	[pageSlot, set_pageSlot] = React.useState(-1);
 
 	React.useEffect(() => {
 		if (router?.query?.slot) {
 			set_pageSlot(Number(router?.query?.slot));
 		} else {
-			set_pageSlot(0);
+			set_pageSlot(-1);
 		}
 	}, [router]);
 
@@ -160,45 +163,64 @@ function	OverviewEquipement({provider, raritySkin}) {
 		);
 	}
 
+	function	ItemWithTooltip({pageSlot, item, slot, children}) {
+		return (
+			<div className={'group relative w-18 cursor-help tooltip'}>
+				<div className={`aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center image-wrapper ${pageSlot === slot ? 'text-plain-60' : 'text-400 hover-text-plain-60'}`}>
+					{
+						item !== undefined ?
+							<>
+								<Image src={item.img} width={64} height={64} />
+								<Tooltip className={'top-0 left-full pl-2 w-80 cursor-auto'}> 
+									{item.name}
+									<ItemAttributes category={item.category} item={item} />
+									<button
+										onClick={() => {
+											unequip({
+												provider,
+												tokenID: currentAdventurer.tokenID,
+												itemName: item.name,
+												slot
+											}, ({error}) => {
+												if (error) return;
+												updateInventory(currentAdventurer.tokenID);
+											});
+										}}
+										className={'flex mt-4 w-full flex-center button-outline'}>
+										<p className={'select-none'}>{'Unequip'}</p>
+									</button>
+								</Tooltip>
+							</>
+							: children
+					}
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div>
 			<div className={'flex flex-row'} style={{width: 384}}>
 				<div className={'grid grid-cols-1 gap-y-4 ml-auto w-18'}>
 					<Link href={'/equipements?slot=1'}>
-						<div className={`aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center ${pageSlot === 1 ? 'text-plain-60' : 'text-400 hover-text-plain-60'}`}>
-							{
-								equipements[currentAdventurer.tokenID]?.[1] !== undefined ?
-									<Image src={equipements[currentAdventurer.tokenID][1].img} width={64} height={64} />
-									: <IconHelmet className={'w-12 h-12'} />
-							}
-						</div>
+						<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[1]} slot={1} pageSlot={pageSlot}>
+							<IconHelmet className={'w-12 h-12'} />
+						</ItemWithTooltip>
 					</Link>
 					<Link href={'/equipements?slot=2'}>
-						<div className={`aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center ${pageSlot === 2 ? 'text-plain-60' : 'text-400 hover-text-plain-60'}`}>
-							{
-								equipements[currentAdventurer.tokenID]?.[2] !== undefined ?
-									<Image src={equipements[currentAdventurer.tokenID][2].img} width={64} height={64} />
-									: <IconArmor className={'w-12 h-12'} />
-							}
-						</div>
+						<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[2]} slot={2} pageSlot={pageSlot}>
+							<IconArmor className={'w-12 h-12'} />
+						</ItemWithTooltip>
 					</Link>
 					<Link href={'/equipements?slot=3'}>
-						<div className={`aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center ${pageSlot === 3 ? 'text-plain-60' : 'text-400 hover-text-plain-60'}`}>
-							{
-								equipements[currentAdventurer.tokenID]?.[3] !== undefined ?
-									<Image src={equipements[currentAdventurer.tokenID][3].img} width={64} height={64} />
-									: <IconGloves className={'w-12 h-12'} />
-							}
-						</div>
+						<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[3]} slot={3} pageSlot={pageSlot}>
+							<IconGloves className={'w-12 h-12'} />
+						</ItemWithTooltip>
 					</Link>
 					<Link href={'/equipements?slot=4'}>
-						<div className={`aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center ${pageSlot === 4 ? 'text-plain-60' : 'text-400 hover-text-plain-60'}`}>
-							{
-								equipements[currentAdventurer.tokenID]?.[4] !== undefined ?
-									<Image src={equipements[currentAdventurer.tokenID][4].img} width={64} height={64} />
-									: <IconBoots className={'w-12 h-12'} />
-							}
-						</div>
+						<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[4]} slot={4} pageSlot={pageSlot}>
+							<IconBoots className={'w-12 h-12'} />
+						</ItemWithTooltip>
 					</Link>
 				</div>
 				<div className={'flex flex-col justify-between items-center pt-4 pb-8 w-60'}>
@@ -215,24 +237,27 @@ function	OverviewEquipement({provider, raritySkin}) {
 				</div>
 				<div className={'grid grid-cols-1 gap-y-4 w-18'}>
 					<Link href={'/equipements?slot=5'}>
-						<div className={`aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center ${pageSlot === 5 ? 'text-plain-60' : 'text-400 hover-text-plain-60'}`}>
-							{
-								equipements[currentAdventurer.tokenID]?.[5] !== undefined ?
-									<Image src={equipements[currentAdventurer.tokenID][5].img} width={64} height={64} />
-									: <IconWeapon className={'w-12 h-12'} />
-							}
-						</div>
+						<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[5]} slot={5} pageSlot={pageSlot}>
+							<IconWeapon className={'w-12 h-12'} />
+						</ItemWithTooltip>
 					</Link>
+					
 					<Link href={'/equipements?slot=6'}>
-						<div className={`aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center ${pageSlot === 6 ? 'text-plain-60' : 'text-400 hover-text-plain-60'}`}>
-							{
-								equipements[currentAdventurer.tokenID]?.[6] !== undefined ?
-									<Image src={equipements[currentAdventurer.tokenID][6].img} width={64} height={64} /> :
-									equipements[currentAdventurer.tokenID]?.[101] !== undefined ?
-										<Image src={equipements[currentAdventurer.tokenID][101].img} width={64} height={64} /> :
-										<IconWeapon className={'w-12 h-12'} />
-							}
-						</div>
+						{
+							equipements[currentAdventurer.tokenID]?.[6] ? (
+								<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[6]} slot={6} pageSlot={pageSlot}>
+									<IconWeapon className={'w-12 h-12'} />
+								</ItemWithTooltip>		
+							) : equipements[currentAdventurer.tokenID]?.[101] ? (
+								<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[101]} slot={101} pageSlot={pageSlot}>
+									<IconWeapon className={'w-12 h-12'} />
+								</ItemWithTooltip>
+							) : (
+								<ItemWithTooltip item={undefined} slot={0} pageSlot={pageSlot}>
+									<IconWeapon className={'w-12 h-12'} />
+								</ItemWithTooltip>
+							)
+						}
 					</Link>
 					<Link href={'/equipements?slot=7'}>
 						<div className={`aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center ${pageSlot === 7 ? 'text-plain-60' : 'text-400 hover-text-plain-60'}`}>

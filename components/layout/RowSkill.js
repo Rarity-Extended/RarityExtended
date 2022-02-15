@@ -3,7 +3,7 @@ import	Image				from	'next/image';
 import	SKILLS				from	'utils/codex/core/skills.json';
 import	IconChevron			from	'components/icons/IconChevron';
 
-function	RowSkill({currentAdventurer, skill, isClassSpecific, updateSkills, onIncreaseLevel, onReduceLevel, onLearn}) {
+const RowSkill = React.memo(function RowSkill({currentAdventurer, skill, isClassSpecific, updateSkills, onIncreaseLevel, onReduceLevel, onLearn}) {
 	const	[expanded, set_expanded] = useState(false);
 	const	canReduce = currentAdventurer.skills[skill?.id - 1] === updateSkills[skill?.id] || updateSkills[skill?.id] === 0;
 	const	canIncrease = (updateSkills.remainingPoints === 0 || isClassSpecific && updateSkills[skill?.id] >= currentAdventurer.level + 3) || (!isClassSpecific && updateSkills[skill?.id] >= Math.floor((currentAdventurer.level + 3) / 2));
@@ -67,6 +67,6 @@ function	RowSkill({currentAdventurer, skill, isClassSpecific, updateSkills, onIn
 			</div>
 		</div>
 	);
-}
+});
 
 export default RowSkill;

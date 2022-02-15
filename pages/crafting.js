@@ -11,7 +11,6 @@ import	TabGoods						from	'components/layout/RowCraftGoods';
 import	TabWeapons						from	'components/layout/RowCraftWeapons';
 import	Section							from	'components/layout/Section';
 import	{approveForAll, craft, cook}	from	'utils/actions/rarity_extended_crafting_helper';
-import 	* as difficulty					from	'utils/libs/rarityCrafting';
 import	MANIFEST_ARMORS					from	'utils/codex/items/items_manifest_armors.json';
 import	MANIFEST_GOODS					from	'utils/codex/items/items_manifest_goods.json';
 import	MANIFEST_WEAPONS 				from	'utils/codex/items/items_manifest_weapons.json';
@@ -80,13 +79,12 @@ function	Index({tab, onApproveAll}) {
 					index={index}
 					currentAdventurer={currentAdventurer}
 					inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
-					difficultyCheckFunc={() => difficulty.getGoodsDifficulty()}
 					onCraft={materials => onLegacyCraft(recipe, materials)}
 					recipe={{
 						...recipe,
 						cost: [
 							[process.env.RARITY_GOLD_ADDR, recipe.cost],
-							[process.env.RARITY_EXTENDED_XP, 250],
+							[process.env.RARITY_EXTENDED_XP_ADDR, 250],
 							[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
 						]
 					}} />
@@ -100,7 +98,6 @@ function	Index({tab, onApproveAll}) {
 						index={index}
 						currentAdventurer={currentAdventurer}
 						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
-						difficultyCheckFunc={() => difficulty.getWeaponDifficulty(recipe.armor_bonus)}
 						onCraft={materials => onLegacyCraft(recipe, materials)}
 						category={'weapon'}
 						recipe={{
@@ -108,7 +105,7 @@ function	Index({tab, onApproveAll}) {
 							effect: recipe.description,
 							cost: [
 								[process.env.RARITY_GOLD_ADDR, recipe.cost],
-								[process.env.RARITY_EXTENDED_XP, 250],
+								[process.env.RARITY_EXTENDED_XP_ADDR, 250],
 								[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
 							]
 						}} />
@@ -123,7 +120,6 @@ function	Index({tab, onApproveAll}) {
 						index={index}
 						currentAdventurer={currentAdventurer}
 						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
-						difficultyCheckFunc={() => difficulty.getWeaponDifficulty(recipe.armor_bonus)}
 						onCraft={materials => onLegacyCraft(recipe, materials)}
 						category={'weapon'}
 						recipe={{
@@ -131,7 +127,7 @@ function	Index({tab, onApproveAll}) {
 							effect: recipe.description,
 							cost: [
 								[process.env.RARITY_GOLD_ADDR, recipe.cost],
-								[process.env.RARITY_EXTENDED_XP, 250],
+								[process.env.RARITY_EXTENDED_XP_ADDR, 250],
 								[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
 							]
 						}} />
@@ -146,7 +142,6 @@ function	Index({tab, onApproveAll}) {
 						index={index}
 						currentAdventurer={currentAdventurer}
 						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
-						difficultyCheckFunc={() => difficulty.getWeaponDifficulty(recipe.armor_bonus)}
 						onCraft={materials => onLegacyCraft(recipe, materials)}
 						category={'weapon'}
 						recipe={{
@@ -154,7 +149,7 @@ function	Index({tab, onApproveAll}) {
 							effect: recipe.description,
 							cost: [
 								[process.env.RARITY_GOLD_ADDR, recipe.cost],
-								[process.env.RARITY_EXTENDED_XP, 250],
+								[process.env.RARITY_EXTENDED_XP_ADDR, 250],
 								[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
 							]
 						}} />
@@ -169,7 +164,6 @@ function	Index({tab, onApproveAll}) {
 						index={index}
 						currentAdventurer={currentAdventurer}
 						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
-						difficultyCheckFunc={() => difficulty.getWeaponDifficulty(recipe.armor_bonus)}
 						onCraft={materials => onLegacyCraft(recipe, materials)}
 						category={'weapon'}
 						recipe={{
@@ -177,7 +171,7 @@ function	Index({tab, onApproveAll}) {
 							effect: recipe.description,
 							cost: [
 								[process.env.RARITY_GOLD_ADDR, recipe.cost],
-								[process.env.RARITY_EXTENDED_XP, 250],
+								[process.env.RARITY_EXTENDED_XP_ADDR, 250],
 								[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
 							]
 						}} />
@@ -192,7 +186,6 @@ function	Index({tab, onApproveAll}) {
 						index={index}
 						currentAdventurer={currentAdventurer}
 						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
-						difficultyCheckFunc={() => difficulty.getArmorDifficulty(recipe.armor_bonus)}
 						onCraft={materials => onLegacyCraft(recipe, materials)}
 						category={'armor'}
 						recipe={{
@@ -200,7 +193,7 @@ function	Index({tab, onApproveAll}) {
 							effect: recipe.description,
 							cost: [
 								[process.env.RARITY_GOLD_ADDR, recipe.cost],
-								[process.env.RARITY_EXTENDED_XP, 250],
+								[process.env.RARITY_EXTENDED_XP_ADDR, 250],
 								[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
 							]
 						}} />
@@ -215,7 +208,6 @@ function	Index({tab, onApproveAll}) {
 						index={index}
 						currentAdventurer={currentAdventurer}
 						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
-						difficultyCheckFunc={() => difficulty.getArmorDifficulty(recipe.armor_bonus)}
 						onCraft={materials => onLegacyCraft(recipe, materials)}
 						category={'armor'}
 						recipe={{
@@ -223,7 +215,7 @@ function	Index({tab, onApproveAll}) {
 							effect: recipe.description,
 							cost: [
 								[process.env.RARITY_GOLD_ADDR, recipe.cost],
-								[process.env.RARITY_EXTENDED_XP, 250],
+								[process.env.RARITY_EXTENDED_XP_ADDR, 250],
 								[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
 							]
 						}} />
@@ -245,7 +237,7 @@ function	Index({tab, onApproveAll}) {
 function	Wrapper() {
 	const	{provider} = useWeb3();
 	const	router = useRouter();
-	const	{currentAdventurer, set_specialApprovals} = useRarity();
+	const	{currentAdventurer, specialApprovals, set_specialApprovals} = useRarity();
 	const	[txApproveStatus, set_txApproveStatus] = useState({none: true, isPending: false, isSuccess: false, isError: false});
 
 	function	onApproveAll(tab) {
@@ -272,7 +264,14 @@ function	Wrapper() {
 			onClick: (tab) => (tab > 0 && Number(currentAdventurer?.skills?.[5] || 0) <= 0)
 				? router.push('/skills?tab=0&search=crafting')
 				: onApproveAll(tab),
-			disabled: false,
+			disabled: (tab) => {
+				if (tab === 0) {
+					return specialApprovals[process.env.RARITY_COOKING_HELPER_ADDR];
+				} else if (Number(currentAdventurer?.skills?.[5] || 0) <= 0) {
+					return false;
+				}
+				return specialApprovals[process.env.RARITY_CRAFTING_HELPER_ADDR];
+			},
 			label: (tab) => (tab > 0 && Number(currentAdventurer?.skills?.[5] || 0) <= 0)
 				? 'Learn Crafting'
 				: 'Approve Crafting',

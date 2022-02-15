@@ -12,18 +12,12 @@ import	useWeb3											from	'contexts/useWeb3';
 import	useRarity										from	'contexts/useRarity';
 import	{chunk, newEthCallProvider}						from	'utils';
 import	performBatchedUpdates							from	'utils/performBatchedUpdates';
+import	* as ABI										from	'utils/abi/mixed.min.abi';
 import	* as ITEMS										from	'utils/codex/items/items';
 import	MANIFEST_GOODS									from	'utils/codex/items/items_manifest_goods.json';
 import	MANIFEST_ARMORS									from	'utils/codex/items/items_manifest_armors.json';
 import	MANIFEST_WEAPONS								from	'utils/codex/items/items_manifest_weapons.json';
 import	MANIFEST_SHIELDS								from	'utils/codex/items/items_manifest_shields.json';
-
-const	MEAL_ABI = [
-	{'inputs': [{'internalType': 'uint256','name': 'summonerId','type': 'uint256'}],'name': 'getTotalMealsBySummoner','outputs': [{'components': [{'internalType': 'address','name': 'meal','type': 'address'},{'internalType': 'uint256[]','name': 'balance','type': 'uint256[]'}],'internalType': 'struct Cooking.MealBalance[]','name': '','type': 'tuple[]'}],'stateMutability': 'view','type': 'function'},
-];
-const	EQUIPEMENT_ABI = [
-	{'inputs':[{'internalType':'uint256','name':'_adventurer','type':'uint256'},{'internalType':'uint256','name':'_slot','type':'uint256'}],'name':'getEquipementBySlot','outputs':[{'internalType':'uint256','name':'','type':'uint256'},{'internalType':'address','name':'','type':'address'},{'internalType':'address','name':'','type':'address'},{'internalType':'uint8','name':'','type':'uint8'},{'internalType':'uint8','name':'','type':'uint8'},{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'}
-];
 
 const	InventoryContext = createContext();
 export const InventoryContextApp = ({children}) => {
@@ -43,11 +37,7 @@ export const InventoryContextApp = ({children}) => {
 		if (!provider || !address) {
 			return;
 		}
-		const	contract = new ethers.Contract(
-			process.env.RARITY_CRAFTING_HELPER_ADDR,
-			process.env.RARITY_CRAFTING_HELPER_ABI,
-			provider
-		);
+		const	contract = new ethers.Contract(process.env.RARITY_CRAFTING_HELPER_ADDR, ABI.RARITY_CRAFTING_HELPER_ABI, provider);
 		const	results = await contract.getItemsByAddress(address);
 		const	_sharedInventory = [];
 		const	allWeapons = Object.values(MANIFEST_WEAPONS);
@@ -68,30 +58,24 @@ export const InventoryContextApp = ({children}) => {
 				const	weapon = allWeapons.find(e => e.id === item.item_type);
 				_sharedInventory[item.item_id] = {
 					..._sharedInventory[item.item_id],
-					name: weapon.name,
-					description: weapon.description,
-					img: weapon.img,
 					...weapon,
+					minter: process.env.RARITY_CRAFTING_ADDR
 				};
 			}
 			if (item.base_type === 2) {
 				const	armor = allArmors.find(e => e.id === item.item_type);
 				_sharedInventory[item.item_id] = {
 					..._sharedInventory[item.item_id],
-					name: armor.name,
-					description: armor.description,
-					img: armor.img,
 					...armor,
+					minter: process.env.RARITY_CRAFTING_ADDR
 				};
 			}
 			if (item.base_type === 1) {
 				const	good = allGoods.find(e => e.id === item.item_type);
 				_sharedInventory[item.item_id] = {
 					..._sharedInventory[item.item_id],
-					name: good.name,
-					description: good.description,
-					img: good.img,
-					...good
+					...good,
+					minter: process.env.RARITY_CRAFTING_ADDR
 				};
 			}	
 		}
@@ -110,10 +94,11 @@ export const InventoryContextApp = ({children}) => {
 	**********************************************************************************************/
 	function		prepareInventory(tokenID) {
 		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, process.env.RARITY_GOLD_ABI);
-		const	rarityMealts = new Contract(process.env.RARITY_COOKING_ADDR, MEAL_ABI);
+		const	rarityMealts = new Contract(process.env.RARITY_EXTENDED_COOKING_ADDR, ABI.RARITY_EXTENDED_MEAL_ABI);
 		const	raritytheForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI);
 		const	rarityOpenMic = new Contract(process.env.DUNGEON_OPEN_MIC_V2_ADDR, process.env.DUNGEON_OPEN_MIC_V2_ABI);
-		const	rarityEquipementWrapper = new Contract(process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, EQUIPEMENT_ABI);
+		const	rarityBasicSet = new Contract(process.env.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ADDR, ABI.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ABI);
+		const	rarityEquipementWrapper = new Contract(process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, ABI.RARITY_EQUIPEMENT_ABI);
 
 		return [
 			rarityGold.balanceOf(tokenID),
@@ -121,14 +106,15 @@ export const InventoryContextApp = ({children}) => {
 			rarityMealts.getTotalMealsBySummoner(tokenID),
 			raritytheForest.getTreasuresBySummoner(tokenID),
 			rarityOpenMic.getPrizes(tokenID),
+			rarityBasicSet.getOwnedItems(tokenID),
 
-			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 1), //Head
-			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 2), //Chest
-			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 3), //Hand
-			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 4), //Feet
-			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 5), //Primary weapon
-			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 6), //Secondary weapon
-			// rarityEquipementWrapper.getEquipementBySlot(tokenID, 101), //Secondary weapon
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 1), //Head
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 2), //Chest
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 3), //Hand
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 4), //Feet
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 5), //Primary weapon
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 6), //Secondary weapon
+			rarityEquipementWrapper.getEquipementBySlot(tokenID, 101), //Secondary weapon
 		];
 	}
 	async function	assignInventory(tokenID, inventoryCallResult) {
@@ -174,56 +160,101 @@ export const InventoryContextApp = ({children}) => {
 		rIndex++;
 		for (let index = 0; index < inventoryCallResult[rIndex].length; index++) {
 			const item = inventoryCallResult[rIndex][index];
-			const treasure = ITEMS.ITEMS_THE_FOREST.find(m => m.name === item.itemName);
-			_inventory[treasure.address] = {
-				tokenID: ethers.BigNumber.from(item.treasureId).toNumber(),
-				name: treasure.name,
-				description: treasure.description,
-				img: treasure.img,
-				address: treasure.address,
-				type: 'unique',
-				balance: 1
-			};
+			const element = ITEMS.ITEMS_THE_FOREST.find(m => m.name === item.itemName);
+			if (_inventory[element.address]?.balance > 0) {
+				_inventory[element.address].balance++;
+			} else {
+				_inventory[element.address] = {
+					tokenID: ethers.BigNumber.from(item.treasureId).toNumber(),
+					type: 'unique',
+					balance: 1,
+					...element
+				};
+			}
 		}
 
 		rIndex++;
 		for (let index = 0; index < inventoryCallResult[rIndex].length; index++) {
 			const item = inventoryCallResult[rIndex][index];
 			const element = ITEMS.ITEMS_OPENMIC.find(m => m.name === item.name);
-			_inventory[element.address] = {
-				tokenID: ethers.BigNumber.from(item.tokenId).toNumber(),
-				name: element.name,
-				description: element.description,
-				img: element.img,
-				address: element.address,
-				type: 'unique',
-				balance: 1
-			};
+			if (_inventory[element.address]?.balance > 0) {
+				_inventory[element.address].balance++;
+			} else {
+				_inventory[element.address] = {
+					tokenID: ethers.BigNumber.from(item.tokenId).toNumber(),
+					type: 'unique',
+					balance: 1,
+					...element
+				};
+			}
 		}
 
-		// rIndex++;
-		// for (let index = 1; index < 8; index++) {
-		// 	const	element = inventoryCallResult[rIndex++];
-		// 	const	elementDetails = {
-		// 		tokenID: (element[0]).toNumber(),
-		// 		registry: (element[1]),
-		// 		codex: (element[2]),
-		// 		baseType: (element[3]),
-		// 		itemType: (element[4])
-		// 	};
-		// 	if ((index === 2) && elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
-		// 		const	_equipement = Object.values(MANIFEST_ARMORS).find(e => e.id === elementDetails.itemType);
-		// 		_equipements[index] = {...elementDetails, ..._equipement};
-		// 	}
-		// 	if ((index === 5 || index === 6) && elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
-		// 		const	_equipement = Object.values(MANIFEST_WEAPONS).find(e => e.id === elementDetails.itemType);
-		// 		_equipements[index] = {...elementDetails, ..._equipement};
-		// 	}
-		// 	if ((index === 7) && elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
-		// 		const	_equipement = Object.values(MANIFEST_SHIELDS).find(e => e.id === elementDetails.itemType);
-		// 		_equipements[101] = {...elementDetails, ..._equipement};
-		// 	}
-		// }
+		rIndex++;
+		for (let index = 0; index < inventoryCallResult[rIndex].length; index++) {
+			const item = inventoryCallResult[rIndex][index];
+			const initialIndex = (item.base_type === 3 ? 19 : 0) - 1;
+			const element = ITEMS.ITEMS_BASIC_SET[initialIndex + item.item_type];
+			if (_inventory[element.address]?.balance > 0) {
+				_inventory[element.address].balance++;
+			} else {
+				_inventory[element.address] = {
+					tokenID: ethers.BigNumber.from(item.tokenID).toNumber(),
+					type: 'unique',
+					balance: 1,
+					...element,
+				};
+			}
+		}
+
+		rIndex++;
+		for (let index = 1; index < 8; index++) {
+			const	element = inventoryCallResult[rIndex++];
+			if (!element) {
+				continue;
+			}
+			const	elementDetails = {
+				tokenID: (element[0]).toNumber(),
+				registry: (element[1]),
+				codex: (element[2]),
+				baseType: (element[3]),
+				itemType: (element[4])
+			};
+
+			if (index <= 4) {
+				let	_equipement = null;
+				if (elementDetails.registry === process.env.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ADDR) {
+					_equipement = ITEMS.ITEMS_BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
+				} else if (elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
+					_equipement = Object.values(MANIFEST_ARMORS).find(e => e.id === elementDetails.itemType);
+				}
+				if (_equipement) {
+					_equipements[index] = {...elementDetails, ..._equipement};
+				}
+			}
+
+			if (index === 5 || index === 6) {
+				let	_equipement = null;
+				if (elementDetails.registry === process.env.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ADDR) {
+					_equipement = ITEMS.ITEMS_BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
+				} else if (elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
+					_equipement = Object.values(MANIFEST_WEAPONS).find(e => e.id === elementDetails.itemType);
+				}
+				if (_equipement) {
+					_equipements[index] = {...elementDetails, ..._equipement};
+				}
+			}
+			if (index === 7) {
+				let	_equipement = null;
+				if (elementDetails.registry === process.env.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ADDR) {
+					_equipement = ITEMS.ITEMS_BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
+				} else if (elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
+					_equipement = Object.values(MANIFEST_SHIELDS).find(e => e.id === elementDetails.itemType);
+				}
+				if (_equipement) {
+					_equipements[101] = {...elementDetails, ..._equipement};
+				}
+			}
+		}
 	
 		//Hack to bactch all of this in only 1 render
 		performBatchedUpdates(() => {
@@ -251,10 +282,12 @@ export const InventoryContextApp = ({children}) => {
 
 		const	callResults = await ethcallProvider.tryAll(preparedInventoryCalls);
 		const	chunkedCallResult = chunk(callResults, chunckLen);
-		for (let index = 0; index < chunkedCallResult.length; index++) {
-			const callResult = chunkedCallResult[index];
-			assignInventory(adventurers[index].tokenID, callResult);
-		}
+		performBatchedUpdates(() => {
+			for (let index = 0; index < chunkedCallResult.length; index++) {
+				const callResult = chunkedCallResult[index];
+				assignInventory(adventurers[index].tokenID, callResult);
+			}
+		});
 	}, [chainID, provider]);
 
 	React.useEffect(() => {

@@ -1,16 +1,15 @@
 import	React, {useState}					from	'react';
-import	dayjs								from	'dayjs';
-import	relativeTime						from	'dayjs/plugin/relativeTime';
 import	useRarity							from	'contexts/useRarity';
+import	useDungeons							from	'contexts/useDungeons';
 import	Template							from	'components/templates/Adventurer';
 import	AdventureTemplate					from	'components/adventures/Template';
 import	DescriptionFormater					from	'components/adventures/DescriptionFormater';
 import	OptionsFormater						from	'components/adventures/OptionsFormater';
 import	ADVENTURE							from	'utils/codex/adventures/the-cellar';
 
-dayjs.extend(relativeTime);
 function	Index({router}) {
 	const	{currentAdventurer} = useRarity();
+	const	{dungeons} = useDungeons();
 	const	[step, set_step] = useState('intro');
 	const	[variables] = useState({});
 
@@ -32,16 +31,16 @@ function	Index({router}) {
 			<div className={'text-base leading-relaxed normal-case text-plain'}>
 				<DescriptionFormater
 					addr={process.env.DUNGEON_THE_CELLAR_ADDR}
-					rawDescription={ADVENTURE[currentAdventurer?.adventures?.cellar?.canAdventure ? step : 'rest'].description}
+					rawDescription={ADVENTURE[dungeons[currentAdventurer.tokenID]?.cellar?.canAdventure ? step : 'rest'].description}
 					variables={{
 						...variables,
 						'${adventurer_name}': currentAdventurer.displayName,
-						'${next_adventure}': currentAdventurer?.adventures?.cellar?.nextAdventure
+						'${next_adventure}': dungeons[currentAdventurer.tokenID]?.cellar?.nextAdventure
 					}} />
 			</div>
 			<div className={'grid grid-cols-1 gap-4 pt-4 mt-4 border-t-2 border-black dark:border-dark-300'}>
 				<OptionsFormater
-					options={ADVENTURE[currentAdventurer?.adventures?.cellar?.canAdventure ? step : 'rest'].options}
+					options={ADVENTURE[dungeons[currentAdventurer.tokenID]?.cellar?.canAdventure ? step : 'rest'].options}
 					onChoice={(choice) => {
 						if (choice === 'fight') {
 							onFight();

@@ -2,7 +2,7 @@ import	React, {useState}	from	'react';
 import	Image				from	'next/image';
 import	FEATS				from	'utils/codex/core/feats.json';
 
-function	RowFeat({feat, canLearn, onLearn}) {
+const RowFeat = React.memo(function RowFeat({feat, canLearn, onLearn}) {
 	const	[expanded, set_expanded] = useState(false);
 
 	return (
@@ -45,6 +45,6 @@ function	RowFeat({feat, canLearn, onLearn}) {
 			</div>
 		</div>
 	);
-}
+});
 
 export default RowFeat;

@@ -13,6 +13,7 @@ import	useUI									from	'contexts/useUI';
 import	useWeb3									from	'contexts/useWeb3';
 import	useRarity								from	'contexts/useRarity';
 import	useInventory							from	'contexts/useInventory';
+import	useDungeons								from	'contexts/useDungeons';
 import	{sleep}									from	'utils';
 import	{lootDungeonTheCellar}					from	'utils/actions';
 import	CLASSES									from	'utils/codex/core/classes';
@@ -21,8 +22,9 @@ function	Index({dungeon, adventurer, router}) {
 	const	STEP_LIMIT = 10;
 	const	{raritySkins} = useUI();
 	const	{provider} = useWeb3();
-	const	{updateRarity, skins} = useRarity();
+	const	{skins} = useRarity();
 	const	{updateInventory} = useInventory();
+	const	{updateDungeonForOne} = useDungeons();
 	const	[ratEscaped, set_ratEscaped] = useState(false);
 	const	[adventurerWon, set_adventurerWon] = useState(false);
 	const	[adventurerHealth, set_adventurerHealth] = useState(dungeon.adventurerHealth);
@@ -67,7 +69,7 @@ function	Index({dungeon, adventurer, router}) {
 			if (error) {
 				return console.error(error);
 			}
-			updateRarity(dungeon.tokenID);
+			updateDungeonForOne(dungeon.tokenID);
 			updateInventory(dungeon.tokenID);
 			if (router.pathname === '/adventures/the-cellar/fight')
 				router.push('/adventures/the-cellar');

@@ -5,6 +5,7 @@ import	OverviewAttributes	from	'sections/adventurer/OverviewAttributes';
 import	OverviewSkills		from	'sections/adventurer/OverviewSkills';
 import	OverviewFeats		from	'sections/adventurer/OverviewFeats';
 import	OverviewInventory	from	'sections/adventurer/OverviewInventory';
+import	OverviewProfession	from	'sections/adventurer/OverviewProfession';
 import	OverviewEquipement	from	'sections/adventurer/OverviewEquipement';
 import	OverviewMinimal		from	'sections/adventurer/OverviewMinimal';
 
@@ -25,7 +26,7 @@ function	Wrapper({media}) {
 	}
 
 	return (
-		<div className={'flex overflow-hidden relative flex-row p-4 space-x-16 box'}>
+		<div className={'flex relative flex-row p-4 space-x-16 box'}>
 			<OverviewEquipement
 				provider={provider}
 				raritySkin={skins[currentAdventurer?.tokenID] || currentAdventurer?.skin} />
@@ -47,15 +48,21 @@ function	Wrapper({media}) {
 						{'Feat'}
 					</p>
 					<p
-						onClick={() => set_tab(3)} 
+						onClick={() => set_tab(3)}
 						className={`p-4 text-plain text-sm transition-opacity hover:opacity-100 ${tab === 3 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+						{'Profession'}
+					</p>
+					<p
+						onClick={() => set_tab(4)} 
+						className={`p-4 text-plain text-sm transition-opacity hover:opacity-100 ${tab === 4 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
 						{'Inventory'}
 					</p>
 				</div>
 				{tab === 0 ? <OverviewAttributes adventurer={currentAdventurer} /> : null}
 				{tab === 1 ? <OverviewSkills adventurer={currentAdventurer} /> : null}
 				{tab === 2 ? <OverviewFeats adventurer={currentAdventurer} /> : null}
-				{tab === 3 ? <OverviewInventory adventurer={currentAdventurer} /> : null}
+				{tab === 3 ? <OverviewProfession adventurer={currentAdventurer} /> : null}
+				{tab === 4 ? <OverviewInventory adventurer={currentAdventurer} /> : null}
 			</div>
 			
 		</div>

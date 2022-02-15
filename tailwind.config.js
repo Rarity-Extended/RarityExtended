@@ -118,7 +118,8 @@ module.exports = {
 			},
 			maxHeight: {
 				120: '480px',
-				133: '33.25rem'
+				133: '33.25rem',
+				full: '100rem'
 			},
 			transitionProperty: {
 				'visibility': 'visibility',

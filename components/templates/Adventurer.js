@@ -150,10 +150,10 @@ function	Template({children}) {
 									{'Adventures'}
 								</p>
 							</Link>
-							<Link href={'/farming'}>
+							<Link href={'/professions'}>
 								<p
-									className={`p-4 pr-6 pl-0 text-plain text-sm transition-opacity hover:opacity-100 ${router.pathname === '/farming' || router.pathname.startsWith('/farming') ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-									{'Farming'}
+									className={`p-4 pr-6 pl-0 text-plain text-sm transition-opacity hover:opacity-100 ${router.pathname === '/professions' || router.pathname.startsWith('/professions') ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+									{'Professions'}
 								</p>
 							</Link>
 							<Link href={'/crafting'}>

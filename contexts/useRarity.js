@@ -19,6 +19,7 @@ import	useIndexDB												from	'hook/useIDB';
 import	performBatchedUpdates									from	'utils/performBatchedUpdates';
 import	{chunk, fetcher, toAddress, newEthCallProvider}			from	'utils';
 import	CLASSES													from	'utils/codex/core/classes';
+import	* as ABI												from	'utils/abi/mixed.min.abi';
 
 dayjs.extend(relativeTime);
 dayjs.extend(duration);
@@ -40,12 +41,12 @@ export const RarityContextApp = ({children}) => {
 	const	[currentAdventurer, set_currentAdventurer] = useIndexDB('currentAdventurer', null);
 	const	[rarities, set_rarities] = useIndexDB('adventurers', {});
 	const	[skins, set_skins] = useIndexDB('adventurersSkins', {});
-	const	[specialApprovals, set_specialApprovals] = useState(null);
+	const	[specialApprovals, set_specialApprovals] = useState({});
 	const	[loaded, set_loaded] = useState(false);
 	const	[isModalOpen, set_isModalOpen] = useState(false);
 
 	async function	fetchRaritySkins(tokensIDs) {
-		const	raritySkinHelper = new Contract(process.env.RARITY_EXTENDED_SKIN_HELPER_ADDR, process.env.RARITY_EXTENDED_SKIN_HELPER_ABI);
+		const	raritySkinHelper = new Contract(process.env.RARITY_SKIN_HELPER_ADDR, ABI.RARITY_SKIN_HELPER_ABI);
 		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
 
 		const	calls = [];
@@ -76,15 +77,17 @@ export const RarityContextApp = ({children}) => {
 		const	calls = [
 			rarity.isApprovedForAll(address, process.env.RARITY_CRAFTING_HELPER_ADDR),
 			rarity.isApprovedForAll(address, process.env.RARITY_COOKING_HELPER_ADDR),
+			rarity.isApprovedForAll(address, process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR),
 		];
 		const	callResults = await ethcallProvider.tryAll(calls);
 		performBatchedUpdates(() => {
 			set_specialApprovals({
 				[process.env.RARITY_CRAFTING_HELPER_ADDR]: callResults[0],
 				[process.env.RARITY_COOKING_HELPER_ADDR]: callResults[1],
+				[process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR]: callResults[2],
 			});
 		});
-	}, [address, provider]);
+	}, [address, provider, chainID]);
 	React.useEffect(() => checkSpecialApprovals(), [checkSpecialApprovals]);
 
 	/**************************************************************************
@@ -96,11 +99,8 @@ export const RarityContextApp = ({children}) => {
 		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, process.env.RARITY_GOLD_ABI);
 		const	raritySkills = new Contract(process.env.RARITY_SKILLS_ADDR, process.env.RARITY_SKILLS_ABI);
 		const	rarityFeats = new Contract(process.env.RARITY_FEATS_ADDR, process.env.RARITY_FEATS_ABI);
-		const	rarityDungeonCellar = new Contract(process.env.DUNGEON_THE_CELLAR_ADDR, process.env.DUNGEON_THE_CELLAR_ABI);
-		const	rarityDungeonForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI);
-		const	rarityExtendedName = new Contract(process.env.RARITY_EXTENDED_NAME, process.env.RARITY_EXTENDED_NAME_ABI);
-		const	rarityDungeonBoars = new Contract(process.env.DUNGEON_BOARS_ADDR, process.env.DUNGEON_BOARS_ABI);
-		const	rarityDungeonOpenMic = new Contract(process.env.DUNGEON_OPEN_MIC_V2_ADDR, process.env.DUNGEON_OPEN_MIC_V2_ABI);
+		const	rarityFarming = new Contract(process.env.RARITY_EXTENDED_FARM_CORE, ABI.RARITY_EXTENDEDN_FARM_CORE_ABI);
+		const	rarityExtendedName = new Contract(process.env.RARITY_EXTENDED_NAME, ABI.RARITY_EXTENDED_NAME_ABI);
 
 		return [
 			rarity.ownerOf(tokenID),
@@ -113,11 +113,8 @@ export const RarityContextApp = ({children}) => {
 			rarityGold.claimable(tokenID),
 			raritySkills.get_skills(tokenID),
 			rarityFeats.get_feats_by_id(tokenID),
-			rarityDungeonCellar.adventurers_log(tokenID),
-			rarityDungeonCellar.scout(tokenID),
-			rarityDungeonForest.getResearchBySummoner(tokenID),
-			rarityDungeonBoars.actions_log(tokenID),
-			rarityDungeonOpenMic.timeToNextPerformance(tokenID),
+			rarityFarming.adventurerStatus(tokenID, 1),
+			rarityFarming.adventurerStatus(tokenID, 2)
 		];
 	}
 
@@ -139,7 +136,7 @@ export const RarityContextApp = ({children}) => {
 			initialAttributes, abilityScores, extraPointsSpents,
 			balanceOfGold, claimableGold,
 			skills, feats,
-			cellarLog, cellarScout, forestResearch, boarsLog, timeToNextOpenMic,
+			farmingWood, farmingOre,
 		] = multicallResult;
 
 		if (toAddress(owner) !== toAddress(address)) {
@@ -180,32 +177,14 @@ export const RarityContextApp = ({children}) => {
 			skills: skills,
 			feats: (feats || []).map(f => Number(f)),
 			skin: CLASSES[Number(adventurer['_class'])]?.images?.front,
-			adventures: {
-				cellar: {
-					log: Number(cellarLog),
-					scout: Number(cellarScout),
-					nextAdventure: Number(cellarLog) === 0 ? 'Now' : dayjs(new Date(Number(cellarLog) * 1000)).from(dayjs(new Date(chainTime * 1000))),
-					canAdventure: dayjs(new Date(Number(cellarLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
+			professions: {
+				wood: {
+					level: Number(farmingWood['level']),
+					xp: Number(farmingWood['xp']),
 				},
-				boars: {
-					log: Number(boarsLog),
-					nextAdventure: Number(boarsLog) === 0 ? 'Now' : dayjs(new Date(Number(boarsLog) * 1000)).from(dayjs(new Date(chainTime * 1000))),
-					canAdventure: dayjs(new Date(Number(boarsLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
-				},
-				forest: {
-					initBlockTs: forestResearch?.initBlockTs,
-					endBlockTs: forestResearch?.endBlockTs,
-					nextAdventure: Number(forestResearch?.endBlockTs) === 0 ? 'Now' : dayjs(new Date(Number(forestResearch?.endBlockTs) * 1000)).from(dayjs(new Date(chainTime * 1000))),
-					canAdventure: Number(forestResearch?.endBlockTs) <= chainTime && (forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0)
-				},
-				openMic: {
-					nextAdventure: Number(adventurer['_class']) === 2 && Number(adventurer['_level']) >= 2 ? dayjs.duration({seconds: ethers.BigNumber.from(timeToNextOpenMic).toNumber()}).humanize(true) : null,
-					canAdventure: (
-						Number(adventurer['_class']) === 2 &&
-						Number(adventurer['_level']) >= 2 &&
-						ethers.BigNumber.from(timeToNextOpenMic).toNumber() <= 0
-					),
-					timeToNextPerformance: timeToNextOpenMic
+				ore: {
+					level: Number(farmingOre['level']),
+					xp: Number(farmingOre['xp']),
 				}
 			}
 		};

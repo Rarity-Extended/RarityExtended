@@ -1,16 +1,15 @@
 import	React, {useState}					from	'react';
-import	dayjs								from	'dayjs';
-import	relativeTime						from	'dayjs/plugin/relativeTime';
 import	useRarity							from	'contexts/useRarity';
+import	useDungeons							from	'contexts/useDungeons';
 import	Template							from	'components/templates/Adventurer';
 import	AdventureTemplate					from	'components/adventures/Template';
 import	DescriptionFormater					from	'components/adventures/DescriptionFormater';
 import	OptionsFormater						from	'components/adventures/OptionsFormater';
 import	ADVENTURE							from	'utils/codex/adventures/openmic';
 
-dayjs.extend(relativeTime);
 function	Index({router}) {
 	const	{currentAdventurer} = useRarity();
+	const	{dungeons} = useDungeons();
 	const	[step, set_step] = useState('intro');
 	const	[variables] = useState({});
 
@@ -25,7 +24,7 @@ function	Index({router}) {
 			return 'noBard';
 		if (currentAdventurer.level < 2)
 			return 'noLevel';
-		if (currentAdventurer?.adventures?.openMic?.canAdventure)
+		if (dungeons[currentAdventurer.tokenID]?.openMic?.canAdventure)
 			return step;
 		return 'rest';
 	}
@@ -45,7 +44,7 @@ function	Index({router}) {
 					variables={{
 						...variables,
 						'${adventurer_name}': currentAdventurer.displayName,
-						'${next_adventure}': currentAdventurer?.adventures?.openMic?.nextAdventure
+						'${next_adventure}': dungeons[currentAdventurer.tokenID]?.openMic?.nextAdventure
 					}} />
 			</div>
 			<div className={'grid grid-cols-1 gap-4 pt-4 mt-4 border-t-2 border-black dark:border-dark-300'}>

@@ -13,6 +13,7 @@ import	useWeb3						from	'contexts/useWeb3';
 import	useRarity					from	'contexts/useRarity';
 import	useInventory				from	'contexts/useInventory';
 import	useUI						from	'contexts/useUI';
+import	useDungeons					from	'contexts/useDungeons';
 import	{perform}					from	'utils/actions/perform';
 import	SKILLS						from	'utils/codex/core/skills';
 import	OPENMIC_LOOT				from	'utils/codex/items/items_dungeon_openmic.json';
@@ -67,8 +68,9 @@ function AdventureResult() {
 
 function Adventure({router, adventurer}) {
 	const	{raritySkins} = useUI();
-	const	{rarities, updateRarity, skins} = useRarity();
+	const	{rarities, skins} = useRarity();
 	const	{inventory, updateInventory} = useInventory();
+	const	{updateDungeonForOne} = useDungeons();
 	const	{provider} = useWeb3();
 	const	[odds, setOdds] = useState('--- %');
 	const	performer = rarities[router?.query?.adventurer];
@@ -114,7 +116,7 @@ function Adventure({router, adventurer}) {
 				});
 			}
 			updateInventory(performer.tokenID);
-			updateRarity(performer.tokenID);
+			updateDungeonForOne(performer.tokenID);
 		});
 	}
 

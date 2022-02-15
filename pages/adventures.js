@@ -6,6 +6,7 @@ import	dayjs						from	'dayjs';
 import	duration					from	'dayjs/plugin/duration';
 import	relativeTime				from	'dayjs/plugin/relativeTime';
 import	useRarity					from	'contexts/useRarity';
+import	useDungeons					from	'contexts/useDungeons';
 import	{Media}						from	'contexts/useUI';
 import	Tooltip						from	'components/Tooltip';
 import	ADVENTURES					from	'utils/codex/adventures/adventures';
@@ -50,12 +51,13 @@ function	FormatedDescription({addr, rawDescription}) {
 
 function	Index() {
 	const	{currentAdventurer} = useRarity();
+	const	{dungeons} = useDungeons();
 	const	[selectedAdventure, set_selectedAdventure] = useState(0);
 	
 	function	renderAdventures() {
 		const	adventure = ADVENTURES[selectedAdventure];
-		const	canAdventure = currentAdventurer?.adventures?.[adventure.key]?.canAdventure;
-		const	nextAdventure = currentAdventurer?.adventures?.[adventure.key]?.nextAdventure;
+		const	canAdventure = dungeons[currentAdventurer.tokenID]?.[adventure.key]?.canAdventure;
+		const	nextAdventure = dungeons[currentAdventurer.tokenID]?.[adventure.key]?.nextAdventure;
 		return (
 			<div key={adventure.address}>
 				<div className={'overflow-hidden relative w-full box'}>
@@ -80,7 +82,7 @@ function	Index() {
 											disabled={!canAdventure}
 											className={`flex flex-center w-full button-highlight ${nextAdventure ? '' : 'pointer-events-none'}`}
 											style={!nextAdventure ? {opacity: 0} : {}}>
-											{canAdventure ? 'Accept Adventure' : `Ready ${currentAdventurer?.adventures?.[adventure.key]?.nextAdventure}`}
+											{canAdventure ? 'Accept Adventure' : `Ready ${dungeons[currentAdventurer.tokenID]?.[adventure.key]?.nextAdventure}`}
 										</button>
 									</Link>
 								</div>
@@ -113,8 +115,8 @@ function	Index() {
 		const	resultKO = [];
 		for (let index = 0; index < ADVENTURES.length; index++) {
 			const adventure = ADVENTURES[index];
-			const nextAdventure = currentAdventurer?.adventures?.[adventure.key]?.nextAdventure;
-			if (currentAdventurer?.adventures?.[adventure.key]?.canAdventure) {
+			const nextAdventure = dungeons[currentAdventurer.tokenID]?.[adventure.key]?.nextAdventure;
+			if (dungeons[currentAdventurer.tokenID]?.[adventure.key]?.canAdventure) {
 				resultOK.push(
 					<Link key={adventure.address}href={`/adventures/${adventure.path}#action`}>
 						<div
@@ -200,8 +202,8 @@ function	Index() {
 		const	resultKO = [];
 		for (let index = 0; index < ADVENTURES.length; index++) {
 			const adventure = ADVENTURES[index];
-			const nextAdventure = currentAdventurer?.adventures?.[adventure.key]?.nextAdventure;
-			if (currentAdventurer?.adventures?.[adventure.key]?.canAdventure) {
+			const nextAdventure = dungeons[currentAdventurer.tokenID]?.[adventure.key]?.nextAdventure;
+			if (dungeons[currentAdventurer.tokenID]?.[adventure.key]?.canAdventure) {
 				resultOK.push(
 					<div
 						key={adventure.address}

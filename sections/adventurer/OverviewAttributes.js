@@ -420,7 +420,7 @@ function	OverviewAttributes({adventurer}) {
 					<FakeAttributeSetter value={modifier_for_attribute(adventurer.attributes.dexterity)} />
 				</div>
 			</div>
-			<div className={'absolute top-4 right-4'}>
+			<div className={'absolute top-0 right-0'}>
 				{renderSaveButtons()}
 			</div>
 

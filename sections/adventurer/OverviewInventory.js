@@ -15,8 +15,8 @@ const InventoryGrid = React.memo(function InventoryGrid({currentAdventurer}) {
 				key={'xp'}
 				item={{
 					name: 'XP',
-					img: `/items/${process.env.RARITY_EXTENDED_XP}.png`,
-					address: process.env.RARITY_EXTENDED_XP,
+					img: `/items/${process.env.RARITY_EXTENDED_XP_ADDR}.png`,
+					address: process.env.RARITY_EXTENDED_XP_ADDR,
 					balance: Number(currentAdventurer?.xp)
 				}} />
 		);

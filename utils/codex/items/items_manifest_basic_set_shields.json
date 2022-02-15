@@ -1,0 +1,17 @@
+{
+	"Practice shield": {
+		"id": 19,
+		"name": "Practice shield",
+		"description": "A practice shield that should only be used for training.",
+		"img": "/items/rarity_crafting/shields/buckler.png",
+		"category": "shield",
+		"weight": 5,
+		"cost": 15,
+		"proficiency": "Shields",
+		"armor_bonus": 1,
+		"max_dex_bonus": 8,
+		"penalty": -1,
+		"spell_failure": 5,
+		"type": 2
+	}
+}

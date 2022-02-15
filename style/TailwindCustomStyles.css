@@ -11,6 +11,9 @@
 .box-with-border {
   @apply rounded-sm bg-light-0 dark:bg-dark-400 border border-gray-100 border-opacity-40 dark:border-dark-400;
 }
+.box-darker-with-border {
+  @apply rounded-sm bg-light-0 dark:bg-dark-600 border border-gray-100 border-opacity-40 dark:border-dark-900;
+}
 .box-darker {
   @apply rounded-sm bg-light-600 dark:bg-dark-600;
 }
@@ -86,6 +89,18 @@
     cursor-pointer
   ;
 }
+.button-outline {
+  @apply
+  button-core
+  cursor-pointer
+  bg-light-400
+  dark:bg-dark-400
+  text-gray-200
+  dark:text-dark-200
+  hover:text-black
+  hover:dark:text-white
+}
+
 .button-outline-arrow {
   @apply
     select-none

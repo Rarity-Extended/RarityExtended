@@ -15,6 +15,7 @@ import	{ethers}						from	'ethers';
 import	useWeb3, {Web3ContextApp}		from	'contexts/useWeb3';
 import	useRarity, {RarityContextApp}	from	'contexts/useRarity';
 import	{InventoryContextApp}			from	'contexts/useInventory';
+import	{DungeonsContextApp}			from	'contexts/useDungeons';
 import	{UIContextApp}					from	'contexts/useUI';
 import	Navbar							from	'components/layout/Navbar';
 import	Footer							from	'components/layout/Footer';
@@ -136,11 +137,13 @@ function	MyApp(props) {
 				<Web3ContextApp>
 					<RarityContextApp>
 						<InventoryContextApp>
-							<AppWrapper
-								Component={Component}
-								pageProps={pageProps}
-								element={props.element}
-								router={props.router} />
+							<DungeonsContextApp>
+								<AppWrapper
+									Component={Component}
+									pageProps={pageProps}
+									element={props.element}
+									router={props.router} />
+							</DungeonsContextApp>
 						</InventoryContextApp>
 					</RarityContextApp>
 				</Web3ContextApp>
