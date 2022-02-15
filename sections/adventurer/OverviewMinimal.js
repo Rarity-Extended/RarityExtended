@@ -17,7 +17,7 @@ function	OverviewMinimal({adventurer, provider, raritySkin}) {
 	const	[name, set_name] = React.useState(adventurer.name || adventurer.tokenID);
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	React.useEffect(() => set_name(adventurer.name || adventurer.tokenID), [adventurer.tokenID]);
+	React.useLayoutEffect(() => set_name(adventurer.name || adventurer.tokenID), [adventurer.tokenID]);
 
 	/* 🏹🛡 - Rarity Extended ***********************************************************************
 	**	Claim the daily XP for a specific adventurer. This can be called once a day for each

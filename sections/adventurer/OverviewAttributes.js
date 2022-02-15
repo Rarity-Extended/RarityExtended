@@ -246,7 +246,7 @@ function	OverviewAttributes({adventurer}) {
 		remainingPoints: adventurer?.attributes?.remainingPoints
 	});
 
-	React.useEffect(() => {
+	React.useLayoutEffect(() => {
 		set_updateAttribute({
 			strength: adventurer?.attributes?.strength,
 			dexterity: adventurer?.attributes?.dexterity,

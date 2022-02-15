@@ -32,7 +32,7 @@ function	OverviewEquipement({provider, raritySkin}) {
 	const	[name, set_name] = React.useState(currentAdventurer.name || currentAdventurer.tokenID);
 	const	[pageSlot, set_pageSlot] = React.useState(-1);
 
-	React.useEffect(() => {
+	React.useLayoutEffect(() => {
 		if (router?.query?.slot) {
 			set_pageSlot(Number(router?.query?.slot));
 		} else {
@@ -41,7 +41,7 @@ function	OverviewEquipement({provider, raritySkin}) {
 	}, [router]);
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	React.useEffect(() => set_name(currentAdventurer.name || currentAdventurer.tokenID), [currentAdventurer.tokenID]);
+	React.useLayoutEffect(() => set_name(currentAdventurer.name || currentAdventurer.tokenID), [currentAdventurer.tokenID]);
 
 	/* 🏹🛡 - Rarity Extended ***********************************************************************
 	**	Claim the daily XP for a specific adventurer. This can be called once a day for each

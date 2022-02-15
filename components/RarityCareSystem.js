@@ -1,4 +1,4 @@
-import	React, {useState, useEffect}		from	'react';
+import	React, {useState}					from	'react';
 import	dayjs								from	'dayjs';
 import	relativeTime						from	'dayjs/plugin/relativeTime';
 import	toast								from	'react-hot-toast';
@@ -34,7 +34,7 @@ function	Index({minimal}) {
 	**	Everty time the global nonce is updated, the local nonce is updated or the list of favorite
 	**	adventurers is updated, we need to cound again the count of selectedAdventurersActions.
 	**********************************************************************************************/
-	useEffect(() => {
+	React.useLayoutEffect(() => {
 		let	canAdventure = 0;
 		let	canAdventureCellar = 0;
 		let	canLevelUp = 0;

@@ -67,7 +67,7 @@ function	AppWrapper(props) {
 	const	{switchChain, chainID} = useWeb3();
 	const	windowInFocus = useWindowInFocus();
 
-	React.useEffect(() => {
+	React.useLayoutEffect(() => {
 		if (windowInFocus && Number(chainID) > 0 && (Number(chainID) !== 250 && Number(chainID) !== 1337)) {
 			switchChain();
 		}

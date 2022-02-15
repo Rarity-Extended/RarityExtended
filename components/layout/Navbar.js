@@ -1,4 +1,4 @@
-import	React, {useState, useEffect}	from	'react';
+import	React, {useState}				from	'react';
 import	Link							from	'next/link';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
@@ -11,7 +11,7 @@ function	Navbar() {
 	const	[initialPopup, set_initialPopup] = useState(false);
 	const	[modalLoginOpen, set_modalLoginOpen] = useState(false);
 
-	useEffect(() => {
+	React.useLayoutEffect(() => {
 		if (initialPopup)
 			return;
 

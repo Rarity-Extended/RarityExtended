@@ -275,7 +275,7 @@ function	ItemList({tab}) {
 function	Index({tab, set_tab}) {
 	const	router = useRouter();
 
-	React.useEffect(() => {
+	React.useLayoutEffect(() => {
 		if (router?.query?.slot) {
 			set_tab(Number(router?.query?.slot));
 		}

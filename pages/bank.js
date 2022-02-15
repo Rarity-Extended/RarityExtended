@@ -143,7 +143,7 @@ function	Index() {
 		}
 		set_bankSituation(_bankSituation);
 	}, [provider, address, chainID]);
-	React.useEffect(() => fetchVaultsPositions(), [fetchVaultsPositions]);
+	React.useLayoutEffect(() => fetchVaultsPositions(), [fetchVaultsPositions]);
 
 	function	performApeIn(amount) {
 		if (isTxPending)

@@ -10,7 +10,7 @@ const MobileMenu = React.memo(function MobileMenu() {
 	const	router = useRouter();
 	const	[open, set_open] = React.useState(false);
 
-	React.useEffect(() => {
+	React.useLayoutEffect(() => {
 		set_open(false);
 	}, [router.pathname]);
 

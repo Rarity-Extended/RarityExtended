@@ -1,6 +1,6 @@
-import	React, {useState, useEffect}	from	'react';
-import	{useRouter}						from	'next/router';
-import	IconHelp						from	'components/icons/IconHelp';
+import	React, {useState}	from	'react';
+import	{useRouter}			from	'next/router';
+import	IconHelp			from	'components/icons/IconHelp';
 
 function Head({children, title, tabs, button, tab, set_tab}) {
 	return (
@@ -45,7 +45,7 @@ function Section({children, headChildren, title, tabs, button, className = 'box'
 	const	[tab, set_tab] = React.useState(0);
 	const	[search, set_search] = useState(router?.query?.search || '');
 
-	useEffect(() => {
+	React.useLayoutEffect(() => {
 		if (router?.query?.search) set_search(router.query.search);
 		if (router?.query?.tab) set_tab(Number(router.query.tab) || 0);
 	}, [router]);
