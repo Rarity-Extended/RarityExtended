@@ -30,7 +30,7 @@ const	ITEMS_ERC20 = [
 	},
 	{
 		name: 'Wood',
-		description: 'A standard piece of wood',
+		description: 'The most commonly found Wood log in the forest, is rather a common log. It is a round log, with a dark brown to a dark gray skin, and usually rectangular and round cross-section. It has a leathery-brown bark, which becomes thinner and thinner as it approaches the trunk.',
 		img: `/items/${process.env.LOOT_WOOD_ADDR}.png`,
 		address: process.env.LOOT_WOOD_ADDR,
 		type: 'enumerable',
@@ -91,7 +91,7 @@ const	ITEMS_ERC20 = [
 
 	{
 		name: 'Soft Wood',
-		description: 'A soft piece of wood',
+		description: 'Like many of its brethren, the Soft Wood log is small and round, but its brown bark, which is either smooth or slightly rough looking, contrasts with the light brown skin. The log is pliable and soft, it can easily be molded into different shapes, it is capable of a wide range of movements and adjustments.',
 		img: `/items/${process.env.LOOT_WOOD_ADDR}.png`,
 		address: process.env.RARITY_EXTENDED_WOOD_LOOT_1,
 		type: 'enumerable',
@@ -100,7 +100,7 @@ const	ITEMS_ERC20 = [
 	},
 	{
 		name: 'Fine Wood',
-		description: 'A fine piece of wood',
+		description: 'The Fine Wood is the most soft and delicate of all the woods. It is green over most of its area, with splotches of brown, but not the same color as the wood beneath the surface, instead the brown is an interplay of the two woods. The wood is lighter in weight and sometimes appears translucent, but not to the same extent as the Soft Wood.',
 		img: `/items/${process.env.LOOT_WOOD_ADDR}.png`,
 		address: process.env.RARITY_EXTENDED_WOOD_LOOT_2,
 		type: 'enumerable',
@@ -109,7 +109,7 @@ const	ITEMS_ERC20 = [
 	},
 	{
 		name: 'Seasoned Wood',
-		description: 'A seasoned piece of wood',
+		description: 'It is hard, it is dry and it is well seasoned. It is like it has been in the rain for years. You can see through it and it is clear. The wood is green and smooth, covered in moss and lichen, the veins of the wood grain run through it and the bark is like a tight, white skin.',
 		img: `/items/${process.env.LOOT_WOOD_ADDR}.png`,
 		address: process.env.RARITY_EXTENDED_WOOD_LOOT_3,
 		type: 'enumerable',
@@ -118,7 +118,7 @@ const	ITEMS_ERC20 = [
 	},
 	{
 		name: 'Hard Wood',
-		description: 'A hard piece of wood',
+		description: 'The Hard Wood is the thickest of all the woods, the tree itself is like a single piece of stone, a gnarled and tortured thing, the bark is cracked and covered in moss and lichens, free to peel away and leave the inner bark exposed.',
 		img: `/items/${process.env.LOOT_WOOD_ADDR}.png`,
 		address: process.env.RARITY_EXTENDED_WOOD_LOOT_4,
 		type: 'enumerable',
@@ -126,8 +126,8 @@ const	ITEMS_ERC20 = [
 		id: 13,
 	},
 	{
-		name: 'Elder Wood',
-		description: 'An elder piece of wood',
+		name: 'Darkwood',
+		description: 'This rare magic wood has a dark red colour. It is hard as rock and when you touch it, you cannot scratch it with your nails. It feels like a normal wood, but is very light.',
 		img: `/items/${process.env.LOOT_WOOD_ADDR}.png`,
 		address: process.env.RARITY_EXTENDED_WOOD_LOOT_5,
 		type: 'enumerable',
@@ -146,8 +146,8 @@ const	ITEMS_MEALS = [
 		address: '0x97e8f1061224cb532F808b074786C76e977BA6EE',
 		type: 'enumerable',
 		cost: [
-			[process.env.RARITY_GOLD_ADDR, 10],
-			[process.env.LOOT_MEAT_ADDR, 10]
+			[process.env.RARITY_GOLD_ADDR, 10, 'Gold', 'The official currency of the realm.'],
+			[process.env.LOOT_MEAT_ADDR, 10, 'Meat', 'A nice piece of red meat.']
 		]
 	},
 	{
@@ -157,8 +157,8 @@ const	ITEMS_MEALS = [
 		address: '0x2e3e1C1F49A288ebF88be66a3ED3539B5971f25D',
 		type: 'enumerable',
 		cost: [
-			[process.env.RARITY_GOLD_ADDR, 10],
-			[process.env.LOOT_MUSHROOM_ADDR, 10]
+			[process.env.RARITY_GOLD_ADDR, 10, 'Gold', 'The official currency of the realm.'],
+			[process.env.LOOT_MUSHROOM_ADDR, 10, 'Mushroom', 'A small white mushroom with a strong smell.']
 		]
 	},
 	{
@@ -168,8 +168,8 @@ const	ITEMS_MEALS = [
 		address: '0x57e4cD55289da26aa7cb607c00c5dDcd0f7980a2',
 		type: 'enumerable',
 		cost: [
-			[process.env.RARITY_GOLD_ADDR, 10],
-			[process.env.LOOT_BERRIES_ADDR, 10]
+			[process.env.RARITY_GOLD_ADDR, 10, 'Gold', 'The official currency of the realm.'],
+			[process.env.LOOT_BERRIES_ADDR, 10, 'Berries', 'A handful of juicy red berries']
 		]
 	},
 	{
@@ -179,9 +179,9 @@ const	ITEMS_MEALS = [
 		address: '0x65567a2fBC14B4aBCd414bb6902384745d4353f6',
 		type: 'enumerable',
 		cost: [
-			[process.env.RARITY_GOLD_ADDR, 10],
-			[process.env.LOOT_MEAT_ADDR, 10],
-			[process.env.LOOT_MUSHROOM_ADDR, 10]
+			[process.env.RARITY_GOLD_ADDR, 10, 'Gold', 'The official currency of the realm.'],
+			[process.env.LOOT_MEAT_ADDR, 10, 'Meat', 'A nice piece of red meat.'],
+			[process.env.LOOT_MUSHROOM_ADDR, 10, 'Mushroom', 'A small white mushroom with a strong smell.']
 		]
 	},
 	{
@@ -191,9 +191,9 @@ const	ITEMS_MEALS = [
 		address: '0xF06FfE67CB96641eEC55eA19126BD8F0107Ff0Ad',
 		type: 'enumerable',
 		cost: [
-			[process.env.RARITY_GOLD_ADDR, 10],
-			[process.env.LOOT_BERRIES_ADDR, 10],
-			[process.env.LOOT_MUSHROOM_ADDR, 10]
+			[process.env.RARITY_GOLD_ADDR, 10, 'Gold', 'The official currency of the realm.'],
+			[process.env.LOOT_BERRIES_ADDR, 10, 'Berries', 'A handful of juicy red berries'],
+			[process.env.LOOT_MUSHROOM_ADDR, 10, 'Mushroom', 'A small white mushroom with a strong smell.']
 		]
 	},
 	{
@@ -203,8 +203,8 @@ const	ITEMS_MEALS = [
 		address: '0xA0e9159EfC4407c4465bbCDF0e7538D6869d81a3',
 		type: 'enumerable',
 		cost: [
-			[process.env.RARITY_GOLD_ADDR, 50],
-			[process.env.LOOT_BERRIES_ADDR, 100]
+			[process.env.RARITY_GOLD_ADDR, 50, 'Gold', 'The official currency of the realm.'],
+			[process.env.LOOT_BERRIES_ADDR, 100, 'Berries', 'A handful of juicy red berries']
 		]
 	},
 ];

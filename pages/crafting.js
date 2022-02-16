@@ -83,9 +83,9 @@ function	Index({tab, onApproveAll}) {
 					recipe={{
 						...recipe,
 						cost: [
-							[process.env.RARITY_GOLD_ADDR, recipe.cost],
-							[process.env.RARITY_EXTENDED_XP_ADDR, 250],
-							[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
+							[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
+							[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
+							[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
 						]
 					}} />
 			));
@@ -104,9 +104,9 @@ function	Index({tab, onApproveAll}) {
 							...recipe,
 							effect: recipe.description,
 							cost: [
-								[process.env.RARITY_GOLD_ADDR, recipe.cost],
-								[process.env.RARITY_EXTENDED_XP_ADDR, 250],
-								[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
+								[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
+								[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
+								[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
 							]
 						}} />
 				))
@@ -126,9 +126,9 @@ function	Index({tab, onApproveAll}) {
 							...recipe,
 							effect: recipe.description,
 							cost: [
-								[process.env.RARITY_GOLD_ADDR, recipe.cost],
-								[process.env.RARITY_EXTENDED_XP_ADDR, 250],
-								[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
+								[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
+								[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
+								[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
 							]
 						}} />
 				))
@@ -148,9 +148,9 @@ function	Index({tab, onApproveAll}) {
 							...recipe,
 							effect: recipe.description,
 							cost: [
-								[process.env.RARITY_GOLD_ADDR, recipe.cost],
-								[process.env.RARITY_EXTENDED_XP_ADDR, 250],
-								[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
+								[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
+								[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
+								[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
 							]
 						}} />
 				))
@@ -170,9 +170,9 @@ function	Index({tab, onApproveAll}) {
 							...recipe,
 							effect: recipe.description,
 							cost: [
-								[process.env.RARITY_GOLD_ADDR, recipe.cost],
-								[process.env.RARITY_EXTENDED_XP_ADDR, 250],
-								[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
+								[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
+								[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
+								[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
 							]
 						}} />
 				))
@@ -192,9 +192,9 @@ function	Index({tab, onApproveAll}) {
 							...recipe,
 							effect: recipe.description,
 							cost: [
-								[process.env.RARITY_GOLD_ADDR, recipe.cost],
-								[process.env.RARITY_EXTENDED_XP_ADDR, 250],
-								[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
+								[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
+								[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
+								[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
 							]
 						}} />
 				))
@@ -214,9 +214,9 @@ function	Index({tab, onApproveAll}) {
 							...recipe,
 							effect: recipe.description,
 							cost: [
-								[process.env.RARITY_GOLD_ADDR, recipe.cost],
-								[process.env.RARITY_EXTENDED_XP_ADDR, 250],
-								[process.env.DUNGEON_THE_CELLAR_ADDR, -1],
+								[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
+								[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
+								[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
 							]
 						}} />
 				))

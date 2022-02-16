@@ -5,6 +5,7 @@ import	useInventory		from	'contexts/useInventory';
 import	useRarity			from	'contexts/useRarity';
 import	useClientEffect		from	'hooks/useClientEffect';
 import	{unlock}			from	'utils/actions/rarity_extended_farming';
+import	Tooltip				from	'components/Tooltip';
 
 const RowFarms = React.memo(function RowFarms({farm, level}) {
 	const	{provider} = useWeb3();
@@ -65,11 +66,20 @@ const RowFarms = React.memo(function RowFarms({farm, level}) {
 				<div className={'grid flex-row grid-cols-5 gap-2 space-x-0 md:flex md:space-x-2'}>
 					{farm.cost.map(({name, src, amount}) => (
 						<div key={name} className={''}>
-							<div className={'relative p-2 w-14 h-14 bg-500 image-wrapper'}>
+							<div className={'group relative w-14 h-14 rounded-sm cursor-help bg-500 image-wrapper tooltip'}>
 								<Image src={src} width={48} height={48} />
 								<div className={'absolute right-1 bottom-1 text-sm'}>
 									{`x${amount}`}
 								</div>
+								<Tooltip className={'pt-2 w-80 text-sm'}> 
+									<div className={'flex flex-col justify-center items-center'}>
+										<Image src={src} width={80} height={80} />
+										<div>
+											<b className={'mb-1'}>{name}</b>
+											<p className={'mb-1'}>{'Accusamus libero qui ut magnam quo et. Velit eum voluptatem quisquam quam vitae. Odio cupiditate ut fugit aut ab quia. Accusantium alias sit vel consequatur aliquam. Nostrum quis qui tenetur eum ab mollitia'}</p>
+										</div>
+									</div>
+								</Tooltip>
 							</div>
 						</div>
 					))}

@@ -124,7 +124,7 @@ export const InventoryContextApp = ({children}) => {
 		let	rIndex = 0;
 		_inventory[process.env.RARITY_GOLD_ADDR] = {
 			name: 'Gold',
-			description: 'Currency in the realm',
+			description: 'The official currency of the realm.',
 			img: `/items/${process.env.RARITY_GOLD_ADDR}.png`,
 			address: process.env.RARITY_GOLD_ADDR,
 			type: 'enumerable',
