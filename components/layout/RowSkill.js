@@ -10,9 +10,9 @@ const RowSkill = React.memo(function RowSkill({currentAdventurer, skill, isClass
 	const	canSave = currentAdventurer.skills[skill?.id - 1] !== updateSkills[skill?.id];
 
 	return (
-		<div className={'p-4'}>
-			<div className={'grid grid-cols-12 gap-x-8'}>
-				<div className={'flex flex-row col-span-3'}>
+		<div className={'p-0 md:p-4'}>
+			<div className={'grid grid-cols-12 gap-x-0 gap-y-4 p-4 md:gap-x-8 md:gap-y-0'}>
+				<div className={'flex flex-row col-span-12 md:col-span-3'}>
 					<div className={'flex w-20 min-w-20 h-20 bg-500 flex-center'}>
 						<Image src={skill.img} width={80} height={80} objectFit={'contain'} />
 					</div>
@@ -26,7 +26,7 @@ const RowSkill = React.memo(function RowSkill({currentAdventurer, skill, isClass
 					</div>
 				</div>
 
-				<div className={'flex flex-col col-span-6'}>
+				<div className={'flex flex-col col-span-12 md:col-span-6'}>
 					<div className={`text-sm text-plain-60 cursor-help ${expanded ? 'line-clamp-none' : skill?.synergy > 0 && skill?.armorCheckPenalty > 0 ? 'line-clamp-2' : skill?.synergy > 0 || skill?.armorCheckPenalty > 0 ? 'line-clamp-3' : 'line-clamp-4'}`} onClick={() => set_expanded(!expanded)}>
 						{skill.check}
 					</div>
@@ -44,7 +44,7 @@ const RowSkill = React.memo(function RowSkill({currentAdventurer, skill, isClass
 						</div> : null}
 				</div>
 
-				<div className={'flex col-span-3 justify-center items-start w-full'}>
+				<div className={'flex col-span-12 justify-center items-start md:col-span-3 md:justify-end'}>
 					<div className={'flex flex-row space-x-4 w-full'}>
 						<div className={'flex relative justify-between items-center w-1/2 button-fake'}>
 							<div onClick={onReduceLevel}>

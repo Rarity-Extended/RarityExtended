@@ -20,8 +20,8 @@ const RowCraftMeals = React.memo(function RowCraftMeals({recipe, currentAdventur
 	const	canCraft = ensureCanCraft(currentAdventurer, inventory, recipe.cost);
 
 	return (
-		<div className={'grid grid-cols-7 gap-x-8 p-4'}>
-			<div className={'flex flex-row col-span-2'}>
+		<div className={'grid grid-cols-7 gap-x-0 gap-y-4 p-4 md:gap-x-8 md:gap-y-0'}>
+			<div className={'flex flex-row col-span-7 md:col-span-2'}>
 				<div className={'flex w-20 min-w-20 h-20 bg-500 flex-center'}>
 					<Image src={recipe.img} width={64} height={64} objectFit={'contain'} />
 				</div>
@@ -35,8 +35,8 @@ const RowCraftMeals = React.memo(function RowCraftMeals({recipe, currentAdventur
 				</div>
 			</div>
 
-			<div className={'flex col-span-3 pl-8'}>
-				<div className={'flex flex-row space-x-2'}>
+			<div className={'flex col-span-7 pl-0 md:col-span-3 md:pl-8'}>
+				<div className={'grid flex-row grid-cols-5 gap-2 space-x-0 md:flex md:space-x-2'}>
 					{recipe.cost.map(([addr, cost]) => (
 						<div key={addr} className={''}>
 							<div className={'relative p-2 w-14 h-14 bg-500 image-wrapper'}>
@@ -50,8 +50,8 @@ const RowCraftMeals = React.memo(function RowCraftMeals({recipe, currentAdventur
 				</div>
 			</div>
 
-			<div className={'flex col-span-2 justify-end items-start'}>
-				<div className={'flex flex-row w-1/2'}>
+			<div className={'flex col-span-7 justify-center items-start md:col-span-2 md:justify-end'}>
+				<div className={'flex flex-row w-full md:w-1/2'}>
 					<button
 						disabled={!canCraft}
 						onClick={() => !isApproved ? onApprove() : canCraft ? onCraft() : null}

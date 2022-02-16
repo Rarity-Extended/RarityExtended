@@ -4,6 +4,7 @@ import	{useRouter}						from	'next/router';
 import	{Dialog, Transition} 			from	'@headlessui/react';
 import	{Media, MediaContextProvider}	from	'contexts/useUI';
 import	RarityCareSystem				from	'components/RarityCareSystem';
+import	MobileDetails					from	'components/MobileDetails';
 import	AdventurerDetails				from	'components/sections/Adventurer';
 
 const MobileMenu = React.memo(function MobileMenu() {
@@ -107,6 +108,12 @@ const MobileMenu = React.memo(function MobileMenu() {
 														{'Equipements'}
 													</button>
 												</Link>
+												<Link href={'/professions'}>
+													<button
+														className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/professions' ? '' : 'cursor-pointer'}`}>
+														{'Farming'}
+													</button>
+												</Link>
 												<Link href={'/bank'}>
 													<button
 														className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/bank' ? '' : 'cursor-pointer'}`}>
@@ -115,6 +122,7 @@ const MobileMenu = React.memo(function MobileMenu() {
 												</Link>
 											</section>
 											<RarityCareSystem minimal/>
+											<MobileDetails />
 										</div>
 									</div>
 								</div>
@@ -174,6 +182,7 @@ function	Template({children}) {
 									{'Feats'}
 								</p>
 							</Link>
+							
 							<Link href={'/equipements'}>
 								<p
 									className={`p-4 pr-6 pl-0 text-plain text-sm transition-opacity hover:opacity-100 ${router.pathname === '/equipements' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>

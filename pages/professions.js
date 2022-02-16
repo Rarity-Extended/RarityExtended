@@ -140,11 +140,11 @@ function	TabFarmWood({access, level}) {
 			<div className={'pb-4 mt-8 box'}>
 				<div className={'p-4'}>
 					<p className={'mb-2 text-lg font-bold text-plain'}>{'Farming Slots'}</p>
-					<p className={'w-3/4 text-sm font-normal text-plain-60'}>
+					<p className={'w-full text-sm font-normal md:w-3/4 text-plain-60'}>
 						{'Once you reach the required level and have enough resources, you can unlock a slot for your farm. You can have as much slots as you want and you can harvest each slot once a day.'}
 					</p>
 				</div>
-				<div className={'grid grid-cols-1 divide-y dark:divide-dark-600 divide-light-primary-lighter'}>
+				<div className={'grid grid-cols-1 divide-y divide-light-primary-lighter dark:divide-dark-600'}>
 					{WOOD_TIERS.filter((e, index) => (!e.unlocked && !access[index])).map((farm) => <RowFarms key={farm.name} farm={farm} level={level} />)}
 				</div>
 			</div>
@@ -165,7 +165,7 @@ function	TabFarmMine({access, level}) {
 			<div className={'pb-4 mt-8 box'}>
 				<div className={'p-4'}>
 					<p className={'mb-2 text-lg font-bold text-plain'}>{'Farming Slots'}</p>
-					<p className={'w-3/4 text-sm font-normal text-plain-60'}>
+					<p className={'w-full text-sm font-normal md:w-3/4 text-plain-60'}>
 						{'Once you reach the required level and have enough resources, you can unlock a slot for your farm. You can have as much slots as you want and you can harvest each slot once a day.'}
 					</p>
 				</div>

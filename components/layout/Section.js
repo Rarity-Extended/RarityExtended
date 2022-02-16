@@ -6,14 +6,14 @@ function Head({children, title, tabs, button, tab, set_tab}) {
 	return (
 		<header id={'content'} aria-label={`tab ${tab}`} className={'pb-6 box'}>
 			<div className={'flex flex-col p-4 pb-2 border-b-2 dark:border-b-dark-300'}>
-				<div className={'flex flex-row justify-between items-center mb-4 h-9'}>
+				<div className={'flex flex-row justify-between items-start mb-4 h-9 md:items-center'}>
 					<div className={'flex flex-row items-center'}>
 						<h2 className={'text-base font-bold text-plain'}>{title}</h2>
 						<div className={'flex ml-2 h-6 flex-center'}>
 							<IconHelp />
 						</div>
 					</div>
-					<div className={'flex flex-row items-center space-x-4'}>
+					<div className={'flex flex-col-reverse items-center space-x-0 md:flex-row md:space-x-4'}>
 						{children}
 						<div>
 							{button ? <button
@@ -25,7 +25,7 @@ function Head({children, title, tabs, button, tab, set_tab}) {
 						</div>
 					</div>
 				</div>
-				<nav className={'flex relative flex-row items-center space-x-4'}>
+				<nav className={'hidden relative flex-row items-center space-x-4 md:flex'}>
 					{tabs.map((name, index) => (
 						<div
 							key={name}
@@ -34,6 +34,16 @@ function Head({children, title, tabs, button, tab, set_tab}) {
 							<p className={'text-sm'}>{name}</p>
 						</div>
 					))}
+				</nav>
+				<nav className={'flex relative flex-row items-center my-2 mt-4 md:hidden'}>
+					<select
+						value={tab}
+						className={'flex items-center py-2 px-3 w-full text-sm dark:text-white whitespace-nowrap bg-light-primary-lighter dark:bg-dark-500 rounded-sm border-none cursor-pointer'}
+						onChange={(e) => set_tab(Number(e.target.value))}>
+						{tabs.map((name, index) => (
+							<option className={'cursor-pointer'} key={index} value={index}>{name}</option>
+						))}
+					</select>
 				</nav>
 			</div>
 		</header>

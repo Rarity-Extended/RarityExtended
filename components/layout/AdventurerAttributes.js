@@ -317,8 +317,8 @@ function	OverviewAttributes({adventurer}) {
 
 	const	health = health_by_class_and_level(adventurer.class, adventurer.level, adventurer.attributes.constitution);
 	return (
-		<div className={'flex flex-col items-center mt-auto w-full'}>
-			<div className={'grid grid-cols-2 gap-x-16 gap-y-2 w-full'}>
+		<div className={'flex relative flex-col-reverse items-center p-4 mt-auto w-full md:static md:flex-col md:p-0'}>
+			<div className={'grid grid-cols-1 gap-x-16 gap-y-2 mt-4 w-full md:grid-cols-2 md:mt-0'}>
 				<div className={'flex flex-row justify-between items-center'}>
 					<div className={'flex flex-row items-center opacity-60'}>
 						<IconAttributeStrength width={16} height={16} />
@@ -420,12 +420,11 @@ function	OverviewAttributes({adventurer}) {
 					<FakeAttributeSetter value={modifier_for_attribute(adventurer.attributes.dexterity)} />
 				</div>
 			</div>
-			<div className={'absolute top-0 right-0'}>
+			<div className={'absolute -top-4 right-4 md:top-0 md:right-0'}>
 				{renderSaveButtons()}
 			</div>
 
-
-			<div className={'mt-9 w-full'}>
+			<div className={'mt-2 w-full md:mt-9'}>
 				<div className={'flex flex-row justify-between items-center mb-1 w-full text-xs font-bold opacity-60'}>
 					<div>{'Health'}</div>
 					<div>{`${health} / ${health}`}</div>
@@ -437,7 +436,7 @@ function	OverviewAttributes({adventurer}) {
 				</div>
 			</div>
 
-			<div className={'mt-1 w-full'}>
+			<div className={'mt-2 w-full md:mt-1'}>
 				<div className={'flex flex-row justify-between items-center mb-1 w-full text-xs font-bold opacity-60'}>
 					<div>{`Level ${adventurer.level}`}</div>
 					<div>{`${Number(adventurer.xp)} / ${xpRequired(adventurer.level)}`}</div>

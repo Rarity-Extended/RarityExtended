@@ -24,9 +24,9 @@ function	OverviewFeats({adventurer}) {
 	}
 
 	return (
-		<div className={'flex flex-col items-center mt-auto w-full'} style={{height: 282}}>
+		<div className={'flex flex-col items-center p-4 mt-auto w-full h-auto md:p-0 md:h-282px'}>
 			<div className={'mb-6'}>
-				<p className={' text-sm'}>
+				<p className={'text-sm'}>
 					<span className={'text-plain-60'}>{'A feat represents a talent or an area of expertise that gives a character special capabilities. It embodies training, experience, and abilities beyond what a class provides. Some are inherent to the class, while others can be learned. You have '}</span>
 					<Link href={'/feats#content'}>
 						<span className={'font-bold hover:underline cursor-pointer text-highlight'}>{`${_pointLefts <= 1 ? `${_pointLefts} point` : `${_pointLefts} points`} left`}</span>
@@ -34,12 +34,14 @@ function	OverviewFeats({adventurer}) {
 					<span className={'text-plain-60'}>{' to spend.'}</span>
 				</p>
 			</div>
-			<div className={'grid overflow-auto grid-cols-3 gap-x-4 gap-y-5 pb-2 w-full scrollbar-none'}>
+			<div className={'grid overflow-auto grid-cols-1 gap-x-8 gap-y-4 w-full md:grid-cols-3 scrollbar-none'}>
 				{Object.values(FEATS).filter(isLearned).map((feat) => (
 					<div key={feat.id} className={'flex flex-row justify-between items-center'}>
 						<div className={'flex flex-row items-center'}>
-							<Image src={feat.img} width={56} height={56} />
-							<div className={'flex flex-col justify-between h-14'}>
+							<div style={{minWidth: 56}}>
+								<Image src={feat.img} width={56} height={56} />
+							</div>
+							<div className={'flex flex-col justify-between -mt-2 ml-2 h-14 md:mt-0'}>
 								<p className={'ml-2 text-sm'}>{feat.name}</p>
 								<p className={'ml-2 text-xs opacity-60'}>{`Type: ${feat?.type || '-'}`}</p>
 							</div>

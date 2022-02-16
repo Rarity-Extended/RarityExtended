@@ -129,7 +129,7 @@ function	Details() {
 				{'Check other classes sets'}
 			</summary>
 			<div className={`w-full transition-max-height duration-500 overflow-hidden ${isExpandedAnimation ? 'max-h-full' : 'max-h-0'}`}>
-				<div className={'grid grid-cols-1 pt-0 divide-y dark:divide-dark-600 divide-light-primary-lighter'}>
+				<div className={'grid grid-cols-1 pt-0 divide-y divide-light-primary-lighter dark:divide-dark-600'}>
 					{isExpanded ? (
 						SETS.map((set, index) => (
 							<RowBasicSets key={`${set.name}_${index}`} darker set={set} />
@@ -320,14 +320,14 @@ function	Wrapper() {
 				button={{
 					onClick: onApproveAll,
 					disabled: specialApprovals[process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR] === true,
-					label: specialApprovals[process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR] ? 'Equipement approved!' : 'Approve equipements'
+					label: specialApprovals[process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR] ? 'Approved!' : 'Approve equipements'
 				}}>
 				<Index />
 			</Section>
 			<div className={'pb-4 mt-8 box'}>
 				<div className={'p-4'}>
 					<p className={'mb-2 text-lg font-bold text-plain'}>{'Basic set'}</p>
-					<p className={'w-3/4 text-sm italic font-normal text-plain-60'}>
+					<p className={'w-full text-sm italic font-normal md:w-3/4 text-plain-60'}>
 						{'Hello adventurer! Are you ready to start your great journey? As an old man told us years ago, it\'s dangerous to go alone. I have here some of my old equipement. Do you want to buy some?'}
 					</p>
 				</div>

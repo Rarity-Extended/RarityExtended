@@ -23,7 +23,7 @@ function	ProfessionLevelProgress({adventurerID, farmType, name, level, xp}) {
 
 	if (progress < 1) {
 		return (
-			<div className={'mb-1 w-full'}>
+			<div className={'mt-2 mb-1 w-full'}>
 				<div className={'flex flex-row justify-between items-center mb-1 w-full text-xs font-bold opacity-60'}>
 					<div>{`${name} level ${level}`}</div>
 					<div>{`${Number(xp)} / ${xpRequired(level + 1)}`}</div>
@@ -39,7 +39,7 @@ function	ProfessionLevelProgress({adventurerID, farmType, name, level, xp}) {
 		);
 	} else {
 		return (
-			<div className={'mb-1 w-full'}>
+			<div className={'mt-2 mb-1 w-full'}>
 				<div className={'flex flex-row justify-between items-center mb-1 w-full text-xs font-bold'}>
 					<div className={'opacity-60'}>{`${name} level ${level}`}</div>
 					<div
@@ -62,7 +62,7 @@ function	ProfessionLevelProgress({adventurerID, farmType, name, level, xp}) {
 
 function	OverviewProfession({adventurer}) {
 	return (
-		<div className={'flex flex-col items-center mt-auto w-full'}>
+		<div className={'flex flex-col items-center px-4 mt-auto w-full md:px-0'}>
 			<ProfessionLevelProgress
 				adventurerID={adventurer.tokenID}
 				farmType={process.env.RARITY_EXTENDED_FARM_TYPE_WOOD}

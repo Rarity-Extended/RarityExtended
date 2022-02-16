@@ -225,7 +225,6 @@ function	Index({tab, onApproveAll}) {
 		return (null);
 	}
 
-
 	return (
 		<div className={'grid grid-cols-1 divide-y divide-light-primary-lighter dark:divide-dark-600'}>
 			{renderShop()}

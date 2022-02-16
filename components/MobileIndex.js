@@ -2,6 +2,7 @@ import	React							from	'react';
 import	Link							from	'next/link';
 import	{useRouter}						from	'next/router';
 import	RarityCareSystem				from	'components/RarityCareSystem';
+import	MobileDetails					from	'components/MobileDetails';
 import	AdventurerDetails				from	'components/sections/Adventurer';
 
 const MobileIndex = React.memo(function MobileIndex() {
@@ -23,6 +24,12 @@ const MobileIndex = React.memo(function MobileIndex() {
 						{'Adventures'}
 					</button>
 				</Link>
+				<Link href={'/equipements'}>
+					<button
+						className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/equipements' ? '' : 'cursor-pointer'}`}>
+						{'Equipements'}
+					</button>
+				</Link>
 				<Link href={'/crafting'}>
 					<button
 						className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/crafting' ? '' : 'cursor-pointer'}`}>
@@ -41,6 +48,12 @@ const MobileIndex = React.memo(function MobileIndex() {
 						{'Feats'}
 					</button>
 				</Link>
+				<Link href={'/professions'}>
+					<button
+						className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/professions' ? '' : 'cursor-pointer'}`}>
+						{'Farming'}
+					</button>
+				</Link>
 				<Link href={'/bank'}>
 					<button
 						className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/bank' ? '' : 'cursor-pointer'}`}>
@@ -49,6 +62,7 @@ const MobileIndex = React.memo(function MobileIndex() {
 				</Link>
 			</section>
 			<RarityCareSystem minimal/>
+			<MobileDetails />
 		</div>
 	);
 });

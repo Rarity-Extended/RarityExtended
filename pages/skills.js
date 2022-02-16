@@ -165,7 +165,7 @@ function	Wrapper() {
 			title={'Skills'}
 			tabs={['All', adventurerClass.name, 'Cross-class']}
 			headChildren={
-				<div className={'flex text-xs whitespace-nowrap text-plain'}>
+				<div className={'flex mt-1 text-xs whitespace-nowrap md:mt-0 text-plain'}>
 					{`${updateSkills.remainingPoints <= 1 ? 'Point left:' : 'Points left:'}`}&nbsp;
 					<span className={'font-bold text-highlight'}>{updateSkills.remainingPoints}</span>
 				</div>
