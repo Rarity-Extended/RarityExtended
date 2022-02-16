@@ -129,7 +129,7 @@ function	Details() {
 				{'Check other classes sets'}
 			</summary>
 			<div className={`w-full transition-max-height duration-500 overflow-hidden ${isExpandedAnimation ? 'max-h-full' : 'max-h-0'}`}>
-				<div className={'grid grid-cols-1 pt-0 divide-y divide-dark-600'}>
+				<div className={'grid grid-cols-1 pt-0 divide-y dark:divide-dark-600 divide-light-primary-lighter'}>
 					{isExpanded ? (
 						SETS.map((set, index) => (
 							<RowBasicSets key={`${set.name}_${index}`} darker set={set} />

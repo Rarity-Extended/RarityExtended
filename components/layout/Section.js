@@ -30,7 +30,7 @@ function Head({children, title, tabs, button, tab, set_tab}) {
 						<div
 							key={name}
 							onClick={() => set_tab(index)}
-							className={`p-2 -mb-2 ${index === 0 ? 'pl-0' : ''} ${tab === index ? 'text-plain border-b-2 dark:border-b-dark-primary' : 'cursor-pointer text-plain-60 hover-text-plain border-b-2 border-transparent'}`}>
+							className={`p-2 -mb-2 ${index === 0 ? 'pl-0' : ''} ${tab === index ? 'text-plain border-b-2 border-b-light-primary dark:border-b-dark-primary' : 'cursor-pointer text-plain-60 hover-text-plain border-b-2 border-transparent'}`}>
 							<p className={'text-sm'}>{name}</p>
 						</div>
 					))}

@@ -34,7 +34,7 @@ function	OverviewFeats({adventurer}) {
 					<span className={'text-plain-60'}>{' to spend.'}</span>
 				</p>
 			</div>
-			<div className={'grid overflow-auto grid-cols-3 gap-x-4 gap-y-5 w-full scrollbar-none'}>
+			<div className={'grid overflow-auto grid-cols-3 gap-x-4 gap-y-5 pb-2 w-full scrollbar-none'}>
 				{Object.values(FEATS).filter(isLearned).map((feat) => (
 					<div key={feat.id} className={'flex flex-row justify-between items-center'}>
 						<div className={'flex flex-row items-center'}>

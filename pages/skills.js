@@ -68,7 +68,7 @@ function	Index({tab, search, updateSkills, set_updateSkills, skillPoints, advent
 	}
 
 	return (
-		<div className={'grid grid-cols-1 divide-y divide-dark-600'}>
+		<div className={'grid grid-cols-1 divide-y divide-light-primary-lighter dark:divide-dark-600'}>
 			{
 				Object.values(SKILLS)
 					.filter((skill) => {

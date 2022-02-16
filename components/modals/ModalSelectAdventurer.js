@@ -49,7 +49,7 @@ function ModalSelectAdventurer({isOpen, onClose, onSelect}) {
 									<ul role={'list'} className={'overflow-y-auto flex-1'}>
 										{[...Object.values(rarities)].map((adventurer) => (
 											<li key={adventurer.tokenID}>
-												<div className={'group flex relative items-center py-3 px-4 hover:bg-dark-900 cursor-pointer'}>
+												<div className={'group flex relative items-center py-3 px-4 hover:bg-light-400 hover:dark:bg-dark-900 cursor-pointer'}>
 													<div onClick={() => clickAdventurer(adventurer)} className={'block flex-1 p-1 -m-1'}>
 														<div className={'flex relative flex-1 items-center min-w-0'}>
 															<span className={'inline-block relative w-20 h-20'}>

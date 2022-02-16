@@ -70,17 +70,18 @@ export async function	equip({provider, tokenID, minter, itemID, itemName, slot},
 		process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, [
 			'function RARITY_EXTENDED_NCP() public view returns (uint256)',
 			'function set_equipement(uint _slot, uint _adventurer, address _operator, address _registry, uint256 _tokenID) public',
-		],
-		signer
+		], signer
 	);
 
 	const	isApproved = await isApprovedForAll({provider});
 	if (!isApproved) {
-		_toast = toast.loading(`${currentStep++}/${++steps} - Approving ${itemName}...`);
-		const	raritySource = RARITY_MANIFEST.connect(signer);
 		try {
 			_toast = toast.loading('Approving equipements...');
-			const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, true);
+			const	raritySource = RARITY_MANIFEST.connect(signer);
+			const	transaction = await raritySource.setApprovalForAll(
+				process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR,
+				true
+			);
 			const	transactionResult = await transaction.wait();
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
@@ -124,6 +125,7 @@ export async function	equip({provider, tokenID, minter, itemID, itemName, slot},
 		toast.dismiss(_toast);
 		toast.error('Something went wrong, please try again later.');
 		callback({error, data: undefined});
+		return;
 	}
 
 	_toast = toast.loading(`${currentStep}/${steps} - Trying to equip ${itemName}...`);
@@ -169,7 +171,6 @@ export async function	rEquip({provider, tokenID, minter, itemID, itemName, slot}
 	//3 steps : Approve adventurer, approve Token and equip
 	const	isApproved = await isApprovedForAll({provider});
 	if (!isApproved) {
-		_toast = toast.loading(`${currentStep++}/${++steps} - Approving ${itemName}...`);
 		const	raritySource = RARITY_MANIFEST.connect(signer);
 		try {
 			_toast = toast.loading('Approving equipements...');
