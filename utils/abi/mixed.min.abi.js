@@ -21,10 +21,32 @@ export const RARITY_SKIN_HELPER_ABI = [
 ];
 
 export const RARITY_CRAFTING_HELPER_ABI = [
-	{'inputs':[{'internalType':'address','name':'owner','type':'address'}],'name':'getItemsByAddress','outputs':[{'components':[{'internalType':'uint8','name':'base_type','type':'uint8'},{'internalType':'uint8','name':'item_type','type':'uint8'},{'internalType':'uint256','name':'crafter','type':'uint256'},{'internalType':'uint256','name':'item_id','type':'uint256'}],'internalType':'struct RarityCraftingHelper.Item[]','name':'','type':'tuple[]'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_summoner','type':'uint256'},{'internalType':'uint8','name':'_base_type','type':'uint8'},{'internalType':'uint8','name':'_item_type','type':'uint8'},{'internalType':'uint256','name':'_crafting_materials','type':'uint256'}],'name':'safeCraft','outputs':[],'stateMutability':'nonpayable','type':'function'
-	}
+	{'inputs':[{'internalType':'address','name':'owner','type':'address'}],'name':'getItemsByAddress','outputs':[{'components':[{'internalType':'uint8','name':'base_type','type':'uint8'},{'internalType':'uint8','name':'item_type','type':'uint8'},{'internalType':'uint256','name':'crafter','type':'uint256'},{'internalType':'uint256','name':'item_id','type':'uint256'}],'internalType':'struct RarityCraftingHelper.Item[]','name':'','type':'tuple[]'}],'stateMutability':'view','type':'function'},{'inputs':[{'internalType':'uint256','name':'_summoner','type':'uint256'},{'internalType':'uint8','name':'_base_type','type':'uint8'},{'internalType':'uint8','name':'_item_type','type':'uint8'},{'internalType':'uint256','name':'_crafting_materials','type':'uint256'}],'name':'safeCraft','outputs':[],'stateMutability':'nonpayable','type':'function'},
+	{'inputs':[{'internalType':'uint256','name':'_summoner','type':'uint256'},{'internalType':'uint8','name':'_base_type','type':'uint8'},{'internalType':'uint8','name':'_item_type','type':'uint8'},{'internalType':'uint256','name':'_crafting_materials','type':'uint256'}],'name':'craft','outputs':[],'stateMutability':'nonpayable','type':'function'}
 ];
 
-export const RARITY_EXTENDEDN_FARM_CORE_ABI = [
+export const RARITY_EXTENDED_FARM_CORE_ABI = [
 	{'inputs': [{'internalType': 'uint256','name': '_adventurer','type': 'uint256'}, {'internalType': 'uint256','name': '_farmType','type': 'uint256'}],'name': 'adventurerStatus','outputs': [{'internalType': 'uint256','name': 'level','type': 'uint256'}, {'internalType': 'uint256','name': 'xp','type': 'uint256'}],'stateMutability': 'view','type': 'function'},
+];
+
+export const RARITY_EXTENDED_FARM_BASE_ABI = [
+	{'inputs':[{'internalType':'uint256','name':'_adventurer','type':'uint256'}],'name':'adventurerHasAccess','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},
+	{'inputs':[{'internalType':'uint256','name':'_adventurer','type':'uint256'}],'name':'estimateHarvest','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},
+	{'inputs':[{'internalType':'uint256','name':'','type':'uint256'}],'name':'nextHarvest','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},
+	{'inputs':[{'internalType':'uint256','name':'','type':'uint256'}],'name':'upgradeLevel','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},
+	{'inputs':[{'internalType':'uint256','name':'_toUpgradeLevel','type':'uint256'}],'name':'upgradePrice','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'pure','type':'function'}
+];
+
+export const RARITY_ABI = [
+	{'inputs':[{'internalType':'address','name':'owner','type':'address'},{'internalType':'address','name':'operator','type':'address'}],'name':'isApprovedForAll','outputs':[{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'},
+	{'inputs':[{'internalType':'uint256','name':'_summoner','type':'uint256'}],'name':'level_up','outputs':[],'stateMutability':'nonpayable','type':'function'},
+	{'inputs':[{'internalType':'uint256','name':'tokenId','type':'uint256'}],'name':'ownerOf','outputs':[{'internalType':'address','name':'','type':'address'}],'stateMutability':'view','type':'function'},
+	{'inputs':[{'internalType':'uint256','name':'_class','type':'uint256'}],'name':'summon','outputs':[],'stateMutability':'nonpayable','type':'function'},
+	{'inputs':[{'internalType':'uint256','name':'_summoner','type':'uint256'}],'name':'summoner','outputs':[{'internalType':'uint256','name':'_xp','type':'uint256'},{'internalType':'uint256','name':'_log','type':'uint256'},{'internalType':'uint256','name':'_class','type':'uint256'},{'internalType':'uint256','name':'_level','type':'uint256'}],'stateMutability':'view','type':'function'}
+];
+
+export const RARITY_GOLD_ABI = [
+	{'inputs':[{'internalType':'uint256','name':'','type':'uint256'}],'name':'balanceOf','outputs':[{'internalType':'uint256','name':'','type':'uint256'}],'stateMutability':'view','type':'function'},
+	{'inputs':[{'internalType':'uint256','name':'summoner','type':'uint256'}],'name':'claim','outputs':[],'stateMutability':'nonpayable','type':'function'},
+	{'inputs':[{'internalType':'uint256','name':'summoner','type':'uint256'}],'name':'claimable','outputs':[{'internalType':'uint256','name':'amount','type':'uint256'}],'stateMutability':'view','type':'function'}
 ];

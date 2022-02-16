@@ -1,11 +1,11 @@
 import	React					from	'react';
 import	Image					from	'next/image';
 import	Link					from	'next/link';
-import	Template				from	'components/templates/Adventurer';
+import	Template				from	'components/templates/Head';
 import	RarityCareSystem		from	'components/RarityCareSystem';
 import	MobileIndex				from	'components/MobileIndex';
-import	AdventurerDetails		from	'sections/adventurer/WrapperMinimal';
-import	useLocalStorage			from	'hook/useLocalStorage';
+import	AdventurerDetails		from	'components/AdventurerCard';
+import	useLocalStorage			from	'hooks/useLocalStorage';
 import	useRarity				from	'contexts/useRarity';
 
 function	NewAdventurer() {

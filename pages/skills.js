@@ -1,7 +1,7 @@
 import	React, {useState}								from	'react';
 import	useRarity										from	'contexts/useRarity';
 import	useWeb3											from	'contexts/useWeb3';
-import	Template										from	'components/templates/Adventurer';
+import	Template										from	'components/templates/Head';
 import	RowSkill										from	'components/layout/RowSkill';
 import	Section											from	'components/layout/Section';
 import	{learnSkills}									from	'utils/actions';

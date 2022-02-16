@@ -1,5 +1,5 @@
 import	React, {useState}			from	'react';
-import	Template					from	'components/templates/Adventurer';
+import	Template					from	'components/templates/Head';
 import	Image						from	'next/image';
 import	Link						from	'next/link';
 import	dayjs						from	'dayjs';

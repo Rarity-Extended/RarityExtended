@@ -14,7 +14,7 @@ import	useRarity					from	'contexts/useRarity';
 import	useInventory				from	'contexts/useInventory';
 import	useUI						from	'contexts/useUI';
 import	useDungeons					from	'contexts/useDungeons';
-import	{perform}					from	'utils/actions/perform';
+import	{perform}					from	'utils/actions/rarity_openmic_perform';
 import	SKILLS						from	'utils/codex/core/skills';
 import	OPENMIC_LOOT				from	'utils/codex/items/items_dungeon_openmic.json';
 import	CLASSES						from	'utils/codex/core/classes';

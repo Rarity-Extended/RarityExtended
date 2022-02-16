@@ -18,11 +18,47 @@ import	IconRing				from	'components/icons/IconRing';
 import	Tooltip					from	'components/Tooltip';
 import	ItemAttributes			from	'components/itemAttributes';
 import	* as actions			from	'utils/actions';
+import	{setName}				from	'utils/actions/rarity_extended_name';
 import	{unequip}				from	'utils/actions/rarity_extended_equipements';
 import	{xpRequired}			from	'utils/libs/rarity';
 import	CLASSES					from	'utils/codex/core/classes';
 
 dayjs.extend(relativeTime);
+
+function	ItemWithTooltip({provider, currentAdventurer, updateInventory, pageSlot, item, slot, children}) {
+	return (
+		<div className={'group relative w-18 cursor-help tooltip'}>
+			<div className={`aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center image-wrapper ${pageSlot === slot ? 'text-plain-60' : 'text-400 hover-text-plain-60'}`}>
+				{
+					item !== undefined ?
+						<>
+							<Image src={item.img} width={64} height={64} />
+							<Tooltip className={'top-0 left-full pl-2 w-80 cursor-auto'}> 
+								{item.name}
+								<ItemAttributes category={item.category} item={item} />
+								<button
+									onClick={() => {
+										unequip({
+											provider,
+											tokenID: currentAdventurer.tokenID,
+											itemName: item.name,
+											slot
+										}, ({error}) => {
+											if (error) return;
+											updateInventory(currentAdventurer.tokenID);
+										});
+									}}
+									className={'flex mt-4 w-full flex-center button-outline'}>
+									<p className={'select-none'}>{'Unequip'}</p>
+								</button>
+							</Tooltip>
+						</>
+						: children
+				}
+			</div>
+		</div>
+	);
+}
 
 function	OverviewEquipement({provider, raritySkin}) {
 	const	router = useRouter();
@@ -139,7 +175,7 @@ function	OverviewEquipement({provider, raritySkin}) {
 				<div
 					onClick={() => {
 						if (isSameName) {
-							actions.setName(
+							setName(
 								{provider, name, tokenID: currentAdventurer.tokenID},
 								({error}) => console.error(error),
 								(_toast) => {
@@ -163,62 +199,51 @@ function	OverviewEquipement({provider, raritySkin}) {
 		);
 	}
 
-	function	ItemWithTooltip({pageSlot, item, slot, children}) {
-		return (
-			<div className={'group relative w-18 cursor-help tooltip'}>
-				<div className={`aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center image-wrapper ${pageSlot === slot ? 'text-plain-60' : 'text-400 hover-text-plain-60'}`}>
-					{
-						item !== undefined ?
-							<>
-								<Image src={item.img} width={64} height={64} />
-								<Tooltip className={'top-0 left-full pl-2 w-80 cursor-auto'}> 
-									{item.name}
-									<ItemAttributes category={item.category} item={item} />
-									<button
-										onClick={() => {
-											unequip({
-												provider,
-												tokenID: currentAdventurer.tokenID,
-												itemName: item.name,
-												slot
-											}, ({error}) => {
-												if (error) return;
-												updateInventory(currentAdventurer.tokenID);
-											});
-										}}
-										className={'flex mt-4 w-full flex-center button-outline'}>
-										<p className={'select-none'}>{'Unequip'}</p>
-									</button>
-								</Tooltip>
-							</>
-							: children
-					}
-				</div>
-			</div>
-		);
-	}
-
 	return (
 		<div>
 			<div className={'flex flex-row'} style={{width: 384}}>
 				<div className={'grid grid-cols-1 gap-y-4 ml-auto w-18'}>
 					<Link href={'/equipements?slot=1'}>
-						<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[1]} slot={1} pageSlot={pageSlot}>
+						<ItemWithTooltip
+							provider={provider}
+							currentAdventurer={currentAdventurer}
+							updateInventory={updateInventory}
+							item={equipements[currentAdventurer.tokenID]?.[1]}
+							slot={1}
+							pageSlot={pageSlot}>
 							<IconHelmet className={'w-12 h-12'} />
 						</ItemWithTooltip>
 					</Link>
 					<Link href={'/equipements?slot=2'}>
-						<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[2]} slot={2} pageSlot={pageSlot}>
+						<ItemWithTooltip
+							provider={provider}
+							currentAdventurer={currentAdventurer}
+							updateInventory={updateInventory}
+							item={equipements[currentAdventurer.tokenID]?.[2]}
+							slot={2}
+							pageSlot={pageSlot}>
 							<IconArmor className={'w-12 h-12'} />
 						</ItemWithTooltip>
 					</Link>
 					<Link href={'/equipements?slot=3'}>
-						<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[3]} slot={3} pageSlot={pageSlot}>
+						<ItemWithTooltip
+							provider={provider}
+							currentAdventurer={currentAdventurer}
+							updateInventory={updateInventory}
+							item={equipements[currentAdventurer.tokenID]?.[3]}
+							slot={3}
+							pageSlot={pageSlot}>
 							<IconGloves className={'w-12 h-12'} />
 						</ItemWithTooltip>
 					</Link>
 					<Link href={'/equipements?slot=4'}>
-						<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[4]} slot={4} pageSlot={pageSlot}>
+						<ItemWithTooltip
+							provider={provider}
+							currentAdventurer={currentAdventurer}
+							updateInventory={updateInventory}
+							item={equipements[currentAdventurer.tokenID]?.[4]}
+							slot={4}
+							pageSlot={pageSlot}>
 							<IconBoots className={'w-12 h-12'} />
 						</ItemWithTooltip>
 					</Link>
@@ -237,7 +262,13 @@ function	OverviewEquipement({provider, raritySkin}) {
 				</div>
 				<div className={'grid grid-cols-1 gap-y-4 w-18'}>
 					<Link href={'/equipements?slot=5'}>
-						<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[5]} slot={5} pageSlot={pageSlot}>
+						<ItemWithTooltip
+							provider={provider}
+							currentAdventurer={currentAdventurer}
+							updateInventory={updateInventory}
+							item={equipements[currentAdventurer.tokenID]?.[5]}
+							slot={5}
+							pageSlot={pageSlot}>
 							<IconWeapon className={'w-12 h-12'} />
 						</ItemWithTooltip>
 					</Link>
@@ -245,15 +276,33 @@ function	OverviewEquipement({provider, raritySkin}) {
 					<Link href={'/equipements?slot=6'}>
 						{
 							equipements[currentAdventurer.tokenID]?.[6] ? (
-								<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[6]} slot={6} pageSlot={pageSlot}>
+								<ItemWithTooltip
+									provider={provider}
+									currentAdventurer={currentAdventurer}
+									updateInventory={updateInventory}
+									item={equipements[currentAdventurer.tokenID]?.[6]}
+									slot={6}
+									pageSlot={pageSlot}>
 									<IconWeapon className={'w-12 h-12'} />
 								</ItemWithTooltip>		
 							) : equipements[currentAdventurer.tokenID]?.[101] ? (
-								<ItemWithTooltip item={equipements[currentAdventurer.tokenID]?.[101]} slot={101} pageSlot={pageSlot}>
+								<ItemWithTooltip
+									provider={provider}
+									currentAdventurer={currentAdventurer}
+									updateInventory={updateInventory}
+									item={equipements[currentAdventurer.tokenID]?.[101]}
+									slo={101}
+									pageSlot={pageSlot}>
 									<IconWeapon className={'w-12 h-12'} />
 								</ItemWithTooltip>
 							) : (
-								<ItemWithTooltip item={undefined} slot={0} pageSlot={pageSlot}>
+								<ItemWithTooltip
+									provider={provider}
+									currentAdventurer={currentAdventurer}
+									updateInventory={updateInventory}
+									item={undefined}
+									slot={0}
+									pageSlot={pageSlot}>
 									<IconWeapon className={'w-12 h-12'} />
 								</ItemWithTooltip>
 							)

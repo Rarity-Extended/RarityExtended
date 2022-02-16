@@ -1,7 +1,7 @@
 import	React					from	'react';
 import	Image					from	'next/image';
 
-function	ElementInventoryItemNonFungible({item}) {
+function	ItemInventory({item}) {
 	return (
 		<div key={item.name} className={'flex flex-row items-center button-fake'}>
 			<div className={'flex relative w-14 h-14 flex-center image-wrapper'} style={{minWidth: 56}}>
@@ -19,4 +19,4 @@ function	ElementInventoryItemNonFungible({item}) {
 	);
 }
 
-export default ElementInventoryItemNonFungible;
+export default ItemInventory;

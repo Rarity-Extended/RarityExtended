@@ -8,14 +8,14 @@ import	useRarity							from	'contexts/useRarity';
 import	useWeb3								from	'contexts/useWeb3';
 import	useInventory						from	'contexts/useInventory';
 import	useDungeons							from	'contexts/useDungeons';
-import	Template							from	'components/templates/Adventurer';
+import	Template							from	'components/templates/Head';
 import	AdventureTemplate					from	'components/adventures/Template';
 import	DescriptionFormater					from	'components/adventures/DescriptionFormater';
 import	OptionsFormater						from	'components/adventures/OptionsFormater';
 import	{newEthCallProvider}				from	'utils';
 import	ADVENTURE							from	'utils/codex/adventures/the-boars';
 import	{RARITY_EXTENDED_NAME_ABI}			from	'utils/abi/mixed.min.abi';
-import	{protectBoars}						from	'utils/actions/boar';
+import	{protectBoars}						from	'utils/actions/rarity_extended_boars';
 
 dayjs.extend(relativeTime);
 function	Index({router}) {

@@ -1,13 +1,13 @@
 import	React				from	'react';
 import	useWeb3				from	'contexts/useWeb3';
 import	useRarity			from	'contexts/useRarity';
-import	OverviewAttributes	from	'sections/adventurer/OverviewAttributes';
-import	OverviewSkills		from	'sections/adventurer/OverviewSkills';
-import	OverviewFeats		from	'sections/adventurer/OverviewFeats';
-import	OverviewInventory	from	'sections/adventurer/OverviewInventory';
-import	OverviewProfession	from	'sections/adventurer/OverviewProfession';
-import	OverviewEquipement	from	'sections/adventurer/OverviewEquipement';
-import	OverviewMinimal		from	'sections/adventurer/OverviewMinimal';
+import	OverviewAttributes	from	'components/layout/AdventurerAttributes';
+import	OverviewSkills		from	'components/layout/AdventurerSkills';
+import	OverviewFeats		from	'components/layout/AdventurerFeats';
+import	OverviewInventory	from	'components/layout/AdventurerInventory';
+import	OverviewProfession	from	'components/layout/AdventurerProfession';
+import	OverviewEquipement	from	'components/layout/AdventurerEquipement';
+import	OverviewMinimal		from	'components/layout/AdventurerMinimal';
 
 function	Wrapper({media}) {
 	const	{provider} = useWeb3();
@@ -24,7 +24,6 @@ function	Wrapper({media}) {
 			</div>
 		);	
 	}
-
 	return (
 		<div className={'flex relative flex-row p-4 space-x-16 box'}>
 			<OverviewEquipement
@@ -49,8 +48,15 @@ function	Wrapper({media}) {
 					</p>
 					<p
 						onClick={() => set_tab(3)}
-						className={`p-4 text-plain text-sm transition-opacity hover:opacity-100 ${tab === 3 ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+						className={`p-4 text-sm transition-opacity hover:opacity-100 relative ${tab === 3 ? 'text-plain' : 'text-plain-20 cursor-pointer'}`}>
 						{'Profession'}
+						{currentAdventurer?.professions?.canLevelUp ?
+							<span className={'absolute top-3 right-1 '}>
+								<span className={'flex w-2 h-2'}>
+									<span className={'inline-flex absolute w-full h-full rounded-full opacity-75 animate-ping bg-highlight'}></span>
+									<span className={'inline-flex relative w-2 h-2 rounded-full bg-highlight'}></span>
+								</span>
+							</span> : null}
 					</p>
 					<p
 						onClick={() => set_tab(4)} 

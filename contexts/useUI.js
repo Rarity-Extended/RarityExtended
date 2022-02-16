@@ -7,7 +7,7 @@
 
 import	React, {useEffect, useContext, createContext}	from	'react';
 import	{createMedia}									from	'@artsy/fresnel';
-import	useLocalStorage									from	'hook/useLocalStorage';
+import	useLocalStorage									from	'hooks/useLocalStorage';
 
 const AppMedia = createMedia({
 	breakpoints: {

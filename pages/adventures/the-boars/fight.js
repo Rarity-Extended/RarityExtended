@@ -15,7 +15,7 @@ import	useInventory							from	'contexts/useInventory';
 import	useDungeons								from	'contexts/useDungeons';
 import	useUI									from	'contexts/useUI';
 import	{sleep}									from	'utils';
-import	{killBoar}								from	'utils/actions/boar';
+import	{killBoar}								from	'utils/actions/rarity_extended_boars';
 import	CLASSES									from	'utils/codex/core/classes';
 
 function	Index({dungeon, adventurer, router}) {

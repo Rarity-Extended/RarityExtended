@@ -3,14 +3,14 @@ import	dayjs								from	'dayjs';
 import	relativeTime						from	'dayjs/plugin/relativeTime';
 import	toast								from	'react-hot-toast';
 import	{Listbox, Transition}				from	'@headlessui/react';
-import	useLocalStorage						from	'hook/useLocalStorage';
+import	useLocalStorage						from	'hooks/useLocalStorage';
 import	useWeb3								from	'contexts/useWeb3';
 import	useRarity							from	'contexts/useRarity';
 import	useInventory						from	'contexts/useInventory';
 import	useDungeons							from	'contexts/useDungeons';
 import	{chunk}								from	'utils';
 import	{xpRequired}						from	'utils/libs/rarity';
-import	* as daycare						from	'utils/actions/daycare';
+import	* as daycare						from	'utils/actions/rarity_extended_daycare';
 
 dayjs.extend(relativeTime);
 
@@ -57,6 +57,7 @@ function	Index({minimal}) {
 			}
 		}
 		set_selectedAdventurersActions({canAdventure, canClaimGold, canAdventureCellar, canLevelUp});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [nonce, dungeons, rarities, favoritesAdventurers.length]);
 
 	/* 🏹🛡 - Rarity Extended ***********************************************************************
@@ -285,7 +286,7 @@ function	Index({minimal}) {
 											value={option}>
 											<div className={'flex flex-col cursor-pointer'}>
 												<div className={'flex justify-between'}>
-													<p className={'text-sm font-bold text-plain normal-normal-case'}>{option.title}</p>
+													<p className={'text-sm font-bold normal-case text-plain'}>{option.title}</p>
 												</div>
 												<p className={'mt-2 text-sm text-plain-60'}>
 													{option.description}

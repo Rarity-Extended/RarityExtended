@@ -93,7 +93,7 @@ export const InventoryContextApp = ({children}) => {
 	**	3. Parse and assign the multicall result
 	**********************************************************************************************/
 	function		prepareInventory(tokenID) {
-		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, process.env.RARITY_GOLD_ABI);
+		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, ABI.RARITY_GOLD_ABI);
 		const	rarityMealts = new Contract(process.env.RARITY_EXTENDED_COOKING_ADDR, ABI.RARITY_EXTENDED_MEAL_ABI);
 		const	raritytheForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI);
 		const	rarityOpenMic = new Contract(process.env.DUNGEON_OPEN_MIC_V2_ADDR, process.env.DUNGEON_OPEN_MIC_V2_ABI);

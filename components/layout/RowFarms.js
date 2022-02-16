@@ -1,8 +1,47 @@
-import	React			from	'react';
-import	Image			from	'next/image';
-import	{xpRequired}	from	'utils/libs/rarity';
+import	React				from	'react';
+import	Image				from	'next/image';
+import	useWeb3				from	'contexts/useWeb3';
+import	useInventory		from	'contexts/useInventory';
+import	useRarity			from	'contexts/useRarity';
+import	useClientEffect		from	'hooks/useClientEffect';
+import	{unlock}			from	'utils/actions/rarity_extended_farming';
 
-const RowFarms = React.memo(function RowFarms({farm, level, xp}) {
+const RowFarms = React.memo(function RowFarms({farm, level}) {
+	const	{provider} = useWeb3();
+	const	{currentAdventurer, updateRarity} = useRarity();
+	const	{inventory, updateInventory} = useInventory();
+	const	[meetRequirements, set_meetRequirements] = React.useState(false);
+
+	useClientEffect(() => {
+		const	adventurerInventory = inventory?.[currentAdventurer.tokenID] || {};
+		let		_meetAllRequirements = true;
+
+		for (let index = 0; index < farm?.cost?.length || 0; index++) {
+			const	item = farm?.cost[index];
+			if (adventurerInventory?.[item.address]?.balance < item.amount) {
+				_meetAllRequirements = false;
+				break;
+			}
+		}
+		set_meetRequirements(_meetAllRequirements);
+	}, [inventory, currentAdventurer, farm]);
+
+	function onUnlock() {
+		unlock({
+			provider,
+			tokenID: currentAdventurer.tokenID,
+			farm: farm.address,
+			farmName: farm.name,
+			farmCost: farm.cost
+		}, ({error}) => {
+			if (error) {
+				return;
+			}
+			updateRarity(currentAdventurer.tokenID);
+			updateInventory(currentAdventurer.tokenID);
+		});
+	}
+
 	return (
 		<div className={'grid grid-cols-7 gap-x-8 p-4'}>
 			<div className={'flex flex-row col-span-2'}>
@@ -27,7 +66,7 @@ const RowFarms = React.memo(function RowFarms({farm, level, xp}) {
 					{farm.cost.map(({name, src, amount}) => (
 						<div key={name} className={''}>
 							<div className={'relative p-2 w-14 h-14 bg-500 image-wrapper'}>
-								<Image src={`/items/${src}.png`} width={48} height={48} />
+								<Image src={src} width={48} height={48} />
 								<div className={'absolute right-1 bottom-1 text-sm'}>
 									{`x${amount}`}
 								</div>
@@ -40,7 +79,8 @@ const RowFarms = React.memo(function RowFarms({farm, level, xp}) {
 			<div className={'flex col-span-2 justify-end items-start'}>
 				<div className={'flex flex-row w-1/2'}>
 					<button
-						disabled={level + 1 < farm.tier || xp < xpRequired(farm.tier)}
+						onClick={() => !(level < farm.tier || !meetRequirements) ? onUnlock() : null}
+						disabled={level < farm.tier || !meetRequirements}
 						className={'flex w-full flex-center button-highlight'}>
 						<p>{'Unlock'}</p>
 					</button>

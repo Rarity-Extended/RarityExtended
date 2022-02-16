@@ -10,10 +10,10 @@ import	React, {useState}				from	'react';
 import	{ethers}						from	'ethers';
 import	{Contract}						from	'ethcall';
 import	useSWR							from	'swr';
-import	Template						from	'components/templates/Adventurer';
+import	Template						from	'components/templates/Head';
 import	useWeb3							from	'contexts/useWeb3';
 import	{fetcher}						from	'utils';
-import	{apeInVault, apeOutVault, depositInVault, withdrawFromVault}					from	'utils/actions/vaults';
+import	* as ACTIONS					from	'utils/actions/vaults';
 import	{newEthCallProvider}			from	'utils';
 
 const	VAULT_ABI = [
@@ -149,7 +149,7 @@ function	Index() {
 		if (isTxPending)
 			return;
 		set_isTxPending(true);
-		apeInVault({
+		ACTIONS.apeInVault({
 			provider,
 			contractAddress: selectedVault?.zap,
 			amount: amount
@@ -162,7 +162,7 @@ function	Index() {
 		if (isTxPending)
 			return;
 		set_isTxPending(true);
-		apeOutVault({
+		ACTIONS.apeOutVault({
 			provider,
 			address,
 			zapAddress: selectedVault?.zap,
@@ -178,7 +178,7 @@ function	Index() {
 		if (isTxPending)
 			return;
 		set_isTxPending(true);
-		depositInVault({
+		ACTIONS.depositInVault({
 			provider,
 			address,
 			contractAddress: vault,
@@ -194,7 +194,7 @@ function	Index() {
 		if (isTxPending)
 			return;
 		set_isTxPending(true);
-		withdrawFromVault({
+		ACTIONS.withdrawFromVault({
 			provider,
 			contractAddress: selectedVault?.address,
 			amount: amount,
@@ -262,7 +262,7 @@ function	Index() {
 					vault={vaults?.find(e => e.address === '0x148c05caf1Bb09B5670f00D511718f733C54bC4c') || {}}
 					situation={bankSituation['0x148c05caf1Bb09B5670f00D511718f733C54bC4c']} />
 			</div>
-			<div className={'mt-8 text-sx text-plain-60'}>
+			<div className={'mt-8 text-xs text-plain-60'}>
 				{'The Bank is powered by '}
 				<a className={'font-bold hover:underline cursor-pointer'} href={'https://yearn.finance.com'} target={'_blank'} rel={'noreferrer'}>{'Yearn Finance'}</a>
 				{'. You check details about the Vaults and the Strategies and withdraw your funds on Yearn\'s website.'}

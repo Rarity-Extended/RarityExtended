@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
 	font-family: 'Runes';
 	src: url('../public/fonts/VIKING-MIDDLE-Runes-Bold.eot');
@@ -101,32 +105,220 @@ details[open] summary {
 }
 
 /******************************************************************************
-**	Styled button style
-******************************************************************************/
-.button {
-	will-change: transform, opacity;
-	contain: content;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	width: fit-content;
-	transition: 0.1s;
-	outline: none;
-	cursor: pointer;
-	font-weight: 600;
-	border-radius: 4px;
-	padding-top: 8px;
-	padding-bottom: 8px;
-	padding-left: 16px;
-	padding-right: 16px;
-	font-size: 0.875rem;
-	line-height: 1.25rem;
-}
-
-/******************************************************************************
 **	TAILWIND CSS ++
 ******************************************************************************/
+.flex-center {
+  @apply justify-center items-center;
+}
+.box {
+  @apply rounded-sm bg-light-0 dark:bg-dark-400;
+}
+.box-with-border {
+  @apply rounded-sm bg-light-0 dark:bg-dark-400 border border-gray-100 border-opacity-40 dark:border-dark-400;
+}
+.box-darker-with-border {
+  @apply rounded-sm bg-light-0 dark:bg-dark-600 border border-gray-100 border-opacity-40 dark:border-dark-900;
+}
+.box-darker {
+  @apply rounded-sm bg-light-600 dark:bg-dark-600;
+}
+
+.button-core {
+  @apply
+    select-none
+    font-bold
+    rounded-sm
+    px-4
+    py-2
+    text-sm
+    tracking-wide
+    text-center
+    transition-colors;
+}
+.button-highlight {
+  @apply
+    button-core
+    bg-light-primary
+    hover:bg-light-primary-darker
+    dark:bg-dark-primary
+    dark:hover:bg-dark-primary-darker
+    text-white
+    dark:text-black
+    cursor-pointer
+  ;
+}
+.button-highlight:disabled {
+  @apply
+    button-core
+    cursor-not-allowed
+    bg-light-600
+    dark:bg-dark-600
+    text-gray-200
+    dark:text-dark-200
+  ;
+}
+.button-highlight-outline {
+  @apply
+    button-core
+    bg-transparent
+    hover:bg-light-primary-lighter
+    border-light-primary
+    dark:bg-transparent
+    dark:hover:bg-dark-primary-lighter
+    dark:border-dark-primary
+    text-light-primary
+    dark:text-dark-primary
+    border
+    cursor-pointer
+  ;
+}
+.button-highlight-with-arrow {
+  @apply
+    select-none
+    rounded-l-sm
+    rounded-r-none
+    px-4
+    py-2
+    pl-3
+    pr-4
+    text-sm
+    tracking-wide
+    text-center
+    transition-colors
+    bg-light-primary
+    hover:bg-light-primary-darker
+    dark:bg-dark-primary
+    dark:hover:bg-dark-primary-darker
+    text-white
+    dark:text-black
+    cursor-pointer
+  ;
+}
+.button-outline {
+  @apply
+  button-core
+  cursor-pointer
+  bg-light-400
+  dark:bg-dark-400
+  text-gray-200
+  dark:text-dark-200
+  hover:text-black
+  hover:dark:text-white
+}
+
+.button-outline-arrow {
+  @apply
+    select-none
+    rounded-r-sm
+    rounded-l-none
+    p-2
+    text-sm
+    tracking-wide
+    text-center
+    bg-transparent
+    transition-colors
+    hover:bg-light-primary-lighter
+    border-light-primary
+    dark:bg-transparent
+    dark:hover:bg-dark-primary-lighter
+    dark:border-dark-primary
+    text-light-primary
+    dark:text-dark-primary
+    border
+    border-l-0
+    cursor-pointer
+  ;
+}
+.button-fake {
+  @apply
+    select-none
+    rounded-sm
+    px-4
+    py-2
+    text-sm
+    tracking-wide
+    text-center
+    bg-light-background
+    dark:bg-dark-500
+    text-black
+    dark:text-white
+  ;
+}
+.button-regular {
+  @apply
+    select-none
+    rounded-sm
+    p-4
+    text-sm
+    tracking-wide
+    text-center
+    font-bold
+    cursor-pointer
+    transition-colors
+    bg-light-background
+    hover:bg-light-primary-lighter
+    dark:bg-dark-600
+    dark:hover:bg-dark-900
+    text-black
+    dark:text-white
+  ;
+}
+.image-wrapper > span {
+	vertical-align: middle;
+}
+.text-start {
+  text-align: start;
+  text-align: left;
+}
+.text-plain {
+  @apply text-black dark:text-white;
+}
+.text-plain-60 {
+  @apply text-black/60 dark:text-white/60;
+}
+.text-plain-20 {
+  @apply text-black/20 dark:text-white/20;
+}
+.hover-text-plain {
+  @apply hover:text-black dark:hover:text-white;
+}
+.hover-text-plain-60 {
+  @apply hover:text-black/60 dark:hover:text-white/60;
+}
+.text-400 {
+  @apply text-light-400 dark:text-dark-400;
+}
+.text-200 {
+  @apply text-light-200 dark:text-dark-200;
+}
+.bg-600 {
+  @apply bg-light-600 dark:bg-dark-600;
+}
+.bg-500 {
+  @apply bg-light-background dark:bg-dark-500
+}
+.bg-900 {
+  @apply bg-light-0 dark:bg-dark-900;
+}
+.hover-bg-900 {
+  @apply hover:bg-light-300 dark:hover:bg-dark-900;
+}
+.border-plain {
+  @apply border-black dark:border-white;
+}
+.border-highlight {
+  @apply border-light-primary dark:border-dark-primary;
+}
+.text-highlight {
+  @apply text-light-primary dark:text-dark-primary;
+}
+.group-hover-text-highlight {
+  @apply group-hover:text-light-primary dark:group-hover:text-dark-primary;
+}
+.bg-highlight {
+  @apply bg-light-primary dark:bg-dark-primary;
+}
+
 .transition-all {
 	transition-duration: 150ms;
 }
@@ -404,4 +596,102 @@ background-color: #fff;
 .scrollbar-none {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+}
+
+
+.goUp0 {
+	opacity: 0;
+	animation: goUpAnimation0 2s, fadeOut 2s;
+}
+
+@keyframes goUpAnimation0 {
+	from {
+		transform: translate(0px, 0px);
+	}
+
+	to {
+		transform: translate(0px, -400px);
+	}
+}
+
+.goUp1 {
+	opacity: 0;
+	animation: goUpAnimation1 2s, fadeOut 2s;
+}
+
+@keyframes goUpAnimation1 {
+	from {
+		transform: translate(0px, 0px);
+	}
+
+	to {
+		transform: translate(0px, -300px);
+	}
+}
+
+.goUp2 {
+	opacity: 0;
+	animation: goUpAnimation2 2s, fadeOut 2s;
+}
+
+@keyframes goUpAnimation2 {
+	from {
+		transform: translate(0px, 0px);
+	}
+
+	to {
+		transform: translate(0px, -200px);
+	}
+}
+
+.leftRight0 {
+	animation: leftRightAnimation0 0.3s alternate infinite ease-in-out;
+}
+
+@keyframes leftRightAnimation0 {
+	from {
+		transform: translate(0px, 0px);
+	}
+
+	to {
+		transform: translate(50px, 0px);
+	}
+}
+
+.leftRight1 {
+	animation: leftRightAnimation1 0.3s alternate infinite ease-in-out;
+}
+
+@keyframes leftRightAnimation1 {
+	from {
+		transform: translate(0px, 0px);
+	}
+
+	to {
+		transform: translate(100px, 0px);
+	}
+}
+
+.leftRight2 {
+	animation: leftRightAnimation2 0.3s alternate infinite ease-in-out;
+}
+
+@keyframes leftRightAnimation2 {
+	from {
+		transform: translate(0px, 0px);
+	}
+
+	to {
+		transform: translate(-50px, 0px);
+	}
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
 }

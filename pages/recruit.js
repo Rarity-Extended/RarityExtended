@@ -1,7 +1,7 @@
 import	React, {useState}			from	'react';
 import	Image						from	'next/image';
 import	{useRouter}					from	'next/router';
-import	Template					from	'components/templates/Adventurer';
+import	Template					from	'components/templates/Head';
 import	useWeb3						from	'contexts/useWeb3';
 import	useRarity					from	'contexts/useRarity';
 import	{recruitAdventurer}			from	'utils/actions';

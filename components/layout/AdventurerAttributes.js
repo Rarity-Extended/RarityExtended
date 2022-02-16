@@ -1,5 +1,5 @@
 import	React, {useState}			from	'react';
-import	* as attributes				from	'utils/actions/attributes';
+import	* as attributes				from	'utils/actions/rarity_core_attributes';
 import	{xpRequired}				from	'utils/libs/rarity';
 import	useWeb3						from	'contexts/useWeb3';
 import	useRarity					from	'contexts/useRarity';

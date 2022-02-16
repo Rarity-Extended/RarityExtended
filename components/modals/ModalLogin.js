@@ -49,7 +49,7 @@ function	ModalLogin({open, set_open}) {
 			<Dialog
 				as={'div'}
 				static
-				className={'overflow-y-auto fixed inset-0 z-10 font-title uppercase'}
+				className={'overflow-y-auto fixed inset-0 z-10'}
 				style={{zIndex: 9999999}}
 				initialFocus={walletConnectRef}
 				open={open}

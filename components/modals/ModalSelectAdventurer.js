@@ -3,7 +3,7 @@ import	{Dialog, Transition}	from	'@headlessui/react';
 import	Image					from	'next/image';
 import	useRarity				from	'contexts/useRarity';
 import	useUI					from	'contexts/useUI';
-import	useLocalStorage			from	'hook/useLocalStorage';
+import	useLocalStorage			from	'hooks/useLocalStorage';
 import	CLASSES					from	'utils/codex/core/classes';
 
 function ModalSelectAdventurer({isOpen, onClose, onSelect}) {
@@ -12,9 +12,9 @@ function ModalSelectAdventurer({isOpen, onClose, onSelect}) {
 	const	[favoritesAdventurers] = useLocalStorage('favorites', []);
 
 	function clickAdventurer(adventurer) {
-		onClose();
+		onSelect(adventurer);
 		setTimeout(() => {
-			onSelect(adventurer);
+			onClose();
 		}, 250);
 	}
 

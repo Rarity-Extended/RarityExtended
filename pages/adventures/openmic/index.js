@@ -1,7 +1,7 @@
 import	React, {useState}					from	'react';
 import	useRarity							from	'contexts/useRarity';
 import	useDungeons							from	'contexts/useDungeons';
-import	Template							from	'components/templates/Adventurer';
+import	Template							from	'components/templates/Head';
 import	AdventureTemplate					from	'components/adventures/Template';
 import	DescriptionFormater					from	'components/adventures/DescriptionFormater';
 import	OptionsFormater						from	'components/adventures/OptionsFormater';

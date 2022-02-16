@@ -4,6 +4,7 @@ import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	ModalLogin						from	'components/modals/ModalLogin';
 import	AdventurerModalMenu				from	'components/modals/AdventurerModalMenu';
+import	useClientEffect					from	'hooks/useClientEffect';
 
 function	Navbar() {
 	const	{active, address} = useWeb3();
@@ -11,7 +12,7 @@ function	Navbar() {
 	const	[initialPopup, set_initialPopup] = useState(false);
 	const	[modalLoginOpen, set_modalLoginOpen] = useState(false);
 
-	React.useLayoutEffect(() => {
+	useClientEffect(() => {
 		if (initialPopup)
 			return;
 

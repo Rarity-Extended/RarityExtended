@@ -19,13 +19,12 @@ import	{DungeonsContextApp}			from	'contexts/useDungeons';
 import	{UIContextApp}					from	'contexts/useUI';
 import	Navbar							from	'components/layout/Navbar';
 import	Footer							from	'components/layout/Footer';
-import	SectionNoWallet					from	'sections/SectionNoWallet';
-import	SectionNoAdventurer				from	'sections/SectionNoAdventurer';
-import	useWindowInFocus				from	'hook/useWindowInFocus';
+import	SectionNoAdventurer				from	'components/sections/SectionNoAdventurer';
+import	SectionNoWallet					from	'components/sections/SectionNoWallet';
+import	useWindowInFocus				from	'hooks/useWindowInFocus';
+import	useClientEffect					from	'hooks/useClientEffect';
 
-import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
-import	'style/TailwindCustomStyles.css';
 
 const GameWrapper = React.memo(function GameWrapper({Component}) {
 	const	{switchChain, active, chainID} = useWeb3();
@@ -33,7 +32,7 @@ const GameWrapper = React.memo(function GameWrapper({Component}) {
 
 	if (!isLoaded) {
 		return (
-			<div className={'absolute inset-0 bg-opacity-40 backdrop-blur-3xl pointer-events-none'}>
+			<div className={'absolute inset-0 backdrop-blur-3xl pointer-events-none'}>
 				<div className={'loader'} />
 				<div className={'flex absolute inset-0 mt-32 w-full flex-center'}>
 					<p className={'z-40 text-center text-white'}>{'Retrieving your adventurers...'}</p>
@@ -67,7 +66,7 @@ function	AppWrapper(props) {
 	const	{switchChain, chainID} = useWeb3();
 	const	windowInFocus = useWindowInFocus();
 
-	React.useLayoutEffect(() => {
+	useClientEffect(() => {
 		if (windowInFocus && Number(chainID) > 0 && (Number(chainID) !== 250 && Number(chainID) !== 1337)) {
 			switchChain();
 		}
@@ -115,7 +114,7 @@ function	AppWrapper(props) {
 					cardType: 'summary_large_image',
 				}} />
 			<main id={'app'} className={'overflow-x-hidden relative p-4 font-story bg-light-background dark:bg-dark-600 md:overflow-x-auto text-plain scrollbar-none'} style={{minHeight: '100vh'}}>
-				<Toaster position={'bottom-right'} toastOptions={{className: 'text-sx border-4 border-black dark:border-dark-100 text-plain bg-white dark:bg-dark-600 noBr shadow-xl'}} />
+				<Toaster position={'bottom-right'} toastOptions={{className: 'text-xs border-4 border-black dark:border-dark-100 text-plain bg-white dark:bg-dark-600 noBr shadow-xl'}} />
 				<Navbar />
 				<GameWrapper {...props} />
 				<Footer />

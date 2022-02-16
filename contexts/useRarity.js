@@ -15,9 +15,10 @@ import	relativeTime											from	'dayjs/plugin/relativeTime';
 import	duration												from	'dayjs/plugin/duration';
 import	useWeb3													from	'contexts/useWeb3';
 import 	ModalSelectAdventurer 									from	'components/modals/ModalSelectAdventurer';
-import	useIndexDB												from	'hook/useIDB';
+import	useIndexDB												from	'hooks/useIDB';
 import	performBatchedUpdates									from	'utils/performBatchedUpdates';
 import	{chunk, fetcher, toAddress, newEthCallProvider}			from	'utils';
+import	{xpRequired}											from	'utils/libs/rarity';
 import	CLASSES													from	'utils/codex/core/classes';
 import	* as ABI												from	'utils/abi/mixed.min.abi';
 
@@ -73,7 +74,7 @@ export const RarityContextApp = ({children}) => {
 			return;
 		}
 		const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
-		const	rarity = new Contract(process.env.RARITY_ADDR, process.env.RARITY_ABI);
+		const	rarity = new Contract(process.env.RARITY_ADDR, ABI.RARITY_ABI);
 		const	calls = [
 			rarity.isApprovedForAll(address, process.env.RARITY_CRAFTING_HELPER_ADDR),
 			rarity.isApprovedForAll(address, process.env.RARITY_COOKING_HELPER_ADDR),
@@ -94,12 +95,12 @@ export const RarityContextApp = ({children}) => {
 	**	Prepare the multicall to get most of the data
 	**************************************************************************/
 	function		prepareAdventurer(tokenID) {
-		const	rarity = new Contract(process.env.RARITY_ADDR, process.env.RARITY_ABI);
+		const	rarity = new Contract(process.env.RARITY_ADDR, ABI.RARITY_ABI);
 		const	rarityAttr = new Contract(process.env.RARITY_ATTR_ADDR, process.env.RARITY_ATTR_ABI);
-		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, process.env.RARITY_GOLD_ABI);
+		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, ABI.RARITY_GOLD_ABI);
 		const	raritySkills = new Contract(process.env.RARITY_SKILLS_ADDR, process.env.RARITY_SKILLS_ABI);
 		const	rarityFeats = new Contract(process.env.RARITY_FEATS_ADDR, process.env.RARITY_FEATS_ABI);
-		const	rarityFarming = new Contract(process.env.RARITY_EXTENDED_FARM_CORE, ABI.RARITY_EXTENDEDN_FARM_CORE_ABI);
+		const	rarityFarming = new Contract(process.env.RARITY_EXTENDED_FARM_CORE, ABI.RARITY_EXTENDED_FARM_CORE_ABI);
 		const	rarityExtendedName = new Contract(process.env.RARITY_EXTENDED_NAME, ABI.RARITY_EXTENDED_NAME_ABI);
 
 		return [
@@ -178,13 +179,16 @@ export const RarityContextApp = ({children}) => {
 			feats: (feats || []).map(f => Number(f)),
 			skin: CLASSES[Number(adventurer['_class'])]?.images?.front,
 			professions: {
+				canLevelUp: Number(farmingWood['xp']) >= xpRequired(Number(farmingWood['level']) + 1) || Number(farmingOre['xp']) >= xpRequired(Number(farmingOre['level'])) + 1,
 				wood: {
 					level: Number(farmingWood['level']),
 					xp: Number(farmingWood['xp']),
+					canLevelUp: Number(farmingWood['xp']) >= xpRequired(Number(farmingWood['level']) + 1)
 				},
 				ore: {
 					level: Number(farmingOre['level']),
 					xp: Number(farmingOre['xp']),
+					canLevelUp: Number(farmingOre['xp']) >= xpRequired(Number(farmingOre['level']) + 1)
 				}
 			}
 		};

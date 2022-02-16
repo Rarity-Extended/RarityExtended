@@ -43,7 +43,7 @@ function	Footer() {
 								leave={'ease-in duration-200'}
 								leaveFrom={'opacity-100 scale-100'}
 								leaveTo={'opacity-0 scale-95'}>
-								<div className={'inline-block overflow-hidden relative p-6 my-8 w-full max-w-md font-title text-left uppercase align-middle bg-white dark:bg-dark-600 shadow-xl transition-all text-plain'}>
+								<div className={'inline-block overflow-hidden relative p-6 my-8 w-full max-w-md text-left uppercase align-middle bg-white dark:bg-dark-600 shadow-xl transition-all text-plain'}>
 									<Dialog.Title className={'relative text-lg font-medium leading-6 text-gray-900'}>
 										{'Options'}
 										<div className={'absolute top-0 right-0 cursor-pointer'} onClick={() => set_options(false)}>
@@ -54,7 +54,7 @@ function	Footer() {
 									<div className={'mt-4'}>
 										<div
 											onClick={switchTheme}
-											className={'flex flex-row items-center p-4 text-regular hover:bg-gray-200 dark:hover:bg-dark-400 cursor-pointer'}>
+											className={'flex flex-row items-center p-4 text-base hover:bg-gray-200 dark:hover:bg-dark-400 cursor-pointer'}>
 											<div className={'mr-6'}>
 												{theme === 'light' || theme === 'light-initial' ? <svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M3 3h18v18H3V3zm16 16V5H5v14h14z'} fill={'currentColor'}/> </svg> : <svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M5 3H3v18h18V3H5zm0 2h14v14H5V5zm4 7H7v2h2v2h2v-2h2v-2h2v-2h2V8h-2v2h-2v2h-2v2H9v-2z'} fill={'currentColor'}/> </svg>}
 											</div>
@@ -65,7 +65,7 @@ function	Footer() {
 
 										<div
 											onClick={switchSkin}
-											className={'flex flex-row items-center p-4 text-regular hover:bg-gray-200 dark:hover:bg-dark-400 cursor-pointer'}>
+											className={'flex flex-row items-center p-4 text-base hover:bg-gray-200 dark:hover:bg-dark-400 cursor-pointer'}>
 											<div className={'mr-6'}>
 												{!raritySkins ? <svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M3 3h18v18H3V3zm16 16V5H5v14h14z'} fill={'currentColor'}/> </svg> : <svg width={24} height={24} fill={'none'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 24 24'}> <path d={'M5 3H3v18h18V3H5zm0 2h14v14H5V5zm4 7H7v2h2v2h2v-2h2v-2h2v-2h2V8h-2v2h-2v2h-2v2H9v-2z'} fill={'currentColor'}/> </svg>}
 											</div>
@@ -86,7 +86,7 @@ function	Footer() {
 
 	return (
 		<>
-			<div className={'flex absolute inset-x-0 bottom-3 flex-col text-xxs text-center flex-center'}>
+			<div className={'flex absolute inset-x-0 bottom-3 flex-col text-xs text-center flex-center'}>
 				<div onClick={() => set_options(true)} className={'py-2 hover:underline cursor-pointer'}>
 					{'Options'}
 				</div>

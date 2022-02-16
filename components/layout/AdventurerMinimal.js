@@ -6,6 +6,7 @@ import	relativeTime			from	'dayjs/plugin/relativeTime';
 import	useUI					from	'contexts/useUI';
 import	useRarity				from	'contexts/useRarity';
 import	* as actions			from	'utils/actions';
+import	{setName}				from	'utils/actions/rarity_extended_name';
 import	{xpRequired}			from	'utils/libs/rarity';
 import	CLASSES					from	'utils/codex/core/classes';
 
@@ -115,7 +116,7 @@ function	OverviewMinimal({adventurer, provider, raritySkin}) {
 				<div
 					onClick={() => {
 						if (isSameName) {
-							actions.setName(
+							setName(
 								{provider, name, tokenID: adventurer.tokenID},
 								({error}) => console.error(error),
 								(_toast) => {

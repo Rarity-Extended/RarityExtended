@@ -2,7 +2,7 @@ import	React							from	'react';
 import	Link							from	'next/link';
 import	{useRouter}						from	'next/router';
 import	RarityCareSystem				from	'components/RarityCareSystem';
-import	AdventurerDetails				from	'sections/adventurer/Wrapper';
+import	AdventurerDetails				from	'components/sections/Adventurer';
 
 const MobileIndex = React.memo(function MobileIndex() {
 	const	router = useRouter();

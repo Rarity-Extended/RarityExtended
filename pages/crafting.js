@@ -3,7 +3,7 @@ import	{useRouter}						from	'next/router';
 import	useWeb3							from	'contexts/useWeb3';
 import	useRarity						from	'contexts/useRarity';
 import	useInventory					from	'contexts/useInventory';
-import	Template						from	'components/templates/Adventurer';
+import	Template						from	'components/templates/Head';
 import	TabMeals						from	'components/layout/RowCraftMeals';
 import	TabShields						from	'components/layout/RowCraftShields';
 import	TabArmors						from	'components/layout/RowCraftArmors';

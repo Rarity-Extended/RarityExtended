@@ -2,11 +2,9 @@ const colors = require('tailwindcss/colors');
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-	purge: [
+	content: [
 		'./pages/**/*.js',
-		'./components/**/*.js',
-		'./sections/**/*.js',
-		'./utils/**/*.js'
+		'./components/**/*.js'
 	],
 	darkMode: 'class',
 	corePlugins: {
@@ -76,15 +74,10 @@ module.exports = {
 				'120px': '120px'
 			},
 			fontSize: {
-				'regular': ['10px', '16px'],
-				'megaxs': '0.5rem',
-				'xxs': '0.6rem',
-				'xss': '8px',
-				'sx': '10px',
+				'sm': ['0.8rem', '24px'],
 				'base': ['0.95rem', '24px'],
 				'3xl': '2rem',
 				'7xl': '5rem',
-				'sm': '0.8rem',
 			},
 			spacing: {
 				'7.5': '1.875rem',

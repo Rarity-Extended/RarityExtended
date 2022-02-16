@@ -16,7 +16,7 @@ function AdventurerModalMenu() {
 
 	const	skin = raritySkins ? skins[currentAdventurer?.tokenID] || currentAdventurer?.skin : currentAdventurer?.skin;
 	return (
-		<div className={'hidden relative flex-row h-8 font-title md:flex flex-center'}>
+		<div className={'hidden relative flex-row h-8 md:flex flex-center'}>
 			<div onClick={openModal} className={'group hidden flex-row justify-end items-center mr-6 outline-none focus:outline-none cursor-pointer md:flex'}>
 				{currentAdventurer ? <div className={'flex flex-center'}>
 					<Image
@@ -24,11 +24,11 @@ function AdventurerModalMenu() {
 						quality={100}
 						width={60}
 						height={60} />
-					<div className={'ml-2 text-sm uppercase cursor-pointer'}>
-						<div className={'mb-1 text-sx group-hover:underline cursor-pointer'}>
+					<div className={'ml-2 text-sm cursor-pointer'}>
+						<div className={'mb-1 text-lg group-hover:underline cursor-pointer'}>
 							{currentAdventurer?.name ? currentAdventurer?.name : currentAdventurer?.tokenID}
 						</div>
-						<div className={'text-megaxs group-hover:underline cursor-pointer'}>
+						<div className={'text-xs group-hover:underline opacity-80 cursor-pointer'}>
 							{currentAdventurer ? `${CLASSES[currentAdventurer?.class].name} LVL ${currentAdventurer.level}` : null}
 						</div>
 					</div>
@@ -39,7 +39,7 @@ function AdventurerModalMenu() {
 						width={60}
 						height={60} />
 					<div className={'ml-2 text-sm uppercase cursor-pointer'}>
-						<div className={'mb-1 text-sx group-hover:underline cursor-pointer'}>
+						<div className={'mb-1 text-xs group-hover:underline cursor-pointer'}>
 							{'Nobody'}
 						</div>
 						<div className={'text-megaxs group-hover:underline cursor-pointer'}>

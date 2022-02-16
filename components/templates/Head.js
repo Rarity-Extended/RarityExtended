@@ -4,7 +4,7 @@ import	{useRouter}						from	'next/router';
 import	{Dialog, Transition} 			from	'@headlessui/react';
 import	{Media, MediaContextProvider}	from	'contexts/useUI';
 import	RarityCareSystem				from	'components/RarityCareSystem';
-import	AdventurerDetails				from	'sections/adventurer/Wrapper';
+import	AdventurerDetails				from	'components/sections/Adventurer';
 
 const MobileMenu = React.memo(function MobileMenu() {
 	const	router = useRouter();

@@ -7,6 +7,7 @@
 
 import	{ethers}			from	'ethers';
 import	toast				from	'react-hot-toast';
+import	* as ABI			from	'utils/abi/mixed.min.abi';
 
 function	onSuccessToast(_toast) {
 	toast.dismiss(_toast);
@@ -67,7 +68,7 @@ export async function	craft({
 	const	signer = provider.getSigner();
 	const	rarityCraft = new ethers.Contract(
 		process.env.RARITY_CRAFTING_HELPER_ADDR,
-		process.env.RARITY_CRAFTING_ABI,
+		ABI.RARITY_CRAFTING_HELPER_ABI,
 		signer
 	);
 

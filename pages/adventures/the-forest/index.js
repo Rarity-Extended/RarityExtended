@@ -5,12 +5,12 @@ import	useWeb3						from	'contexts/useWeb3';
 import	useRarity					from	'contexts/useRarity';
 import	useInventory				from	'contexts/useInventory';
 import	useDungeons					from	'contexts/useDungeons';
-import	Template					from	'components/templates/Adventurer';
+import	Template					from	'components/templates/Head';
 import	AdventureTemplate			from	'components/adventures/Template';
 import	DescriptionFormater			from	'components/adventures/DescriptionFormater';
 import	OptionsFormater				from	'components/adventures/OptionsFormater';
 import	ADVENTURE					from	'utils/codex/adventures/the-forest';
-import	* as actions				from	'utils/actions/dungeon_theForest';
+import	* as actions				from	'utils/actions/rarity_theForest';
 
 dayjs.extend(relativeTime);
 function	Index({router}) {

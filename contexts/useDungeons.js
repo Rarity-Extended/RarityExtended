@@ -13,7 +13,7 @@ import	relativeTime									from	'dayjs/plugin/relativeTime';
 import	duration										from	'dayjs/plugin/duration';
 import	useWeb3											from	'contexts/useWeb3';
 import	useRarity										from	'contexts/useRarity';
-import	useIndexDB										from	'hook/useIDB';
+import	useIndexDB										from	'hooks/useIDB';
 import	performBatchedUpdates							from	'utils/performBatchedUpdates';
 import	{chunk, newEthCallProvider}						from	'utils';
 

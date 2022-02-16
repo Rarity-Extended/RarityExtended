@@ -11,8 +11,8 @@ import	QRCodeModal																from	'@walletconnect/qrcode-modal';
 import	{useWeb3React}															from	'@web3-react-fork/core';
 import	{InjectedConnector}														from	'@web3-react-fork/injected-connector';
 import	{WalletConnectConnector}												from	'@web3-react-fork/walletconnect-connector';
-import	useLocalStorage															from	'hook/useLocalStorage';
-import	useClientEffect															from	'hook/useClientEffect';
+import	useLocalStorage															from	'hooks/useLocalStorage';
+import	useClientEffect															from	'hooks/useClientEffect';
 
 const walletType = {NONE: -1, METAMASK: 0, WALLET_CONNECT: 1};
 const Web3Context = createContext();

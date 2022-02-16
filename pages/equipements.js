@@ -4,7 +4,7 @@ import	Image								from	'next/image';
 import	useWeb3								from	'contexts/useWeb3';
 import	useRarity							from	'contexts/useRarity';
 import	useInventory						from	'contexts/useInventory';
-import	Template							from	'components/templates/Adventurer';
+import	Template							from	'components/templates/Head';
 import	IconChevron							from	'components/icons/IconChevron';
 import	ItemAttributes						from	'components/itemAttributes';
 import	Section								from	'components/layout/Section';
