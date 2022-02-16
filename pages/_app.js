@@ -51,7 +51,7 @@ const GameWrapper = React.memo(function GameWrapper({Component}) {
 
 	const getLayout = Component.getLayout || ((page) => page);
 	return (
-		<div className={'relative z-10 pb-24 mb-24'}>
+		<div className={'relative z-10 pb-24 mb-0 md:mb-24'}>
 			{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
 				<div aria-label={'switchchain'} className={'flex justify-center w-full text-lg text-center'} onClick={switchChain}>
 					{'PLEASE SWITCH TO FANTOM NETWORK'}

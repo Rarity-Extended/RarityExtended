@@ -48,9 +48,9 @@ const MobileIndex = React.memo(function MobileIndex() {
 						{'Feats'}
 					</button>
 				</Link>
-				<Link href={'/professions'}>
+				<Link href={'/farming'}>
 					<button
-						className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/professions' ? '' : 'cursor-pointer'}`}>
+						className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/farming' ? '' : 'cursor-pointer'}`}>
 						{'Farming'}
 					</button>
 				</Link>
