@@ -14,10 +14,6 @@ import	{chunk, newEthCallProvider}						from	'utils';
 import	performBatchedUpdates							from	'utils/performBatchedUpdates';
 import	* as ABI										from	'utils/abi/mixed.min.abi';
 import	* as ITEMS										from	'utils/codex/items/items';
-import	MANIFEST_GOODS									from	'utils/codex/items/items_manifest_goods.json';
-import	MANIFEST_ARMORS									from	'utils/codex/items/items_manifest_armors.json';
-import	MANIFEST_WEAPONS								from	'utils/codex/items/items_manifest_weapons.json';
-import	MANIFEST_SHIELDS								from	'utils/codex/items/items_manifest_shields.json';
 
 const	InventoryContext = createContext();
 export const InventoryContextApp = ({children}) => {
@@ -40,9 +36,9 @@ export const InventoryContextApp = ({children}) => {
 		const	contract = new ethers.Contract(process.env.RARITY_CRAFTING_HELPER_ADDR, ABI.RARITY_CRAFTING_HELPER_ABI, provider);
 		const	results = await contract.getItemsByAddress(address);
 		const	_sharedInventory = [];
-		const	allWeapons = Object.values(MANIFEST_WEAPONS);
-		const	allArmors = [...Object.values(MANIFEST_ARMORS), ...Object.values(MANIFEST_SHIELDS)];
-		const	allGoods = Object.values(MANIFEST_GOODS);
+		const	allWeapons = ITEMS.CORE_CRAFTING_WEAPONS;
+		const	allArmors = ITEMS.CORE_CRAFTING_ARMORS;
+		const	allGoods = ITEMS.CORE_CRAFTING_GOODS;
 
 		for (let index = 0; index < results.length; index++) {
 			const item = results[index];
@@ -93,7 +89,6 @@ export const InventoryContextApp = ({children}) => {
 	**	3. Parse and assign the multicall result
 	**********************************************************************************************/
 	function		prepareInventory(tokenID) {
-		const	rarityGold = new Contract(process.env.RARITY_GOLD_ADDR, ABI.RARITY_GOLD_ABI);
 		const	rarityMealts = new Contract(process.env.RARITY_EXTENDED_COOKING_ADDR, ABI.RARITY_EXTENDED_MEAL_ABI);
 		const	raritytheForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI);
 		const	rarityOpenMic = new Contract(process.env.DUNGEON_OPEN_MIC_V2_ADDR, process.env.DUNGEON_OPEN_MIC_V2_ABI);
@@ -101,8 +96,7 @@ export const InventoryContextApp = ({children}) => {
 		const	rarityEquipementWrapper = new Contract(process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, ABI.RARITY_EQUIPEMENT_ABI);
 
 		return [
-			rarityGold.balanceOf(tokenID),
-			...ITEMS.ITEMS_ERC20.map(item => item.fetch(tokenID)),
+			...ITEMS.LOOTS.map(item => item.fetch(tokenID)),
 			rarityMealts.getTotalMealsBySummoner(tokenID),
 			raritytheForest.getTreasuresBySummoner(tokenID),
 			rarityOpenMic.getPrizes(tokenID),
@@ -122,45 +116,35 @@ export const InventoryContextApp = ({children}) => {
 		const	_equipements = [];
 		
 		let	rIndex = 0;
-		_inventory[process.env.RARITY_GOLD_ADDR] = {
-			name: 'Gold',
-			description: 'The official currency of the realm.',
-			img: `/items/${process.env.RARITY_GOLD_ADDR}.png`,
-			address: process.env.RARITY_GOLD_ADDR,
-			type: 'enumerable',
-			balance: ethers.utils.formatEther(inventoryCallResult[rIndex])
-		};
-		rIndex++;
-
-		for (let index = 0; index < ITEMS.ITEMS_ERC20.length; index++) {
-			const item = ITEMS.ITEMS_ERC20[index];
+		for (let index = 0; index < ITEMS.LOOTS.length; index++) {
+			const item = ITEMS.LOOTS[index];
 			_inventory[item.address] = {
 				name: item.name,
 				description: item.description,
 				img: item.img,
 				address: item.address,
 				type: item.type,
-				balance: ethers.BigNumber.from(inventoryCallResult[rIndex++]).toNumber()
+				balance: Number(ethers.utils.formatUnits(inventoryCallResult[rIndex++], item.decimals))
 			};
 		}
 		
 		for (let index = 0; index < inventoryCallResult[rIndex].length; index++) {
 			const item = inventoryCallResult[rIndex][index];
-			const meal = ITEMS.ITEMS_MEALS.find(m => m.address === item.meal);
+			const meal = ITEMS.MEALS.find(m => m.address === item.meal);
 			_inventory[meal.address] = {
 				name: meal.name,
 				description: meal.description,
 				img: meal.img,
 				address: meal.address,
 				type: meal.type,
-				balance: ethers.BigNumber.from(item?.balance?.length || '0').toNumber()
+				balance: Number(ethers.utils.formatUnits(item?.balance?.length || '0', item.decimals))
 			};
 		}
 
 		rIndex++;
 		for (let index = 0; index < inventoryCallResult[rIndex].length; index++) {
 			const item = inventoryCallResult[rIndex][index];
-			const element = ITEMS.ITEMS_THE_FOREST.find(m => m.name === item.itemName);
+			const element = ITEMS.THE_FOREST.find(m => m.name === item.itemName);
 			if (_inventory[element.address]?.balance > 0) {
 				_inventory[element.address].balance++;
 			} else {
@@ -176,7 +160,7 @@ export const InventoryContextApp = ({children}) => {
 		rIndex++;
 		for (let index = 0; index < inventoryCallResult[rIndex].length; index++) {
 			const item = inventoryCallResult[rIndex][index];
-			const element = ITEMS.ITEMS_OPENMIC.find(m => m.name === item.name);
+			const element = ITEMS.OPENMIC.find(m => m.name === item.name);
 			if (_inventory[element.address]?.balance > 0) {
 				_inventory[element.address].balance++;
 			} else {
@@ -193,7 +177,7 @@ export const InventoryContextApp = ({children}) => {
 		for (let index = 0; index < inventoryCallResult[rIndex].length; index++) {
 			const item = inventoryCallResult[rIndex][index];
 			const initialIndex = (item.base_type === 3 ? 19 : 0) - 1;
-			const element = ITEMS.ITEMS_BASIC_SET[initialIndex + item.item_type];
+			const element = ITEMS.BASIC_SET[initialIndex + item.item_type];
 			if (_inventory[element.address]?.balance > 0) {
 				_inventory[element.address].balance++;
 			} else {
@@ -223,9 +207,9 @@ export const InventoryContextApp = ({children}) => {
 			if (index <= 4) {
 				let	_equipement = null;
 				if (elementDetails.registry === process.env.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ADDR) {
-					_equipement = ITEMS.ITEMS_BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
+					_equipement = ITEMS.BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
 				} else if (elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
-					_equipement = Object.values(MANIFEST_ARMORS).find(e => e.id === elementDetails.itemType);
+					_equipement = ITEMS.CORE_CRAFTING_ARMORS.find(e => e.id === elementDetails.itemType);
 				}
 				if (_equipement) {
 					_equipements[index] = {...elementDetails, ..._equipement};
@@ -235,9 +219,9 @@ export const InventoryContextApp = ({children}) => {
 			if (index === 5 || index === 6) {
 				let	_equipement = null;
 				if (elementDetails.registry === process.env.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ADDR) {
-					_equipement = ITEMS.ITEMS_BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
+					_equipement = ITEMS.BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
 				} else if (elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
-					_equipement = Object.values(MANIFEST_WEAPONS).find(e => e.id === elementDetails.itemType);
+					_equipement = ITEMS.CORE_CRAFTING_WEAPONS.find(e => e.id === elementDetails.itemType);
 				}
 				if (_equipement) {
 					_equipements[index] = {...elementDetails, ..._equipement};
@@ -246,9 +230,9 @@ export const InventoryContextApp = ({children}) => {
 			if (index === 7) {
 				let	_equipement = null;
 				if (elementDetails.registry === process.env.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ADDR) {
-					_equipement = ITEMS.ITEMS_BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
+					_equipement = ITEMS.BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
 				} else if (elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
-					_equipement = Object.values(MANIFEST_SHIELDS).find(e => e.id === elementDetails.itemType);
+					_equipement = ITEMS.CORE_CRAFTING_ARMORS.find(e => e.id === elementDetails.itemType);
 				}
 				if (_equipement) {
 					_equipements[101] = {...elementDetails, ..._equipement};

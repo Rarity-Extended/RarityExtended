@@ -10,101 +10,7 @@ import	ItemAttributes						from	'components/itemAttributes';
 import	Section								from	'components/layout/Section';
 import	RowBasicSets						from	'components/layout/RowBasicSets';
 import	{equip, rEquip, approveForAll}		from	'utils/actions/rarity_extended_equipements';
-import	performBatchedUpdates				from	'utils/performBatchedUpdates';
-import	BASIC_SET_ARMORS					from	'utils/codex/items/items_manifest_basic_set_armors.json';
-import	BASIC_SET_SHIELDS					from	'utils/codex/items/items_manifest_basic_set_shields.json';
-import	BASIC_SET_WEAPONS					from	'utils/codex/items/items_manifest_basic_set_weapons.json';
-
-const	SETS = [
-	{id: 1, name: 'Barbarian Basic Set', src: '/classes/front/barbarian.svg', width: 56, height: 56, cost: [
-		{name: 'Head', src: ''},
-		{name: 'Hide', src: 'rarity_crafting/armors/hide', item: BASIC_SET_ARMORS['Hide']},
-		{name: 'Leather gloves', src: 'rarity_crafting/hand/leather_gloves', item: BASIC_SET_ARMORS['Leather gloves']},
-		{name: 'Stuffed boots', src: 'rarity_crafting/foot/stuffed_boots', item: BASIC_SET_ARMORS['Stuffed boots']},
-		{name: 'Greataxe', src: 'rarity_crafting/weapons/greataxe', item: BASIC_SET_WEAPONS['Greataxe']},
-		{name: 'Secondary weapon', src: ''},
-	]},
-	{id: 2, name: 'Bard Basic Set', src: '/classes/front/bard.png', width: 56, height: 56, cost: [
-		{name: 'Fancy hat', src: 'rarity_crafting/head/fancy_hat', item: BASIC_SET_ARMORS['Fancy hat']},
-		{name: 'Padded', src: 'rarity_crafting/armors/padded', item: BASIC_SET_ARMORS['Padded']},
-		{name: 'Light gloves', src: 'rarity_crafting/hand/light_gloves', item: BASIC_SET_ARMORS['Light gloves']},
-		{name: 'Light shoes', src: 'rarity_crafting/foot/light_shoes', item: BASIC_SET_ARMORS['Light shoes']},
-		{name: 'Dagger', src: 'rarity_crafting/weapons/dagger', item: BASIC_SET_WEAPONS['Dagger']},
-		{name: 'Secondary weapon', src: ''},
-	]},
-	{id: 3, name: 'Cleric Basic Set', src: '/classes/front/cleric.png', width: 56, height: 56, cost: [
-		{name: 'Hood', src: 'rarity_crafting/head/hood', item: BASIC_SET_ARMORS['Hood']},
-		{name: 'Chain shirt', src: 'rarity_crafting/armors/chain_shirt', item: BASIC_SET_ARMORS['Chain shirt']},
-		{name: 'Gauntlet', src: 'rarity_crafting/hand/metal_gloves', item: BASIC_SET_ARMORS['Gauntlet']},
-		{name: 'Stuffed boots', src: 'rarity_crafting/foot/stuffed_boots', item: BASIC_SET_ARMORS['Stuffed boots']},
-		{name: 'Hammer, light', src: 'rarity_crafting/weapons/hammer_light', item: BASIC_SET_WEAPONS['Hammer, light']},
-		{name: 'Practice shield', src: 'rarity_crafting/shields/shield_practice', item: BASIC_SET_SHIELDS['Practice shield']},
-	]},
-	{id: 4, name: 'Druid Basic Set', src: '/classes/front/druid.png', width: 56, height: 56, cost: [
-		{name: 'Hood', src: 'rarity_crafting/head/hood', item: BASIC_SET_ARMORS['Hood']},
-		{name: 'Hide', src: 'rarity_crafting/armors/hide', item: BASIC_SET_ARMORS['Hide']},
-		{name: 'Leather gloves', src: 'rarity_crafting/hand/leather_gloves', item: BASIC_SET_ARMORS['Leather gloves']},
-		{name: 'Stuffed boots', src: 'rarity_crafting/foot/stuffed_boots', item: BASIC_SET_ARMORS['Stuffed boots']},
-		{name: 'Sickle', src: 'rarity_crafting/weapons/sickle', item: BASIC_SET_WEAPONS['Sickle']},
-		{name: 'Practice shield', src: 'rarity_crafting/shields/shield_practice', item: BASIC_SET_SHIELDS['Practice shield']},
-	]},
-	{id: 5, name: 'Fighter Basic Set', src: '/classes/front/fighter.png', width: 56, height: 56, cost: [
-		{name: 'Warrior helmet', src: 'rarity_crafting/head/warrior_helmet', item: BASIC_SET_ARMORS['Warrior helmet']},
-		{name: 'Splint mail', src: 'rarity_crafting/armors/splint_mail', item: BASIC_SET_ARMORS['Splint mail']},
-		{name: 'Armored Bracers', src: 'rarity_crafting/hand/armored_bracers', item: BASIC_SET_ARMORS['Armored Bracers']},
-		{name: 'War boots', src: 'rarity_crafting/foot/war_boots', item: BASIC_SET_ARMORS['War boots']},
-		{name: 'Sword, short', src: 'rarity_crafting/weapons/short_sword', item: BASIC_SET_WEAPONS['Sword, short']},
-		{name: 'Practice shield', src: 'rarity_crafting/shields/shield_practice', item: BASIC_SET_SHIELDS['Practice shield']},
-	]},
-	{id: 6, name: 'Monk Basic Set', src: '/classes/front/monk.svg', width: 56, height: 56, cost: [
-		{name: 'Head', src: ''},
-		{name: 'Padded', src: 'rarity_crafting/armors/padded', item: BASIC_SET_ARMORS['Padded']},
-		{name: 'Cestus', src: 'rarity_crafting/hand/cestus', item: BASIC_SET_ARMORS['Cestus']},
-		{name: 'Light shoes', src: 'rarity_crafting/foot/light_shoes', item: BASIC_SET_ARMORS['Light shoes']},
-		{name: 'Gauntlet', src: 'rarity_crafting/weapons/gauntlet', item: BASIC_SET_WEAPONS['Gauntlet']},
-		{name: 'Secondary weapon', src: ''},
-	]},
-	{id: 7, name: 'Paladin Basic Set', src: '/classes/front/paladin.png', width: 56, height: 56, cost: [
-		{name: 'Warrior helmet', src: 'rarity_crafting/head/warrior_helmet', item: BASIC_SET_ARMORS['Warrior helmet']},
-		{name: 'Splint mail', src: 'rarity_crafting/armors/splint_mail', item: BASIC_SET_ARMORS['Splint mail']},
-		{name: 'Armored Bracers', src: 'rarity_crafting/hand/armored_bracers', item: BASIC_SET_ARMORS['Armored Bracers']},
-		{name: 'War boots', src: 'rarity_crafting/foot/war_boots', item: BASIC_SET_ARMORS['War boots']},
-		{name: 'Longsword', src: 'rarity_crafting/weapons/longsword', item: BASIC_SET_WEAPONS['Longsword']},
-		{name: 'Practice shield', src: 'rarity_crafting/shields/shield_practice', item: BASIC_SET_SHIELDS['Practice shield']},
-	]},
-	{id: 8, name: 'Ranger Basic Set', src: '/classes/front/ranger.png', width: 56, height: 56, cost: [
-		{name: 'Hood', src: 'rarity_crafting/head/hood', item: BASIC_SET_ARMORS['Hood']},
-		{name: 'leather', src: 'rarity_crafting/armors/leather', item: BASIC_SET_ARMORS['Leather']},
-		{name: 'Light gloves', src: 'rarity_crafting/hand/light_gloves', item: BASIC_SET_ARMORS['Light gloves']},
-		{name: 'Light shoes', src: 'rarity_crafting/foot/light_shoes', item: BASIC_SET_ARMORS['Light shoes']},
-		{name: 'Longbow', src: 'rarity_crafting/weapons/longbow', item: BASIC_SET_WEAPONS['Longbow']},
-		{name: 'Secondary weapon', src: ''},
-	]},
-	{id: 9, name: 'Rogue Basic Set', src: '/classes/front/rogue.png', width: 56, height: 56, cost: [
-		{name: 'Hood', src: 'rarity_crafting/head/hood', item: BASIC_SET_ARMORS['Hood']},
-		{name: 'leather', src: 'rarity_crafting/armors/leather', item: BASIC_SET_ARMORS['Leather']},
-		{name: 'Light gloves', src: 'rarity_crafting/hand/light_gloves', item: BASIC_SET_ARMORS['Light gloves']},
-		{name: 'Light shoes', src: 'rarity_crafting/foot/light_shoes', item: BASIC_SET_ARMORS['Light shoes']},
-		{name: 'Dagger', src: 'rarity_crafting/weapons/dagger', item: BASIC_SET_WEAPONS['Dagger']},
-		{name: 'Dagger', src: 'rarity_crafting/weapons/dagger', item: BASIC_SET_WEAPONS['Dagger']}
-	]},
-	{id: 10, name: 'Sorcerer Basic Set', src: '/classes/front/sorcerer.png', width: 56, height: 56, cost: [
-		{name: 'Magician hat', src: 'rarity_crafting/head/magician_hat', item: BASIC_SET_ARMORS['Magician hat']},
-		{name: 'Robe', src: 'rarity_crafting/armors/robe', item: BASIC_SET_ARMORS['Robe']},
-		{name: 'Light gloves', src: 'rarity_crafting/hand/light_gloves', item: BASIC_SET_ARMORS['Light gloves']},
-		{name: 'Light shoes', src: 'rarity_crafting/foot/light_shoes', item: BASIC_SET_ARMORS['Light shoes']},
-		{name: 'Wand', src: 'rarity_crafting/weapons/wand', item: BASIC_SET_WEAPONS['Wand']},
-		{name: 'Secondary weapon', src: ''},
-	]},
-	{id: 11, name: 'Wizard Basic Set', src: '/classes/front/wizard.png', width: 56, height: 56, cost: [
-		{name: 'Magician hat', src: 'rarity_crafting/head/magician_hat', item: BASIC_SET_ARMORS['Magician hat']},
-		{name: 'Robe', src: 'rarity_crafting/armors/robe', item: BASIC_SET_ARMORS['Robe']},
-		{name: 'Light gloves', src: 'rarity_crafting/hand/light_gloves', item: BASIC_SET_ARMORS['Light gloves']},
-		{name: 'Light shoes', src: 'rarity_crafting/foot/light_shoes', item: BASIC_SET_ARMORS['Light shoes']},
-		{name: 'Wand', src: 'rarity_crafting/weapons/wand', item: BASIC_SET_WEAPONS['Wand']},
-		{name: 'Secondary weapon', src: ''},
-	]},
-];
+import	{BASIC_SETS}						from	'utils/codex/extentions/rarity_extended_basic_sets';
 
 function	Details() {
 	const	[isExpanded, set_isExpanded] = React.useState(false);
@@ -115,10 +21,8 @@ function	Details() {
 			set_isExpandedAnimation(false);
 			setTimeout(() => set_isExpanded(false), 500);
 		} else {
-			performBatchedUpdates(() => {
-				set_isExpanded(true);
-				set_isExpandedAnimation(true);
-			});
+			set_isExpanded(true);
+			setTimeout(() => set_isExpandedAnimation(true), 200);
 		}
 	}
 
@@ -128,10 +32,10 @@ function	Details() {
 				<IconChevron className={`${isExpanded ? 'rotate-90' : 'rotate-0'} transform transition-all mr-4`} />
 				{'Check other classes sets'}
 			</summary>
-			<div className={`w-full transition-max-height duration-500 overflow-hidden ${isExpandedAnimation ? 'max-h-full' : 'max-h-0'}`}>
+			<div className={`w-full transition-max-height duration-500 ${isExpandedAnimation ? 'max-h-full' : 'max-h-0 overflow-hidden'}`}>
 				<div className={'grid grid-cols-1 pt-0 divide-y divide-light-primary-lighter dark:divide-dark-600'}>
 					{isExpanded ? (
-						SETS.map((set, index) => (
+						BASIC_SETS.map((set, index) => (
 							<RowBasicSets key={`${set.name}_${index}`} darker set={set} />
 						))
 					) : <div />}
@@ -331,7 +235,7 @@ function	Wrapper() {
 						{'Hello adventurer! Are you ready to start your great journey? As an old man told us years ago, it\'s dangerous to go alone. I have here some of my old equipement. Do you want to buy some?'}
 					</p>
 				</div>
-				<RowBasicSets set={SETS[currentAdventurer.class - 1]} />
+				<RowBasicSets set={BASIC_SETS[currentAdventurer.class - 1]} />
 				<Details />
 			</div>
 		</>

@@ -1,15 +1,15 @@
 import	React		from	'react';
 import	Image		from	'next/image';
-import	Tooltip		from	'components/Tooltip';
+import	ItemBox		from	'components/layout/ItemBox';
 
 function	ensureCanCraft(adventurer, inventory, ingredients) {
 	for (let index = 0; index < ingredients.length; index++) {
-		const [addr, cost] = ingredients[index];
-		if (addr === process.env.RARITY_GOLD_ADDR) {
-			if (Number(adventurer?.gold?.balance) < cost) {
+		const {address, amount} = ingredients[index];
+		if (address === process.env.RARITY_GOLD_ADDR) {
+			if (Number(adventurer?.gold?.balance) < amount) {
 				return false;
 			}
-		} else if (Number(inventory?.[addr]?.balance || 0) < cost) {
+		} else if (Number(inventory?.[address]?.balance || 0) < amount) {
 			return false;
 		}
 	}
@@ -38,24 +38,9 @@ const RowCraftMeals = React.memo(function RowCraftMeals({recipe, currentAdventur
 
 			<div className={'flex col-span-7 pl-0 md:col-span-3 md:pl-8'}>
 				<div className={'grid flex-row grid-cols-5 gap-2 space-x-0 md:flex md:space-x-2'}>
-					{recipe.cost.map(([addr, cost, name, desc]) => (
-						<div key={`${addr}`} className={''}>
-							<div className={'group relative w-14 h-14 rounded-sm cursor-help bg-500 image-wrapper tooltip'}>
-								<Image src={`/items/${addr}.png`} width={56} height={56} />
-								<div className={'absolute right-1 bottom-1 text-sm'}>
-									{`x${cost}`}
-								</div>
-								<Tooltip className={'pt-2 w-80 text-sm'}> 
-									<div className={'flex flex-col justify-center items-center'}>
-										<Image src={`/items/${addr}.png`} width={80} height={80} />
-										<div>
-											<b className={'mb-1'}>{name}</b>
-											<p className={'mb-1'}>{desc}</p>
-											<p className={'italic opacity-60'}>{`${cost} ${name} are required to craft this meal.`}</p>
-										</div>
-									</div>
-								</Tooltip>
-							</div>
+					{recipe.cost.map((item) => (
+						<div key={`${item.address}`}>
+							<ItemBox item={item} />
 						</div>
 					))}
 				</div>

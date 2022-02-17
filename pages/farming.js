@@ -23,7 +23,7 @@ dayjs.extend(relativeTime);
 dayjs.extend(duration);
 
 
-function	ElementFarm({name, address, tier, src, width, height, level}) {
+function	ElementFarm({name, address, tier, img, width, height, level}) {
 	const	{provider, chainID, chainTime} = useWeb3();
 	const	{currentAdventurer, updateRarity} = useRarity();
 	const	{updateInventory} = useInventory();
@@ -106,7 +106,7 @@ function	ElementFarm({name, address, tier, src, width, height, level}) {
 			</p>
 			<div className={'flex flex-row justify-center pb-2 mb-4 w-full'}>
 				<div className={'flex h-48'}>
-					<Image src={src} width={width} height={height} objectFit={'contain'} />
+					<Image src={img} width={width} height={height} objectFit={'contain'} />
 				</div>
 			</div>
 			<div className={'flex flex-row mt-auto space-x-2'}>

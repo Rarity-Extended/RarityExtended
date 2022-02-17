@@ -10,59 +10,57 @@ const RowSkill = React.memo(function RowSkill({currentAdventurer, skill, isClass
 	const	canSave = currentAdventurer.skills[skill?.id - 1] !== updateSkills[skill?.id];
 
 	return (
-		<div className={'p-0 md:p-4'}>
-			<div className={'grid grid-cols-12 gap-x-0 gap-y-4 p-4 md:gap-x-8 md:gap-y-0'}>
-				<div className={'flex flex-row col-span-12 md:col-span-3'}>
-					<div className={'flex w-20 min-w-20 h-20 bg-500 flex-center'}>
-						<Image src={skill.img} width={80} height={80} objectFit={'contain'} />
-					</div>
-					<div className={'flex flex-col ml-4 w-full'}>
-						<p className={'mb-1 text-base font-bold text-plain'}>
-							{skill.name}
-						</p>
-						<p className={'text-sm text-plain-60'}>
-							{`Attribute: ${skill?.attributeLabel || 'None'}`}
-						</p>
-					</div>
+		<div className={'grid grid-cols-12 gap-x-0 gap-y-4 p-4 md:gap-x-8 md:gap-y-0'}>
+			<div className={'flex flex-row col-span-12 md:col-span-3'}>
+				<div className={'flex w-20 min-w-20 h-20 bg-500 flex-center'}>
+					<Image src={skill.img} width={80} height={80} objectFit={'contain'} />
 				</div>
-
-				<div className={'flex flex-col col-span-12 md:col-span-6'}>
-					<div className={`text-sm text-plain-60 cursor-help ${expanded ? 'line-clamp-none' : skill?.synergy > 0 && skill?.armorCheckPenalty > 0 ? 'line-clamp-2' : skill?.synergy > 0 || skill?.armorCheckPenalty > 0 ? 'line-clamp-3' : 'line-clamp-4'}`} onClick={() => set_expanded(!expanded)}>
-						{skill.check}
-					</div>
-					{skill?.synergy > 0 ? 
-						<div className={'text-sm text-plain-60'}>
-							{'Has a synergy with '}
-							<span className={'font-bold text-highlight'}>{Object.values(SKILLS).find(s => s.id === skill?.synergy)?.name}</span>
-							{'.'}
-						</div> : null}
-					{skill?.armorCheckPenalty > 0 ? 
-						<div className={'text-sm text-plain-60'}>
-							{'There is an'}
-							<span className={'font-bold text-highlight'}>{' armor penalty '}</span>
-							{'for this skill.'}
-						</div> : null}
+				<div className={'flex flex-col ml-4 w-full'}>
+					<p className={'mb-1 text-base font-bold text-plain'}>
+						{skill.name}
+					</p>
+					<p className={'text-sm text-plain-60'}>
+						{`Attribute: ${skill?.attributeLabel || 'None'}`}
+					</p>
 				</div>
+			</div>
 
-				<div className={'flex col-span-12 justify-center items-start md:col-span-3 md:justify-end'}>
-					<div className={'flex flex-row space-x-4 w-full'}>
-						<div className={'flex relative justify-between items-center w-1/2 button-fake'}>
-							<div onClick={onReduceLevel}>
-								<IconChevron className={`${canReduce ? 'opacity-0' : 'text-gray-100 cursor-pointer'} transform rotate-180`} />
-							</div>
-							<p>{`Level ${updateSkills[skill?.id]}`}</p>
-							<div onClick={onIncreaseLevel}>
-								<IconChevron className={`${canIncrease ? 'opacity-0' : 'text-gray-100 cursor-pointer'}`} />
-							</div>
+			<div className={'flex flex-col col-span-12 md:col-span-6'}>
+				<div className={`text-sm text-plain-60 cursor-help ${expanded ? 'line-clamp-none' : skill?.synergy > 0 && skill?.armorCheckPenalty > 0 ? 'line-clamp-2' : skill?.synergy > 0 || skill?.armorCheckPenalty > 0 ? 'line-clamp-3' : 'line-clamp-4'}`} onClick={() => set_expanded(!expanded)}>
+					{skill.check}
+				</div>
+				{skill?.synergy > 0 ? 
+					<div className={'text-sm text-plain-60'}>
+						{'Has a synergy with '}
+						<span className={'font-bold text-highlight'}>{Object.values(SKILLS).find(s => s.id === skill?.synergy)?.name}</span>
+						{'.'}
+					</div> : null}
+				{skill?.armorCheckPenalty > 0 ? 
+					<div className={'text-sm text-plain-60'}>
+						{'There is an'}
+						<span className={'font-bold text-highlight'}>{' armor penalty '}</span>
+						{'for this skill.'}
+					</div> : null}
+			</div>
+
+			<div className={'flex col-span-12 justify-center items-start md:col-span-3 md:justify-end'}>
+				<div className={'flex flex-row space-x-4 w-full'}>
+					<div className={'flex relative justify-between items-center w-1/2 button-fake'}>
+						<div onClick={onReduceLevel}>
+							<IconChevron className={`${canReduce ? 'opacity-0' : 'text-gray-100 cursor-pointer'} transform rotate-180`} />
 						</div>
-
-						<button
-							disabled={!canSave}
-							onClick={() => canSave ? onLearn() : null}
-							className={'flex w-1/2 flex-center button-highlight'}>
-							<p className={'select-none'}>{'Craft'}</p>
-						</button>
+						<p>{`Level ${updateSkills[skill?.id]}`}</p>
+						<div onClick={onIncreaseLevel}>
+							<IconChevron className={`${canIncrease ? 'opacity-0' : 'text-gray-100 cursor-pointer'}`} />
+						</div>
 					</div>
+
+					<button
+						disabled={!canSave}
+						onClick={() => canSave ? onLearn() : null}
+						className={'flex w-1/2 flex-center button-highlight'}>
+						<p className={'select-none'}>{'Craft'}</p>
+					</button>
 				</div>
 			</div>
 		</div>

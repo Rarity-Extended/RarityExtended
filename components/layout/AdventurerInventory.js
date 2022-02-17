@@ -9,17 +9,6 @@ const InventoryGrid = React.memo(function InventoryGrid({currentAdventurer}) {
 	const prepareToRender = React.useCallback(async (_currentAdventurer) => {
 		const	adventurerInventory = inventory?.[_currentAdventurer.tokenID] || {};
 		const	toRender = [];
-		toRender.push(
-			<ItemInventory
-				key={'xp'}
-				item={{
-					name: 'XP',
-					img: `/items/${process.env.RARITY_EXTENDED_XP_ADDR}.png`,
-					address: process.env.RARITY_EXTENDED_XP_ADDR,
-					balance: Number(_currentAdventurer?.xp)
-				}} />
-		);
-
 		const	_inventory = Object.values(adventurerInventory || {});
 		for (let index = 0; index < (_inventory || []).length; index++) {
 			const item = _inventory[index];

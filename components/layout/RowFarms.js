@@ -5,7 +5,7 @@ import	useInventory		from	'contexts/useInventory';
 import	useRarity			from	'contexts/useRarity';
 import	useClientEffect		from	'hooks/useClientEffect';
 import	{unlock}			from	'utils/actions/rarity_extended_farming';
-import	Tooltip				from	'components/Tooltip';
+import	ItemBox				from	'components/layout/ItemBox';
 
 const RowFarms = React.memo(function RowFarms({farm, level}) {
 	const	{provider} = useWeb3();
@@ -47,7 +47,7 @@ const RowFarms = React.memo(function RowFarms({farm, level}) {
 		<div className={'grid grid-cols-7 gap-x-0 gap-y-4 p-4 md:gap-x-8 md:gap-y-0'}>
 			<div className={'flex flex-row col-span-7 md:col-span-2'}>
 				<div className={'flex w-20 min-w-20 h-20 bg-500 flex-center'}>
-					<Image src={farm.src} width={64} height={64} objectFit={'contain'} />
+					<Image src={farm.img} width={64} height={64} objectFit={'contain'} />
 				</div>
 				<div className={'flex flex-col ml-4 w-full'}>
 					<p className={'-mt-0.5 mb-1 text-base font-bold text-plain'}>
@@ -64,23 +64,9 @@ const RowFarms = React.memo(function RowFarms({farm, level}) {
 
 			<div className={'flex col-span-7 pl-0 md:col-span-3 md:pl-8'}>
 				<div className={'grid flex-row grid-cols-5 gap-2 space-x-0 md:flex md:space-x-2'}>
-					{farm.cost.map(({name, src, amount}) => (
-						<div key={name} className={''}>
-							<div className={'group relative w-14 h-14 rounded-sm cursor-help bg-500 image-wrapper tooltip'}>
-								<Image src={src} width={48} height={48} />
-								<div className={'absolute right-1 bottom-1 text-sm'}>
-									{`x${amount}`}
-								</div>
-								<Tooltip className={'pt-2 w-80 text-sm'}> 
-									<div className={'flex flex-col justify-center items-center'}>
-										<Image src={src} width={80} height={80} />
-										<div>
-											<b className={'mb-1'}>{name}</b>
-											<p className={'mb-1'}>{'Accusamus libero qui ut magnam quo et. Velit eum voluptatem quisquam quam vitae. Odio cupiditate ut fugit aut ab quia. Accusantium alias sit vel consequatur aliquam. Nostrum quis qui tenetur eum ab mollitia'}</p>
-										</div>
-									</div>
-								</Tooltip>
-							</div>
+					{farm.cost.map((item) => (
+						<div key={`${item.address}`}>
+							<ItemBox item={item} />
 						</div>
 					))}
 				</div>

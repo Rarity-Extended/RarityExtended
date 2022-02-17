@@ -204,48 +204,56 @@ function	OverviewEquipement({provider, raritySkin}) {
 			<div className={'flex flex-row'} style={{width: 384}}>
 				<div className={'grid grid-cols-1 gap-y-4 ml-auto w-18'}>
 					<Link href={'/equipements?slot=1'}>
-						<ItemWithTooltip
-							provider={provider}
-							currentAdventurer={currentAdventurer}
-							updateInventory={updateInventory}
-							item={equipements[currentAdventurer.tokenID]?.[1]}
-							slot={1}
-							pageSlot={pageSlot}>
-							<IconHelmet className={'w-12 h-12'} />
-						</ItemWithTooltip>
+						<div>
+							<ItemWithTooltip
+								provider={provider}
+								currentAdventurer={currentAdventurer}
+								updateInventory={updateInventory}
+								item={equipements[currentAdventurer.tokenID]?.[1]}
+								slot={1}
+								pageSlot={pageSlot}>
+								<IconHelmet className={'w-12 h-12'} />
+							</ItemWithTooltip>
+						</div>
 					</Link>
 					<Link href={'/equipements?slot=2'}>
-						<ItemWithTooltip
-							provider={provider}
-							currentAdventurer={currentAdventurer}
-							updateInventory={updateInventory}
-							item={equipements[currentAdventurer.tokenID]?.[2]}
-							slot={2}
-							pageSlot={pageSlot}>
-							<IconArmor className={'w-12 h-12'} />
-						</ItemWithTooltip>
+						<div>
+							<ItemWithTooltip
+								provider={provider}
+								currentAdventurer={currentAdventurer}
+								updateInventory={updateInventory}
+								item={equipements[currentAdventurer.tokenID]?.[2]}
+								slot={2}
+								pageSlot={pageSlot}>
+								<IconArmor className={'w-12 h-12'} />
+							</ItemWithTooltip>
+						</div>
 					</Link>
 					<Link href={'/equipements?slot=3'}>
-						<ItemWithTooltip
-							provider={provider}
-							currentAdventurer={currentAdventurer}
-							updateInventory={updateInventory}
-							item={equipements[currentAdventurer.tokenID]?.[3]}
-							slot={3}
-							pageSlot={pageSlot}>
-							<IconGloves className={'w-12 h-12'} />
-						</ItemWithTooltip>
+						<div>
+							<ItemWithTooltip
+								provider={provider}
+								currentAdventurer={currentAdventurer}
+								updateInventory={updateInventory}
+								item={equipements[currentAdventurer.tokenID]?.[3]}
+								slot={3}
+								pageSlot={pageSlot}>
+								<IconGloves className={'w-12 h-12'} />
+							</ItemWithTooltip>
+						</div>
 					</Link>
 					<Link href={'/equipements?slot=4'}>
-						<ItemWithTooltip
-							provider={provider}
-							currentAdventurer={currentAdventurer}
-							updateInventory={updateInventory}
-							item={equipements[currentAdventurer.tokenID]?.[4]}
-							slot={4}
-							pageSlot={pageSlot}>
-							<IconBoots className={'w-12 h-12'} />
-						</ItemWithTooltip>
+						<div>
+							<ItemWithTooltip
+								provider={provider}
+								currentAdventurer={currentAdventurer}
+								updateInventory={updateInventory}
+								item={equipements[currentAdventurer.tokenID]?.[4]}
+								slot={4}
+								pageSlot={pageSlot}>
+								<IconBoots className={'w-12 h-12'} />
+							</ItemWithTooltip>
+						</div>
 					</Link>
 				</div>
 				<div className={'flex flex-col justify-between items-center pt-4 pb-8 w-60'}>
@@ -262,49 +270,57 @@ function	OverviewEquipement({provider, raritySkin}) {
 				</div>
 				<div className={'grid grid-cols-1 gap-y-4 w-18'}>
 					<Link href={'/equipements?slot=5'}>
-						<ItemWithTooltip
-							provider={provider}
-							currentAdventurer={currentAdventurer}
-							updateInventory={updateInventory}
-							item={equipements[currentAdventurer.tokenID]?.[5]}
-							slot={5}
-							pageSlot={pageSlot}>
-							<IconWeapon className={'w-12 h-12'} />
-						</ItemWithTooltip>
+						<div>
+							<ItemWithTooltip
+								provider={provider}
+								currentAdventurer={currentAdventurer}
+								updateInventory={updateInventory}
+								item={equipements[currentAdventurer.tokenID]?.[5]}
+								slot={5}
+								pageSlot={pageSlot}>
+								<IconWeapon className={'w-12 h-12'} />
+							</ItemWithTooltip>
+						</div>
 					</Link>
 					
 					<Link href={'/equipements?slot=6'}>
 						{
 							equipements[currentAdventurer.tokenID]?.[6] ? (
-								<ItemWithTooltip
-									provider={provider}
-									currentAdventurer={currentAdventurer}
-									updateInventory={updateInventory}
-									item={equipements[currentAdventurer.tokenID]?.[6]}
-									slot={6}
-									pageSlot={pageSlot}>
-									<IconWeapon className={'w-12 h-12'} />
-								</ItemWithTooltip>		
+								<div>
+									<ItemWithTooltip
+										provider={provider}
+										currentAdventurer={currentAdventurer}
+										updateInventory={updateInventory}
+										item={equipements[currentAdventurer.tokenID]?.[6]}
+										slot={6}
+										pageSlot={pageSlot}>
+										<IconWeapon className={'w-12 h-12'} />
+									</ItemWithTooltip>		
+								</div>
 							) : equipements[currentAdventurer.tokenID]?.[101] ? (
-								<ItemWithTooltip
-									provider={provider}
-									currentAdventurer={currentAdventurer}
-									updateInventory={updateInventory}
-									item={equipements[currentAdventurer.tokenID]?.[101]}
-									slo={101}
-									pageSlot={pageSlot}>
-									<IconWeapon className={'w-12 h-12'} />
-								</ItemWithTooltip>
+								<div>
+									<ItemWithTooltip
+										provider={provider}
+										currentAdventurer={currentAdventurer}
+										updateInventory={updateInventory}
+										item={equipements[currentAdventurer.tokenID]?.[101]}
+										slo={101}
+										pageSlot={pageSlot}>
+										<IconWeapon className={'w-12 h-12'} />
+									</ItemWithTooltip>
+								</div>
 							) : (
-								<ItemWithTooltip
-									provider={provider}
-									currentAdventurer={currentAdventurer}
-									updateInventory={updateInventory}
-									item={undefined}
-									slot={0}
-									pageSlot={pageSlot}>
-									<IconWeapon className={'w-12 h-12'} />
-								</ItemWithTooltip>
+								<div>
+									<ItemWithTooltip
+										provider={provider}
+										currentAdventurer={currentAdventurer}
+										updateInventory={updateInventory}
+										item={undefined}
+										slot={0}
+										pageSlot={pageSlot}>
+										<IconWeapon className={'w-12 h-12'} />
+									</ItemWithTooltip>
+								</div>
 							)
 						}
 					</Link>

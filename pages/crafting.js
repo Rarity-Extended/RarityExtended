@@ -11,10 +11,7 @@ import	TabGoods						from	'components/layout/RowCraftGoods';
 import	TabWeapons						from	'components/layout/RowCraftWeapons';
 import	Section							from	'components/layout/Section';
 import	{approveForAll, craft, cook}	from	'utils/actions/rarity_extended_crafting_helper';
-import	MANIFEST_ARMORS					from	'utils/codex/items/items_manifest_armors.json';
-import	MANIFEST_GOODS					from	'utils/codex/items/items_manifest_goods.json';
-import	MANIFEST_WEAPONS 				from	'utils/codex/items/items_manifest_weapons.json';
-import	MANIFEST_SHIELDS				from	'utils/codex/items/items_manifest_shields.json';
+import	{MEALS_RECIPES}					from	'utils/codex/extentions/rarity_extended_cook';
 import	* as ITEMS						from	'utils/codex/items/items';
 
 function	Index({tab, onApproveAll}) {
@@ -56,7 +53,7 @@ function	Index({tab, onApproveAll}) {
 	function	renderShop() {
 		if (tab === 0) {
 			return (
-				(ITEMS.ITEMS_MEALS).map((recipe, index) => (
+				(MEALS_RECIPES).map((recipe, index) => (
 					<TabMeals
 						key={recipe.name}
 						index={index}
@@ -73,7 +70,7 @@ function	Index({tab, onApproveAll}) {
 			);
 		}
 		if (tab === 1) {
-			return Object.values(MANIFEST_GOODS).map((recipe, index) => (
+			return ITEMS.CORE_CRAFTING_GOODS.map((recipe, index) => (
 				<TabGoods
 					key={recipe.name}
 					index={index}
@@ -83,16 +80,16 @@ function	Index({tab, onApproveAll}) {
 					recipe={{
 						...recipe,
 						cost: [
-							[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
-							[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
-							[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
+							{...ITEMS.LOOTS[process.env.RARITY_GOLD_ADDR], amount: recipe.cost},
+							{...ITEMS.LOOTS[process.env.RARITY_EXTENDED_XP_ADDR], amount: 250},
+							{...ITEMS.LOOTS[process.env.DUNGEON_THE_CELLAR_ADDR], amount: -1},
 						]
 					}} />
 			));
 		}
 		if (tab === 2) {
 			return (
-				Object.values(MANIFEST_WEAPONS).filter(e => e.encumbrance !== 'Ranged Weapons' && e.proficiency === 'Simple').map((recipe, index) => (
+				ITEMS.CORE_CRAFTING_WEAPONS.filter(e => e.encumbrance !== 'Ranged Weapons' && e.proficiency === 'Simple').map((recipe, index) => (
 					<TabWeapons
 						key={recipe.name}
 						index={index}
@@ -104,9 +101,9 @@ function	Index({tab, onApproveAll}) {
 							...recipe,
 							effect: recipe.description,
 							cost: [
-								[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
-								[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
-								[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
+								{...ITEMS.LOOTS[process.env.RARITY_GOLD_ADDR], amount: recipe.cost},
+								{...ITEMS.LOOTS[process.env.RARITY_EXTENDED_XP_ADDR], amount: 250},
+								{...ITEMS.LOOTS[process.env.DUNGEON_THE_CELLAR_ADDR], amount: -1},
 							]
 						}} />
 				))
@@ -114,7 +111,7 @@ function	Index({tab, onApproveAll}) {
 		}
 		if (tab === 3) {
 			return (
-				Object.values(MANIFEST_WEAPONS).filter(e => e.encumbrance !== 'Ranged Weapons' && e.proficiency === 'Martial').map((recipe, index) => (
+				ITEMS.CORE_CRAFTING_WEAPONS.filter(e => e.encumbrance !== 'Ranged Weapons' && e.proficiency === 'Martial').map((recipe, index) => (
 					<TabWeapons
 						key={recipe.name}
 						index={index}
@@ -126,9 +123,9 @@ function	Index({tab, onApproveAll}) {
 							...recipe,
 							effect: recipe.description,
 							cost: [
-								[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
-								[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
-								[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
+								{...ITEMS.LOOTS[process.env.RARITY_GOLD_ADDR], amount: recipe.cost},
+								{...ITEMS.LOOTS[process.env.RARITY_EXTENDED_XP_ADDR], amount: 250},
+								{...ITEMS.LOOTS[process.env.DUNGEON_THE_CELLAR_ADDR], amount: -1},
 							]
 						}} />
 				))
@@ -136,7 +133,7 @@ function	Index({tab, onApproveAll}) {
 		}
 		if (tab === 4) {
 			return (
-				Object.values(MANIFEST_WEAPONS).filter(e => e.encumbrance !== 'Ranged Weapons' && e.proficiency === 'Exotic').map((recipe, index) => (
+				ITEMS.CORE_CRAFTING_WEAPONS.filter(e => e.encumbrance !== 'Ranged Weapons' && e.proficiency === 'Exotic').map((recipe, index) => (
 					<TabWeapons
 						key={recipe.name}
 						index={index}
@@ -148,9 +145,9 @@ function	Index({tab, onApproveAll}) {
 							...recipe,
 							effect: recipe.description,
 							cost: [
-								[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
-								[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
-								[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
+								{...ITEMS.LOOTS[process.env.RARITY_GOLD_ADDR], amount: recipe.cost},
+								{...ITEMS.LOOTS[process.env.RARITY_EXTENDED_XP_ADDR], amount: 250},
+								{...ITEMS.LOOTS[process.env.DUNGEON_THE_CELLAR_ADDR], amount: -1},
 							]
 						}} />
 				))
@@ -158,7 +155,7 @@ function	Index({tab, onApproveAll}) {
 		}
 		if (tab === 5) {
 			return (
-				Object.values(MANIFEST_WEAPONS).filter(e => e.encumbrance === 'Ranged Weapons').map((recipe, index) => (
+				ITEMS.CORE_CRAFTING_WEAPONS.filter(e => e.encumbrance === 'Ranged Weapons').map((recipe, index) => (
 					<TabWeapons
 						key={recipe.name}
 						index={index}
@@ -170,9 +167,9 @@ function	Index({tab, onApproveAll}) {
 							...recipe,
 							effect: recipe.description,
 							cost: [
-								[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
-								[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
-								[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
+								{...ITEMS.LOOTS[process.env.RARITY_GOLD_ADDR], amount: recipe.cost},
+								{...ITEMS.LOOTS[process.env.RARITY_EXTENDED_XP_ADDR], amount: 250},
+								{...ITEMS.LOOTS[process.env.DUNGEON_THE_CELLAR_ADDR], amount: -1},
 							]
 						}} />
 				))
@@ -180,7 +177,7 @@ function	Index({tab, onApproveAll}) {
 		}
 		if (tab === 6) {
 			return (
-				Object.values(MANIFEST_SHIELDS).map((recipe, index) => (
+				ITEMS.CORE_CRAFTING_ARMORS.map((recipe, index) => (
 					<TabShields
 						key={recipe.name}
 						index={index}
@@ -192,9 +189,9 @@ function	Index({tab, onApproveAll}) {
 							...recipe,
 							effect: recipe.description,
 							cost: [
-								[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
-								[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
-								[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
+								{...ITEMS.LOOTS[process.env.RARITY_GOLD_ADDR], amount: recipe.cost},
+								{...ITEMS.LOOTS[process.env.RARITY_EXTENDED_XP_ADDR], amount: 250},
+								{...ITEMS.LOOTS[process.env.DUNGEON_THE_CELLAR_ADDR], amount: -1},
 							]
 						}} />
 				))
@@ -202,7 +199,7 @@ function	Index({tab, onApproveAll}) {
 		}
 		if (tab === 7) {
 			return (
-				Object.values(MANIFEST_ARMORS).map((recipe, index) => (
+				ITEMS.CORE_CRAFTING_ARMORS.map((recipe, index) => (
 					<TabArmors
 						key={recipe.name}
 						index={index}
@@ -214,9 +211,9 @@ function	Index({tab, onApproveAll}) {
 							...recipe,
 							effect: recipe.description,
 							cost: [
-								[process.env.RARITY_GOLD_ADDR, recipe.cost, 'Gold', 'The official currency of the realm.'],
-								[process.env.RARITY_EXTENDED_XP_ADDR, 250, 'XP', 'Someone said experience could not be stored. Maybe, but it can be spend.'],
-								[process.env.DUNGEON_THE_CELLAR_ADDR, -1, 'Rat Skin', 'This rat skin is incredible. You can use it to make armors, weapons and even some Spyglass!'],
+								{...ITEMS.LOOTS[process.env.RARITY_GOLD_ADDR], amount: recipe.cost},
+								{...ITEMS.LOOTS[process.env.RARITY_EXTENDED_XP_ADDR], amount: 250},
+								{...ITEMS.LOOTS[process.env.DUNGEON_THE_CELLAR_ADDR], amount: -1},
 							]
 						}} />
 				))

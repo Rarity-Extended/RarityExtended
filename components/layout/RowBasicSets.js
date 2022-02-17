@@ -6,6 +6,7 @@ import	useInventory		from	'contexts/useInventory';
 import	{buyBasicSet}		from	'utils/actions/rarity_extended_equipements';
 import	Tooltip				from	'components/Tooltip';
 import	ItemAttributes		from	'components/itemAttributes';
+import {ethers} from 'ethers';
 
 const RowBasicSets = React.memo(function RowBasicSets({set, darker}) {
 	const	{provider} = useWeb3();
@@ -38,7 +39,7 @@ const RowBasicSets = React.memo(function RowBasicSets({set, darker}) {
 		<div className={'grid grid-cols-7 gap-x-0 gap-y-4 p-4 md:gap-x-8 md:gap-y-0'}>
 			<div className={'flex flex-row col-span-7 md:col-span-2'}>
 				<div className={`flex w-20 min-w-20 h-20 ${darker ? 'box-darker' : 'bg-500 rounded-sm'} flex-center`}>
-					<Image src={set.src} width={76} height={76} objectFit={'contain'} />
+					<Image src={set.img} width={76} height={76} objectFit={'contain'} />
 				</div>
 				<div className={'flex flex-col ml-4 w-full'}>
 					<p className={'-mt-0.5 mb-1 text-base font-bold text-plain'}>
@@ -52,14 +53,16 @@ const RowBasicSets = React.memo(function RowBasicSets({set, darker}) {
 
 			<div className={'flex col-span-7 pl-0 md:col-span-3 md:pl-8'}>
 				<div className={'grid flex-row grid-cols-5 gap-2 space-x-0 md:flex md:space-x-2'}>
-					{set.cost.map(({name, src, item}, index) => (
-						<div key={`${name}${index}`} className={''}>
-							<div className={`group relative w-14 h-14 cursor-help ${darker ? 'box-darker' : 'bg-500 rounded-sm'} image-wrapper tooltip`}>
-								<Image src={`/items/${src}.png`} width={56} height={56} />
-								<Tooltip className={'pt-2 w-80'}> 
-									{name}
-									{item ? <ItemAttributes category={['armor']} item={item} /> : null}
-								</Tooltip>
+					{set.rewards.map((item, index) => (
+						<div key={`${item.address}${index}`} className={''}>
+							<div className={`group relative w-14 h-14 ${item?.address ? 'cursor-help' : 'cursor-auto'} ${darker ? 'box-darker' : 'bg-500 rounded-sm'} image-wrapper tooltip`}>
+								{item?.address ? (
+									<Image src={item.img} width={56} height={56} />
+								) : null}
+								{item?.address ? <Tooltip className={'pt-2 w-80'}> 
+									{item.name}
+									<ItemAttributes category={item.category} item={item} />
+								</Tooltip> : null}
 							</div>
 						</div>
 					))}

@@ -9,6 +9,7 @@ import	useRarity					from	'contexts/useRarity';
 import	useDungeons					from	'contexts/useDungeons';
 import	{Media}						from	'contexts/useUI';
 import	Tooltip						from	'components/Tooltip';
+import	ItemBox						from	'components/layout/ItemBox';
 import	ADVENTURES					from	'utils/codex/adventures/adventures';
 
 dayjs.extend(duration);
@@ -60,7 +61,7 @@ function	Index() {
 		const	nextAdventure = dungeons[currentAdventurer.tokenID]?.[adventure.key]?.nextAdventure;
 		return (
 			<div key={adventure.address}>
-				<div className={'overflow-hidden relative w-full box'}>
+				<div className={'relative w-full box'}>
 					<div className={'overflow-hidden relative opacity-100'}>
 						<Image
 							src={adventure.img}
@@ -91,15 +92,10 @@ function	Index() {
 								<FormatedDescription addr={adventure.address} rawDescription={adventure.description} />
 							</div>
 							<h1 className={'mt-12 mb-2 text-base font-bold text-plain-60'}>{'Potential Rewards'}</h1>
-							<div className={'grid grid-cols-3 gap-4 -ml-2 w-2/3'}>
-								{adventure.rewards.map(([envName, name, addr]) => (
-									<div key={addr} className={'flex flex-row items-center'}>
-										<div className={'flex w-14 h-14 flex-center'} style={{minWidth: 56}}>
-											<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={56} height={56} />
-										</div>
-										<p className={'ml-1 text-sm text-plain text-plain-60'}>
-											{name}
-										</p>
+							<div className={'grid grid-cols-12 gap-2 -ml-2 w-full'}>
+								{(adventure?.rewards || []).map((item) => (
+									<div key={`${item.address}`}>
+										<ItemBox item={item} />
 									</div>
 								))}
 							</div>
@@ -121,7 +117,7 @@ function	Index() {
 					<Link key={adventure.address}href={`/adventures/${adventure.path}#action`}>
 						<div
 							onClick={() => set_selectedAdventure(index)}
-							className={'group overflow-hidden relative w-full cursor-pointer box'}>
+							className={'relative w-full cursor-pointer box'}>
 							<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-0 md:border-l-4 border-highlight' : 'pl-0 md:pl-1'}`}>
 								<div className={'p-4 w-full h-full'}>
 									<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
@@ -134,15 +130,10 @@ function	Index() {
 										<div className={'flex flex-row items-center'}>
 											<p className={'text-xs'}>{'Rewards'}</p>
 										</div>
-										<div className={'grid grid-cols-2 gap-1 mt-2 -ml-2 w-full'}>
-											{adventure.rewards.map(([envName, name, addr]) => (
-												<div key={addr} className={'flex flex-row items-center'}>
-													<div className={'flex w-10 h-10 flex-center'} style={{minWidth: 40}}>
-														<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={40} height={40} />
-													</div>
-													<p className={'ml-1 text-sm text-plain text-plain-60'}>
-														{name}
-													</p>
+										<div className={'grid grid-cols-4 gap-2 mt-2 w-full'}>
+											{(adventure?.rewards || []).map((item) => (
+												<div key={`${item.address}`}>
+													<ItemBox item={item} />
 												</div>
 											))}
 										</div>
@@ -157,7 +148,7 @@ function	Index() {
 					<div
 						key={adventure.address}
 						onClick={() => set_selectedAdventure(index)}
-						className={'group overflow-hidden relative w-full opacity-40 box'}>
+						className={'overflow-hidden relative w-full opacity-40 box'}>
 						<div className={`relative flex flex-row ${selectedAdventure === index ? 'border-l-4 border-highlight' : 'pl-1'}`}>
 							<div className={'p-4 w-full h-full'}>
 								<h1 className={'text-lg font-bold'}>{adventure.name}</h1>
@@ -175,15 +166,10 @@ function	Index() {
 									<div className={'flex flex-row items-center'}>
 										<p className={'text-xs'}>{'Rewards'}</p>
 									</div>
-									<div className={'grid grid-cols-2 gap-1 mt-2 -ml-2 w-full'}>
-										{adventure.rewards.map(([envName, name, addr]) => (
-											<div key={addr} className={'flex flex-row items-center'}>
-												<div className={'flex w-10 h-10 flex-center'} style={{minWidth: 40}}>
-													<Image src={`/items/${process?.env?.[envName] || addr}.png`} width={40} height={40} />
-												</div>
-												<p className={'ml-1 text-sm text-plain text-plain-60'}>
-													{name}
-												</p>
+									<div className={'grid grid-cols-4 gap-2 mt-2 w-full'}>
+										{(adventure?.rewards || []).map((item) => (
+											<div key={`${item.address}`}>
+												<ItemBox item={item} />
 											</div>
 										))}
 									</div>
