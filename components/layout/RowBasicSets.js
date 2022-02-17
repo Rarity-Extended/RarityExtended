@@ -6,7 +6,6 @@ import	useInventory		from	'contexts/useInventory';
 import	{buyBasicSet}		from	'utils/actions/rarity_extended_equipements';
 import	Tooltip				from	'components/Tooltip';
 import	ItemAttributes		from	'components/itemAttributes';
-import {ethers} from 'ethers';
 
 const RowBasicSets = React.memo(function RowBasicSets({set, darker}) {
 	const	{provider} = useWeb3();
