@@ -6,7 +6,7 @@ import	useRarity							from	'contexts/useRarity';
 import	useInventory						from	'contexts/useInventory';
 import	Template							from	'components/templates/Head';
 import	IconChevron							from	'components/icons/IconChevron';
-import	ItemAttributes						from	'components/itemAttributes';
+import	ItemAttributes						from	'components/ItemAttributes';
 import	Section								from	'components/layout/Section';
 import	RowBasicSets						from	'components/layout/RowBasicSets';
 import	{equip, rEquip, approveForAll}		from	'utils/actions/rarity_extended_equipements';
