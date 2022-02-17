@@ -16,7 +16,7 @@ import	IconWeapon				from	'components/icons/IconWeapon';
 import	IconNecklace			from	'components/icons/IconNecklace';
 import	IconRing				from	'components/icons/IconRing';
 import	Tooltip					from	'components/Tooltip';
-import	ItemAttributes			from	'components/itemAttributes';
+import	ItemAttributes			from	'components/ItemAttributes';
 import	* as actions			from	'utils/actions';
 import	{setName}				from	'utils/actions/rarity_extended_name';
 import	{unequip}				from	'utils/actions/rarity_extended_equipements';
