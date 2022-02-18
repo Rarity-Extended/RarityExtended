@@ -1432,7 +1432,8 @@ const	_ITEMS_CORE_CRAFTING_ARMORS = [
 		armor_bonus: 1,
 		max_dex_bonus: 8,
 		penalty: 0,
-		spell_failure: 5
+		spell_failure: 5,
+		type: 2
 	},
 	{
 		id: 2,
@@ -1449,7 +1450,8 @@ const	_ITEMS_CORE_CRAFTING_ARMORS = [
 		armor_bonus: 2,
 		max_dex_bonus: 6,
 		penalty: 0,
-		spell_failure: 10
+		spell_failure: 10,
+		type: 2
 	},
 	{
 		id: 3,
@@ -1466,7 +1468,8 @@ const	_ITEMS_CORE_CRAFTING_ARMORS = [
 		armor_bonus: 3,
 		max_dex_bonus: 5,
 		penalty: -1,
-		spell_failure: 15
+		spell_failure: 15,
+		type: 2
 	},
 	{
 		id: 4,
@@ -1483,7 +1486,8 @@ const	_ITEMS_CORE_CRAFTING_ARMORS = [
 		armor_bonus: 4,
 		max_dex_bonus: 4,
 		penalty: -2,
-		spell_failure: 20
+		spell_failure: 20,
+		type: 2
 	},
 	{
 		id: 5,
@@ -1500,7 +1504,8 @@ const	_ITEMS_CORE_CRAFTING_ARMORS = [
 		armor_bonus: 3,
 		max_dex_bonus: 4,
 		penalty: -3,
-		spell_failure: 20
+		spell_failure: 20,
+		type: 2
 	},
 	{
 		id: 6,
@@ -1517,7 +1522,8 @@ const	_ITEMS_CORE_CRAFTING_ARMORS = [
 		armor_bonus: 4,
 		max_dex_bonus: 3,
 		penalty: -4,
-		spell_failure: 25
+		spell_failure: 25,
+		type: 2
 	},
 	{
 		id: 7,
@@ -1534,7 +1540,8 @@ const	_ITEMS_CORE_CRAFTING_ARMORS = [
 		armor_bonus: 5,
 		max_dex_bonus: 2,
 		penalty: -5,
-		spell_failure: 30
+		spell_failure: 30,
+		type: 2
 	},
 	{
 		id: 8,
@@ -1551,7 +1558,8 @@ const	_ITEMS_CORE_CRAFTING_ARMORS = [
 		armor_bonus: 5,
 		max_dex_bonus: 3,
 		penalty: -4,
-		spell_failure: 25
+		spell_failure: 25,
+		type: 2
 	},
 	{
 		id: 9,
@@ -1568,7 +1576,8 @@ const	_ITEMS_CORE_CRAFTING_ARMORS = [
 		armor_bonus: 6,
 		max_dex_bonus: 0,
 		penalty: -7,
-		spell_failure: 40
+		spell_failure: 40,
+		type: 2
 	},
 	{
 		id: 10,
@@ -1585,7 +1594,8 @@ const	_ITEMS_CORE_CRAFTING_ARMORS = [
 		armor_bonus: 6,
 		max_dex_bonus: 1,
 		penalty: -6,
-		spell_failure: 35
+		spell_failure: 35,
+		type: 2
 	},
 	{
 		id: 11,
@@ -1602,7 +1612,8 @@ const	_ITEMS_CORE_CRAFTING_ARMORS = [
 		armor_bonus: 7,
 		max_dex_bonus: 0,
 		penalty: -7,
-		spell_failure: 40
+		spell_failure: 40,
+		type: 2
 	},
 	{
 		id: 12,
@@ -1619,7 +1630,8 @@ const	_ITEMS_CORE_CRAFTING_ARMORS = [
 		armor_bonus: 8,
 		max_dex_bonus: 1,
 		penalty: -6,
-		spell_failure: 35
+		spell_failure: 35,
+		type: 2
 	},
 	{
 		id: 13,

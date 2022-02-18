@@ -2,6 +2,7 @@
 import	React, {useEffect, useState}		from	'react';
 import	{Contract}							from	'ethcall';
 import	{ethers}							from	'ethers';
+import	{useRouter}							from	'next/router';
 import	dayjs								from	'dayjs';
 import	relativeTime						from	'dayjs/plugin/relativeTime';
 import	useRarity							from	'contexts/useRarity';
@@ -18,7 +19,8 @@ import	{RARITY_EXTENDED_NAME_ABI}			from	'utils/abi/mixed.min.abi';
 import	{protectBoars}						from	'utils/actions/rarity_extended_boars';
 
 dayjs.extend(relativeTime);
-function	Index({router}) {
+function	Index() {
+	const	router = useRouter();
 	const	{provider, chainID, chainTime} = useWeb3();
 	const	{dungeons, updateDungeonForOne} = useDungeons();
 	const	{currentAdventurer} = useRarity();
@@ -81,7 +83,7 @@ function	Index({router}) {
 			if (error) {
 				return console.error(error);
 			}
-			updateDungeonForOne(currentAdventurer.tokenID);
+			updateDungeonForOne(currentAdventurer);
 			updateInventory(currentAdventurer.tokenID);
 		});
 	}

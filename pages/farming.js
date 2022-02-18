@@ -122,7 +122,8 @@ function	ElementFarm({name, address, tier, img, width, height, level}) {
 				adventurerLevel={level}
 				farmUpgrade={farmUpgrade}
 				isOpen={modalOpen}
-				set_isOpen={set_modalOpen} />
+				set_isOpen={set_modalOpen}
+				img={img} />
 		</div>
 	);
 }

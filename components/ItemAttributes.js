@@ -63,7 +63,6 @@ function	ItemAttributes({category, item}) {
 		);
 	}
 	if (category && (category.includes('armor') || category.includes('shield'))) {
-		console.log(item);
 		return (
 			<div className={'mt-2'}>
 				<div className={'flex flex-row justify-between items-center my-1'}>

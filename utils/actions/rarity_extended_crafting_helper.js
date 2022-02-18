@@ -14,20 +14,18 @@ function	onSuccessToast(_toast) {
 	toast.success('Transaction successful');
 }
 
-const	RARITY_MANIFEST = new ethers.Contract(
-	process.env.RARITY_ADDR, [
-		'function isApprovedForAll(address owner, address operator) external view returns (bool)',
-		'function setApprovalForAll(address operator, bool approved) external',
-	]
-);
-
-export async function	isApprovedForAll({provider}) {
+export async function	isApprovedForAll({provider, toApprove}) {
 	const	signer = provider.getSigner();
 	const	address = await signer.getAddress();
-	const	raritySource = RARITY_MANIFEST.connect(signer);
+	const	raritySource = new ethers.Contract(
+		process.env.RARITY_ADDR, [
+			'function isApprovedForAll(address owner, address operator) external view returns (bool)',
+			'function setApprovalForAll(address operator, bool approved) external',
+		], signer
+	);
 	const	isApprovedForAll = await raritySource.isApprovedForAll(
 		address,
-		process.env.RARITY_CRAFTING_HELPER_ADDR
+		toApprove
 	);
 	return isApprovedForAll;
 }
@@ -72,28 +70,36 @@ export async function	craft({
 		signer
 	);
 
-	_toast = toast.loading(`Trying to craft ${itemName}...`);
-	/**********************************************************************
-	**	In order to avoid dumb error, let's first check if the TX would
-	**	be successful with a static call
-	**********************************************************************/
-	try {
-		await rarityCraft.callStatic.craft(
-			tokenID,
-			baseType,
-			itemType,
-			craftingMaterials
+	const	isApproved = await isApprovedForAll({provider, toApprove: process.env.RARITY_CRAFTING_HELPER_ADDR});
+	if (!isApproved) {
+		const	raritySource = new ethers.Contract(
+			process.env.RARITY_ADDR, [
+				'function isApprovedForAll(address owner, address operator) external view returns (bool)',
+				'function setApprovalForAll(address operator, bool approved) external',
+			], signer
 		);
-	} catch (error) {
-		toast.dismiss(_toast);
-		toast.error('You have a bad feeling about this. You should retry later.');
-		callback({error, data: undefined});
-		return;
+		try {
+			_toast = toast.loading('Approving crafting...');
+			const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_CRAFTING_HELPER_ADDR, true);
+			const	transactionResult = await transaction.wait();
+			if (transactionResult.status === 1) {
+				toast.dismiss(_toast);
+			} else {
+				toast.dismiss(_toast);
+				toast.error('Approve reverted');
+				callback({error: true, data: undefined});
+				return;
+			}
+		} catch (error) {
+			console.error(error);
+			toast.dismiss(_toast);
+			toast.error('Approve reverted');
+			callback({error: true, data: undefined});
+			return;
+		}
 	}
 
-	/**********************************************************************
-	**	If the call is successful, try to perform the actual TX
-	**********************************************************************/
+	_toast = toast.loading(`Trying to craft ${itemName}...`);
 	try {
 		const	transaction = await rarityCraft.craft(
 			tokenID,
@@ -101,7 +107,7 @@ export async function	craft({
 			itemType,
 			craftingMaterials
 		);
-		const	transactionResult = await transaction.wait(2);
+		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -133,8 +139,36 @@ export async function	cook({
 		signer
 	);
 
-	_toast = toast.loading(`Trying to cook ${itemName}...`);
+	const	isApproved = await isApprovedForAll({provider, toApprove: process.env.RARITY_COOKING_HELPER_ADDR});
+	if (!isApproved) {
+		const	raritySource = new ethers.Contract(
+			process.env.RARITY_ADDR, [
+				'function isApprovedForAll(address owner, address operator) external view returns (bool)',
+				'function setApprovalForAll(address operator, bool approved) external',
+			], signer
+		);
+		try {
+			_toast = toast.loading('Approving crafting...');
+			const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_COOKING_HELPER_ADDR, true);
+			const	transactionResult = await transaction.wait();
+			if (transactionResult.status === 1) {
+				toast.dismiss(_toast);
+			} else {
+				toast.dismiss(_toast);
+				toast.error('Approve reverted');
+				callback({error: true, data: undefined});
+				return;
+			}
+		} catch (error) {
+			console.error(error);
+			toast.dismiss(_toast);
+			toast.error('Approve reverted');
+			callback({error: true, data: undefined});
+			return;
+		}
+	}
 
+	_toast = toast.loading(`Trying to cook ${itemName}...`);
 	/**********************************************************************
 	**	If the call is successful, try to perform the actual TX
 	**********************************************************************/
@@ -144,7 +178,7 @@ export async function	cook({
 			tokenID,
 			tokenID
 		);
-		const	transactionResult = await transaction.wait(2);
+		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);

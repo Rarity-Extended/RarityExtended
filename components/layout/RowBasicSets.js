@@ -45,7 +45,7 @@ const RowBasicSets = React.memo(function RowBasicSets({set, darker}) {
 						{set.name}
 					</p>
 					<p className={'text-sm text-plain-60'}>
-						{'Price: 3 FTM'}
+						{'Price: 5 FTM'}
 					</p>
 				</div>
 			</div>

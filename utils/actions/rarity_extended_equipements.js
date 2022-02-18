@@ -68,7 +68,7 @@ export async function	equip({provider, tokenID, minter, itemID, itemName, slot},
 	const	address = await signer.getAddress();
 	const	rarityEquipementContract = new ethers.Contract(
 		process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, [
-			'function RARITY_EXTENDED_NCP() public view returns (uint256)',
+			'function RARITY_EXTENDED_NPC() public view returns (uint256)',
 			'function set_equipement(uint _slot, uint _adventurer, address _operator, address _registry, uint256 _tokenID) public',
 		], signer
 	);
@@ -162,7 +162,7 @@ export async function	rEquip({provider, tokenID, minter, itemID, itemName, slot}
 	const	signer = provider.getSigner();
 	const	rarityEquipementContract = new ethers.Contract(
 		process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, [
-			'function RARITY_EXTENDED_NCP() public view returns (uint256)',
+			'function RARITY_EXTENDED_NPC() public view returns (uint256)',
 			'function set_rEquipement(uint _slot, uint _adventurer, uint _operator, address _registry, uint256 _tokenID) public',
 		],
 		signer
@@ -199,7 +199,7 @@ export async function	rEquip({provider, tokenID, minter, itemID, itemName, slot}
 			'function getApproved(uint, uint) external view returns (uint)'
 		], signer);
 		const	[manager, approved] = await Promise.all([
-			rarityEquipementContract.RARITY_EXTENDED_NCP(),
+			rarityEquipementContract.RARITY_EXTENDED_NPC(),
 			minterContract.getApproved(tokenID, itemID)
 		]);
 		if (Number(approved) !== Number(manager)) {
@@ -289,7 +289,7 @@ export async function	buyBasicSet({provider, tokenID, setID, setName}, callback)
 			ABI.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ABI,
 			signer
 		);
-		const	transaction = await rarityEquipementBasicSet.buySet(setID, tokenID, {value: ethers.utils.parseEther('3')});
+		const	transaction = await rarityEquipementBasicSet.buySet(setID, tokenID, {value: ethers.utils.parseEther('5')});
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});

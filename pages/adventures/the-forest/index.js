@@ -1,4 +1,5 @@
 import	React, {useState}			from	'react';
+import	{useRouter}					from	'next/router';
 import	dayjs						from	'dayjs';
 import	relativeTime				from	'dayjs/plugin/relativeTime';
 import	useWeb3						from	'contexts/useWeb3';
@@ -13,7 +14,8 @@ import	ADVENTURE					from	'utils/codex/adventures/the-forest';
 import	* as actions				from	'utils/actions/rarity_theForest';
 
 dayjs.extend(relativeTime);
-function	Index({router}) {
+function	Index() {
+	const	router = useRouter();
 	const	{provider, chainTime} = useWeb3();
 	const	{currentAdventurer} = useRarity();
 	const	{dungeons, updateDungeonForOne} = useDungeons();
@@ -21,7 +23,14 @@ function	Index({router}) {
 	const	[step, set_step] = useState('intro');
 
 	function	getCurrentStep() {
-		if (!dungeons[currentAdventurer.tokenID]?.forest?.canAdventure && dayjs(new Date(dungeons[currentAdventurer.tokenID]?.forest?.endBlockTs * 1000)).isBefore(dayjs(new Date(chainTime * 1000))))
+		const	isAdventuring = Number(dungeons[currentAdventurer.tokenID]?.forest?.endBlockTs || 0) !== 0;
+		const	isDiscovered = dungeons[currentAdventurer.tokenID]?.forest?.discovered;
+
+		if (
+			isAdventuring &&
+			dayjs(new Date(dungeons[currentAdventurer.tokenID]?.forest?.endBlockTs * 1000)).isBefore(dayjs(new Date(chainTime * 1000))) &&
+			!isDiscovered
+		)
 			return 'dig';
 		if (dungeons[currentAdventurer.tokenID]?.forest?.canAdventure)
 			return step;
@@ -36,7 +45,7 @@ function	Index({router}) {
 			if (error) {
 				return console.error(error);
 			}
-			updateDungeonForOne(currentAdventurer.tokenID);
+			updateDungeonForOne(currentAdventurer);
 		});
 	}
 	function	onDig() {
@@ -47,7 +56,7 @@ function	Index({router}) {
 			if (error) {
 				return console.error(error);
 			}
-			updateDungeonForOne(currentAdventurer.tokenID);
+			updateDungeonForOne(currentAdventurer);
 			updateInventory(currentAdventurer.tokenID);
 		});
 	}

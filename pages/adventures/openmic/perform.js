@@ -116,7 +116,7 @@ function Adventure({router, adventurer}) {
 				});
 			}
 			updateInventory(performer.tokenID);
-			updateDungeonForOne(performer.tokenID);
+			updateDungeonForOne(performer);
 		});
 	}
 

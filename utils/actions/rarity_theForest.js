@@ -35,7 +35,7 @@ export async function	exploreTheForest({provider, tokenID, timeInDays}, callback
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.startResearch(tokenID, timeInDays, {gasLimit: 200_000});
-		const	transactionResult = await transaction.wait(2);
+		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -80,7 +80,7 @@ export async function	discoverTreasureTheForest({provider, tokenID}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.discover(tokenID, {gasLimit: 300_000});
-		const	transactionResult = await transaction.wait(2);
+		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -124,7 +124,7 @@ export async function	levelUpTreasureTheForest({provider, tokenID, adventurerID,
 			//
 		} else {
 			const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EXTENDED_XP_ADDR, true);
-			const	transactionResult = await transaction.wait(2);
+			const	transactionResult = await transaction.wait();
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
 			} else {
@@ -159,7 +159,7 @@ export async function	levelUpTreasureTheForest({provider, tokenID, adventurerID,
 			toast.dismiss(_toast);
 		} else {
 			const	transaction = await rarityXpProxy.approve(adventurerID, process.env.DUNGEON_THE_FOREST_ADDR, xpRequired);
-			const	transactionResult = await transaction.wait(2);
+			const	transactionResult = await transaction.wait();
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
 			} else {
@@ -197,7 +197,7 @@ export async function	levelUpTreasureTheForest({provider, tokenID, adventurerID,
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.levelUp(tokenID, {gasLimit: 200_000});
-		const	transactionResult = await transaction.wait(2);
+		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -240,7 +240,7 @@ export async function	restoreTreasureTheForest({provider, tokenID, treasureName,
 			toast.dismiss(_toast);
 		} else {
 			const	transaction = await raritySource.approve(process.env.DUNGEON_THE_FOREST_ADDR, tokenID);
-			const	transactionResult = await transaction.wait(2);
+			const	transactionResult = await transaction.wait();
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
 			} else {
@@ -277,7 +277,7 @@ export async function	restoreTreasureTheForest({provider, tokenID, treasureName,
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.restoreTreasure(tokenID, adventurerID, {gasLimit: 300_000});
-		const	transactionResult = await transaction.wait(2);
+		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);

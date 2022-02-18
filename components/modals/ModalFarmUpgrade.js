@@ -3,7 +3,7 @@ import	Image						from	'next/image';
 import	{ethers}					from	'ethers';
 import	{Dialog, Transition}		from	'@headlessui/react';
 
-function	ModalHelpProfessions({isOpen, set_isOpen, farmUpgrade, adventurerLevel, onUpgrade}) {
+function	ModalFarmUpgrade({isOpen, set_isOpen, farmUpgrade, adventurerLevel, onUpgrade, img}) {
 	function closeModal() {
 		set_isOpen(false);
 	}
@@ -44,12 +44,12 @@ function	ModalHelpProfessions({isOpen, set_isOpen, farmUpgrade, adventurerLevel,
 									</div>
 									<div className={'flex flex-row justify-center my-4 w-full'}>
 										<div className={'flex h-48'}>
-											<Image src={'/items/farming/tree_5.png'} width={152} height={248} objectFit={'contain'} />
+											<Image src={img} width={152} height={248} objectFit={'contain'} />
 										</div>
 									</div>
 									<div className={'text-center'}>
 										<p className={'mb-6 text-base text-plain'}>
-											{`Upgrade your farm to Level ${farmUpgrade?.level + 2} to earn up to ${(3 * (farmUpgrade?.level + 2)) + (adventurerLevel)} ressources per harvest!`}
+											{`Upgrade your farm to Level ${Number(farmUpgrade?.level || 0) + 2} to earn up to ${(3 * (Number(farmUpgrade?.level || 0) + 2)) + (adventurerLevel || 0)} ressources per harvest!`}
 										</p>
 								
 										<div className={'flex flex-row mt-4 flex-center'}>
@@ -69,4 +69,4 @@ function	ModalHelpProfessions({isOpen, set_isOpen, farmUpgrade, adventurerLevel,
 	);
 }
 
-export default ModalHelpProfessions;
+export default ModalFarmUpgrade;

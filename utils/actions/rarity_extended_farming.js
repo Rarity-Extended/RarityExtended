@@ -67,11 +67,11 @@ export async function	unlock({provider, tokenID, farm, farmName, farmCost}, call
 	let		steps = 1;
 	const	signer = provider.getSigner();
 	const	rarityFarm = new ethers.Contract(farm, [
-		'function RARITY_EXTENDED_NCP() public view returns (uint256)',
+		'function RARITY_EXTENDED_NPC() public view returns (uint256)',
 		'function unlock(uint _adventurer) public'
 	], signer);
 
-	const	manager = await rarityFarm.RARITY_EXTENDED_NCP();
+	const	manager = await rarityFarm.RARITY_EXTENDED_NPC();
 	for (let index = 0; index < farmCost.length; index++) {
 		const element = farmCost[index];
 		try {

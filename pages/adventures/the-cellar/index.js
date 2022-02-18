@@ -1,4 +1,5 @@
 import	React, {useState}					from	'react';
+import	{useRouter}							from	'next/router';
 import	useRarity							from	'contexts/useRarity';
 import	useDungeons							from	'contexts/useDungeons';
 import	Template							from	'components/templates/Head';
@@ -7,7 +8,8 @@ import	DescriptionFormater					from	'components/adventures/DescriptionFormater';
 import	OptionsFormater						from	'components/adventures/OptionsFormater';
 import	ADVENTURE							from	'utils/codex/adventures/the-cellar';
 
-function	Index({router}) {
+function	Index() {
+	const	router = useRouter();
 	const	{currentAdventurer} = useRarity();
 	const	{dungeons} = useDungeons();
 	const	[step, set_step] = useState('intro');

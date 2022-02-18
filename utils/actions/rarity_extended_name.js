@@ -30,7 +30,7 @@ export async function	setName({provider, tokenID, name}, onError, onSuccess = on
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.set_name(tokenID, name);
-		const	transactionResult = await transaction.wait(2);
+		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			onSuccess(_toast);
 		} else {

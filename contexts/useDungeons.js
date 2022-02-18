@@ -67,10 +67,11 @@ export const DungeonsContextApp = ({children}) => {
 				canAdventure: dayjs(new Date(Number(boarsLog) * 1000)).isBefore(dayjs(new Date(chainTime * 1000))),
 			},
 			forest: {
+				discovered: forestResearch?.discovered,
 				initBlockTs: forestResearch?.initBlockTs,
 				endBlockTs: forestResearch?.endBlockTs,
 				nextAdventure: Number(forestResearch?.endBlockTs) === 0 ? 'Now' : dayjs(new Date(Number(forestResearch?.endBlockTs) * 1000)).from(dayjs(new Date(chainTime * 1000))),
-				canAdventure: Number(forestResearch?.endBlockTs) <= chainTime && (forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0)
+				canAdventure: Number(forestResearch?.endBlockTs) <= chainTime && ((forestResearch?.discovered === true || Number(forestResearch?.timeInDays) === 0) || (forestResearch?.discovered === false || Number(forestResearch?.timeInDays) !== 0))
 			},
 			openMic: {
 				nextAdventure: Number(adventurer.class) === 2 && Number(adventurer.level) >= 2 ? dayjs.duration({seconds: ethers.BigNumber.from(timeToNextOpenMic).toNumber()}).humanize(true) : null,

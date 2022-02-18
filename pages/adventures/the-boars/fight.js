@@ -8,6 +8,7 @@
 import	React, {useState, useEffect}			from	'react';
 import	Image									from	'next/image';
 import	Link									from	'next/link';
+import	{useRouter}								from	'next/router';
 import	useDungeon, {DungeonContextApp}			from	'contexts/useDungeonsTheBoars';
 import	useWeb3									from	'contexts/useWeb3';
 import	useRarity								from	'contexts/useRarity';
@@ -64,13 +65,13 @@ function	Index({dungeon, adventurer, router}) {
 	function	onLoot() {
 		killBoar({
 			provider,
-			tokenID: dungeon.tokenID,
+			tokenID: adventurer.tokenID,
 		}, ({error}) => {
 			if (error) {
 				return console.error(error);
 			}
-			updateInventory(dungeon.tokenID);
-			updateDungeonForOne(dungeon.tokenID);
+			updateInventory(adventurer.tokenID);
+			updateDungeonForOne(adventurer);
 			if (router.pathname === '/adventures/the-boars/fight')	
 				router.push('/adventures/the-boars');
 		});
@@ -118,7 +119,7 @@ function	Index({dungeon, adventurer, router}) {
 
 	return (
 		<section id={'action'} className={'flex relative flex-col mx-auto w-full max-w-screen md:max-w-screen-xl'}>
-			<div className={`absolute bg-black inset-0 z-10 -top-32 -left-4 -right-4 flex flex-col items-center min-h-screen transition-opacity duration-1000 ${adventurerHealth <= 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+			<div className={`fixed bg-black inset-0 z-10 -top-32 -left-4 -right-4 flex flex-col items-center min-h-screen transition-opacity duration-1000 ${adventurerHealth <= 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
 				<p className={'pt-20 mx-4 max-w-screen-sm text-2xl text-center text-white md:pt-64 md:mx-0'}>{'you passed out'}</p>
 				<p className={'pt-8 mx-4 max-w-screen-sm text-base text-center text-white md:mx-0'}>{'After some time, the Farmer find you and bring you back in town...'}</p>
 				<Link href={'/adventures/the-boars#action'}>
@@ -180,7 +181,7 @@ function	Index({dungeon, adventurer, router}) {
 							</div>
 
 							<div className={'mt-auto mb-2 w-full'}>
-								<p>{dungeon.tokenID}</p>
+								<p>{adventurer.tokenID}</p>
 								<div className={'flex flex-row items-center py-2 w-full'}>
 									<div className={'w-32 text-sm text-opacity-80 text-plain'}>{'HP:'}</div>
 									<progress
@@ -212,7 +213,10 @@ function	Wrapper({router, adventurer}) {
 	);
 }
 
-function	WithContext({rarities, router}) {
+function	WithContext() {
+	const	{rarities} = useRarity();
+	const	router = useRouter();
+
 	if (!rarities || rarities === {}) {
 		return null;
 	}

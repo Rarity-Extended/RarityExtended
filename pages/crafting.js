@@ -177,7 +177,7 @@ function	Index({tab, onApproveAll}) {
 		}
 		if (tab === 6) {
 			return (
-				ITEMS.CORE_CRAFTING_ARMORS.map((recipe, index) => (
+				ITEMS.CORE_CRAFTING_ARMORS.filter(e => e.proficiency === 'Shields').map((recipe, index) => (
 					<TabShields
 						key={recipe.name}
 						index={index}
@@ -199,7 +199,7 @@ function	Index({tab, onApproveAll}) {
 		}
 		if (tab === 7) {
 			return (
-				ITEMS.CORE_CRAFTING_ARMORS.map((recipe, index) => (
+				ITEMS.CORE_CRAFTING_ARMORS.filter(e => e.proficiency !== 'Shields').map((recipe, index) => (
 					<TabArmors
 						key={recipe.name}
 						index={index}

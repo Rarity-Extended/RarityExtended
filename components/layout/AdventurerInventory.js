@@ -51,7 +51,7 @@ const InventoryGrid = React.memo(function InventoryGrid({currentAdventurer}) {
 
 function	OverviewInventory({adventurer}) {
 	return (
-		<div className={'flex flex-col items-center px-4 pb-4 mt-auto w-full h-auto md:px-0 md:pb-0 md:h-282px'}>
+		<div className={'flex flex-col items-center px-4 pb-4 mt-auto w-full h-auto md:px-0 md:pb-0 md:h-292px'}>
 			<div className={'grid overflow-auto grid-cols-1 gap-x-4 gap-y-2 w-full md:grid-cols-4'}>
 				<InventoryGrid currentAdventurer={adventurer} />
 			</div>
