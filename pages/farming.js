@@ -194,7 +194,6 @@ function	Index({tab}) {
 				const	farmingOre3 = new Contract(process.env.RARITY_EXTENDED_ORE_FARM_3, ABI.RARITY_EXTENDED_FARM_BASE_ABI);
 				const	farmingOre4 = new Contract(process.env.RARITY_EXTENDED_ORE_FARM_4, ABI.RARITY_EXTENDED_FARM_BASE_ABI);
 				const	farmingOre5 = new Contract(process.env.RARITY_EXTENDED_ORE_FARM_5, ABI.RARITY_EXTENDED_FARM_BASE_ABI);
-
 				const	ethcallProvider = await newEthCallProvider(provider, Number(chainID) === 1337);
 				const	callResults = await ethcallProvider.tryAll([
 					farmingWood1.adventurerHasAccess(currentAdventurer.tokenID),

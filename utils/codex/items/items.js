@@ -163,7 +163,7 @@ const	_ITEMS_ERC20 = [
 	{
 		name: 'Copper Ore',
 		description: 'This metal is soft and easily malleable, it is the most widely used metal in the world. It is easily identified by its dark, greenish to bronze skin. The skin is bumpy, with many small pores on its surface.',
-		img: `/items/${'farming/ore-copper'}.png`,
+		img: `/items/${process.env.RARITY_EXTENDED_ORE_LOOT_0}.png`,
 		address: process.env.RARITY_EXTENDED_ORE_LOOT_0,
 		type: 'enumerable',
 		fetch: (adventurerID) => new Contract(process.env.RARITY_EXTENDED_ORE_LOOT_0, process.env.LOOT_ERC20_ABI).balanceOf(adventurerID),
@@ -173,7 +173,7 @@ const	_ITEMS_ERC20 = [
 	{
 		name: 'Iron Ore',
 		description: 'The Iron ore is heavy and heavy when moved, you can feel its mass beneath your hands, it is hard and dense, but yet it is flexible and malleable. It feels a little reactive to your touch.',
-		img: `/items/${'farming/ore-iron'}.png`,
+		img: `/items/${process.env.RARITY_EXTENDED_ORE_LOOT_1}.png`,
 		address: process.env.RARITY_EXTENDED_ORE_LOOT_1,
 		type: 'enumerable',
 		fetch: (adventurerID) => new Contract(process.env.RARITY_EXTENDED_ORE_LOOT_1, process.env.LOOT_ERC20_ABI).balanceOf(adventurerID),
@@ -183,7 +183,7 @@ const	_ITEMS_ERC20 = [
 	{
 		name: 'Gold Ore',
 		description: 'The Gold ore is shiny and yellow. It\'s indented with smooth lines in different places. It\'s the color of honeycombs and honey. It is soft and subtle, just like the finest velvet.',
-		img: `/items/${'farming/ore-gold'}.png`,
+		img: `/items/${process.env.RARITY_EXTENDED_ORE_LOOT_2}.png`,
 		address: process.env.RARITY_EXTENDED_ORE_LOOT_2,
 		type: 'enumerable',
 		fetch: (adventurerID) => new Contract(process.env.RARITY_EXTENDED_ORE_LOOT_2, process.env.LOOT_ERC20_ABI).balanceOf(adventurerID),
@@ -193,7 +193,7 @@ const	_ITEMS_ERC20 = [
 	{
 		name: 'Platinum Ore',
 		description: 'The ore is hard, brittle as glass, but with a silky smoothness. It feels like the finest grade of rose quartz, or pure gold.',
-		img: `/items/${'farming/ore-platinium'}.png`,
+		img: `/items/${process.env.RARITY_EXTENDED_ORE_LOOT_3}.png`,
 		address: process.env.RARITY_EXTENDED_ORE_LOOT_3,
 		type: 'enumerable',
 		fetch: (adventurerID) => new Contract(process.env.RARITY_EXTENDED_ORE_LOOT_3, process.env.LOOT_ERC20_ABI).balanceOf(adventurerID),
@@ -203,7 +203,7 @@ const	_ITEMS_ERC20 = [
 	{
 		name: 'Mithril Ore',
 		description: 'The Mithril Ore is soft and smooth, it\'s smooth as silk and as light as a feather. This mythical metal is used in some of the finest armor.',
-		img: `/items/${'farming/ore-mirthril'}.png`,
+		img: `/items/${process.env.RARITY_EXTENDED_ORE_LOOT_4}.png`,
 		address: process.env.RARITY_EXTENDED_ORE_LOOT_4,
 		type: 'enumerable',
 		fetch: (adventurerID) => new Contract(process.env.RARITY_EXTENDED_ORE_LOOT_4, process.env.LOOT_ERC20_ABI).balanceOf(adventurerID),
@@ -211,15 +211,25 @@ const	_ITEMS_ERC20 = [
 		decimals: 0
 	},
 	{
-		name: 'Adamantine Ore',
-		description: 'The Adamantine is a beam of ultrahard metal. It penetrates deep into the metal and binds with it in multiple places, making it stronger and stiffer than normal. It is extremely difficult to work with, and is often fashioned by smiths who have spent decades perfecting the craft',
-		img: `/items/${'farming/ore-adamantine'}.png`,
+		name: 'Orichalcum Ore',
+		description: 'Orichalcum is smooth under the fingertips, like skin that is both just supple and just as gentle. It sends little sparks of magic outward, like tiny bolts of lightning.',
+		img: `/items/${process.env.RARITY_EXTENDED_ORE_LOOT_5}.png`,
 		address: process.env.RARITY_EXTENDED_ORE_LOOT_5,
 		type: 'enumerable',
 		fetch: (adventurerID) => new Contract(process.env.RARITY_EXTENDED_ORE_LOOT_5, process.env.LOOT_ERC20_ABI).balanceOf(adventurerID),
 		id: 20,
 		decimals: 0
 	},
+	// {
+	// 	name: 'Adamantine Ore',
+	// 	description: 'The Adamantine is a beam of ultrahard metal. It penetrates deep into the metal and binds with it in multiple places, making it stronger and stiffer than normal. It is extremely difficult to work with, and is often fashioned by smiths who have spent decades perfecting the craft',
+	// 	img: `/items/${'farming/ore-adamantine'}.png`,
+	// 	address: process.env.RARITY_EXTENDED_ORE_LOOT_5,
+	// 	type: 'enumerable',
+	// 	fetch: (adventurerID) => new Contract(process.env.RARITY_EXTENDED_ORE_LOOT_5, process.env.LOOT_ERC20_ABI).balanceOf(adventurerID),
+	// 	id: 20,
+	// 	decimals: 0
+	// },
 ];
 
 const	_ITEMS_MEALS = [

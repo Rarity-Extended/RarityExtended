@@ -82,7 +82,7 @@ const ORE_TIERS = [
 		name: 'Copper Ore',
 		address: process.env.RARITY_EXTENDED_ORE_FARM_0,
 		tier: 0,
-		img: '/items/farming/ore-copper.png',
+		img: `/items/${process.env.RARITY_EXTENDED_ORE_LOOT_0}.png`,
 		width: 256,
 		height: 256,
 		cost: [],
@@ -92,7 +92,7 @@ const ORE_TIERS = [
 		name: 'Iron Ore',
 		address: process.env.RARITY_EXTENDED_ORE_FARM_1,
 		tier: 1,
-		img: '/items/farming/ore-iron.png',
+		img: `/items/${process.env.RARITY_EXTENDED_ORE_LOOT_1}.png`,
 		width: 256,
 		height: 256,
 		cost: [
@@ -103,7 +103,7 @@ const ORE_TIERS = [
 		name: 'Gold Ore',
 		address: process.env.RARITY_EXTENDED_ORE_FARM_2,
 		tier: 2,
-		img: '/items/farming/ore-gold.png',
+		img: `/items/${process.env.RARITY_EXTENDED_ORE_LOOT_2}.png`,
 		width: 256,
 		height: 256,
 		cost: [
@@ -115,7 +115,7 @@ const ORE_TIERS = [
 		name: 'Platinum Ore',
 		address: process.env.RARITY_EXTENDED_ORE_FARM_3,
 		tier: 3,
-		img: '/items/farming/ore-platinium.png',
+		img: `/items/${process.env.RARITY_EXTENDED_ORE_LOOT_3}.png`,
 		width: 256,
 		height: 256,
 		cost: [
@@ -128,7 +128,7 @@ const ORE_TIERS = [
 		name: 'Mithril Ore',
 		address: process.env.RARITY_EXTENDED_ORE_FARM_4,
 		tier: 4,
-		img: '/items/farming/ore-mirthril.png',
+		img: `/items/${process.env.RARITY_EXTENDED_ORE_LOOT_4}.png`,
 		width: 256,
 		height: 256,
 		cost: [
@@ -139,10 +139,10 @@ const ORE_TIERS = [
 		]
 	},
 	{
-		name: 'Adamantine Ore',
+		name: 'Orichalcum Ore',
 		address: process.env.RARITY_EXTENDED_ORE_FARM_5,
 		tier: 5,
-		img: '/items/farming/ore-adamantine.png',
+		img: `/items/${process.env.RARITY_EXTENDED_ORE_LOOT_5}.png`,
 		width: 256,
 		height: 256,
 		cost: [
@@ -153,6 +153,21 @@ const ORE_TIERS = [
 			{...LOOTS[process.env.RARITY_EXTENDED_ORE_LOOT_4], amount: 180},
 		]
 	},
+	// {
+	// 	name: 'Adamantine Ore',
+	// 	address: process.env.RARITY_EXTENDED_ORE_FARM_5,
+	// 	tier: 5,
+	// 	img: '/items/farming/ore-adamantine.png',
+	// 	width: 256,
+	// 	height: 256,
+	// 	cost: [
+	// 		{...LOOTS[process.env.RARITY_EXTENDED_ORE_LOOT_0], amount: 6},
+	// 		{...LOOTS[process.env.RARITY_EXTENDED_ORE_LOOT_1], amount: 18},
+	// 		{...LOOTS[process.env.RARITY_EXTENDED_ORE_LOOT_2], amount: 36},
+	// 		{...LOOTS[process.env.RARITY_EXTENDED_ORE_LOOT_3], amount: 60},
+	// 		{...LOOTS[process.env.RARITY_EXTENDED_ORE_LOOT_4], amount: 180},
+	// 	]
+	// },
 ];
 
 export {WOOD_TIERS, ORE_TIERS};
