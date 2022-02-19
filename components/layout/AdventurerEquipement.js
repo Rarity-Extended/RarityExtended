@@ -317,12 +317,12 @@ function	OverviewEquipement({provider, raritySkin}) {
 						}
 					</Link>
 					<Link href={'/equipements'}>
-						<div className={`aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center ${pageSlot === 7 ? 'text-plain-60' : 'text-400 hover-text-plain-60'}`}>
+						<div className={'aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center text-plain-60'}>
 							<IconNecklace className={'w-12 h-12'} />
 						</div>
 					</Link>
 					<Link href={'/equipements'}>
-						<div className={`aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center ${pageSlot === 8 ? 'text-plain-60' : 'text-400 hover-text-plain-60'}`}>
+						<div className={'aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center text-plain-60'}>
 							<IconRing className={'w-12 h-12'} />
 						</div>
 					</Link>
