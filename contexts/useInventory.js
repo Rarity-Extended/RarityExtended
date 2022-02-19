@@ -176,8 +176,13 @@ export const InventoryContextApp = ({children}) => {
 		rIndex++;
 		for (let index = 0; index < inventoryCallResult[rIndex].length; index++) {
 			const item = inventoryCallResult[rIndex][index];
+			// const initialIndex = (item.base_type === 3 ? 19 : 0) - 1;
 			const initialIndex = (item.base_type === 3 ? 19 : 0) - 1;
-			const element = ITEMS.BASIC_SET[initialIndex + item.item_type];
+			let element = ITEMS.BASIC_SET[initialIndex + item.item_type];
+			if (item.item_type === 19) {
+				element = ITEMS.BASIC_SET[18];
+			}
+			console.warn(element, item, initialIndex + item.item_type);
 			if (_inventory[element.address]?.balance > 0) {
 				_inventory[element.address].balance++;
 			} else {

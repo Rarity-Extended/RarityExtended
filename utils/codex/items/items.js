@@ -1761,7 +1761,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 3,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 2,
@@ -1780,7 +1781,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 4,
 		critical: 2,
 		critical_modifier: -1,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 3,
@@ -1799,7 +1801,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 4,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 4,
@@ -1818,7 +1821,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 5,
@@ -1837,7 +1841,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 6,
@@ -1856,7 +1861,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 7,
@@ -1875,7 +1881,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 8,
@@ -1894,7 +1901,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 9,
@@ -1913,7 +1921,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 10,
@@ -1932,7 +1941,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 11,
@@ -1951,7 +1961,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 12,
@@ -1970,7 +1981,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 13,
@@ -1989,7 +2001,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 10,
 		critical: 2,
 		critical_modifier: -1,
-		range_increment: 120
+		range_increment: 120,
+		type: 3
 	},
 	{
 		id: 14,
@@ -2008,7 +2021,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 2,
 		critical_modifier: -1,
-		range_increment: 80
+		range_increment: 80,
+		type: 3
 	},
 	{
 		id: 15,
@@ -2027,7 +2041,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 4,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 20
+		range_increment: 20,
+		type: 3
 	},
 	{
 		id: 16,
@@ -2046,7 +2061,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 30
+		range_increment: 30,
+		type: 3
 	},
 	{
 		id: 17,
@@ -2065,7 +2081,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 4,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 50
+		range_increment: 50,
+		type: 3
 	},
 	{
 		id: 18,
@@ -2084,7 +2101,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 19,
@@ -2103,7 +2121,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 4,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 20,
@@ -2122,7 +2141,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 10
+		range_increment: 10,
+		type: 3
 	},
 	{
 		id: 21,
@@ -2141,7 +2161,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 4,
 		critical: 2,
 		critical_modifier: -2,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 22,
@@ -2160,7 +2181,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 4,
 		critical: 4,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 23,
@@ -2179,7 +2201,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 24,
@@ -2198,7 +2221,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: -1,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 25,
@@ -2217,7 +2241,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 26,
@@ -2236,7 +2261,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 27,
@@ -2255,7 +2281,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 2,
 		critical_modifier: -1,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 28,
@@ -2274,7 +2301,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 4,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 29,
@@ -2293,7 +2321,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: -2,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 30,
@@ -2312,7 +2341,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: -2,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 31,
@@ -2331,7 +2361,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 32,
@@ -2350,7 +2381,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 33,
@@ -2369,7 +2401,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 2,
 		critical_modifier: -2,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 34,
@@ -2388,7 +2421,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 10,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 35,
@@ -2407,7 +2441,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 12,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 36,
@@ -2426,7 +2461,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 10,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 37,
@@ -2445,7 +2481,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 10,
 		critical: 2,
 		critical_modifier: -1,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 38,
@@ -2464,7 +2501,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 12,
 		critical: 2,
 		critical_modifier: -1,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 39,
@@ -2483,7 +2521,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 40,
@@ -2502,7 +2541,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 10,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 41,
@@ -2521,7 +2561,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 42,
@@ -2540,7 +2581,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 43,
@@ -2559,7 +2601,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 4,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 44,
@@ -2578,7 +2621,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 100
+		range_increment: 100,
+		type: 3
 	},
 	{
 		id: 45,
@@ -2597,7 +2641,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 110
+		range_increment: 110,
+		type: 3
 	},
 	{
 		id: 46,
@@ -2616,7 +2661,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 60
+		range_increment: 60,
+		type: 3
 	},
 	{
 		id: 47,
@@ -2635,7 +2681,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 70
+		range_increment: 70,
+		type: 3
 	},
 	{
 		id: 48,
@@ -2654,7 +2701,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 49,
@@ -2673,7 +2721,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 50,
@@ -2692,7 +2741,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 4,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 51,
@@ -2711,7 +2761,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 6,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 52,
@@ -2730,7 +2781,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 10,
 		critical: 2,
 		critical_modifier: -1,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 53,
@@ -2749,7 +2801,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 10,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 54,
@@ -2768,7 +2821,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 3,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 55,
@@ -2787,7 +2841,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 56,
@@ -2806,7 +2861,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 2,
 		critical_modifier: 0,
-		range_increment: 0
+		range_increment: 0,
+		type: 3
 	},
 	{
 		id: 57,
@@ -2825,7 +2881,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 4,
 		critical: 2,
 		critical_modifier: -1,
-		range_increment: 30
+		range_increment: 30,
+		type: 3
 	},
 	{
 		id: 58,
@@ -2844,7 +2901,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 10,
 		critical: 2,
 		critical_modifier: -1,
-		range_increment: 120
+		range_increment: 120,
+		type: 3
 	},
 	{
 		id: 59,
@@ -2863,7 +2921,8 @@ const	_ITEMS_CORE_CRAFTING_WEAPONS = [
 		damage: 8,
 		critical: 2,
 		critical_modifier: -1,
-		range_increment: 80
+		range_increment: 80,
+		type: 3
 	}
 ];
 
@@ -2879,7 +2938,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 2,
-		cost: 1
+		cost: 1,
+		type: 1
 	},
 	{
 		id: 2,
@@ -2892,7 +2952,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 0,
-		cost: 0.01
+		cost: 0.01,
+		type: 1
 	},
 	{
 		id: 3,
@@ -2905,7 +2966,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 2,
-		cost: 30
+		cost: 30,
+		type: 1
 	},
 	{
 		id: 4,
@@ -2918,7 +2980,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 5,
-		cost: 2
+		cost: 2,
+		type: 1
 	},
 	{
 		id: 5,
@@ -2931,7 +2994,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 0,
-		cost: 1
+		cost: 1,
+		type: 1
 	},
 	{
 		id: 6,
@@ -2944,7 +3008,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 4,
-		cost: 1
+		cost: 1,
+		type: 1
 	},
 	{
 		id: 7,
@@ -2957,7 +3022,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 2,
-		cost: 0.5
+		cost: 0.5,
+		type: 1
 	},
 	{
 		id: 8,
@@ -2970,7 +3036,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 0,
-		cost: 8
+		cost: 8,
+		type: 1
 	},
 	{
 		id: 9,
@@ -2983,7 +3050,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 9,
-		cost: 0.03
+		cost: 0.03,
+		type: 1
 	},
 	{
 		id: 10,
@@ -2996,7 +3064,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 1,
-		cost: 0.1
+		cost: 0.1,
+		type: 1
 	},
 	{
 		id: 11,
@@ -3009,7 +3078,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 3,
-		cost: 12
+		cost: 12,
+		type: 1
 	},
 	{
 		id: 12,
@@ -3022,7 +3092,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 2,
-		cost: 7
+		cost: 7,
+		type: 1
 	},
 	{
 		id: 13,
@@ -3035,7 +3106,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 1,
-		cost: 20
+		cost: 20,
+		type: 1
 	},
 	{
 		id: 14,
@@ -3048,7 +3120,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 1,
-		cost: 40
+		cost: 40,
+		type: 1
 	},
 	{
 		id: 15,
@@ -3061,7 +3134,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 1,
-		cost: 80
+		cost: 80,
+		type: 1
 	},
 	{
 		id: 16,
@@ -3074,7 +3148,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 1,
-		cost: 150
+		cost: 150,
+		type: 1
 	},
 	{
 		id: 17,
@@ -3087,7 +3162,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 2,
-		cost: 15
+		cost: 15,
+		type: 1
 	},
 	{
 		id: 18,
@@ -3100,7 +3176,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 2,
-		cost: 50
+		cost: 50,
+		type: 1
 	},
 	{
 		id: 19,
@@ -3113,7 +3190,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 1,
-		cost: 0.1
+		cost: 0.1,
+		type: 1
 	},
 	{
 		id: 20,
@@ -3126,7 +3204,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 10,
-		cost: 1
+		cost: 1,
+		type: 1
 	},
 	{
 		id: 21,
@@ -3139,7 +3218,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 5,
-		cost: 10
+		cost: 10,
+		type: 1
 	},
 	{
 		id: 22,
@@ -3152,7 +3232,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 1,
-		cost: 1000
+		cost: 1000,
+		type: 1
 	},
 	{
 		id: 23,
@@ -3165,7 +3246,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 1,
-		cost: 0.01
+		cost: 0.01,
+		type: 1
 	},
 	{
 		id: 24,
@@ -3178,7 +3260,8 @@ const	_ITEMS_CORE_CRAFTING_GOODS = [
 		category: 'good',
 		minter: process.env.RARITY_CRAFTING_ADDR,
 		weight: 1,
-		cost: 1
+		cost: 1,
+		type: 1
 	}
 ];
 

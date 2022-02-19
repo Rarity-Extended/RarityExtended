@@ -148,9 +148,6 @@ export const RarityContextApp = ({children}) => {
 			return;
 		}
 
-		console.log(Number(farmingWood['xp']));
-		console.log(Number(farmingWood['level']));
-		console.log(xpRequired(Number(farmingWood['level']) + 1));
 		const	_adventurer = {
 			tokenID: tokenID,
 			owner: owner,

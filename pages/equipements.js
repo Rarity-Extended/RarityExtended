@@ -1,6 +1,7 @@
 import	React, {useState}					from	'react';
 import	{useRouter}							from	'next/router';
 import	Image								from	'next/image';
+import	{Listbox, Transition}				from	'@headlessui/react';
 import	useWeb3								from	'contexts/useWeb3';
 import	useRarity							from	'contexts/useRarity';
 import	useInventory						from	'contexts/useInventory';
@@ -11,6 +12,7 @@ import	Section								from	'components/layout/Section';
 import	RowBasicSets						from	'components/layout/RowBasicSets';
 import	{equip, rEquip, approveForAll}		from	'utils/actions/rarity_extended_equipements';
 import	{BASIC_SETS}						from	'utils/codex/extentions/rarity_extended_basic_sets';
+import useClientEffect from 'hooks/useClientEffect';
 
 function	Details() {
 	const	[isExpanded, set_isExpanded] = React.useState(false);
@@ -42,6 +44,179 @@ function	Details() {
 				</div>
 			</div>
 		</div>
+	);
+}
+
+function	EquipButton({item, onEquipItem}) {
+	const	{currentAdventurer} = useRarity();
+	const	{equipements} = useInventory();
+	const	slotForItem = getSlotForItem(item);
+
+	// console.log(equipements?.[currentAdventurer?.tokenID]);
+
+	const	[options, set_options] = useState([
+		{title: 'Equip as primary', disabled: false, onClick: () => onEquipItem(item, 5)},
+		{title: 'Equip as secondary', disabled: false, onClick: () => onEquipItem(item, 6)}
+	]);
+	
+	useClientEffect(() => {
+		if (item.category === 'weapon') {
+			if (item.encumbrance === 'Ranged Weapons' || item.encumbrance === 'Two-Handed Melee Weapons') {
+				if (equipements?.[currentAdventurer?.tokenID]?.[5] === undefined) {
+					if (equipements?.[currentAdventurer?.tokenID]?.[6] !== undefined || equipements?.[currentAdventurer?.tokenID]?.[101] !== undefined) {
+						set_options([{title: 'Equip as primary', disabled: true, onClick: () => null}]);
+					} else {
+						set_options([{title: 'Equip as primary', disabled: false, onClick: () => onEquipItem(item, 5)}]);
+					}
+				} else {
+					if (equipements?.[currentAdventurer?.tokenID]?.[6] !== undefined || equipements?.[currentAdventurer?.tokenID]?.[101] !== undefined) {
+						set_options([{title: 'Equip as primary', disabled: true, onClick: () => null}]);
+					} else if (equipements?.[currentAdventurer?.tokenID]?.[5] !== undefined) {
+						set_options([{title: 'Equip as primary', disabled: true, onClick: () => null}]);
+					} else {
+						set_options([{title: 'Equip as primary', disabled: false, onClick: () => onEquipItem(item, 5)}]);
+					}
+				}
+			} else {
+				if (equipements?.[currentAdventurer?.tokenID]?.[5] !== undefined) {
+					if (equipements?.[currentAdventurer?.tokenID]?.[5].encumbrance === 'Two-Handed Melee Weapons' ||
+						equipements?.[currentAdventurer?.tokenID]?.[5].encumbrance === 'Ranged Weapons') {
+						set_options([{title: 'Equip as secondary', disabled: true, onClick: () => null}]);
+					} else if (equipements?.[currentAdventurer?.tokenID]?.[6] !== undefined || equipements?.[currentAdventurer?.tokenID]?.[101] !== undefined) {
+						set_options([{title: 'Equip as primary', disabled: true, onClick: () => null}]);
+					} else {
+						set_options([{title: 'Equip as secondary', disabled: false, onClick: () => onEquipItem(item, 6)}]);
+					}
+				} else {
+					if (equipements?.[currentAdventurer?.tokenID]?.[6] !== undefined) {
+						set_options([
+							{title: 'Equip as primary', disabled: false, onClick: () => onEquipItem(item, 5)},
+						]);
+					} else {
+						set_options([
+							{title: 'Equip as primary', disabled: false, onClick: () => onEquipItem(item, 5)},
+							{title: 'Equip as secondary', disabled: false, onClick: () => onEquipItem(item, 6)}
+						]);
+					}
+				}
+			}
+		} else if (item.category === 'shield') {
+			if (equipements?.[currentAdventurer?.tokenID]?.[5] !== undefined) {
+				if (equipements?.[currentAdventurer?.tokenID]?.[5].encumbrance === 'Two-Handed Melee Weapons' ||
+					equipements?.[currentAdventurer?.tokenID]?.[5].encumbrance === 'Ranged Weapons') {
+					set_options([{title: 'Equip as secondary', disabled: true, onClick: () => null}]);
+				} else if (equipements?.[currentAdventurer?.tokenID]?.[6] !== undefined) {
+					set_options([{title: 'Equip as secondary', disabled: true, onClick: () => null}]);
+				} else {
+					set_options([{title: 'Equip as secondary', disabled: false, onClick: () => onEquipItem(item, 101)}]);
+				}
+			} else {
+				if (equipements?.[currentAdventurer?.tokenID]?.[6] !== undefined || equipements?.[currentAdventurer?.tokenID]?.[101] !== undefined) {
+					set_options([{title: 'Equip as secondary', disabled: true, onClick: () => null}]);
+				} else {
+					set_options([{title: 'Equip as secondary', disabled: false, onClick: () => onEquipItem(item, 101)}]);
+				}
+			}
+		}
+	}, [equipements]);
+
+	function	getSlotForItem(item) {
+		if (item.category === 'shield') {
+			return 101;
+		}
+		if (item.category === 'weapon') {
+			if (item.encumbrance === 'Ranged Weapons' || item.encumbrance === 'Two-Handed Melee Weapons') {
+				return 5;
+			}
+			return 6;
+		}
+		if (item.category === 'head-armor') return 1;
+		if (item.category === 'body-armor') return 2;
+		if (item.category === 'hand-armor') return 3;
+		if (item.category === 'foot-armor') return 4;
+	}
+
+	if ((item?.category || '').includes('weapon') && options.length > 1) {
+		return (
+			<Listbox onChange={(e) => e.onClick()}>
+				{({open}) => (
+					<>
+						<Listbox.Label className={'sr-only'}>{'Care options'}</Listbox.Label>
+						<div className={'relative w-full'}>
+							<div className={'inline-flex w-full'}>
+								<div className={'inline-flex relative z-0 mt-4 w-full'}>
+									<button
+										disabled={options[0].disabled}
+										className={'inline-flex relative items-center w-full button-highlight-with-arrow flex-center'} onClick={() => options[0].onClick()}>
+										<p className={'font-bold'}>{options[0].title}</p>
+									</button>
+									<Listbox.Button
+										className={`inline-flex relative items-center ${options[0].disabled ? 'button-outline-arrow-disabled' : 'button-outline-arrow'}`}>
+										<svg aria-hidden={'true'} focusable={'false'} data-prefix={'fas'} data-icon={'chevron-down'} className={'w-3 h-3'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 448 512'}><path fill={'currentColor'} d={'M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z'}></path></svg>
+									</Listbox.Button>
+								</div>
+							</div>
+		
+							<Transition
+								show={open}
+								as={React.Fragment}
+								leave={'transition ease-in duration-100'}
+								leaveFrom={'opacity-100'}
+								leaveTo={'opacity-0'}>
+								<Listbox.Options className={'overflow-hidden absolute right-0 z-10 mt-2 w-full shadow-lg origin-top-right box-darker-with-border'}>
+									{options.map((option) => (
+										<Listbox.Option
+											key={option.title}
+											className={'relative py-2 px-4 hover:bg-light-primary-lighter dark:hover:bg-dark-primary-lighter select-none'}
+											value={option}>
+											<div className={'flex flex-col cursor-pointer'}>
+												<div className={'flex justify-between'}>
+													<p className={'text-sm font-bold normal-case text-plain'}>{option.title}</p>
+												</div>
+												<p className={'mt-2 text-sm text-plain-60'}>
+													{option.description}
+												</p>
+											</div>
+										</Listbox.Option>
+									))}
+								</Listbox.Options>
+							</Transition>
+						</div>
+					</>
+				)}
+			</Listbox>
+		);
+	}
+
+	if ((item?.category || '').includes('weapon') && options?.[0]?.title === 'Equip as primary') {
+		return (
+			<button
+				disabled={options[0].disabled}
+				onClick={() => options[0].onClick()}
+				className={'flex mt-4 w-full flex-center button-highlight'}>
+				<p className={'select-none'}>{'Equip as primary'}</p>
+			</button>
+		);	
+	}
+
+	if (options?.[0]?.title === 'Equip as secondary') {
+		return (
+			<button
+				disabled={options[0].disabled}
+				onClick={() => options[0].onClick()}
+				className={'flex mt-4 w-full flex-center button-highlight'}>
+				<p className={'select-none'}>{'Equip as secondary'}</p>
+			</button>
+		);	
+	}
+
+	return (
+		<button
+			disabled={equipements?.[currentAdventurer?.tokenID]?.[slotForItem] !== undefined}
+			onClick={() => onEquipItem(item, getSlotForItem(item))}
+			className={'flex mt-4 w-full flex-center button-highlight'}>
+			<p className={'select-none'}>{'Equip'}</p>
+		</button>
 	);
 }
 
@@ -93,30 +268,14 @@ function	ItemList({tab}) {
 	}, [currentAdventurer, inventory, sharedInventory, nonce, tab]);
 	React.useEffect(() => prepareItemlist(), [prepareItemlist]);
 
-	function	getSlotForItem(item) {
-		if (item.category === 'shield') {
-			return 101;
-		}
-		if (item.category === 'weapon') {
-			if (item.encumbrance !== 'Ranged Weapons' && item.encumbrance !== 'Two-Handed Melee Weapons') {
-				return 5;
-			}
-			return 6;
-		}
-		if (item.category === 'head-armor') return 1;
-		if (item.category === 'body-armor') return 2;
-		if (item.category === 'hand-armor') return 3;
-		if (item.category === 'foot-armor') return 4;
-
-	}
-	function	_onAddressEquip(item) {
+	function	_onAddressEquip(item, slot) {
 		equip({
 			provider,
 			tokenID: currentAdventurer.tokenID,
 			minter: item.minter,
 			itemID: item.tokenID,
 			itemName: item.name,
-			slot: getSlotForItem(item)
+			slot: slot
 		}, ({error}) => {
 			if (error) {
 				return;
@@ -125,14 +284,14 @@ function	ItemList({tab}) {
 		});
 	}
 
-	function	_onRarityEquip(item) {
+	function	_onRarityEquip(item, slot) {
 		rEquip({
 			provider,
 			tokenID: currentAdventurer.tokenID,
 			minter: item.minter,
 			itemID: item.tokenID,
 			itemName: item.name,
-			slot: getSlotForItem(item)
+			slot: slot
 		}, ({error}) => {
 			if (error) {
 				return;
@@ -140,11 +299,11 @@ function	ItemList({tab}) {
 			updateInventory(currentAdventurer.tokenID);
 		});
 	}
-	function	onEquipItem(item) {
+	function	onEquipItem(item, slot) {
 		if (item.ownerType === 'uint') {
-			_onRarityEquip(item);
+			_onRarityEquip(item, slot);
 		} else {
-			_onAddressEquip(item);
+			_onAddressEquip(item, slot);
 		}
 	}
 
@@ -157,7 +316,7 @@ function	ItemList({tab}) {
 				</div>
 				: null}
 			{itemList.map((item, index) => (
-				<div key={index} className={'flex flex-col col-span-1 p-4 h-full rounded-sm bg-500'}>
+				<div key={index} className={'flex relative flex-col col-span-1 p-4 h-full rounded-sm bg-500'}>
 					<p className={'w-4/5 text-sm text-plain'}>{item.name}</p>
 					<div className={'flex h-full flex-center'}>
 						<Image src={item.img} width={105} height={105} />
@@ -165,11 +324,24 @@ function	ItemList({tab}) {
 					<ItemAttributes
 						category={item.category}
 						item={item} />
-					<button
+					<EquipButton item={item} onEquipItem={(_item, _slot) => onEquipItem(_item, _slot)} />
+					{/* <button
 						onClick={() => onEquipItem(item)}
 						className={'flex mt-4 w-full flex-center button-highlight'}>
 						<p className={'select-none'}>{'Equip'}</p>
-					</button>
+					</button> */}
+					{/* <div className={'flex flex-col space-y-4'}>
+						<button
+							onClick={() => onEquipItem(item)}
+							className={'flex mt-4 w-full flex-center button-highlight'}>
+							<p className={'select-none'}>{'Equip as Primary'}</p>
+						</button>
+						<button
+							onClick={() => onEquipItem(item)}
+							className={'flex mt-4 w-full flex-center button-highlight'}>
+							<p className={'select-none'}>{'Equip as secondary'}</p>
+						</button>
+					</div> */}
 				</div>
 			))}
 		</div>

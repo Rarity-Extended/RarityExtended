@@ -173,26 +173,47 @@ details[open] summary {
   ;
 }
 .button-highlight-with-arrow {
-  @apply
-    select-none
-    rounded-l-sm
-    rounded-r-none
-    px-4
-    py-2
-    pl-3
-    pr-4
-    text-sm
-    tracking-wide
-    text-center
-    transition-colors
+  @apply select-none rounded-l-sm rounded-r-none
+    px-4 py-2 pl-3 pr-4
+	text-sm tracking-wide text-center
+    transition-colors cursor-pointer
     bg-light-primary
     hover:bg-light-primary-darker
     dark:bg-dark-primary
     dark:hover:bg-dark-primary-darker
     text-white
     dark:text-black
-    cursor-pointer
-  ;
+}
+.button-highlight-with-arrow:disabled {
+  @apply select-none rounded-l-sm rounded-r-none
+    px-4 py-2 pl-3 pr-4
+    text-sm tracking-wide text-center
+    transition-colors cursor-not-allowed
+    bg-light-600
+    dark:bg-dark-600
+    text-gray-200
+    dark:text-dark-200
+    border
+    border-r-0
+    border-light-200
+    dark:border-dark-600
+}
+.button-outline-arrow-disabled {
+	@apply select-none
+    rounded-r-sm
+    rounded-l-none
+    p-2
+    text-sm
+    tracking-wide
+    text-center
+    bg-light-600
+    dark:bg-dark-600
+    text-gray-200
+    dark:text-dark-200
+    border border-l-0
+	border-light-200
+    dark:border-dark-600
+    cursor-not-allowed
 }
 .button-outline {
   @apply
@@ -227,7 +248,6 @@ details[open] summary {
     border
     border-l-0
     cursor-pointer
-  ;
 }
 .button-fake {
   @apply

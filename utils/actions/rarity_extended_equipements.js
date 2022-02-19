@@ -246,8 +246,6 @@ export async function	rEquip({provider, tokenID, minter, itemID, itemName, slot}
 
 export async function	unequip({provider, tokenID, itemName, slot}, callback) {
 	let		_toast;
-	let		currentStep = 1;
-	let		steps = 1;
 	const	signer = provider.getSigner();
 	const	rarityEquipementContract = new ethers.Contract(
 		slotsRegistry[slot], [
@@ -257,7 +255,7 @@ export async function	unequip({provider, tokenID, itemName, slot}, callback) {
 	);
 
 	toast.dismiss(_toast);
-	_toast = toast.loading(`${currentStep}/${steps} - Trying to unequip ${itemName}...`);
+	_toast = toast.loading(`Trying to unequip ${itemName}...`);
 	try {
 		const	transaction = await rarityEquipementContract.unset_equipement(tokenID);
 		const	transactionResult = await transaction.wait();
