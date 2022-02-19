@@ -52,8 +52,6 @@ function	EquipButton({item, onEquipItem}) {
 	const	{equipements} = useInventory();
 	const	slotForItem = getSlotForItem(item);
 
-	// console.log(equipements?.[currentAdventurer?.tokenID]);
-
 	const	[options, set_options] = useState([
 		{title: 'Equip as primary', disabled: false, onClick: () => onEquipItem(item, 5)},
 		{title: 'Equip as secondary', disabled: false, onClick: () => onEquipItem(item, 6)}

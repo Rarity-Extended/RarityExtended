@@ -182,7 +182,6 @@ export const InventoryContextApp = ({children}) => {
 			if (item.item_type === 19) {
 				element = ITEMS.BASIC_SET[18];
 			}
-			console.warn(element, item, initialIndex + item.item_type);
 			if (_inventory[element.address]?.balance > 0) {
 				_inventory[element.address].balance++;
 			} else {

@@ -38,12 +38,6 @@ function	ItemWithTooltip({provider, currentAdventurer, updateInventory, item, sl
 								<ItemAttributes category={item.category} item={item} />
 								<button
 									onClick={() => {
-										console.log({
-											provider,
-											tokenID: currentAdventurer.tokenID,
-											itemName: item.name,
-											slot
-										});
 										unequip({
 											provider,
 											tokenID: currentAdventurer.tokenID,
