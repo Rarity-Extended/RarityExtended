@@ -148,6 +148,9 @@ export const RarityContextApp = ({children}) => {
 			return;
 		}
 
+		console.log(Number(farmingWood['xp']));
+		console.log(Number(farmingWood['level']));
+		console.log(xpRequired(Number(farmingWood['level']) + 1));
 		const	_adventurer = {
 			tokenID: tokenID,
 			owner: owner,
@@ -179,7 +182,10 @@ export const RarityContextApp = ({children}) => {
 			feats: (feats || []).map(f => Number(f)),
 			skin: CLASSES[Number(adventurer['_class'])]?.images?.front,
 			professions: {
-				canLevelUp: Number(farmingWood['xp']) >= xpRequired(Number(farmingWood['level']) + 1) || Number(farmingOre['xp']) >= xpRequired(Number(farmingOre['level'])) + 1,
+				canLevelUp: (
+					(Number(farmingWood['xp']) >= xpRequired(Number(farmingWood['level']) + 1)) ||
+					(Number(farmingOre['xp']) >= xpRequired(Number(farmingOre['level']) + 1))
+				),
 				wood: {
 					level: Number(farmingWood['level']),
 					xp: Number(farmingWood['xp']),
