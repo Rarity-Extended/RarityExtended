@@ -3,7 +3,7 @@ import	Image						from	'next/image';
 import	{ethers}					from	'ethers';
 import	{Dialog, Transition}		from	'@headlessui/react';
 
-function	ModalFarmUpgrade({isOpen, set_isOpen, farmUpgrade, adventurerLevel, onUpgrade, img}) {
+function	ModalFarmUpgrade({isOpen, set_isOpen, farmUpgrade, adventurerLevel, onUpgrade, img, messageOverride}) {
 	function closeModal() {
 		set_isOpen(false);
 	}
@@ -39,7 +39,7 @@ function	ModalFarmUpgrade({isOpen, set_isOpen, farmUpgrade, adventurerLevel, onU
 								<div className={'flex flex-col items-start mt-4 text-sm text-plain-60'}>
 									<div>
 										<p>
-											{'Help the development of Rarity Extended and the extraordinary volunteer contributors behind it!'}
+											{messageOverride || 'Help the development of Rarity Extended and the extraordinary volunteer contributors behind it!'}
 										</p>
 									</div>
 									<div className={'flex flex-row justify-center my-4 w-full'}>

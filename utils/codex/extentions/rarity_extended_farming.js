@@ -129,6 +129,7 @@ const ORE_TIERS = [
 		address: process.env.RARITY_MURDERTEETH_COLD_IRON_FARM,
 		tier: 3,
 		img: `/items/${process.env.LOOT_ORE_COLD_IRON}.png`,
+		upgradeMessage: 'Upgrade your mining level for higher Cold Iron yield, support rarity development!',
 		width: 256,
 		height: 256,
 		cost: [
@@ -171,6 +172,7 @@ const ORE_TIERS = [
 		address: process.env.RARITY_MURDERTEETH_ADAMANTINE_FARM,
 		tier: 5,
 		img: `/items/${process.env.LOOT_ORE_ADAMANTINE}.png`,
+		upgradeMessage: 'Upgrade your mining level for higher Adamantine yield, support rarity development!',
 		width: 256,
 		height: 256,
 		cost: [

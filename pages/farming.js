@@ -23,7 +23,7 @@ dayjs.extend(relativeTime);
 dayjs.extend(duration);
 
 
-function	ElementFarm({name, address, tier, img, width, height, level}) {
+function	ElementFarm({name, address, tier, img, width, height, level, upgradeMessage}) {
 	const	{provider, chainID, chainTime} = useWeb3();
 	const	{currentAdventurer, updateRarity} = useRarity();
 	const	{updateInventory} = useInventory();
@@ -118,6 +118,7 @@ function	ElementFarm({name, address, tier, img, width, height, level}) {
 				</button>
 			</div>
 			<ModalFarmUpgrade
+				messageOverride={upgradeMessage}
 				onUpgrade={onUpgrade}
 				adventurerLevel={level}
 				farmUpgrade={farmUpgrade}
