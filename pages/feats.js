@@ -31,7 +31,7 @@ function	Index({tab, search, unlockedFeats}) {
 	}
 
 	return (
-		<div className={'grid grid-cols-1 divide-y dark:divide-dark-600 divide-light-primary-lighter'}>
+		<div className={'grid grid-cols-1 divide-y divide-light-primary-lighter dark:divide-dark-600'}>
 			{
 				Object.values(FEATS)
 					.filter((feat) => {

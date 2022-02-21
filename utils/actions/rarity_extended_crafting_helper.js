@@ -33,7 +33,12 @@ export async function	isApprovedForAll({provider, toApprove}) {
 export async function	approveForAll({provider, contract}, onError = () => null, onSuccess = () => null) {
 	let		_toast;
 	const	signer = provider.getSigner();
-	const	raritySource = RARITY_MANIFEST.connect(signer);
+	const	raritySource = new ethers.Contract(
+		process.env.RARITY_ADDR, [
+			'function isApprovedForAll(address owner, address operator) external view returns (bool)',
+			'function setApprovalForAll(address operator, bool approved) external',
+		], signer
+	);
 	try {
 		_toast = toast.loading('Approving Crafting...');
 		const	transaction = await raritySource.setApprovalForAll(contract, true);

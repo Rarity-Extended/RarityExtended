@@ -42,7 +42,7 @@ function AdventurerModalMenu() {
 						<div className={'mb-1 text-xs group-hover:underline cursor-pointer'}>
 							{'Nobody'}
 						</div>
-						<div className={'text-megaxs group-hover:underline cursor-pointer'}>
+						<div className={'text-xs group-hover:underline opacity-80 cursor-pointer'}>
 							{`${address.slice(0, 4)}...${address.slice(-4)}`}
 						</div>
 					</div>

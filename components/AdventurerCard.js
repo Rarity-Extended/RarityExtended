@@ -11,7 +11,7 @@ function	WrapperMinimal({adventurer, set_currentAdventurer, favoritesAdventurers
 			<Media greaterThan={'md'}>
 				<div className={'flex relative flex-col justify-between items-center p-4 w-full box'}>
 					<div className={'text-center'}>
-						<p className={'text-xl font-bold text-center text-plain dark:text-opacity-70'}>
+						<p className={'text-xl font-bold text-center dark:opacity-70 text-plain'}>
 							{adventurer.name || adventurer.tokenID}
 						</p>
 						<p className={'mb-4 text-sm text-black dark:text-dark-100'}>
@@ -46,7 +46,7 @@ function	WrapperMinimal({adventurer, set_currentAdventurer, favoritesAdventurers
 					</div>
 					<div>
 						<div className={'text-center'}>
-							<p className={'text-xl font-bold text-center text-plain dark:text-opacity-70'}>
+							<p className={'text-xl font-bold text-center dark:opacity-70 text-plain'}>
 								{adventurer.name || adventurer.tokenID}
 							</p>
 							<p className={'mb-4 text-sm text-black dark:text-dark-100'}>
