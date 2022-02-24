@@ -18,7 +18,7 @@ import	Tooltip					from	'components/Tooltip';
 import	ItemAttributes			from	'components/ItemAttributes';
 import	* as actions			from	'utils/actions';
 import	{setName}				from	'utils/actions/rarity_extended_name';
-import	{unequip}				from	'utils/actions/rarity_extended_equipements';
+import	{unequip}				from	'utils/actions/rarity_extended_equipments';
 import	{xpRequired}			from	'utils/libs/rarity';
 import	CLASSES					from	'utils/codex/core/classes';
 
@@ -59,9 +59,9 @@ function	ItemWithTooltip({provider, currentAdventurer, updateInventory, item, sl
 	);
 }
 
-function	OverviewEquipement({provider, raritySkin}) {
+function	OverviewEquipment({provider, raritySkin}) {
 	const	{updateRarity, currentAdventurer} = useRarity();
-	const	{equipements, updateInventory} = useInventory();
+	const	{equipment, updateInventory} = useInventory();
 	const	{raritySkins} = useUI();
 	const	[name, set_name] = React.useState(currentAdventurer.name || currentAdventurer.tokenID);
 
@@ -192,49 +192,49 @@ function	OverviewEquipement({provider, raritySkin}) {
 		<div>
 			<div className={'flex flex-row'} style={{width: 384}}>
 				<div className={'grid grid-cols-1 gap-y-4 ml-auto w-18'}>
-					<Link href={'/equipements'}>
+					<Link href={'/equipment'}>
 						<div>
 							<ItemWithTooltip
 								provider={provider}
 								currentAdventurer={currentAdventurer}
 								updateInventory={updateInventory}
-								item={equipements[currentAdventurer.tokenID]?.[1]}
+								item={equipment[currentAdventurer.tokenID]?.[1]}
 								slot={1}>
 								<IconHelmet className={'w-12 h-12'} />
 							</ItemWithTooltip>
 						</div>
 					</Link>
-					<Link href={'/equipements'}>
+					<Link href={'/equipment'}>
 						<div>
 							<ItemWithTooltip
 								provider={provider}
 								currentAdventurer={currentAdventurer}
 								updateInventory={updateInventory}
-								item={equipements[currentAdventurer.tokenID]?.[2]}
+								item={equipment[currentAdventurer.tokenID]?.[2]}
 								slot={2}>
 								<IconArmor className={'w-12 h-12'} />
 							</ItemWithTooltip>
 						</div>
 					</Link>
-					<Link href={'/equipements'}>
+					<Link href={'/equipment'}>
 						<div>
 							<ItemWithTooltip
 								provider={provider}
 								currentAdventurer={currentAdventurer}
 								updateInventory={updateInventory}
-								item={equipements[currentAdventurer.tokenID]?.[3]}
+								item={equipment[currentAdventurer.tokenID]?.[3]}
 								slot={3}>
 								<IconGloves className={'w-12 h-12'} />
 							</ItemWithTooltip>
 						</div>
 					</Link>
-					<Link href={'/equipements'}>
+					<Link href={'/equipment'}>
 						<div>
 							<ItemWithTooltip
 								provider={provider}
 								currentAdventurer={currentAdventurer}
 								updateInventory={updateInventory}
-								item={equipements[currentAdventurer.tokenID]?.[4]}
+								item={equipment[currentAdventurer.tokenID]?.[4]}
 								slot={4}>
 								<IconBoots className={'w-12 h-12'} />
 							</ItemWithTooltip>
@@ -254,39 +254,39 @@ function	OverviewEquipement({provider, raritySkin}) {
 					</div>
 				</div>
 				<div className={'grid grid-cols-1 gap-y-4 w-18'}>
-					<Link href={'/equipements'}>
+					<Link href={'/equipment'}>
 						<div>
 							<ItemWithTooltip
 								provider={provider}
 								currentAdventurer={currentAdventurer}
 								updateInventory={updateInventory}
-								item={equipements[currentAdventurer.tokenID]?.[5]}
+								item={equipment[currentAdventurer.tokenID]?.[5]}
 								slot={5}>
 								<IconWeapon className={'w-12 h-12'} />
 							</ItemWithTooltip>
 						</div>
 					</Link>
 					
-					<Link href={'/equipements'}>
+					<Link href={'/equipment'}>
 						{
-							equipements[currentAdventurer.tokenID]?.[6] ? (
+							equipment[currentAdventurer.tokenID]?.[6] ? (
 								<div>
 									<ItemWithTooltip
 										provider={provider}
 										currentAdventurer={currentAdventurer}
 										updateInventory={updateInventory}
-										item={equipements[currentAdventurer.tokenID]?.[6]}
+										item={equipment[currentAdventurer.tokenID]?.[6]}
 										slot={6}>
 										<IconWeapon className={'w-12 h-12'} />
 									</ItemWithTooltip>		
 								</div>
-							) : equipements[currentAdventurer.tokenID]?.[101] ? (
+							) : equipment[currentAdventurer.tokenID]?.[101] ? (
 								<div>
 									<ItemWithTooltip
 										provider={provider}
 										currentAdventurer={currentAdventurer}
 										updateInventory={updateInventory}
-										item={equipements[currentAdventurer.tokenID]?.[101]}
+										item={equipment[currentAdventurer.tokenID]?.[101]}
 										slot={101}>
 										<IconWeapon className={'w-12 h-12'} />
 									</ItemWithTooltip>
@@ -305,12 +305,12 @@ function	OverviewEquipement({provider, raritySkin}) {
 							)
 						}
 					</Link>
-					<Link href={'/equipements'}>
+					<Link href={'/equipment'}>
 						<div className={'aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center image-wrapper text-400'}>
 							<IconNecklace className={'w-12 h-12'} />
 						</div>
 					</Link>
-					<Link href={'/equipements'}>
+					<Link href={'/equipment'}>
 						<div className={'aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center image-wrapper text-400'}>
 							<IconRing className={'w-12 h-12'} />
 						</div>
@@ -322,4 +322,4 @@ function	OverviewEquipement({provider, raritySkin}) {
 }
 
 
-export default OverviewEquipement;
+export default OverviewEquipment;

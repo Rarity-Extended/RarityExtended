@@ -6,7 +6,7 @@ import	OverviewSkills		from	'components/layout/AdventurerSkills';
 import	OverviewFeats		from	'components/layout/AdventurerFeats';
 import	OverviewInventory	from	'components/layout/AdventurerInventory';
 import	OverviewProfession	from	'components/layout/AdventurerProfession';
-import	OverviewEquipement	from	'components/layout/AdventurerEquipement';
+import	OverviewEquipment	from	'components/layout/AdventurerEquipment';
 import	OverviewMinimal		from	'components/layout/AdventurerMinimal';
 
 function	Wrapper({media}) {
@@ -26,7 +26,7 @@ function	Wrapper({media}) {
 	}
 	return (
 		<div className={'flex relative flex-row p-4 space-x-16 box'}>
-			<OverviewEquipement
+			<OverviewEquipment
 				provider={provider}
 				raritySkin={skins[currentAdventurer?.tokenID] || currentAdventurer?.skin} />
 			<div className={'relative w-full'}>

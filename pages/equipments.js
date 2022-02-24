@@ -10,7 +10,7 @@ import	IconChevron							from	'components/icons/IconChevron';
 import	ItemAttributes						from	'components/ItemAttributes';
 import	Section								from	'components/layout/Section';
 import	RowBasicSets						from	'components/layout/RowBasicSets';
-import	{equip, rEquip, approveForAll}		from	'utils/actions/rarity_extended_equipements';
+import	{equip, rEquip, approveForAll}		from	'utils/actions/rarity_extended_equipments';
 import	{BASIC_SETS}						from	'utils/codex/extentions/rarity_extended_basic_sets';
 import useClientEffect from 'hooks/useClientEffect';
 
@@ -49,7 +49,7 @@ function	Details() {
 
 function	EquipButton({item, onEquipItem}) {
 	const	{currentAdventurer} = useRarity();
-	const	{equipements} = useInventory();
+	const	{equipment} = useInventory();
 	const	slotForItem = getSlotForItem(item);
 
 	const	[options, set_options] = useState([
@@ -60,33 +60,33 @@ function	EquipButton({item, onEquipItem}) {
 	useClientEffect(() => {
 		if (item.category === 'weapon') {
 			if (item.encumbrance === 'Ranged Weapons' || item.encumbrance === 'Two-Handed Melee Weapons') {
-				if (equipements?.[currentAdventurer?.tokenID]?.[5] === undefined) {
-					if (equipements?.[currentAdventurer?.tokenID]?.[6] !== undefined || equipements?.[currentAdventurer?.tokenID]?.[101] !== undefined) {
+				if (equipment?.[currentAdventurer?.tokenID]?.[5] === undefined) {
+					if (equipment?.[currentAdventurer?.tokenID]?.[6] !== undefined || equipment?.[currentAdventurer?.tokenID]?.[101] !== undefined) {
 						set_options([{title: 'Equip as primary', disabled: true, onClick: () => null}]);
 					} else {
 						set_options([{title: 'Equip as primary', disabled: false, onClick: () => onEquipItem(item, 5)}]);
 					}
 				} else {
-					if (equipements?.[currentAdventurer?.tokenID]?.[6] !== undefined || equipements?.[currentAdventurer?.tokenID]?.[101] !== undefined) {
+					if (equipment?.[currentAdventurer?.tokenID]?.[6] !== undefined || equipment?.[currentAdventurer?.tokenID]?.[101] !== undefined) {
 						set_options([{title: 'Equip as primary', disabled: true, onClick: () => null}]);
-					} else if (equipements?.[currentAdventurer?.tokenID]?.[5] !== undefined) {
+					} else if (equipment?.[currentAdventurer?.tokenID]?.[5] !== undefined) {
 						set_options([{title: 'Equip as primary', disabled: true, onClick: () => null}]);
 					} else {
 						set_options([{title: 'Equip as primary', disabled: false, onClick: () => onEquipItem(item, 5)}]);
 					}
 				}
 			} else {
-				if (equipements?.[currentAdventurer?.tokenID]?.[5] !== undefined) {
-					if (equipements?.[currentAdventurer?.tokenID]?.[5].encumbrance === 'Two-Handed Melee Weapons' ||
-						equipements?.[currentAdventurer?.tokenID]?.[5].encumbrance === 'Ranged Weapons') {
+				if (equipment?.[currentAdventurer?.tokenID]?.[5] !== undefined) {
+					if (equipment?.[currentAdventurer?.tokenID]?.[5].encumbrance === 'Two-Handed Melee Weapons' ||
+						equipment?.[currentAdventurer?.tokenID]?.[5].encumbrance === 'Ranged Weapons') {
 						set_options([{title: 'Equip as secondary', disabled: true, onClick: () => null}]);
-					} else if (equipements?.[currentAdventurer?.tokenID]?.[6] !== undefined || equipements?.[currentAdventurer?.tokenID]?.[101] !== undefined) {
+					} else if (equipment?.[currentAdventurer?.tokenID]?.[6] !== undefined || equipment?.[currentAdventurer?.tokenID]?.[101] !== undefined) {
 						set_options([{title: 'Equip as primary', disabled: true, onClick: () => null}]);
 					} else {
 						set_options([{title: 'Equip as secondary', disabled: false, onClick: () => onEquipItem(item, 6)}]);
 					}
 				} else {
-					if (equipements?.[currentAdventurer?.tokenID]?.[6] !== undefined) {
+					if (equipment?.[currentAdventurer?.tokenID]?.[6] !== undefined) {
 						set_options([
 							{title: 'Equip as primary', disabled: false, onClick: () => onEquipItem(item, 5)},
 						]);
@@ -99,24 +99,24 @@ function	EquipButton({item, onEquipItem}) {
 				}
 			}
 		} else if (item.category === 'shield') {
-			if (equipements?.[currentAdventurer?.tokenID]?.[5] !== undefined) {
-				if (equipements?.[currentAdventurer?.tokenID]?.[5].encumbrance === 'Two-Handed Melee Weapons' ||
-					equipements?.[currentAdventurer?.tokenID]?.[5].encumbrance === 'Ranged Weapons') {
+			if (equipment?.[currentAdventurer?.tokenID]?.[5] !== undefined) {
+				if (equipment?.[currentAdventurer?.tokenID]?.[5].encumbrance === 'Two-Handed Melee Weapons' ||
+					equipment?.[currentAdventurer?.tokenID]?.[5].encumbrance === 'Ranged Weapons') {
 					set_options([{title: 'Equip as secondary', disabled: true, onClick: () => null}]);
-				} else if (equipements?.[currentAdventurer?.tokenID]?.[6] !== undefined) {
+				} else if (equipment?.[currentAdventurer?.tokenID]?.[6] !== undefined) {
 					set_options([{title: 'Equip as secondary', disabled: true, onClick: () => null}]);
 				} else {
 					set_options([{title: 'Equip as secondary', disabled: false, onClick: () => onEquipItem(item, 101)}]);
 				}
 			} else {
-				if (equipements?.[currentAdventurer?.tokenID]?.[6] !== undefined || equipements?.[currentAdventurer?.tokenID]?.[101] !== undefined) {
+				if (equipment?.[currentAdventurer?.tokenID]?.[6] !== undefined || equipment?.[currentAdventurer?.tokenID]?.[101] !== undefined) {
 					set_options([{title: 'Equip as secondary', disabled: true, onClick: () => null}]);
 				} else {
 					set_options([{title: 'Equip as secondary', disabled: false, onClick: () => onEquipItem(item, 101)}]);
 				}
 			}
 		}
-	}, [equipements]);
+	}, [equipment]);
 
 	function	getSlotForItem(item) {
 		if (item.category === 'shield') {
@@ -210,7 +210,7 @@ function	EquipButton({item, onEquipItem}) {
 
 	return (
 		<button
-			disabled={equipements?.[currentAdventurer?.tokenID]?.[slotForItem] !== undefined}
+			disabled={equipment?.[currentAdventurer?.tokenID]?.[slotForItem] !== undefined}
 			onClick={() => onEquipItem(item, getSlotForItem(item))}
 			className={'flex mt-4 w-full flex-center button-highlight'}>
 			<p className={'select-none'}>{'Equip'}</p>
@@ -310,7 +310,7 @@ function	ItemList({tab}) {
 		<div className={'grid grid-cols-1 gap-4 px-4 pb-4 md:grid-cols-4'} style={{minHeight: '20rem'}}>
 			{itemList.length === 0 ?
 				<div className={'flex col-span-4 mx-auto w-full opacity-20 flex-center'}>
-					<p>{'No equipement available'}</p>
+					<p>{'No equipment available'}</p>
 				</div>
 				: null}
 			{itemList.map((item, index) => (
@@ -381,7 +381,7 @@ function	Wrapper() {
 				setTimeout(() => set_txApproveStatus({none: true, isPending: false, isSuccess: false, isError: false}), 5000);
 			},
 			() => {
-				set_specialApprovals(s => ({...s, [process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR]: true}));
+				set_specialApprovals(s => ({...s, [process.env.RARITY_EQUIPMENT_WRAPPER_ADDR]: true}));
 			}
 		);
 	}
@@ -389,12 +389,12 @@ function	Wrapper() {
 	return (
 		<>
 			<Section
-				title={'Equipements'}
+				title={'Equipments'}
 				tabs={['All', 'Head Armors', 'Body Armors', 'Hand Armors', 'Foot Armors', 'Primary Weapons', 'Secondary Weapons', 'Jewelleries']}
 				button={{
 					onClick: onApproveAll,
-					disabled: specialApprovals[process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR] === true,
-					label: specialApprovals[process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR] ? 'Approved!' : 'Approve equipements'
+					disabled: specialApprovals[process.env.RARITY_EQUIPMENT_WRAPPER_ADDR] === true,
+					label: specialApprovals[process.env.RARITY_EQUIPMENT_WRAPPER_ADDR] ? 'Approved!' : 'Approve equipment'
 				}}>
 				<Index />
 			</Section>
@@ -402,7 +402,7 @@ function	Wrapper() {
 				<div className={'p-4'}>
 					<p className={'mb-2 text-lg font-bold text-plain'}>{'Basic set'}</p>
 					<p className={'w-full text-sm italic font-normal md:w-3/4 text-plain-60'}>
-						{'Hello adventurer! Are you ready to start your great journey? As an old man told us years ago, it\'s dangerous to go alone. I have here some of my old equipement. Do you want to buy some?'}
+						{'Hello adventurer! Are you ready to start your great journey? As an old man told us years ago, it\'s dangerous to go alone. I have here some of my old equipment. Do you want to buy some?'}
 					</p>
 				</div>
 				<RowBasicSets set={BASIC_SETS[currentAdventurer.class - 1]} />

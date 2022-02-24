@@ -119,7 +119,7 @@ const	ADVENTURES = [
 					'text': 'prizes',
 					'highlighted': true,
 					'tooltip': [
-						{'text': 'The prizes can be consomables, equipement or specific items that can be handfull at some point.'}
+						{'text': 'The prizes can be consomables, equipment or specific items that can be handfull at some point.'}
 					]
 				},
 				{'text': ' to offer in return. But for the best performers, Facu will part with a secret mission pass!'}
@@ -196,7 +196,7 @@ const	ADVENTURES = [
 			]
 		],
 		'rewards': [
-			{...ITEMS.THE_FOREST['0x0000000000000000000000000000000000000041'], name: 'Random equipement'},
+			{...ITEMS.THE_FOREST['0x0000000000000000000000000000000000000041'], name: 'Random equipment'},
 			{...ITEMS.THE_FOREST['0x0000000000000000000000000000000000000020']},
 			{...ITEMS.THE_FOREST['0x0000000000000000000000000000000000000007']},
 			{...ITEMS.THE_FOREST['0x0000000000000000000000000000000000000051'], name: 'Random item'},

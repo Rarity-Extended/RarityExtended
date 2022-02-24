@@ -102,10 +102,10 @@ const MobileMenu = React.memo(function MobileMenu() {
 														{'Feats'}
 													</button>
 												</Link>
-												<Link href={'/equipements'}>
+												<Link href={'/equipment'}>
 													<button
-														className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/equipements' ? '' : 'cursor-pointer'}`}>
-														{'Equipements'}
+														className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/equipment' ? '' : 'cursor-pointer'}`}>
+														{'Equipment'}
 													</button>
 												</Link>
 												<Link href={'/farming'}>
@@ -183,10 +183,10 @@ function	Template({children}) {
 								</p>
 							</Link>
 							
-							<Link href={'/equipements'}>
+							<Link href={'/equipment'}>
 								<p
-									className={`p-4 pr-6 pl-0 text-plain text-sm transition-opacity hover:opacity-100 ${router.pathname === '/equipements' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
-									{'Equipements'}
+									className={`p-4 pr-6 pl-0 text-plain text-sm transition-opacity hover:opacity-100 ${router.pathname === '/equipment' ? 'opacity-100' : 'opacity-20 cursor-pointer'}`}>
+									{'Equipment'}
 								</p>
 							</Link>
 							<Link href={'/bank'}>

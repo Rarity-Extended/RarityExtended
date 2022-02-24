@@ -20,7 +20,7 @@ export const InventoryContextApp = ({children}) => {
 	const	{address, chainID, provider} = useWeb3();
 	const	{rarities, isLoaded} = useRarity();
 	const	[inventory, set_inventory] = useState({});
-	const	[equipements, set_equipements] = useState([]);
+	const	[equipments, set_equipment] = useState([]);
 	const	[sharedInventory, set_sharedInventory] = useState({});
 	const	[initialFetchSet, set_initialFetchSet] = useState(false);
 	const	[nonce, set_nonce] = useState(0);
@@ -92,8 +92,8 @@ export const InventoryContextApp = ({children}) => {
 		const	rarityMealts = new Contract(process.env.RARITY_EXTENDED_COOKING_ADDR, ABI.RARITY_EXTENDED_MEAL_ABI);
 		const	raritytheForest = new Contract(process.env.DUNGEON_THE_FOREST_ADDR, process.env.DUNGEON_THE_FOREST_ABI);
 		const	rarityOpenMic = new Contract(process.env.DUNGEON_OPEN_MIC_V2_ADDR, process.env.DUNGEON_OPEN_MIC_V2_ABI);
-		const	rarityBasicSet = new Contract(process.env.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ADDR, ABI.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ABI);
-		const	rarityEquipementWrapper = new Contract(process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, ABI.RARITY_EQUIPEMENT_ABI);
+		const	rarityBasicSet = new Contract(process.env.RARITY_EXTENDED_EQUIPMENT_BASIC_SET_ADDR, ABI.RARITY_EXTENDED_EQUIPMENT_BASIC_SET_ABI);
+		const	rarityEquipmentWrapper = new Contract(process.env.RARITY_EQUIPMENT_WRAPPER_ADDR, ABI.RARITY_EQUIPMENT_ABI);
 
 		return [
 			...ITEMS.LOOTS.map(item => item.fetch(tokenID)),
@@ -102,18 +102,18 @@ export const InventoryContextApp = ({children}) => {
 			rarityOpenMic.getPrizes(tokenID),
 			rarityBasicSet.getOwnedItems(tokenID),
 
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 1), //Head
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 2), //Chest
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 3), //Hand
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 4), //Feet
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 5), //Primary weapon
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 6), //Secondary weapon
-			rarityEquipementWrapper.getEquipementBySlot(tokenID, 101), //Secondary weapon
+			rarityEquipmentWrapper.getEquipementBySlot(tokenID, 1), //Head
+			rarityEquipmentWrapper.getEquipementBySlot(tokenID, 2), //Chest
+			rarityEquipmentWrapper.getEquipementBySlot(tokenID, 3), //Hand
+			rarityEquipmentWrapper.getEquipementBySlot(tokenID, 4), //Feet
+			rarityEquipmentWrapper.getEquipementBySlot(tokenID, 5), //Primary weapon
+			rarityEquipmentWrapper.getEquipementBySlot(tokenID, 6), //Secondary weapon
+			rarityEquipmentWrapper.getEquipementBySlot(tokenID, 101), //Secondary weapon
 		];
 	}
 	async function	assignInventory(tokenID, inventoryCallResult) {
 		const	_inventory = [];
-		const	_equipements = [];
+		const	_equipments = [];
 		
 		let	rIndex = 0;
 		for (let index = 0; index < ITEMS.LOOTS.length; index++) {
@@ -209,37 +209,37 @@ export const InventoryContextApp = ({children}) => {
 			};
 
 			if (index <= 4) {
-				let	_equipement = null;
-				if (elementDetails.registry === process.env.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ADDR) {
-					_equipement = ITEMS.BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
+				let	_equipment = null;
+				if (elementDetails.registry === process.env.RARITY_EXTENDED_EQUIPMENT_BASIC_SET_ADDR) {
+					_equipment = ITEMS.BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
 				} else if (elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
-					_equipement = ITEMS.CORE_CRAFTING_ARMORS.find(e => e.id === elementDetails.itemType);
+					_equipment = ITEMS.CORE_CRAFTING_ARMORS.find(e => e.id === elementDetails.itemType);
 				}
-				if (_equipement) {
-					_equipements[index] = {...elementDetails, ..._equipement};
+				if (_equipment) {
+					_equipments[index] = {...elementDetails, ..._equipment};
 				}
 			}
 
 			if (index === 5 || index === 6) {
-				let	_equipement = null;
-				if (elementDetails.registry === process.env.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ADDR) {
-					_equipement = ITEMS.BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
+				let	_equipment = null;
+				if (elementDetails.registry === process.env.RARITY_EXTENDED_EQUIPMENT_BASIC_SET_ADDR) {
+					_equipment = ITEMS.BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
 				} else if (elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
-					_equipement = ITEMS.CORE_CRAFTING_WEAPONS.find(e => e.id === elementDetails.itemType);
+					_equipment = ITEMS.CORE_CRAFTING_WEAPONS.find(e => e.id === elementDetails.itemType);
 				}
-				if (_equipement) {
-					_equipements[index] = {...elementDetails, ..._equipement};
+				if (_equipment) {
+					_equipments[index] = {...elementDetails, ..._equipment};
 				}
 			}
 			if (index === 7) {
-				let	_equipement = null;
-				if (elementDetails.registry === process.env.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ADDR) {
-					_equipement = ITEMS.BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
+				let	_equipment = null;
+				if (elementDetails.registry === process.env.RARITY_EXTENDED_EQUIPMENT_BASIC_SET_ADDR) {
+					_equipment = ITEMS.BASIC_SET[(elementDetails.baseType === 3 ? 19 : 0) - 1 + elementDetails.itemType];
 				} else if (elementDetails.registry === process.env.RARITY_CRAFTING_ADDR) {
-					_equipement = ITEMS.CORE_CRAFTING_ARMORS.find(e => e.id === elementDetails.itemType);
+					_equipment = ITEMS.CORE_CRAFTING_ARMORS.find(e => e.id === elementDetails.itemType);
 				}
-				if (_equipement) {
-					_equipements[101] = {...elementDetails, ..._equipement};
+				if (_equipment) {
+					_equipments[101] = {...elementDetails, ..._equipment};
 				}
 			}
 		}
@@ -248,7 +248,7 @@ export const InventoryContextApp = ({children}) => {
 		performBatchedUpdates(() => {
 			set_nonce(n => n + 1);
 			set_inventory((prev) => ({...prev, [tokenID]: _inventory}));
-			set_equipements((prev) => ({...prev, [tokenID]: _equipements}));
+			set_equipment((prev) => ({...prev, [tokenID]: _equipments}));
 		});
 	}
 	const	updateInventories = React.useCallback(async (adventurers) => {
@@ -308,7 +308,7 @@ export const InventoryContextApp = ({children}) => {
 				sharedInventory,
 				updateInventory,
 				updateInventories,
-				equipements,
+				equipments,
 				nonce
 			}}>
 			{children}

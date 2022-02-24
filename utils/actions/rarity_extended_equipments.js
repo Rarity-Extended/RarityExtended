@@ -4,13 +4,13 @@ import	* as ABI			from	'utils/abi/mixed.min.abi';
 
 
 const	slotsRegistry = {
-	1: process.env.RARITY_EQUIPEMENT_ARMOR_HEAD_ADDR,
-	2: process.env.RARITY_EQUIPEMENT_ARMOR_BODY_ADDR,
-	3: process.env.RARITY_EQUIPEMENT_ARMOR_HAND_ADDR,
-	4: process.env.RARITY_EQUIPEMENT_ARMOR_FOOT_ADDR,
-	5: process.env.RARITY_EQUIPEMENT_WEAPON_PRIMARY_ADDR,
-	6: process.env.RARITY_EQUIPEMENT_WEAPON_SECONDARY_ADDR,
-	101: process.env.RARITY_EQUIPEMENT_WEAPON_SHIELD_ADDR,
+	1: process.env.RARITY_EQUIPMENT_ARMOR_HEAD_ADDR,
+	2: process.env.RARITY_EQUIPMENT_ARMOR_BODY_ADDR,
+	3: process.env.RARITY_EQUIPMENT_ARMOR_HAND_ADDR,
+	4: process.env.RARITY_EQUIPMENT_ARMOR_FOOT_ADDR,
+	5: process.env.RARITY_EQUIPMENT_WEAPON_PRIMARY_ADDR,
+	6: process.env.RARITY_EQUIPMENT_WEAPON_SECONDARY_ADDR,
+	101: process.env.RARITY_EQUIPMENT_WEAPON_SHIELD_ADDR,
 };
 
 function	onSuccessToast(_toast) {
@@ -31,7 +31,7 @@ export async function	isApprovedForAll({provider}) {
 	const	raritySource = RARITY_MANIFEST.connect(signer);
 	const	isApprovedForAll = await raritySource.isApprovedForAll(
 		address,
-		process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR
+		process.env.RARITY_EQUIPMENT_WRAPPER_ADDR
 	);
 	return isApprovedForAll;
 }
@@ -41,8 +41,8 @@ export async function	approveForAll({provider}, onError = () => null, onSuccess 
 	const	signer = provider.getSigner();
 	const	raritySource = RARITY_MANIFEST.connect(signer);
 	try {
-		_toast = toast.loading('Approving equipements...');
-		const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, true);
+		_toast = toast.loading('Approving equipments...');
+		const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EQUIPMENT_WRAPPER_ADDR, true);
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			onSuccessToast();
@@ -66,8 +66,8 @@ export async function	equip({provider, tokenID, minter, itemID, itemName, slot},
 	let		steps = 1;
 	const	signer = provider.getSigner();
 	const	address = await signer.getAddress();
-	const	rarityEquipementContract = new ethers.Contract(
-		process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, [
+	const	rarityEquipmentContract = new ethers.Contract(
+		process.env.RARITY_EQUIPMENT_WRAPPER_ADDR, [
 			'function RARITY_EXTENDED_NPC() public view returns (uint256)',
 			'function set_equipement(uint _slot, uint _adventurer, address _operator, address _registry, uint256 _tokenID) public',
 		], signer
@@ -76,10 +76,10 @@ export async function	equip({provider, tokenID, minter, itemID, itemName, slot},
 	const	isApproved = await isApprovedForAll({provider});
 	if (!isApproved) {
 		try {
-			_toast = toast.loading('Approving equipements...');
+			_toast = toast.loading('Approving equipments...');
 			const	raritySource = RARITY_MANIFEST.connect(signer);
 			const	transaction = await raritySource.setApprovalForAll(
-				process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR,
+				process.env.RARITY_EQUIPMENT_WRAPPER_ADDR,
 				true
 			);
 			const	transactionResult = await transaction.wait();
@@ -107,9 +107,9 @@ export async function	equip({provider, tokenID, minter, itemID, itemName, slot},
 			'function getApproved(uint256 tokenId) external view returns (address operator)',
 		], signer);
 		const	approved = await minterContract.getApproved(itemID);
-		if (approved !== process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR) {
+		if (approved !== process.env.RARITY_EQUIPMENT_WRAPPER_ADDR) {
 			_toast = toast.loading(`${currentStep++}/${++steps} - Approving ${itemName}...`);
-			const	transaction = await minterContract.approve(process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, itemID);
+			const	transaction = await minterContract.approve(process.env.RARITY_EQUIPMENT_WRAPPER_ADDR, itemID);
 			const	transactionResult = await transaction.wait();
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
@@ -130,7 +130,7 @@ export async function	equip({provider, tokenID, minter, itemID, itemName, slot},
 
 	_toast = toast.loading(`${currentStep}/${steps} - Trying to equip ${itemName}...`);
 	try {
-		const	transaction = await rarityEquipementContract.set_equipement(
+		const	transaction = await rarityEquipmentContract.set_equipement(
 			slot,
 			tokenID,
 			address,
@@ -160,8 +160,8 @@ export async function	rEquip({provider, tokenID, minter, itemID, itemName, slot}
 	let		currentStep = 1;
 	let		steps = 1;
 	const	signer = provider.getSigner();
-	const	rarityEquipementContract = new ethers.Contract(
-		process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, [
+	const	rarityEquipmentContract = new ethers.Contract(
+		process.env.RARITY_EQUIPMENT_WRAPPER_ADDR, [
 			'function RARITY_EXTENDED_NPC() public view returns (uint256)',
 			'function set_rEquipement(uint _slot, uint _adventurer, uint _operator, address _registry, uint256 _tokenID) public',
 		],
@@ -173,8 +173,8 @@ export async function	rEquip({provider, tokenID, minter, itemID, itemName, slot}
 	if (!isApproved) {
 		const	raritySource = RARITY_MANIFEST.connect(signer);
 		try {
-			_toast = toast.loading('Approving equipements...');
-			const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR, true);
+			_toast = toast.loading('Approving equipments...');
+			const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EQUIPMENT_WRAPPER_ADDR, true);
 			const	transactionResult = await transaction.wait();
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
@@ -199,7 +199,7 @@ export async function	rEquip({provider, tokenID, minter, itemID, itemName, slot}
 			'function getApproved(uint, uint) external view returns (uint)'
 		], signer);
 		const	[manager, approved] = await Promise.all([
-			rarityEquipementContract.RARITY_EXTENDED_NPC(),
+			rarityEquipmentContract.RARITY_EXTENDED_NPC(),
 			minterContract.getApproved(tokenID, itemID)
 		]);
 		if (Number(approved) !== Number(manager)) {
@@ -225,7 +225,7 @@ export async function	rEquip({provider, tokenID, minter, itemID, itemName, slot}
 	toast.dismiss(_toast);
 	_toast = toast.loading(`${currentStep}/${steps} - Trying to equip ${itemName}...`);
 	try {
-		const	transaction = await rarityEquipementContract.set_rEquipement(slot, tokenID, tokenID, minter, itemID);
+		const	transaction = await rarityEquipmentContract.set_rEquipement(slot, tokenID, tokenID, minter, itemID);
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
@@ -247,7 +247,7 @@ export async function	rEquip({provider, tokenID, minter, itemID, itemName, slot}
 export async function	unequip({provider, tokenID, itemName, slot}, callback) {
 	let		_toast;
 	const	signer = provider.getSigner();
-	const	rarityEquipementContract = new ethers.Contract(
+	const	rarityEquipmentContract = new ethers.Contract(
 		slotsRegistry[slot], [
 			'function unset_equipement(uint _adventurer) public',
 		],
@@ -257,7 +257,7 @@ export async function	unequip({provider, tokenID, itemName, slot}, callback) {
 	toast.dismiss(_toast);
 	_toast = toast.loading(`Trying to unequip ${itemName}...`);
 	try {
-		const	transaction = await rarityEquipementContract.unset_equipement(tokenID);
+		const	transaction = await rarityEquipmentContract.unset_equipement(tokenID);
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
@@ -282,12 +282,12 @@ export async function	buyBasicSet({provider, tokenID, setID, setName}, callback)
 
 	_toast = toast.loading(`Buying ${setName}...`);
 	try {
-		const	rarityEquipementBasicSet = new ethers.Contract(
-			process.env.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ADDR,
-			ABI.RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ABI,
+		const	rarityEquipmentBasicSet = new ethers.Contract(
+			process.env.RARITY_EXTENDED_EQUIPMENT_BASIC_SET_ADDR,
+			ABI.RARITY_EXTENDED_EQUIPMENT_BASIC_SET_ABI,
 			signer
 		);
-		const	transaction = await rarityEquipementBasicSet.buySet(setID, tokenID, {value: ethers.utils.parseEther('5')});
+		const	transaction = await rarityEquipmentBasicSet.buySet(setID, tokenID, {value: ethers.utils.parseEther('5')});
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});

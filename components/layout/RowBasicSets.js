@@ -3,7 +3,7 @@ import	Image				from	'next/image';
 import	useWeb3				from	'contexts/useWeb3';
 import	useRarity			from	'contexts/useRarity';
 import	useInventory		from	'contexts/useInventory';
-import	{buyBasicSet}		from	'utils/actions/rarity_extended_equipements';
+import	{buyBasicSet}		from	'utils/actions/rarity_extended_equipments';
 import	Tooltip				from	'components/Tooltip';
 import	ItemAttributes		from	'components/ItemAttributes';
 

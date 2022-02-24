@@ -78,14 +78,14 @@ export const RarityContextApp = ({children}) => {
 		const	calls = [
 			rarity.isApprovedForAll(address, process.env.RARITY_CRAFTING_HELPER_ADDR),
 			rarity.isApprovedForAll(address, process.env.RARITY_COOKING_HELPER_ADDR),
-			rarity.isApprovedForAll(address, process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR),
+			rarity.isApprovedForAll(address, process.env.RARITY_EQUIPMENT_WRAPPER_ADDR),
 		];
 		const	callResults = await ethcallProvider.tryAll(calls);
 		performBatchedUpdates(() => {
 			set_specialApprovals({
 				[process.env.RARITY_CRAFTING_HELPER_ADDR]: callResults[0],
 				[process.env.RARITY_COOKING_HELPER_ADDR]: callResults[1],
-				[process.env.RARITY_EQUIPEMENT_WRAPPER_ADDR]: callResults[2],
+				[process.env.RARITY_EQUIPMENT_WRAPPER_ADDR]: callResults[2],
 			});
 		});
 	}, [address, provider, chainID]);

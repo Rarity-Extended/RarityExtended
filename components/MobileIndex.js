@@ -24,10 +24,10 @@ const MobileIndex = React.memo(function MobileIndex() {
 						{'Adventures'}
 					</button>
 				</Link>
-				<Link href={'/equipements'}>
+				<Link href={'/equipment'}>
 					<button
-						className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/equipements' ? '' : 'cursor-pointer'}`}>
-						{'Equipements'}
+						className={`box p-4 text-plain text-sm text-center transition-opacity ${router.pathname === '/equipment' ? '' : 'cursor-pointer'}`}>
+						{'Equipment'}
 					</button>
 				</Link>
 				<Link href={'/crafting'}>

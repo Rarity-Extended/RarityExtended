@@ -1,9 +1,9 @@
-export const RARITY_EXTENDED_EQUIPEMENT_BASIC_SET_ABI = [
+export const RARITY_EXTENDED_EQUIPMENT_BASIC_SET_ABI = [
 	{'inputs':[{'internalType':'uint256','name':'_adventurerID','type':'uint256'}],'name':'getOwnedItems','outputs':[{'components':[{'internalType':'uint8','name':'base_type','type':'uint8'},{'internalType':'uint8','name':'item_type','type':'uint8'},{'internalType':'uint32','name':'crafted','type':'uint32'},{'internalType':'uint256','name':'crafter','type':'uint256'},{'internalType':'uint256','name':'tokenID','type':'uint256'}],'internalType':'struct rarity_extended_basic_set.item[]','name':'','type':'tuple[]'}],'stateMutability':'view','type':'function'},
 	{'inputs':[{'internalType':'uint256','name':'_id','type':'uint256'},{'internalType':'uint256','name':'_receiver','type':'uint256'}],'name':'buySet','outputs':[],'stateMutability':'payable','type':'function'}
 ];
 
-export const RARITY_EQUIPEMENT_ABI = [
+export const RARITY_EQUIPMENT_ABI = [
 	{'inputs':[{'internalType':'uint256','name':'_adventurer','type':'uint256'},{'internalType':'uint256','name':'_slot','type':'uint256'}],'name':'getEquipementBySlot','outputs':[{'internalType':'uint256','name':'','type':'uint256'},{'internalType':'address','name':'','type':'address'},{'internalType':'address','name':'','type':'address'},{'internalType':'uint8','name':'','type':'uint8'},{'internalType':'uint8','name':'','type':'uint8'},{'internalType':'bool','name':'','type':'bool'}],'stateMutability':'view','type':'function'}
 ];
 
