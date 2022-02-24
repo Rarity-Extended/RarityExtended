@@ -10,7 +10,7 @@ import	IconChevron							from	'components/icons/IconChevron';
 import	ItemAttributes						from	'components/ItemAttributes';
 import	Section								from	'components/layout/Section';
 import	RowBasicSets						from	'components/layout/RowBasicSets';
-import	{equip, rEquip, approveForAll}		from	'utils/actions/rarity_extended_equipments';
+import	{equip, rEquip, approveForAll}		from	'utils/actions/rarity_extended_equipment';
 import	{BASIC_SETS}						from	'utils/codex/extentions/rarity_extended_basic_sets';
 import useClientEffect from 'hooks/useClientEffect';
 
@@ -389,7 +389,7 @@ function	Wrapper() {
 	return (
 		<>
 			<Section
-				title={'Equipments'}
+				title={'Equipment'}
 				tabs={['All', 'Head Armors', 'Body Armors', 'Hand Armors', 'Foot Armors', 'Primary Weapons', 'Secondary Weapons', 'Jewelleries']}
 				button={{
 					onClick: onApproveAll,

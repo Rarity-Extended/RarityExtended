@@ -41,7 +41,7 @@ export async function	approveForAll({provider}, onError = () => null, onSuccess 
 	const	signer = provider.getSigner();
 	const	raritySource = RARITY_MANIFEST.connect(signer);
 	try {
-		_toast = toast.loading('Approving equipments...');
+		_toast = toast.loading('Approving equipment...');
 		const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EQUIPMENT_WRAPPER_ADDR, true);
 		const	transactionResult = await transaction.wait();
 		if (transactionResult.status === 1) {
@@ -76,7 +76,7 @@ export async function	equip({provider, tokenID, minter, itemID, itemName, slot},
 	const	isApproved = await isApprovedForAll({provider});
 	if (!isApproved) {
 		try {
-			_toast = toast.loading('Approving equipments...');
+			_toast = toast.loading('Approving equipment...');
 			const	raritySource = RARITY_MANIFEST.connect(signer);
 			const	transaction = await raritySource.setApprovalForAll(
 				process.env.RARITY_EQUIPMENT_WRAPPER_ADDR,
@@ -173,7 +173,7 @@ export async function	rEquip({provider, tokenID, minter, itemID, itemName, slot}
 	if (!isApproved) {
 		const	raritySource = RARITY_MANIFEST.connect(signer);
 		try {
-			_toast = toast.loading('Approving equipments...');
+			_toast = toast.loading('Approving equipment...');
 			const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EQUIPMENT_WRAPPER_ADDR, true);
 			const	transactionResult = await transaction.wait();
 			if (transactionResult.status === 1) {

@@ -35,7 +35,7 @@ function	ModalHelpProfessions({isOpen, set_isOpen}) {
 							</Dialog.Title>
 							<div className={'mt-2 space-y-2 text-sm text-plain-60'}>
 								<p>
-									{'One of the basic features of any role playing game is the ability to collect ressources to be able to build, craft and upgrade your equipments and weapons. There are different ways to do that: by hunting some peaceful animals, by fighting agains frightening monsters, or simply by harvesting some natural resources.'}
+									{'One of the basic features of any role playing game is the ability to collect ressources to be able to build, craft and upgrade your equipment and weapons. There are different ways to do that: by hunting some peaceful animals, by fighting agains frightening monsters, or simply by harvesting some natural resources.'}
 								</p>
 								<p>
 									{'With the Rarity Farming contracts, you can gather ressources from the land, either Wood, Minerals or Herbs. The contract will be automatically renewed every day. Each harvest will give you between 1 and 3 materials, with a bonus depending on your profession level.'}

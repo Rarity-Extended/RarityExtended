@@ -18,7 +18,7 @@ import	Tooltip					from	'components/Tooltip';
 import	ItemAttributes			from	'components/ItemAttributes';
 import	* as actions			from	'utils/actions';
 import	{setName}				from	'utils/actions/rarity_extended_name';
-import	{unequip}				from	'utils/actions/rarity_extended_equipments';
+import	{unequip}				from	'utils/actions/rarity_extended_equipment';
 import	{xpRequired}			from	'utils/libs/rarity';
 import	CLASSES					from	'utils/codex/core/classes';
 

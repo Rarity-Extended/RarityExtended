@@ -20,7 +20,7 @@ export const InventoryContextApp = ({children}) => {
 	const	{address, chainID, provider} = useWeb3();
 	const	{rarities, isLoaded} = useRarity();
 	const	[inventory, set_inventory] = useState({});
-	const	[equipments, set_equipment] = useState([]);
+	const	[equipment, set_equipment] = useState([]);
 	const	[sharedInventory, set_sharedInventory] = useState({});
 	const	[initialFetchSet, set_initialFetchSet] = useState(false);
 	const	[nonce, set_nonce] = useState(0);
@@ -113,7 +113,7 @@ export const InventoryContextApp = ({children}) => {
 	}
 	async function	assignInventory(tokenID, inventoryCallResult) {
 		const	_inventory = [];
-		const	_equipments = [];
+		const	_equipment = [];
 		
 		let	rIndex = 0;
 		for (let index = 0; index < ITEMS.LOOTS.length; index++) {
@@ -216,7 +216,7 @@ export const InventoryContextApp = ({children}) => {
 					_equipment = ITEMS.CORE_CRAFTING_ARMORS.find(e => e.id === elementDetails.itemType);
 				}
 				if (_equipment) {
-					_equipments[index] = {...elementDetails, ..._equipment};
+					_equipment[index] = {...elementDetails, ..._equipment};
 				}
 			}
 
@@ -228,7 +228,7 @@ export const InventoryContextApp = ({children}) => {
 					_equipment = ITEMS.CORE_CRAFTING_WEAPONS.find(e => e.id === elementDetails.itemType);
 				}
 				if (_equipment) {
-					_equipments[index] = {...elementDetails, ..._equipment};
+					_equipment[index] = {...elementDetails, ..._equipment};
 				}
 			}
 			if (index === 7) {
@@ -239,7 +239,7 @@ export const InventoryContextApp = ({children}) => {
 					_equipment = ITEMS.CORE_CRAFTING_ARMORS.find(e => e.id === elementDetails.itemType);
 				}
 				if (_equipment) {
-					_equipments[101] = {...elementDetails, ..._equipment};
+					_equipment[101] = {...elementDetails, ..._equipment};
 				}
 			}
 		}
@@ -248,7 +248,7 @@ export const InventoryContextApp = ({children}) => {
 		performBatchedUpdates(() => {
 			set_nonce(n => n + 1);
 			set_inventory((prev) => ({...prev, [tokenID]: _inventory}));
-			set_equipment((prev) => ({...prev, [tokenID]: _equipments}));
+			set_equipment((prev) => ({...prev, [tokenID]: _equipment}));
 		});
 	}
 	const	updateInventories = React.useCallback(async (adventurers) => {
@@ -308,7 +308,7 @@ export const InventoryContextApp = ({children}) => {
 				sharedInventory,
 				updateInventory,
 				updateInventories,
-				equipments,
+				equipment,
 				nonce
 			}}>
 			{children}
