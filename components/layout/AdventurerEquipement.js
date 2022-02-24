@@ -1,7 +1,6 @@
 import	React					from	'react';
 import	Image					from	'next/image';
 import	Link					from	'next/link';
-import	{useRouter}				from	'next/router';
 import	toast					from	'react-hot-toast';
 import	dayjs					from	'dayjs';
 import	relativeTime			from	'dayjs/plugin/relativeTime';
@@ -61,20 +60,10 @@ function	ItemWithTooltip({provider, currentAdventurer, updateInventory, item, sl
 }
 
 function	OverviewEquipement({provider, raritySkin}) {
-	const	router = useRouter();
 	const	{updateRarity, currentAdventurer} = useRarity();
 	const	{equipements, updateInventory} = useInventory();
 	const	{raritySkins} = useUI();
 	const	[name, set_name] = React.useState(currentAdventurer.name || currentAdventurer.tokenID);
-	const	[pageSlot, set_pageSlot] = React.useState(-1);
-
-	React.useLayoutEffect(() => {
-		if (router?.query?.slot) {
-			set_pageSlot(Number(router?.query?.slot));
-		} else {
-			set_pageSlot(-1);
-		}
-	}, [router]);
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	React.useLayoutEffect(() => set_name(currentAdventurer.name || currentAdventurer.tokenID), [currentAdventurer.tokenID]);
@@ -171,7 +160,7 @@ function	OverviewEquipement({provider, raritySkin}) {
 					value={name}
 					onChange={(e) => set_name(e.target.value)}
 					placeholder={currentAdventurer.name || currentAdventurer.tokenID}
-					className={'relative pl-1 w-full text-center uppercase bg-white bg-opacity-0 focus:outline-none'} />
+					className={'relative pl-1 w-full text-center uppercase bg-white/0 focus:outline-none'} />
 				<div
 					onClick={() => {
 						if (isSameName) {
@@ -317,12 +306,12 @@ function	OverviewEquipement({provider, raritySkin}) {
 						}
 					</Link>
 					<Link href={'/equipements'}>
-						<div className={'aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center text-plain-60'}>
+						<div className={'aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center image-wrapper text-400'}>
 							<IconNecklace className={'w-12 h-12'} />
 						</div>
 					</Link>
 					<Link href={'/equipements'}>
-						<div className={'aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center text-plain-60'}>
+						<div className={'aspect-1 flex w-18 transition-colors cursor-pointer box-darker flex-center image-wrapper text-400'}>
 							<IconRing className={'w-12 h-12'} />
 						</div>
 					</Link>

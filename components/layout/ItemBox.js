@@ -2,10 +2,10 @@ import	React			from	'react';
 import	Image			from	'next/image';
 import	Tooltip			from	'components/Tooltip';
 
-function	ItemBox({item, replacedAmount}) {
+function	ItemBox({item, replacedAmount, width = 56, height = 56}) {
 	return (
-		<div className={'group relative w-14 h-14 rounded-sm cursor-help bg-500 image-wrapper tooltip'}>
-			<Image src={item.img} width={56} height={56} />
+		<div className={'group relative rounded-sm cursor-help bg-500 image-wrapper tooltip'} style={{width, height}}>
+			<Image src={item.img} width={width} height={height} />
 			{(item.amount && item.amount > 0) || (item.amount === -1 && replacedAmount && replacedAmount > 0) ? <div className={'absolute right-1 bottom-1 text-sm'}>
 				{`x${(item.amount === -1 && replacedAmount && replacedAmount > 0) ? replacedAmount :  item.amount}`}
 			</div> : null}

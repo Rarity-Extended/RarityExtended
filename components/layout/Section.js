@@ -1,15 +1,20 @@
 import	React, {useState}	from	'react';
 import	{useRouter}			from	'next/router';
 import	IconHelp			from	'components/icons/IconHelp';
+import	ModalHelpDefault	from	'components/modals/HelpDefault';
 
-function Head({children, title, tabs, button, tab, set_tab}) {
+function SectionHead({children, title, tabs, button, tab, set_tab}) {
+	const	[modalOpen, set_modalOpen] = useState(false);
+
 	return (
 		<header id={'content'} aria-label={`tab ${tab}`} className={'pb-6 box'}>
 			<div className={'flex flex-col p-4 pb-2 border-b-2 dark:border-b-dark-300'}>
 				<div className={'flex flex-row justify-between items-start mb-4 h-9 md:items-center'}>
 					<div className={'flex flex-row items-center'}>
 						<h2 className={'text-base font-bold text-plain'}>{title}</h2>
-						<div className={'flex ml-2 h-6 flex-center'}>
+						<div
+							onClick={() => set_modalOpen(!modalOpen)}
+							className={'flex ml-2 h-6 flex-center'} >
 							<IconHelp />
 						</div>
 					</div>
@@ -46,11 +51,12 @@ function Head({children, title, tabs, button, tab, set_tab}) {
 					</select>
 				</nav>
 			</div>
+			{React.createElement(ModalHelpDefault, {isOpen: modalOpen, set_isOpen: set_modalOpen})}
 		</header>
 	);
 }
 
-function Section({children, headChildren, title, tabs, button, className = 'box'}) {
+function Section({children, help, headChildren, title, tabs, button, className = 'box'}) {
 	const	router = useRouter();
 	const	[tab, set_tab] = React.useState(0);
 	const	[search, set_search] = useState(router?.query?.search || '');
@@ -62,14 +68,15 @@ function Section({children, headChildren, title, tabs, button, className = 'box'
 
 	return (
 		<section id={'content'} className={className}>
-			<Head
+			<SectionHead
 				title={title}
 				tabs={tabs}
 				button={button}
 				tab={tab}
-				set_tab={set_tab}>
+				set_tab={set_tab}
+				help={help}>
 				{headChildren}
-			</Head>
+			</SectionHead>
 			{React.cloneElement(children, {tab, set_tab, search})}
 		</section>
 	);

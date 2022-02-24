@@ -62,7 +62,7 @@ function	ProfessionLevelProgress({adventurerID, farmType, name, level, xp}) {
 
 function	OverviewProfession({adventurer}) {
 	return (
-		<div className={'flex flex-col items-center px-4 mt-auto w-full md:px-0'}>
+		<div className={'flex flex-col items-center px-4 mt-auto w-full h-auto md:px-0 md:h-292px'}>
 			<ProfessionLevelProgress
 				adventurerID={adventurer.tokenID}
 				farmType={process.env.RARITY_EXTENDED_FARM_TYPE_WOOD}

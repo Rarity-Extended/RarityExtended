@@ -1,5 +1,4 @@
 import	React									from	'react';
-import	Image									from	'next/image';
 import	IconChevron								from	'components/icons/IconChevron';
 import	ItemBox									from	'components/layout/ItemBox';
 import	{craftSkillCheck, requiredMaterials}	from	'utils/libs/rarityCrafting';
@@ -65,7 +64,7 @@ const RowCraftArmors = React.memo(function RowCraftArmors({recipe, currentAdvent
 		<div className={'grid grid-cols-7 gap-x-0 gap-y-4 p-4 md:gap-x-8 md:gap-y-0'}>
 			<div className={'flex flex-row col-span-7 md:col-span-2'}>
 				<div className={'flex w-20 min-w-20 h-20 bg-500 flex-center'}>
-					<Image src={recipe.img} width={64} height={64} objectFit={'contain'} />
+					<ItemBox item={recipe} width={64} height={64} />
 				</div>
 				<div className={'flex flex-col ml-4 w-full'}>
 					<p className={'-mt-0.5 mb-1 text-base font-bold text-plain'}>

@@ -244,7 +244,7 @@ function	Wrapper() {
 			title={'Professions'}
 			tabs={['Woodcutter', 'Miner']}
 			className={'cursor-auto'}
-			help={<ModalHelpProfessions />}>
+			help={ModalHelpProfessions}>
 			<Index />
 		</Section>
 	);

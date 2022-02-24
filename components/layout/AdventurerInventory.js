@@ -1,6 +1,6 @@
-import	React							from	'react';
-import	useInventory					from	'contexts/useInventory';
-import	ItemInventory					from	'components/layout/ItemInventory';
+import	React					from	'react';
+import	useInventory			from	'contexts/useInventory';
+import	ItemInventory			from	'components/layout/ItemInventory';
 
 const InventoryGrid = React.memo(function InventoryGrid({currentAdventurer}) {
 	const	{inventory, sharedInventory, nonce} = useInventory();
