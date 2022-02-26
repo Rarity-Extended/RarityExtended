@@ -1,10 +1,3 @@
-/******************************************************************************
-**	@Author:				Rarity Extended
-**	@Twitter:				@RXtended
-**	@Date:					Sunday September 5th 2021
-**	@Filename:				useDungeons.js
-******************************************************************************/
-
 import	React, {useState, useContext, createContext}	from	'react';
 import	{ethers}										from	'ethers';
 import	{Contract}										from	'ethcall';
@@ -83,6 +76,7 @@ export const DungeonsContextApp = ({children}) => {
 				timeToNextPerformance: timeToNextOpenMic
 			}
 		};
+		console.log(_dungeons);
 		set_dungeons((prev) => ({...prev, [adventurer.tokenID]: _dungeons}));
 	}
 
