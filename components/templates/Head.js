@@ -3,6 +3,7 @@ import	Link							from	'next/link';
 import	{useRouter}						from	'next/router';
 import	{Dialog, Transition} 			from	'@headlessui/react';
 import	{Media, MediaContextProvider}	from	'contexts/useUI';
+import	useLocalStorage					from	'hooks/useLocalStorage';
 import	RarityCareSystem				from	'components/RarityCareSystem';
 import	MobileDetails					from	'components/MobileDetails';
 import	AdventurerDetails				from	'components/sections/Adventurer';
@@ -10,6 +11,7 @@ import	AdventurerDetails				from	'components/sections/Adventurer';
 const MobileMenu = React.memo(function MobileMenu() {
 	const	router = useRouter();
 	const	[open, set_open] = React.useState(false);
+	const	[favoritesAdventurers] = useLocalStorage('favorites', []);
 
 	React.useLayoutEffect(() => {
 		set_open(false);
@@ -121,7 +123,9 @@ const MobileMenu = React.memo(function MobileMenu() {
 													</button>
 												</Link>
 											</section>
-											<RarityCareSystem minimal/>
+											<RarityCareSystem
+												minimal
+												favoritesAdventurers={favoritesAdventurers} />
 											<MobileDetails />
 										</div>
 									</div>

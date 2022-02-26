@@ -13,7 +13,7 @@ export async function	harvest({provider, tokenID, farm}, callback) {
 	_toast = toast.loading('Trying to harvest...');
 	try {
 		const	transaction = await rarityFarm.harvest(tokenID,);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -43,7 +43,7 @@ export async function	levelup({provider, tokenID, farmID, jobName}, callback) {
 	_toast = toast.loading(`Trying to level-up ${jobName}...`);
 	try {
 		const	transaction = await rarityFarm.levelup(tokenID, farmID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -85,7 +85,7 @@ export async function	unlock({provider, tokenID, farm, farmName, farmCost}, call
 			} else {
 				_toast = toast.loading(`${currentStep++}/${++steps} - Approving ${element.name}...`);
 				const	transaction = await IERC20.approve(tokenID, manager, element.amount);
-				const	transactionResult = await transaction.wait();
+				const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 				if (transactionResult.status === 1) {
 					toast.dismiss(_toast);
 				} else {
@@ -107,7 +107,7 @@ export async function	unlock({provider, tokenID, farm, farmName, farmCost}, call
 	_toast = toast.loading(`${currentStep++}/${steps} - Unlocking ${farmName}...`);
 	try {
 		const	transaction = await rarityFarm.unlock(tokenID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -137,7 +137,7 @@ export async function	upgrade({provider, tokenID, farm, value}, callback) {
 	_toast = toast.loading('Upgrading farm...');
 	try {
 		const	transaction = await rarityFarm.upgrade(tokenID, {value: value});
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);

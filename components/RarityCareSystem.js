@@ -3,7 +3,6 @@ import	dayjs								from	'dayjs';
 import	relativeTime						from	'dayjs/plugin/relativeTime';
 import	toast								from	'react-hot-toast';
 import	{Listbox, Transition}				from	'@headlessui/react';
-import	useLocalStorage						from	'hooks/useLocalStorage';
 import	useWeb3								from	'contexts/useWeb3';
 import	useRarity							from	'contexts/useRarity';
 import	useInventory						from	'contexts/useInventory';
@@ -14,12 +13,11 @@ import	* as daycare						from	'utils/actions/rarity_extended_daycare';
 
 dayjs.extend(relativeTime);
 
-function	Index({minimal}) {
+function	Index({minimal, favoritesAdventurers}) {
 	const	{provider, chainTime} = useWeb3();
 	const	{rarities, updateBatchRarity} = useRarity();
 	const	{updateInventories} = useInventory();
 	const	{dungeons} = useDungeons();
-	const	[favoritesAdventurers] = useLocalStorage('favorites', []);
 	const	[nonce, set_nonce] = useState(0);
 	const	[selected] = useState('Take care of everything');
 
@@ -58,7 +56,7 @@ function	Index({minimal}) {
 		}
 		set_selectedAdventurersActions({canAdventure, canClaimGold, canAdventureCellar, canLevelUp});
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [nonce, dungeons, rarities, favoritesAdventurers.length]);
+	}, [nonce, dungeons, rarities, favoritesAdventurers, favoritesAdventurers.length]);
 
 	/* 🏹🛡 - Rarity Extended ***********************************************************************
 	**	Filter the Favorites Adventurer to remove the one that cannot do anything with the current
@@ -117,7 +115,7 @@ function	Index({minimal}) {
 				({error}) => console.error(error),
 				(_toast) => {
 					Promise.all([
-						updateInventories(tokensID),
+						updateInventories(rarities),
 						updateBatchRarity(tokensID)	
 					]).then(() => {
 						set_nonce(n => n + 1);
@@ -160,7 +158,7 @@ function	Index({minimal}) {
 				({error}) => console.error(error),
 				(_toast) => {
 					Promise.all([
-						updateInventories(tokensID),
+						updateInventories(rarities),
 						updateBatchRarity(tokensID)	
 					]).then(() => {
 						set_nonce(n => n + 1);
@@ -254,6 +252,7 @@ function	Index({minimal}) {
 			{title: 'Take care of the Level-ups only', description: `(${selectedAdventurersActions.canLevelUp} adventurers)`, onClick: onLevelUp},
 			{title: 'Take care of the Gold only', description: `(${selectedAdventurersActions.canClaimGold} adventurers)`, onClick: onClaimGold},
 		];
+		const isDisabled = selectedAdventurersActions.canAdventure === 0 && selectedAdventurersActions.canClaimGold === 0 && selectedAdventurersActions.canAdventureCellar === 0 && selectedAdventurersActions.canLevelUp === 0;
 		return (
 			<Listbox onChange={(e) => e.onClick()}>
 				{({open}) => (
@@ -263,10 +262,12 @@ function	Index({minimal}) {
 							<div className={'inline-flex w-full md:w-auto'}>
 								<div className={'inline-flex relative z-0 w-full md:w-auto'}>
 									<button
+										disabled={isDisabled}
 										className={'inline-flex relative items-center w-full md:w-auto button-highlight-with-arrow'} onClick={onCareOf}>
 										<p>{selected}</p>
 									</button>
-									<Listbox.Button className={'inline-flex relative items-center button-outline-arrow'}>
+									<Listbox.Button
+										className={`inline-flex relative items-center ${isDisabled ? 'button-outline-arrow-disabled' : 'button-outline-arrow'}`}>
 										<svg aria-hidden={'true'} focusable={'false'} data-prefix={'fas'} data-icon={'chevron-down'} className={'w-3 h-3'} role={'img'} xmlns={'http://www.w3.org/2000/svg'} viewBox={'0 0 448 512'}><path fill={'currentColor'} d={'M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z'}></path></svg>
 									</Listbox.Button>
 								</div>

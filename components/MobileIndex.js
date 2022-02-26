@@ -5,7 +5,7 @@ import	RarityCareSystem				from	'components/RarityCareSystem';
 import	MobileDetails					from	'components/MobileDetails';
 import	AdventurerDetails				from	'components/sections/Adventurer';
 
-const MobileIndex = React.memo(function MobileIndex() {
+const MobileIndex = React.memo(function MobileIndex({favoritesAdventurers}) {
 	const	router = useRouter();
 
 	return (
@@ -61,7 +61,7 @@ const MobileIndex = React.memo(function MobileIndex() {
 					</button>
 				</Link>
 			</section>
-			<RarityCareSystem minimal/>
+			<RarityCareSystem minimal favoritesAdventurers={favoritesAdventurers} />
 			<MobileDetails />
 		</div>
 	);

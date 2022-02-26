@@ -10,6 +10,7 @@ import	{ethers}										from	'ethers';
 import	{Contract}										from	'ethcall';
 import	useWeb3											from	'contexts/useWeb3';
 import	useRarity										from	'contexts/useRarity';
+import	useIndexDB										from	'hooks/useIDB';
 import	{chunk, newEthCallProvider}						from	'utils';
 import	performBatchedUpdates							from	'utils/performBatchedUpdates';
 import	* as ABI										from	'utils/abi/mixed.min.abi';
@@ -19,9 +20,9 @@ const	InventoryContext = createContext();
 export const InventoryContextApp = ({children}) => {
 	const	{address, chainID, provider} = useWeb3();
 	const	{rarities, isLoaded} = useRarity();
-	const	[inventory, set_inventory] = useState({});
-	const	[equipment, set_equipment] = useState([]);
-	const	[sharedInventory, set_sharedInventory] = useState({});
+	const	[inventory, set_inventory] = useIndexDB('inventory', {});
+	const	[equipment, set_equipment] = useIndexDB('equipment', []);
+	const	[sharedInventory, set_sharedInventory] = useIndexDB('sharedInventory', {});
 	const	[initialFetchSet, set_initialFetchSet] = useState(false);
 	const	[nonce, set_nonce] = useState(0);
 
@@ -113,7 +114,6 @@ export const InventoryContextApp = ({children}) => {
 	}
 	async function	assignInventory(tokenID, inventoryCallResult) {
 		const	_inventory = [];
-		const	_equipment = [];
 		
 		let	rIndex = 0;
 		for (let index = 0; index < ITEMS.LOOTS.length; index++) {
@@ -195,6 +195,7 @@ export const InventoryContextApp = ({children}) => {
 		}
 
 		rIndex++;
+		const	_allEquipment = [];
 		for (let index = 1; index < 8; index++) {
 			const	element = inventoryCallResult[rIndex++];
 			if (!element) {
@@ -216,7 +217,7 @@ export const InventoryContextApp = ({children}) => {
 					_equipment = ITEMS.CORE_CRAFTING_ARMORS.find(e => e.id === elementDetails.itemType);
 				}
 				if (_equipment) {
-					_equipment[index] = {...elementDetails, ..._equipment};
+					_allEquipment[index] = {...elementDetails, ..._equipment};
 				}
 			}
 
@@ -228,7 +229,7 @@ export const InventoryContextApp = ({children}) => {
 					_equipment = ITEMS.CORE_CRAFTING_WEAPONS.find(e => e.id === elementDetails.itemType);
 				}
 				if (_equipment) {
-					_equipment[index] = {...elementDetails, ..._equipment};
+					_allEquipment[index] = {...elementDetails, ..._equipment};
 				}
 			}
 			if (index === 7) {
@@ -239,7 +240,7 @@ export const InventoryContextApp = ({children}) => {
 					_equipment = ITEMS.CORE_CRAFTING_ARMORS.find(e => e.id === elementDetails.itemType);
 				}
 				if (_equipment) {
-					_equipment[101] = {...elementDetails, ..._equipment};
+					_allEquipment[101] = {...elementDetails, ..._equipment};
 				}
 			}
 		}
@@ -248,7 +249,7 @@ export const InventoryContextApp = ({children}) => {
 		performBatchedUpdates(() => {
 			set_nonce(n => n + 1);
 			set_inventory((prev) => ({...prev, [tokenID]: _inventory}));
-			set_equipment((prev) => ({...prev, [tokenID]: _equipment}));
+			set_equipment((prev) => ({...prev, [tokenID]: _allEquipment}));
 		});
 	}
 	const	updateInventories = React.useCallback(async (adventurers) => {

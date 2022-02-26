@@ -37,7 +37,7 @@ async function	_adventure(loader, {provider, contractAddress, tokenID}, callback
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.adventure(tokenID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -85,7 +85,7 @@ export async function	levelUp({provider, tokenID}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.level_up(tokenID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -130,7 +130,7 @@ export async function	learnSkills({provider, tokenID, skills}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.set_skills(tokenID, skills);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -175,7 +175,7 @@ export async function	learnFeat({provider, tokenID, feat}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.select_feat(tokenID, feat);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -216,7 +216,7 @@ export async function	recruitAdventurer({provider, classID}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.summon(classID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: classID});
 			toast.dismiss(_toast);
@@ -261,7 +261,7 @@ export async function	setAttributes({provider, _summoner, _str, _dex, _const, _i
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.point_buy(_summoner, _str, _dex, _const, _int, _wis, _cha);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: {_summoner, _str, _dex, _const, _int, _wis, _cha}});
 			toast.dismiss(_toast);
@@ -302,7 +302,7 @@ export async function	claimGold({provider, tokenID}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.claim(tokenID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);

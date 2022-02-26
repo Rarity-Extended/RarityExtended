@@ -22,7 +22,7 @@ export async function	apeInVault({provider, contractAddress, amount}, callback) 
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.deposit({value: amount});
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: undefined});
 			toast.dismiss(_toast);
@@ -64,7 +64,7 @@ export async function	apeOutVault({provider, address, zapAddress, contractAddres
 			toast.dismiss(_toast);
 		} else {
 			const	transaction = await vault.approve(zapAddress, amount);
-			const	transactionResult = await transaction.wait();
+			const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
 			} else {
@@ -87,7 +87,7 @@ export async function	apeOutVault({provider, address, zapAddress, contractAddres
 	**********************************************************************/
 	try {
 		const	transaction = await zap.withdraw(amount);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: undefined});
 			toast.dismiss(_toast);
@@ -130,7 +130,7 @@ export async function	depositInVault({provider, address, contractAddress, amount
 			toast.dismiss(_toast);
 		} else {
 			const	transaction = await wantContract.approve(contractAddress, amount);
-			const	transactionResult = await transaction.wait();
+			const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
 			} else {
@@ -166,7 +166,7 @@ export async function	depositInVault({provider, address, contractAddress, amount
 	**********************************************************************/
 	try {
 		const	transaction = await vault.deposit(amount);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: undefined});
 			toast.dismiss(_toast);
@@ -212,7 +212,7 @@ export async function	withdrawFromVault({provider, contractAddress, amount, want
 	**********************************************************************/
 	try {
 		const	transaction = await vault.withdraw(amount);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: undefined});
 			toast.dismiss(_toast);

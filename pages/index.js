@@ -36,14 +36,15 @@ function	NewAdventurer() {
 function	Index() {
 	const	{rarities, set_currentAdventurer, skins} = useRarity();
 	const	[favoritesAdventurers, set_favoritesAdventurers] = useLocalStorage('favorites', []);
-
+	
 	return (
 		<>
 			<div className={'block md:hidden'}>
-				<MobileIndex />
+				<MobileIndex favoritesAdventurers={favoritesAdventurers} />
 			</div>
 			<div className={'hidden md:block'}>
-				<RarityCareSystem />
+				<RarityCareSystem
+					favoritesAdventurers={favoritesAdventurers} />
 				<div className={'col-span-12 mt-4 md:mt-8'}>
 					<div className={'grid grid-cols-1 gap-2 md:grid-cols-4 md:gap-4'}>
 						{([...Object.values(rarities || {})] || [])

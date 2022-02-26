@@ -43,7 +43,7 @@ export async function	approveForAll({provider}, onError = () => null, onSuccess 
 	try {
 		_toast = toast.loading('Approving equipment...');
 		const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EQUIPMENT_WRAPPER_ADDR, true);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			onSuccessToast();
 			onSuccess();
@@ -82,7 +82,7 @@ export async function	equip({provider, tokenID, minter, itemID, itemName, slot},
 				process.env.RARITY_EQUIPMENT_WRAPPER_ADDR,
 				true
 			);
-			const	transactionResult = await transaction.wait();
+			const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
 			} else {
@@ -110,7 +110,7 @@ export async function	equip({provider, tokenID, minter, itemID, itemName, slot},
 		if (approved !== process.env.RARITY_EQUIPMENT_WRAPPER_ADDR) {
 			_toast = toast.loading(`${currentStep++}/${++steps} - Approving ${itemName}...`);
 			const	transaction = await minterContract.approve(process.env.RARITY_EQUIPMENT_WRAPPER_ADDR, itemID);
-			const	transactionResult = await transaction.wait();
+			const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
 			} else {
@@ -137,7 +137,7 @@ export async function	equip({provider, tokenID, minter, itemID, itemName, slot},
 			minter,
 			itemID
 		);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -175,7 +175,7 @@ export async function	rEquip({provider, tokenID, minter, itemID, itemName, slot}
 		try {
 			_toast = toast.loading('Approving equipment...');
 			const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EQUIPMENT_WRAPPER_ADDR, true);
-			const	transactionResult = await transaction.wait();
+			const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
 			} else {
@@ -205,7 +205,7 @@ export async function	rEquip({provider, tokenID, minter, itemID, itemName, slot}
 		if (Number(approved) !== Number(manager)) {
 			_toast = toast.loading(`${currentStep++}/${++steps} - Approving ${itemName}...`);
 			const	transaction = await minterContract.approve(tokenID, manager, itemID);
-			const	transactionResult = await transaction.wait();
+			const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
 			} else {
@@ -226,7 +226,7 @@ export async function	rEquip({provider, tokenID, minter, itemID, itemName, slot}
 	_toast = toast.loading(`${currentStep}/${steps} - Trying to equip ${itemName}...`);
 	try {
 		const	transaction = await rarityEquipmentContract.set_rEquipement(slot, tokenID, tokenID, minter, itemID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -258,7 +258,7 @@ export async function	unequip({provider, tokenID, itemName, slot}, callback) {
 	_toast = toast.loading(`Trying to unequip ${itemName}...`);
 	try {
 		const	transaction = await rarityEquipmentContract.unset_equipement(tokenID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -288,7 +288,7 @@ export async function	buyBasicSet({provider, tokenID, setID, setName}, callback)
 			signer
 		);
 		const	transaction = await rarityEquipmentBasicSet.buySet(setID, tokenID, {value: ethers.utils.parseEther('5')});
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);

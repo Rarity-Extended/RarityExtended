@@ -12,6 +12,7 @@ module.exports = ({
 		new Dotenv()
 	],
 	env: {
+		DEFAULT_WAIT: 2,
 		FMT_KEY: process.env.FMT_KEY,
 		WEBSITE_URI: process.env.WEBSITE_URI || 'https://adventure.major.tax/',
 

@@ -32,7 +32,7 @@ async function	approveRarityExtendedCare({provider, steps}) {
 		try {
 			_toast = toast.loading(`1/${steps} - Approving Extended Care...`);
 			const	transaction = await raritySource.setApprovalForAll(process.env.RARITY_EXTENDED_CARE, true);
-			const	transactionResult = await transaction.wait();
+			const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 			if (transactionResult.status === 1) {
 				toast.dismiss(_toast);
 				return [true, true];
@@ -82,7 +82,7 @@ export async function	careOfAll({provider, tokensID}, onError, onSuccess = onSuc
 			[true, true, true, true],
 			1
 		);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			onSuccess(_toast);
 		} else {
@@ -125,7 +125,7 @@ export async function	careAdventure({provider, tokensID}, onError, onSuccess = o
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.adventure(tokensID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			onSuccess(_toast);
 		} else {
@@ -168,7 +168,7 @@ export async function	careCellar({provider, tokensID}, onError, onSuccess = onSu
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.adventure_cellar(tokensID, 1);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			onSuccess(_toast);
 		} else {
@@ -211,7 +211,7 @@ export async function	careLevelup({provider, tokensID}, onError, onSuccess = onS
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.level_up(tokensID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			onSuccess(_toast);
 		} else {
@@ -254,7 +254,7 @@ export async function	careGold({provider, tokensID}, onError, onSuccess = onSucc
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.claim_gold(tokensID);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			onSuccess(_toast);
 		} else {

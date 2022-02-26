@@ -29,7 +29,7 @@ export async function	setAttributes({provider, adventurer, _str, _dex, _const, _
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.point_buy(adventurer, _str, _dex, _const, _int, _wis, _cha);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: {adventurer, _str, _dex, _const, _int, _wis, _cha}});
 			toast.dismiss(_toast);
@@ -70,7 +70,7 @@ export async function	increaseStrength({provider, adventurer}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.increase_strength(adventurer);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: {adventurer}});
 			toast.dismiss(_toast);
@@ -111,7 +111,7 @@ export async function	increaseDexterity({provider, adventurer}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.increase_dexterity(adventurer);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: {adventurer}});
 			toast.dismiss(_toast);
@@ -152,7 +152,7 @@ export async function	increaseConstitution({provider, adventurer}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.increase_constitution(adventurer);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: {adventurer}});
 			toast.dismiss(_toast);
@@ -193,7 +193,7 @@ export async function	increaseIntelligence({provider, adventurer}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.increase_intelligence(adventurer);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: {adventurer}});
 			toast.dismiss(_toast);
@@ -234,7 +234,7 @@ export async function	increaseWisdom({provider, adventurer}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.increase_wisdom(adventurer);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: {adventurer}});
 			toast.dismiss(_toast);
@@ -275,7 +275,7 @@ export async function	increaseCharisma({provider, adventurer}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.increase_charisma(adventurer);
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: {adventurer}});
 			toast.dismiss(_toast);

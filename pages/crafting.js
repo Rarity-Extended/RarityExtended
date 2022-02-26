@@ -61,7 +61,7 @@ function	Index({tab, onApproveAll}) {
 						currentAdventurer={currentAdventurer}
 						inventory={inventory?.[currentAdventurer?.tokenID || ''] || {}}
 						onCraft={() => onCraft(recipe)}
-						onApprove={onApproveAll}
+						onApprove={() => onApproveAll(0)}
 						recipe={{
 							...recipe,
 							effect: recipe.description,

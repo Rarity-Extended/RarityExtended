@@ -36,7 +36,7 @@ export async function	killBoar({provider, tokenID}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.kill(tokenID, {gasLimit: 300_000});
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
@@ -81,7 +81,7 @@ export async function	protectBoars({provider, tokenID}, callback) {
 	**********************************************************************/
 	try {
 		const	transaction = await rarity.reproduce(tokenID, {gasLimit: 300_000});
-		const	transactionResult = await transaction.wait();
+		const	transactionResult = await transaction.wait(process.env.DEFAULT_WAIT);
 		if (transactionResult.status === 1) {
 			callback({error: false, data: tokenID});
 			toast.dismiss(_toast);
