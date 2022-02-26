@@ -6,12 +6,23 @@
 ******************************************************************************/
 
 import	React, {useEffect, useContext, createContext}	from	'react';
-import	useLocalStorage									from	'hook/useLocalStorage';
+import	{createMedia}									from	'@artsy/fresnel';
+import	useLocalStorage									from	'hooks/useLocalStorage';
+
+const AppMedia = createMedia({
+	breakpoints: {
+		xs: 0,
+		sm: 640,
+		md: 768,
+		lg: 1024,
+		xl: 1280,
+		xxl: 1536,
+	},
+});
 
 const	UI = createContext();
 export const UIContextApp = ({children}) => {
 	const	[theme, set_theme] = useLocalStorage('theme', 'dark-initial');
-	const	[layout, set_layout] = useLocalStorage('layout', 'default');
 	const	[raritySkins, set_raritySkins] = useLocalStorage('skins', true);
 
 	useEffect(() => {
@@ -37,11 +48,9 @@ export const UIContextApp = ({children}) => {
 		<UI.Provider
 			value={{
 				theme,
-				layout,
 				setTheme: set_theme,
 				raritySkins: raritySkins,
 				switchTheme: () => set_theme(t => t === 'dark' ? 'light' : 'dark'),
-				switchLayout: () => set_layout(t => t === 'default' ? 'legacy' : 'default'),
 				switchSkin: () => set_raritySkins(t => t === true ? false : true)
 			}}>
 			{children}
@@ -49,5 +58,7 @@ export const UIContextApp = ({children}) => {
 	);
 };
 
+export const mediaStyle = AppMedia.createMediaStyle();
+export const {Media, MediaContextProvider} = AppMedia;
 export const useUI = () => useContext(UI);
 export default useUI;

@@ -6,7 +6,7 @@
 ******************************************************************************/
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import	React, {useState}							from	'react';
+import	React							from	'react';
 import	Head							from	'next/head';
 import	{DefaultSeo}					from	'next-seo';
 import	{Toaster}						from	'react-hot-toast';
@@ -14,66 +14,59 @@ import	{Web3ReactProvider}				from	'@web3-react-fork/core';
 import	{ethers}						from	'ethers';
 import	useWeb3, {Web3ContextApp}		from	'contexts/useWeb3';
 import	useRarity, {RarityContextApp}	from	'contexts/useRarity';
+import	{InventoryContextApp}			from	'contexts/useInventory';
+import	{DungeonsContextApp}			from	'contexts/useDungeons';
 import	{UIContextApp}					from	'contexts/useUI';
-import	Navbar							from	'components/Navbar';
-import	Footer							from	'components/Footer';
-import	SectionNoWallet					from	'sections/SectionNoWallet';
-import	useWindowInFocus				from	'hook/useWindowInFocus';
-import	Confetti								from	'react-confetti';
+import	Navbar							from	'components/layout/Navbar';
+import	Footer							from	'components/layout/Footer';
+import	SectionNoAdventurer				from	'components/sections/SectionNoAdventurer';
+import	SectionNoWallet					from	'components/sections/SectionNoWallet';
+import	useWindowInFocus				from	'hooks/useWindowInFocus';
+import	useClientEffect					from	'hooks/useClientEffect';
 
-import	'tailwindcss/tailwind.css';
 import	'style/Default.css';
-import	'style/TailwindCustomStyles.css';
-import { ConfettiContext } from 'components/ConfettiContext';
 
-function	GameWrapper({Component, pageProps, element, router}) {
+const GameWrapper = React.memo(function GameWrapper({Component}) {
 	const	{switchChain, active, chainID} = useWeb3();
-	const	{isLoaded, rarities, fetchRarity, updateRarity, rNonce} = useRarity();
+	const	{isLoaded, currentAdventurer} = useRarity();
 
 	if (!isLoaded) {
 		return (
-			<div className={'absolute inset-0 backdrop-blur-3xl bg-opacity-40 pointer-events-none'}>
+			<div className={'absolute inset-0 backdrop-blur-3xl pointer-events-none'}>
 				<div className={'loader'} />
-				<div className={'absolute inset-0 mt-32 flex justify-center items-center'}>
-					<p className={'center-text text-white z-40'}>{'Retrieving your adventurers...'}</p>
+				<div className={'flex absolute inset-0 mt-32 w-full flex-center'}>
+					<p className={'z-40 text-center text-white'}>{'Retrieving your adventurers...'}</p>
 				</div>
 			</div>
 		);
 	}
 
 	if (!active) {
-		return (
-			<SectionNoWallet />
-		);
+		return (<SectionNoWallet />);
 	}
 
+	if (!currentAdventurer) {
+		return (<SectionNoAdventurer />);
+	}
+
+	const getLayout = Component.getLayout || ((page) => page);
 	return (
-		<div className={'pb-24 mb-24 relative z-10'}>
+		<div className={'relative z-10 pb-24 mb-0 md:mb-24'}>
 			{chainID >= 0 && (chainID !== 250 && chainID !== 1337) ? (
-				<div aria-label={'switchchain'} className={'flex w-full  text-lg text-center justify-center'} onClick={switchChain}>
+				<div aria-label={'switchchain'} className={'flex justify-center w-full text-lg text-center'} onClick={switchChain}>
 					{'PLEASE SWITCH TO FANTOM NETWORK'}
 				</div>
 			) : null}
-			<Component
-				key={router.route}
-				element={element}
-				router={router}
-				rarities={rarities}
-				updateRarity={updateRarity}
-				fetchRarity={fetchRarity}
-				rNonce={rNonce}
-				{...pageProps} />
+			{getLayout(<Component />)}
 		</div>
 	);
-}
+});
 
 function	AppWrapper(props) {
-	const	{Component, pageProps, router} = props;
 	const	{switchChain, chainID} = useWeb3();
 	const	windowInFocus = useWindowInFocus();
-	const [showConfetti, setShowConfetti] = useState(false);
 
-	React.useEffect(() => {
+	useClientEffect(() => {
 		if (windowInFocus && Number(chainID) > 0 && (Number(chainID) !== 250 && Number(chainID) !== 1337)) {
 			switchChain();
 		}
@@ -90,15 +83,10 @@ function	AppWrapper(props) {
 				<meta name={'msapplication-TileColor'} content={'#9fcc2e'} />
 				<meta name={'theme-color'} content={'#ffffff'} />
 				<meta charSet={'utf-8'} />
-				<link rel={'preconnect'} href={'https://fonts.googleapis.com'} />
-				<link rel={'preconnect'} href={'https://fonts.gstatic.com'} crossOrigin={'true'} />
-				<link href={'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap'} rel={'stylesheet'} />
-				<link href={'https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;500;600;700&display=swap'} rel={'stylesheet'} />
 
 				<meta name={'robots'} content={'index,nofollow'} />
 				<meta name={'googlebot'} content={'index,nofollow'} />
 				<meta charSet={'utf-8'} />
-				<script defer data-domain={'rarityextended.com'} src={'https://plausible.io/js/plausible.js'} />
 			</Head>
 			<DefaultSeo
 				title={'Rarity Extended'}
@@ -125,19 +113,11 @@ function	AppWrapper(props) {
 					site: '@RXtended',
 					cardType: 'summary_large_image',
 				}} />
-			<main id={'app'} className={'p-4 relative font-title uppercase text-black dark:text-white bg-white dark:bg-dark-600'} style={{minHeight: '100vh'}}>
-				<Toaster position={'bottom-right'} toastOptions={{className: 'text-sx border-4 border-black dark:border-dark-100 text-black dark:text-white bg-white dark:bg-dark-600 noBr shadow-xl'}} />
-				{showConfetti && <Confetti 
-					colors={['#ffffff', 'rgb(42,94,161)']} 
-					drawShape={ctx => {
-						const size = 5 + (Math.random() * (20 - 5))
-						ctx.fillRect(-size/2, -size/2, size, size)
-					}} />}
-				<ConfettiContext.Provider value={{ showConfetti, setShowConfetti }}>
-					<Navbar router={router} />
-					<GameWrapper Component={Component} pageProps={pageProps} element={props.element} router={router} />
-					<Footer />
-				</ConfettiContext.Provider>
+			<main id={'app'} className={'overflow-x-hidden relative p-4 font-story bg-light-background dark:bg-dark-600 md:overflow-x-auto text-plain scrollbar-none'} style={{minHeight: '100vh'}}>
+				<Toaster position={'bottom-right'} toastOptions={{className: 'text-xs border-4 border-black dark:border-dark-100 text-plain bg-white dark:bg-dark-600 noBr shadow-xl'}} />
+				<Navbar />
+				<GameWrapper {...props} />
+				<Footer />
 			</main>
 		</>
 	);
@@ -155,11 +135,15 @@ function	MyApp(props) {
 			<Web3ReactProvider getLibrary={getLibrary}>
 				<Web3ContextApp>
 					<RarityContextApp>
-						<AppWrapper
-							Component={Component}
-							pageProps={pageProps}
-							element={props.element}
-							router={props.router} />
+						<InventoryContextApp>
+							<DungeonsContextApp>
+								<AppWrapper
+									Component={Component}
+									pageProps={pageProps}
+									element={props.element}
+									router={props.router} />
+							</DungeonsContextApp>
+						</InventoryContextApp>
 					</RarityContextApp>
 				</Web3ContextApp>
 			</Web3ReactProvider>

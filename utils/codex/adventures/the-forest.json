@@ -1,0 +1,117 @@
+{
+	"intro": {
+		"description": [
+			[
+				{"text": "There is a dark looking man sitting at a table in the corner. His face is hidden under a full faced mask. He speaks of a forest to the north where he has buried "},
+				{
+					"text": "a treasure",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "Many treasures are buried in the forest. Nobody knows what they will be or what they may be used for, or even if you will be able to sell them... But are you a real treasure hunter?"}
+					]
+				},
+				{"text": "."}
+			],
+			[
+				{"text": "He leads you to a corner and starts looking through a pack with a sketchbook and a quill. You wait for him to find what he is looking for. He finally lifts a small piece of parchment and hands it to you. He has drawn a map of the area close to where he was found and circled a large oak tree with a pair of trees which look like they are kissing at the base."}
+			],
+			[
+				{"text": "You have to travel to that location and search for the two trees, then follow the game trail northeast. He doesn't know how long it will take, or how many days you will need, but says perhaps "},
+				{
+					"text": "around a week",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "You can spend between "},
+						{"text": "4 an 7 days", "highlighted": true},
+						{"text": " on this trail. Different times reap different treasures."}
+					]
+				},
+				{"text": ". Once you get to the forest, if you're still alive, look for the glowing mushrooms. Then, and only then, you will have to "},
+				{
+					"text": "dig for the treasure",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "After the time on the trail has ended, you will have to come back here to "},
+						{"text": "dig for a random treasure", "highlighted": true},
+						{"text": "."}
+					]
+				},
+				{"text": "."}
+			],
+			[
+				{"text": "He doesn't want anything in return for helping you. For now."}
+			]
+		],
+		"options": [
+			{"text": "Explore the Forest for ~~4 days~~", "goto": "explore4"},
+			{"text": "Explore the Forest for ~~5 days~~", "goto": "explore5"},
+			{"text": "Explore the Forest for ~~6 days~~", "goto": "explore6"},
+			{"text": "Explore the Forest for ~~7 days~~", "goto": "explore7"},
+			{"text": "Leave the Tavern", "goto": "adventures"}
+		]
+	},
+	"rest": {
+		"description": [
+			[
+				{"text": "You begin to study the map and then notice that the masked man has not moved at all. He has been staring at the same spot on the wall. You touch his arm. He looks toward you and smiles. He smiles as if to say, \"Go. I will be here when you return.\""}
+			],
+			[
+				{"text": "It takes you several hours to make your way to the location the map shows and after a few more hours of searching, you find the two trees."}
+			],
+			[
+				{"text": "The trail is a narrow dirt path winding through the forest, the trees are old, some are grand trees reaching up to the sky while others are barely taller than bushes. You can see green everywhere and the ground is muddy. Some patches are covered in fallen leaves while some are not, some parts are bare of trees, while some parts are slightly overgrown, dense with green."}
+			],
+			[
+				{"text": "It's quiet. You can hear the sound of the wind rustling through the trees and leaves finding their way."}
+			],
+			[
+				{"text": "Now, you just have to enjoy this walk. "},
+				{
+					"text": "${adventurer_name}",
+					"hasVariable": true,
+					"highlighted": true,
+					"tooltip": [
+						{"text": "This is you"}
+					]
+				},
+				{"text": " will be near the glowing mushrooms "},
+				{
+					"text": "${dig_time}",
+					"hasVariable": true,
+					"highlighted": true,
+					"tooltip": [
+						{"text": "You will find the glowing mushrooms after this long journey. Use this time to think about the state of our ecosystem."}
+					]
+				},
+				{"text": "."}
+			]
+		],
+		"options": [
+			{"text": "Check the ~~other adventures~~", "goto": "adventures"}
+		]
+	},
+	"dig": {
+		"description": [
+			[
+				{"text": "You searched the area for days before you came to the location of theses glowing mushrooms. As you prepare to dig, you notice that the whole forest is very quiet."}
+			],
+			[
+				{"text": "You dig with a shovel for hours, but you can't seem to go deep enough. It's getting dark. You know you have to escape the forest before it gets too dark, but you still have a goal, a quest to finish. So you start digging again."}
+			],
+			[
+				{"text": "Hours later, the sun has set and you have yet to find anything. You were about to give up digging when you finally see something shine under the dirt. More hours pass and you finally reach the prize. You lift out a small wooden box. The "},
+				{
+					"text": "treasure",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "What will you get?"}
+					]
+				},
+				{"text": " is yours."}
+			]
+		],
+		"options": [
+			{"text": "Get your ~~treasure~~", "goto": "dig_treasure"}
+		]
+	}
+}

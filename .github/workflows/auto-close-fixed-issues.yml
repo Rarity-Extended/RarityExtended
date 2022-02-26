@@ -1,0 +1,12 @@
+name: Auto Close Issues
+
+on:
+  pull_request_target:
+    types: [closed]
+jobs:
+  close:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: wow-actions/auto-close-fixed-issues@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,242 @@
+{
+	"intro": {
+		"description": [
+			[
+				{"text": "You are walking near a large forest. The air fills with the scent of sap, leaves, and decaying leaves. The sun dips below the mountains, revealing the speckled green and brown of the forest floor, the slender trunks of stunted trees, the bird nests in the tops of branches."}
+			],
+			[
+				{"text": "A burst of voices reach the ears of our adventurer. Two men are arguing about a "},
+				{
+					"text": "boar",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "The boars are big, black and bristly, their snouts curled like those of a ferret. They are like piglets, though much larger."}
+					]
+				},
+				{"text": " problem. The youngest, an angry farmer, yells at the other, a man in his late middle ages. You can hear the conversation."}
+			],
+			[
+				{"text": "\"I tell you I saw it! A huge black boar... filthy thing! It tore up my prize plants! I only saw the beast, but it's big enough to be a dwarf a harvest price pig! It'll be back soon, you'll see! "},
+				{
+					"text": "We need to kill them all",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "The boars are strong. Stronger than Facu's Rat. Only adventurer with a good amout of "},
+						{"text": "CONST", "highlighted": true},
+						{"text": " and "},
+						{"text": "STR", "highlighted": true},
+						{"text": " should start this fight."}
+					]
+				},
+				{"text": "!\""}
+			],
+			[
+				{"text": "The older man ignores the farmer's rantings, though his face is hard. \"Look, there is no boar big enough to do what you say. What you saw was an elk, or one of those manticores that plague the land sometimes. "},
+				{
+					"text": "Boars are necessary to maintain balance",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "Less boars means more "},
+						{"text": "Mushroom", "highlighted": true},
+						{"text": ", "},
+						{"text": "Berries", "highlighted": true},
+						{"text": " and "},
+						{"text": "Wood", "highlighted": true},
+						{"text": ", but much less "},
+						{"text": "Meat", "highlighted": true},
+						{"text": ", "},
+						{"text": "Tusks", "highlighted": true},
+						{"text": " and "},
+						{"text": "Leather", "highlighted": true},
+						{"text": ". And the other way around."}
+					]
+				},
+				{"text": " of this forest. They must be "},
+				{
+					"text": "preserved, protected",
+					"highlighted": true,
+					"tooltip": [
+						{"text": "An adventurer knowing how to "},
+						{"text": "Handle Animal", "highlighted": true},
+						{"text": " and having a good "},
+						{"text": "INT", "highlighted": true},
+						{"text": ", "},
+						{"text": "CHA", "highlighted": true},
+						{"text": " and "},
+						{"text": "WIS", "highlighted": true},
+						{"text": "  will be perfect for this task."}
+					]
+				},
+				{"text": ". And with your hunting, it is about to be broken!\""}
+			],
+			[
+				{"text": "It is getting dark, but our adventurer can still see the farmer's face clearly. He is angry, and quickly becoming hysterical. His jaw is trembling, and his eyes are red and watery. Seeing you, he calls you to ask for help."}
+			],
+			[
+				{"text": "There is "},
+				{
+					"text": "${boar_count}",
+					"hasVariable": true,
+					"highlighted": true,
+					"tooltip": [
+						{"text": "The ecosystem will be balanced with "},
+						{"text": "10000", "highlighted": true},
+						{"text": " boars. You will earn less rewards by hunting. However, by protecting them when the boar population is below this number, you may earn more. The reverse is true and hunting is more profitable if the boar population is above this number."}
+					]
+				},
+				{"text": " in the Forest"}
+			]
+		],
+		"options": [
+			{"text": "~~Hunt the Boar~~ to help this Humble Farmer", "goto": "hunt"},
+			{"text": "Listen to the wise man and ~~Protect the Boars~~", "goto": "protect"}
+		]
+	},
+	"rest": {
+		"description": [
+			[
+				{"text": "The air you breathe is fresh and silent. The leaves on the trees rustle as a breeze comes through them. The grass ripples as a butterfly alights on the end of a blade. You can feel the air caress your skin. It is as if everything has been cleansed by the rain, as if there is no angry farmer, no boar grunts."}
+			],
+			[
+				{"text": "The boar herd has abandoned the clearing once again. The acorns and beech nuts that they’d scrounged across the forest floor were not enough to sustain them today."}
+			],
+			[
+				{"text": "That is enough for you, "},
+				{
+					"text": "${adventurer_name}",
+					"hasVariable": true,
+					"highlighted": true,
+					"tooltip": [
+						{"text": "This is you. But maybe another day you can find the boars ?"}
+					]
+				},
+				{"text": ". You head back to the village."}
+			], 
+			[
+				{"text": "Maybe you could come back "},
+				{
+					"text": "${next_adventure}",
+					"hasVariable": true,
+					"highlighted": true,
+					"tooltip": [
+						{"text": "The forest is very big, but they really like this place. Be patient, they will come back."}
+					]
+				},
+				{"text": "?"}
+			]
+		],
+		"options": [
+			{"text": "Check the ~~other adventures~~", "goto": "adventures"}
+		]
+	},
+	"hunt": {
+		"description": [
+			[
+				{"text": "The farmer directed you to the place he saw the boar."}
+			],
+			[
+				{"text": "You are in a big glade, hemmed all around by tall trees, except for a narrow trail leading in, obviously the trail the farmer came in by. There are ruts in the trail, traces of the wheels of cart tracks. A patch of dry brown grass, trampled flat in some places, has growing here. There are small bushes, some of which have been bent almost flat to the ground."}
+			],
+			[
+				{"text": "In the center of the opening, the boar snorts and grunts. The boar is angry. It is angry because the forest is angry. It is angry because it must prove its strength."}
+			],
+			[
+				{"text": "Judging by its size, you can expect to collect up to "},
+				{
+					"text": "${loot_fight}",
+					"hasVariable": true,
+					"highlighted": true,
+					"tooltip": [
+						{"text": "Loot can be "},
+						{"text": "Meat", "highlighted": true},
+						{"text": ", "},
+						{"text": "Tusks", "highlighted": true},
+						{"text": ", "},
+						{"text": "Leather", "highlighted": true},
+						{"text": ". Distribution between these 3 is random."}
+					]
+				},
+				{"text": "."}
+			]
+		],
+		"options": [
+			{"text": "~~Start the Fight~~", "goto": "fight"},
+			{"text": "Run for your life", "goto": "intro"}
+		]
+	},
+	"protect": {
+		"description": [
+			[
+				{"text": "You take the direction of the forest to find these wild animals."}
+			],
+			[
+				{"text": "You are in a big glade, hemmed all around by tall trees, except for a narrow trail leading in, obviously the trail the farmer came in by. There are ruts in the trail, traces of the wheels of cart tracks. A patch of dry brown grass, trampled flat in some places, is growing here. There are small bushes, some of which have been bent almost flat to the ground. There are many piles of wood in the clearing and the air is filled with scents of animals and plants. Some you can identify easily, while some you can't."}
+			],
+			[
+				{"text": "While searching for the boars, you could stop to gather some berries, mushroom, or wood."}
+			],
+			[
+				{"text": "You could get up to "},
+				{
+					"text": "${loot_protect}",
+					"hasVariable": true,
+					"highlighted": true,
+					"tooltip": [
+						{"text": "Loot can be "},
+						{"text": "Berries", "highlighted": true},
+						{"text": ", "},
+						{"text": "Mushrooms", "highlighted": true},
+						{"text": ", "},
+						{"text": "Woods", "highlighted": true},
+						{"text": ". Distribution between these 3 is random."}
+					]
+				},
+				{"text": "."}
+			]
+		],
+		"options": [
+			{"text": "~~Gather~~ some loots", "goto": "gather"},
+			{"text": "Go back to the edge of the Forest", "goto": "intro"}
+		]
+	},
+	"end": {
+		"description": [
+			[
+				{"text": "'You are walking near a large forest. The air is filled with the scent of sap, leaves, and decaying leaves. The sun dips below the mountains, revealing the speckled green and brown of forest floor, the slender trunks of stunted trees, the bird nests in the tops of branches. A burst of voices reach the ears of our adventurer. Two men are arguing about a boar problem. \"THERE ARE NO MORE BOAR!\""}
+			],
+			[
+				{"text": "It's been "},
+				{
+					"text": "${extinction_time}",
+					"hasVariable": true,
+					"highlighted": true,
+					"tooltip": [
+						{"text": "The last boar was killed the "},
+						{"text": "${extinction_exact_time}", "highlighted": true, "hasVariable": true},
+						{"text": "."}
+					]
+				},
+				{"text": " was killed by "},
+				{
+					"text": "${extinction_by}",
+					"hasVariable": true,
+					"highlighted": true,
+					"tooltip": [
+						{"text": "After this event, people started to call him "},
+						{"text": "“The No Boar”", "highlighted": true, "hasVariable": true},
+						{"text": "."}
+					]
+				}
+			],
+			[
+				{"text": ". This is not good for the village, particularly considering the heavy taxes on meat the king has recently set upon his citizens. The men are obviously upset. They are both pulling their blades out. The other man, obviously the leader, is trying to pacify the situation. He is talking about how they are not paying enough."}
+			],
+			[
+				{"text": "It looks like this whole boar situation leaded to unpleasant things..."}
+			]
+		],
+		"options": [
+			{"text": "Go back to town", "goto": "adventure"}
+		]
+	}
+}

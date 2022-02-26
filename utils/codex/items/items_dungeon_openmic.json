@@ -1,0 +1,138 @@
+{
+	"Hawk signet ring": {
+		"name": "Hawk signet ring",
+		"description": "A common signet ring",
+		"img": "/items/openmic/hawk.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+	"Badger signet ring": {
+		"name": "Badger signet ring",
+		"description": "A common signet ring",
+		"img": "/items/openmic/badger.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+	"Song Bird signet ring": {
+		"name": "Song Bird signet ring",
+		"description": "A common signet ring",
+		"img": "/items/openmic/bird.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+	"Skunk signet ring": {
+		"name": "Skunk signet ring",
+		"description": "A common signet ring",
+		"img": "/items/openmic/skunk.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+  	"Cat signet ring": {
+		"name": "Cat signet ring",
+		"description": "A common signet ring",
+		"img": "/items/openmic/cat.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+  	"Dog signet ring": {
+		"name": "Dog signet ring",
+		"description": "A common signet ring",
+		"img": "/items/openmic/dog.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+  	"Fish signet ring": {
+		"name": "Fish signet ring",
+		"description": "A common signet ring",
+		"img": "/items/openmic/fish.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+  	"Shark signet ring": {
+		"name": "Shark signet ring",
+		"description": "A common signet ring",
+		"img": "/items/openmic/shark.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+  	"Lion signet ring": {
+		"name": "Lion signet ring",
+		"description": "A common signet ring",
+		"img": "/items/openmic/lion.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+  	"Tiger signet ring": {
+		"name": "Tiger signet ring",
+		"description": "A common signet ring",
+		"img": "/items/openmic/tiger.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+  	"Snake signet ring": {
+		"name": "Snake signet ring",
+		"description": "A common signet ring",
+		"img": "/items/openmic/snake.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+	"Crate of Goblin Wine": {
+		"name": "Crate of Goblin Wine",
+		"description": "A crate of the liquid foulness",
+		"img": "/items/openmic/wine.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+	"Expired rations": {
+		"name": "Expired rations",
+		"description": "This was a tidy meal once",
+		"img": "/items/openmic/expired-rations.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+	"Mysterious black stone": {
+		"name": "Mysterious black stone",
+		"description": "This stone seems lost...",
+		"img": "/items/openmic/blackstone.png",
+		"level": "Common",
+		"levelClassName": "bg-items-common",
+		"modifier": []
+	},
+	"Secret mission pass from Prince Andre": {
+		"name": "Secret mission pass from Prince Andre",
+		"description": "This envelope feels hot",
+		"img": "/items/openmic/missionpass-prince.png",
+		"level": "Uncommon",
+		"levelClassName": "bg-items-uncommon",
+		"modifier": []
+	},
+	"Secret mission pass from The Austrian": {
+		"name": "Secret mission pass from The Austrian",
+		"description": "This envelope feels cold",
+		"img": "/items/openmic/missionpass-austrian.png",
+		"level": "Uncommon",
+		"levelClassName": "bg-items-uncommon",
+		"modifier": []
+	},
+	"Secret mission pass from Murderteeth": {
+		"name": "Secret mission pass from Murderteeth",
+		"description": "This envelope feels just right",
+		"img": "/items/openmic/missionpass-murderteeth.png",
+		"level": "Uncommon",
+		"levelClassName": "bg-items-uncommon",
+		"modifier": []
+	}
+}

@@ -51,6 +51,21 @@ export function craftSkillCheck(cratingLevel, int, difficulty) {
 	return result.toFixed(2);
 }
 
+export function requiredMaterials(cratingLevel, int, difficulty, limit) {
+	let	check = cratingLevel;
+	if (check == 0) {
+		return 0;
+	}
+	check += modifierForAttribute(int);
+	if (check <= 0) {
+		return 0;
+	}
+	const	result = (difficulty - check) * 10;
+	if (result > limit)
+		return limit;
+	return result;
+}
+
 export function craftingMaterialsRequired(cratingLevel, int, difficulty) {
 	let	check = cratingLevel;
 	if (check == 0) {
