@@ -231,6 +231,9 @@ function	ItemList({tab}) {
 		const	_inventory = Object.values(adventurerInventory || {});
 		for (let index = 0; index < (_inventory || []).length; index++) {
 			const item = _inventory[index];
+			if (item.dungeon === 'the-forest') {
+				continue;
+			}
 			if (item.type === 'unique') {
 				if ((tab === 0 && item.category && item.category !== 'good')) toRender.push(item);
 				else if (tab === 1 && item?.category === 'head-armor') toRender.push(item);
@@ -249,6 +252,9 @@ function	ItemList({tab}) {
 		const	_sharedInventory = Object.values(sharedInventory || {});
 		for (let index = 0; index < (_sharedInventory || []).length; index++) {
 			const item = _sharedInventory[index];
+			if (item.dungeon === 'the-forest') {
+				continue;
+			}
 			if ((tab === 0 && item.category && item.category !== 'good')) toRender.push(item);
 			else if (tab === 1 && item?.category === 'head-armor') toRender.push(item);
 			else if (tab === 2 && item?.category === 'body-armor') toRender.push(item);

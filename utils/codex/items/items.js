@@ -299,6 +299,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Once was a king, his name was lost but not his crown.',
 		img: '/items/the-forest/dead_king_crown.png',
 		address: '0x0000000000000000000000000000000000000001',
+		dungeon: 'the-forest',
 		category: 'head-armor',
 		weight: 2,
 		cost: 100,
@@ -313,6 +314,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'A mysterious gauntlet, with mysterious power.',
 		img: '/items/the-forest/black_gauntlet.png',
 		address: '0x0000000000000000000000000000000000000002',
+		dungeon: 'the-forest',
 		category: 'weapon',
 		weight: 1,
 		cost: 20,
@@ -329,6 +331,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Tells the story, that belonged to a witch...',
 		img: '/items/the-forest/haunted_ring.png',
 		address: '0x0000000000000000000000000000000000000003',
+		dungeon: 'the-forest',
 		category: 'jewelry',
 	},
 	{
@@ -336,6 +339,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'The forest has a lot of stories, not as many as this book.',
 		img: '/items/the-forest/ancient_book.png',
 		address: '0x0000000000000000000000000000000000000004',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -343,6 +347,7 @@ const	_ITEMS_THE_FOREST = [
 		description: "I wouldn't take it if I was you ...",
 		img: '/items/the-forest/enchanted_book.png',
 		address: '0x0000000000000000000000000000000000000005',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -350,6 +355,7 @@ const	_ITEMS_THE_FOREST = [
 		description: "Crafted by nobody, 'belongs to whoever finds it' is engraved on the ring...",
 		img: '/items/the-forest/gold_ring.png',
 		address: '0x0000000000000000000000000000000000000006',
+		dungeon: 'the-forest',
 		category: 'jewelry',
 	},
 	{
@@ -357,6 +363,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Where does it lead? to the rarest destiny.',
 		img: '/items/the-forest/treasure_map.png',
 		address: '0x0000000000000000000000000000000000000007',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -364,6 +371,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Beware! can cast a spell on you.',
 		img: '/items/the-forest/spell_book.png',
 		address: '0x0000000000000000000000000000000000000008',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -371,6 +379,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'An unprecedented magic, anyway it looks cool.',
 		img: '/items/the-forest/magic_necklace.png',
 		address: '0x0000000000000000000000000000000000000009',
+		dungeon: 'the-forest',
 		category: 'jewelry',
 	},
 	{
@@ -378,6 +387,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Solid and rigid, but precise and delicate.',
 		img: '/items/the-forest/mechanical_hand.png',
 		address: '0x0000000000000000000000000000000000000010',
+		dungeon: 'the-forest',
 		category: 'weapon',
 		weight: 2,
 		cost: 40,
@@ -394,6 +404,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Survived the battle, not as its former carrier.',
 		img: '/items/the-forest/war_helmet.png',
 		address: '0x0000000000000000000000000000000000000011',
+		dungeon: 'the-forest',
 		category: 'head-armor',
 		weight: 20,
 		cost: 100,
@@ -408,6 +419,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'The God of Fire created these. Only a cold soul could carry them.',
 		img: '/items/the-forest/fire_boots.png',
 		address: '0x0000000000000000000000000000000000000012',
+		dungeon: 'the-forest',
 		category: 'foot-armor',
 		weight: 20,
 		cost: 500,
@@ -422,6 +434,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'A war where too much was lost.',
 		img: '/items/the-forest/war_trophy.png',
 		address: '0x0000000000000000000000000000000000000013',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -429,6 +442,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'The anatomy of an elf, the trophy of his assassin.',
 		img: '/items/the-forest/elf_skull.png',
 		address: '0x0000000000000000000000000000000000000014',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -436,6 +450,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'A mystery created in the hardest metal.',
 		img: '/items/the-forest/unknown_ring.png',
 		address: '0x0000000000000000000000000000000000000015',
+		dungeon: 'the-forest',
 		category: 'jewelry',
 	},
 	{
@@ -443,6 +458,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Bright at first, dark in oblivion.',
 		img: '/items/the-forest/silver_ring.png',
 		address: '0x0000000000000000000000000000000000000016',
+		dungeon: 'the-forest',
 		category: 'jewelry',
 	},
 	{
@@ -450,6 +466,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'How to start a war, how to bury your soldier friends...',
 		img: '/items/the-forest/war_book.png',
 		address: '0x0000000000000000000000000000000000000017',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -457,6 +474,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'The temptation to put coin inside is hard to resist',
 		img: '/items/the-forest/gold_pot.png',
 		address: '0x0000000000000000000000000000000000000018',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -464,6 +482,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Shadowy figure, now headless.',
 		img: '/items/the-forest/demon_head.png',
 		address: '0x0000000000000000000000000000000000000019',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -471,6 +490,7 @@ const	_ITEMS_THE_FOREST = [
 		description: "Whatever this may open, it's a complete mystery.",
 		img: '/items/the-forest/unknown_key.png',
 		address: '0x0000000000000000000000000000000000000020',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -478,6 +498,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'An ancient enchantment. Whoever reads this will be forgotten forever.',
 		img: '/items/the-forest/cursed_book.png',
 		address: '0x0000000000000000000000000000000000000021',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -485,6 +506,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Little like a bug, tall like the sky.',
 		img: '/items/the-forest/giant_plant_seed.png',
 		address: '0x0000000000000000000000000000000000000022',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -492,6 +514,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Only the old ones remember this sickle.',
 		img: '/items/the-forest/old_farmer_sickle.png',
 		address: '0x0000000000000000000000000000000000000023',
+		dungeon: 'the-forest',
 		category: 'weapon',
 		weight: 2,
 		cost: 4,
@@ -508,6 +531,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Very promising, but useless.',
 		img: '/items/the-forest/enchanted_useless_tool.png',
 		address: '0x0000000000000000000000000000000000000024',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -515,6 +539,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'The perfect pet.',
 		img: '/items/the-forest/dragon_egg.png',
 		address: '0x0000000000000000000000000000000000000025',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -522,6 +547,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Now, you can claim you survived a Bear.',
 		img: '/items/the-forest/bear_claw.png',
 		address: '0x0000000000000000000000000000000000000026',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -529,6 +555,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Even the bravest enemy is afraid to reflect on this sword.',
 		img: '/items/the-forest/silver_sword.png',
 		address: '0x0000000000000000000000000000000000000027',
+		dungeon: 'the-forest',
 		category: 'weapon',
 		weight: 4,
 		cost: 150,
@@ -545,6 +572,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Very rare, hope it has a good price in the market.',
 		img: '/items/the-forest/rare_ring.png',
 		address: '0x0000000000000000000000000000000000000028',
+		dungeon: 'the-forest',
 		category: 'jewelry',
 	},
 	{
@@ -552,6 +580,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Glamor is just one of its characteristics.',
 		img: '/items/the-forest/glove_with_diamonds.png',
 		address: '0x0000000000000000000000000000000000000029',
+		dungeon: 'the-forest',
 		category: 'hand-armor',
 		weight: 10,
 		cost: 5000,
@@ -566,6 +595,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'It has a life of its own, it protects those who use it.',
 		img: '/items/the-forest/haunted_cloak.png',
 		address: '0x0000000000000000000000000000000000000030',
+		dungeon: 'the-forest',
 		category: 'body-armor',
 		weight: 10,
 		cost: 10,
@@ -580,6 +610,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'We honor his former owner, a hero with no name.',
 		img: '/items/the-forest/dead_hero_cape.png',
 		address: '0x0000000000000000000000000000000000000031',
+		dungeon: 'the-forest',
 		category: 'body-armor',
 		weight: 5,
 		cost: 5,
@@ -594,6 +625,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'When it was not enchanted it gave luck, now it only gives death.',
 		img: '/items/the-forest/enchanted_talisman.png',
 		address: '0x0000000000000000000000000000000000000032',
+		dungeon: 'the-forest',
 		category: 'jewelry',
 	},
 	{
@@ -601,6 +633,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'A warrior never has enough time.',
 		img: '/items/the-forest/warrior_watch.png',
 		address: '0x0000000000000000000000000000000000000033',
+		dungeon: 'the-forest',
 		category: 'jewelry',
 	},
 	{
@@ -608,6 +641,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Now you only need a horse.',
 		img: '/items/the-forest/metal_horse_saddle.png',
 		address: '0x0000000000000000000000000000000000000034',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -615,6 +649,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Shady secrets, nobody should see it.',
 		img: '/items/the-forest/witch_book.png',
 		address: '0x0000000000000000000000000000000000000035',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -622,6 +657,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'From a beast, or a pet, a monster or a bunny.',
 		img: '/items/the-forest/unknown_animal_eye.png',
 		address: '0x0000000000000000000000000000000000000036',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -629,6 +665,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'I hope you find it useful.',
 		img: '/items/the-forest/slain_warrior_armor.png',
 		address: '0x0000000000000000000000000000000000000037',
+		dungeon: 'the-forest',
 		category: 'body-armor',
 		weight: 45,
 		cost: 200,
@@ -643,6 +680,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Magic, spells, enchantments. Everything in your hand.',
 		img: '/items/the-forest/witcher_book.png',
 		address: '0x0000000000000000000000000000000000000038',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -650,6 +688,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'When it was not enchanted it gave lucky, now it only gives death.',
 		img: '/items/the-forest/cursed_talisman.png',
 		address: '0x0000000000000000000000000000000000000039',
+		dungeon: 'the-forest',
 		category: 'jewelry',
 	},
 	{
@@ -657,6 +696,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'An ancient power, a present from the gods, the future of its bearer.',
 		img: '/items/the-forest/antique_ring.png',
 		address: '0x0000000000000000000000000000000000000040',
+		dungeon: 'the-forest',
 		category: 'jewelry',
 	},
 	{
@@ -664,6 +704,7 @@ const	_ITEMS_THE_FOREST = [
 		description: "Hope the prince doesn't claim his sword.",
 		img: '/items/the-forest/ancient_prince_andre_s_sword.png',
 		address: '0x0000000000000000000000000000000000000041',
+		dungeon: 'the-forest',
 		category: 'weapon',
 		weight: 6,
 		cost: 2000,
@@ -680,6 +721,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'It will be yours when you grow',
 		img: '/items/the-forest/king_s_son_sword.png',
 		address: '0x0000000000000000000000000000000000000042',
+		dungeon: 'the-forest',
 		category: 'weapon',
 		weight: 6,
 		cost: 2000,
@@ -696,6 +738,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'An old coin, nobody uses it... right?',
 		img: '/items/the-forest/old_damaged_coin.png',
 		address: '0x0000000000000000000000000000000000000043',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -703,6 +746,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Forged in the storm, lightning in your hand.',
 		img: '/items/the-forest/thunder_hammer.png',
 		address: '0x0000000000000000000000000000000000000044',
+		dungeon: 'the-forest',
 		category: 'weapon',
 		weight: 10,
 		cost: 1200,
@@ -719,6 +763,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'If the former owner of this crystal could go back in time, he would surely avoid losing it.',
 		img: '/items/the-forest/time_crystal.png',
 		address: '0x0000000000000000000000000000000000000045',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -726,6 +771,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'A puzzle to solve. What did the former owner of this head think?',
 		img: '/items/the-forest/skull_fragment.png',
 		address: '0x0000000000000000000000000000000000000046',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -733,6 +779,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'It gives you precision. In your decisions and in your shots.',
 		img: '/items/the-forest/hawk_eye.png',
 		address: '0x0000000000000000000000000000000000000047',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -740,6 +787,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Unknown alien power.',
 		img: '/items/the-forest/meteorite_fragment.png',
 		address: '0x0000000000000000000000000000000000000048',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -747,6 +795,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'The sea is very strange...',
 		img: '/items/the-forest/mutant_fisheye.png',
 		address: '0x0000000000000000000000000000000000000049',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -754,6 +803,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'For a wolf or a human, or both at the same time.',
 		img: '/items/the-forest/wolf_necklace.png',
 		address: '0x0000000000000000000000000000000000000050',
+		dungeon: 'the-forest',
 		category: 'jewelry',
 	},
 	{
@@ -761,6 +811,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'A one-legged rabbit is still a rabbit.',
 		img: '/items/the-forest/shadowy_rabbit_paw.png',
 		address: '0x0000000000000000000000000000000000000051',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -768,6 +819,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Do not lose sight of it, it could be useful for its owner.',
 		img: '/items/the-forest/paladin_eye.png',
 		address: '0x0000000000000000000000000000000000000052',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -775,6 +827,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Filled with Valor, glory, but most important, Alturisum',
 		img: '/items/the-forest/paladin_heart.png',
 		address: '0x0000000000000000000000000000000000000053',
+		dungeon: 'the-forest',
 		category: 'good',
 	},
 	{
@@ -782,6 +835,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Were these tanned with blood? No one can know.',
 		img: '/items/the-forest/red_tanned_gloves.png',
 		address: '0x0000000000000000000000000000000000000054',
+		dungeon: 'the-forest',
 		category: 'hand-armor',
 		weight: 2,
 		cost: 5,
@@ -796,6 +850,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Which feline was the owner of such claws? Matters not. You may wear don them now.',
 		img: '/items/the-forest/cat_clow_glove.png',
 		address: '0x0000000000000000000000000000000000000055',
+		dungeon: 'the-forest',
 		category: 'hand-armor',
 		weight: 2,
 		cost: 5,
@@ -810,6 +865,7 @@ const	_ITEMS_THE_FOREST = [
 		description: 'Made of foreign metal, by foreign hands.',
 		img: '/items/the-forest/foreign_armor.png',
 		address: '0x0000000000000000000000000000000000000056',
+		dungeon: 'the-forest',
 		category: 'body-armor',
 		weight: 35,
 		cost: 400,
