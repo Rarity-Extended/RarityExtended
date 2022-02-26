@@ -76,7 +76,6 @@ export const DungeonsContextApp = ({children}) => {
 				timeToNextPerformance: timeToNextOpenMic
 			}
 		};
-		console.log(_dungeons);
 		set_dungeons((prev) => ({...prev, [adventurer.tokenID]: _dungeons}));
 	}
 
